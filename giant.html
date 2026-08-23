@@ -371,10 +371,11 @@ body.route-film .pri .pchip2{border-color:#6f86c4;color:#fff;background:transpar
 body.route-film .pri .pchip2.on{background:#3D8BFF;border-color:#3D8BFF}
 body.route-film .route-cta .b2{background:transparent;color:#fff;border-color:#6f86c4}
 /* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
-.amb-frame{position:fixed;inset:0;pointer-events:none;z-index:150;border:2px solid var(--brand);opacity:0;transition:opacity .6s var(--ease)}
-body.amb-near .amb-frame{opacity:.9}
-body.amb-on .amb-frame{opacity:.4}
-.amb-tab{position:fixed;left:50%;bottom:0;transform:translate(-50%,115%);z-index:160;background:#fff;border:1px solid var(--line);border-bottom:0;border-top:3px solid var(--brand);padding:14px 16px 14px 22px;display:flex;gap:14px;align-items:center;width:max-content;max-width:min(760px,94vw);box-shadow:0 -10px 34px rgba(0,0,0,.08);transition:transform .6s var(--ease),bottom .3s var(--ease)}
+.amb-frame{position:fixed;inset:0;pointer-events:none;z-index:205;border:0 solid var(--brand);box-shadow:inset 0 0 0 0 rgba(6,3,141,0);opacity:0;transition:opacity .5s var(--ease),border-width .6s var(--ease),box-shadow .9s var(--ease)}
+body.amb-near .amb-frame{opacity:1;border-width:6px;box-shadow:inset 0 0 0 1px rgba(6,3,141,.5),inset 0 0 44px rgba(6,3,141,.38),inset 0 0 170px rgba(6,3,141,.28);animation:ambBreath 1.8s var(--ease) 1}
+body.amb-on .amb-frame{opacity:1;border-width:4px;box-shadow:inset 0 0 0 1px rgba(6,3,141,.35),inset 0 0 36px rgba(6,3,141,.22),inset 0 0 120px rgba(6,3,141,.14)}
+@keyframes ambBreath{0%{box-shadow:inset 0 0 0 1px rgba(6,3,141,0),inset 0 0 0 rgba(6,3,141,0),inset 0 0 0 rgba(6,3,141,0)}40%{box-shadow:inset 0 0 0 1px rgba(6,3,141,.6),inset 0 0 70px rgba(6,3,141,.5),inset 0 0 260px rgba(6,3,141,.4)}100%{box-shadow:inset 0 0 0 1px rgba(6,3,141,.5),inset 0 0 44px rgba(6,3,141,.38),inset 0 0 170px rgba(6,3,141,.28)}}
+.amb-tab{position:fixed;left:50%;bottom:0;transform:translate(-50%,115%);z-index:160;background:#fff;border:1px solid var(--line);border-bottom:0;border-top:4px solid var(--brand);padding:14px 16px 14px 22px;display:flex;gap:14px;align-items:center;width:max-content;max-width:min(760px,94vw);box-shadow:0 -10px 34px rgba(0,0,0,.08);transition:transform .6s var(--ease),bottom .3s var(--ease)}
 body.amb-near .amb-tab,body.amb-on .amb-tab{transform:translate(-50%,0)}
 body.has-tray .amb-tab{bottom:64px}
 .amb-tab p{font-size:13.5px;line-height:1.65;flex:1;min-width:0}
