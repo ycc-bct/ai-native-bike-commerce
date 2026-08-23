@@ -309,6 +309,67 @@ body.ai-mode .ai-bubble{display:block}
 .sw.on{background:var(--brand)}
 .sw.on::after{transform:translateX(17px)}
 .tw-close{margin-top:16px;font-size:12px;color:#9A9A9C;text-decoration:underline}
+/* ---------- Canvas 轉場：按下「幫我整理」的那一刻，商店自己重組 ---------- */
+.pgrid{position:relative}
+.plp .cathero::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
+body.amb-canvas .plp .cathero::after{opacity:.35}
+body.amb-canvas .pc{transform:scale(1.02) translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.12)}
+.pc.lead{outline:2px solid var(--brand);outline-offset:-2px;transition:outline-color .6s var(--ease)}
+.jline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;opacity:1;transition:opacity .5s var(--ease)}
+.jline path{fill:none;stroke:var(--brand);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.jline.out{opacity:0}
+.jstrip .jgo{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--brand);white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+.amb-tab .r{display:none;font-size:13px;font-weight:700;color:var(--brand);white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+body.amb-on .amb-tab .r{display:inline}
+/* ---------- 你的路線（Journey Constellation，網站語言版） ---------- */
+.route{position:fixed;inset:0;z-index:185;background:#fff;overflow:auto;display:none;color:var(--ink)}
+.route.on{display:block}
+.rclose{position:fixed;right:28px;top:calc(var(--hd) + 33px + 16px);z-index:2;background:#fff;border:1px solid var(--line);padding:9px 14px;font-size:12.5px;font-weight:700}
+.route-in{width:min(1100px,92vw);margin:0 auto;padding:calc(var(--hd) + 33px + 40px) 0 60px}
+.route-h .qstep{font-family:var(--num);font-size:11.5px;letter-spacing:.18em;color:var(--brand);font-weight:700;margin-bottom:10px}
+.route-h h2{font-size:30px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+.route-h .qsub{font-size:14px;color:var(--ink-70);line-height:1.8;max-width:640px}
+.sig{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:28px 0 10px}
+.sig .s{border-top:2px solid var(--line);padding-top:10px}
+.sig .s p{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
+.sig .s p span:last-child{font-weight:400;color:var(--ink-70)}
+.sig .s p span:last-child.hot{color:var(--brand);font-weight:700}
+.sig .bar{height:3px;background:var(--line-2);margin-top:9px;overflow:hidden}
+.sig .bar i{display:block;height:100%;background:var(--brand);transition:width .7s var(--ease)}
+.rmap{width:100%;height:auto;display:block;margin:6px 0 14px}
+.rmap .ln{stroke:var(--brand);stroke-width:1.5;fill:none;transition:all .7s var(--ease)}
+.rmap .sq{stroke:var(--brand);stroke-width:1.2;stroke-dasharray:3 5;fill:none;opacity:.55}
+.rmap .nd{transition:transform .7s var(--ease);cursor:pointer}
+.rmap .nd circle{fill:#fff;stroke:var(--line);stroke-width:1.5;transition:all .7s var(--ease)}
+.rmap .nd.c circle{stroke:var(--brand);stroke-width:2}
+.rmap .nd text{font-family:var(--sans);font-size:12px;fill:var(--ink);text-anchor:middle}
+.rmap .nd text.m{font-family:var(--num);font-size:11px;fill:var(--ink-70)}
+.rmap .nd text.t{fill:var(--brand);font-weight:700}
+.pri{border-top:1px solid var(--line);padding-top:22px;margin-top:8px}
+.pri>p{font-size:14px;font-weight:700;margin-bottom:12px}
+.pri .pc2{display:flex;gap:10px;flex-wrap:wrap}
+.pri .pchip2{border:1px solid var(--ink);padding:10px 16px;font-size:13.5px;font-weight:700;border-radius:999px;background:#fff;transition:all .25s var(--ease)}
+.pri .pchip2.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.pri .note{font-size:12px;color:var(--ink-45);margin-top:10px;line-height:1.7}
+.route-cta{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.route-cta .a{background:var(--brand);color:#fff;padding:13px 24px;font-weight:700;font-size:13.5px;border-radius:3px}
+.route-cta .b2{border:1px solid var(--ink);padding:13px 24px;font-weight:700;font-size:13.5px;border-radius:3px;background:#fff}
+/* 影片風格對照（Tweaks，平常關著） */
+body.route-film .route{background:#061033;color:#fff}
+body.route-film .rclose{background:#061033;color:#fff;border-color:#2b3a66}
+body.route-film .route-h h2,body.route-film .sig .s p,body.route-film .pri>p{color:#fff}
+body.route-film .route-h .qsub,body.route-film .sig .s p span:last-child{color:#9fb0d8}
+body.route-film .sig .s{border-top-color:#23325e}
+body.route-film .sig .bar{background:#23325e}
+body.route-film .sig .bar i,body.route-film .rmap .ln{stroke:#3D8BFF;background:#3D8BFF;filter:drop-shadow(0 0 6px rgba(61,139,255,.9))}
+body.route-film .rmap .nd circle{fill:#0c1a45;stroke:#2b3a66}
+body.route-film .rmap .nd.c circle{stroke:#3D8BFF}
+body.route-film .rmap .nd text{fill:#fff}
+body.route-film .rmap .nd text.m{fill:#9fb0d8}
+body.route-film .rmap .nd text.t{fill:#8EC5FF}
+body.route-film .pri .pchip2{border-color:#6f86c4;color:#fff;background:transparent}
+body.route-film .pri .pchip2.on{background:#3D8BFF;border-color:#3D8BFF}
+body.route-film .route-cta .b2{background:transparent;color:#fff;border-color:#6f86c4}
 /* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
 .amb-frame{position:fixed;inset:0;pointer-events:none;z-index:150;border:2px solid var(--brand);opacity:0;transition:opacity .6s var(--ease)}
 body.amb-near .amb-frame{opacity:.9}
@@ -518,6 +579,18 @@ body.amb-on .jstrip.has{display:flex}
   </div>
 </div>
 
+<!-- 你的路線：使用者自己打開的視圖（永遠不自動展開） -->
+<div class="route" id="route">
+  <button class="rclose" id="routeClose">關閉 ✕</button>
+  <div class="route-in">
+    <div class="route-h"><p class="qstep">你的路線</p><h2>從你看過的車，整理出的方向</h2><p class="qsub" id="routeSub"></p></div>
+    <div class="sig" id="routeSig"></div>
+    <svg class="rmap" id="routeMap" viewBox="0 0 1000 500" aria-hidden="true"></svg>
+    <div class="pri"><p>你比較在意什麼？</p><div class="pc2" id="priChips"></div><p class="note">每一項都對應官網既有的分類欄位：輕一點＝碳纖維車架、要爬坡＝XC、要下坡＝越野玩樂與全避震、要省力＝電力輔助。選了會同時重排這張圖與清單。</p></div>
+    <div class="route-cta"><button class="a" id="routeGo">就照這個方向 →</button><button class="b2" id="routeDecide">幫我決定</button></div>
+  </div>
+</div>
+
 <div class="tray" id="tray">
   <div class="tray-in">
     <div class="slots" id="traySlots"></div>
@@ -544,6 +617,7 @@ body.amb-on .jstrip.has{display:flex}
 <div class="amb-tab" id="ambTab">
   <p id="ambText"></p>
   <button class="a" id="ambGo">幫我整理</button>
+  <button class="r" id="ambRoute">看整條路線</button>
   <button class="b" id="ambNo">先自己逛</button>
 </div>
 
@@ -556,6 +630,7 @@ body.amb-on .jstrip.has{display:flex}
   <div class="tw-row"><p>新增條件標記<small>隱藏篩選欄上的「新增」標籤，看它是否融入原有介面</small></p><div class="sw on" id="swFlag"></div></div>
   <div class="tw-row"><p>提案註解列<small>隱藏頂端的黑色說明條</small></p><div class="sw on" id="swAnn"></div></div>
   <div class="tw-row"><p>走近的時機<small>開：逛一陣子會來找你（來回看同一台、改條件沒定、停留夠久）。關：只在你主動找時出現</small></p><div class="sw on" id="swAmb"></div></div>
+  <div class="tw-row"><p>路線視圖影片風格<small>「你的路線」改成深藍發光的影片版，用來現場對照；平常關著</small></p><div class="sw" id="swFilm"></div></div>
   <div class="tw-row"><p>立刻走近<small>簡報用：不等觸發條件，直接示範走近的那一刻</small></p><button class="tw-go" id="twNear">走近</button></div>
   <button class="tw-close" id="twClose">關閉</button>
 </div>
@@ -684,6 +759,7 @@ const PRESETS = [
   {t:'爬坡想要有輔助',d:{terrain:'ebike',intent:'sport',budget:200000,height:172}}
 ];
 
+const P = {light:false,climb:false,down:false,ease:false};  /* 你比較在意什麼：只對應官網分面 */
 const S = {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,
            height:172,qi:0,touched:false,cmp:[],sort:'fit'};
 
@@ -718,6 +794,11 @@ function score(b){
     if (b.lo <= S.budget){ s += 3; why.push('budget'); }
     else if (b.lo > S.budget * 1.3) s -= 6;
   }
+  /* 你比較在意什麼：每一項都只讀官網分面 */
+  if (P.light && b.mat === 'composite-carbon'){ s += 2; why.push('light'); }
+  if (P.climb && b.best === 'xc'){ s += 2; why.push('climb'); }
+  if (P.down && b.best === 'trail'){ s += 2; why.push('down'); if (b.susp === 'full-suspension') s += 1; }
+  if (P.ease){ if (b.ebike){ s += 3; why.push('ease'); } }
   /* 車架單品無法對「描述騎乘的人」成立，官網也把它列在同一頁，所以留在清單裡但往後排 */
   if (S.touched && b.frameset) s -= 3;
   /* 童車尺寸不符：用官網自己標的適用身高／年齡，不是推估 */
@@ -731,6 +812,10 @@ function reason(b, why){
   if (why.includes('intent'))  bits.push('騎乘等級是<b>' + L_LVL[b.lvl] + '</b>');
   if (why.includes('budget'))  bits.push('起價落在預算內');
   if (why.includes('kidsoff')) bits.push('<b>但這是青少年車</b>，官網標示適用 ' + b.kids.label);
+  if (why.includes('light')) bits.push('你在意輕一點，它是<b>碳纖維車架</b>');
+  if (why.includes('climb')) bits.push('你要爬坡，官網把它歸在 <b>XC</b>');
+  if (why.includes('down'))  bits.push('你要下坡，官網把它歸在<b>越野玩樂</b>' + (b.susp === 'full-suspension' ? '且是全避震' : ''));
+  if (why.includes('ease'))  bits.push('你要省力，它有<b>電力輔助</b>');
   return bits.length ? bits.join('，') + '。' : '';
 }
 
@@ -948,6 +1033,7 @@ function renderPLP(){
   if (S.brake)   chip('煞車', L_BRAKE[S.brake],   () => { S.brake=null; renderPLP(); });
   if (S.post)    chip('座管', L_POST[S.post],     () => { S.post=null; renderPLP(); });
   if (S.touched) chip('身高', S.height + ' cm', () => openQuizAtHeight());
+  Object.keys(P).forEach(k => { if (P[k]) chip('在意', PRI_LABEL[k], () => { P[k] = false; renderPLP(); }); });
 
   const z = fitOf(S.height);
   $('fitSize').textContent = z.s;
@@ -1091,7 +1177,8 @@ function renderOvw(n){
     (S.sort === 'fit'
       ? '適合度的權重如下：' +
         '<div class="rule"><i>車款類別吻合 +4</i><i>騎乘等級吻合 +3</i><i>起價在預算內 +3</i><i>需要電輔而它有 +4</i>' +
-        '<i>需要電輔而它沒有 −3</i><i>已設條件但未指定電輔時 E-Bike −1</i><i>車架單品 −3</i><i>青少年車但身高超出官網標示 −5</i><i>起價超出預算 30% 以上 −6</i></div>' +
+        '<i>需要電輔而它沒有 −3</i><i>已設條件但未指定電輔時 E-Bike −1</i><i>車架單品 −3</i><i>青少年車但身高超出官網標示 −5</i><i>起價超出預算 30% 以上 −6</i>' +
+        '<i>在意輕一點：碳纖維 +2</i><i>要爬坡：XC +2</i><i>要下坡：越野玩樂 +2、全避震再 +1</i><i>要省力：電力輔助 +3</i></div>' +
         '同分時以起價由低到高排列；未設任何條件時全部同分，等同純價格排序。'
       : '此排序不套用任何適合度權重，與官網原有的兩個排序選項一致。') +
     '<div class="guard">車款、價格、車款類別、騎乘等級、避震、車架材質、輪徑、煞車、座管與適用年齡，全部取自 giant-bicycles.com/tw 登山車分類頁既有的產品分類欄位。系統只負責讀懂你的描述並套用這些既有欄位，不生成任何規格數字。</div>';
@@ -1099,6 +1186,7 @@ function renderOvw(n){
 
 $('clearAll').onclick = () => {
   Object.assign(S, {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,touched:false,cmp:[]});
+  Object.keys(P).forEach(k => P[k] = false);
   renderPLP();
 };
 
@@ -1197,7 +1285,7 @@ function jEngage(infer){
   clearTimeout(J._t); J.near = false; J.on = true;
   document.body.classList.remove('amb-near'); document.body.classList.add('amb-on');
   if (infer){ Object.assign(S, jInfer()); S.touched = true; S.sort = 'fit'; $('sortSel').value = 'fit'; }
-  J._flip = true; renderPLP();
+  jCanvas();
   $('ambText').innerHTML = infer ? '清單已依你看過的方向整理。條件都在左側，隨時可以改。' : '已依你的描述整理清單。條件都在左側，隨時可以改。';
 }
 function jExit(){ J.on = false; J.declinedAt = Date.now(); document.body.classList.remove('amb-on'); renderPLP(); }
@@ -1230,7 +1318,7 @@ function renderJStrip(){
     t.onclick = () => openPeek(b);
     el.appendChild(t);
   });
-  const n = document.createElement('span'); n.className = 'jn'; n.textContent = '清單依這條路線的方向排序'; el.appendChild(n);
+  const n = document.createElement('button'); n.className = 'jgo'; n.textContent = '看整條路線 →'; n.onclick = openRoute; el.appendChild(n);
 }
 /* 點開一台車：只列官網分類欄位，不生成規格 */
 function openPeek(b){
@@ -1258,6 +1346,139 @@ setInterval(jTick, 5000);
 /* Tweaks */
 $('swAmb').onclick = e => { e.currentTarget.classList.toggle('on'); J.auto = e.currentTarget.classList.contains('on'); if (!J.auto) jRetract(); };
 $('twNear').onclick = () => { $('tw').classList.remove('open'); $('twBtn').style.display = ''; jNear(true); };
+
+/* ---------- Canvas 轉場：商店自己重組的那 1.2 秒，之後落回標準版型 ---------- */
+function jCanvas(){
+  const g = $('pgrid');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !document.body.classList.contains('show-plp')){ J._flip = true; renderPLP(); return; }
+  document.body.classList.add('amb-canvas');
+  /* 1. 一條線穿過你看過的卡片（目前位置） */
+  const seen = []; J.seq.forEach(k => { if (!seen.includes(k)) seen.push(k); });
+  const pts = seen.map(k => g.querySelector('.pc[data-k="' + CSS.escape(k) + '"]')).filter(Boolean).map(n => {
+    const r = n.getBoundingClientRect(), gr = g.getBoundingClientRect();
+    return [r.left - gr.left + r.width/2, r.top - gr.top + r.height*0.42];
+  });
+  let svg = null;
+  if (pts.length >= 2){
+    svg = document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.setAttribute('class','jline');
+    const d = pts.map((p,i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const path = document.createElementNS('http://www.w3.org/2000/svg','path'); path.setAttribute('d', d);
+    svg.appendChild(path); g.appendChild(svg);
+    const len = path.getTotalLength(); path.style.strokeDasharray = len; path.style.strokeDashoffset = len;
+    path.style.transition = 'stroke-dashoffset .55s ' + getComputedStyle(document.documentElement).getPropertyValue('--ease');
+    void path.getBoundingClientRect(); path.style.strokeDashoffset = 0;
+  }
+  /* 2. 線畫完 → 卡片滑到新位置、線收掉、最合適的那台短暫描邊 */
+  setTimeout(() => {
+    J._flip = true; renderPLP();
+    if (svg){ svg.remove(); }
+    const lead = g.querySelector('.pc'); if (lead){ lead.classList.add('lead'); setTimeout(() => lead.classList.remove('lead'), 1400); }
+  }, pts.length >= 2 ? 620 : 120);
+  /* 3. 落回標準版型 */
+  setTimeout(() => document.body.classList.remove('amb-canvas'), 1300);
+}
+
+/* ---------- 你的路線：看過的車變成一張圖；越合適越靠近中央；在意什麼由你決定 ---------- */
+const PRI_LABEL = {light:'輕一點', climb:'要爬坡', down:'要下坡', ease:'要省力'};
+function jSeen(){ const seen = []; J.seq.forEach(k => { if (!seen.includes(k)) seen.push(k); }); return seen.map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean); }
+function jSignals(){
+  const seen = jSeen(), n = Math.max(1, seen.length);
+  const share = f => seen.filter(f).length / n;
+  const lvl = v => v >= .6 ? ['很明確', true] : v >= .3 ? ['有興趣', false] : ['還在看', false];
+  return [
+    {k:'light', label:'輕一點', v: share(b => b.mat === 'composite-carbon')},
+    {k:'climb', label:'要爬坡', v: share(b => b.best === 'xc')},
+    {k:'down',  label:'要下坡', v: share(b => b.best === 'trail')},
+    {k:'ease',  label:'要省力', v: share(b => b.ebike)}
+  ].map(x => Object.assign(x, { txt: P[x.k] ? '你選的' : lvl(x.v)[0], hot: P[x.k] || lvl(x.v)[1], w: P[x.k] ? 1 : x.v }));
+}
+function openRoute(){
+  $('route').classList.add('on'); window.scrollTo(0,0);
+  renderRoute();
+}
+function closeRoute(){ $('route').classList.remove('on'); }
+function renderRoute(){
+  const seen = jSeen();
+  $('routeSub').textContent = seen.length
+    ? '你看過 ' + seen.length + ' 台。越靠近中央的越接近你目前的條件，線依你的瀏覽順序串起。點任何一台可以再看一次；下面的選項會同時重排這張圖與清單。'
+    : '還沒有看過的車。回到清單點開幾台，這裡會把它們串成一條路線。';
+  /* 訊號 */
+  $('routeSig').innerHTML = jSignals().map(x =>
+    '<div class="s"><p><span>' + x.label + '</span><span class="' + (x.hot ? 'hot' : '') + '">' + x.txt + '</span></p><div class="bar"><i style="width:' + Math.round(x.w*100) + '%"></i></div></div>').join('');
+  /* 在意什麼 */
+  const pc = $('priChips'); pc.innerHTML = '';
+  Object.keys(PRI_LABEL).forEach(k => {
+    const b = document.createElement('button'); b.className = 'pchip2' + (P[k] ? ' on' : ''); b.textContent = PRI_LABEL[k];
+    b.onclick = () => { P[k] = !P[k]; S.touched = true; renderRoute(); J._flip = true; renderPLP(); };
+    pc.appendChild(b);
+  });
+  /* 圖：中央 = 目前最合適（排除車架單品）；其餘看過的依排名決定距離 */
+  const list = ranked().filter(b => !b.frameset);
+  const top = list[0];
+  const svg = $('routeMap');
+  const CX = 500, CY = 250;
+  const others = seen.filter(b => !top || keyOf(b) !== keyOf(top)).slice(-8);
+  const rankOf = b => Math.max(0, list.findIndex(x => keyOf(x) === keyOf(b)));
+  const pos = {};
+  if (top) pos[keyOf(top)] = [CX, CY];
+  others.forEach((b, i) => {
+    const r = Math.min(215, 125 + rankOf(b) * 14);
+    const a = -Math.PI/2 + (i / others.length) * Math.PI * 2 + 0.35;
+    pos[keyOf(b)] = [CX + Math.cos(a) * r * 1.9, CY + Math.sin(a) * r * 0.85];
+  });
+  /* 節點一次建立、之後只改 transform，讓重排會滑動 */
+  const ensure = (b) => {
+    const k = keyOf(b);
+    let gN = svg.querySelector('g[data-k="' + CSS.escape(k) + '"]');
+    if (!gN){
+      gN = document.createElementNS('http://www.w3.org/2000/svg','g'); gN.setAttribute('class','nd'); gN.dataset.k = k;
+      gN.innerHTML = '<circle r="34"></circle><image width="56" height="42" x="-28" y="-21" preserveAspectRatio="xMidYMid meet"></image><text class="t" y="-46"></text><text y="52"></text><text class="m" y="68"></text>';
+      gN.querySelector('image').setAttribute('href', ASSET[b.img]);
+      gN.onclick = () => openPeek(b);
+      svg.appendChild(gN);
+    }
+    return gN;
+  };
+  /* 線層放最底 */
+  let lines = svg.querySelector('g.lines');
+  if (!lines){ lines = document.createElementNS('http://www.w3.org/2000/svg','g'); lines.setAttribute('class','lines'); svg.insertBefore(lines, svg.firstChild); }
+  lines.innerHTML = '';
+  if (top) others.forEach(b => {
+    const p = pos[keyOf(b)];
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('class','ln');
+    l.setAttribute('x1', p[0]); l.setAttribute('y1', p[1]); l.setAttribute('x2', CX); l.setAttribute('y2', CY);
+    lines.appendChild(l);
+  });
+  const seqPts = seen.map(b => pos[keyOf(b)]).filter(Boolean);
+  if (seqPts.length >= 2){
+    const pl = document.createElementNS('http://www.w3.org/2000/svg','polyline'); pl.setAttribute('class','sq');
+    pl.setAttribute('points', seqPts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '));
+    lines.appendChild(pl);
+  }
+  /* 節點 */
+  const keep = new Set();
+  const place = (b, isTop) => {
+    const k = keyOf(b), gN = ensure(b), p = pos[k]; keep.add(k);
+    const v = J.views[k] || 0, r = isTop ? 46 : Math.min(42, 30 + v * 4);
+    gN.classList.toggle('c', !!isTop);
+    gN.querySelector('circle').setAttribute('r', r);
+    const im = gN.querySelector('image'), sz = r * 1.55; im.setAttribute('width', sz); im.setAttribute('height', sz * .75); im.setAttribute('x', -sz/2); im.setAttribute('y', -sz*.375);
+    gN.querySelector('text.t').textContent = isTop ? '目前最合適' : '';
+    gN.querySelector('text.t').setAttribute('y', -(r + 12));
+    gN.querySelectorAll('text')[1].textContent = b.n; gN.querySelectorAll('text')[1].setAttribute('y', r + 18);
+    gN.querySelector('text.m').textContent = (v > 1 ? '看了 ' + v + ' 次 · ' : '') + b.pr.replace(' - ', '–'); gN.querySelector('text.m').setAttribute('y', r + 34);
+    gN.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
+  };
+  if (top) place(top, true);
+  others.forEach(b => place(b, false));
+  svg.querySelectorAll('g.nd').forEach(n => { if (!keep.has(n.dataset.k)) n.remove(); });
+}
+$('routeClose').onclick = closeRoute;
+$('routeGo').onclick = () => { closeRoute(); if (!J.on) jEngage(true); else { J._flip = true; renderPLP(); } };
+$('routeDecide').onclick = () => { closeRoute(); if (!J.on) jEngage(true); setTimeout(openDecide, 300); };
+$('ambRoute').onclick = openRoute;
+$('swFilm').onclick = e => { e.currentTarget.classList.toggle('on'); document.body.classList.toggle('route-film'); };
 
 renderHome();
 renderPLP();
