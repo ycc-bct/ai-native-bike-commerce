@@ -309,6 +309,29 @@ body.ai-mode .ai-bubble{display:block}
 .sw.on{background:var(--brand)}
 .sw.on::after{transform:translateX(17px)}
 .tw-close{margin-top:16px;font-size:12px;color:#9A9A9C;text-decoration:underline}
+/* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
+.amb-frame{position:fixed;inset:0;pointer-events:none;z-index:150;border:2px solid var(--brand);opacity:0;transition:opacity .6s var(--ease)}
+body.amb-near .amb-frame{opacity:.9}
+body.amb-on .amb-frame{opacity:.4}
+.amb-tab{position:fixed;left:50%;bottom:0;transform:translate(-50%,115%);z-index:160;background:#fff;border:1px solid var(--line);border-bottom:0;border-top:3px solid var(--brand);padding:14px 16px 14px 22px;display:flex;gap:14px;align-items:center;width:max-content;max-width:min(760px,94vw);box-shadow:0 -10px 34px rgba(0,0,0,.08);transition:transform .6s var(--ease),bottom .3s var(--ease)}
+body.amb-near .amb-tab,body.amb-on .amb-tab{transform:translate(-50%,0)}
+body.has-tray .amb-tab{bottom:64px}
+.amb-tab p{font-size:13.5px;line-height:1.65;flex:1;min-width:0}
+.amb-tab .a{background:var(--brand);color:#fff;padding:10px 16px;font-weight:700;font-size:13px;border-radius:3px;white-space:nowrap}
+.amb-tab .b{border:1px solid var(--ink);background:#fff;padding:10px 14px;font-weight:700;font-size:13px;border-radius:3px;white-space:nowrap}
+body.amb-on .amb-tab .a{display:none}
+.jstrip{display:none;align-items:center;margin:0 0 14px;padding:12px 16px;border:1px solid var(--line);background:#fff}
+body.amb-on .jstrip.has{display:flex}
+.jstrip .jl{font-size:12px;font-weight:700;color:var(--ink-70);margin-right:16px;white-space:nowrap}
+.jstrip .jt{position:relative;width:64px;height:48px;border:1px solid var(--line);background:#fff;margin-right:24px;cursor:pointer;flex:none}
+.jstrip .jt img{width:100%;height:100%;object-fit:contain}
+.jstrip .jt::after{content:"";position:absolute;left:100%;top:50%;width:24px;height:2px;background:var(--brand)}
+.jstrip .jt:last-of-type::after{display:none}
+.jstrip .jt b{position:absolute;right:-7px;top:-7px;background:var(--brand);color:#fff;font-family:var(--num);font-size:10px;line-height:1;padding:3px 5px;border-radius:999px}
+.jstrip .jn{font-size:12px;color:var(--ink-45);margin-left:auto;white-space:nowrap}
+.pc{transition:transform .55s var(--ease),opacity .4s var(--ease)}
+.pc.flip{transition:none}
+.tw-go{background:#fff;color:#111;font-weight:700;font-size:12px;padding:7px 12px;border-radius:3px;flex:none;margin-top:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -455,6 +478,7 @@ body.ai-mode .ai-bubble{display:block}
           </select>
         </div>
       </div>
+      <div class="jstrip" id="jstrip"></div>
       <div class="chipbar" id="chipbar"></div>
       <details class="ovw" id="ovw"><summary>這份清單怎麼來的</summary><div class="ovw-b" id="ovwBody"></div></details>
       <div class="pgrid" id="pgrid"></div>
@@ -515,6 +539,14 @@ body.ai-mode .ai-bubble{display:block}
   嗨，我是 Mia！看完推薦還有問題嗎？想比較規格或問預算都可以跟我說 😊
 </div>
 
+<!-- 店員模式：走近時的外框與邊緣提示（不是對話泡泡、沒有角色） -->
+<div class="amb-frame" aria-hidden="true"></div>
+<div class="amb-tab" id="ambTab">
+  <p id="ambText"></p>
+  <button class="a" id="ambGo">幫我整理</button>
+  <button class="b" id="ambNo">先自己逛</button>
+</div>
+
 <button class="tw-btn" id="twBtn">TWEAKS</button>
 <div class="tw" id="tw">
   <h4>TWEAKS</h4>
@@ -523,6 +555,8 @@ body.ai-mode .ai-bubble{display:block}
   <div class="tw-row"><p>清單說明區塊<small>預設收起，關掉則完全不出現</small></p><div class="sw on" id="swOvw"></div></div>
   <div class="tw-row"><p>新增條件標記<small>隱藏篩選欄上的「新增」標籤，看它是否融入原有介面</small></p><div class="sw on" id="swFlag"></div></div>
   <div class="tw-row"><p>提案註解列<small>隱藏頂端的黑色說明條</small></p><div class="sw on" id="swAnn"></div></div>
+  <div class="tw-row"><p>走近的時機<small>開：逛一陣子會來找你（來回看同一台、改條件沒定、停留夠久）。關：只在你主動找時出現</small></p><div class="sw on" id="swAmb"></div></div>
+  <div class="tw-row"><p>立刻走近<small>簡報用：不等觸發條件，直接示範走近的那一刻</small></p><button class="tw-go" id="twNear">走近</button></div>
   <button class="tw-close" id="twClose">關閉</button>
 </div>
 
@@ -728,7 +762,7 @@ const mega = $('mega');
 $('navBikes').addEventListener('mouseenter', () => mega.classList.add('show'));
 document.querySelector('.gh').addEventListener('mouseleave', () => mega.classList.remove('show'));
 $('navBikes').addEventListener('click', () => mega.classList.toggle('show'));
-$('homeBtn').onclick = () => { document.body.classList.remove('show-plp'); window.scrollTo(0,0); };
+$('homeBtn').onclick = () => { document.body.classList.remove('show-plp'); window.scrollTo(0,0); jRetract(); };
 
 /* ---------- 情境問答 ---------- */
 function openQuiz(){ S.qi = 0; $('quiz').classList.add('on'); renderQ(); }
@@ -795,13 +829,17 @@ function fitOf(h){
   });
   return best;
 }
-function goPLP(){ document.body.classList.add('show-plp'); window.scrollTo(0,0); renderPLP(); }
+function goPLP(){
+  document.body.classList.add('show-plp'); window.scrollTo(0,0);
+  J.plpAt = Date.now();
+  if (S.touched && !J.on) jEngage(false); else renderPLP();
+}
 
 function railOpt(label, active, n, onclick){
   const b = document.createElement('button');
   b.className = 'fopt' + (active ? ' on' : '');
   b.innerHTML = '<span class="bx"></span>' + label + (n != null ? '<span class="n">(' + n + ')</span>' : '');
-  b.onclick = onclick;
+  b.onclick = () => { J.filterChanges++; onclick(); jTick(); };
   return b;
 }
 function countBy(key, val){ return BIKES.filter(b => Array.isArray(b[key]) ? b[key].includes(val) : b[key] === val).length; }
@@ -852,6 +890,7 @@ function card(b, withWhy){
   const why = withWhy ? reason(b, b.why) : '';
   const el = document.createElement('article');
   el.className = 'pc';
+  el.dataset.k = keyOf(b);
   const badges = [];
   if (b.y >= '2026') badges.push('<span class="tag new">NEW</span>');
   badges.push('<span class="tag year">' + b.y + ' 年式</span>');
@@ -868,6 +907,10 @@ function card(b, withWhy){
     '<span class="more">' + b.cta + '</span>' +
     '<button class="cmp' + (S.cmp.includes(b.n + b.y) ? ' on' : '') + '"><span class="bx"></span>加入比較</button>';
   el.querySelector('.cmp').onclick = () => toggleCmp(b.n + b.y);
+  /* 店員模式：停留 1.5 秒或點開算「看過」 */
+  ['.shot','h4','.more'].forEach(q => { el.querySelector(q).onclick = () => openPeek(b); });
+  let ht; el.addEventListener('mouseenter', () => { ht = setTimeout(() => jView(b, true), 1500); });
+  el.addEventListener('mouseleave', () => clearTimeout(ht));
   return el;
 }
 
@@ -913,8 +956,12 @@ function renderPLP(){
 
   const list = ranked();
   $('cnt').textContent = list.length;
-  const g = $('pgrid'); g.innerHTML = '';
+  const g = $('pgrid');
+  const before = {}; if (J._flip) g.querySelectorAll('.pc').forEach(n => { before[n.dataset.k] = n.getBoundingClientRect(); });
+  g.innerHTML = '';
   list.forEach(b => g.appendChild(card(b, S.sort === 'fit')));
+  if (J._flip){ J._flip = false; jFlip(g, before); }
+  renderJStrip();
   $('decideBtn').style.display = (S.touched && S.sort === 'fit' && list.length > 1) ? '' : 'none';
   renderOvw(list.length);
   renderTray();
@@ -928,6 +975,7 @@ $('sortSel').onchange = e => { S.sort = e.target.value; renderPLP(); };
 /* ---------- 比較 ---------- */
 function keyOf(b){ return b.n + b.y; }
 function toggleCmp(k){
+  J.cmpAt = Date.now();
   const i = S.cmp.indexOf(k);
   if (i >= 0) S.cmp.splice(i,1);
   else { if (S.cmp.length >= 3) S.cmp.shift(); S.cmp.push(k); }
@@ -936,6 +984,7 @@ function toggleCmp(k){
 function renderTray(){
   const t = $('tray'), slots = $('traySlots');
   t.classList.toggle('up', S.cmp.length > 0);
+  document.body.classList.toggle('has-tray', S.cmp.length > 0);
   slots.innerHTML = '';
   S.cmp.forEach(k => {
     const b = BIKES.find(x => keyOf(x) === k); if (!b) return;
@@ -1074,6 +1123,141 @@ $('swAnn').onclick = e => {
   document.body.style.paddingTop = on ? '33px' : '0';
   document.querySelector('.gh').style.top = on ? '33px' : '0';
 };
+
+/* ==================================================================
+   店員模式：背景理解瀏覽旅程，需要時才走近。
+   原則：沒有角色、沒有對話泡泡、不自稱；文案描述使用者做過的事。
+   兩條路都成立——你主動找（找車入口／問答／搜尋），或逛一陣子它來找你。
+   J 只活在記憶體，不寫 storage。
+================================================================== */
+const J = { t0:Date.now(), plpAt:0, views:{}, seq:[], filterChanges:0, cardOpens:0, cmpAt:0, scrollMax:0,
+            approaches:0, declinedAt:0, ignoredAt:0, near:false, on:false, auto:true, _flip:false, _t:null };
+const NEAR_MS = 12000;
+
+function jView(b, passive){
+  const k = keyOf(b);
+  if (passive && J.seq[J.seq.length-1] === k) return;      /* 同一張卡連續停留不重複計 */
+  J.views[k] = (J.views[k]||0) + 1;
+  J.seq.push(k); if (J.seq.length > 12) J.seq.shift();
+  if (!passive) J.cardOpens++;
+  jTick();
+}
+/* 只在使用者沒設的欄位上，用看過的車推斷方向（欄位值仍是官網分類） */
+function jInfer(){
+  const seen = J.seq.map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean);
+  if (!seen.length) return {};
+  const mode = arr => { const m = {}; arr.forEach(v => { if (v) m[v] = (m[v]||0)+1; }); return Object.keys(m).sort((a,c) => m[c]-m[a])[0]; };
+  const d = {};
+  if (!S.terrain){
+    const eb = seen.filter(b => b.ebike).length, best = mode(seen.map(b => b.best));
+    if (eb > seen.length/2) d.terrain = 'ebike'; else if (T_BEST[best]) d.terrain = best;
+  }
+  if (!S.intent) d.intent = mode(seen.map(b => b.lvl));
+  if (!S.budget){ const lo = seen.map(b => b.lo).sort((a,c) => a-c); d.budget = bucket(lo[Math.floor(lo.length/2)]); }
+  return d;
+}
+function jTop(){ return Object.keys(J.views).sort((a,c) => J.views[c]-J.views[a]).map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean); }
+/* 走近時的那句話：描述事實，主詞是使用者 */
+function jCopy(){
+  const top = jTop(), d = jInfer();
+  if (top.length >= 2 && J.views[keyOf(top[0])] >= 2) return '你來回看了 <b>' + top[0].n + '</b> 和 <b>' + top[1].n + '</b>——要把這幾台放在一起比嗎？';
+  if (top.length >= 1 && J.views[keyOf(top[0])] >= 2) return '你回來看了 <b>' + top[0].n + '</b> 第 ' + J.views[keyOf(top[0])] + ' 次——要依它的方向整理清單嗎？';
+  if (J.filterChanges >= 3 && !J.cardOpens) return '條件改了幾次還沒定——要先照你看過的方向整理一版嗎？';
+  if (S.cmp.length) return '比較清單裡有 ' + S.cmp.length + ' 台——要直接並排看規格嗎？';
+  if (d.terrain) return '你在' + T_LABEL[d.terrain] + '這類車上停了一陣子——要依這個方向整理清單嗎？';
+  return '逛了一陣子了——要把看過的車整理成一份清單嗎？';
+}
+function jShould(){
+  if (!J.auto || J.on || J.near) return false;
+  if (!document.body.classList.contains('show-plp')) return false;
+  const now = Date.now();
+  if (now - J.t0 < 30000) return false;                          /* 開店不推銷 */
+  if (J.approaches >= 2) return false;                            /* 一次造訪最多兩次 */
+  if (J.declinedAt && now - J.declinedAt < 180000) return false;  /* 被拒絕後三分鐘 */
+  if (J.ignoredAt && now - J.ignoredAt < 90000) return false;
+  const top = Math.max(0, ...Object.values(J.views));
+  if (top >= 2 || J.seq.length >= 4) return true;
+  if (J.filterChanges >= 3 && !J.cardOpens) return true;
+  if (S.cmp.length && J.cmpAt && now - J.cmpAt > 20000) return true;
+  if (J.plpAt && now - J.plpAt > 45000 && J.scrollMax >= 0.6) return true;
+  return false;
+}
+function jTick(){ if (jShould()) jNear(false); }
+function jNear(force){
+  if (J.on || (J.near && !force)) return;
+  if (!document.body.classList.contains('show-plp')) goPLP();
+  J.near = true; J.approaches++;
+  $('ambText').innerHTML = jCopy();
+  document.body.classList.add('amb-near');
+  clearTimeout(J._t);
+  J._t = setTimeout(() => { if (J.near && !J.on){ jRetract(); J.ignoredAt = Date.now(); } }, NEAR_MS);
+}
+function jRetract(){ J.near = false; document.body.classList.remove('amb-near'); clearTimeout(J._t); }
+function jEngage(infer){
+  clearTimeout(J._t); J.near = false; J.on = true;
+  document.body.classList.remove('amb-near'); document.body.classList.add('amb-on');
+  if (infer){ Object.assign(S, jInfer()); S.touched = true; S.sort = 'fit'; $('sortSel').value = 'fit'; }
+  J._flip = true; renderPLP();
+  $('ambText').innerHTML = infer ? '清單已依你看過的方向整理。條件都在左側，隨時可以改。' : '已依你的描述整理清單。條件都在左側，隨時可以改。';
+}
+function jExit(){ J.on = false; J.declinedAt = Date.now(); document.body.classList.remove('amb-on'); renderPLP(); }
+$('ambGo').onclick = () => jEngage(true);
+$('ambNo').onclick = () => { if (J.on) jExit(); else { J.declinedAt = Date.now(); jRetract(); } };
+
+/* 重排：FLIP，卡片從舊位置滑到新位置，新進卡片淡入 */
+function jFlip(g, before){
+  const cards = [...g.querySelectorAll('.pc')];
+  cards.forEach(n => {
+    const a = n.getBoundingClientRect(), b = before[n.dataset.k];
+    if (b){ const dx = b.left - a.left, dy = b.top - a.top; if (dx || dy){ n.classList.add('flip'); n.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'; } }
+    else { n.classList.add('flip'); n.style.opacity = '0'; }
+  });
+  void g.offsetWidth;
+  requestAnimationFrame(() => cards.forEach(n => { n.classList.remove('flip'); n.style.transform = ''; n.style.opacity = ''; }));
+}
+/* 你看過的：縮圖用一條品牌色細線串起，順序即瀏覽順序 */
+function renderJStrip(){
+  const el = $('jstrip');
+  const seen = []; J.seq.forEach(k => { if (!seen.includes(k)) seen.push(k); });
+  const list = seen.slice(-6).map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean);
+  el.classList.toggle('has', list.length > 0);
+  el.innerHTML = '';
+  if (!list.length) return;
+  const l = document.createElement('span'); l.className = 'jl'; l.textContent = '你看過的'; el.appendChild(l);
+  list.forEach(b => {
+    const t = document.createElement('span'); t.className = 'jt'; t.title = b.n;
+    t.innerHTML = '<img src="' + ASSET[b.img] + '" alt="' + b.n + '">' + (J.views[keyOf(b)] > 1 ? '<b>×' + J.views[keyOf(b)] + '</b>' : '');
+    t.onclick = () => openPeek(b);
+    el.appendChild(t);
+  });
+  const n = document.createElement('span'); n.className = 'jn'; n.textContent = '清單依這條路線的方向排序'; el.appendChild(n);
+}
+/* 點開一台車：只列官網分類欄位，不生成規格 */
+function openPeek(b){
+  jView(b, false);
+  const sp = [L_BEST[b.best], L_LVL[b.lvl], L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(w => w.replace('-','.') + '"').join(' / ')].filter(Boolean);
+  $('modalBody').innerHTML =
+    '<div class="pick"><div class="sh"><img src="' + ASSET[b.img] + '" alt=""></div><div>' +
+    '<h4>' + b.n + ' <small style="font-weight:400;font-size:14px;color:var(--ink-45)">' + b.y + ' 年式</small></h4>' +
+    '<p class="pz">' + b.pr + '</p>' +
+    '<div class="sp" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">' + sp.map(x => '<i style="font-style:normal;font-size:12px;border:1px solid var(--line);padding:4px 9px">' + x + '</i>').join('') + '</div>' +
+    (b.kids ? '<p style="font-size:13px;color:var(--ink-70)">官網標示適用 ' + b.kids.label + '</p>' : '') +
+    '<p style="font-size:13px;color:var(--ink-70);line-height:1.8;margin-top:8px">完整規格、幾何與 Size Guide 以官網產品頁為準；這裡只列官網分類欄位。</p>' +
+    '<div class="pick-cta"><button class="a">預約試乘</button><button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button></div>' +
+    '</div></div>';
+  $('modal').classList.add('on');
+  $('peekCmp').onclick = () => { toggleCmp(keyOf(b)); $('modal').classList.remove('on'); };
+}
+/* 停留與捲動 */
+window.addEventListener('scroll', () => {
+  if (!document.body.classList.contains('show-plp')) return;
+  const h = document.documentElement, d = h.scrollHeight - h.clientHeight;
+  if (d > 0) J.scrollMax = Math.max(J.scrollMax, h.scrollTop / d);
+}, { passive:true });
+setInterval(jTick, 5000);
+/* Tweaks */
+$('swAmb').onclick = e => { e.currentTarget.classList.toggle('on'); J.auto = e.currentTarget.classList.contains('on'); if (!J.auto) jRetract(); };
+$('twNear').onclick = () => { $('tw').classList.remove('open'); $('twBtn').style.display = ''; jNear(true); };
 
 renderHome();
 renderPLP();
