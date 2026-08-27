@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+     fill="none" stroke="currentColor" stroke-width="1.33333"
+     stroke-linecap="round" stroke-linejoin="round">
+  <title>新車上市（方形版）</title>
+  <rect x="0.9" y="3.7" width="14.2" height="8.6" rx="1.5"/>
+  <text x="8" y="8.2" text-anchor="middle" dominant-baseline="central"
+        font-family="Open Sans, system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="5.4" font-weight="800" letter-spacing="-0.15"
+        fill="currentColor" stroke="none">NEW</text>
+</svg>

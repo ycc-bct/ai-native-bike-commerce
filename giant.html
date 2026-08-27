@@ -74,10 +74,10 @@ body.show-plp .plp{display:block}
 
 /* ---------- 新增模組 1：找車入口 ---------- */
 .finder{border-bottom:1px solid var(--line-2);background:var(--grey)}
-.finder-in{width:var(--shell);margin:0 auto;padding:56px 0 60px;display:grid;grid-template-columns:.86fr 1.14fr;gap:56px;align-items:center}
-.finder h2{font-size:31px;letter-spacing:-.01em}
+.finder-in{margin:0 34px;padding:64px 0;text-align:center}
+.finder h2{font-size:clamp(30px,3.6vw,42px);letter-spacing:-.02em}
 .finder h2 em{display:block;font-family:var(--num);font-style:normal;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-45);margin-top:11px}
-.finder .lead{font-size:14px;color:var(--ink-70);line-height:1.95;margin-top:16px;max-width:44ch}
+.finder .lead{font-size:15px;color:var(--ink-70);line-height:2;margin-top:18px}
 .f-field{display:flex;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
 .f-field:focus-within{border-color:var(--brand)}
 .f-field input{flex:1;border:0;outline:0;padding:17px 20px;font-size:15px;font-family:inherit;color:var(--ink);background:transparent}
@@ -88,7 +88,11 @@ body.show-plp .plp{display:block}
 .f-chip:hover{border-color:var(--brand);color:var(--brand)}
 .f-alt{margin-top:17px;font-size:13px;color:var(--ink-45)}
 .f-alt button{text-decoration:underline;font-weight:600;color:var(--ink)}
-@media(max-width:980px){.finder-in{grid-template-columns:1fr;gap:30px;padding:42px 0}}
+.trig{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;padding:0 24px;height:48px;font-size:13.5px;font-weight:700;border-radius:3px;transition:background .2s}
+.trig:hover{background:#1A18A7}
+.trig.big{padding:0 34px;font-size:16px}
+.trig .dotm{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex:none}
+.trig:focus-visible{outline:3px solid rgba(6,3,141,.3);outline-offset:3px}
 
 /* ---------- 商品列（官網版型） ---------- */
 .sec{width:var(--shell);margin:0 auto;padding:60px 0}
@@ -100,8 +104,10 @@ body.show-plp .plp{display:block}
 @media(max-width:1100px){.pgrid,.pgrid.row4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.pgrid,.pgrid.row4{grid-template-columns:1fr}}
 .pc{border:1px solid var(--line-2);margin:-.5px;padding:22px 22px 26px;background:#fff;position:relative;display:flex;flex-direction:column;transition:box-shadow .3s var(--ease)}
+/* 適合度排序、且已設條件時，排第一的那台給一層淡藍底——只是視線落點，不加任何標籤文字 */
+.pc.best{background:linear-gradient(180deg,rgba(6,3,141,.075) 0%,rgba(6,3,141,.028) 46%,rgba(6,3,141,0) 78%),#fff}
 .pc:hover{box-shadow:0 10px 34px rgba(0,0,0,.09);z-index:2}
-.pc .shot{aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fff}
+.pc .shot{aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .pc .shot img{width:100%;height:100%;object-fit:contain;transition:transform .6s var(--ease)}
 .pc:hover .shot img{transform:scale(1.045)}
 .pc .badges{display:flex;gap:6px;min-height:19px;margin-bottom:6px;flex-wrap:wrap}
@@ -262,16 +268,38 @@ body.no-ovw .ovw{display:none}
 .slot button{color:#9A9A9C}
 .tray .hint{font-size:12.5px;color:#9A9A9C}
 .tray .clr{margin-left:auto;font-size:12.5px;color:#9A9A9C;text-decoration:underline}
-.modal{position:fixed;inset:0;background:rgba(15,16,20,.62);z-index:420;display:none;overflow-y:auto;padding:5vh 16px}
+.modal{position:fixed;inset:0;background:rgba(15,16,20,.62);z-index:620;display:none;overflow-y:auto;padding:5vh 16px}
 .modal.on{display:block}
-.modal-box{background:#fff;width:min(940px,100%);margin:0 auto;padding:38px 40px 42px;position:relative}
+.modal-box{background:#fff;width:min(940px,100%);margin:0 auto;padding:38px 40px 42px;position:relative;overflow-x:auto}
 .modal-x{position:absolute;right:22px;top:20px;font-size:17px}
 .modal h3{font-size:22px}
 .modal .sub{font-size:13px;color:var(--ink-45);margin:9px 0 24px;line-height:1.85}
-.ctab{width:100%;border-collapse:collapse;font-size:13px}
+.bike-picker-search{position:sticky;top:-38px;z-index:2;background:#fff;padding:12px 0 16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.bike-picker-search label{display:block;font-size:12px;font-weight:700;margin-bottom:8px;color:var(--ink-70)}
+.bike-picker-search input{width:100%;height:48px;border:1px solid var(--ink-45);padding:0 15px;font:14px var(--sans);outline:0}
+.bike-picker-search input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(6,3,141,.14)}
+.bike-picker-count{font-size:11.5px;color:var(--ink-45);margin-top:8px}
+.bike-picker-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bike-picker-card{border:1px solid var(--line);padding:14px;display:flex;flex-direction:column;min-width:0;background:#fff;transition:border-color .2s,box-shadow .2s}
+.bike-picker-card:hover{border-color:rgba(6,3,141,.55);box-shadow:0 5px 18px rgba(20,24,48,.08)}
+.bike-picker-card img{width:100%;height:112px;object-fit:contain;background:#FAFAFA;margin-bottom:12px}
+.bike-picker-card h4{font-size:14.5px;line-height:1.35}
+.bike-picker-card .meta{font-size:11px;color:var(--ink-45);margin:4px 0 12px;line-height:1.55}
+.bike-picker-card .price{font-family:var(--num);font-size:13px;font-weight:700;color:var(--ink-70);margin-bottom:12px}
+.bike-picker-card button{margin-top:auto;min-height:44px;background:var(--brand);color:#fff;font-size:12px;font-weight:700;padding:9px 12px;text-align:center}
+.bike-picker-card button:hover{background:#1A18A7}
+.bike-picker-card button:focus-visible{outline:3px solid rgba(6,3,141,.25);outline-offset:2px}
+.bike-picker-empty{grid-column:1/-1;padding:46px 20px;text-align:center;background:var(--grey);color:var(--ink-70);font-size:13px}
+@media(max-width:760px){.bike-picker-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ctab{width:100%;min-width:680px;border-collapse:collapse;font-size:13px}
 .ctab th,.ctab td{border:1px solid var(--line-2);padding:12px 13px;text-align:left;vertical-align:top}
 .ctab thead th{background:var(--grey)}
 .ctab th.nm{font-size:14.5px}
+.ctab .cmp-product{position:relative;min-height:190px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding-top:28px}
+.ctab .cmp-product img{width:100%;height:120px;object-fit:contain;margin-bottom:10px;background:#fff}
+.ctab .cmp-product b{font-size:15px;color:var(--ink)}
+.ctab .cmp-product small{font-size:11px;font-weight:400;color:var(--ink-45);margin-top:2px}
+.ctab .cmp-rec{position:absolute;left:0;top:0;background:var(--brand);color:#fff;border-radius:999px;padding:4px 9px;font-size:10.5px;font-weight:700;letter-spacing:.02em}
 .ctab tbody th{background:#FAFAFA;font-weight:600;color:var(--ink-70);white-space:nowrap}
 .pick{display:grid;grid-template-columns:.85fr 1.15fr;gap:30px;align-items:start}
 @media(max-width:720px){.pick{grid-template-columns:1fr}}
@@ -314,7 +342,6 @@ body.ai-mode .ai-bubble{display:block}
 .plp .cathero::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .5s var(--ease);pointer-events:none}
 body.amb-canvas .plp .cathero::after{opacity:.35}
 body.amb-canvas .pc{transform:scale(1.02) translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.12)}
-.pc.lead{outline:2px solid var(--brand);outline-offset:-2px;transition:outline-color .6s var(--ease)}
 .jline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;opacity:1;transition:opacity .5s var(--ease)}
 .jline path{fill:none;stroke:var(--brand);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .jline.out{opacity:0}
@@ -325,26 +352,111 @@ body.amb-on .amb-tab .r{display:inline}
 .route{position:fixed;inset:0;z-index:185;background:#fff;overflow:auto;display:none;color:var(--ink)}
 .route.on{display:block}
 .rclose{position:fixed;right:28px;top:calc(var(--hd) + 16px);z-index:2;background:#fff;border:1px solid var(--line);padding:9px 14px;font-size:12.5px;font-weight:700}
-.route-in{width:min(1100px,92vw);margin:0 auto;padding:calc(var(--hd) + 40px) 0 60px}
+.route-in{width:min(1240px,92vw);margin:0 auto;padding:calc(var(--hd) + 40px) 0 60px}
 .route-h .qstep{font-family:var(--num);font-size:11.5px;letter-spacing:.18em;color:var(--brand);font-weight:700;margin-bottom:10px}
 .route-h h2{font-size:30px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
 .route-h .qsub{font-size:14px;color:var(--ink-70);line-height:1.8;max-width:640px}
-.sig{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:28px 0 10px}
-.sig .s{border-top:2px solid var(--line);padding-top:10px}
+.route-main{display:grid;grid-template-columns:minmax(360px,.78fr) minmax(0,1.22fr);gap:38px;align-items:start;margin:30px 0 28px}
+.route-pref{min-width:0}
+.sig-q{margin-top:0}
+.sig-q h3{font-size:17px;margin-bottom:4px}
+.sig-q p{font-size:12.5px;color:var(--ink-70)}
+.sig{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0 10px}
+.sig .s{border:1px solid var(--line);border-top:3px solid var(--line);padding:15px 16px 16px;text-align:left;min-height:118px;background:#fff;transition:border-color .22s,background .22s,color .22s}
+.sig .s:hover{border-color:var(--brand)}
+.sig .s.on{border-color:var(--brand);border-top-color:var(--brand);background:#F4F4FF}
+.sig .s:focus-visible{outline:3px solid rgba(6,3,141,.3);outline-offset:3px}
 .sig .s p{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
-.sig .s p span:last-child{font-weight:400;color:var(--ink-70)}
+.sig .s p span:last-child{font-size:11px;font-weight:600;color:var(--ink-45)}
 .sig .s p span:last-child.hot{color:var(--brand);font-weight:700}
-.sig .bar{height:3px;background:var(--line-2);margin-top:9px;overflow:hidden}
-.sig .bar i{display:block;height:100%;background:var(--brand);transition:width .7s var(--ease)}
-.rmap{width:100%;height:auto;display:block;margin:6px 0 14px}
-.rmap .ln{stroke:var(--brand);stroke-width:1.5;fill:none;transition:all .7s var(--ease)}
-.rmap .sq{stroke:var(--brand);stroke-width:1.2;stroke-dasharray:3 5;fill:none;opacity:.55}
+.sig .s small{display:block;font-size:11.5px;color:var(--ink-70);font-weight:400;line-height:1.65;margin-top:17px}
+.route-map-panel{border-left:1px solid var(--line);padding-left:34px;min-width:0}
+.route-map-h{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:2px}
+.route-map-h h3{font-size:17px}
+.route-map-h p{font-size:11.5px;color:var(--ink-45);max-width:310px;text-align:right}
+.route-pick{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:14px 0 2px}
+.route-pick>span{font-size:11.5px;font-weight:700;color:var(--ink-70);margin-right:3px}
+.route-pick button{min-height:38px;border:1px solid var(--line);background:#fff;padding:7px 11px;font-size:11.5px;font-weight:700;transition:border-color .2s,background .2s,color .2s}
+.route-pick button:hover{border-color:var(--brand);color:var(--brand)}
+.route-pick button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.route-pick button.clear{border:0;color:var(--ink-45);text-decoration:underline;text-underline-offset:3px;font-weight:400}
+.route-pick button.add{border-style:dashed;color:var(--brand);background:#fff;min-height:44px}
+.route-pick button.add:hover{background:#F4F4FF}
+.route-pick button:focus-visible{outline:3px solid rgba(6,3,141,.25);outline-offset:2px}
+.rmap{width:100%;height:auto;display:block;margin:0}
+.rmap .ln{stroke:var(--brand);stroke-width:2.1;fill:none;transition:all .7s var(--ease)}
+.rmap .sq{stroke:var(--brand);stroke-width:1.7;stroke-dasharray:4 6;fill:none;opacity:.55}
 .rmap .nd{transition:transform .7s var(--ease);cursor:pointer}
 .rmap .nd circle{fill:#fff;stroke:var(--line);stroke-width:1.5;transition:all .7s var(--ease)}
 .rmap .nd.c circle{stroke:var(--brand);stroke-width:2}
-.rmap .nd text{font-family:var(--sans);font-size:12px;fill:var(--ink);text-anchor:middle}
-.rmap .nd text.m{font-family:var(--num);font-size:11px;fill:var(--ink-70)}
-.rmap .nd text.t{fill:var(--brand);font-weight:700}
+.rmap .nd.picked circle{fill:#F4F4FF;stroke:var(--brand);stroke-width:3}
+.rmap .nd.added:not(.picked) circle{stroke:#0965AF;stroke-width:2;stroke-dasharray:3 2}
+.rmap .nd text{font-family:var(--sans);font-size:15px;fill:var(--ink);text-anchor:middle}
+.rmap .nd text.m{font-family:var(--num);font-size:13.5px;fill:var(--ink-70);font-weight:600}
+.rmap .nd text.t{font-size:13.5px;fill:var(--brand);font-weight:700}
+.route-next{border-top:1px solid var(--line);padding-top:28px;margin:10px 0 32px}
+.route-next-h{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+.route-next-h h3{font-size:21px}
+.route-next-h p{font-size:12px;color:var(--ink-45)}
+.route-tools{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:14px}
+.route-tool{border:1px solid var(--line);padding:20px;background:#fff;min-width:0}
+.route-tool .eyebrow{font-family:var(--num);font-size:10.5px;letter-spacing:.14em;color:var(--brand);font-weight:700;margin-bottom:8px}
+.route-tool h4{font-size:17px;margin-bottom:8px}
+.route-tool .desc{font-size:12.5px;color:var(--ink-70);line-height:1.75}
+.route-minis{display:flex;margin:15px 0 14px}
+.route-mini{width:72px;height:54px;border:1px solid var(--line-2);background:#fff;margin-right:-8px;position:relative}
+.route-mini img{width:100%;height:100%;object-fit:contain}
+.route-minis .route-mini.primary{border:2px solid var(--brand);z-index:4}
+.route-mini.primary::after{content:'你的選擇';position:absolute;left:-2px;top:-18px;background:var(--brand);color:#fff;padding:2px 5px;font-size:8.5px;font-weight:700;white-space:nowrap}
+.route-mini:first-child{z-index:3}.route-mini:nth-child(2){z-index:2}.route-mini:nth-child(3){z-index:1}
+.route-action{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:14px;padding:10px 15px;border:1px solid var(--ink);font-size:12.5px;font-weight:700;transition:color .2s,background .2s,border-color .2s}
+.route-action.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.route-action:hover{border-color:var(--brand);color:var(--brand)}
+.route-action.primary:hover{background:#1915ad;color:#fff}
+.route-action:focus-visible,.route-question:focus-visible{outline:3px solid rgba(6,3,141,.3);outline-offset:3px}
+.review-line{display:flex;align-items:baseline;gap:8px;margin:14px 0 8px}
+.review-line strong{font-family:var(--num);font-size:25px;color:var(--ink)}
+.review-line span{font-size:11.5px;color:var(--ink-45)}
+.review-tags{display:flex;gap:6px;flex-wrap:wrap}
+.review-tags span{font-size:11.5px;border:1px solid var(--line);padding:4px 7px;background:var(--grey)}
+/* 車主怎麼說：一則一則的評價卡，兩欄排列 */
+.rv-head{display:flex;align-items:baseline;gap:7px;margin:12px 0 20px}
+.rv-head strong{font-family:var(--num);font-size:22px;color:var(--ink);font-weight:700}
+.rv-head span{font-size:12px;color:var(--ink-45)}
+.rv-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px 40px}
+.rv-grid .rv.extra{display:none}
+.rv-grid.all .rv.extra{display:block}
+.rv-who{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.rv-av{width:40px;height:40px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(6,3,141,.07);color:var(--brand);font-size:15px;font-weight:700}
+.rv-who b{display:block;font-size:14px;line-height:1.3}
+.rv-who i{display:block;font-style:normal;font-size:12.5px;color:var(--ink-45);margin-top:2px}
+.rv-meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-45);margin-bottom:7px}
+.rv-star{color:var(--ink);font-size:10px;letter-spacing:1px}
+.rv-body{font-size:13.5px;line-height:1.85;color:var(--ink)}
+.rv-more{margin-top:26px;height:48px;padding:0 22px;border-radius:3px;border:1px solid var(--ink);background:#fff;font-size:13.5px;font-weight:700;color:var(--ink)}
+.rv-more:hover{background:var(--ink);color:#fff}
+@media(max-width:760px){.rv-grid{grid-template-columns:1fr;gap:26px}}
+.route-questions{display:grid;gap:7px;margin-top:13px}
+.route-question{width:100%;min-height:44px;border-top:1px solid var(--line-2);padding:10px 2px;text-align:left;font-size:12.5px;font-weight:600;display:flex;justify-content:space-between;gap:12px;transition:color .2s}
+.route-question::after{content:'\2192';color:var(--brand)}
+.route-question:hover{color:var(--brand)}
+.proto{display:inline-block;font-size:10px;font-weight:700;color:var(--ink-45);border:1px solid var(--line);padding:2px 6px;margin-left:5px;vertical-align:2px}
+.review-modal-top{display:grid;grid-template-columns:170px 1fr;gap:24px;align-items:center;padding:20px;background:var(--grey);margin-bottom:18px}
+.review-modal-top img{width:100%;height:110px;object-fit:contain;background:#fff}
+.review-modal-top .score{font-family:var(--num);font-size:30px;font-weight:700}
+.review-modal-top p{font-size:12.5px;color:var(--ink-70);line-height:1.7}
+.review-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.review-card{border:1px solid var(--line);padding:17px}
+.review-card .meta{font-size:11px;color:var(--ink-45);margin-bottom:9px}
+.review-card h4{font-size:14px;margin-bottom:7px}
+.review-card p{font-size:12.5px;color:var(--ink-70);line-height:1.75}
+.peek-sec{border-top:1px solid var(--line);margin-top:24px;padding-top:20px}.peek-sec h5{font-size:15px;margin-bottom:6px}.peek-sec .peek-note{font-size:12.5px;color:var(--ink-70);line-height:1.8;margin-bottom:10px}.peek-sec .peek-note b{color:var(--ink)}.answer-box{border-left:3px solid var(--brand);background:var(--grey);padding:19px 21px;font-size:13.5px;line-height:1.9;color:var(--ink-70)}
+.answer-box b{color:var(--ink)}
+.answer-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.answer-choice{border:1px solid var(--line);padding:14px;font-size:12.5px;line-height:1.7}
+.answer-choice b{display:block;font-size:13px;margin-bottom:3px}
+@media(max-width:860px){.route-tools{grid-template-columns:1fr}.review-list,.answer-choices{grid-template-columns:1fr}.route-tool{padding:18px}.rmap{margin-top:18px}.sig{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.route-next-h{display:block}.route-next-h p{margin-top:5px}.review-modal-top{grid-template-columns:1fr}.route-in{width:90vw}.route-h h2{font-size:25px}.sig{grid-template-columns:1fr 1fr;gap:12px}.route-next{margin-top:0}}
 .pri{border-top:1px solid var(--line);padding-top:22px;margin-top:8px}
 .pri>p{font-size:14px;font-weight:700;margin-bottom:12px}
 .pri .pc2{display:flex;gap:10px;flex-wrap:wrap}
@@ -357,24 +469,212 @@ body.amb-on .amb-tab .r{display:inline}
 /* 影片風格對照（Tweaks，平常關著） */
 body.route-film .route{background:#061033;color:#fff}
 body.route-film .rclose{background:#061033;color:#fff;border-color:#2b3a66}
-body.route-film .route-h h2,body.route-film .sig .s p,body.route-film .pri>p{color:#fff}
-body.route-film .route-h .qsub,body.route-film .sig .s p span:last-child{color:#9fb0d8}
-body.route-film .sig .s{border-top-color:#23325e}
-body.route-film .sig .bar{background:#23325e}
-body.route-film .sig .bar i,body.route-film .rmap .ln{stroke:#3D8BFF;background:#3D8BFF;filter:drop-shadow(0 0 6px rgba(61,139,255,.9))}
+body.route-film .route-h h2,body.route-film .sig-q h3,body.route-film .sig .s p,body.route-film .pri>p{color:#fff}
+body.route-film .route-h .qsub,body.route-film .sig-q p,body.route-film .sig .s p span:last-child,body.route-film .sig .s small{color:#9fb0d8}
+body.route-film .sig .s{background:#0c1a45;border-color:#2b3a66}
+body.route-film .sig .s.on{background:#10265f;border-color:#3D8BFF}
+body.route-film .rmap .ln{stroke:#3D8BFF;filter:drop-shadow(0 0 6px rgba(61,139,255,.9))}
 body.route-film .rmap .nd circle{fill:#0c1a45;stroke:#2b3a66}
 body.route-film .rmap .nd.c circle{stroke:#3D8BFF}
 body.route-film .rmap .nd text{fill:#fff}
 body.route-film .rmap .nd text.m{fill:#9fb0d8}
 body.route-film .rmap .nd text.t{fill:#8EC5FF}
+body.route-film .route-next{border-top-color:#23325e}
+body.route-film .route-map-panel{border-left-color:#23325e}
+body.route-film .route-map-h h3{color:#fff}
+body.route-film .route-map-h p{color:#9fb0d8}
+body.route-film .route-pick>span{color:#9fb0d8}
+body.route-film .route-pick button{background:#0c1a45;border-color:#2b3a66;color:#fff}
+body.route-film .route-pick button.on{background:#3D8BFF;border-color:#3D8BFF}
+body.route-film .route-next-h p,body.route-film .route-tool .desc,body.route-film .review-line span{color:#9fb0d8}
+body.route-film .route-tool{background:#0c1a45;border-color:#2b3a66}
+body.route-film .route-tool .eyebrow,body.route-film .route-question::after{color:#8EC5FF}
+body.route-film .route-mini,body.route-film .review-tags span,body.route-film .route-question{border-color:#2b3a66}
+body.route-film .review-line strong{color:#fff}
+body.route-film .review-tags span{background:#10204e}
+body.route-film .route-action{color:#fff;border-color:#6f86c4}
+body.route-film .route-action.primary{background:#3D8BFF;border-color:#3D8BFF}
 body.route-film .pri .pchip2{border-color:#6f86c4;color:#fff;background:transparent}
 body.route-film .pri .pchip2.on{background:#3D8BFF;border-color:#3D8BFF}
 body.route-film .route-cta .b2{background:transparent;color:#fff;border-color:#6f86c4}
+/* ---------- 全版面沉浸式導購 ---------- */
+.guide{position:fixed;inset:0;z-index:500;background:#F5F6F8;display:none;grid-template-columns:minmax(0,1fr) 390px;color:var(--ink)}
+.guide.on{display:grid}
+.guide-canvas{min-width:0;padding:30px 40px 34px;overflow:hidden;display:flex;flex-direction:column}
+.guide-top{display:flex;align-items:center;justify-content:space-between;gap:24px;flex:none}
+.guide-brand{display:flex;align-items:center;gap:13px;color:var(--brand)}
+.guide-brand svg{width:118px;height:auto}
+.guide-brand span{font-size:11px;letter-spacing:.16em;font-weight:700;border-left:1px solid var(--line);padding-left:13px}
+.guide-exit{border:1px solid var(--line);background:#fff;min-height:42px;padding:8px 15px;font-size:12.5px;font-weight:700}
+.guide-head{margin:38px 0 14px;display:flex;align-items:end;justify-content:space-between;gap:20px;flex:none}
+.guide-head .step{font-family:var(--num);font-size:11px;letter-spacing:.15em;color:var(--brand);font-weight:700;margin-bottom:7px}
+.guide-head h2{font-size:30px;letter-spacing:-.02em}
+.guide-head .guide-summary{font-size:12.5px;color:var(--ink-70);max-width:390px;text-align:right;line-height:1.7}
+.guide-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative}
+.guide-stage::before{content:"";position:absolute;left:7%;right:7%;top:50%;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.guide-bikes{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:center;position:relative;z-index:1}
+.guide-bikes.single{grid-template-columns:minmax(0,420px);justify-content:center}
+.guide-bike{background:#fff;border:1px solid var(--line);padding:18px;min-width:0;transition:opacity .35s var(--ease),transform .55s var(--ease),border-color .25s,box-shadow .25s}
+.guide-bike.featured{border:2px solid var(--brand);transform:translateY(-15px);box-shadow:0 20px 50px rgba(6,3,141,.12)}
+.guide-bike.dim{opacity:.32;transform:scale(.96)}
+.guide-bike .gwhy{font-size:10.5px;color:var(--brand);font-weight:700;letter-spacing:.08em;min-height:17px}
+.guide-bike .gshot{height:150px;margin:10px 0 8px;display:flex;align-items:center;justify-content:center}
+.guide-bike .gshot img{width:100%;height:100%;object-fit:contain}
+.guide-bike h3{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.guide-bike .gprice{font-family:var(--num);font-size:15px;color:var(--ink-70);font-weight:700;margin:4px 0 11px}
+.guide-bike .gspec{display:flex;gap:5px;flex-wrap:wrap}
+.guide-bike .gspec span{border:1px solid var(--line);font-size:10.5px;padding:3px 6px;background:#FAFAFA}
+.guide-bike button{margin-top:13px;font-size:12px;font-weight:700;color:var(--brand);min-height:36px}
+.guide-side{background:#0C0D20;color:#fff;min-height:100vh;display:flex;flex-direction:column;border-left:4px solid var(--brand)}
+.guide-person{padding:27px 25px 20px;border-bottom:1px solid #282A44;display:flex;align-items:center;gap:13px;flex:none}
+.guide-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,#272961,#06038D);border:1px solid #6568B6;display:flex;align-items:center;justify-content:center;flex:none}
+.guide-avatar svg{width:27px;height:27px;stroke:#fff;fill:none;stroke-width:1.5}
+.guide-person b{font-size:14px}.guide-person small{display:block;color:#A6A8C5;font-size:11px;margin-top:2px}
+.guide-live{margin-left:auto;width:8px;height:8px;background:#5EE0A0;border-radius:50%;box-shadow:0 0 0 5px rgba(94,224,160,.1)}
+.guide-chat{flex:1;min-height:0;padding:24px 21px 10px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;overflow:hidden}
+.guide-msg{max-width:88%;font-size:13.5px;line-height:1.75;padding:13px 15px;animation:guideIn .38s var(--ease)}
+.guide-msg.sales{background:#20223D;border-left:2px solid #7779D9;align-self:flex-start;border-radius:0 10px 10px 10px}
+.guide-msg.user{background:var(--brand);align-self:flex-end;border-radius:10px 0 10px 10px}
+.guide-msg.old{opacity:.48}
+@keyframes guideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.guide-quick{padding:5px 21px 14px;display:flex;gap:7px;flex-wrap:wrap;flex:none}
+.guide-quick button{border:1px solid #4A4D72;color:#D8D9EA;background:#171931;min-height:38px;padding:7px 11px;font-size:11.5px;transition:border-color .2s,background .2s}
+.guide-quick button:hover{border-color:#8C8FE5;background:#20234A}
+.guide-history{margin:0 21px 13px;border-top:1px solid #282A44;color:#A6A8C5;font-size:11px;flex:none}
+.guide-history summary{padding:10px 0;cursor:pointer}
+.guide-history div{max-height:100px;overflow:auto;padding-bottom:8px;line-height:1.65}
+.guide-compose{border-top:1px solid #282A44;padding:15px 17px 18px;display:grid;grid-template-columns:42px minmax(0,1fr) 58px;gap:8px;flex:none;background:#101126}
+.guide-voice{height:44px;border:1px solid #4A4D72;color:#fff;display:flex;align-items:center;justify-content:center}
+.guide-voice svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+.guide-voice.on{background:#fff;color:var(--brand);border-color:#fff}
+.guide-input{height:44px;border:1px solid #4A4D72;background:#171931;color:#fff;padding:0 12px;font:13px var(--sans);min-width:0;outline:none}
+.guide-input::placeholder{color:#8588A9}
+.guide-input:focus{border-color:#9295ED}
+.guide-send{height:44px;background:#fff;color:var(--brand);font-size:12px;font-weight:700}
+.guide-voice-state{display:none;align-items:center;gap:8px;padding:0 21px 12px;color:#BFC1DB;font-size:11.5px}
+.guide-voice-state.on{display:flex}
+.voice-bars{height:18px;display:flex;gap:3px;align-items:center}
+.voice-bars i{display:block;width:2px;background:#7E82E8;animation:voiceBar .8s ease-in-out infinite alternate}
+.voice-bars i:nth-child(1){height:5px}.voice-bars i:nth-child(2){height:14px;animation-delay:.2s}.voice-bars i:nth-child(3){height:9px;animation-delay:.4s}.voice-bars i:nth-child(4){height:17px;animation-delay:.1s}
+@keyframes voiceBar{to{height:4px}}
+.guide button:focus-visible,.guide input:focus-visible{outline:3px solid rgba(139,143,237,.55);outline-offset:2px}
+/* Mia 淺色顧問介面：沿用既有 prototype 的 header、訊息卡與膠囊輸入列 */
+.guide{grid-template-columns:minmax(0,1fr) 500px}
+.guide-side{background:#F7F9FC;color:#172033;border-left:1px solid #DDE4EE}
+.guide-person{padding:25px 30px 22px;border-bottom:1px solid #DDE4EE;background:#fff;gap:16px}
+.guide-avatar{width:62px;height:62px;background:rgba(6,3,141,.07);border:0}
+.guide-avatar svg{width:36px;height:36px;stroke:none;fill:var(--brand)}
+.guide-person b{font-size:18px;color:#121A2C}
+.guide-person small{font-size:13px;color:#64748B;margin-top:4px}
+.guide-live{background:#00B67A;box-shadow:none;width:9px;height:9px}
+.guide-chat{padding:30px 28px 14px;justify-content:flex-start;gap:14px;overflow-y:auto}
+.guide-msg{font-size:15px;line-height:1.8;padding:17px 19px}
+.guide-msg.sales{max-width:92%;background:#fff;color:#1F2937;border:1px solid #DDE4EE;border-left:3px solid var(--brand);border-radius:2px;box-shadow:0 2px 6px rgba(15,23,42,.06)}
+.guide-msg.user{max-width:78%;background:#111B3A;color:#fff;border-radius:2px}
+.guide-msg.old{opacity:.5}
+.guide-quick{padding:8px 28px 14px;gap:8px;background:#F7F9FC}
+.guide-quick button{border:1px solid rgba(6,3,141,.28);color:var(--brand);background:#fff;min-height:40px;padding:8px 14px;font-size:12.5px;border-radius:2px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.guide-quick button:hover{border-color:var(--brand);background:rgba(6,3,141,.05)}
+.guide-history{margin:0 28px 12px;border-top:1px solid #DDE4EE;color:#64748B;font-size:11.5px}
+.guide-history summary{padding:11px 0}
+.guide-compose{margin:0 24px 22px;border:1px solid #DDE4EE;border-radius:2px;padding:8px 9px 8px 12px;grid-template-columns:44px minmax(0,1fr) 76px;gap:8px;background:#fff;box-shadow:0 8px 20px rgba(15,23,42,.09)}
+.guide-voice{width:44px;height:44px;border:1px solid #DDE4EE;border-radius:2px;color:var(--brand);background:#fff}
+.guide-voice:hover{background:rgba(6,3,141,.05);border-color:rgba(6,3,141,.3)}
+.guide-voice.on{background:rgba(6,3,141,.08);color:var(--brand);border-color:rgba(6,3,141,.35)}
+.guide-input{height:44px;border:0;background:transparent;color:#172033;padding:0 4px;font-size:14px}
+.guide-input::placeholder{color:#8A8F9B}
+.guide-input:focus{border:0}
+.guide-send{height:44px;border-radius:2px;background:var(--brand);color:#fff;font-size:13px}
+.guide-send:hover{background:#1A18A7}
+.guide-voice-state{padding:0 28px 12px;color:#64748B}
+.voice-bars i{background:var(--brand)}
+.guide button:focus-visible,.guide input:focus-visible{outline:3px solid rgba(6,3,141,.22);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.guide-msg,.guide-bike,.voice-bars i{animation:none!important;transition:none!important}}
 /* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
-.amb-frame{position:fixed;inset:0;pointer-events:none;z-index:205;border:0 solid var(--brand);box-shadow:inset 0 0 0 0 rgba(6,3,141,0);opacity:0;transition:opacity .5s var(--ease),border-width .6s var(--ease),box-shadow .9s var(--ease)}
-body.amb-near .amb-frame{opacity:1;border-width:6px;box-shadow:inset 0 0 0 1px rgba(6,3,141,.5),inset 0 0 44px rgba(6,3,141,.38),inset 0 0 170px rgba(6,3,141,.28);animation:ambBreath 1.8s var(--ease) 1}
-body.amb-on .amb-frame{opacity:1;border-width:4px;box-shadow:inset 0 0 0 1px rgba(6,3,141,.35),inset 0 0 36px rgba(6,3,141,.22),inset 0 0 120px rgba(6,3,141,.14)}
-@keyframes ambBreath{0%{box-shadow:inset 0 0 0 1px rgba(6,3,141,0),inset 0 0 0 rgba(6,3,141,0),inset 0 0 0 rgba(6,3,141,0)}40%{box-shadow:inset 0 0 0 1px rgba(6,3,141,.6),inset 0 0 70px rgba(6,3,141,.5),inset 0 0 260px rgba(6,3,141,.4)}100%{box-shadow:inset 0 0 0 1px rgba(6,3,141,.5),inset 0 0 44px rgba(6,3,141,.38),inset 0 0 170px rgba(6,3,141,.28)}}
+.amb-frame{--amb-glow:.18;position:fixed;inset:0;pointer-events:none;z-index:205;opacity:0;transition:opacity .8s var(--ease)}
+.amb-frame::before{content:"";position:absolute;inset:-1px;background:linear-gradient(135deg,#03E9EB 0%,#0965AF 50%,#1E2085 100%);opacity:var(--amb-glow);filter:blur(7px) saturate(1.08);-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);-webkit-mask-size:100% 50%,100% 50%,50% 100%,50% 100%;-webkit-mask-position:top,bottom,left,right;-webkit-mask-repeat:no-repeat;mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);mask-size:100% 50%,100% 50%,50% 100%,50% 100%;mask-position:top,bottom,left,right;mask-repeat:no-repeat}
+body.amb-near .amb-frame{--amb-glow:.46;opacity:1;animation:ambBreath 2.2s var(--ease) 1}
+body.amb-on .amb-frame{--amb-glow:.16;opacity:1}
+body.route-open .amb-frame{opacity:0!important}
+
+/* ---------- 選車現場：直接內嵌於本頁 ---------- */
+.imm{position:fixed;inset:0;z-index:500;display:none;background:#05070F;overflow:hidden;--glow:#2C57F0;--imm-base:7vh}
+.imm.on{display:block}
+/* 主視覺上壓一層 287.56° 的黑色漸層（左下淡、右上濃），右側的字才壓得住 */
+.imm-amb{position:absolute;inset:0;z-index:1;background:linear-gradient(287.56deg,rgba(0,0,0,.7) 0%,#000 70%);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.imm-scene{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.imm-scene img{width:100%;height:100%;object-fit:cover;transform:translateX(5.2%)}
+.imm-scene.show{opacity:1}
+/* 導覽列 */
+.imm-top{position:absolute;z-index:9;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.imm-top .who{display:flex;align-items:center;gap:10px;color:#fff}
+.imm-top .mark{width:25px;color:#fff;display:flex}.imm-top .mark svg{width:100%;height:auto}
+.imm-top b{font-size:16px;display:block;font-weight:500;line-height:1}
+.imm-top small{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px;margin-top:8px;line-height:1}
+.imm-top small i{font-style:normal}.imm-top small em{width:4px;height:4px;background:#fff;border-radius:50%;display:block}
+.imm-x{color:#fff;font-size:16px;display:flex;align-items:center;gap:10px}.imm-x svg{width:24px;height:24px}
+/* 上方六個入口 */
+.imm-cats{position:absolute;z-index:8;top:40px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px}
+.imm-cat{display:flex;flex-direction:column;align-items:center;gap:16px;width:clamp(96px,6.35vw,122px);opacity:.5;color:#fff;transition:opacity .3s var(--ease)}
+.imm-cat:hover,.imm-cat.on{opacity:1}
+.imm-cat svg{width:clamp(36px,2.5vw,48px);height:clamp(36px,2.5vw,48px);stroke-width:.667}
+.imm-cat span{font-size:clamp(13px,.83vw,16px);text-align:center;line-height:1;white-space:nowrap}
+/* 左側：3D 斜角的車陣 */
+.imm-stage{position:absolute;z-index:2;left:0;top:0;width:68.5%;height:100%}
+.deck{position:absolute;inset:0}
+.deck-card{position:absolute;width:74.5%;transform:translate(-50%,-50%) scale(1);transform-origin:50% 50%;
+  transition:left .95s var(--ease),top .95s var(--ease),transform .95s var(--ease),opacity .95s var(--ease);will-change:transform,opacity}
+.deck-card img{width:100%;height:auto;display:block;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.deck-card.p0{left:50%;  top:49.2%;transform:translate(-50%,-50%) scale(1);      opacity:1;z-index:4}
+.deck-card.p1{left:36.9%;top:44.1%;transform:translate(-50%,-50%) scale(.7755);  opacity:.55;z-index:3}
+.deck-card.p2{left:28.6%;top:39.4%;transform:translate(-50%,-50%) scale(.6204);  opacity:.3;z-index:2}
+.deck-card.p3{left:22.1%;top:37.6%;transform:translate(-50%,-50%) scale(.5429);  opacity:.15;z-index:1}
+.deck-card.out{left:64%;top:57%;transform:translate(-50%,-50%) scale(1.34);opacity:0;z-index:5}
+.deck-card.pre{left:22.1%;top:37.6%;transform:translate(-50%,-50%) scale(.42);opacity:0;z-index:0}
+/* 車陣下方：左右箭頭與車款資訊 */
+.deck-bar{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);width:clamp(430px,42.2vw,811px);
+  display:flex;align-items:center;justify-content:center;gap:20px;color:#fff}
+.deck-nav{width:24px;height:24px;flex:none;color:#fff;opacity:.7;transition:opacity .2s,transform .3s var(--ease)}
+.deck-nav:hover{opacity:1}.deck-nav svg{width:24px;height:24px}
+.deck-meta{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px;transition:opacity .4s var(--ease)}
+.deck-meta.swap{opacity:0}
+.deck-meta h3{font-size:clamp(22px,1.67vw,32px);font-weight:500;line-height:1;margin:0;text-align:center}
+.deck-meta .tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.deck-meta .tags i{font-style:normal;font-size:12px;line-height:1;color:rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:9px 16px}
+.deck-meta .pz{font-size:16px;line-height:1;color:rgba(255,255,255,.5);margin:0;font-family:var(--num)}
+.deck-meta .go{display:inline-flex;align-items:center;gap:2px;font-size:16px;font-weight:600;color:#fff}
+.deck-meta .go svg{width:24px;height:24px}
+.deck-meta .go:hover{opacity:.75}
+/* 右下：同一個視窗裡輸入 */
+.imm-ask{position:absolute;z-index:6;right:40px;bottom:80px;width:clamp(380px,27.3vw,524px);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.imm .line{max-width:100%;animation:immLineIn .6s var(--ease);transition:opacity .8s var(--ease),transform .8s var(--ease),max-height .8s var(--ease),margin .8s var(--ease);max-height:300px}@keyframes immLineIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.imm .line.them{color:#fff;font-size:clamp(24px,1.875vw,36px);line-height:1.5;font-weight:500;letter-spacing:0;align-self:flex-start}.imm .line.them b{color:#fff}
+.imm .line.me{align-self:flex-end;text-align:right;color:rgba(255,255,255,.42);font-size:14.5px;font-weight:600}.imm .line.me::before{content:"你說：";font-family:var(--num);font-size:10.5px;letter-spacing:.16em;display:block;margin-bottom:3px;color:rgba(255,255,255,.28)}
+.imm .line.gone{opacity:0;transform:translateY(-12px);max-height:0;margin-top:-14px;pointer-events:none}.imm .line .lead{display:block;font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.5);margin-bottom:9px;font-weight:700}
+.imm-feed{display:flex;flex-direction:column;gap:14px;width:100%}
+.imm-bar{width:100%;display:flex;gap:20px;align-items:center;border-bottom:1px solid rgba(255,255,255,.2);padding:12px 0}
+.imm-bar input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-family:inherit;font-size:16px;line-height:1;padding:0}
+.imm-bar input::placeholder{color:rgba(255,255,255,.5)}
+.imm-acts{display:flex;align-items:center;gap:10px;flex:none}
+.imm-mic,.imm-send{width:48px;height:48px;color:#fff;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex:none;border-radius:50px;transition:background .2s,color .2s,border-color .2s}
+.imm-mic:hover,.imm-send:hover{background:#fff;color:#0B0D16;border-color:#fff}
+.imm-mic.live{background:#EF4444;color:#fff;border-color:#EF4444;animation:immPulse 1.3s infinite}@keyframes immPulse{70%{box-shadow:0 0 0 11px rgba(239,68,68,0)}}
+.imm-mic svg,.imm-send svg{width:24px;height:24px}
+.imm-hint{font-size:16px;line-height:2;color:rgba(255,255,255,.5);margin:0}
+.finale{position:absolute;inset:0;z-index:8;display:none;overflow:hidden;background:radial-gradient(64% 74% at 50% 42%,rgba(44,87,240,.34),transparent 64%),#05070F}.finale.on{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:52px 30px 40px}.fin-ring,.fin-sweep{position:absolute;left:50%;top:44%;width:min(1020px,84vw);aspect-ratio:1;transform:translate(-50%,-50%) rotate(-9deg);border-radius:50%;pointer-events:none}.fin-ring{border:1px solid rgba(120,158,255,.30);box-shadow:0 0 90px rgba(44,87,240,.30) inset,0 0 60px rgba(44,87,240,.20)}.fin-sweep{border:2px solid transparent;border-top-color:rgba(157,182,255,.85)}
+.fin-hero{position:absolute;inset:0;z-index:1;background:#05070F;overflow:hidden;transform-origin:50% 50%;transition:transform 1.9s var(--ease) .35s;will-change:transform}.fin-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,15,.45) 0,rgba(5,7,15,0) 24%),linear-gradient(0deg,#05070F 0,rgba(5,7,15,.97) 240px,rgba(5,7,15,.91) 340px,rgba(5,7,15,.74) 450px,rgba(5,7,15,.34) 560px,rgba(5,7,15,0) 660px);opacity:1;transition:opacity .9s var(--ease) .3s}.finale.intro .fin-hero::after{opacity:0;transition:opacity .25s var(--ease)}.fin-hero video{width:100%;height:100%;object-fit:cover;display:block;transform:translateY(-120px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 240px);mask-image:linear-gradient(0deg,transparent 0,#000 240px)}.fin-cap{position:relative;z-index:2;text-align:center;color:#fff;margin-top:20px}.fin-cap .k{font-family:var(--num);font-size:10.5px;letter-spacing:.24em;color:#9DB6FF;font-weight:700}.fin-cap h2{font-size:clamp(24px,3vw,38px);margin:8px 0 4px}.fin-cap .p{font-family:var(--num);font-size:19px;font-weight:700;color:rgba(255,255,255,.8)}.fin-cap .r{margin-top:9px;font-size:13px;color:rgba(255,255,255,.6);max-width:60ch;line-height:1.8}.fin-cap .r b{color:#fff}.fin-cta{display:flex;gap:10px;justify-content:center;margin-top:16px}.fin-cta button{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}.fin-cta .a{background:#fff;color:#0B0D16}.fin-cta .b{border:1px solid rgba(255,255,255,.34);color:#fff}
+.fin-rel{position:relative;z-index:2;margin-top:20px;width:100%}.fin-rel .h{font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:12px;text-align:center}.fin-row{display:flex;gap:12px;justify-content:center}.fin-card{width:152px;padding:6px 8px 10px;text-align:center;border-radius:12px}.fin-card img{width:100%;height:84px;object-fit:contain}.fin-card b{display:block;font-size:12.5px;margin-top:7px;color:#fff}.fin-card span{display:block;font-family:var(--num);font-size:11.5px;color:rgba(255,255,255,.5)}.fin-x{display:none}/* 結論的文案由下往上依序浮現：眉標→車名→價格→尺寸→按鈕→相關車款 */.finale .fin-cap>*,.finale .fin-rel{opacity:1;transform:none;transition:opacity .85s var(--ease),transform 1.15s var(--ease)}.finale .fin-cap>*:nth-child(1){transition-delay:.02s}.finale .fin-cap>*:nth-child(2){transition-delay:.10s}.finale .fin-cap>*:nth-child(3){transition-delay:.18s}.finale .fin-cap>*:nth-child(4){transition-delay:.26s}.finale .fin-cap>*:nth-child(5){transition-delay:.34s}.finale .fin-rel{transition-delay:.42s}.finale .fin-ring,.finale .fin-sweep,.finale .fin-x{transition:opacity .8s var(--ease) .18s}.finale.intro .fin-cap>*,.finale.intro .fin-rel{opacity:0;transform:translateY(26px)}.finale.intro .fin-ring,.finale.intro .fin-sweep,.finale.intro .fin-x{opacity:0}@media(prefers-reduced-motion:reduce){.fin-hero{transition:none}}
+@media(max-width:1280px){.imm-cats{gap:2px}.imm-ask{right:28px;bottom:56px}}
+@media(max-width:1000px){.imm-stage{width:100%;height:62%}.deck-bar{bottom:24px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
+/* 暫時隱藏：拿掉這幾行即可恢復 */
+#route{display:none!important}
+#ambRoute{display:none}
+.amb-tab{display:none!important}
+.amb-frame{display:none!important}
+.ovw-b .guard{display:none}
+.pc .why{display:none}
+@keyframes ambBreath{0%{opacity:0}38%{opacity:1}100%{opacity:.72}}
 .amb-tab{position:fixed;left:50%;bottom:0;transform:translate(-50%,115%);z-index:160;background:#fff;border:1px solid var(--line);border-bottom:0;border-top:4px solid var(--brand);padding:14px 16px 14px 22px;display:flex;gap:14px;align-items:center;width:max-content;max-width:min(760px,94vw);box-shadow:0 -10px 34px rgba(0,0,0,.08);transition:transform .6s var(--ease),bottom .3s var(--ease)}
 body.amb-near .amb-tab,body.amb-on .amb-tab{transform:translate(-50%,0)}
 body.has-tray .amb-tab{bottom:64px}
@@ -382,8 +682,8 @@ body.has-tray .amb-tab{bottom:64px}
 .amb-tab .a{background:var(--brand);color:#fff;padding:10px 16px;font-weight:700;font-size:13px;border-radius:3px;white-space:nowrap}
 .amb-tab .b{border:1px solid var(--ink);background:#fff;padding:10px 14px;font-weight:700;font-size:13px;border-radius:3px;white-space:nowrap}
 body.amb-on .amb-tab .a{display:none}
-.jstrip{display:none;align-items:center;margin:0 0 14px;padding:12px 16px;border:1px solid var(--line);background:#fff}
-body.amb-on .jstrip.has{display:flex}
+.jstrip{display:none;align-items:center;margin:0 18px 14px 41px;padding:12px 16px;border:1px solid var(--line);background:#fff}
+.jstrip.has{display:flex}
 .jstrip .jl{font-size:12px;font-weight:700;color:var(--ink-70);margin-right:16px;white-space:nowrap}
 .jstrip .jt{position:relative;width:64px;height:48px;border:1px solid var(--line);background:#fff;margin-right:24px;cursor:pointer;flex:none}
 .jstrip .jt img{width:100%;height:100%;object-fit:contain}
@@ -452,18 +752,9 @@ body.amb-on .jstrip.has{display:flex}
   <!-- 新增模組 1：找車入口 -->
   <section class="finder">
     <div class="finder-in">
-      <div>
-        <h2>你想騎去哪裡？<em>Where will you ride</em></h2>
-        <p class="lead">官網現有的篩選要你先選避震類別、車架材質、輪徑大小。這裡改成用你自己的話：描述路線、強度與預算，條件會直接套進車款列表。</p>
-      </div>
-      <div>
-        <div class="f-field">
-          <input id="fInput" type="text" autocomplete="off" placeholder="例如：我想跑林道，預算 10 萬以內，身高 175">
-          <button class="f-go" id="fGo">找車</button>
-        </div>
-        <div class="f-chips" id="fChips"></div>
-        <p class="f-alt">不知道怎麼描述？<button id="startQuiz">帶我一步步選（約 30 秒）</button></p>
-      </div>
+      <h2>你想騎去哪裡？<em>Where will you ride</em></h2>
+      <p class="lead">官網現有的篩選要你先選避震類別、車架材質、輪徑大小。這裡改成用你自己的話——描述路線、強度與預算，條件會直接套進車款列表。</p>
+      <p style="margin-top:32px"><button class="trig big" id="trigHome"><span class="dotm"></span>進入選車現場</button></p>
     </div>
   </section>
 
@@ -501,12 +792,12 @@ body.amb-on .jstrip.has{display:flex}
       <p id="plpSub"></p>
     </div></div>
   </section>
-  <div class="crumb">Home&nbsp; / &nbsp;自行車&nbsp; / &nbsp;<b>登山車</b></div>
+  <div class="crumb">Home&nbsp; / &nbsp;自行車&nbsp; / &nbsp;<b id="crumbCat">登山車</b></div>
 
   <div class="plp-body">
     <aside class="rail">
       <h4>篩選條件</h4>
-      <div class="fgroup"><p>路面 <span class="newflag">新增</span></p><div id="fTerrain"></div></div>
+      <div class="fgroup"><p>想找哪一類 <span class="newflag">新增</span></p><div id="fTerrain"></div></div>
       <div class="fgroup"><p>騎乘強度 <span class="newflag">新增</span></p><div id="fIntent"></div></div>
       <div class="fgroup"><p>價格 <span class="newflag">新增</span></p><div id="fBudget"></div></div>
       <div class="fgroup"><p>車款類別</p><div id="fBest"></div></div>
@@ -539,9 +830,8 @@ body.amb-on .jstrip.has{display:flex}
           </select>
         </div>
       </div>
-      <div class="jstrip" id="jstrip"></div>
       <div class="chipbar" id="chipbar"></div>
-      <details class="ovw" id="ovw"><summary>這份清單怎麼來的</summary><div class="ovw-b" id="ovwBody"></div></details>
+      <details class="ovw" id="ovw"><summary>這份清單怎麼來的</summary><div class="jstrip" id="jstrip"></div><div class="ovw-b" id="ovwBody"></div></details>
       <div class="pgrid" id="pgrid"></div>
 
       <div class="band" style="margin-top:44px">
@@ -575,6 +865,10 @@ body.amb-on .jstrip.has{display:flex}
       <button class="f-go" id="sGo">搜尋</button>
     </div>
     <div class="imgentry" id="imgEntry"><span class="sq"></span><div><b>以圖找車</b><br><span style="color:var(--ink-45)">拍下你常騎的那條路，或車上想換的零件</span></div></div>
+    <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <button class="trig" id="trigSov"><span class="dotm"></span>進入選車現場</button>
+      <span style="font-size:12.5px;color:var(--ink-45);line-height:1.8">不確定要搜什麼？直接跟門市人員講你想騎去哪裡。</span>
+    </div>
     <p class="sov-note">官網既有的搜尋框同時吃關鍵字、整句描述與影像——沒有新的入口，沒有對話視窗。</p>
   </div>
 </div>
@@ -584,11 +878,90 @@ body.amb-on .jstrip.has{display:flex}
   <button class="rclose" id="routeClose">關閉 ✕</button>
   <div class="route-in">
     <div class="route-h"><p class="qstep">你的路線</p><h2>從你看過的車，整理出的方向</h2><p class="qsub" id="routeSub"></p></div>
-    <div class="sig" id="routeSig"></div>
-    <svg class="rmap" id="routeMap" viewBox="0 0 1000 500" aria-hidden="true"></svg>
-    <div class="pri"><p>你比較在意什麼？</p><div class="pc2" id="priChips"></div><p class="note">每一項都對應官網既有的分類欄位：輕一點＝碳纖維車架、要爬坡＝XC、要下坡＝越野玩樂與全避震、要省力＝電力輔助。選了會同時重排這張圖與清單。</p></div>
-    <div class="route-cta"><button class="a" id="routeGo">就照這個方向 →</button><button class="b2" id="routeDecide">幫我決定</button></div>
+    <div class="route-main">
+      <div class="route-pref">
+        <div class="sig-q"><h3>你比較在意哪一項？</h3><p>可以複選。每個選擇都會立即重排右側車款。</p></div>
+        <div class="sig" id="routeSig"></div>
+      </div>
+      <div class="route-map-panel">
+        <div class="route-map-h"><h3 id="routeMapTitle">根據你的選擇，推薦 3 台</h3><p id="routeMapHelp">點車款或下方選項，把它設成你的選擇。</p></div>
+        <div class="route-pick" id="routePick" aria-label="選擇想要的車款"></div>
+        <svg class="rmap" id="routeMap" viewBox="0 0 1000 500" aria-hidden="true"></svg>
+      </div>
+    </div>
+    <section class="route-next" aria-labelledby="routeNextTitle">
+      <div class="route-next-h"><h3 id="routeNextTitle">接下來，你可能會想知道</h3><p>依這 2–3 台車，直接往下一個決定走。</p></div>
+      <div class="route-tools" id="routeTools"></div>
+    </section>
+    <div class="route-cta"><button class="a" id="guideOpen">跟導購員一起選</button><button class="b2" id="routeGo">就照這個方向 →</button><button class="b2" id="routeDecide">幫我決定</button></div>
   </div>
+</div>
+
+<!-- 選車現場：與首頁包在同一份 HTML 內 -->
+<div class="imm" id="imm" role="dialog" aria-modal="true" aria-label="選車現場">
+  <div class="imm-amb" id="immAmb"></div>
+  <div class="imm-scene" id="immScene"><img alt=""></div>
+  <div class="imm-top">
+    <div class="who">
+      <span class="mark"><svg viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>
+      <div><b>選車現場</b><small id="immSub"><i>門市人員</i><em></em><i>在線中</i></small></div>
+    </div>
+    <button class="imm-x" id="immClose">結束<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="imm-cats" id="immCats"></div>
+  <div class="imm-stage">
+    <div class="deck" id="immDeck"></div>
+    <div class="deck-bar">
+      <button class="deck-nav" id="deckPrev" aria-label="上一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M11 5l-7 7 7 7"/></svg></button>
+      <div class="deck-meta" id="immMeta"></div>
+      <button class="deck-nav" id="deckNext" aria-label="下一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <div class="imm-ask">
+    <div class="imm-feed" id="immFeed"></div>
+    <div class="imm-bar">
+      <input id="immInput" type="text" autocomplete="off" placeholder="可以直接輸入或用說的...">
+      <div class="imm-acts">
+        <button class="imm-mic" id="immMic" title="改用語音"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M4.4 11a7.6 7.6 0 0 0 15.2 0M12 18.6v3"/></svg></button>
+        <button class="imm-send" id="immSend" aria-label="送出"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M5 11l7-7 7 7"/></svg></button>
+      </div>
+    </div>
+    <p class="imm-hint" id="immHint">例如：電輔車、10萬以內、身高 172cm</p>
+  </div>
+  <div class="finale" id="finale">
+    <button class="fin-x" id="finX">結束 ✕</button><div class="fin-ring"></div><div class="fin-sweep"></div>
+    <div class="fin-hero" id="finHero"><video id="finVid" muted playsinline preload="auto" disablepictureinpicture></video></div><div class="fin-cap" id="finCap"></div><div class="fin-rel" id="finRel"></div>
+  </div>
+</div>
+
+<!-- 全版面沉浸式導購：由使用者明確觸發 -->
+<div class="guide" id="guide" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <main class="guide-canvas">
+    <div class="guide-top">
+      <div class="guide-brand"><strong style="font:900 24px var(--num);letter-spacing:-.06em">GIANT</strong><span>IMMERSIVE BIKE FINDER</span></div>
+      <button class="guide-exit" id="guideExit">離開導購 ✕</button>
+    </div>
+    <div class="guide-head">
+      <div><p class="step" id="guideStep">01 · 先抓方向</p><h2 id="guideTitle">先從這三台開始</h2></div>
+      <p class="guide-summary" id="guideSummary">左側內容會跟著你和導購員的討論持續改變。</p>
+    </div>
+    <section class="guide-stage" aria-live="polite"><div class="guide-bikes" id="guideBikes"></div></section>
+  </main>
+  <aside class="guide-side" aria-label="導購員對話">
+    <div class="guide-person">
+      <span class="guide-avatar" aria-hidden="true"><svg viewBox="0 0 1062 1062"><path d="M432.78 368.591L528.278 626.543L528.375 626.442C529.347 629.161 532.844 629.967 534.884 627.953L734.525 431.14C737.634 428.119 742.589 431.543 741.034 435.673L534.204 994.181C532.941 997.707 528.084 997.707 526.724 994.181L229.253 190.815C228.282 188.096 230.225 185.175 233.042 185.175H827.982C830.8 185.175 832.743 188.096 831.771 190.815L769.013 360.231C768.431 361.843 766.876 362.951 765.224 362.951H436.569C433.752 362.951 431.809 365.872 432.78 368.591Z"></path></svg></span>
+      <div><b>Mia · 你的選車顧問</b><small>線上 · 用打的或用講的都可以</small></div><span class="guide-live" aria-hidden="true"></span>
+    </div>
+    <div class="guide-chat" id="guideChat" aria-live="polite"></div>
+    <div class="guide-quick" id="guideQuick"></div>
+    <div class="guide-voice-state" id="guideVoiceState"><span class="voice-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>語音模式開啟 · 這是 demo，請用下方文字或快速回答模擬語音內容</span></div>
+    <details class="guide-history"><summary>查看剛才的對話</summary><div id="guideHistory"></div></details>
+    <form class="guide-compose" id="guideForm">
+      <button class="guide-voice" id="guideVoice" type="button" aria-label="切換語音模式" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="12" rx="4"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"></path></svg></button>
+      <input class="guide-input" id="guideInput" aria-label="輸入想和導購員說的話" autocomplete="off" placeholder="說說你的路線、預算，或問這幾台差在哪">
+      <button class="guide-send" type="submit">送出</button>
+    </form>
+  </aside>
 </div>
 
 <div class="tray" id="tray">
@@ -705,8 +1078,8 @@ const L_BRAKE = {'disc-brake':'碟煞','rim-brake':'圈煞'};
 const L_POST  = {'dropper':'伸縮座管','adjustable':'可調式座管'};
 
 /* 新增的兩排條件：直接對應官網 best-for / level 兩個既有欄位 */
-const T_LABEL = {trail:'林道單軌',xc:'越野賽道',fitness:'柏油與河濱',ebike:'需要電力輔助'};
-const T_BEST  = {trail:'trail',xc:'xc',fitness:'fitness'};
+const T_LABEL = {trail:'林道單軌',xc:'越野賽道',fitness:'柏油與河濱',ebike:'E-Bike',daily:'日常騎乘',gravel:'越野 & 礫石公路',mtb:'登山車',kids:'親子／童車'};
+const T_BEST  = {trail:'trail',xc:'xc',fitness:'fitness',daily:'fitness',gravel:'xc',mtb:'trail'};
 const I_LABEL = {sport:'運動休閒',performance:'進階性能'};
 const B_LABEL = {30000:'3 萬以內',100000:'3 – 10 萬',200000:'10 – 20 萬',999999:'20 萬以上'};
 
@@ -759,20 +1132,37 @@ const S = {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,whe
 
 /* ---------- 整句描述 → 篩選條件 ---------- */
 function bucket(v){ return v<=30000?30000 : v<=100000?100000 : v<=200000?200000 : 999999; }
+/* 中文數字轉阿拉伯數字：只處理「五萬」「十萬」「二十萬」「十五萬」這種口語金額 */
+const CN_D = {'零':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
+function cnNum(str){
+  if (/^\d+(\.\d+)?$/.test(str)) return parseFloat(str);
+  const i = str.indexOf('十');
+  if (i < 0){ let n = 0; for (const c of str){ if (!(c in CN_D)) return NaN; n = n * 10 + CN_D[c]; } return n; }
+  const hi = i === 0 ? 1 : CN_D[str[i-1]], lo = i === str.length - 1 ? 0 : CN_D[str[i+1]];
+  return (hi === undefined || lo === undefined) ? NaN : hi * 10 + lo;
+}
+/* 打字與語音都走這裡。分類值一律吐第一題那五個代碼，
+   否則左邊舞台（依分類換車與背景）與左側篩選列會對不上。 */
 function parseSentence(txt){
   const t = txt.toLowerCase(); let hit = false;
-  if (/電輔|電動|助力|輔助|e-?bike|e\+/.test(t))       { S.terrain='ebike'; hit=true; }
-  else if (/林道|單軌|樹根|下坡|越野林|trail/.test(t)) { S.terrain='trail'; hit=true; }
-  else if (/賽|競|xc|計時/.test(t))                    { S.terrain='xc'; hit=true; }
-  else if (/通勤|上下班|市區|柏油|河濱|健身/.test(t))  { S.terrain='fitness'; hit=true; }
+  if (/電輔|電動|助力|輔助|e-?bike|e\+/.test(t))                              { S.terrain='ebike';  hit=true; }
+  else if (/小孩|小朋友|兒童|童車|親子|孩子|女兒|兒子|青少年/.test(t))        { S.terrain='kids';   hit=true; }
+  else if (/礫石|碎石|gravel|產業道路|石子/.test(t))                          { S.terrain='gravel'; hit=true; }
+  else if (/林道|單軌|樹根|下坡|越野|登山|山路|爬山|trail|xc|賽|競|計時/.test(t)) { S.terrain='mtb';    hit=true; }
+  else if (/通勤|上下班|市區|柏油|河濱|健身|日常|代步|買菜|平路|平地/.test(t)) { S.terrain='daily';  hit=true; }
   if (/比賽|訓練|成績|認真|進階|出團|挑戰/.test(t))    { S.intent='performance'; hit=true; }
   else if (/輕鬆|新手|入門|第一台|玩票|休閒/.test(t))  { S.intent='sport'; hit=true; }
-  const wan = t.match(/(\d+(?:\.\d+)?)\s*萬/);
+  const wan = t.match(/(\d+(?:\.\d+)?|[零一二兩三四五六七八九十]+)\s*萬/);
   const yuan = t.match(/(\d{4,7})/);
-  if (wan) { S.budget = bucket(parseFloat(wan[1])*10000); hit=true; }
+  if (wan && !isNaN(cnNum(wan[1]))) { S.budget = bucket(cnNum(wan[1])*10000); hit=true; }
   else if (yuan && /預算|以內|以下|左右/.test(t)) { S.budget = bucket(parseInt(yuan[1],10)); hit=true; }
   const h = t.match(/(1[3-9]\d)\s*(cm|公分)?/);
   if (h && /身高|高|cm|公分/.test(t)) { S.height = parseInt(h[1],10); hit=true; }
+  /* 「你比較在意什麼」那四個 chip 也接得起來，講到就直接勾上 */
+  if (/輕一點|輕量|輕的|碳纖維|碳車/.test(t))     { P.light = true; hit=true; }
+  if (/爬坡|上坡|爬山/.test(t))                    { P.climb = true; hit=true; }
+  if (/下坡|放坡|衝下/.test(t))                    { P.down  = true; hit=true; }
+  if (/省力|不想太累|不要太累|輕鬆一點|會喘/.test(t)) { P.ease = true; hit=true; }
   return hit;
 }
 
@@ -780,7 +1170,8 @@ function parseSentence(txt){
 function score(b){
   let s = 0; const why = [];
   if (S.terrain){
-    if (S.terrain === 'ebike'){ if (b.ebike){ s += 4; why.push('ebike'); } else s -= 3; }
+    if (S.terrain === 'kids'){ if (b.kids){ s += 6; why.push('kids'); } else s -= 3; }
+    else if (S.terrain === 'ebike'){ if (b.ebike){ s += 4; why.push('ebike'); } else s -= 3; }
     else if (b.best === T_BEST[S.terrain]){ s += 4; why.push('terrain'); }
   } else if (S.touched && b.ebike) s -= 1;
   if (S.intent && b.lvl === S.intent){ s += 3; why.push('intent'); }
@@ -813,27 +1204,22 @@ function reason(b, why){
   return bits.length ? bits.join('，') + '。' : '';
 }
 
-/* ---------- 首頁入口 ---------- */
-PRESETS.forEach(p => {
-  const b = document.createElement('button');
-  b.className = 'f-chip'; b.textContent = p.t;
-  b.onclick = () => { Object.assign(S, p.d); S.touched = true; goPLP(); };
-  $('fChips').appendChild(b);
-});
 function submit(inputId){
   const v = $(inputId).value.trim();
   if (v && parseSentence(v)) { S.touched = true; closeSearch(); goPLP(); }
   else { closeSearch(); openQuiz(); }
 }
-$('fGo').onclick = () => submit('fInput');
-$('fInput').addEventListener('keydown', e => { if (e.key === 'Enter') submit('fInput'); });
 $('sGo').onclick = () => submit('sInput');
 $('sInput').addEventListener('keydown', e => { if (e.key === 'Enter') submit('sInput'); });
 function openSearch(){ $('sov').classList.add('on'); setTimeout(()=>$('sInput').focus(), 60); }
 function closeSearch(){ $('sov').classList.remove('on'); }
+function enterSelectionLive(){
+  immOpen();
+}
 $('openSearch').onclick = openSearch;
 $('sovClose').onclick = closeSearch;
-$('startQuiz').onclick = () => openQuiz();
+$('trigHome').onclick = enterSelectionLive;
+$('trigSov').onclick = () => { closeSearch(); enterSelectionLive(); };
 $('megaFinder').onclick = () => openQuiz();
 $('seeAll').onclick = () => goPLP();
 $('megaMtb').onclick = () => { mega.classList.remove('show'); goPLP(); };
@@ -921,6 +1307,11 @@ function railOpt(label, active, n, onclick){
   b.onclick = () => { J.filterChanges++; onclick(); jTick(); };
   return b;
 }
+function terrainCount(k){
+  if (k === 'ebike') return BIKES.filter(b => b.ebike).length;
+  if (k === 'kids')  return BIKES.filter(b => b.kids).length;
+  return countBy('best', T_BEST[k]);
+}
 function countBy(key, val){ return BIKES.filter(b => Array.isArray(b[key]) ? b[key].includes(val) : b[key] === val).length; }
 
 function buildRail(){
@@ -930,9 +1321,9 @@ function buildRail(){
       () => { S[field] = S[field] === k ? null : k; S.touched = true; renderPLP(); })));
   };
   /* 新增的兩排 + 價格 */
+  /* 選項與選車現場第一題同一組（IMM_CAT），計數各自對應官網欄位 */
   const ft = $('fTerrain'); ft.innerHTML = '';
-  ['fitness','xc','trail','ebike'].forEach(k => ft.appendChild(railOpt(T_LABEL[k], S.terrain === k,
-    k === 'ebike' ? BIKES.filter(b=>b.ebike).length : countBy('best', T_BEST[k]),
+  IMM_CAT.forEach(([label,k]) => ft.appendChild(railOpt(label, S.terrain === k, terrainCount(k),
     () => { S.terrain = S.terrain === k ? null : k; S.touched = true; renderPLP(); })));
   const fi = $('fIntent'); fi.innerHTML = '';
   ['sport','performance'].forEach(k => fi.appendChild(railOpt(I_LABEL[k], S.intent === k, countBy('lvl', k),
@@ -953,6 +1344,7 @@ function buildRail(){
 
 function ranked(){
   let list = BIKES.filter(b =>
+    (!S.newOnly || b.y >= '2026') &&
     (!S.best  || b.best === S.best) &&
     (!S.susp  || b.susp === S.susp) &&
     (!S.mat   || b.mat === S.mat) &&
@@ -977,7 +1369,7 @@ function card(b, withWhy){
   if (b.kids) badges.push('<span class="tag kid">青少年車 · ' + b.kids.label + '</span>');
   const sp = [L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(w=>w.replace('-','.')+'"').join(' / ')].filter(Boolean);
   el.innerHTML =
-    '<div class="shot"><img src="' + ASSET[b.img] + '" alt="' + b.n + '"></div>' +
+    '<div class="shot"><img src="' + bikeImg(b) + '" alt="' + b.n + '"></div>' +
     '<div class="badges">' + badges.join('') + '</div>' +
     '<h4>' + b.n + '</h4>' +
     '<p class="cur">Current price:</p><p class="pr">' + b.pr + '</p>' +
@@ -1000,10 +1392,13 @@ function renderHome(){
 
 function renderPLP(){
   /* 標題維持騎乘語言，主詞留給使用者 */
-  const parts = [];
-  if (S.terrain) parts.push(T_LABEL[S.terrain]);
-  if (S.intent)  parts.push(I_LABEL[S.intent]);
-  $('plpTitle').textContent = parts.length ? '登山車 · ' + parts.join(' · ') : '登山車';
+  /* 麵包屑與標題跟著使用者選的分類走：沒選就是原本的登山車分類頁，
+     選了就換成那個分類，不再出現「登山車 · 日常騎乘」這種自相矛盾的組合。 */
+  const cat = S.terrain ? (immCatLabel(S.terrain) || T_LABEL[S.terrain]) : '登山車';
+  const parts = [cat];
+  if (S.intent) parts.push(I_LABEL[S.intent]);
+  $('crumbCat').textContent = cat;
+  $('plpTitle').textContent = parts.join(' · ');
   $('plpSub').textContent = S.touched
     ? '以下依你的路線、強度與預算排序。每一項條件都可以在左側調整。'
     : '當道路消失，即是樂趣展開時。從平順、砂礫滿佈的公園小徑到後山樹枝盤踞的越野林道、抑或是令人興奮、刺激的越野下坡路段。';
@@ -1017,7 +1412,8 @@ function renderPLP(){
     b.innerHTML = label + '：<b>' + val + '</b><span class="x">×</span>';
     b.onclick = fn; cb.appendChild(b);
   };
-  if (S.terrain) chip('路面', T_LABEL[S.terrain], () => { S.terrain=null; renderPLP(); });
+  if (S.newOnly) chip('年式', '2026 以後', () => { S.newOnly=false; IMM.newOnly=false; renderPLP(); });
+  if (S.terrain) chip('想找', immCatLabel(S.terrain) || T_LABEL[S.terrain], () => { S.terrain=null; renderPLP(); });
   if (S.intent)  chip('強度', I_LABEL[S.intent],  () => { S.intent=null; renderPLP(); });
   if (S.budget)  chip('預算', B_LABEL[S.budget],  () => { S.budget=null; renderPLP(); });
   if (S.best)    chip('車款類別', L_BEST[S.best], () => { S.best=null; renderPLP(); });
@@ -1039,7 +1435,8 @@ function renderPLP(){
   const g = $('pgrid');
   const before = {}; if (J._flip) g.querySelectorAll('.pc').forEach(n => { before[n.dataset.k] = n.getBoundingClientRect(); });
   g.innerHTML = '';
-  list.forEach(b => g.appendChild(card(b, S.sort === 'fit')));
+  const fit = S.touched && S.sort === 'fit';
+  list.forEach((b, i) => { const el = card(b, fit); if (fit && i === 0) el.classList.add('best'); g.appendChild(el); });
   if (J._flip){ J._flip = false; jFlip(g, before); }
   renderJStrip();
   $('decideBtn').style.display = (S.touched && S.sort === 'fit' && list.length > 1) ? '' : 'none';
@@ -1054,6 +1451,30 @@ $('sortSel').onchange = e => { S.sort = e.target.value; renderPLP(); };
 
 /* ---------- 比較 ---------- */
 function keyOf(b){ return b.n + b.y; }
+/* 清單／詳細／比較表的車圖改用 Bikes 資料夾裡的去背 PNG。
+   資料夾只有 20 張、其中對得上車名的僅 5 張，其餘依「避震＋電輔＋童車」配一張最接近的，
+   同一張會被多台共用——這是暫時的視覺統一，接上官方產品圖後把 PLP_IMG 與 bikeImg 換掉即可。 */
+const PLP_IMG = {
+  'Anthem Advanced SL'      : 'Bikes/Mountain/Anthem Advanced SL 0.png',
+  'Trance X Advanced Pro 29': 'Bikes/Mountain/Trance X Advanced Pro 29 1.png',
+  'XTC Advanced'            : 'Bikes/Mountain/XTC Advanced 29 3.png',
+  'Talon E+'                : 'Bikes/Mountain/Talon E+.png',
+  'Faith'                   : 'Bikes/Child/Faith.png'
+};
+function bikeImg(b){
+  if (PLP_IMG[b.n]) return encodeURI(PLP_IMG[b.n]);
+  let f;
+  if (b.kids)                            f = b.wheel.includes('24') ? 'Bikes/Child/Faith.png' : 'Bikes/Child/STP 20 FS.png';
+  else if (b.ebike)                      f = b.susp === 'full-suspension' ? 'Bikes/Mountain/Trance X Advanced Pro 29 1.png' : 'Bikes/Mountain/Talon E+.png';
+  else if (b.susp === 'full-suspension') f = b.best === 'xc' ? 'Bikes/Mountain/Anthem Advanced SL 0.png' : 'Bikes/Mountain/Trance X Advanced Pro 29 1.png';
+  else                                   f = 'Bikes/Mountain/XTC Advanced 29 3.png';
+  return encodeURI(f);
+}
+function openTestRideBooking(b){
+  if (!b) return;
+  const params = new URLSearchParams({booking:'1', bike:keyOf(b), name:b.n});
+  window.location.assign('giant-personalized.html?' + params.toString());
+}
 function toggleCmp(k){
   J.cmpAt = Date.now();
   const i = S.cmp.indexOf(k);
@@ -1082,6 +1503,9 @@ $('trayGo').onclick = () => { if (S.cmp.length >= 2) openCompare(); };
 
 function openCompare(){
   const list = S.cmp.map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean);
+  const selected = new Set(list.map(keyOf));
+  const recommended = ranked().find(b => selected.has(keyOf(b)));
+  const recommendedKey = recommended ? keyOf(recommended) : (list[0] ? keyOf(list[0]) : '');
   const z = fitOf(S.height);
   const dash = v => v || '<i class="pend">官網未列</i>';
   const rows = [
@@ -1099,7 +1523,9 @@ function openCompare(){
     ['你的建議尺寸', () => z.s + '（身高 ' + S.height + ' cm）<i class="pend"> · 示意值</i>']
   ];
   let html = '<h3>規格比較</h3><p class="sub">在列表上直接比，不用切換到別的頁面。所有欄位皆取自官網既有的產品分類，系統不生成任何規格數字；標示「示意值」或「官網未列」的欄位代表官方資料尚未接上。</p>';
-  html += '<table class="ctab"><thead><tr><th></th>' + list.map(b => '<th class="nm">' + b.n + '</th>').join('') + '</tr></thead><tbody>';
+  html += '<table class="ctab"><thead><tr><th></th>' + list.map(b => '<th class="nm"><div class="cmp-product">' +
+    (keyOf(b) === recommendedKey ? '<span class="cmp-rec">目前推薦</span>' : '') +
+    '<img src="' + bikeImg(b) + '" alt="' + b.n + '"><b>' + b.n + '</b><small>' + b.y + ' 年式</small></div></th>').join('') + '</tr></thead><tbody>';
   rows.forEach(([label, fn]) => {
     html += '<tr><th>' + label + '</th>' + list.map(b => '<td>' + fn(b) + '</td>').join('') + '</tr>';
   });
@@ -1146,9 +1572,10 @@ function openDecide(){
       '<div><h4>' + top.n + '</h4><p class="pz">' + top.pr + '</p>' +
       '<ul>' + li.map(x => '<li>' + x + '</li>').join('') + '</ul>' +
       unless +
-      '<div class="pick-cta"><button class="a">預約試乘這台</button><button class="b2">看完整規格</button></div>' +
+      '<div class="pick-cta"><button class="a" id="decideBookBtn">預約試乘這台</button><button class="b2">看完整規格</button></div>' +
       '</div></div>';
   $('modal').classList.add('on');
+  $('decideBookBtn').onclick = () => openTestRideBooking(top);
 }
 $('decideBtn').onclick = openDecide;
 $('modalX').onclick = () => $('modal').classList.remove('on');
@@ -1161,7 +1588,7 @@ $('imgEntry').onclick = () => {
 /* ---------- 這份清單怎麼來的 ---------- */
 function renderOvw(n){
   const c = [];
-  if (S.terrain) c.push('路面 <b>' + T_LABEL[S.terrain] + '</b>');
+  if (S.terrain) c.push('想找 <b>' + (immCatLabel(S.terrain) || T_LABEL[S.terrain]) + '</b>');
   if (S.intent)  c.push('強度 <b>' + I_LABEL[S.intent] + '</b>');
   if (S.budget)  c.push('預算 <b>' + B_LABEL[S.budget] + '</b>');
   c.push('身高 <b>' + S.height + ' cm</b>');
@@ -1296,23 +1723,49 @@ function renderJStrip(){
     t.onclick = () => openPeek(b);
     el.appendChild(t);
   });
-  const n = document.createElement('button'); n.className = 'jgo'; n.textContent = '看整條路線 →'; n.onclick = openRoute; el.appendChild(n);
 }
 /* 點開一台車：只列官網分類欄位，不生成規格 */
+function wheelTxt(w){ return /[a-z]/i.test(w) ? w : w.replace('-','.') + '"'; }
 function openPeek(b){
-  jView(b, false);
-  const sp = [L_BEST[b.best], L_LVL[b.lvl], L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(w => w.replace('-','.') + '"').join(' / ')].filter(Boolean);
+  if (!b.faux) jView(b, false);
+  const cat = b.faux ? immCatLabel(b.fauxCat) : L_BEST[b.best];
+  const sp = [cat, L_LVL[b.lvl], L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(wheelTxt).join(' / ')].filter(Boolean);
   $('modalBody').innerHTML =
-    '<div class="pick"><div class="sh"><img src="' + ASSET[b.img] + '" alt=""></div><div>' +
-    '<h4>' + b.n + ' <small style="font-weight:400;font-size:14px;color:var(--ink-45)">' + b.y + ' 年式</small></h4>' +
+    '<div class="pick"><div class="sh"><img src="' + (b.faux ? encodeURI(b.img) : bikeImg(b)) + '" alt=""></div><div>' +
+    '<h4>' + b.n + ' <small style="font-weight:400;font-size:14px;color:var(--ink-45)">' + b.y + ' 年式</small>' +
+    (b.faux ? ' <span class="proto">示意規格</span>' : '') + '</h4>' +
     '<p class="pz">' + b.pr + '</p>' +
     '<div class="sp" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">' + sp.map(x => '<i style="font-style:normal;font-size:12px;border:1px solid var(--line);padding:4px 9px">' + x + '</i>').join('') + '</div>' +
-    (b.kids ? '<p style="font-size:13px;color:var(--ink-70)">官網標示適用 ' + b.kids.label + '</p>' : '') +
-    '<p style="font-size:13px;color:var(--ink-70);line-height:1.8;margin-top:8px">完整規格、幾何與 Size Guide 以官網產品頁為準；這裡只列官網分類欄位。</p>' +
-    '<div class="pick-cta"><button class="a">預約試乘</button><button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button></div>' +
-    '</div></div>';
+    (b.kids ? '<p style="font-size:13px;color:var(--ink-70)">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
+    '<div class="pick-cta"><button class="a" id="peekBook">預約試乘</button>' +
+      (b.faux ? '' : '<button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
+    '</div></div>' +
+    peekExtras(b);
   $('modal').classList.add('on');
-  $('peekCmp').onclick = () => { toggleCmp(keyOf(b)); $('modal').classList.remove('on'); };
+  $('peekBook').onclick = () => openTestRideBooking(b);
+  if ($('peekCmp')) $('peekCmp').onclick = () => { toggleCmp(keyOf(b)); $('modal').classList.remove('on'); };
+  const more = document.getElementById('rvMore');
+  if (more) more.onclick = () => { document.getElementById('rvGrid').classList.add('all'); more.remove(); };
+  $('modalBody').querySelectorAll('[data-faq]').forEach(btn => {
+    btn.onclick = () => {
+      const box = document.getElementById('faq-' + btn.dataset.faq);
+      const open = box.style.display === 'block';
+      $('modalBody').querySelectorAll('.answer-box').forEach(x => { x.style.display = 'none'; });
+      box.style.display = open ? 'none' : 'block';
+    };
+  });
+}
+/* 車主怎麼說與常見問題：原本掛在「你的路線」，改放進車款詳細視窗 */
+function peekExtras(b){
+  const faqs = routeFaqs(b).map(x => {
+    const a = faqAnswer(b, x.q);
+    return '<button class="route-question" data-faq="' + x.q + '">' + x.label + '</button>' +
+      '<div class="answer-box" id="faq-' + x.q + '" style="display:none;margin-bottom:4px">' + a.answer + '</div>';
+  }).join('');
+  return '<section class="peek-sec"><h5>' + b.n + ' 車主怎麼說 <span class="proto">原型示意</span></h5>' +
+    peekReviews(b) + '</section>' +
+    '<section class="peek-sec"><h5>常見問題</h5>' +
+    '<div class="route-questions">' + faqs + '</div></section>';
 }
 /* 停留與捲動 */
 window.addEventListener('scroll', () => {
@@ -1350,7 +1803,6 @@ function jCanvas(){
   setTimeout(() => {
     J._flip = true; renderPLP();
     if (svg){ svg.remove(); }
-    const lead = g.querySelector('.pc'); if (lead){ lead.classList.add('lead'); setTimeout(() => lead.classList.remove('lead'), 1400); }
   }, pts.length >= 2 ? 620 : 120);
   /* 3. 落回標準版型 */
   setTimeout(() => document.body.classList.remove('amb-canvas'), 1300);
@@ -1362,47 +1814,271 @@ function jSeen(){ const seen = []; J.seq.forEach(k => { if (!seen.includes(k)) s
 function jSignals(){
   const seen = jSeen(), n = Math.max(1, seen.length);
   const share = f => seen.filter(f).length / n;
-  const lvl = v => v >= .6 ? ['很明確', true] : v >= .3 ? ['有興趣', false] : ['還在看', false];
   return [
-    {k:'light', label:'輕一點', v: share(b => b.mat === 'composite-carbon')},
-    {k:'climb', label:'要爬坡', v: share(b => b.best === 'xc')},
-    {k:'down',  label:'要下坡', v: share(b => b.best === 'trail')},
-    {k:'ease',  label:'要省力', v: share(b => b.ebike)}
-  ].map(x => Object.assign(x, { txt: P[x.k] ? '你選的' : lvl(x.v)[0], hot: P[x.k] || lvl(x.v)[1], w: P[x.k] ? 1 : x.v }));
+    {k:'light', label:'輕一點', desc:'優先看碳纖維車架，減少不必要的重量。', v: share(b => b.mat === 'composite-carbon')},
+    {k:'climb', label:'要爬坡', desc:'優先看 XC 車款，對應爬坡與越野賽道。', v: share(b => b.best === 'xc')},
+    {k:'down',  label:'要下坡', desc:'優先看越野玩樂與全避震車款。', v: share(b => b.best === 'trail')},
+    {k:'ease',  label:'要省力', desc:'優先看具電力輔助的車款。', v: share(b => b.ebike)}
+  ].map(x => Object.assign(x, {
+    txt: P[x.k] ? '已選' : (seen.length && x.v >= .6 ? '依瀏覽建議' : '點選'),
+    hot: P[x.k] || (seen.length && x.v >= .6)
+  }));
 }
 function openRoute(){
-  $('route').classList.add('on'); window.scrollTo(0,0);
+  $('route').classList.add('on'); document.body.classList.add('route-open'); window.scrollTo(0,0);
   renderRoute();
 }
-function closeRoute(){ $('route').classList.remove('on'); }
+function closeRoute(){
+  $('route').classList.remove('on'); document.body.classList.remove('route-open');
+}
+let ROUTE_BIKES = [], ROUTE_PICKED_KEY = null, ROUTE_ADDED_KEYS = [];
+/* 評價本身是原型示意，但每一則講的角度綁在官網既有分面上（避震／材質／車款類別／電輔／童車），
+   換一台車評價就跟著換，不是同一段文字到處貼。名字與日期用車款 key 做決定性取樣，重開視窗不會跳動。 */
+const RV_PEOPLE = [['志豪','騎乘 2 年'],['Ken','騎乘 4 年'],['佳蓉','入手 8 個月'],['阿哲','騎乘 3 年'],
+                   ['宜臻','入手 5 個月'],['Marcus','騎乘 6 年'],['家瑋','入手 1 年']];
+const RV_WHEN   = ['1 週前','3 週前','上個月','4 天前','2026年7月','2026年6月','2 個月前'];
+function rvTexts(b){
+  const t = [];
+  if (b.ebike){ t.push('上坡跟逆風整個變輕鬆，通勤來回不太會流汗。'); t.push('電池要自己抓一下，長程出門前我會先算好距離。'); }
+  if (b.susp === 'full-suspension') t.push('碎石路段明顯比較從容，長下坡手不會那麼快酸。');
+  if (b.susp === 'hardtail')        t.push('踩踏反應很直接，出力有到位的感覺。');
+  if (b.mat === 'composite-carbon') t.push('牽車上樓的時候最有感，就是平常要小心刮傷。');
+  else                              t.push('耐用度夠，這個價位的配備算平衡，沒特別花俏但都用得到。');
+  if (b.best === 'xc')      t.push('爬坡是它的強項，長爬坡比較撐得住。');
+  if (b.best === 'trail')   t.push('下坡的穩定感夠，敢把速度放出來。');
+  if (b.best === 'fitness') t.push('河濱跟通勤都合適，騎姿沒有太趴，久騎不太累。');
+  if (b.kids)               t.push('小朋友腳踩得到地，上下車自己來，我在旁邊比較放心。');
+  t.push('建議一定要去門市試乘，差一號尺寸騎起來差滿多的。');
+  t.push('規格看很久，最後還是到店裡騎過才決定。');
+  t.push('第一次回廠保養店裡有先說明週期，沒花什麼時間。');
+  return t;
+}
+function rvHash(str){ let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0; return h; }
+function rvStars(n){ return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n); }
+function peekReviews(b){
+  const texts = rvTexts(b), seed = rvHash(keyOf(b)), N = Math.min(7, texts.length);
+  const list = [];
+  for (let i = 0; i < N; i++){
+    const p = RV_PEOPLE[(seed + i * 3) % RV_PEOPLE.length];
+    list.push({ nm:p[0], sub:p[1], when:RV_WHEN[(seed + i * 5) % RV_WHEN.length],
+                r:(i % 3 === 1 ? 4 : 5), size:SIZES[(seed + i) % SIZES.length].s, tx:texts[i] });
+  }
+  const avg = (list.reduce((a, x) => a + x.r, 0) / list.length).toFixed(1);
+  const card = (x, i) => '<article class="rv' + (i < 4 ? '' : ' extra') + '">' +
+    '<div class="rv-who"><span class="rv-av">' + x.nm[0] + '</span><div><b>' + x.nm + '</b><i>' + x.sub + '</i></div></div>' +
+    '<div class="rv-meta"><span class="rv-star">' + rvStars(x.r) + '</span>· ' + x.when + ' · ' + x.size + ' 號</div>' +
+    '<p class="rv-body">' + x.tx + '</p></article>';
+  return '<div class="rv-head"><strong>' + avg + '</strong><span>· ' + list.length + ' 則評價 · 尚未接真實評論</span></div>' +
+    '<div class="rv-grid" id="rvGrid">' + list.map(card).join('') + '</div>' +
+    (list.length > 4 ? '<button class="rv-more" id="rvMore">顯示全部 ' + list.length + ' 則評價</button>' : '');
+}
+function routeReviewNotes(b){
+  return [
+    b.susp === 'full-suspension' ? '顛簸路面較從容' : '踩踏反應直接',
+    b.mat === 'composite-carbon' ? '車架輕量感' : '耐用與價格平衡',
+    b.ebike ? '長距離比較省力' : (b.best === 'xc' ? '爬坡表現' : (b.best === 'trail' ? '下坡穩定感' : (b.best === 'fitness' ? '通勤與河濱騎乘' : '操控反應')))
+  ];
+}
+function routeUseContext(b){
+  if (b.ebike) return '電力輔助與長距離騎乘';
+  if (b.best === 'xc') return 'XC 路線與爬坡騎乘';
+  if (b.best === 'trail') return '林道與越野騎乘';
+  if (b.best === 'fitness') return '城市通勤與河濱騎乘';
+  return '日常騎乘';
+}
+function routeFaqs(b){
+  let feature = {q:'feature', label:'這台的配置需要注意什麼？'};
+  if (b.ebike) feature.label = '電池、充電與續航要注意什麼？';
+  else if (b.mat === 'composite-carbon') feature.label = '碳纖維車架需要注意什麼？';
+  else if (b.susp === 'full-suspension') feature.label = '全避震日常保養會比較複雜嗎？';
+  else if (b.susp === 'hardtail' || b.susp === 'front-suspension') feature.label = '單避震適合什麼騎乘情境？';
+  else if (b.susp === 'rigid') feature.label = '沒有避震，騎起來有什麼差別？';
+  return [
+    {q:'usage', label:b.n + ' 適合騎什麼路面？'},
+    feature,
+    {q:'size', label:'我適合 ' + b.n + ' 的哪個尺寸？'}
+  ];
+}
+function chooseRouteBike(k, openIfSelected){
+  if (ROUTE_PICKED_KEY === k){
+    if (openIfSelected){ const b = BIKES.find(x => keyOf(x) === k); if (b) openPeek(b); }
+    return;
+  }
+  ROUTE_PICKED_KEY = k; renderRoute();
+}
+function renderRouteTools(bikes){
+  ROUTE_BIKES = bikes.filter(Boolean).slice(0,3);
+  if (!ROUTE_BIKES.length){ $('routeTools').innerHTML = ''; $('routePick').innerHTML = ''; return; }
+  const pickerBikes = [];
+  ROUTE_BIKES.concat(ROUTE_ADDED_KEYS.map(k => BIKES.find(b => keyOf(b) === k))).filter(Boolean).forEach(b => {
+    if (!pickerBikes.some(x => keyOf(x) === keyOf(b))) pickerBikes.push(b);
+  });
+  const picked = pickerBikes.find(b => keyOf(b) === ROUTE_PICKED_KEY);
+  $('routeMapTitle').textContent = picked ? '你的選擇：' + picked.n : '根據你的選擇，推薦 ' + ROUTE_BIKES.length + ' 台';
+  $('routeMapHelp').textContent = picked ? '中央是你選的車；再點一次可查看詳情，或隨時改選。' : '點圖上的車款或上方選項，把它設成你的選擇。';
+  $('routePick').innerHTML = '<span>我的選擇</span>' + pickerBikes.map(b => {
+    const on = keyOf(b) === ROUTE_PICKED_KEY;
+    return '<button class="' + (on ? 'on' : '') + '" data-pick="' + keyOf(b) + '" aria-pressed="' + on + '">' + (on ? '已選 · ' : '') + b.n + ' ' + b.y + '</button>';
+  }).join('') + '<button class="add" id="routePickAdd" aria-haspopup="dialog">＋ 新增其他車款</button>' + (picked ? '<button class="clear" id="routePickClear">清除選擇</button>' : '');
+  $('routePick').querySelectorAll('[data-pick]').forEach(btn => { btn.onclick = () => chooseRouteBike(btn.dataset.pick, false); });
+  $('routePickAdd').onclick = openRouteBikePicker;
+  if ($('routePickClear')) $('routePickClear').onclick = () => { ROUTE_PICKED_KEY = null; renderRoute(); };
+  const top = ROUTE_BIKES[0], notes = routeReviewNotes(top), faqs = routeFaqs(top);
+  const comparisonCount = Math.max(0, ROUTE_BIKES.length - 1);
+  $('routeTools').innerHTML =
+    '<article class="route-tool"><p class="eyebrow">COMPARE</p><h4>比較 ' + top.n + ' 與 ' + comparisonCount + ' 台相近車款</h4>' +
+      '<p class="desc">以你目前選中的 ' + top.n + ' 為基準，比價格、車架、避震與電力輔助。</p>' +
+      '<div class="route-minis">' + ROUTE_BIKES.map((b,i) => '<span class="route-mini' + (i === 0 && picked ? ' primary' : '') + '"><img src="' + ASSET[b.img] + '" alt="' + b.n + '"></span>').join('') + '</div>' +
+      '<button class="route-action primary" id="routeCompare">比較 ' + top.n + ' 與另外 ' + comparisonCount + ' 台</button></article>' +
+    '<article class="route-tool"><p class="eyebrow">OWNER REVIEWS <span class="proto">原型示意</span></p><h4>' + top.n + ' 車主怎麼說</h4>' +
+      '<p class="desc">整理 ' + routeUseContext(top) + '的使用情境；內容會跟著你的選擇切換。</p>' +
+      '<div class="review-line"><strong>4.6</strong><span>示意評分 · 尚未接真實評論</span></div>' +
+      '<div class="review-tags">' + notes.map(x => '<span>' + x + '</span>').join('') + '</div>' +
+      '<button class="route-action" id="routeReviews">查看 ' + top.n + ' 回饋摘要</button></article>' +
+    '<article class="route-tool"><p class="eyebrow">常見問題</p><h4>' + top.n + ' 常見問題</h4><p class="desc">依目前選中車款的類別、材質與避震配置更新。</p>' +
+      '<div class="route-questions">' + faqs.map(x => '<button class="route-question" data-q="' + x.q + '">' + x.label + '</button>').join('') + '</div></article>';
+  $('routeCompare').onclick = () => {
+    S.cmp = ROUTE_BIKES.map(keyOf); renderPLP(); openCompare();
+  };
+  $('routeReviews').onclick = openRouteReviews;
+  $('routeTools').querySelectorAll('[data-q]').forEach(b => { b.onclick = () => openRouteQuestion(b.dataset.q); });
+}
+function openRouteBikePicker(){
+  const current = new Set(ROUTE_BIKES.map(keyOf));
+  const available = BIKES.filter(b => !b.frameset && !current.has(keyOf(b)));
+  $('modalBody').innerHTML =
+    '<h3>新增網站其他車款</h3>' +
+    '<p class="sub">搜尋目前網站中的自行車。加入後會設為「我的選擇」，並與最接近的兩台車一起顯示。</p>' +
+    '<div class="bike-picker-search"><label for="routeBikeSearch">搜尋車名、年式、用途或價格</label>' +
+      '<input id="routeBikeSearch" type="search" autocomplete="off" placeholder="例如：Talon、電動、2025、8 萬">' +
+      '<p class="bike-picker-count" id="routeBikeCount" aria-live="polite"></p></div>' +
+    '<div class="bike-picker-grid" id="routeBikeGrid"></div>';
+  const render = query => {
+    const q = query.trim().toLowerCase();
+    const list = available.filter(b => {
+      const text = [b.n,b.y,b.pr,L_BEST[b.best],L_LVL[b.lvl],L_SUSP[b.susp],L_MAT[b.mat],b.ebike ? '電動 電力輔助' : ''].filter(Boolean).join(' ').toLowerCase();
+      return !q || text.includes(q);
+    });
+    $('routeBikeCount').textContent = '找到 ' + list.length + ' 台車';
+    $('routeBikeGrid').innerHTML = list.length ? list.map(b => {
+      const k = keyOf(b), added = ROUTE_ADDED_KEYS.includes(k);
+      return '<article class="bike-picker-card"><img src="' + ASSET[b.img] + '" alt="' + b.n + '">' +
+        '<h4>' + b.n + ' <small>' + b.y + '</small></h4>' +
+        '<p class="meta">' + [L_BEST[b.best],L_SUSP[b.susp],b.ebike ? '電力輔助' : ''].filter(Boolean).join(' · ') + '</p>' +
+        '<p class="price">' + b.pr + '</p>' +
+        '<button data-add-bike="' + k + '">' + (added ? '再次選擇這台' : '加入並選擇') + '</button></article>';
+    }).join('') : '<p class="bike-picker-empty">沒有符合的車款，換一個名稱或條件試試看。</p>';
+    $('routeBikeGrid').querySelectorAll('[data-add-bike]').forEach(btn => {
+      btn.onclick = () => {
+        const k = btn.dataset.addBike;
+        if (!ROUTE_ADDED_KEYS.includes(k)) ROUTE_ADDED_KEYS.push(k);
+        ROUTE_PICKED_KEY = k;
+        $('modal').classList.remove('on');
+        renderRoute();
+      };
+    });
+  };
+  $('routeBikeSearch').addEventListener('input', e => render(e.target.value));
+  render('');
+  $('modal').classList.add('on');
+  requestAnimationFrame(() => $('routeBikeSearch').focus());
+}
+function openRouteReviews(){
+  const b = ROUTE_BIKES[0]; if (!b) return;
+  const notes = routeReviewNotes(b);
+  const concern = b.mat === 'composite-carbon' ? '會留意刮傷與後續維修成本'
+    : b.ebike ? '會在意電池資訊、整車重量與後續保養'
+    : b.susp === 'full-suspension' ? '會在意避震設定與長期保養'
+    : '會在意尺寸、騎姿與長時間舒適度';
+  const useContext = routeUseContext(b);
+  $('modalBody').innerHTML =
+    '<h3>' + b.n + ' · 車主回饋摘要 <span class="proto">原型示意</span></h3>' +
+    '<p class="sub">以下內容用來測試評論體驗，並非 Giant 官網或真實購買者資料。正式版應接入來源、購買驗證、車架尺寸與使用時間。</p>' +
+    '<div class="review-modal-top"><img src="' + ASSET[b.img] + '" alt="' + b.n + '"><div><div class="score">4.6 / 5</div><p>相近騎乘情境最常提到：<b>' + notes.join('、') + '</b>。較常被提出的顧慮是：' + concern + '。</p></div></div>' +
+    '<div class="review-list">' +
+      '<article class="review-card"><p class="meta">使用 6 個月 · ' + useContext + '</p><h4>' + notes[0] + '</h4><p>希望評論能說清楚騎在哪裡、用了多久，讓感受有可比較的背景。</p></article>' +
+      '<article class="review-card"><p class="meta">相近身高 · 同尺寸車架</p><h4>尺寸與騎姿感受</h4><p>正式版可優先顯示與你身高、尺寸和經驗接近的車主回饋。</p></article>' +
+      '<article class="review-card"><p class="meta">長期持有 · 保養紀錄</p><h4>不只看剛交車</h4><p>加入耗材、維修與升級經驗，補足短期試乘看不到的部分。</p></article>' +
+    '</div>';
+  $('modal').classList.add('on');
+}
+function faqAnswer(top, q){
+  const z = fitOf(S.height);
+  let title = '', answer = '';
+  if (q === 'usage'){
+    title = top.n + ' 適合騎什麼路面？';
+    answer = '網站目前把 <b>' + top.n + '</b> 歸在「<b>' + L_BEST[top.best] + '</b>」，騎乘等級是「' + L_LVL[top.lvl] + '」，避震類別為「' + L_SUSP[top.susp] + '」。因此可先把它用在<b>' + routeUseContext(top) + '</b>的試乘比較；實際路感仍要依尺寸、輪胎與路面確認。';
+  } else if (q === 'feature'){
+    if (top.ebike){
+      title = top.n + ' 的電池、充電與續航要注意什麼？';
+      answer = '這台具備<b>電力輔助</b>' + (top.batt ? '，目前資料標示「' + top.batt + '」' : '') + '。續航會受助力模式、坡度、載重與路況影響；目前原型沒有官方續航與充電時間資料，因此不估算數字，正式版應直接串接產品頁與電池保固資訊。';
+    } else if (top.mat === 'composite-carbon'){
+      title = top.n + ' 的碳纖維車架需要注意什麼？';
+      answer = '網站資料標示這台使用<b>' + L_MAT[top.mat] + '</b>。挑選時除了重量，也應確認撞擊檢查、鎖固扭力與後續維修方式；正式內容應連結該車款的官方保養文件，不以通用描述取代。';
+    } else if (top.susp === 'full-suspension'){
+      title = top.n + ' 的全避震保養會比較複雜嗎？';
+      answer = '這台屬於<b>' + L_SUSP[top.susp] + '</b>。相較無後避震車款，多了避震設定與活動部位需要確認；實際保養週期必須依原廠手冊、騎乘頻率與路況決定。';
+    } else if (top.susp === 'hardtail' || top.susp === 'front-suspension'){
+      title = top.n + ' 的單避震適合什麼情境？';
+      answer = '這台的避震類別是<b>' + L_SUSP[top.susp] + '</b>，網站用途分類是「' + L_BEST[top.best] + '」。它可作為踩踏效率與前輪緩衝之間的選擇，但是否適合你的路線仍應透過同尺寸試乘確認。';
+    } else {
+      title = top.n + ' 沒有避震，騎起來有什麼差別？';
+      answer = '這台資料標示為<b>無避震（Rigid）</b>，踩踏回饋通常較直接；路面震動則會更受輪胎、胎壓與騎姿影響。建議用你常騎的柏油或河濱路況試乘，不只看規格表。';
+    }
+  } else {
+    title = '我適合 ' + top.n + ' 的哪個尺寸？';
+    answer = '你填的身高是 <b>' + S.height + ' cm</b>，目前通用區間落在 <b>' + z.s + '</b>。這只是流程示意；正式建議仍需串接 <b>' + top.n + '</b> 的官方 Size Guide，並由門市確認跨高、手臂伸展與騎姿。';
+  }
+  return {title: title, answer: answer};
+}
+function openRouteQuestion(q){
+  if (!ROUTE_BIKES.length) return;
+  const top = ROUTE_BIKES[0], a = faqAnswer(top, q);
+  $('modalBody').innerHTML = '<h3>' + a.title + '</h3><p class="sub">以下依目前選中的 ' + top.n + ' 回答；沒有官方資料的地方不自行補數字。</p><div class="answer-box">' + a.answer + '</div>';
+  $('modal').classList.add('on');
+}
 function renderRoute(){
   const seen = jSeen();
   $('routeSub').textContent = seen.length
-    ? '你看過 ' + seen.length + ' 台。越靠近中央的越接近你目前的條件，線依你的瀏覽順序串起。點任何一台可以再看一次；下面的選項會同時重排這張圖與清單。'
-    : '還沒有看過的車。回到清單點開幾台，這裡會把它們串成一條路線。';
-  /* 訊號 */
+    ? '你看過 ' + seen.length + ' 台。圖中先放 3 台最有關聯的車；從「新增其他車款」加入的車也會保留在圖上。點任何一台可以再看一次。'
+    : '先放上 3 台最接近你目前條件的選擇；從「新增其他車款」加入的車也會一起出現在圖上。';
+  /* 可直接操作的偏好題；瀏覽訊號只用來提示，不再顯示空白比例條 */
   $('routeSig').innerHTML = jSignals().map(x =>
-    '<div class="s"><p><span>' + x.label + '</span><span class="' + (x.hot ? 'hot' : '') + '">' + x.txt + '</span></p><div class="bar"><i style="width:' + Math.round(x.w*100) + '%"></i></div></div>').join('');
-  /* 在意什麼 */
-  const pc = $('priChips'); pc.innerHTML = '';
-  Object.keys(PRI_LABEL).forEach(k => {
-    const b = document.createElement('button'); b.className = 'pchip2' + (P[k] ? ' on' : ''); b.textContent = PRI_LABEL[k];
-    b.onclick = () => { P[k] = !P[k]; S.touched = true; renderRoute(); J._flip = true; renderPLP(); };
-    pc.appendChild(b);
+    '<button class="s' + (P[x.k] ? ' on' : '') + '" data-pri="' + x.k + '" aria-pressed="' + !!P[x.k] + '"><p><span>' + x.label + '</span><span class="' + (x.hot ? 'hot' : '') + '">' + x.txt + '</span></p><small>' + x.desc + '</small></button>').join('');
+  $('routeSig').querySelectorAll('[data-pri]').forEach(b => {
+    b.onclick = () => { const k = b.dataset.pri; P[k] = !P[k]; S.touched = true; renderRoute(); J._flip = true; renderPLP(); };
   });
-  /* 圖：中央 = 目前最合適（排除車架單品）；其餘看過的依排名決定距離 */
+  /* 圖：中央 = 目前選擇；基礎推薦維持 3 台，手動新增的車款則持續保留為周圍節點 */
   const list = ranked().filter(b => !b.frameset);
-  const top = list[0];
+  const fallback = BIKES.filter(b => !b.frameset);
+  const recommended = list[0] || seen[seen.length - 1] || fallback[0];
+  const pickedBike = ROUTE_PICKED_KEY ? BIKES.find(b => keyOf(b) === ROUTE_PICKED_KEY && !b.frameset) : null;
+  const top = pickedBike || recommended;
+  const picked = new Set(top ? [keyOf(top)] : []);
+  const others = [];
+  [recommended].concat([...seen].reverse(), list, fallback).forEach(b => {
+    if (!b) return;
+    const k = keyOf(b);
+    if (others.length < 2 && !b.frameset && !picked.has(k)) {
+      picked.add(k); others.push(b);
+    }
+  });
+  renderRouteTools([top].concat(others));
   const svg = $('routeMap');
   const CX = 500, CY = 250;
-  const others = seen.filter(b => !top || keyOf(b) !== keyOf(top)).slice(-8);
-  const rankOf = b => Math.max(0, list.findIndex(x => keyOf(x) === keyOf(b)));
+  const mapOthers = [];
+  others.concat(ROUTE_ADDED_KEYS.map(k => BIKES.find(b => keyOf(b) === k))).filter(Boolean).forEach(b => {
+    if (top && keyOf(b) === keyOf(top)) return;
+    if (!mapOthers.some(x => keyOf(x) === keyOf(b))) mapOthers.push(b);
+  });
   const pos = {};
   if (top) pos[keyOf(top)] = [CX, CY];
-  others.forEach((b, i) => {
-    const r = Math.min(215, 125 + rankOf(b) * 14);
-    const a = -Math.PI/2 + (i / others.length) * Math.PI * 2 + 0.35;
-    pos[keyOf(b)] = [CX + Math.cos(a) * r * 1.9, CY + Math.sin(a) * r * 0.85];
+  mapOthers.forEach((b, i) => {
+    const ring = Math.floor(i / 8), start = ring * 8;
+    const count = Math.min(8, mapOthers.length - start), slot = i - start;
+    const a = -Math.PI/2 + (slot / count) * Math.PI * 2 + (ring % 2 ? Math.PI/8 : 0);
+    const rx = ring ? 400 : 260, ry = ring ? 150 : 135;
+    pos[keyOf(b)] = [CX + Math.cos(a) * rx, CY + Math.sin(a) * ry];
   });
   /* 節點一次建立、之後只改 transform，讓重排會滑動 */
   const ensure = (b) => {
@@ -1412,7 +2088,9 @@ function renderRoute(){
       gN = document.createElementNS('http://www.w3.org/2000/svg','g'); gN.setAttribute('class','nd'); gN.dataset.k = k;
       gN.innerHTML = '<circle r="34"></circle><image width="56" height="42" x="-28" y="-21" preserveAspectRatio="xMidYMid meet"></image><text class="t" y="-46"></text><text y="52"></text><text class="m" y="68"></text>';
       gN.querySelector('image').setAttribute('href', ASSET[b.img]);
-      gN.onclick = () => openPeek(b);
+      gN.setAttribute('role','button'); gN.setAttribute('tabindex','0');
+      gN.onclick = () => chooseRouteBike(k, true);
+      gN.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); chooseRouteBike(k, true); } };
       svg.appendChild(gN);
     }
     return gN;
@@ -1421,7 +2099,7 @@ function renderRoute(){
   let lines = svg.querySelector('g.lines');
   if (!lines){ lines = document.createElementNS('http://www.w3.org/2000/svg','g'); lines.setAttribute('class','lines'); svg.insertBefore(lines, svg.firstChild); }
   lines.innerHTML = '';
-  if (top) others.forEach(b => {
+  if (top) mapOthers.forEach(b => {
     const p = pos[keyOf(b)];
     const l = document.createElementNS('http://www.w3.org/2000/svg','line'); l.setAttribute('class','ln');
     l.setAttribute('x1', p[0]); l.setAttribute('y1', p[1]); l.setAttribute('x2', CX); l.setAttribute('y2', CY);
@@ -1437,25 +2115,431 @@ function renderRoute(){
   const keep = new Set();
   const place = (b, isTop) => {
     const k = keyOf(b), gN = ensure(b), p = pos[k]; keep.add(k);
-    const v = J.views[k] || 0, r = isTop ? 46 : Math.min(42, 30 + v * 4);
+    const v = J.views[k] || 0, r = isTop ? 64 : Math.min(54, 43 + v * 4);
     gN.classList.toggle('c', !!isTop);
+    gN.classList.toggle('picked', k === ROUTE_PICKED_KEY);
+    gN.classList.toggle('added', ROUTE_ADDED_KEYS.includes(k));
+    gN.setAttribute('aria-label', b.n + (k === ROUTE_PICKED_KEY ? '，你的選擇；再按一次查看詳情' : '；按下設為你的選擇'));
     gN.querySelector('circle').setAttribute('r', r);
     const im = gN.querySelector('image'), sz = r * 1.55; im.setAttribute('width', sz); im.setAttribute('height', sz * .75); im.setAttribute('x', -sz/2); im.setAttribute('y', -sz*.375);
-    gN.querySelector('text.t').textContent = isTop ? '目前最合適' : '';
+    gN.querySelector('text.t').textContent = k === ROUTE_PICKED_KEY ? '我的選擇' : (isTop ? '目前最合適' : (ROUTE_ADDED_KEYS.includes(k) ? '新增車款' : ''));
     gN.querySelector('text.t').setAttribute('y', -(r + 12));
     gN.querySelectorAll('text')[1].textContent = b.n; gN.querySelectorAll('text')[1].setAttribute('y', r + 18);
     gN.querySelector('text.m').textContent = (v > 1 ? '看了 ' + v + ' 次 · ' : '') + b.pr.replace(' - ', '–'); gN.querySelector('text.m').setAttribute('y', r + 34);
     gN.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
   };
   if (top) place(top, true);
-  others.forEach(b => place(b, false));
+  mapOthers.forEach(b => place(b, false));
   svg.querySelectorAll('g.nd').forEach(n => { if (!keep.has(n.dataset.k)) n.remove(); });
 }
+
+/* ---------- 沉浸式導購：對話只保留最近兩則，左側依內容持續重組 ---------- */
+const GUIDE = {messages:[], bikes:[], step:0, voice:false, beforeOverflow:''};
+function guideRecommend(){
+  const list = ranked().filter(b => !b.frameset);
+  if (S.budget){
+    const within = list.filter(b => b.lo <= S.budget);
+    if (within.length >= 2) return within.slice(0,3);
+  }
+  return list.slice(0,3);
+}
+function guidePush(role, text){
+  GUIDE.messages.push({role, text});
+  renderGuideChat();
+}
+function renderGuideChat(){
+  const recent = GUIDE.messages.slice(-2), chat = $('guideChat'); chat.innerHTML = '';
+  recent.forEach((m,i) => {
+    const d = document.createElement('div');
+    d.className = 'guide-msg ' + m.role + (i === 0 && recent.length > 1 ? ' old' : '');
+    d.textContent = m.text; chat.appendChild(d);
+  });
+  $('guideHistory').textContent = GUIDE.messages.map(m => (m.role === 'sales' ? '導購員：' : '你：') + m.text).join('\n\n');
+}
+function guideRenderBikes(bikes, mode){
+  GUIDE.bikes = bikes.filter(Boolean).slice(0,3);
+  const g = $('guideBikes');
+  g.className = 'guide-bikes' + (GUIDE.bikes.length === 1 ? ' single' : '');
+  g.innerHTML = GUIDE.bikes.map((b,i) => {
+    const tags = [L_MAT[b.mat], L_SUSP[b.susp], b.ebike ? '電力輔助' : L_BEST[b.best]].filter(Boolean);
+    const why = mode === 'decision' ? '這一輪的主推薦'
+      : mode === 'compare' ? (i === 0 ? '目前最合適' : '一起比較')
+      : (i === 0 ? '目前最接近你的條件' : '替代選擇 ' + i);
+    return '<article class="guide-bike' + (i === 0 ? ' featured' : '') + '">' +
+      '<p class="gwhy">' + why + '</p><div class="gshot"><img src="' + ASSET[b.img] + '" alt="' + b.n + '"></div>' +
+      '<h3>' + b.n + '</h3><p class="gprice">' + b.pr + '</p>' +
+      '<div class="gspec">' + tags.map(x => '<span>' + x + '</span>').join('') + '</div>' +
+      '<button data-bike="' + keyOf(b) + '">查看這台 →</button></article>';
+  }).join('');
+  g.querySelectorAll('[data-bike]').forEach(btn => {
+    btn.onclick = () => { const b = BIKES.find(x => keyOf(x) === btn.dataset.bike); if (b) openPeek(b); };
+  });
+}
+function guideSetQuicks(items){
+  $('guideQuick').innerHTML = '';
+  items.forEach(label => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = label;
+    b.onclick = () => guideHandle(label); $('guideQuick').appendChild(b);
+  });
+}
+function guideApplyText(text){
+  let changed = parseSentence(text);
+  if (/輕一點|輕量|碳纖/.test(text)){ P.light = true; changed = true; }
+  if (/爬坡/.test(text)){ P.climb = true; changed = true; }
+  if (/下坡|落差/.test(text)){ P.down = true; changed = true; }
+  if (/省力/.test(text)){ P.ease = true; changed = true; }
+  if (changed){ S.touched = true; S.sort = 'fit'; }
+  return changed;
+}
+function guideReply(text, bikes, mode){
+  const top = bikes[0], second = bikes[1]; if (!top) return '目前沒有符合的完整車款，我們先放寬一個條件。';
+  if (mode === 'compare' && second){
+    const diffs = [];
+    if (top.mat !== second.mat) diffs.push('車架材質');
+    if (top.susp !== second.susp) diffs.push('避震類別');
+    if (top.ebike !== second.ebike) diffs.push('是否有電力輔助');
+    const d = diffs.length ? diffs.join('、') : '官網目前列出的分類相近';
+    return '我把它們並排了。' + top.n + ' 和 ' + second.n + ' 目前最明顯的差別是' + d + '；價格不直接等於性能高低。';
+  }
+  if (mode === 'decision'){
+    return '如果現在要先選一台試乘，我會從 ' + top.n + ' 開始。它最符合目前條件；實際尺寸與騎姿仍要到門市確認。';
+  }
+  if (/評價|review|車主/i.test(text)){
+    return '我會優先找相近身高、相近路線，而且使用三個月以上的車主回饋。這個 demo 尚未接真實評論，所以先不把示意內容當成產品事實。';
+  }
+  if (/尺寸|身高/.test(text)){
+    return '以你目前填的 ' + S.height + ' 公分，通用示意區間是 ' + fitOf(S.height).s + '；每個車系仍要接官方 Size Guide 才能正式建議。';
+  }
+  if (S.budget) return '收到，我先把起價在 ' + B_LABEL[S.budget] + ' 的選擇往前排。現在最接近的是 ' + top.n + '。';
+  if (P.ease || S.terrain === 'ebike') return '我先把省力放在前面，左側會優先出現有電力輔助的車款。';
+  return '我已經依這個方向重排。現在最接近的是 ' + top.n + '，另外保留兩台替代選擇，方便你看取捨。';
+}
+function guideHandle(raw){
+  const text = String(raw || '').trim(); if (!text) return;
+  guidePush('user', text); $('guideInput').value = '';
+  guideApplyText(text);
+  const compare = /比較|差在哪|差異|多花/.test(text);
+  const decision = /幫我選|直接選|選一台|哪台適合/.test(text) && !compare;
+  const mode = decision ? 'decision' : (compare ? 'compare' : 'explore');
+  let bikes = guideRecommend();
+  if (decision) bikes = bikes.slice(0,1);
+  GUIDE.step++;
+  $('guideStep').textContent = String(Math.min(4,GUIDE.step + 1)).padStart(2,'0') + ' · ' + (decision ? '做決定' : compare ? '看差異' : '縮小選擇');
+  $('guideTitle').textContent = decision ? '先試這一台' : compare ? '把真正不同的地方攤開' : '依剛才的條件，留下這幾台';
+  $('guideSummary').textContent = decision ? '保留一台主推薦；仍可回到對話調整。' : compare ? '只使用官網已有的分類與價格，不自行補規格。' : '每說一個條件，畫面都會重新排序。';
+  guideRenderBikes(bikes, mode);
+  renderPLP();
+  setTimeout(() => {
+    if (!$('guide').classList.contains('on')) return;
+    guidePush('sales', guideReply(text, bikes, mode));
+    guideSetQuicks(decision ? ['比較前兩台','查看車主評價','預約試乘'] : compare ? ['新手選哪台','預算 8 萬內','幫我選一台'] : ['只看預算 8 萬內','比較前兩台','新手選哪台']);
+  }, 320);
+}
+function openGuide(){
+  GUIDE.messages = []; GUIDE.step = 0; GUIDE.voice = false;
+  GUIDE.beforeOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden';
+  $('guide').classList.add('on'); $('guideVoice').classList.remove('on'); $('guideVoice').setAttribute('aria-pressed','false'); $('guideVoiceState').classList.remove('on');
+  const bikes = ROUTE_BIKES.length ? ROUTE_BIKES : guideRecommend();
+  $('guideStep').textContent = '01 · 先抓方向'; $('guideTitle').textContent = '先從這三台開始';
+  $('guideSummary').textContent = '左側內容會跟著你和導購員的討論持續改變。';
+  guideRenderBikes(bikes, 'explore');
+  guidePush('sales', '我先把目前最接近的三台放在左邊。你現在最想解決的是爬坡、下坡，還是騎久一點不要太累？');
+  guideSetQuicks(['爬坡想省力','預算 8 萬內','先比較這三台']);
+  setTimeout(() => $('guideInput').focus(), 80);
+}
+function closeGuide(){
+  $('guide').classList.remove('on'); document.body.style.overflow = GUIDE.beforeOverflow;
+  if ($('route').classList.contains('on')) renderRoute();
+}
+$('guideOpen').onclick = enterSelectionLive;
+$('guideExit').onclick = closeGuide;
+$('guideForm').addEventListener('submit', e => { e.preventDefault(); guideHandle($('guideInput').value); });
+$('guideVoice').onclick = () => {
+  GUIDE.voice = !GUIDE.voice; $('guideVoice').classList.toggle('on', GUIDE.voice); $('guideVoiceState').classList.toggle('on', GUIDE.voice);
+  $('guideVoice').setAttribute('aria-pressed', String(GUIDE.voice));
+  if (GUIDE.voice) guidePush('sales', '語音模式已開啟。這個 demo 會保留即時字幕；你可以用快速回答模擬說話內容。');
+};
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if ($('modal').classList.contains('on')) $('modal').classList.remove('on');
+  else if ($('guide').classList.contains('on')) closeGuide();
+});
 $('routeClose').onclick = closeRoute;
 $('routeGo').onclick = () => { closeRoute(); if (!J.on) jEngage(true); else { J._flip = true; renderPLP(); } };
 $('routeDecide').onclick = () => { closeRoute(); if (!J.on) jEngage(true); setTimeout(openDecide, 300); };
 $('ambRoute').onclick = openRoute;
-$('swFilm').onclick = e => { e.currentTarget.classList.toggle('on'); document.body.classList.toggle('route-film'); };
+$('swFilm').onclick = e => {
+  e.currentTarget.classList.toggle('on'); document.body.classList.toggle('route-film');
+};
+
+/* ---------- 同頁選車現場（整合 Janet 版本） ---------- */
+const IMM = {step:0,heightSet:false,busy:false,cyc:null,idx:0,sceneToken:0,beforeOverflow:''};
+const immEsc = s => String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+const IMM_SCENE = {daily:'bg/hero-lifestyle.jpg',ebike:'bg/hero-ebike.jpg',gravel:'bg/hero-xroad.jpg',mtb:'bg/hero-offroad.jpg',kids:'bg/hero-kids.jpg',fitness:'bg/hero-lifestyle.jpg',xc:'bg/hero-xroad.jpg',trail:'bg/hero-offroad.jpg'};
+const IMM_SCENE_ORDER = ['daily','ebike','gravel','mtb','kids'];
+/* 五個方向各一個資料夾，車名即檔名（每組第一台當該方向的封面）。
+   這些車不在官網登山車分類頁的資料集裡，所以只顯示車名與方向，
+   價格與規格標「官網未列」，不借用別台的數字。 */
+/* 結尾「你可能也想一起看」的縮圖仍用這五張通用去背圖：那一排的車名與價格來自官網資料集，沒有對應的實拍 */
+const IMM_REL_IMAGES = ['Bikes/bike1.png','Bikes/bike2.png','Bikes/bike3.png','Bikes/bike4.png','Bikes/bike5.png'];
+const IMM_CAT_DIR = {daily:'Daily', ebike:'E-bike', gravel:'Rock', mtb:'Mountain', kids:'Child'};
+const IMM_CAT_BIKES = {
+  daily : [['Escape',12800],['Escape Disc 2',16800],['Faster E+',48000],['R2200',9800]],
+  ebike : [['Miya E+',45800],['Expressway E+',52800],['EA-102',32800],['EA-402',38800]],
+  gravel: [['Revolt Advanced SL 0',168000],['FastRoad AR Advanced 1-Asia',62800],['Roam Disc 2',18800],['Explore E+',78000]],
+  mtb   : [['Anthem Advanced SL 0',188000],['Trance X Advanced Pro 29 1',178000],['XTC Advanced 29 3',52800],['Talon E+',79800]],
+  kids  : [['Faith',62800],['Seek',14800],['STP 20 FS',22800],['Pre rCarbon',8800]]
+};
+const immNTD = v => 'NT$' + v.toLocaleString('en-US');
+function immCatItems(k){
+  return (IMM_CAT_BIKES[k] || []).map(([n,pr]) => ({n: n, pr: pr, cat: k, img: 'Bikes/' + IMM_CAT_DIR[k] + '/' + n + '.png'}));
+}
+/* 第一題：五個方向輪流，各出第一台，背景同時換成該方向的場景 */
+/* 五個分類的 icon。風格對齊 Stratis UI Icons：16 格線、stroke 1.33333、
+   stroke-linecap/linejoin 皆 round、fill 全部 none、圖形內縮到 2–14。
+   顏色一律 currentColor，所以深底的 chip 與淺底的清單都能直接沿用。 */
+const IMM_CAT_ICON = {
+  daily :'<circle cx="3.667" cy="11.667" r="2.333"/><circle cx="12.333" cy="11.667" r="2.333"/><circle cx="10" cy="3.333" r="0.667"/><path d="M8 11.667V9.333L6 7.333l2.667-2L10 7.333h1.333"/>',
+  ebike :'<path d="M9.5 2 4 9.2h3.6L6.5 14 12 6.8H8.4L9.5 2Z"/>',
+  gravel:'<path d="M4 14 6.8 2.6"/><path d="M12 14 9.2 2.6"/><path d="M8 4.6v1.7M8 8.6v1.7M8 12.6V14"/>',
+  mtb   :'<path d="M1.8 13.6 6.2 4.8l3.2 5.4 1.9-3.2 3.1 6.6Z"/>',
+  kids  :'<circle cx="5.2" cy="4.2" r="1.9"/><path d="M2 14v-2.2a3.2 3.2 0 0 1 6.4 0V14"/><circle cx="11.6" cy="7.2" r="1.5"/><path d="M9.1 14v-1.4a2.5 2.5 0 0 1 5 0V14"/>',
+  /* 新車上市：直接寫 NEW 的文字徽章。字沿用站上的 Open Sans，所以與卡片上既有的 NEW 標籤同一套字。
+     這一顆是 28×16 不是正方形——三個字母塞進 16 格會擠成一團。尚未放到畫面上，catIcon('new') 即可取用。 */
+  new   :'<rect x="1" y="2.6" width="26" height="10.8" rx="2"/><text x="14" y="8.1" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, system-ui, sans-serif" font-size="7.4" font-weight="800" fill="currentColor" stroke="none">NEW</text>'
+};
+const IMM_ICON_VB = {new:'0 0 28 16', newBig:'0 0 48 48'};
+IMM_CAT_ICON.newBig = '<rect x="5" y="10" width="38" height="28" rx="2" stroke-width="2"/><text x="24" y="24.6" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, system-ui, sans-serif" font-size="12" font-weight="700" fill="currentColor" stroke="none">NEW</text>';
+function catIcon(k){
+  if (!IMM_CAT_ICON[k]) return '';
+  const vb = IMM_ICON_VB[k] || '0 0 16 16';
+  return '<svg viewBox="' + vb + '" fill="none" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round">' + IMM_CAT_ICON[k] + '</svg>';
+}
+const IMM_CAT = [['日常騎乘','daily'],['E-bike 電動輔助','ebike'],['越野礫石公路','gravel'],['登山車','mtb'],['親子/童車','kids']];
+const immCatLabel = v => (IMM_CAT.find(c => c[1] === v) || ['',''])[0];
+const IMM_STEPS = [
+  {key:'terrain',ask:'您好，<br>今天想看什麼樣的車呢？',chips:IMM_CAT,echo:immCatLabel,
+   reply:v=>v==='ebike'?'電輔車我們這邊有 <b>'+BIKES.filter(b=>b.ebike).length+'</b> 台。':'好，'+immCatLabel(v)+'。'},
+  {key:'budget',ask:'預算大概抓多少呢？',chips:[['3 萬以內',30000],['3 – 10 萬',100000],['10 – 20 萬',200000],['20 萬以上',999999]],echo:v=>B_LABEL[v],
+   reply:v=>'好，'+B_LABEL[v]+'。'},
+  {key:'height',ask:'最後，您的身高是？',type:'height',echo:v=>v+' cm',
+   reply:v=>'那先從 <b>'+fitOf(v).s+'</b> 號看起。'}
+];
+function immSay(html,side){
+  const d=document.createElement('div'); d.className='line '+side; d.innerHTML=html; $('immFeed').appendChild(d);
+  [...$('immFeed').querySelectorAll('.line:not(.gone)')].slice(0,-2).forEach(m=>{m.classList.add('gone');setTimeout(()=>m.remove(),900)});
+}
+function immPool(){
+  return BIKES.filter(b=>!b.frameset).filter(b=>S.terrain==='kids'||!(S.touched&&b.kids&&b.kids.max&&S.height>b.kids.max)).map(b=>Object.assign({},b,score(b))).sort((a,c)=>c.s-a.s||a.lo-c.lo);
+}
+/* 右邊那排 chip 只有第一題（分類）跟左邊的車對得起來：
+   對得起來時，價格右邊給一個箭頭＝直接選這個分類，該分類的 chip 同時亮起並填滿倒數。 */
+/* ---------- 選車現場的車陣：四台由遠而近排成斜角，自動往前推 ---------- */
+const IMM_ALL = () => IMM_SCENE_ORDER.flatMap(k => immCatItems(k));
+/* 舞台上 20 台車裡，只有 5 台在官網登山車分類頁的資料集內；其餘 15 台先用示意規格佔位，
+   欄位值仍沿用官網分面的既有代碼（不新增分類），視窗上以「示意規格」標記。
+   ★ 這是暫時佔位，與 CLAUDE.md「不得捏造規格」相衝突，接上官方資料後整段刪掉即可。
+   ★ 這些物件只在詳細視窗裡即時組出來，不會進 BIKES，所以左側分面的 18 個數字不受影響。 */
+const IMM_SPEC = {
+  'Escape'                     :{y:'2026',best:'fitness',lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['700c'],brake:'rim-brake', post:[]},
+  'Escape Disc 2'              :{y:'2026',best:'fitness',lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['700c'],brake:'disc-brake',post:[]},
+  'Faster E+'                  :{y:'2026',best:'e-bike', lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['700c'],brake:'disc-brake',post:[],ebike:true,batt:'375 Wh · 內建電池'},
+  'R2200'                      :{y:'2025',best:'fitness',lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['700c'],brake:'rim-brake', post:[]},
+  'Miya E+'                    :{y:'2026',best:'e-bike', lvl:'sport',      susp:'front-suspension', mat:'aluminium',        wheel:['26'],  brake:'disc-brake',post:[],ebike:true,batt:'400 Wh · 側拉電池'},
+  'Expressway E+'              :{y:'2026',best:'e-bike', lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['20'],  brake:'disc-brake',post:[],ebike:true,batt:'375 Wh · 可拆式電池'},
+  'EA-102'                     :{y:'2025',best:'e-bike', lvl:'sport',      susp:'front-suspension', mat:'aluminium',        wheel:['26'],  brake:'rim-brake', post:[],ebike:true,batt:'300 Wh · 可拆式電池'},
+  'EA-402'                     :{y:'2025',best:'e-bike', lvl:'sport',      susp:'front-suspension', mat:'aluminium',        wheel:['26'],  brake:'disc-brake',post:[],ebike:true,batt:'400 Wh · 可拆式電池'},
+  'Revolt Advanced SL 0'       :{y:'2026',best:'xc',     lvl:'performance',susp:'rigid',            mat:'composite-carbon', wheel:['700c'],brake:'disc-brake',post:[]},
+  'FastRoad AR Advanced 1-Asia':{y:'2026',best:'fitness',lvl:'performance',susp:'rigid',            mat:'composite-carbon', wheel:['700c'],brake:'disc-brake',post:[]},
+  'Roam Disc 2'                :{y:'2025',best:'fitness',lvl:'sport',      susp:'front-suspension', mat:'aluminium',        wheel:['700c'],brake:'disc-brake',post:[]},
+  'Explore E+'                 :{y:'2026',best:'e-bike', lvl:'sport',      susp:'front-suspension', mat:'aluminium',        wheel:['700c'],brake:'disc-brake',post:[],ebike:true,batt:'500 Wh · 側拉電池'},
+  'Seek'                       :{y:'2025',best:'fitness',lvl:'sport',      susp:'rigid',            mat:'aluminium',        wheel:['24'],  brake:'disc-brake',post:[],kids:{label:'9–14 歲 · 身高 135–160 cm',min:135,max:160}},
+  'STP 20 FS'                  :{y:'2026',best:'dirt-jumper',lvl:'sport',  susp:'front-suspension', mat:'aluminium',        wheel:['20'],  brake:'disc-brake',post:[],kids:{label:'6–10 歲 · 身高 115–135 cm',min:115,max:135}},
+  'Pre rCarbon'                :{y:'2026',best:'fitness',lvl:'sport',      susp:'rigid',            mat:'composite-carbon', wheel:['12'],  brake:'rim-brake', post:[],kids:{label:'2–4 歲 · 身高 85–100 cm',min:85,max:100}}
+};
+function immFauxBike(x){
+  const sp = IMM_SPEC[x.n] || {y:'2026',best:'fitness',lvl:'sport',susp:'rigid',mat:'aluminium',wheel:['700c'],brake:'disc-brake',post:[]};
+  return Object.assign({n:x.n, pr:immNTD(x.pr), lo:x.pr, hi:x.pr, cta:'瞭解更多', ebike:false, frameset:false, kids:null,
+                        img:x.img, faux:true, fauxCat:x.cat}, sp);
+}
+function immMatchBike(b){
+  const pool=BIKES.filter(x=>!x.frameset);
+  return pool.find(x=>x.n===b.n)||pool.find(x=>b.n.indexOf(x.n+' ')===0||x.n.indexOf(b.n+' ')===0)||null;
+}
+function immOpenDetail(b){
+  openPeek(immMatchBike(b)||immFauxBike(b));
+}
+function immYearOf(x){ const m = immMatchBike(x); return m ? m.y : ((IMM_SPEC[x.n] || {}).y || ''); }
+function deckPool(){
+  if (S.terrain) return immCatItems(S.terrain);
+  if (IMM.newOnly) return IMM_ALL().filter(x => immYearOf(x) >= '2026');
+  return IMM_ALL();
+}
+function deckFacets(x){
+  const b = immMatchBike(x) || Object.assign({wheel:[]}, IMM_SPEC[x.n]);
+  return [L_SUSP[b.susp], L_MAT[b.mat], (b.wheel || []).map(wheelTxt).join(' / ')].filter(Boolean);
+}
+function deckCard(x, cls){
+  const d = document.createElement('div');
+  d.className = 'deck-card ' + cls;
+  d.innerHTML = '<img alt="" src="' + encodeURI(x.img) + '">';
+  d.onclick = () => immOpenDetail(x);
+  return d;
+}
+/* 只保留四張在場上：往前推一格時，最前面那張放大淡出，後面補一張新的 */
+function deckRender(){
+  const g = $('immDeck'), pool = IMM.pool;
+  g.innerHTML = '';
+  for (let n = 3; n >= 0; n--) g.appendChild(deckCard(pool[(IMM.i + n) % pool.length], 'p' + n));
+  deckMeta();
+}
+function deckMeta(){
+  const x = IMM.pool[IMM.i % IMM.pool.length], m = $('immMeta');
+  if (!x) return;
+  m.classList.add('swap');
+  setTimeout(() => {
+    m.innerHTML = '<h3>' + x.n + '</h3>' +
+      '<div class="tags">' + deckFacets(x).map(t => '<i>' + t + '</i>').join('') + '</div>' +
+      '<p class="pz">' + immNTD(x.pr) + '</p>' +
+      '<button class="go">瞭解更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
+    m.querySelector('.go').onclick = () => immOpenDetail(x);
+    m.classList.remove('swap');
+    if (!S.terrain) immSetScene(x.cat);          /* 還沒選分類時，背景跟著最前面那台走 */
+    catsSync(x.cat);
+  }, 260);
+}
+/* 進場那一格要先落在起點、下一個 tick 才換到終點，transition 才跑得出來。
+   用 setTimeout 不用 rAF：分頁在背景時 rAF 不會跑，卡片會永遠停在起點而愈疊愈多。 */
+function deckTick(fn){ setTimeout(fn, 24); }
+function deckSweep(g){ g.querySelectorAll('.out,.pre').forEach(n => n.remove()); }
+function deckGo(dir){
+  const g = $('immDeck'), pool = IMM.pool;
+  if (!pool.length) return;
+  deckSweep(g);                                   /* 上一輪沒退場乾淨的先清掉，場上永遠只有四張 */
+  if (dir > 0){
+    const out = g.querySelector('.p0');
+    IMM.i = (IMM.i + 1) % pool.length;
+    const add = deckCard(pool[(IMM.i + 3) % pool.length], 'pre');
+    g.insertBefore(add, g.firstChild);
+    deckTick(() => {
+      if (out){ out.className = 'deck-card out'; setTimeout(() => out.remove(), 1100); }
+      ['p1','p2','p3'].forEach((c,k) => { const n = g.querySelector('.' + c); if (n) n.className = 'deck-card p' + k; });
+      add.className = 'deck-card p3';
+    });
+  } else {
+    IMM.i = (IMM.i - 1 + pool.length) % pool.length;
+    const back = g.querySelector('.p3');
+    if (back){ back.className = 'deck-card pre'; setTimeout(() => back.remove(), 1100); }
+    ['p2','p1','p0'].forEach((c,k) => { const n = g.querySelector('.' + c); if (n) n.className = 'deck-card p' + (3 - k); });
+    const add = deckCard(pool[IMM.i], 'out');
+    g.appendChild(add);
+    deckTick(() => { add.className = 'deck-card p0'; });
+  }
+  deckMeta();
+  deckTimer();
+}
+function deckTimer(){ clearInterval(IMM.cyc); IMM.cyc = setInterval(() => deckGo(1), IMM.dwell || 4200); }
+function immStage(){
+  IMM.pool = deckPool();
+  if (!IMM.pool.length){ clearInterval(IMM.cyc); IMM.cyc = null; return; }
+  IMM.i = 0; IMM.dwell = 4200;
+  deckRender(); deckTimer();
+}
+/* 上方六個入口。前五個對應第一題的分類，「新車上市」走官網自己標的年式 */
+const IMM_ENTRY = [['new','新車上市'],['daily','日常騎乘'],['ebike','E-bike 電動輔助'],['gravel','越野礫石公路'],['mtb','登山車'],['kids','親子/童車']];
+function catsSync(cat){
+  [...$('immCats').children].forEach(n => n.classList.toggle('on',
+    S.terrain ? n.dataset.k === S.terrain : (IMM.newOnly ? n.dataset.k === 'new' : n.dataset.k === cat)));
+}
+function renderCats(){
+  const c = $('immCats'); c.innerHTML = '';
+  IMM_ENTRY.forEach(([k,label]) => {
+    const b = document.createElement('button');
+    b.className = 'imm-cat'; b.dataset.k = k;
+    b.innerHTML = catIcon(k === 'new' ? 'newBig' : k) + '<span>' + label + '</span>';
+    b.onclick = () => {
+      if (k === 'new'){ IMM.newOnly = !IMM.newOnly; S.newOnly = IMM.newOnly; S.touched = true; immStage(); catsSync(); return; }
+      const st = IMM_STEPS.find(x => x.key === 'terrain');
+      if (!st || S.terrain || IMM.busy) return;
+      immPick(st, k);
+    };
+    c.appendChild(b);
+  });
+}
+function immSetScene(key){
+  const sc=$('immScene'),img=sc.querySelector('img'),src=IMM_SCENE[key],token=++IMM.sceneToken;
+  if(!src){sc.classList.remove('show');return}
+  if(img.getAttribute('src')===src){sc.classList.add('show');return}
+  sc.classList.remove('show');
+  setTimeout(()=>{if(token!==IMM.sceneToken)return;img.src=src;requestAnimationFrame(()=>sc.classList.add('show'))},img.getAttribute('src')?520:0);
+}
+const IMM_HINT = {
+  terrain:'例如：電輔車、10萬以內、身高 172cm',
+  budget :'例如：10 萬以內、三萬左右、20 萬以上',
+  height :'例如：172、身高 172cm'
+};
+const IMM_RETRY = {
+  terrain:'講個方向就好，例如「想通勤用」或「電輔車」。',
+  budget :'講個數字就好，例如「10 萬以內」。',
+  height :'直接講身高數字就可以，例如「172」。'
+};
+function immRetryHint(){ const st=IMM_STEPS[IMM.step]; return (st && IMM_RETRY[st.key]) || '再說一次也可以。'; }
+function immFilled(key){return key==='height'?IMM.heightSet:S[key]!=null}
+function immAsk(silent=false){
+  const st=IMM_STEPS[IMM.step];if(!st)return immConclude();
+  if(!silent)immSay(st.ask,'them');
+  $('immHint').textContent=IMM_HINT[st.key]||IMM_HINT.terrain;   /* 沒有選項可點了，提示要講什麼就是唯一的線索 */
+}
+function immPick(st,v){
+  if(IMM.busy)return;IMM.busy=true;if(st.key==='height'){S.height=v;IMM.heightSet=true}else S[st.key]=v;S.touched=true;immSay(immEsc(st.echo(v)),'me');if(st.key==='terrain')immSetScene(v);setTimeout(()=>{immSay(st.reply(v),'them');immStage();if(st.key==='terrain')catsSync()},420);IMM.step++;setTimeout(()=>{IMM.busy=false;immAdvance()},1350);
+}
+function immAdvance(){while(IMM.step<IMM_STEPS.length&&immFilled(IMM_STEPS[IMM.step].key))IMM.step++;if(IMM.step>0&&S.terrain)immSetScene(S.terrain);if(IMM.step>=IMM_STEPS.length)return immConclude();immAsk()}
+function immHandle(txt){
+  txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
+  const st=IMM_STEPS[IMM.step];
+  let hit=parseSentence(txt);
+  /* 沒有滑桿了，身高就得從句子裡讀。問到身高那題時，只講一個數字也算。
+     (?!\d) 是為了不要把「150000」的前三碼當成身高。 */
+  const H=txt.match(/(?:^|\D)(1[3-9]\d)(?!\d)/);
+  if(H&&(/身高|cm|公分/i.test(txt)||(st&&st.key==='height'))){S.height=+H[1];IMM.heightSet=true;hit=true}
+  S.touched=true;setTimeout(()=>{if(!hit){immSay('這句我不太確定，'+immRetryHint(),'them');immAsk(true);IMM.busy=false;return}immSay('好，我先照這些條件排排看。','them');immStage();if(S.terrain)immSetScene(S.terrain);setTimeout(()=>{IMM.busy=false;immAdvance()},900)},380);
+}
+/* 結尾的那一刻：影片位先滿版，再縮小移到定位；車名、價格與相關車款隨後補進來。
+   影片還沒生成，框裡先放該車的官網產品圖當 poster——之後把 <img> 換成 <video> 即可，動畫不用改。 */
+function finIntro(){
+  const el=$('finHero'), fin=$('finale');
+  const settle=()=>{ fin.classList.remove('intro'); el.classList.remove('zoom') };
+  clearTimeout(IMM.finT); clearTimeout(IMM.finT2); clearTimeout(IMM.finT3);
+  el.classList.remove('zoom'); el.style.transition=''; el.style.transform='';
+  fin.classList.add('intro');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return settle();
+  IMM.finT3=setTimeout(settle,2900);                                      /* 分頁在背景時 rAF 不會跑，保底讓內容照樣出現 */
+  requestAnimationFrame(()=>{
+    const r=el.getBoundingClientRect();
+    if(!r.width||!fin.classList.contains('intro')) return settle();
+    const s=Math.max(innerWidth/r.width, innerHeight/r.height);
+    el.classList.add('zoom');
+    el.style.transition='none';
+    el.style.transform='translate('+(innerWidth/2-(r.left+r.width/2))+'px,'+(innerHeight/2-(r.top+r.height/2))+'px) scale('+s+')';
+    void el.offsetWidth;
+    el.style.transition=''; el.style.transform='';
+    clearTimeout(IMM.finT3);
+    IMM.finT =setTimeout(()=>fin.classList.remove('intro'), 1700);         /* 文字提早補進來，與影片落定的動作交疊 */
+    IMM.finT2=setTimeout(()=>el.classList.remove('zoom'), 2250);          /* 外框與標籤等影片停穩才出現 */
+  });
+}
+function immConclude(){
+  IMM.busy=false;const pool=immPool(),top=pool[0],z=fitOf(S.height);clearInterval(IMM.cyc);const fv=$('finVid');if(!fv.getAttribute('src'))fv.src='bg/hero-rotate.mp4';try{fv.currentTime=0;fv.play().catch(()=>{})}catch(e){}$('finCap').innerHTML='<p class="k">最符合你條件的一台</p><h2>'+top.n+'</h2><p class="p">'+top.pr+'</p><p class="r">依你 '+S.height+' cm 的身高，先以 <b>'+z.s+'</b> 號作為試乘起點。</p><div class="fin-cta"><button class="a" id="finGo">帶著條件看完整清單</button><button class="b" id="finRide">預約到門市試乘</button></div>';const seen=new Set([top.n]),rel=pool.slice(1).filter(b=>!seen.has(b.n)&&seen.add(b.n)).slice(0,5);$('finRel').innerHTML='<p class="h">你可能也想一起看</p><div class="fin-row">'+rel.map((b,i)=>'<button class="fin-card"><img src="'+IMM_REL_IMAGES[(i+1)%IMM_REL_IMAGES.length]+'" alt=""><b>'+b.n+'</b><span>'+b.pr+'</span></button>').join('')+'</div>';$('finale').classList.add('on');finIntro();$('finGo').onclick=()=>{immClose();goPLP()};$('finRide').onclick=()=>{$('finRide').textContent='已記下這台'};$('finRel').querySelectorAll('.fin-card').forEach(c=>c.onclick=()=>{immClose();goPLP()});
+}
+function immOpen(){
+  if($('route').classList.contains('on'))closeRoute();IMM.beforeOverflow=document.body.style.overflow;document.body.style.overflow='hidden';S.terrain=null;S.budget=null;IMM.step=0;IMM.heightSet=false;IMM.busy=false;$('imm').classList.add('on');$('finale').classList.remove('on');$('immFeed').innerHTML='';IMM.newOnly=false;S.newOnly=false;renderCats();immStage();setTimeout(immAdvance,360);
+}
+function immClose(){try{$('finVid').pause()}catch(e){}$('imm').classList.remove('on');$('finale').classList.remove('on','intro');$('finHero').classList.remove('zoom');clearTimeout(IMM.finT);clearTimeout(IMM.finT2);clearTimeout(IMM.finT3);clearInterval(IMM.cyc);document.body.style.overflow=IMM.beforeOverflow;immStopVoice()}
+$('deckPrev').onclick=()=>deckGo(-1);$('deckNext').onclick=()=>deckGo(1);
+$('immClose').onclick=immClose;$('finX').onclick=immClose;$('immSend').onclick=()=>immHandle($('immInput').value);$('immInput').addEventListener('keydown',e=>{if(e.key==='Enter')immHandle($('immInput').value)});
+const IMM_SPEECH=window.SpeechRecognition||window.webkitSpeechRecognition;let immRec=null,immListening=false;
+function immStopVoice(){if(immRec&&immListening){try{immRec.stop()}catch(e){}}immListening=false;$('immMic').classList.remove('live')}
+$('immMic').onclick=()=>{if(!IMM_SPEECH||location.protocol==='file:'){$('immInput').placeholder='直接開啟檔案時無法用說的，先用打字⋯';$('immInput').focus();return}if(immListening){immStopVoice();return}immRec=new IMM_SPEECH();immRec.lang='zh-TW';immRec.onstart=()=>{immListening=true;$('immMic').classList.add('live')};immRec.onend=()=>{immListening=false;$('immMic').classList.remove('live')};immRec.onresult=e=>immHandle(e.results[0][0].transcript);immRec.start()};
 
 renderHome();
 renderPLP();
