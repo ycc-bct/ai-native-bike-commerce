@@ -682,7 +682,7 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-peek .peek-sec h5{font-size:15px;font-weight:700;margin-bottom:6px;color:#fff}
 .imm-peek .rv-head strong{color:#fff}
 .imm-peek .rv-head span{color:rgba(255,255,255,.45)}
-.imm-peek .rv-grid{gap:24px 28px}
+.imm-peek .rv-grid{grid-template-columns:1fr;gap:24px}
 .imm-peek .rv-av{background:rgba(255,255,255,.1);color:#fff}
 .imm-peek .rv-who b{color:#fff}
 .imm-peek .rv-who i,.imm-peek .rv-meta{color:rgba(255,255,255,.45)}
@@ -691,7 +691,11 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-peek .rv-more{border-color:rgba(255,255,255,.34);background:transparent;color:#fff}
 .imm-peek .rv-more:hover{background:#fff;color:#0B0D16}
 .imm-peek .route-question{color:#fff;border-color:rgba(255,255,255,.14)}
-.imm-peek .answer-box{border-left-color:var(--glow);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78)}
+/* 常見問題在深色底上不用品牌藍：箭頭與 hover 都走白色，答案框的左邊條也是 */
+.imm-peek .route-question::after{color:#fff}
+.imm-peek .route-question:hover{color:#fff;opacity:.7}
+.imm-peek .answer-box{border-left-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78)}
+.imm-peek .answer-box b{color:#fff}
 /* 右下：同一個視窗裡輸入 */
 .imm-ask{position:absolute;z-index:6;right:40px;bottom:var(--imm-pad);width:clamp(380px,27.3vw,524px);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .imm .line{max-width:100%;animation:immLineIn .6s var(--ease);transition:opacity .8s var(--ease),transform .8s var(--ease),max-height .8s var(--ease),margin .8s var(--ease);max-height:300px}@keyframes immLineIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -977,7 +981,7 @@ body.amb-on .amb-tab .a{display:none}
         <button class="imm-send" id="immSend" aria-label="送出"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M5 11l7-7 7 7"/></svg></button>
       </div>
     </div>
-    <p class="imm-hint" id="immHint">例如：電輔車、10萬以內、身高 172cm</p>
+    <p class="imm-hint" id="immHint">例如：電輔車、10 萬以內、身高 172cm</p>
   </div>
   <div class="finale" id="finale">
     <button class="fin-x" id="finX">結束 ✕</button><div class="fin-ring"></div><div class="fin-sweep"></div>
@@ -1183,6 +1187,8 @@ const S = {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,whe
 
 /* ---------- 整句描述 → 篩選條件 ---------- */
 function bucket(v){ return v<=30000?30000 : v<=100000?100000 : v<=200000?200000 : 999999; }
+/* 「20 萬以上」講的是下界，不是上界——落回同一格會變成「10 – 20 萬」，往上跳一格才對 */
+function bucketAbove(v){ return v<30000?30000 : v<100000?100000 : v<200000?200000 : 999999; }
 /* 中文數字轉阿拉伯數字：只處理「五萬」「十萬」「二十萬」「十五萬」這種口語金額 */
 const CN_D = {'零':0,'一':1,'二':2,'兩':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9};
 function cnNum(str){
@@ -1205,7 +1211,8 @@ function parseSentence(txt){
   else if (/輕鬆|新手|入門|第一台|玩票|休閒/.test(t))  { S.intent='sport'; hit=true; }
   const wan = t.match(/(\d+(?:\.\d+)?|[零一二兩三四五六七八九十]+)\s*萬/);
   const yuan = t.match(/(\d{4,7})/);
-  if (wan && !isNaN(cnNum(wan[1]))) { S.budget = bucket(cnNum(wan[1])*10000); hit=true; }
+  if (wan && !isNaN(cnNum(wan[1]))) { const v = cnNum(wan[1])*10000;
+    S.budget = /以上|起跳|以上的|更高/.test(t) ? bucketAbove(v) : bucket(v); hit=true; }
   else if (yuan && /預算|以內|以下|左右/.test(t)) { S.budget = bucket(parseInt(yuan[1],10)); hit=true; }
   const h = t.match(/(1[3-9]\d)\s*(cm|公分)?/);
   if (h && /身高|高|cm|公分/.test(t)) { S.height = parseInt(h[1],10); hit=true; }
@@ -1796,14 +1803,14 @@ function openPeek(b){
   wirePeek($('modalBody'), b, () => $('modal').classList.remove('on'));
 }
 /* 車主怎麼說與常見問題：原本掛在「你的路線」，改放進車款詳細視窗 */
-function peekExtras(b){
+function peekExtras(b, limit){
   const faqs = routeFaqs(b).map(x => {
     const a = faqAnswer(b, x.q);
     return '<button class="route-question" data-faq="' + x.q + '">' + x.label + '</button>' +
       '<div class="answer-box" id="faq-' + x.q + '" style="display:none;margin-bottom:4px">' + a.answer + '</div>';
   }).join('');
   return '<section class="peek-sec"><h5>' + b.n + ' 車主怎麼說 <span class="proto">原型示意</span></h5>' +
-    peekReviews(b) + '</section>' +
+    peekReviews(b, limit) + '</section>' +
     '<section class="peek-sec"><h5>常見問題</h5>' +
     '<div class="route-questions">' + faqs + '</div></section>';
 }
@@ -1895,7 +1902,8 @@ function rvTexts(b){
 }
 function rvHash(str){ let h = 0; for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0; return h; }
 function rvStars(n){ return '★★★★★'.slice(0, n) + '☆☆☆☆☆'.slice(0, 5 - n); }
-function peekReviews(b){
+function peekReviews(b, limit){
+  const lim = limit || 4;
   const texts = rvTexts(b), seed = rvHash(keyOf(b)), N = Math.min(7, texts.length);
   const list = [];
   for (let i = 0; i < N; i++){
@@ -1904,13 +1912,13 @@ function peekReviews(b){
                 r:(i % 3 === 1 ? 4 : 5), size:SIZES[(seed + i) % SIZES.length].s, tx:texts[i] });
   }
   const avg = (list.reduce((a, x) => a + x.r, 0) / list.length).toFixed(1);
-  const card = (x, i) => '<article class="rv' + (i < 4 ? '' : ' extra') + '">' +
+  const card = (x, i) => '<article class="rv' + (i < lim ? '' : ' extra') + '">' +
     '<div class="rv-who"><span class="rv-av">' + x.nm[0] + '</span><div><b>' + x.nm + '</b><i>' + x.sub + '</i></div></div>' +
     '<div class="rv-meta"><span class="rv-star">' + rvStars(x.r) + '</span>· ' + x.when + ' · ' + x.size + ' 號</div>' +
     '<p class="rv-body">' + x.tx + '</p></article>';
   return '<div class="rv-head"><strong>' + avg + '</strong><span>· ' + list.length + ' 則評價 · 尚未接真實評論</span></div>' +
     '<div class="rv-grid" id="rvGrid">' + list.map(card).join('') + '</div>' +
-    (list.length > 4 ? '<button class="rv-more" id="rvMore">顯示全部 ' + list.length + ' 則評價</button>' : '');
+    (list.length > lim ? '<button class="rv-more" id="rvMore">顯示全部 ' + list.length + ' 則評價</button>' : '');
 }
 function routeReviewNotes(b){
   return [
@@ -2419,7 +2427,7 @@ function peekInlineHTML(b){
     (b.kids ? '<p class="pk-kid">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
     '<div class="pk-cta"><button class="a" id="pkBook">預約試乘</button>' +
       (b.faux ? '' : '<button class="b2" id="pkCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
-    peekExtras(b);
+    peekExtras(b, 3);
 }
 function wirePeek(root, b, onCmp){
   const book = root.querySelector('#pkBook, #peekBook'); if (book) book.onclick = () => openTestRideBooking(b);
@@ -2580,8 +2588,8 @@ function immSetScene(key){
   setTimeout(()=>{if(token!==IMM.sceneToken)return;img.src=src;requestAnimationFrame(()=>sc.classList.add('show'))},img.getAttribute('src')?520:0);
 }
 const IMM_HINT = {
-  terrain:'例如：電輔車、10萬以內、身高 172cm',
-  budget :'例如：10 萬以內、三萬左右、20 萬以上',
+  terrain:'例如：電輔車、10 萬以內、身高 172cm',
+  budget :'例如：3 萬以內、10 萬左右、20 萬以上',
   height :'例如：172、身高 172cm'
 };
 const IMM_RETRY = {
