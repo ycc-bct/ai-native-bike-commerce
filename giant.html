@@ -598,7 +598,7 @@ body.amb-on .amb-frame{--amb-glow:.16;opacity:1}
 body.route-open .amb-frame{opacity:0!important}
 
 /* ---------- 選車現場：直接內嵌於本頁 ---------- */
-.imm{position:fixed;inset:0;z-index:500;display:none;background:#05070F;overflow:hidden;--glow:#2C57F0;--imm-base:7vh}
+.imm{position:fixed;inset:0;z-index:500;display:none;background:#05070F;overflow:hidden;--glow:#2C57F0;--imm-base:7vh;--cats-top:clamp(28px,4.44vh,48px);--strip-top:clamp(84px,11.48vh,124px);--strip-h:clamp(104px,12.96vh,140px);--hero-gap:clamp(20px,3.7vh,40px);--imm-pad:clamp(44px,7.4vh,80px)}
 .imm.on{display:block}
 /* 主視覺上壓一層 287.56° 的黑色漸層（左下淡、右上濃），右側的字才壓得住 */
 .imm-amb{position:absolute;inset:0;z-index:1;background:linear-gradient(287.56deg,rgba(0,0,0,.7) 0%,#000 70%);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
@@ -606,48 +606,55 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-scene img{width:100%;height:100%;object-fit:cover;transform:translateX(5.2%)}
 .imm-scene.show{opacity:1}
 /* 導覽列 */
-.imm-top{position:absolute;z-index:9;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+/* 這條 bar 橫跨全寬又壓在分類列上半部，整條不吃點擊，只讓左右兩塊可點 */
+.imm-top{position:absolute;z-index:9;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;pointer-events:none}
+.imm-top .who,.imm-x{pointer-events:auto}
 .imm-top .who{display:flex;align-items:center;gap:10px;color:#fff}
 .imm-top .mark{width:25px;color:#fff;display:flex}.imm-top .mark svg{width:100%;height:auto}
 .imm-top b{font-size:16px;display:block;font-weight:500;line-height:1}
 .imm-top small{font-size:12px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:8px;margin-top:8px;line-height:1}
 .imm-top small i{font-style:normal}.imm-top small em{width:4px;height:4px;background:#fff;border-radius:50%;display:block}
 .imm-x{color:#fff;font-size:16px;display:flex;align-items:center;gap:10px}.imm-x svg{width:24px;height:24px}
-/* 上方六個入口 */
-.imm-cats{position:absolute;z-index:8;top:40px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px}
-.imm-cat{display:flex;flex-direction:column;align-items:center;gap:16px;width:clamp(96px,6.35vw,122px);opacity:.5;color:#fff;transition:opacity .3s var(--ease)}
+/* 上方入口：橫向一列，圖示在左、字在右 */
+/* 點擊範圍用 padding 撐到 48px 高，容器再往左上退回 padding 的量，圖文落點維持 x280 / y60 */
+.imm-cats{position:absolute;z-index:8;left:calc(14.6% - 8px);top:var(--cats-top);display:flex;align-items:center;gap:4px}
+.imm-cat{display:flex;align-items:center;gap:8px;padding:12px 8px;opacity:.5;color:#fff;transition:opacity .3s var(--ease);white-space:nowrap}
 .imm-cat:hover,.imm-cat.on{opacity:1}
-.imm-cat svg{width:clamp(36px,2.5vw,48px);height:clamp(36px,2.5vw,48px);stroke-width:.667}
-.imm-cat span{font-size:clamp(13px,.83vw,16px);text-align:center;line-height:1;white-space:nowrap}
-/* 左側：3D 斜角的車陣 */
+.imm-cat svg{width:24px;height:24px;flex:none}
+.imm-cat span{font-size:16px;line-height:1}
+/* 左側：上方縮圖列＋單一主角車 */
 .imm-stage{position:absolute;z-index:2;left:0;top:0;width:68.5%;height:100%}
-.deck{position:absolute;inset:0}
-.deck-card{position:absolute;width:74.5%;transform:translate(-50%,-50%) scale(1);transform-origin:50% 50%;
-  transition:left .95s var(--ease),top .95s var(--ease),transform .95s var(--ease),opacity .95s var(--ease);will-change:transform,opacity}
-.deck-card img{width:100%;height:auto;display:block;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
-.deck-card.p0{left:50%;  top:49.2%;transform:translate(-50%,-50%) scale(1);      opacity:1;z-index:4}
-.deck-card.p1{left:36.9%;top:44.1%;transform:translate(-50%,-50%) scale(.7755);  opacity:.55;z-index:3}
-.deck-card.p2{left:28.6%;top:39.4%;transform:translate(-50%,-50%) scale(.6204);  opacity:.3;z-index:2}
-.deck-card.p3{left:22.1%;top:37.6%;transform:translate(-50%,-50%) scale(.5429);  opacity:.15;z-index:1}
-.deck-card.out{left:64%;top:57%;transform:translate(-50%,-50%) scale(1.34);opacity:0;z-index:5}
-.deck-card.pre{left:22.1%;top:37.6%;transform:translate(-50%,-50%) scale(.42);opacity:0;z-index:0}
-/* 車陣下方：左右箭頭與車款資訊 */
-.deck-bar{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);width:clamp(430px,42.2vw,811px);
-  display:flex;align-items:center;justify-content:center;gap:20px;color:#fff}
-.deck-nav{width:24px;height:24px;flex:none;color:#fff;opacity:.7;transition:opacity .2s,transform .3s var(--ease)}
+.strip{position:absolute;left:0;right:0;top:var(--strip-top);height:var(--strip-h);overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 90px),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 90px),transparent 100%)}
+.strip-row{display:flex;gap:20px;height:100%;transition:transform .8s var(--ease);will-change:transform}
+.strip-i{width:150px;flex:none;display:flex;flex-direction:column;gap:0;opacity:.72;transition:opacity .35s var(--ease)}
+.strip-i:hover,.strip-i.on{opacity:1}
+.strip-i img{width:150px;height:calc(100% - 12px);object-fit:contain;display:block}
+.strip-i b{display:block;height:12px;font-size:12px;line-height:1;font-weight:400;color:rgba(255,255,255,.5);
+  text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .35s var(--ease)}
+.strip-i.on b{color:#fff}
+/* 上緣固定在縮圖列下方 40px、下緣固定 80px，中間的車圖自己伸縮——
+   原本用 aspect-ratio 算高度，視窗一矮就會往上長到縮圖列裡去 */
+.hero{position:absolute;left:50%;transform:translateX(-50%);top:calc(var(--strip-top) + var(--strip-h) + var(--hero-gap));bottom:var(--imm-pad);width:54.7%;display:flex;flex-direction:column}
+.hero-shot{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.hero-shot img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.hero-shot.swap{opacity:0;transform:translateX(-28px)}
+.deck-bar{flex:none;display:flex;align-items:center;gap:20px;color:#fff}
+.deck-nav{width:24px;height:24px;flex:none;color:#fff;opacity:.7;transition:opacity .2s}
 .deck-nav:hover{opacity:1}.deck-nav svg{width:24px;height:24px}
-.deck-meta{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px;transition:opacity .4s var(--ease)}
+.deck-meta{flex:1;display:flex;flex-direction:column;align-items:center;gap:20px;transition:opacity .4s var(--ease)}
 .deck-meta.swap{opacity:0}
 .deck-meta h3{font-size:clamp(22px,1.67vw,32px);font-weight:500;line-height:1;margin:0;text-align:center}
-.deck-meta .tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.deck-meta .tags{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;min-height:32px}
 .deck-meta .tags i{font-style:normal;font-size:12px;line-height:1;color:rgba(255,255,255,.5);
   border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:9px 16px}
+.deck-meta .tags i.new{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700;padding:9px 16px}
 .deck-meta .pz{font-size:16px;line-height:1;color:rgba(255,255,255,.5);margin:0;font-family:var(--num)}
-.deck-meta .go{display:inline-flex;align-items:center;gap:2px;font-size:16px;font-weight:600;color:#fff}
-.deck-meta .go svg{width:24px;height:24px}
+.deck-meta .go{font-size:16px;font-weight:600;color:#fff;line-height:1;text-decoration:underline;text-underline-offset:3px}
 .deck-meta .go:hover{opacity:.75}
 /* 右下：同一個視窗裡輸入 */
-.imm-ask{position:absolute;z-index:6;right:40px;bottom:80px;width:clamp(380px,27.3vw,524px);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.imm-ask{position:absolute;z-index:6;right:40px;bottom:var(--imm-pad);width:clamp(380px,27.3vw,524px);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .imm .line{max-width:100%;animation:immLineIn .6s var(--ease);transition:opacity .8s var(--ease),transform .8s var(--ease),max-height .8s var(--ease),margin .8s var(--ease);max-height:300px}@keyframes immLineIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .imm .line.them{color:#fff;font-size:clamp(24px,1.875vw,36px);line-height:1.5;font-weight:500;letter-spacing:0;align-self:flex-start}.imm .line.them b{color:#fff}
 .imm .line.me{align-self:flex-end;text-align:right;color:rgba(255,255,255,.42);font-size:14.5px;font-weight:600}.imm .line.me::before{content:"你說：";font-family:var(--num);font-size:10.5px;letter-spacing:.16em;display:block;margin-bottom:3px;color:rgba(255,255,255,.28)}
@@ -657,16 +664,16 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-bar input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-family:inherit;font-size:16px;line-height:1;padding:0}
 .imm-bar input::placeholder{color:rgba(255,255,255,.5)}
 .imm-acts{display:flex;align-items:center;gap:10px;flex:none}
-.imm-mic,.imm-send{width:48px;height:48px;color:#fff;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex:none;border-radius:50px;transition:background .2s,color .2s,border-color .2s}
-.imm-mic:hover,.imm-send:hover{background:#fff;color:#0B0D16;border-color:#fff}
-.imm-mic.live{background:#EF4444;color:#fff;border-color:#EF4444;animation:immPulse 1.3s infinite}@keyframes immPulse{70%{box-shadow:0 0 0 11px rgba(239,68,68,0)}}
+.imm-mic,.imm-send{width:48px;height:48px;color:#fff;display:flex;align-items:center;justify-content:center;flex:none;opacity:.9;transition:opacity .2s,color .2s}
+.imm-mic:hover,.imm-send:hover{opacity:1}
+.imm-mic.live{color:#EF4444;opacity:1;animation:immPulse 1.3s infinite}@keyframes immPulse{70%{box-shadow:0 0 0 11px rgba(239,68,68,0)}}
 .imm-mic svg,.imm-send svg{width:24px;height:24px}
 .imm-hint{font-size:16px;line-height:2;color:rgba(255,255,255,.5);margin:0}
 .finale{position:absolute;inset:0;z-index:8;display:none;overflow:hidden;background:radial-gradient(64% 74% at 50% 42%,rgba(44,87,240,.34),transparent 64%),#05070F}.finale.on{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:52px 30px 40px}.fin-ring,.fin-sweep{position:absolute;left:50%;top:44%;width:min(1020px,84vw);aspect-ratio:1;transform:translate(-50%,-50%) rotate(-9deg);border-radius:50%;pointer-events:none}.fin-ring{border:1px solid rgba(120,158,255,.30);box-shadow:0 0 90px rgba(44,87,240,.30) inset,0 0 60px rgba(44,87,240,.20)}.fin-sweep{border:2px solid transparent;border-top-color:rgba(157,182,255,.85)}
 .fin-hero{position:absolute;inset:0;z-index:1;background:#05070F;overflow:hidden;transform-origin:50% 50%;transition:transform 1.9s var(--ease) .35s;will-change:transform}.fin-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,15,.45) 0,rgba(5,7,15,0) 24%),linear-gradient(0deg,#05070F 0,rgba(5,7,15,.97) 240px,rgba(5,7,15,.91) 340px,rgba(5,7,15,.74) 450px,rgba(5,7,15,.34) 560px,rgba(5,7,15,0) 660px);opacity:1;transition:opacity .9s var(--ease) .3s}.finale.intro .fin-hero::after{opacity:0;transition:opacity .25s var(--ease)}.fin-hero video{width:100%;height:100%;object-fit:cover;display:block;transform:translateY(-120px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 240px);mask-image:linear-gradient(0deg,transparent 0,#000 240px)}.fin-cap{position:relative;z-index:2;text-align:center;color:#fff;margin-top:20px}.fin-cap .k{font-family:var(--num);font-size:10.5px;letter-spacing:.24em;color:#9DB6FF;font-weight:700}.fin-cap h2{font-size:clamp(24px,3vw,38px);margin:8px 0 4px}.fin-cap .p{font-family:var(--num);font-size:19px;font-weight:700;color:rgba(255,255,255,.8)}.fin-cap .r{margin-top:9px;font-size:13px;color:rgba(255,255,255,.6);max-width:60ch;line-height:1.8}.fin-cap .r b{color:#fff}.fin-cta{display:flex;gap:10px;justify-content:center;margin-top:16px}.fin-cta button{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}.fin-cta .a{background:#fff;color:#0B0D16}.fin-cta .b{border:1px solid rgba(255,255,255,.34);color:#fff}
 .fin-rel{position:relative;z-index:2;margin-top:20px;width:100%}.fin-rel .h{font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:12px;text-align:center}.fin-row{display:flex;gap:12px;justify-content:center}.fin-card{width:152px;padding:6px 8px 10px;text-align:center;border-radius:12px}.fin-card img{width:100%;height:84px;object-fit:contain}.fin-card b{display:block;font-size:12.5px;margin-top:7px;color:#fff}.fin-card span{display:block;font-family:var(--num);font-size:11.5px;color:rgba(255,255,255,.5)}.fin-x{display:none}/* 結論的文案由下往上依序浮現：眉標→車名→價格→尺寸→按鈕→相關車款 */.finale .fin-cap>*,.finale .fin-rel{opacity:1;transform:none;transition:opacity .85s var(--ease),transform 1.15s var(--ease)}.finale .fin-cap>*:nth-child(1){transition-delay:.02s}.finale .fin-cap>*:nth-child(2){transition-delay:.10s}.finale .fin-cap>*:nth-child(3){transition-delay:.18s}.finale .fin-cap>*:nth-child(4){transition-delay:.26s}.finale .fin-cap>*:nth-child(5){transition-delay:.34s}.finale .fin-rel{transition-delay:.42s}.finale .fin-ring,.finale .fin-sweep,.finale .fin-x{transition:opacity .8s var(--ease) .18s}.finale.intro .fin-cap>*,.finale.intro .fin-rel{opacity:0;transform:translateY(26px)}.finale.intro .fin-ring,.finale.intro .fin-sweep,.finale.intro .fin-x{opacity:0}@media(prefers-reduced-motion:reduce){.fin-hero{transition:none}}
 @media(max-width:1280px){.imm-cats{gap:2px}.imm-ask{right:28px;bottom:56px}}
-@media(max-width:1000px){.imm-stage{width:100%;height:62%}.deck-bar{bottom:24px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
+@media(max-width:1000px){.imm-stage{width:100%;height:62%}.hero{width:82%}.strip-i,.strip-i img{width:112px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
 /* 暫時隱藏：拿掉這幾行即可恢復 */
 #route{display:none!important}
 #ambRoute{display:none}
@@ -910,11 +917,14 @@ body.amb-on .amb-tab .a{display:none}
   </div>
   <div class="imm-cats" id="immCats"></div>
   <div class="imm-stage">
-    <div class="deck" id="immDeck"></div>
-    <div class="deck-bar">
-      <button class="deck-nav" id="deckPrev" aria-label="上一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M11 5l-7 7 7 7"/></svg></button>
-      <div class="deck-meta" id="immMeta"></div>
-      <button class="deck-nav" id="deckNext" aria-label="下一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
+    <div class="strip"><div class="strip-row" id="immStrip"></div></div>
+    <div class="hero">
+      <div class="hero-shot" id="immShot"><img alt=""></div>
+      <div class="deck-bar">
+        <button class="deck-nav" id="deckPrev" aria-label="上一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M11 5l-7 7 7 7"/></svg></button>
+        <div class="deck-meta" id="immMeta"></div>
+        <button class="deck-nav" id="deckNext" aria-label="下一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
   </div>
   <div class="imm-ask">
@@ -2308,8 +2318,8 @@ const IMM_CAT_ICON = {
      這一顆是 28×16 不是正方形——三個字母塞進 16 格會擠成一團。尚未放到畫面上，catIcon('new') 即可取用。 */
   new   :'<rect x="1" y="2.6" width="26" height="10.8" rx="2"/><text x="14" y="8.1" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, system-ui, sans-serif" font-size="7.4" font-weight="800" fill="currentColor" stroke="none">NEW</text>'
 };
-const IMM_ICON_VB = {new:'0 0 28 16', newBig:'0 0 48 48'};
-IMM_CAT_ICON.newBig = '<rect x="5" y="10" width="38" height="28" rx="2" stroke-width="2"/><text x="24" y="24.6" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, system-ui, sans-serif" font-size="12" font-weight="700" fill="currentColor" stroke="none">NEW</text>';
+const IMM_ICON_VB = {new:'0 0 28 16', newRow:'0 0 24 24'};
+IMM_CAT_ICON.newRow = '<rect x="1.5" y="6" width="21" height="12" rx="2" stroke-width="2"/><text x="12" y="12.4" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, system-ui, sans-serif" font-size="8" font-weight="700" fill="currentColor" stroke="none">NEW</text>';
 function catIcon(k){
   if (!IMM_CAT_ICON[k]) return '';
   const vb = IMM_ICON_VB[k] || '0 0 16 16';
@@ -2379,71 +2389,76 @@ function deckFacets(x){
   const b = immMatchBike(x) || Object.assign({wheel:[]}, IMM_SPEC[x.n]);
   return [L_SUSP[b.susp], L_MAT[b.mat], (b.wheel || []).map(wheelTxt).join(' / ')].filter(Boolean);
 }
-function deckCard(x, cls){
-  const d = document.createElement('div');
-  d.className = 'deck-card ' + cls;
-  d.innerHTML = '<img alt="" src="' + encodeURI(x.img) + '">';
-  d.onclick = () => immOpenDetail(x);
-  return d;
-}
-/* 只保留四張在場上：往前推一格時，最前面那張放大淡出，後面補一張新的 */
-function deckRender(){
-  const g = $('immDeck'), pool = IMM.pool;
-  g.innerHTML = '';
-  for (let n = 3; n >= 0; n--) g.appendChild(deckCard(pool[(IMM.i + n) % pool.length], 'p' + n));
-  deckMeta();
-}
-function deckMeta(){
-  const x = IMM.pool[IMM.i % IMM.pool.length], m = $('immMeta');
-  if (!x) return;
-  m.classList.add('swap');
-  setTimeout(() => {
-    m.innerHTML = '<h3>' + x.n + '</h3>' +
-      '<div class="tags">' + deckFacets(x).map(t => '<i>' + t + '</i>').join('') + '</div>' +
-      '<p class="pz">' + immNTD(x.pr) + '</p>' +
-      '<button class="go">瞭解更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>';
-    m.querySelector('.go').onclick = () => immOpenDetail(x);
-    m.classList.remove('swap');
-    if (!S.terrain) immSetScene(x.cat);          /* 還沒選分類時，背景跟著最前面那台走 */
-    catsSync(x.cat);
-  }, 260);
-}
-/* 進場那一格要先落在起點、下一個 tick 才換到終點，transition 才跑得出來。
-   用 setTimeout 不用 rAF：分頁在背景時 rAF 不會跑，卡片會永遠停在起點而愈疊愈多。 */
-function deckTick(fn){ setTimeout(fn, 24); }
-function deckSweep(g){ g.querySelectorAll('.out,.pre').forEach(n => n.remove()); }
-function deckGo(dir){
-  const g = $('immDeck'), pool = IMM.pool;
-  if (!pool.length) return;
-  deckSweep(g);                                   /* 上一輪沒退場乾淨的先清掉，場上永遠只有四張 */
-  if (dir > 0){
-    const out = g.querySelector('.p0');
-    IMM.i = (IMM.i + 1) % pool.length;
-    const add = deckCard(pool[(IMM.i + 3) % pool.length], 'pre');
-    g.insertBefore(add, g.firstChild);
-    deckTick(() => {
-      if (out){ out.className = 'deck-card out'; setTimeout(() => out.remove(), 1100); }
-      ['p1','p2','p3'].forEach((c,k) => { const n = g.querySelector('.' + c); if (n) n.className = 'deck-card p' + k; });
-      add.className = 'deck-card p3';
+/* 縮圖列：把整份清單重複排幾份，指標只往同一個方向走，
+   走過一整份之後在「同一個畫面」上悄悄退回一份——所以永遠捲得下去，不會撞到頭。
+   IMM.i 是邏輯上的第幾台，IMM.v 是縮圖列上的第幾格（含重複的份數）。 */
+const STRIP_PITCH = 170;                                   /* 150 寬 + 20 間距 */
+/* 指標永遠停在第二份（[n, 2n)），所以右邊至少要再備滿一個畫面的量才不會露白 */
+function stripSlots(){ return Math.ceil(($('immStrip').parentElement.clientWidth || 1316) / STRIP_PITCH) + 2; }
+function stripCopies(){ return Math.max(3, 2 + Math.ceil(stripSlots() / IMM.pool.length)); }
+function stripRender(){
+  const r = $('immStrip'), n = IMM.pool.length;
+  IMM.copies = stripCopies();
+  r.innerHTML = '';
+  for (let c = 0; c < IMM.copies; c++){
+    IMM.pool.forEach((x,k) => {
+      const d = document.createElement('button');
+      d.className = 'strip-i';
+      d.innerHTML = '<img alt="" src="' + encodeURI(x.img) + '"><b>' + x.n + '</b>';
+      d.onclick = () => { IMM.v = c * n + k; IMM.i = k; heroShow(); deckTimer(); };
+      r.appendChild(d);
     });
-  } else {
-    IMM.i = (IMM.i - 1 + pool.length) % pool.length;
-    const back = g.querySelector('.p3');
-    if (back){ back.className = 'deck-card pre'; setTimeout(() => back.remove(), 1100); }
-    ['p2','p1','p0'].forEach((c,k) => { const n = g.querySelector('.' + c); if (n) n.className = 'deck-card p' + (3 - k); });
-    const add = deckCard(pool[IMM.i], 'out');
-    g.appendChild(add);
-    deckTick(() => { add.className = 'deck-card p0'; });
   }
-  deckMeta();
-  deckTimer();
+  IMM.v = n;                                               /* 從第二份起跳，前後都還有得走 */
+  stripPlace(false); stripMark();
+}
+function stripPlace(anim){
+  const r = $('immStrip');
+  if (!anim){ r.style.transition = 'none'; }
+  r.style.transform = 'translateX(' + (-(IMM.v - 2) * STRIP_PITCH) + 'px)';
+  if (!anim){ void r.offsetWidth; r.style.transition = ''; }
+}
+function stripMark(){ [...$('immStrip').children].forEach((n,k) => n.classList.toggle('on', k === IMM.v)); }
+/* 捲到倒數一份或第一份時，跳回中間那份——畫面內容一模一樣，所以看不出來 */
+function stripReanchor(){
+  const n = IMM.pool.length, was = IMM.v;
+  while (IMM.v >= 2 * n) IMM.v -= n;
+  while (IMM.v < n)      IMM.v += n;
+  if (IMM.v === was) return;
+  stripPlace(false); stripMark();
+}
+function heroShow(){
+  const x = IMM.pool[IMM.i]; if (!x) return;
+  const shot = $('immShot'), m = $('immMeta');
+  shot.classList.add('swap'); m.classList.add('swap');
+  stripMark(); stripPlace(true);
+  clearTimeout(IMM.anchorT);
+  IMM.anchorT = setTimeout(stripReanchor, 900);            /* 等捲動的 .8s 走完再換位置 */
+  setTimeout(() => {
+    shot.querySelector('img').src = encodeURI(x.img);
+    const isNew = immYearOf(x) >= '2026';
+    m.innerHTML = '<h3>' + x.n + '</h3>' +
+      '<div class="tags">' + (isNew ? '<i class="new">NEW</i>' : '') +
+        deckFacets(x).map(t => '<i>' + t + '</i>').join('') + '</div>' +
+      '<p class="pz">' + immNTD(x.pr).replace('NT$','NT$ ') + '</p>' +
+      '<button class="go">瞭解更多</button>';
+    m.querySelector('.go').onclick = () => immOpenDetail(x);
+    shot.classList.remove('swap'); m.classList.remove('swap');
+    if (!S.terrain) immSetScene(x.cat);
+    catsSync(x.cat);
+  }, 280);
+}
+function deckGo(dir){
+  const n = IMM.pool.length; if (!n) return;
+  IMM.v += dir; IMM.i = ((IMM.v % n) + n) % n;
+  heroShow(); deckTimer();
 }
 function deckTimer(){ clearInterval(IMM.cyc); IMM.cyc = setInterval(() => deckGo(1), IMM.dwell || 4200); }
 function immStage(){
   IMM.pool = deckPool();
   if (!IMM.pool.length){ clearInterval(IMM.cyc); IMM.cyc = null; return; }
   IMM.i = 0; IMM.dwell = 4200;
-  deckRender(); deckTimer();
+  stripRender(); heroShow(); deckTimer();
 }
 /* 上方六個入口。前五個對應第一題的分類，「新車上市」走官網自己標的年式 */
 const IMM_ENTRY = [['new','新車上市'],['daily','日常騎乘'],['ebike','E-bike 電動輔助'],['gravel','越野礫石公路'],['mtb','登山車'],['kids','親子/童車']];
@@ -2451,18 +2466,31 @@ function catsSync(cat){
   [...$('immCats').children].forEach(n => n.classList.toggle('on',
     S.terrain ? n.dataset.k === S.terrain : (IMM.newOnly ? n.dataset.k === 'new' : n.dataset.k === cat)));
 }
+/* 這一排隨時可以改：換分類就換車陣與背景，右下的對話同步補一輪，
+   然後把目前還沒回答的那一題再問一次（不會倒退回已經答過的題目）。 */
+function immSetCat(k){
+  if (IMM.busy) return;
+  const isNew = k === 'new';
+  if (isNew){ if (IMM.newOnly && !S.terrain) return; IMM.newOnly = true; S.newOnly = true; S.terrain = null; }
+  else {
+    if (S.terrain === k) return;
+    S.terrain = k; IMM.newOnly = false; S.newOnly = false; immSetScene(k);
+  }
+  S.touched = true; IMM.busy = true;
+  immSay(immEsc(isNew ? '新車上市' : immCatLabel(k)), 'me');
+  immStage(); catsSync();
+  setTimeout(() => {
+    immSay(isNew ? '好，先看新上市的。' : IMM_STEPS[0].reply(k), 'them');
+    setTimeout(() => { IMM.busy = false; if (!(isNew && IMM.step === 0)) immAdvance(); }, 900);
+  }, 420);
+}
 function renderCats(){
   const c = $('immCats'); c.innerHTML = '';
   IMM_ENTRY.forEach(([k,label]) => {
     const b = document.createElement('button');
     b.className = 'imm-cat'; b.dataset.k = k;
-    b.innerHTML = catIcon(k === 'new' ? 'newBig' : k) + '<span>' + label + '</span>';
-    b.onclick = () => {
-      if (k === 'new'){ IMM.newOnly = !IMM.newOnly; S.newOnly = IMM.newOnly; S.touched = true; immStage(); catsSync(); return; }
-      const st = IMM_STEPS.find(x => x.key === 'terrain');
-      if (!st || S.terrain || IMM.busy) return;
-      immPick(st, k);
-    };
+    b.innerHTML = catIcon(k === 'new' ? 'newRow' : k) + '<span>' + label + '</span>';
+    b.onclick = () => immSetCat(k);
     c.appendChild(b);
   });
 }
@@ -2502,7 +2530,7 @@ function immHandle(txt){
      (?!\d) 是為了不要把「150000」的前三碼當成身高。 */
   const H=txt.match(/(?:^|\D)(1[3-9]\d)(?!\d)/);
   if(H&&(/身高|cm|公分/i.test(txt)||(st&&st.key==='height'))){S.height=+H[1];IMM.heightSet=true;hit=true}
-  S.touched=true;setTimeout(()=>{if(!hit){immSay('這句我不太確定，'+immRetryHint(),'them');immAsk(true);IMM.busy=false;return}immSay('好，我先照這些條件排排看。','them');immStage();if(S.terrain)immSetScene(S.terrain);setTimeout(()=>{IMM.busy=false;immAdvance()},900)},380);
+  S.touched=true;setTimeout(()=>{if(!hit){immSay('這句我不太確定，'+immRetryHint(),'them');immAsk(true);IMM.busy=false;return}immSay('好，我先照這些條件排排看。','them');immStage();catsSync();if(S.terrain)immSetScene(S.terrain);setTimeout(()=>{IMM.busy=false;immAdvance()},900)},380);
 }
 /* 結尾的那一刻：影片位先滿版，再縮小移到定位；車名、價格與相關車款隨後補進來。
    影片還沒生成，框裡先放該車的官網產品圖當 poster——之後把 <img> 換成 <video> 即可，動畫不用改。 */
@@ -2532,10 +2560,12 @@ function immConclude(){
   IMM.busy=false;const pool=immPool(),top=pool[0],z=fitOf(S.height);clearInterval(IMM.cyc);const fv=$('finVid');if(!fv.getAttribute('src'))fv.src='bg/hero-rotate.mp4';try{fv.currentTime=0;fv.play().catch(()=>{})}catch(e){}$('finCap').innerHTML='<p class="k">最符合你條件的一台</p><h2>'+top.n+'</h2><p class="p">'+top.pr+'</p><p class="r">依你 '+S.height+' cm 的身高，先以 <b>'+z.s+'</b> 號作為試乘起點。</p><div class="fin-cta"><button class="a" id="finGo">帶著條件看完整清單</button><button class="b" id="finRide">預約到門市試乘</button></div>';const seen=new Set([top.n]),rel=pool.slice(1).filter(b=>!seen.has(b.n)&&seen.add(b.n)).slice(0,5);$('finRel').innerHTML='<p class="h">你可能也想一起看</p><div class="fin-row">'+rel.map((b,i)=>'<button class="fin-card"><img src="'+IMM_REL_IMAGES[(i+1)%IMM_REL_IMAGES.length]+'" alt=""><b>'+b.n+'</b><span>'+b.pr+'</span></button>').join('')+'</div>';$('finale').classList.add('on');finIntro();$('finGo').onclick=()=>{immClose();goPLP()};$('finRide').onclick=()=>{$('finRide').textContent='已記下這台'};$('finRel').querySelectorAll('.fin-card').forEach(c=>c.onclick=()=>{immClose();goPLP()});
 }
 function immOpen(){
-  if($('route').classList.contains('on'))closeRoute();IMM.beforeOverflow=document.body.style.overflow;document.body.style.overflow='hidden';S.terrain=null;S.budget=null;IMM.step=0;IMM.heightSet=false;IMM.busy=false;$('imm').classList.add('on');$('finale').classList.remove('on');$('immFeed').innerHTML='';IMM.newOnly=false;S.newOnly=false;renderCats();immStage();setTimeout(immAdvance,360);
+  if($('route').classList.contains('on'))closeRoute();IMM.beforeOverflow=document.body.style.overflow;document.body.style.overflow='hidden';S.terrain=null;S.budget=null;IMM.step=0;IMM.heightSet=false;IMM.busy=false;$('imm').classList.add('on');$('finale').classList.remove('on');$('immFeed').innerHTML='';IMM.newOnly=true;S.newOnly=false;renderCats();immStage();setTimeout(immAdvance,360);
 }
 function immClose(){try{$('finVid').pause()}catch(e){}$('imm').classList.remove('on');$('finale').classList.remove('on','intro');$('finHero').classList.remove('zoom');clearTimeout(IMM.finT);clearTimeout(IMM.finT2);clearTimeout(IMM.finT3);clearInterval(IMM.cyc);document.body.style.overflow=IMM.beforeOverflow;immStopVoice()}
 $('deckPrev').onclick=()=>deckGo(-1);$('deckNext').onclick=()=>deckGo(1);
+$('immShot').onclick=()=>{const x=IMM.pool&&IMM.pool[IMM.i];if(x)immOpenDetail(x)};
+addEventListener('resize',()=>{if($('imm').classList.contains('on')&&IMM.pool&&IMM.pool.length)stripPlace(false)});
 $('immClose').onclick=immClose;$('finX').onclick=immClose;$('immSend').onclick=()=>immHandle($('immInput').value);$('immInput').addEventListener('keydown',e=>{if(e.key==='Enter')immHandle($('immInput').value)});
 const IMM_SPEECH=window.SpeechRecognition||window.webkitSpeechRecognition;let immRec=null,immListening=false;
 function immStopVoice(){if(immRec&&immListening){try{immRec.stop()}catch(e){}}immListening=false;$('immMic').classList.remove('live')}
