@@ -598,10 +598,10 @@ body.amb-on .amb-frame{--amb-glow:.16;opacity:1}
 body.route-open .amb-frame{opacity:0!important}
 
 /* ---------- 選車現場：直接內嵌於本頁 ---------- */
-.imm{position:fixed;inset:0;z-index:500;display:none;background:#05070F;overflow:hidden;--glow:#2C57F0;--imm-base:7vh;--cats-top:clamp(28px,4.44vh,48px);--strip-top:clamp(84px,11.48vh,124px);--strip-h:clamp(104px,12.96vh,140px);--hero-gap:clamp(20px,3.7vh,40px);--imm-pad:clamp(44px,7.4vh,80px)}
+.imm{position:fixed;inset:0;z-index:500;display:none;background:#05070F;overflow:hidden;--glow:#2C57F0;--imm-base:7vh;--strip-top:clamp(68px,9.26vh,100px);--strip-h:clamp(124px,14.54vh,157px);--hero-gap:clamp(24px,4.35vh,47px);--imm-pad:clamp(44px,7.4vh,80px)}
 .imm.on{display:block}
 /* 主視覺上壓一層 287.56° 的黑色漸層（左下淡、右上濃），右側的字才壓得住 */
-.imm-amb{position:absolute;inset:0;z-index:1;background:linear-gradient(287.56deg,rgba(0,0,0,.7) 0%,#000 70%);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.imm-amb{position:absolute;inset:0;z-index:1;background:linear-gradient(287.56deg,rgba(0,0,0,.7) 0%,#000 70%);backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
 .imm-scene{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
 .imm-scene img{width:100%;height:100%;object-fit:cover;transform:translateX(5.2%)}
 .imm-scene.show{opacity:1}
@@ -617,7 +617,8 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-x{color:#fff;font-size:16px;display:flex;align-items:center;gap:10px}.imm-x svg{width:24px;height:24px}
 /* 上方入口：橫向一列，圖示在左、字在右 */
 /* 點擊範圍用 padding 撐到 48px 高，容器再往左上退回 padding 的量，圖文落點維持 x280 / y60 */
-.imm-cats{position:absolute;z-index:8;left:50%;transform:translateX(-50%);top:var(--cats-top);display:flex;align-items:center;gap:4px}
+/* 與導覽列同一條 80px 帶，垂直置中；水平置中於畫面 */
+.imm-cats{position:absolute;z-index:8;left:50%;transform:translateX(-50%);top:0;height:80px;display:flex;align-items:center;gap:4px}
 .imm-cat{display:flex;align-items:center;gap:8px;padding:12px 8px;opacity:.5;color:#fff;transition:opacity .3s var(--ease);white-space:nowrap}
 .imm-cat:hover,.imm-cat.on{opacity:1}
 .imm-cat svg{width:24px;height:24px;flex:none}
@@ -630,15 +631,23 @@ body.route-open .amb-frame{opacity:0!important}
 .strip-row{display:flex;gap:20px;height:100%;transition:transform .8s var(--ease);will-change:transform}
 .strip-i{width:150px;flex:none;display:flex;flex-direction:column;gap:0;opacity:.72;transition:opacity .35s var(--ease)}
 .strip-i:hover,.strip-i.on{opacity:1}
-.strip-i img{width:150px;height:calc(100% - 12px);object-fit:contain;display:block}
-.strip-i b{display:block;height:12px;font-size:12px;line-height:1;font-weight:400;color:rgba(255,255,255,.5);
+.strip-i img{width:150px;height:calc(100% - 29px);object-fit:contain;display:block}
+.strip-i .t{height:29px;display:flex;flex-direction:column;gap:5px;align-items:center}
+.strip-i b,.strip-i em{display:block;width:100%;height:12px;font-size:12px;line-height:1;font-weight:400;font-style:normal;
   text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .35s var(--ease)}
+.strip-i b{color:rgba(255,255,255,.5)}
+.strip-i em{font-family:var(--num);color:rgba(255,255,255,.32)}
 .strip-i.on b{color:#fff}
+.strip-i.on em{color:rgba(255,255,255,.6)}
 /* 上緣固定在縮圖列下方 40px、下緣固定 80px，中間的車圖自己伸縮——
    原本用 aspect-ratio 算高度，視窗一矮就會往上長到縮圖列裡去 */
 .hero{position:absolute;left:50%;transform:translateX(-50%);top:calc(var(--strip-top) + var(--strip-h) + var(--hero-gap));bottom:var(--imm-pad);width:54.7%;display:flex;flex-direction:column}
-.hero-shot{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;transition:opacity .45s var(--ease),transform .6s var(--ease)}
-.hero-shot img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.hero-shot{position:relative;overflow:hidden;flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;transition:opacity .45s var(--ease),transform .6s var(--ease)}
+.hero-shot img,.hero-shot video{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+/* demo 影片：填滿整個框、超出的裁掉，下緣壓一層黑色漸層接到底下的車名 */
+.hero-shot video{filter:none;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;display:block}
+.hero-shot.demo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.92) 100%)}
 .hero-shot.swap{opacity:0;transform:translateX(-28px)}
 .deck-bar{flex:none;display:flex;align-items:center;gap:20px;color:#fff}
 .deck-nav{width:24px;height:24px;flex:none;color:#fff;opacity:.7;transition:opacity .2s}
@@ -658,23 +667,31 @@ body.route-open .amb-frame{opacity:0!important}
 .peek-close:hover{opacity:.75}
 .imm.peek .deck-meta{display:none}
 .imm.peek .peek-close{display:block}
-.imm.peek .imm-ask{display:none}
-.imm-peek{display:none;position:absolute;z-index:6;right:40px;
-  top:calc(var(--strip-top) + var(--strip-h) + var(--hero-gap));bottom:0;
-  width:clamp(380px,27.3vw,524px);overflow-y:auto;overscroll-behavior:contain;
-  padding:0 4px 40px 0;color:#fff;-webkit-overflow-scrolling:touch}
-.imm.peek .imm-peek{display:block}
+/* 詳細頁：左邊車圖（下方接 ← 關閉 →）、右邊資訊各佔一欄，資訊吃滿整個高度自己捲。
+   車圖不用縮小，右下的輸入框是常駐功能，看資料時原位不動。 */
+.imm-peek{display:none}
+.imm.peek .hero{display:grid;grid-template-columns:52% 1fr;grid-template-rows:1fr auto;
+  column-gap:40px;width:92%}
+.imm.peek .hero-shot{grid-column:1;grid-row:1;min-height:0}
+.imm.peek .deck-bar{grid-column:1;grid-row:2}
+.imm.peek .imm-peek{display:block;grid-column:2;grid-row:1 / span 2;min-height:0;
+  overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0;
+  color:#fff;-webkit-overflow-scrolling:touch}
+/* 捲軸只在捲動時浮出：軌道寬度保留住，所以出現／消失不會把內容推來推去 */
+.imm-peek{scrollbar-width:thin;scrollbar-color:transparent transparent}
+.imm-peek.scrolling{scrollbar-color:rgba(255,255,255,.22) transparent}
 .imm-peek::-webkit-scrollbar{width:4px}
-.imm-peek::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22);border-radius:2px}
+.imm-peek::-webkit-scrollbar-thumb{background:transparent;border-radius:2px;transition:background .3s var(--ease)}
+.imm-peek.scrolling::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22)}
 .imm-peek h3{font-size:clamp(22px,1.67vw,32px);font-weight:700;line-height:1.25;margin:0 0 14px}
 .imm-peek h3 small{font-size:16px;font-weight:400;color:rgba(255,255,255,.5);margin-left:8px}
 .imm-peek .proto{color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.24)}
-.imm-peek .pk-pz{font-family:var(--num);font-size:28px;font-weight:700;margin:0 0 20px;color:#fff}
+.imm-peek .pk-pz{font-family:var(--num);font-size:16px;font-weight:700;margin:0 0 20px;color:#fff}
 .imm-peek .pk-sp{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
 .imm-peek .pk-sp i{font-style:normal;font-size:12px;line-height:1;color:rgba(255,255,255,.5);
   border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:9px 16px}
 .imm-peek .pk-kid{font-size:13px;color:rgba(255,255,255,.6);margin:-14px 0 20px}
-.imm-peek .pk-cta{display:flex;gap:10px;margin-bottom:8px}
+.imm-peek .pk-cta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
 .imm-peek .pk-cta button{height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}
 .imm-peek .pk-cta .a{background:var(--brand);color:#fff}
 .imm-peek .pk-cta .b2{border:1px solid rgba(255,255,255,.34);color:#fff}
@@ -711,12 +728,12 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-mic:hover,.imm-send:hover{opacity:1}
 .imm-mic.live{color:#EF4444;opacity:1;animation:immPulse 1.3s infinite}@keyframes immPulse{70%{box-shadow:0 0 0 11px rgba(239,68,68,0)}}
 .imm-mic svg,.imm-send svg{width:24px;height:24px}
-.imm-hint{font-size:16px;line-height:2;color:rgba(255,255,255,.5);margin:0}
+.imm-hint{font-size:12px;line-height:2;color:rgba(255,255,255,.5);margin:0}
 .finale{position:absolute;inset:0;z-index:8;display:none;overflow:hidden;background:radial-gradient(64% 74% at 50% 42%,rgba(44,87,240,.34),transparent 64%),#05070F}.finale.on{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:52px 30px 40px}.fin-ring,.fin-sweep{position:absolute;left:50%;top:44%;width:min(1020px,84vw);aspect-ratio:1;transform:translate(-50%,-50%) rotate(-9deg);border-radius:50%;pointer-events:none}.fin-ring{border:1px solid rgba(120,158,255,.30);box-shadow:0 0 90px rgba(44,87,240,.30) inset,0 0 60px rgba(44,87,240,.20)}.fin-sweep{border:2px solid transparent;border-top-color:rgba(157,182,255,.85)}
 .fin-hero{position:absolute;inset:0;z-index:1;background:#05070F;overflow:hidden;transform-origin:50% 50%;transition:transform 1.9s var(--ease) .35s;will-change:transform}.fin-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,15,.45) 0,rgba(5,7,15,0) 24%),linear-gradient(0deg,#05070F 0,rgba(5,7,15,.97) 240px,rgba(5,7,15,.91) 340px,rgba(5,7,15,.74) 450px,rgba(5,7,15,.34) 560px,rgba(5,7,15,0) 660px);opacity:1;transition:opacity .9s var(--ease) .3s}.finale.intro .fin-hero::after{opacity:0;transition:opacity .25s var(--ease)}.fin-hero video{width:100%;height:100%;object-fit:cover;display:block;transform:translateY(-120px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 240px);mask-image:linear-gradient(0deg,transparent 0,#000 240px)}.fin-cap{position:relative;z-index:2;text-align:center;color:#fff;margin-top:20px}.fin-cap .k{font-family:var(--num);font-size:10.5px;letter-spacing:.24em;color:#9DB6FF;font-weight:700}.fin-cap h2{font-size:clamp(24px,3vw,38px);margin:8px 0 4px}.fin-cap .p{font-family:var(--num);font-size:19px;font-weight:700;color:rgba(255,255,255,.8)}.fin-cap .r{margin-top:9px;font-size:13px;color:rgba(255,255,255,.6);max-width:60ch;line-height:1.8}.fin-cap .r b{color:#fff}.fin-cta{display:flex;gap:10px;justify-content:center;margin-top:16px}.fin-cta button{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}.fin-cta .a{background:#fff;color:#0B0D16}.fin-cta .b{border:1px solid rgba(255,255,255,.34);color:#fff}
 .fin-rel{position:relative;z-index:2;margin-top:20px;width:100%}.fin-rel .h{font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:12px;text-align:center}.fin-row{display:flex;gap:12px;justify-content:center}.fin-card{width:152px;padding:6px 8px 10px;text-align:center;border-radius:12px}.fin-card img{width:100%;height:84px;object-fit:contain}.fin-card b{display:block;font-size:12.5px;margin-top:7px;color:#fff}.fin-card span{display:block;font-family:var(--num);font-size:11.5px;color:rgba(255,255,255,.5)}.fin-x{display:none}/* 結論的文案由下往上依序浮現：眉標→車名→價格→尺寸→按鈕→相關車款 */.finale .fin-cap>*,.finale .fin-rel{opacity:1;transform:none;transition:opacity .85s var(--ease),transform 1.15s var(--ease)}.finale .fin-cap>*:nth-child(1){transition-delay:.02s}.finale .fin-cap>*:nth-child(2){transition-delay:.10s}.finale .fin-cap>*:nth-child(3){transition-delay:.18s}.finale .fin-cap>*:nth-child(4){transition-delay:.26s}.finale .fin-cap>*:nth-child(5){transition-delay:.34s}.finale .fin-rel{transition-delay:.42s}.finale .fin-ring,.finale .fin-sweep,.finale .fin-x{transition:opacity .8s var(--ease) .18s}.finale.intro .fin-cap>*,.finale.intro .fin-rel{opacity:0;transform:translateY(26px)}.finale.intro .fin-ring,.finale.intro .fin-sweep,.finale.intro .fin-x{opacity:0}@media(prefers-reduced-motion:reduce){.fin-hero{transition:none}}
 @media(max-width:1280px){.imm-cats{gap:2px}.imm-ask{right:28px;bottom:56px}}
-@media(max-width:1000px){.imm-stage{width:100%;height:62%}.hero{width:82%}.imm-peek{left:24px;right:24px;width:auto;top:auto;height:52%}.strip-i,.strip-i img{width:112px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
+@media(max-width:1000px){.imm-stage{width:100%;height:62%}.hero{width:82%}.strip-i,.strip-i img{width:112px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
 /* 暫時隱藏：拿掉這幾行即可恢復 */
 #route{display:none!important}
 #ambRoute{display:none}
@@ -969,9 +986,9 @@ body.amb-on .amb-tab .a{display:none}
         <button class="peek-close" id="peekClose">關閉</button>
         <button class="deck-nav" id="deckNext" aria-label="下一台"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
       </div>
+      <div class="imm-peek" id="immPeek"></div>
     </div>
   </div>
-  <div class="imm-peek" id="immPeek"></div>
   <div class="imm-ask">
     <div class="imm-feed" id="immFeed"></div>
     <div class="imm-bar">
@@ -1183,7 +1200,7 @@ const PRESETS = [
 
 const P = {light:false,climb:false,down:false,ease:false};  /* 你比較在意什麼：只對應官網分面 */
 const S = {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,
-           height:172,qi:0,touched:false,cmp:[],sort:'fit'};
+           height:172,qi:0,touched:false,cmp:[],saved:[],sort:'fit'};
 
 /* ---------- 整句描述 → 篩選條件 ---------- */
 function bucket(v){ return v<=30000?30000 : v<=100000?100000 : v<=200000?200000 : 999999; }
@@ -1664,7 +1681,7 @@ function renderOvw(n){
 }
 
 $('clearAll').onclick = () => {
-  Object.assign(S, {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,touched:false,cmp:[]});
+  Object.assign(S, {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,touched:false,cmp:[],saved:[]});
   Object.keys(P).forEach(k => P[k] = false);
   renderPLP();
 };
@@ -1784,6 +1801,14 @@ function renderJStrip(){
 }
 /* 點開一台車：只列官網分類欄位，不生成規格 */
 function wheelTxt(w){ return /[a-z]/i.test(w) ? w : w.replace('-','.') + '"'; }
+/* 加入清單：只記在記憶體裡（不寫 storage），按鈕自己反映狀態。
+   目前還沒有「我的清單」那一頁可以看，接上之前這裡先只做收藏本身。 */
+function savedLabel(b){ return S.saved.includes(keyOf(b)) ? '已加入清單' : '加入清單'; }
+function toggleSaved(b, btn){
+  const k = keyOf(b), i = S.saved.indexOf(k);
+  if (i >= 0) S.saved.splice(i,1); else S.saved.push(k);
+  if (btn) btn.textContent = savedLabel(b);
+}
 function openPeek(b){
   if (!b.faux) jView(b, false);
   const cat = b.faux ? immCatLabel(b.fauxCat) : L_BEST[b.best];
@@ -1796,6 +1821,7 @@ function openPeek(b){
     '<div class="sp" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">' + sp.map(x => '<i style="font-style:normal;font-size:12px;border:1px solid var(--line);padding:4px 9px">' + x + '</i>').join('') + '</div>' +
     (b.kids ? '<p style="font-size:13px;color:var(--ink-70)">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
     '<div class="pick-cta"><button class="a" id="peekBook">預約試乘</button>' +
+      '<button class="b2" id="peekSave">' + savedLabel(b) + '</button>' +
       (b.faux ? '' : '<button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
     '</div></div>' +
     peekExtras(b);
@@ -2426,12 +2452,14 @@ function peekInlineHTML(b){
     '<div class="pk-sp">' + sp.map(x => '<i>' + x + '</i>').join('') + '</div>' +
     (b.kids ? '<p class="pk-kid">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
     '<div class="pk-cta"><button class="a" id="pkBook">預約試乘</button>' +
+      '<button class="b2" id="pkSave">' + savedLabel(b) + '</button>' +
       (b.faux ? '' : '<button class="b2" id="pkCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
     peekExtras(b, 3);
 }
 function wirePeek(root, b, onCmp){
   const book = root.querySelector('#pkBook, #peekBook'); if (book) book.onclick = () => openTestRideBooking(b);
   const cmp = root.querySelector('#pkCmp, #peekCmp'); if (cmp) cmp.onclick = () => { toggleCmp(keyOf(b)); onCmp && onCmp(); };
+  const save = root.querySelector('#pkSave, #peekSave'); if (save) save.onclick = () => toggleSaved(b, save);
   const more = root.querySelector('#rvMore');
   if (more) more.onclick = () => { root.querySelector('#rvGrid').classList.add('all'); more.remove(); };
   root.querySelectorAll('[data-faq]').forEach(btn => {
@@ -2481,7 +2509,8 @@ function stripRender(){
     IMM.pool.forEach((x,k) => {
       const d = document.createElement('button');
       d.className = 'strip-i';
-      d.innerHTML = '<img alt="" src="' + encodeURI(x.img) + '"><b>' + x.n + '</b>';
+      d.innerHTML = '<img alt="" src="' + encodeURI(x.img) + '">' +
+      '<span class="t"><b>' + x.n + '</b><em>' + immNTD(x.pr) + '</em></span>';
       d.onclick = () => { IMM.v = c * n + k; IMM.i = k; heroShow(); deckTimer(); };
       r.appendChild(d);
     });
@@ -2514,7 +2543,10 @@ function heroShow(){
   clearTimeout(IMM.anchorT);
   IMM.anchorT = setTimeout(stripReanchor, 900);            /* 等捲動的 .8s 走完再換位置 */
   setTimeout(() => {
-    shot.querySelector('img').src = encodeURI(x.img);
+    let im = shot.querySelector('img');
+    if (!im){ shot.innerHTML = '<img alt="">'; im = shot.querySelector('img'); }   /* demo 影片播過的話換回車圖 */
+    shot.classList.remove('demo');
+    im.src = encodeURI(x.img);
     const isNew = immYearOf(x) >= '2026';
     m.innerHTML = '<h3>' + x.n + '</h3>' +
       '<div class="tags">' + (isNew ? '<i class="new">NEW</i>' : '') +
@@ -2527,6 +2559,20 @@ function heroShow(){
     catsSync(x.cat);
     /* 詳細頁開著時換車，右邊的資訊要跟著換，否則大圖與資料會對不上 */
     if ($('imm').classList.contains('peek')) openPeekInline(immMatchBike(x) || immFauxBike(x));
+  }, 280);
+}
+/* demo 觸發：輸入「加入」時，左邊的車圖換成這支動畫，當作把這台加進清單的確認。
+   播完停在最後一格；按左右箭頭、點縮圖或換分類都會換回一般車圖。 */
+function heroDemoVideo(){
+  const shot = $('immShot');
+  clearInterval(IMM.cyc); IMM.cyc = null;
+  shot.classList.add('swap');
+  setTimeout(() => {
+    shot.innerHTML = '<video src="Bikes/anime1.mp4" autoplay muted playsinline preload="auto"></video>';
+    shot.classList.add('demo');
+    const v = shot.querySelector('video');
+    v.play && v.play().catch(() => {});
+    shot.classList.remove('swap');
   }, 280);
 }
 function deckGo(dir){
@@ -2611,12 +2657,22 @@ function immAdvance(){while(IMM.step<IMM_STEPS.length&&immFilled(IMM_STEPS[IMM.s
 function immHandle(txt){
   txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
   const st=IMM_STEPS[IMM.step];
+  if(/加入/.test(txt)){                                   /* demo 觸發 */
+    const x=IMM.pool&&IMM.pool[IMM.i];
+    if(x){
+      const k=keyOf(immMatchBike(x)||immFauxBike(x));
+      if(!S.saved.includes(k))S.saved.push(k);
+      S.touched=true;heroDemoVideo();
+      setTimeout(()=>{immSay('好，<b>'+x.n+'</b> 已經加進您的清單。','them');IMM.busy=false},420);
+      return;
+    }
+  }
   let hit=parseSentence(txt);
   /* 沒有滑桿了，身高就得從句子裡讀。問到身高那題時，只講一個數字也算。
      (?!\d) 是為了不要把「150000」的前三碼當成身高。 */
   const H=txt.match(/(?:^|\D)(1[3-9]\d)(?!\d)/);
   if(H&&(/身高|cm|公分/i.test(txt)||(st&&st.key==='height'))){S.height=+H[1];IMM.heightSet=true;hit=true}
-  S.touched=true;setTimeout(()=>{if(!hit){immSay('這句我不太確定，'+immRetryHint(),'them');immAsk(true);IMM.busy=false;return}immSay('好，我先照這些條件排排看。','them');immStage();catsSync();if(S.terrain)immSetScene(S.terrain);setTimeout(()=>{IMM.busy=false;immAdvance()},900)},380);
+  S.touched=true;setTimeout(()=>{if(!hit){immSay('這句我不太確定，'+immRetryHint(),'them');immAsk(true);IMM.busy=false;return}immSay('好，我先照這些條件排排看。','them');if($('imm').classList.contains('peek'))closePeekInline();immStage();catsSync();if(S.terrain)immSetScene(S.terrain);setTimeout(()=>{IMM.busy=false;immAdvance()},900)},380);
 }
 /* 結尾的那一刻：影片位先滿版，再縮小移到定位；車名、價格與相關車款隨後補進來。
    影片還沒生成，框裡先放該車的官網產品圖當 poster——之後把 <img> 換成 <video> 即可，動畫不用改。 */
@@ -2652,6 +2708,7 @@ function immClose(){try{$('finVid').pause()}catch(e){}$('imm').classList.remove(
 $('deckPrev').onclick=()=>deckGo(-1);$('deckNext').onclick=()=>deckGo(1);
 $('immShot').onclick=()=>{const x=IMM.pool&&IMM.pool[IMM.i];if(x)immOpenDetail(x)};
 $('peekClose').onclick=closePeekInline;
+$('immPeek').addEventListener('scroll',()=>{const b=$('immPeek');b.classList.add('scrolling');clearTimeout(IMM.sbT);IMM.sbT=setTimeout(()=>b.classList.remove('scrolling'),700)},{passive:true});
 addEventListener('resize',()=>{if($('imm').classList.contains('on')&&IMM.pool&&IMM.pool.length)stripPlace(false)});
 $('immClose').onclick=immClose;$('finX').onclick=immClose;$('immSend').onclick=()=>immHandle($('immInput').value);$('immInput').addEventListener('keydown',e=>{if(e.key==='Enter')immHandle($('immInput').value)});
 const IMM_SPEECH=window.SpeechRecognition||window.webkitSpeechRecognition;let immRec=null,immListening=false;
