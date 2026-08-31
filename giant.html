@@ -88,7 +88,7 @@ body.show-plp .plp{display:block}
 .f-chip:hover{border-color:var(--brand);color:var(--brand)}
 .f-alt{margin-top:17px;font-size:13px;color:var(--ink-45)}
 .f-alt button{text-decoration:underline;font-weight:600;color:var(--ink)}
-.trig{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;padding:0 24px;height:48px;font-size:13.5px;font-weight:700;border-radius:3px;transition:background .2s}
+.trig{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;padding:0 24px;height:44px;font-size:13.5px;font-weight:700;border-radius:3px;transition:background .2s}
 .trig:hover{background:#1A18A7}
 .trig.big{padding:0 34px;font-size:16px}
 .trig .dotm{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex:none}
@@ -260,14 +260,21 @@ body.no-ovw .ovw{display:none}
 .sov-note{margin-top:22px;font-size:12.5px;color:var(--ink-45);line-height:1.85}
 
 /* ---------- 比較條與彈窗 ---------- */
-.tray{position:fixed;left:0;right:0;bottom:0;background:#1A1A1C;color:#fff;transform:translateY(102%);transition:transform .38s var(--ease);z-index:180}
-.tray.up{transform:none}
-.tray-in{width:var(--shell);margin:0 auto;padding:15px 0;display:flex;align-items:center;gap:13px;flex-wrap:wrap}
-.slots{display:flex;gap:9px;flex-wrap:wrap}
-.slot{border:1px solid #45454A;padding:7px 12px;font-size:12.5px;display:flex;gap:9px;align-items:center;border-radius:2px}
-.slot button{color:#9A9A9C}
+/* 加入比較後從畫面底部中央浮起的固定條：只給數量與一個動作，細節留給比較視窗 */
+.tray{position:fixed;left:50%;bottom:24px;background:#1A1A1C;color:#fff;border-radius:3px;
+  box-shadow:0 18px 44px rgba(0,0,0,.32);z-index:560;   /* 高於選車現場的 500、低於比較視窗的 620 */
+  transform:translateX(-50%) translateY(calc(100% + 24px));opacity:0;pointer-events:none;
+  transition:transform .42s var(--ease),opacity .28s var(--ease)}
+.tray.up{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
+.tray-in{display:flex;align-items:center;gap:18px;padding:14px 16px 14px 24px;white-space:nowrap}
+.tray .tcount{font-size:14px;font-weight:600}
+.tray .tcount b{font-family:var(--num);font-size:16px;margin:0 3px}
 .tray .hint{font-size:12.5px;color:#9A9A9C}
-.tray .clr{margin-left:auto;font-size:12.5px;color:#9A9A9C;text-decoration:underline}
+.tray .clr{font-size:12.5px;color:#9A9A9C;text-decoration:underline}
+.tray .bw{height:44px;padding:0 20px;border-radius:3px;font-size:13.5px;font-weight:700}
+.tray .bw[disabled]{opacity:.4;cursor:default}
+@media(max-width:640px){.tray{left:16px;right:16px;transform:translateY(calc(100% + 24px))}
+  .tray.up{transform:translateY(0)}.tray-in{padding:12px 14px;gap:12px}}
 .modal{position:fixed;inset:0;background:rgba(15,16,20,.62);z-index:620;display:none;overflow-y:auto;padding:5vh 16px}
 .modal.on{display:block}
 .modal-box{background:#fff;width:min(940px,100%);margin:0 auto;padding:38px 40px 42px;position:relative;overflow-x:auto}
@@ -311,9 +318,9 @@ body.no-ovw .ovw{display:none}
 .pick ul b{color:var(--ink)}
 .unless{margin-top:20px;padding:17px 19px;background:var(--grey);border-left:3px solid var(--ink);font-size:13.5px;line-height:1.85}
 .unless b{font-weight:700}
-.pick-cta{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
-.pick-cta .a{background:var(--brand);color:#fff;padding:13px 24px;font-weight:700;font-size:13.5px;border-radius:3px}
-.pick-cta .b2{border:1px solid var(--ink);padding:13px 24px;font-weight:700;font-size:13.5px;border-radius:3px}
+.pick-cta{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}.pick-cta button{display:inline-flex;align-items:center;justify-content:center}
+.pick-cta .a{background:var(--brand);color:#fff;height:44px;padding:0 24px;font-weight:700;font-size:13.5px;border-radius:3px}
+.pick-cta .b2{border:1px solid var(--ink);height:44px;padding:0 24px;font-weight:700;font-size:13.5px;border-radius:3px}
 
 /* ---------- AI 字樣對照（簡報現場用，刻意保留） ---------- */
 .ai-badge{display:none;align-items:center;gap:8px;margin-bottom:13px;background:linear-gradient(90deg,#7C3AED,#2563EB);color:#fff;font-size:12px;font-weight:800;padding:7px 13px;border-radius:999px;width:fit-content}
@@ -433,7 +440,7 @@ body.amb-on .amb-tab .r{display:inline}
 .rv-meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-45);margin-bottom:7px}
 .rv-star{color:var(--ink);font-size:10px;letter-spacing:1px}
 .rv-body{font-size:13.5px;line-height:1.85;color:var(--ink)}
-.rv-more{margin-top:26px;height:48px;padding:0 22px;border-radius:3px;border:1px solid var(--ink);background:#fff;font-size:13.5px;font-weight:700;color:var(--ink)}
+.rv-more{margin-top:26px;height:44px;padding:0 22px;border-radius:3px;border:1px solid var(--ink);background:#fff;font-size:13.5px;font-weight:700;color:var(--ink)}
 .rv-more:hover{background:var(--ink);color:#fff}
 @media(max-width:760px){.rv-grid{grid-template-columns:1fr;gap:26px}}
 .route-questions{display:grid;gap:7px;margin-top:13px}
@@ -667,6 +674,7 @@ body.route-open .amb-frame{opacity:0!important}
 .peek-close:hover{opacity:.75}
 .imm.peek .deck-meta{display:none}
 .imm.peek .peek-close{display:block}
+@keyframes pkIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 /* 詳細頁：左邊車圖（下方接 ← 關閉 →）、右邊資訊各佔一欄，資訊吃滿整個高度自己捲。
    車圖不用縮小，右下的輸入框是常駐功能，看資料時原位不動。 */
 .imm-peek{display:none}
@@ -674,7 +682,7 @@ body.route-open .amb-frame{opacity:0!important}
   column-gap:40px;width:92%}
 .imm.peek .hero-shot{grid-column:1;grid-row:1;min-height:0}
 .imm.peek .deck-bar{grid-column:1;grid-row:2}
-.imm.peek .imm-peek{display:block;grid-column:2;grid-row:1 / span 2;min-height:0;
+.imm.peek .imm-peek{display:block;animation:pkIn .55s var(--ease) both;grid-column:2;grid-row:1 / span 2;min-height:0;
   overflow-y:auto;overscroll-behavior:contain;padding:0 4px 24px 0;
   color:#fff;-webkit-overflow-scrolling:touch}
 /* 捲軸只在捲動時浮出：軌道寬度保留住，所以出現／消失不會把內容推來推去 */
@@ -692,7 +700,7 @@ body.route-open .amb-frame{opacity:0!important}
   border:1px solid rgba(255,255,255,.2);border-radius:40px;padding:9px 16px}
 .imm-peek .pk-kid{font-size:13px;color:rgba(255,255,255,.6);margin:-14px 0 20px}
 .imm-peek .pk-cta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
-.imm-peek .pk-cta button{height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}
+.imm-peek .pk-cta button{height:44px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}
 .imm-peek .pk-cta .a{background:var(--brand);color:#fff}
 .imm-peek .pk-cta .b2{border:1px solid rgba(255,255,255,.34);color:#fff}
 .imm-peek .peek-sec{border-top:1px solid rgba(255,255,255,.14);margin-top:28px;padding-top:22px}
@@ -724,13 +732,21 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-bar input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-family:inherit;font-size:16px;line-height:1;padding:0}
 .imm-bar input::placeholder{color:rgba(255,255,255,.5)}
 .imm-acts{display:flex;align-items:center;gap:10px;flex:none}
-.imm-mic,.imm-send{width:48px;height:48px;color:#fff;display:flex;align-items:center;justify-content:center;flex:none;opacity:.9;transition:opacity .2s,color .2s}
+.imm-mic,.imm-send{width:44px;height:44px;color:#fff;display:flex;align-items:center;justify-content:center;flex:none;opacity:.9;transition:opacity .2s,color .2s}
 .imm-mic:hover,.imm-send:hover{opacity:1}
 .imm-mic.live{color:#EF4444;opacity:1;animation:immPulse 1.3s infinite}@keyframes immPulse{70%{box-shadow:0 0 0 11px rgba(239,68,68,0)}}
 .imm-mic svg,.imm-send svg{width:24px;height:24px}
 .imm-hint{font-size:12px;line-height:2;color:rgba(255,255,255,.5);margin:0}
+/* 逛了一陣子之後才出現的主動提議；沒觸發前完全不佔空間 */
+/* 交棒時整組淡出：車圖與資訊、詳細頁、縮圖列一起 */
+.imm .hero,.imm .imm-peek,.imm .strip{transition:opacity .38s var(--ease)}
+.imm.handoff .hero,.imm.handoff .imm-peek,.imm.handoff .strip{opacity:0}
+.imm-decide{display:none}
+.imm-decide.on{display:block;animation:immLineIn .5s var(--ease) both}
+.imm-decide button{height:44px;padding:0 24px;border-radius:3px;background:#fff;color:#0B0D16;font-size:13.5px;font-weight:700}
+.imm-decide button:hover{opacity:.88}
 .finale{position:absolute;inset:0;z-index:8;display:none;overflow:hidden;background:radial-gradient(64% 74% at 50% 42%,rgba(44,87,240,.34),transparent 64%),#05070F}.finale.on{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:52px 30px 40px}.fin-ring,.fin-sweep{position:absolute;left:50%;top:44%;width:min(1020px,84vw);aspect-ratio:1;transform:translate(-50%,-50%) rotate(-9deg);border-radius:50%;pointer-events:none}.fin-ring{border:1px solid rgba(120,158,255,.30);box-shadow:0 0 90px rgba(44,87,240,.30) inset,0 0 60px rgba(44,87,240,.20)}.fin-sweep{border:2px solid transparent;border-top-color:rgba(157,182,255,.85)}
-.fin-hero{position:absolute;inset:0;z-index:1;background:#05070F;overflow:hidden;transform-origin:50% 50%;transition:transform 1.9s var(--ease) .35s;will-change:transform}.fin-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,15,.45) 0,rgba(5,7,15,0) 24%),linear-gradient(0deg,#05070F 0,rgba(5,7,15,.97) 240px,rgba(5,7,15,.91) 340px,rgba(5,7,15,.74) 450px,rgba(5,7,15,.34) 560px,rgba(5,7,15,0) 660px);opacity:1;transition:opacity .9s var(--ease) .3s}.finale.intro .fin-hero::after{opacity:0;transition:opacity .25s var(--ease)}.fin-hero video{width:100%;height:100%;object-fit:cover;display:block;transform:translateY(-120px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 240px);mask-image:linear-gradient(0deg,transparent 0,#000 240px)}.fin-cap{position:relative;z-index:2;text-align:center;color:#fff;margin-top:20px}.fin-cap .k{font-family:var(--num);font-size:10.5px;letter-spacing:.24em;color:#9DB6FF;font-weight:700}.fin-cap h2{font-size:clamp(24px,3vw,38px);margin:8px 0 4px}.fin-cap .p{font-family:var(--num);font-size:19px;font-weight:700;color:rgba(255,255,255,.8)}.fin-cap .r{margin-top:9px;font-size:13px;color:rgba(255,255,255,.6);max-width:60ch;line-height:1.8}.fin-cap .r b{color:#fff}.fin-cta{display:flex;gap:10px;justify-content:center;margin-top:16px}.fin-cta button{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}.fin-cta .a{background:#fff;color:#0B0D16}.fin-cta .b{border:1px solid rgba(255,255,255,.34);color:#fff}
+.fin-hero{position:absolute;inset:0;z-index:1;background:#05070F;overflow:hidden;transform-origin:50% 50%;transition:transform 1.9s var(--ease) .35s;will-change:transform}.fin-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,7,15,.45) 0,rgba(5,7,15,0) 24%),linear-gradient(0deg,#05070F 0,rgba(5,7,15,.97) 240px,rgba(5,7,15,.91) 340px,rgba(5,7,15,.74) 450px,rgba(5,7,15,.34) 560px,rgba(5,7,15,0) 660px);opacity:1;transition:opacity .9s var(--ease) .3s}.finale.intro .fin-hero::after{opacity:0;transition:opacity .25s var(--ease)}.fin-hero video{width:100%;height:100%;object-fit:cover;display:block;transform:translateY(-120px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 240px);mask-image:linear-gradient(0deg,transparent 0,#000 240px)}.fin-cap{position:relative;z-index:2;text-align:center;color:#fff;margin-top:20px}.fin-cap .k{font-family:var(--num);font-size:10.5px;letter-spacing:.24em;color:#9DB6FF;font-weight:700}.fin-cap h2{font-size:clamp(24px,3vw,38px);margin:8px 0 4px}.fin-cap .p{font-family:var(--num);font-size:19px;font-weight:700;color:rgba(255,255,255,.8)}.fin-cap .r{margin-top:9px;font-size:13px;color:rgba(255,255,255,.6);max-width:60ch;line-height:1.8}.fin-cap .r b{color:#fff}.fin-cta{display:flex;gap:10px;justify-content:center;margin-top:16px}.fin-cta button{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:3px;font-size:13.5px;font-weight:700}.fin-cta .a{background:#fff;color:#0B0D16}.fin-cta .b{border:1px solid rgba(255,255,255,.34);color:#fff}
 .fin-rel{position:relative;z-index:2;margin-top:20px;width:100%}.fin-rel .h{font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:12px;text-align:center}.fin-row{display:flex;gap:12px;justify-content:center}.fin-card{width:152px;padding:6px 8px 10px;text-align:center;border-radius:12px}.fin-card img{width:100%;height:84px;object-fit:contain}.fin-card b{display:block;font-size:12.5px;margin-top:7px;color:#fff}.fin-card span{display:block;font-family:var(--num);font-size:11.5px;color:rgba(255,255,255,.5)}.fin-x{display:none}/* 結論的文案由下往上依序浮現：眉標→車名→價格→尺寸→按鈕→相關車款 */.finale .fin-cap>*,.finale .fin-rel{opacity:1;transform:none;transition:opacity .85s var(--ease),transform 1.15s var(--ease)}.finale .fin-cap>*:nth-child(1){transition-delay:.02s}.finale .fin-cap>*:nth-child(2){transition-delay:.10s}.finale .fin-cap>*:nth-child(3){transition-delay:.18s}.finale .fin-cap>*:nth-child(4){transition-delay:.26s}.finale .fin-cap>*:nth-child(5){transition-delay:.34s}.finale .fin-rel{transition-delay:.42s}.finale .fin-ring,.finale .fin-sweep,.finale .fin-x{transition:opacity .8s var(--ease) .18s}.finale.intro .fin-cap>*,.finale.intro .fin-rel{opacity:0;transform:translateY(26px)}.finale.intro .fin-ring,.finale.intro .fin-sweep,.finale.intro .fin-x{opacity:0}@media(prefers-reduced-motion:reduce){.fin-hero{transition:none}}
 @media(max-width:1280px){.imm-cats{gap:2px}.imm-ask{right:28px;bottom:56px}}
 @media(max-width:1000px){.imm-stage{width:100%;height:62%}.hero{width:82%}.strip-i,.strip-i img{width:112px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
@@ -991,6 +1007,7 @@ body.amb-on .amb-tab .a{display:none}
   </div>
   <div class="imm-ask">
     <div class="imm-feed" id="immFeed"></div>
+    <div class="imm-decide" id="immDecide"><button id="immDecideBtn">幫我決定</button></div>
     <div class="imm-bar">
       <input id="immInput" type="text" autocomplete="off" placeholder="可以直接輸入或用說的...">
       <div class="imm-acts">
@@ -1038,10 +1055,10 @@ body.amb-on .amb-tab .a{display:none}
 
 <div class="tray" id="tray">
   <div class="tray-in">
-    <div class="slots" id="traySlots"></div>
+    <span class="tcount" id="trayCount"></span>
     <span class="hint" id="trayHint"></span>
     <button class="clr" id="trayClear">清除</button>
-    <button class="bw" id="trayGo">比較規格</button>
+    <button class="bw" id="trayGo">查看比較</button>
   </div>
 </div>
 
@@ -1200,7 +1217,7 @@ const PRESETS = [
 
 const P = {light:false,climb:false,down:false,ease:false};  /* 你比較在意什麼：只對應官網分面 */
 const S = {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,
-           height:172,qi:0,touched:false,cmp:[],saved:[],sort:'fit'};
+           height:172,qi:0,touched:false,cmp:[],sort:'fit'};
 
 /* ---------- 整句描述 → 篩選條件 ---------- */
 function bucket(v){ return v<=30000?30000 : v<=100000?100000 : v<=200000?200000 : 999999; }
@@ -1451,7 +1468,7 @@ function card(b, withWhy){
     '<div class="sp">' + sp.map(s => '<i>' + s + '</i>').join('') + '</div>' +
     (why ? '<p class="why">' + why + '</p>' : '') +
     '<span class="more">' + b.cta + '</span>' +
-    '<button class="cmp' + (S.cmp.includes(b.n + b.y) ? ' on' : '') + '"><span class="bx"></span>加入比較</button>';
+    '<button class="cmp' + (S.cmp.includes(b.n + b.y) ? ' on' : '') + '"><span class="bx"></span>加入比較清單</button>';
   el.querySelector('.cmp').onclick = () => toggleCmp(b.n + b.y);
   /* 店員模式：停留 1.5 秒或點開算「看過」 */
   ['.shot','h4','.more'].forEach(q => { el.querySelector(q).onclick = () => openPeek(b); });
@@ -1537,6 +1554,7 @@ const PLP_IMG = {
   'Faith'                   : 'Bikes/Child/Faith.png'
 };
 function bikeImg(b){
+  if (b.faux) return encodeURI(b.img);
   if (PLP_IMG[b.n]) return encodeURI(PLP_IMG[b.n]);
   let f;
   if (b.kids)                            f = b.wheel.includes('24') ? 'Bikes/Child/Faith.png' : 'Bikes/Child/STP 20 FS.png';
@@ -1554,30 +1572,51 @@ function toggleCmp(k){
   J.cmpAt = Date.now();
   const i = S.cmp.indexOf(k);
   if (i >= 0) S.cmp.splice(i,1);
-  else { if (S.cmp.length >= 3) S.cmp.shift(); S.cmp.push(k); }
+  else {
+    if (S.cmp.length >= 3){ trayFull(); return false; }   /* 條上只顯示數量，默默擠掉一台會看不出來 */
+    S.cmp.push(k);
+  }
   renderPLP();
+  return true;
 }
+/* 比較清單的 key 解析：官網資料集找不到時，再從舞台上那 15 台示意規格車找。
+   不這樣做的話，那些車按了「加入比較清單」會靜靜消失。 */
+let FAUX_BY_KEY = null;
+function fauxByKey(){
+  if (!FAUX_BY_KEY){
+    FAUX_BY_KEY = {};
+    IMM_ALL().forEach(x => { if (!immMatchBike(x)){ const f = immFauxBike(x); FAUX_BY_KEY[keyOf(f)] = f; } });
+  }
+  return FAUX_BY_KEY;
+}
+function cmpFind(k){ return BIKES.find(x => keyOf(x) === k) || fauxByKey()[k] || null; }
 function renderTray(){
-  const t = $('tray'), slots = $('traySlots');
-  t.classList.toggle('up', S.cmp.length > 0);
-  document.body.classList.toggle('has-tray', S.cmp.length > 0);
-  slots.innerHTML = '';
-  S.cmp.forEach(k => {
-    const b = BIKES.find(x => keyOf(x) === k); if (!b) return;
-    const d = document.createElement('span');
-    d.className = 'slot';
-    d.innerHTML = b.n + ' <small style="color:#9A9A9C">' + b.y + '</small> <button>✕</button>';
-    d.querySelector('button').onclick = () => toggleCmp(k);
-    slots.appendChild(d);
+  const n = S.cmp.filter(cmpFind).length;
+  $('tray').classList.toggle('up', n > 0);
+  document.body.classList.toggle('has-tray', n > 0);
+  $('trayCount').innerHTML = '已加入比較 <b>' + n + '</b> 台';
+  $('trayHint').textContent = n < 2 ? '再選一台就能比較' : (n >= 3 ? '已達上限 3 台' : '最多 3 台');
+  $('trayGo').disabled = n < 2;
+  syncCmpButtons();
+}
+/* 清除比較清單、或從別的地方移除時，還開著的詳細頁按鈕要跟著換回來 */
+function syncCmpButtons(){
+  document.querySelectorAll('#pkCmp, #peekCmp').forEach(btn => {
+    const k = btn.dataset.k;
+    if (k) btn.textContent = S.cmp.includes(k) ? '已在比較清單' : '加入比較清單';
   });
-  $('trayHint').textContent = S.cmp.length < 2 ? '再選一台就能比較（最多 3 台）' : '';
-  $('trayGo').style.opacity = S.cmp.length < 2 ? '.4' : '1';
+}
+function trayFull(){
+  const h = $('trayHint'); h.textContent = '最多 3 台，請先移除一台';
+  h.style.color = '#FFB4B4';
+  clearTimeout(trayFull.t);
+  trayFull.t = setTimeout(() => { h.style.color = ''; renderTray(); }, 1800);
 }
 $('trayClear').onclick = () => { S.cmp = []; renderPLP(); };
 $('trayGo').onclick = () => { if (S.cmp.length >= 2) openCompare(); };
 
 function openCompare(){
-  const list = S.cmp.map(k => BIKES.find(b => keyOf(b) === k)).filter(Boolean);
+  const list = S.cmp.map(cmpFind).filter(Boolean);
   const selected = new Set(list.map(keyOf));
   const recommended = ranked().find(b => selected.has(keyOf(b)));
   const recommendedKey = recommended ? keyOf(recommended) : (list[0] ? keyOf(list[0]) : '');
@@ -1590,17 +1629,20 @@ function openCompare(){
     ['騎乘等級',   b => L_LVL[b.lvl]],
     ['避震類別',   b => L_SUSP[b.susp]],
     ['車架材質',   b => L_MAT[b.mat]],
-    ['輪徑大小',   b => b.wheel.map(w=>w.replace('-','.')+'"').join(' / ')],
+    ['輪徑大小',   b => b.wheel.map(wheelTxt).join(' / ')],
     ['煞車類別',   b => dash(L_BRAKE[b.brake])],
     ['座管類別',   b => b.post.length ? b.post.map(x => L_POST[x]).join(' / ') : '<i class="pend">官網未列</i>'],
     ['電力輔助',   b => b.ebike ? (b.batt || '有') : '無'],
     ['適用年齡',   b => b.kids ? b.kids.label : '—'],
     ['你的建議尺寸', () => z.s + '（身高 ' + S.height + ' cm）<i class="pend"> · 示意值</i>']
   ];
-  let html = '<h3>規格比較</h3><p class="sub">在列表上直接比，不用切換到別的頁面。所有欄位皆取自官網既有的產品分類，系統不生成任何規格數字；標示「示意值」或「官網未列」的欄位代表官方資料尚未接上。</p>';
+  /* 表裡如果混進示意規格的車，說明文就不能再說「全部取自官網」——那句會變成假的 */
+  const anyFaux = list.some(b => b.faux);
+  let html = '<h3>規格比較</h3><p class="sub">在列表上直接比，不用切換到別的頁面。標示「示意值」或「官網未列」的欄位代表官方資料尚未接上。' +
+    (anyFaux ? '本次比較中有車款的規格為<b>示意值</b>，尚未接上官網資料。' : '其餘欄位皆取自官網既有的產品分類，系統不生成任何規格數字。') + '</p>';
   html += '<table class="ctab"><thead><tr><th></th>' + list.map(b => '<th class="nm"><div class="cmp-product">' +
     (keyOf(b) === recommendedKey ? '<span class="cmp-rec">目前推薦</span>' : '') +
-    '<img src="' + bikeImg(b) + '" alt="' + b.n + '"><b>' + b.n + '</b><small>' + b.y + ' 年式</small></div></th>').join('') + '</tr></thead><tbody>';
+    '<img src="' + bikeImg(b) + '" alt="' + b.n + '"><b>' + b.n + '</b></div></th>').join('') + '</tr></thead><tbody>';
   rows.forEach(([label, fn]) => {
     html += '<tr><th>' + label + '</th>' + list.map(b => '<td>' + fn(b) + '</td>').join('') + '</tr>';
   });
@@ -1681,7 +1723,7 @@ function renderOvw(n){
 }
 
 $('clearAll').onclick = () => {
-  Object.assign(S, {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,touched:false,cmp:[],saved:[]});
+  Object.assign(S, {terrain:null,intent:null,budget:null,best:null,susp:null,mat:null,wheel:null,brake:null,post:null,touched:false,cmp:[]});
   Object.keys(P).forEach(k => P[k] = false);
   renderPLP();
 };
@@ -1801,28 +1843,18 @@ function renderJStrip(){
 }
 /* 點開一台車：只列官網分類欄位，不生成規格 */
 function wheelTxt(w){ return /[a-z]/i.test(w) ? w : w.replace('-','.') + '"'; }
-/* 加入清單：只記在記憶體裡（不寫 storage），按鈕自己反映狀態。
-   目前還沒有「我的清單」那一頁可以看，接上之前這裡先只做收藏本身。 */
-function savedLabel(b){ return S.saved.includes(keyOf(b)) ? '已加入清單' : '加入清單'; }
-function toggleSaved(b, btn){
-  const k = keyOf(b), i = S.saved.indexOf(k);
-  if (i >= 0) S.saved.splice(i,1); else S.saved.push(k);
-  if (btn) btn.textContent = savedLabel(b);
-}
 function openPeek(b){
   if (!b.faux) jView(b, false);
   const cat = b.faux ? immCatLabel(b.fauxCat) : L_BEST[b.best];
   const sp = [cat, L_LVL[b.lvl], L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(wheelTxt).join(' / ')].filter(Boolean);
   $('modalBody').innerHTML =
     '<div class="pick"><div class="sh"><img src="' + (b.faux ? encodeURI(b.img) : bikeImg(b)) + '" alt=""></div><div>' +
-    '<h4>' + b.n + ' <small style="font-weight:400;font-size:14px;color:var(--ink-45)">' + b.y + ' 年式</small>' +
-    (b.faux ? ' <span class="proto">示意規格</span>' : '') + '</h4>' +
+    '<h4>' + b.n + '</h4>' +
     '<p class="pz">' + b.pr + '</p>' +
     '<div class="sp" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">' + sp.map(x => '<i style="font-style:normal;font-size:12px;border:1px solid var(--line);padding:4px 9px">' + x + '</i>').join('') + '</div>' +
     (b.kids ? '<p style="font-size:13px;color:var(--ink-70)">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
     '<div class="pick-cta"><button class="a" id="peekBook">預約試乘</button>' +
-      '<button class="b2" id="peekSave">' + savedLabel(b) + '</button>' +
-      (b.faux ? '' : '<button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
+      '<button class="b2" id="peekCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較清單') + '</button></div>' +
     '</div></div>' +
     peekExtras(b);
   $('modal').classList.add('on');
@@ -2447,19 +2479,24 @@ function immOpenDetail(b){
 function peekInlineHTML(b){
   const cat = b.faux ? immCatLabel(b.fauxCat) : L_BEST[b.best];
   const sp = [cat, L_LVL[b.lvl], L_SUSP[b.susp], L_MAT[b.mat], b.wheel.map(wheelTxt).join(' / ')].filter(Boolean);
-  return '<h3>' + b.n + '<small>' + b.y + ' 年式</small>' + (b.faux ? ' <span class="proto">示意規格</span>' : '') + '</h3>' +
+  return '<h3>' + b.n + '</h3>' +
     '<p class="pk-pz">' + b.pr + '</p>' +
     '<div class="pk-sp">' + sp.map(x => '<i>' + x + '</i>').join('') + '</div>' +
     (b.kids ? '<p class="pk-kid">' + (b.faux ? '適用 ' : '官網標示適用 ') + b.kids.label + '</p>' : '') +
     '<div class="pk-cta"><button class="a" id="pkBook">預約試乘</button>' +
-      '<button class="b2" id="pkSave">' + savedLabel(b) + '</button>' +
-      (b.faux ? '' : '<button class="b2" id="pkCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較') + '</button>') + '</div>' +
+      '<button class="b2" id="pkCmp">' + (S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較清單') + '</button></div>' +
     peekExtras(b, 3);
 }
 function wirePeek(root, b, onCmp){
   const book = root.querySelector('#pkBook, #peekBook'); if (book) book.onclick = () => openTestRideBooking(b);
-  const cmp = root.querySelector('#pkCmp, #peekCmp'); if (cmp) cmp.onclick = () => { toggleCmp(keyOf(b)); onCmp && onCmp(); };
-  const save = root.querySelector('#pkSave, #peekSave'); if (save) save.onclick = () => toggleSaved(b, save);
+  const cmp = root.querySelector('#pkCmp, #peekCmp');
+  if (cmp) cmp.dataset.k = keyOf(b);
+  if (cmp) cmp.onclick = () => {
+    const ok = toggleCmp(keyOf(b));
+    cmp.textContent = S.cmp.includes(keyOf(b)) ? '已在比較清單' : '加入比較清單';
+    if (ok !== false) immNudge();
+    if (ok !== false && onCmp) onCmp();          /* 只有 modal 要關自己；內嵌詳細頁留著繼續看 */
+  };
   const more = root.querySelector('#rvMore');
   if (more) more.onclick = () => { root.querySelector('#rvGrid').classList.add('all'); more.remove(); };
   root.querySelectorAll('[data-faq]').forEach(btn => {
@@ -2470,17 +2507,38 @@ function wirePeek(root, b, onCmp){
     };
   });
 }
+/* 進出詳細頁時車圖會從「置中大圖」跳到「左欄」——用 FLIP 讓它平移縮放過去，
+   而不是瞬間換位。量完新位置後用反向 transform 當起點，再動回原點。 */
+function heroFlip(change){
+  const shot = $('immShot'), el = shot.firstElementChild;
+  if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches){ change(); return; }
+  const a = el.getBoundingClientRect();
+  change();
+  const c = el.getBoundingClientRect();
+  if (!a.width || !c.width){ return; }
+  const dx = (a.left + a.width / 2) - (c.left + c.width / 2);
+  const dy = (a.top + a.height / 2) - (c.top + c.height / 2);
+  const k  = a.width / c.width;
+  el.style.transition = 'none';
+  el.style.transform  = 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')';
+  void el.offsetWidth;                                  /* 強制重排，起點才算數（rAF 在背景分頁不跑） */
+  el.style.transition = 'transform .62s var(--ease)';
+  el.style.transform  = '';
+  clearTimeout(IMM.flipT);
+  IMM.flipT = setTimeout(() => { el.style.transition = ''; el.style.transform = ''; }, 700);
+}
 function openPeekInline(b){
   if (!b.faux) jView(b, false);
   const box = $('immPeek');
   box.innerHTML = peekInlineHTML(b);
   box.scrollTop = 0;
-  $('imm').classList.add('peek');
+  heroFlip(() => $('imm').classList.add('peek'));
   clearInterval(IMM.cyc); IMM.cyc = null;          /* 看資料的時候不要讓車自己換掉 */
-  wirePeek(box, b, closePeekInline);
+  immNudge();
+  wirePeek(box, b, null);
 }
 function closePeekInline(){
-  $('imm').classList.remove('peek');
+  heroFlip(() => $('imm').classList.remove('peek'));
   $('immPeek').innerHTML = '';
   if (IMM.pool && IMM.pool.length) deckTimer();
 }
@@ -2535,6 +2593,15 @@ function stripReanchor(){
   if (IMM.v === was) return;
   stripPlace(false); stripMark();
 }
+function heroMeta(x){
+  const m = $('immMeta'), isNew = immYearOf(x) >= '2026';
+  m.innerHTML = '<h3>' + x.n + '</h3>' +
+    '<div class="tags">' + (isNew ? '<i class="new">NEW</i>' : '') +
+      deckFacets(x).map(t => '<i>' + t + '</i>').join('') + '</div>' +
+    '<p class="pz">' + immNTD(x.pr).replace('NT$','NT$ ') + '</p>' +
+    '<button class="go">瞭解更多</button>';
+  m.querySelector('.go').onclick = () => immOpenDetail(x);
+}
 function heroShow(){
   const x = IMM.pool[IMM.i]; if (!x) return;
   const shot = $('immShot'), m = $('immMeta');
@@ -2547,13 +2614,7 @@ function heroShow(){
     if (!im){ shot.innerHTML = '<img alt="">'; im = shot.querySelector('img'); }   /* demo 影片播過的話換回車圖 */
     shot.classList.remove('demo');
     im.src = encodeURI(x.img);
-    const isNew = immYearOf(x) >= '2026';
-    m.innerHTML = '<h3>' + x.n + '</h3>' +
-      '<div class="tags">' + (isNew ? '<i class="new">NEW</i>' : '') +
-        deckFacets(x).map(t => '<i>' + t + '</i>').join('') + '</div>' +
-      '<p class="pz">' + immNTD(x.pr).replace('NT$','NT$ ') + '</p>' +
-      '<button class="go">瞭解更多</button>';
-    m.querySelector('.go').onclick = () => immOpenDetail(x);
+    heroMeta(x);
     shot.classList.remove('swap'); m.classList.remove('swap');
     if (!S.terrain) immSetScene(x.cat);
     catsSync(x.cat);
@@ -2583,6 +2644,7 @@ function deckGo(dir){
 function deckTimer(){
   clearInterval(IMM.cyc); IMM.cyc = null;
   if ($('imm').classList.contains('peek')) return;      /* 看資料時只能手動切換，不自動跑 */
+  if (S.terrain) return;                                /* 選了分類就停下來讓使用者自己挑，只有新車上市會自動輪播 */
   IMM.cyc = setInterval(() => deckGo(1), IMM.dwell || 4200);
 }
 function immStage(){
@@ -2599,6 +2661,59 @@ function catsSync(cat){
 }
 /* 這一排隨時可以改：換分類就換車陣與背景，右下的對話同步補一輪，
    然後把目前還沒回答的那一題再問一次（不會倒退回已經答過的題目）。 */
+/* 點分類、開車款詳細、加入比較都算一次互動；累積到 3 次還沒收斂就主動提議一次，只提一次。 */
+function immNudge(){
+  if (IMM.nudged || !$('imm').classList.contains('on') || $('finale').classList.contains('on')) return;
+  IMM.acts = (IMM.acts || 0) + 1;
+  if (IMM.acts < 3) return;
+  IMM.nudged = true;
+  setTimeout(() => {
+    immSay('還是毫無頭緒嗎？我推薦您這台車。', 'them');
+    $('immDecide').classList.add('on');
+  }, 900);
+}
+/* 目前這一排車裡，依既有評分規則分數最高的那台 */
+function deckTop(){
+  const pool = (IMM.pool || []);
+  if (!pool.length) return null;
+  return pool.map(x => {
+    const b = immMatchBike(x) || immFauxBike(x);
+    return Object.assign({}, b, score(b), {stage: x});
+  }).sort((a, c) => c.s - a.s || a.lo - c.lo)[0];
+}
+/* 推薦結果固定收斂到影片裡那台。要改回依評分決定就換成 deckTop().stage.n，
+   但影片演的仍是 Revolt，畫面與文案會對不起來。 */
+const REC_NAME = 'Revolt Advanced SL 0';
+function recTarget(){
+  const inPool = (IMM.pool || []).find(x => x.n === REC_NAME);
+  if (inPool) return {item: inPool, cat: null};
+  const g = immCatItems('gravel').find(x => x.n === REC_NAME);
+  return g ? {item: g, cat: 'gravel'} : null;   /* 不在目前這排就把舞台換到它所屬的分類 */
+}
+/* 交棒：使用者正在看的（車圖、車款資訊、詳細頁、縮圖列）整組淡出，換好之後再淡入，
+   中間不讓使用者看到關面板與換位的過程。 */
+function immDecideGo(){
+  const t = recTarget(); if (!t) return;
+  const imm = $('imm');
+  $('immDecide').classList.remove('on');
+  clearInterval(IMM.cyc); IMM.cyc = null;
+  imm.classList.add('handoff');
+  setTimeout(() => {
+    if (imm.classList.contains('peek')){ imm.classList.remove('peek'); $('immPeek').innerHTML = ''; }
+    if (t.cat){ S.terrain = t.cat; immSetScene(t.cat); IMM.pool = deckPool(); stripRender(); }
+    const i = IMM.pool.findIndex(x => x.n === REC_NAME);
+    if (i >= 0){ IMM.v += (i - IMM.i); IMM.i = i; }
+    stripMark(); stripPlace(false);
+    catsSync(t.item.cat);
+    heroMeta(t.item);
+    const shot = $('immShot');
+    shot.innerHTML = '<video src="Bikes/anime1.mp4" autoplay muted playsinline preload="auto"></video>';
+    shot.classList.add('demo');
+    const v = shot.querySelector('video'); v.play && v.play().catch(() => {});
+    imm.classList.remove('handoff');
+    immSay('就這台，<b>' + REC_NAME + '</b>。', 'them');
+  }, 420);
+}
 function immSetCat(k){
   if (IMM.busy) return;
   if ($('imm').classList.contains('peek')) closePeekInline();
@@ -2608,7 +2723,7 @@ function immSetCat(k){
     if (S.terrain === k) return;
     S.terrain = k; IMM.newOnly = false; S.newOnly = false; immSetScene(k);
   }
-  S.touched = true; IMM.busy = true;
+  S.touched = true; IMM.busy = true; immNudge();
   immSay(immEsc(isNew ? '新車上市' : immCatLabel(k)), 'me');
   immStage(); catsSync();
   setTimeout(() => {
@@ -2657,16 +2772,6 @@ function immAdvance(){while(IMM.step<IMM_STEPS.length&&immFilled(IMM_STEPS[IMM.s
 function immHandle(txt){
   txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
   const st=IMM_STEPS[IMM.step];
-  if(/加入/.test(txt)){                                   /* demo 觸發 */
-    const x=IMM.pool&&IMM.pool[IMM.i];
-    if(x){
-      const k=keyOf(immMatchBike(x)||immFauxBike(x));
-      if(!S.saved.includes(k))S.saved.push(k);
-      S.touched=true;heroDemoVideo();
-      setTimeout(()=>{immSay('好，<b>'+x.n+'</b> 已經加進您的清單。','them');IMM.busy=false},420);
-      return;
-    }
-  }
   let hit=parseSentence(txt);
   /* 沒有滑桿了，身高就得從句子裡讀。問到身高那題時，只講一個數字也算。
      (?!\d) 是為了不要把「150000」的前三碼當成身高。 */
@@ -2702,12 +2807,13 @@ function immConclude(){
   IMM.busy=false;const pool=immPool(),top=pool[0],z=fitOf(S.height);clearInterval(IMM.cyc);const fv=$('finVid');if(!fv.getAttribute('src'))fv.src='bg/hero-rotate.mp4';try{fv.currentTime=0;fv.play().catch(()=>{})}catch(e){}$('finCap').innerHTML='<p class="k">最符合你條件的一台</p><h2>'+top.n+'</h2><p class="p">'+top.pr+'</p><p class="r">依你 '+S.height+' cm 的身高，先以 <b>'+z.s+'</b> 號作為試乘起點。</p><div class="fin-cta"><button class="a" id="finGo">帶著條件看完整清單</button><button class="b" id="finRide">預約到門市試乘</button></div>';const seen=new Set([top.n]),rel=pool.slice(1).filter(b=>!seen.has(b.n)&&seen.add(b.n)).slice(0,5);$('finRel').innerHTML='<p class="h">你可能也想一起看</p><div class="fin-row">'+rel.map((b,i)=>'<button class="fin-card"><img src="'+IMM_REL_IMAGES[(i+1)%IMM_REL_IMAGES.length]+'" alt=""><b>'+b.n+'</b><span>'+b.pr+'</span></button>').join('')+'</div>';$('finale').classList.add('on');finIntro();$('finGo').onclick=()=>{immClose();goPLP()};$('finRide').onclick=()=>{$('finRide').textContent='已記下這台'};$('finRel').querySelectorAll('.fin-card').forEach(c=>c.onclick=()=>{immClose();goPLP()});
 }
 function immOpen(){
-  if($('route').classList.contains('on'))closeRoute();IMM.beforeOverflow=document.body.style.overflow;document.body.style.overflow='hidden';S.terrain=null;S.budget=null;IMM.step=0;IMM.heightSet=false;IMM.busy=false;$('imm').classList.add('on');$('finale').classList.remove('on');$('immFeed').innerHTML='';$('imm').classList.remove('peek');$('immPeek').innerHTML='';IMM.newOnly=true;S.newOnly=false;renderCats();immStage();setTimeout(immAdvance,360);
+  if($('route').classList.contains('on'))closeRoute();IMM.beforeOverflow=document.body.style.overflow;document.body.style.overflow='hidden';S.terrain=null;S.budget=null;IMM.step=0;IMM.heightSet=false;IMM.busy=false;$('imm').classList.add('on');$('finale').classList.remove('on');$('immFeed').innerHTML='';IMM.acts=0;IMM.nudged=false;$('immDecide').classList.remove('on');$('imm').classList.remove('peek');$('immPeek').innerHTML='';IMM.newOnly=true;S.newOnly=false;renderCats();immStage();setTimeout(immAdvance,360);
 }
 function immClose(){try{$('finVid').pause()}catch(e){}$('imm').classList.remove('on');$('finale').classList.remove('on','intro');$('finHero').classList.remove('zoom');clearTimeout(IMM.finT);clearTimeout(IMM.finT2);clearTimeout(IMM.finT3);clearInterval(IMM.cyc);document.body.style.overflow=IMM.beforeOverflow;immStopVoice()}
 $('deckPrev').onclick=()=>deckGo(-1);$('deckNext').onclick=()=>deckGo(1);
 $('immShot').onclick=()=>{const x=IMM.pool&&IMM.pool[IMM.i];if(x)immOpenDetail(x)};
 $('peekClose').onclick=closePeekInline;
+$('immDecideBtn').onclick=immDecideGo;
 $('immPeek').addEventListener('scroll',()=>{const b=$('immPeek');b.classList.add('scrolling');clearTimeout(IMM.sbT);IMM.sbT=setTimeout(()=>b.classList.remove('scrolling'),700)},{passive:true});
 addEventListener('resize',()=>{if($('imm').classList.contains('on')&&IMM.pool&&IMM.pool.length)stripPlace(false)});
 $('immClose').onclick=immClose;$('finX').onclick=immClose;$('immSend').onclick=()=>immHandle($('immInput').value);$('immInput').addEventListener('keydown',e=>{if(e.key==='Enter')immHandle($('immInput').value)});
