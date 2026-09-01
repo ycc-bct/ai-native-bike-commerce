@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>選車現場 · 展廳視角（淺色版）</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Overpass:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#06038D; --ink:#333; --ink-70:#58626E; --ink-45:#8A8A8E; --line:#DDD;
+  --sans:'Open Sans',-apple-system,"Segoe UI",Roboto,sans-serif;
+  --num:'Overpass',var(--sans);
+  --ease:cubic-bezier(.16,1,.3,1);
+  /* 淺色展廳 */
+  --room:#EDEEF1; --room-hi:#FBFBFD; --floor:#E4E6EB; --wall:#F7F8FA; --panel:#FFF;
+  /* AI 球 */
+  --o-deep:#05037A; --o-core:#1230C8; --o-mid:#2B6BF0; --o-lit:#7FB6FF; --o-spec:#BDEBFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--room);overflow:hidden}
+button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
+
+/* ══ 展廳：生成的淺色車店內裝（空景，車由 DOM 疊上去） ══════ */
+.room{position:fixed;inset:0;overflow:hidden;background:#FFF}
+/* 背景淡化：只作用在背景那一張（.room 的直接子元素）。
+   用 .room img 會連 .zones 裡的車圖一起吃掉——車就會跟著半透明。 */
+.room>img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;
+  opacity:1;filter:saturate(.9) contrast(.97)}
+/* 上緣淡出，讓導覽列的字壓得住；下緣稍微壓深，車才有重量 */
+.room::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.72) 0,rgba(255,255,255,0) 13%),
+    radial-gradient(84% 70% at 50% 54%,transparent 58%,rgba(126,134,152,.10) 100%)}
+
+/* ══ 三個展區：左右各一組較小、中央一組較大 ══════════════════ */
+.zones{position:absolute;inset:0;z-index:3;pointer-events:none}
+.zone{position:absolute;text-align:center;transition:opacity .5s var(--ease)}
+/* 中央那組站在後方的展台上（照片裡台面約在 58%），左右兩組站在側邊斜台上、位置較低較前 */
+.zone-c{bottom:25%}          /* 中央階梯台：兩翼台面約在 64%，頂階再高 8% */
+/* 兩側台階是斜的，左右高度不同：左邊 x10 處台面約 72%、右邊 x90 處約 74.5% */
+.zone-l{bottom:28%}
+.zone-r{bottom:25.5%}
+.zone-c{left:50%;transform:translateX(-50%);width:47%;z-index:3}
+.zone-l{left:2.5%;width:15%;z-index:2}
+.zone-r{right:2.5%;width:15%;z-index:2}
+
+/* 標題給一塊半透明白底：壓在石材與牆面上才讀得清楚，形狀沿用站上的 3px 圓角 */
+.ztitle{display:inline-block;font-weight:600;color:var(--ink);letter-spacing:.02em;
+  font-size:clamp(13px,1vw,17px);line-height:1;padding:9px 16px;border-radius:999px;
+  background:rgba(255,255,255,.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 2px 10px rgba(80,88,104,.10);
+  margin-bottom:clamp(10px,1.8vh,22px);transition:opacity .34s var(--ease)}
+/* 中央標題改成絕對定位、釘在視窗上的固定高度。
+   原本它跟在主角車上方（靠 margin），車圖一高就被推上去壓到背景牆上的 GIANT logo——
+   E-bike 那台特別高，差距有 7%。改成 vh 之後六個分類都落在同一條線上。 */
+.zone-c .ztitle{position:absolute;left:50%;transform:translateX(-50%);
+  bottom:31.7vh;margin:0}
+
+.bikes{display:flex;align-items:flex-end;justify-content:center;gap:1%;
+  transition:opacity .34s var(--ease),transform .5s var(--ease)}
+.bikes.out{opacity:0;transform:translateX(var(--slide,0)) scale(.98)}
+.bike{position:relative;flex:none}
+.bike img{width:100%;height:auto;display:block}
+/* 接地陰影：前後輪各一顆，不是整台車一道。
+   位置是量 25 張去背圖最底 4% 的不透明像素得到的——側視圖後輪中心約 20%、前輪約 80%；
+   45 度圖（左右兩區）的後輪被透視推高，最低點在圖高 5% 附近，所以另外給一組值。 */
+.bike::before,.bike::after{content:"";position:absolute;height:7%;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 50%,rgba(58,66,84,.46),transparent 70%)}
+.bike::before{left:10%;width:20%;bottom:-3%}    /* 後輪 */
+.bike::after {left:70%;width:20%;bottom:-3%}    /* 前輪 */
+.zone-l .bike::before,.zone-r .bike::before{left:8%;width:21%;bottom:3%}
+.zone-l .bike::after ,.zone-r .bike::after {left:64%;width:25%;bottom:-3%}
+.bike .refl{display:none}   /* 照片地板本身就有反射，再疊一層會打架 */
+/* 中央：中間那台最大、兩側略小且往後退 */
+.zone-c .bikes{gap:0}
+.zone-c .bike{width:36%;z-index:1}              /* 兩翼疊在主角車前面 */
+/* 兩翼各往中間收 2vw（＝視窗寬的 2%），與主角車交疊 */
+.zone-c .bike:first-child{transform:translateX(2vw)}
+.zone-c .bike:last-child{transform:translateX(-2vw)}
+.zone-c .bike:nth-child(2){width:48%;transform:translateY(-4.2vw);z-index:0}  /* 頂階：高一階、也最大，但壓在最後面 */
+/* 抬升用 vw 不用 %：% 是相對車圖自己的高度，而每台車的圖比例不同，
+   換分類時主角車就會忽高忽低。固定成 vw 之後每台的輪底都落在同一條線上。 */
+.zone-l .bike,.zone-r .bike{width:92%}          /* 左右各一台，站在自己的平台上 */
+.zone-r .bike{transform:scaleX(-1)}             /* 右側鏡射；掛在 .bike 上，接地陰影才會一起翻面 */
+
+/* ══ 上方分類列 ══════════════════════════════════════════ */
+.top{position:fixed;z-index:20;top:0;left:0;right:0;height:80px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 40px;
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,0))}
+.who{display:flex;align-items:center;gap:10px}
+.who .mark{width:25px;color:var(--brand);display:flex}.who .mark svg{width:100%;height:auto}
+.who b{font-size:16px;font-weight:600;display:block;line-height:1}
+.who small{font-size:12px;color:var(--ink-45);display:flex;align-items:center;gap:8px;margin-top:8px;line-height:1}
+.who small i{width:4px;height:4px;background:var(--brand);border-radius:50%;display:block}
+.cats{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px}
+.cat{display:flex;align-items:center;gap:8px;padding:12px 10px;color:var(--ink-45);white-space:nowrap;
+  transition:color .3s var(--ease)}
+.cat svg{width:24px;height:24px;flex:none}
+.cat span{font-size:15px;line-height:1}
+.cat:hover{color:var(--ink)}
+.cat.on{color:var(--ink);font-weight:600}
+.cat.on span{border-bottom:2px solid var(--brand);padding-bottom:4px}
+.close{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink)}
+.close svg{width:24px;height:24px}
+
+/* ══ 左右切換 ══════════════════════════════════════════════ */
+/* 箭頭跟在球的左右兩側，切換與問答就集中在同一個地方 */
+.arrow{width:52px;height:52px;flex:none;display:flex;align-items:center;justify-content:center;
+  /* 淺色箭頭：地板是中灰，白色描邊配一道淡投影才立得住 */
+  color:#FFF;opacity:.85;filter:drop-shadow(0 1px 3px rgba(40,46,60,.38));
+  transition:opacity .2s,transform .3s var(--ease);
+  margin-top:calc(var(--orb,96px)/2 - 26px)}   /* 與球心對齊，不被下方文字拉低 */
+.arrow:hover{opacity:1}
+.arrow.l:hover{transform:translateX(-4px)}
+.arrow.r:hover{transform:translateX(4px)}
+.arrow svg{width:32px;height:32px}
+
+/* ══ AI 球（中下） ══════════════════════════════════════════ */
+.dock{--orb:76px;position:fixed;z-index:20;left:0;right:0;bottom:clamp(26px,4.6vh,58px);
+  display:flex;justify-content:center;align-items:flex-start;gap:clamp(80px,19vw,330px);pointer-events:none}
+.dock>*{pointer-events:auto}
+.dock-mid{display:flex;flex-direction:column;align-items:center;gap:16px}
+/* 球底下的同心圈，對應主管圖裡的地面光環 */
+.rings{position:absolute;left:50%;top:calc(var(--size,96px)*.5);transform:translate(-50%,-50%);
+  width:calc(var(--size,96px)*3.4);height:calc(var(--size,96px)*1.5);pointer-events:none}
+.rings i{position:absolute;inset:0;border:1px solid color-mix(in srgb,var(--brand) 20%,transparent);border-radius:50%;
+  animation:ring 4.6s var(--ease) infinite}
+.rings i:nth-child(2){animation-delay:1.5s}
+.rings i:nth-child(3){animation-delay:3s}
+@keyframes ring{0%{transform:scale(.55);opacity:0}25%{opacity:.85}100%{transform:scale(1.25);opacity:0}}
+
+/* ── AI 球本體（與 orb.html 同一份） ─────────────────────── */
+.orb{--size:96px;position:relative;width:var(--size);height:var(--size);flex:none;isolation:isolate}
+.orb::before{content:"";position:absolute;inset:-18%;border-radius:50%;z-index:0;
+  background:radial-gradient(circle at 42% 62%,
+    color-mix(in srgb,var(--o-mid) 62%,transparent) 0%,
+    color-mix(in srgb,var(--o-core) 26%,transparent) 46%,transparent 72%);
+  filter:blur(calc(var(--size)*.09));animation:orbHalo 5.5s var(--ease) infinite}
+.orb-ball{position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:1;
+  background:radial-gradient(circle at 30% 74%,var(--o-spec) 0%,var(--o-lit) 18%,var(--o-mid) 40%,var(--o-core) 68%,var(--o-deep) 100%);
+  box-shadow:0 calc(var(--size)*.10) calc(var(--size)*.22) color-mix(in srgb,var(--o-deep) 34%,transparent),
+             inset 0 0 calc(var(--size)*.20) color-mix(in srgb,var(--o-deep) 55%,transparent);
+  animation:orbBreathe 5.5s var(--ease) infinite, orbMorph 12s ease-in-out infinite}
+.orb-flow{position:absolute;inset:-12%;animation:orbSpin 26s linear infinite;will-change:transform}
+.blob{position:absolute;border-radius:50%;filter:blur(calc(var(--size)*.16));will-change:transform}
+.b1{width:70%;height:70%;left:-4%;top:38%;background:var(--o-spec);opacity:.95;animation:orbDrift1 9s ease-in-out infinite}
+.b2{width:74%;height:74%;left:40%;top:-8%;background:var(--o-deep);opacity:.85;animation:orbDrift2 11s ease-in-out infinite}
+.b3{width:56%;height:56%;left:24%;top:28%;background:var(--o-lit);opacity:.7;animation:orbDrift3 13s ease-in-out infinite}
+.shade{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 34% 70%,transparent 58%,
+    color-mix(in srgb,var(--o-deep) 30%,transparent) 86%,
+    color-mix(in srgb,var(--o-deep) 62%,transparent) 100%)}
+.gloss{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(ellipse 38% 22% at 30% 16%,rgba(255,255,255,.22),transparent 72%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),
+             inset 0 calc(var(--size)*-.06) calc(var(--size)*.12) color-mix(in srgb,var(--o-deep) 45%,transparent)}
+@keyframes orbBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@keyframes orbHalo{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.08)}}
+@keyframes orbMorph{0%,100%{border-radius:50%}25%{border-radius:54% 46% 49% 51% / 47% 53% 47% 53%}
+  50%{border-radius:47% 53% 53% 47% / 52% 46% 54% 48%}75%{border-radius:51% 49% 46% 54% / 49% 51% 50% 50%}}
+@keyframes orbSpin{to{transform:rotate(360deg)}}
+@keyframes orbDrift1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(18%,-12%) scale(1.12)}66%{transform:translate(-10%,10%) scale(.94)}}
+@keyframes orbDrift2{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(-16%,14%) scale(1.1)}70%{transform:translate(8%,-8%) scale(.92)}}
+@keyframes orbDrift3{0%,100%{transform:translate(0,0) scale(1)}45%{transform:translate(12%,-16%) scale(.9)}75%{transform:translate(-14%,-6%) scale(1.15)}}
+.orb[data-state="listening"] .orb-ball{
+  animation:orbBreatheLive 1.9s cubic-bezier(.37,0,.63,1) infinite, orbMorphLive 3.6s cubic-bezier(.45,0,.55,1) infinite}
+.orb[data-state="listening"]::before{animation-duration:1.9s}
+.orb[data-state="listening"] .orb-flow{animation-duration:4.5s}
+.orb[data-state="listening"] .b1{animation:orbLive1 2.6s linear infinite}
+.orb[data-state="listening"] .b2{animation:orbLive2 3.1s linear infinite;animation-delay:-1s}
+.orb[data-state="listening"] .b3{animation:orbLive3 2.2s linear infinite;animation-delay:-1.5s}
+@keyframes orbBreatheLive{0%,100%{transform:scale(1.02,.985)}50%{transform:scale(.985,1.02)}}
+@keyframes orbMorphLive{0%{border-radius:56% 44% 48% 52% / 46% 54% 46% 54%}20%{border-radius:50% 50% 56% 44% / 54% 46% 54% 46%}
+  40%{border-radius:44% 56% 52% 48% / 54% 48% 52% 46%}60%{border-radius:48% 52% 44% 56% / 46% 52% 48% 54%}
+  80%{border-radius:54% 46% 50% 50% / 48% 54% 46% 52%}100%{border-radius:56% 44% 48% 52% / 46% 54% 46% 54%}}
+@keyframes orbLive1{0%{transform:translate(0,-20%) scale(1.08)}25%{transform:translate(19%,-6%) scale(1.16)}
+  50%{transform:translate(12%,17%) scale(.96)}75%{transform:translate(-15%,9%) scale(.9)}100%{transform:translate(0,-20%) scale(1.08)}}
+@keyframes orbLive2{0%{transform:translate(16%,10%) scale(1.1)}25%{transform:translate(-4%,20%) scale(.94)}
+  50%{transform:translate(-19%,2%) scale(1.04)}75%{transform:translate(-6%,-18%) scale(1.18)}100%{transform:translate(16%,10%) scale(1.1)}}
+@keyframes orbLive3{0%{transform:translate(-14%,14%) scale(.92)}25%{transform:translate(6%,21%) scale(1.12)}
+  50%{transform:translate(18%,-4%) scale(1.02)}75%{transform:translate(2%,-19%) scale(.88)}100%{transform:translate(-14%,14%) scale(.92)}}
+@media(prefers-reduced-motion:reduce){
+  .orb::before,.orb-ball,.orb-flow,.blob,.rings i{animation:none!important}
+  .bikes{transition:none}
+}
+@media(max-width:1100px){
+  .cats{gap:0}.cat span{font-size:13px}.cat{padding:12px 6px}
+  .zone-l,.zone-r{width:32%}
+}
+</style>
+
+<div class="room">
+  <img src="bg/showroom-store6.jpg" alt="">
+
+  <div class="zones">
+    <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
+    <div class="zone zone-c"><p class="ztitle"></p><div class="bikes"></div></div>
+    <div class="zone zone-r"><p class="ztitle"></p><div class="bikes"></div></div>
+  </div>
+</div>
+
+<header class="top">
+  <div class="who">
+    <span class="mark"><svg viewBox="0 0 22 28" fill="currentColor"><path d="M7.28856 6.32744L10.7042 15.2261C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>
+    <div><b>選車現場</b><small>門市人員<i></i>在線中</small></div>
+  </div>
+  <nav class="cats" id="cats"></nav>
+  <button class="close">結束<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</header>
+
+<div class="dock">
+  <button class="arrow l" id="prev" aria-label="上一組"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M11 5l-7 7 7 7"/></svg></button>
+  <div class="dock-mid">
+  <div style="position:relative">
+    <span class="rings" style="--size:76px"><i></i><i></i><i></i></span>
+    <div class="orb" id="orb" data-state="idle" style="--size:76px">
+      <span class="orb-ball"><span class="orb-flow"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></span><span class="shade"></span><span class="gloss"></span></span>
+    </div>
+  </div>
+  </div>
+  <button class="arrow r" id="next" aria-label="下一組"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
+</div>
+
+<script>
+/* 五個分類，順序與選車現場一致。左中右各放一個分類，按左右只換車與標題，
+   展廳本身（牆、地板、燈帶、球）完全不動。 */
+const CATS = [
+  {k:'new',    label:'新車上市',        dir:null},
+  {k:'daily',  label:'日常騎乘',        dir:'Daily'},
+  {k:'ebike',  label:'E-bike 電動輔助', dir:'E-bike'},
+  {k:'gravel', label:'越野礫石公路',    dir:'Rock'},
+  {k:'mtb',    label:'登山車',          dir:'Mountain'},
+  {k:'kids',   label:'親子/童車',       dir:'Child'}
+];
+const BIKES = {
+  Daily   : ['Escape','Escape Disc 2','Faster E+','R2200'],
+  'E-bike': ['Miya E+','Expressway E+','EA-102','EA-402'],
+  Rock    : ['Revolt Advanced SL 0','FastRoad AR Advanced 1-Asia','Roam Disc 2','Explore E+'],
+  Mountain: ['Anthem Advanced SL 0','Trance X Advanced Pro 29 1','XTC Advanced 29 3','Talon E+'],
+  Child   : ['Faith','Seek','STP 20 FS','Pre rCarbon']
+};
+/* 「新車上市」不是資料夾，湊各分類的第一台當成新品牆 */
+const NEW_SET = [['Daily','Escape'],['E-bike','Miya E+'],['Rock','Revolt Advanced SL 0'],['Mountain','Anthem Advanced SL 0']];
+const ICON = {
+  new   :'<rect x="1.5" y="6" width="21" height="12" rx="2" stroke-width="2"/><text x="12" y="12.4" text-anchor="middle" dominant-baseline="central" font-family="Open Sans, sans-serif" font-size="8" font-weight="700" fill="currentColor" stroke="none">NEW</text>',
+  daily :'<circle cx="3.667" cy="11.667" r="2.333"/><circle cx="12.333" cy="11.667" r="2.333"/><circle cx="10" cy="3.333" r="0.667"/><path d="M8 11.667V9.333L6 7.333l2.667-2L10 7.333h1.333"/>',
+  ebike :'<path d="M9.5 2 4 9.2h3.6L6.5 14 12 6.8H8.4L9.5 2Z"/>',
+  gravel:'<path d="M4 14 6.8 2.6"/><path d="M12 14 9.2 2.6"/><path d="M8 4.6v1.7M8 8.6v1.7M8 12.6V14"/>',
+  mtb   :'<path d="M1.8 13.6 6.2 4.8l3.2 5.4 1.9-3.2 3.1 6.6Z"/>',
+  kids  :'<circle cx="5.2" cy="4.2" r="1.9"/><path d="M2 14v-2.2a3.2 3.2 0 0 1 6.4 0V14"/><circle cx="11.6" cy="7.2" r="1.5"/><path d="M9.1 14v-1.4a2.5 2.5 0 0 1 5 0V14"/>'
+};
+const icon = k => '<svg viewBox="' + (k === 'new' ? '0 0 24 24' : '0 0 16 16') + '" fill="none" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round">' + ICON[k] + '</svg>';
+
+/* 用 Bikes/trim/ 這份去留白的副本：原圖底部有 0–16% 不等的透明留白，
+   直接用會讓車浮在展台上方、而且每張浮的高度都不一樣。原始檔沒有更動。 */
+const src = (dir, name) => encodeURI('Bikes/trim/' + dir + '/' + name + '.webp');
+function itemsOf(c, n){
+  if (c.k === 'new') return NEW_SET.slice(0, n).map(([d, b]) => src(d, b));
+  return BIKES[c.dir].slice(0, n).map(b => src(c.dir, b));
+}
+/* 左右兩側改用各分類的 45 度角車圖；「新車上市」沒有自己的資料夾，
+   借 NEW_SET 第一台所在的分類。右側靠 CSS 水平翻轉，不另外存一份圖。 */
+const side45 = c => src(c.k === 'new' ? NEW_SET[0][0] : c.dir, '45');
+function bikeHTML(u){
+  return '<div class="bike"><img alt="" src="' + u + '">' +
+         '<span class="refl" aria-hidden="true"><img alt="" src="' + u + '"></span></div>';
+}
+
+let i = 0;                                   /* 中央目前是哪一個分類 */
+const zones = {
+  l: document.querySelector('.zone-l'),
+  c: document.querySelector('.zone-c'),
+  r: document.querySelector('.zone-r')
+};
+const at = k => CATS[(k % CATS.length + CATS.length) % CATS.length];
+
+function paint(dir){
+  const plan = [['l', at(i - 1), 1], ['c', at(i), 3], ['r', at(i + 1), 1]];
+  plan.forEach(([z, cat, n]) => {
+    const zone = zones[z], box = zone.querySelector('.bikes'), ttl = zone.querySelector('.ztitle');
+    if (dir !== 0){
+      box.style.setProperty('--slide', dir > 0 ? '-28px' : '28px');
+      box.classList.add('out'); ttl.style.opacity = '0';
+    }
+    setTimeout(() => {
+      box.innerHTML = (z === 'c' ? itemsOf(cat, n) : [side45(cat)]).map(bikeHTML).join('');
+      ttl.textContent = cat.label;
+      /* 先落在反方向的起點，下一拍再滑回原位。
+         不用 requestAnimationFrame——分頁在背景時 rAF 不會執行，
+         .out 會永遠拿不掉，整排車就停在 opacity:0、位移 28px 的狀態。 */
+      if (dir !== 0){
+        box.style.setProperty('--slide', dir > 0 ? '28px' : '-28px');
+        void box.offsetWidth;
+        setTimeout(() => { box.classList.remove('out'); ttl.style.opacity = ''; }, 24);
+      }
+    }, dir === 0 ? 0 : 300);
+  });
+  [...document.querySelectorAll('.cat')].forEach(c => c.classList.toggle('on', c.dataset.k === at(i).k));
+}
+
+function go(step){ i += step; paint(step); }
+
+/* 上方分類列 */
+const nav = document.getElementById('cats');
+nav.innerHTML = CATS.map(c => '<button class="cat" data-k="' + c.k + '">' + icon(c.k) + '<span>' + c.label + '</span></button>').join('');
+nav.querySelectorAll('.cat').forEach(b => {
+  b.onclick = () => {
+    const t = CATS.findIndex(c => c.k === b.dataset.k);
+    if (t === ((i % CATS.length) + CATS.length) % CATS.length) return;
+    go(t - ((i % CATS.length) + CATS.length) % CATS.length);
+  };
+});
+document.getElementById('prev').onclick = () => go(-1);
+document.getElementById('next').onclick = () => go(1);
+addEventListener('keydown', e => { if (e.key === 'ArrowLeft') go(-1); if (e.key === 'ArrowRight') go(1); });
+
+/* 球：點一下切換聆聽／待命，示意用 */
+const orb = document.getElementById('orb');
+orb.style.cursor = 'pointer';
+orb.onclick = () => { orb.dataset.state = orb.dataset.state === 'listening' ? 'idle' : 'listening'; };
+
+paint(0);
+</script>
