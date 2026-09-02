@@ -36,13 +36,13 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
 .zones{position:absolute;inset:0;z-index:3;pointer-events:none}
 .zone{position:absolute;text-align:center;transition:opacity .5s var(--ease)}
 /* 中央那組站在後方的展台上（照片裡台面約在 58%），左右兩組站在側邊斜台上、位置較低較前 */
-.zone-c{bottom:25%}          /* 中央階梯台：兩翼台面約在 64%，頂階再高 8% */
-/* 兩側台階是斜的，左右高度不同：左邊 x10 處台面約 72%、右邊 x90 處約 74.5% */
-.zone-l{bottom:28%}
-.zone-r{bottom:25.5%}
-.zone-c{left:50%;transform:translateX(-50%);width:47%;z-index:3}
-.zone-l{left:2.5%;width:15%;z-index:2}
-.zone-r{right:2.5%;width:15%;z-index:2}
+.zone-c{bottom:36.5%}          /* 中央階梯台：兩翼台面約在 64%，頂階再高 8% */
+/* 兩側各一台，站在側邊台階上 */
+.zone-l{bottom:41%}
+.zone-r{bottom:41%}
+.zone-c{left:50%;transform:translateX(-50%);width:45%;z-index:3}
+.zone-l{left:6.5%;width:15%;z-index:2}
+.zone-r{right:6.5%;width:15%;z-index:2}
 
 /* 標題給一塊半透明白底：壓在石材與牆面上才讀得清楚，形狀沿用站上的 3px 圓角 */
 .ztitle{display:inline-block;font-weight:600;color:var(--ink);letter-spacing:.02em;
@@ -54,7 +54,7 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
    原本它跟在主角車上方（靠 margin），車圖一高就被推上去壓到背景牆上的 GIANT logo——
    E-bike 那台特別高，差距有 7%。改成 vh 之後六個分類都落在同一條線上。 */
 .zone-c .ztitle{position:absolute;left:50%;transform:translateX(-50%);
-  bottom:31.7vh;margin:0}
+  bottom:33.5vh;margin:0}
 
 .bikes{display:flex;align-items:flex-end;justify-content:center;gap:1%;
   transition:opacity .34s var(--ease),transform .5s var(--ease)}
@@ -74,14 +74,21 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
 /* 中央：中間那台最大、兩側略小且往後退 */
 .zone-c .bikes{gap:0}
 .zone-c .bike{width:36%;z-index:1}              /* 兩翼疊在主角車前面 */
-/* 兩翼各往中間收 2vw（＝視窗寬的 2%），與主角車交疊 */
-.zone-c .bike:first-child{transform:translateX(2vw)}
-.zone-c .bike:last-child{transform:translateX(-2vw)}
-.zone-c .bike:nth-child(2){width:48%;transform:translateY(-4.2vw);z-index:0}  /* 頂階：高一階、也最大，但壓在最後面 */
+/* 兩翼各往中間收 2vw（＝視窗寬的 2%）並下沉 1vw，與主角車交疊 */
+.zone-c .bike:first-child{transform:translateX(2vw) translateY(1vw)}
+.zone-c .bike:last-child{transform:translateX(-2vw) translateY(1vw)}
+.zone-c .bike:nth-child(2){width:48%;transform:translateY(-3.4vw);z-index:0}  /* 頂階：高一階、也最大，但壓在最後面 */
 /* 抬升用 vw 不用 %：% 是相對車圖自己的高度，而每台車的圖比例不同，
    換分類時主角車就會忽高忽低。固定成 vw 之後每台的輪底都落在同一條線上。 */
 .zone-l .bike,.zone-r .bike{width:92%}          /* 左右各一台，站在自己的平台上 */
-.zone-r .bike{transform:scaleX(-1)}             /* 右側鏡射；掛在 .bike 上，接地陰影才會一起翻面 */
+/* 45 度原圖是車頭朝右，所以改鏡射左邊：兩台的車頭都朝畫面外側。
+   鏡射掛在 .bike 上（不是 img），接地陰影才會一起翻面。
+   注意鏡射那一側的 GIANT 字會反、傳動系統會跑到非驅動側——
+   要根治得補一張「車頭朝左、拍非驅動側」的 45 度圖。 */
+/* 旋轉是為了讓輪子貼合台階的斜面；轉在 .bike 上，接地陰影會一起跟著轉。
+   左邊還要鏡射，寫在 rotate 右側＝先鏡射再旋轉，角度才是螢幕上的角度。 */
+.zone-l .bike{transform:rotate(-6deg) scaleX(-1) skewX(3deg);transform-origin:50% 100%}
+.zone-r .bike{transform:rotate(1deg);transform-origin:50% 100%}
 
 /* ══ 上方分類列 ══════════════════════════════════════════ */
 .top{position:fixed;z-index:20;top:0;left:0;right:0;height:80px;display:flex;align-items:center;
@@ -190,7 +197,7 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
 </style>
 
 <div class="room">
-  <img src="bg/showroom-store6.jpg" alt="">
+  <img src="bg/showroom-store7.jpg" alt="">
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
