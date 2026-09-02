@@ -42,7 +42,7 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
 .zone-r{bottom:41%}
 .zone-c{left:50%;transform:translateX(-50%);width:45%;z-index:3}
 .zone-l{left:6.5%;width:15%;z-index:2}
-.zone-r{right:6.5%;width:15%;z-index:2}
+.zone-r{right:5.5%;width:15%;z-index:2}
 
 /* 標題給一塊半透明白底：壓在石材與牆面上才讀得清楚，形狀沿用站上的 3px 圓角 */
 .ztitle{display:inline-block;font-weight:600;color:var(--ink);letter-spacing:.02em;
@@ -74,13 +74,14 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
 /* 中央：中間那台最大、兩側略小且往後退 */
 .zone-c .bikes{gap:0}
 .zone-c .bike{width:36%;z-index:1}              /* 兩翼疊在主角車前面 */
-/* 兩翼各往中間收 2vw（＝視窗寬的 2%）並下沉 1vw，與主角車交疊 */
-.zone-c .bike:first-child{transform:translateX(2vw) translateY(1vw)}
-.zone-c .bike:last-child{transform:translateX(-2vw) translateY(1vw)}
+/* 兩翼各往中間收 7vw（＝視窗寬的 7%）並下沉 1vw，與主角車交疊 */
+.zone-c .bike:first-child{transform:translateX(7vw) translateY(1vw)}
+.zone-c .bike:last-child{transform:translateX(-7vw) translateY(1vw)}
 .zone-c .bike:nth-child(2){width:48%;transform:translateY(-3.4vw);z-index:0}  /* 頂階：高一階、也最大，但壓在最後面 */
 /* 抬升用 vw 不用 %：% 是相對車圖自己的高度，而每台車的圖比例不同，
    換分類時主角車就會忽高忽低。固定成 vw 之後每台的輪底都落在同一條線上。 */
-.zone-l .bike,.zone-r .bike{width:92%}          /* 左右各一台，站在自己的平台上 */
+/* 左右各一台，站在自己的平台上。--s 是分類的相對大小，由 SIDE_SCALE 指派 */
+.zone-l .bike,.zone-r .bike{width:calc(92% * var(--s,1))}
 /* 45 度原圖是車頭朝右，所以改鏡射左邊：兩台的車頭都朝畫面外側。
    鏡射掛在 .bike 上（不是 img），接地陰影才會一起翻面。
    注意鏡射那一側的 GIANT 字會反、傳動系統會跑到非驅動側——
@@ -268,6 +269,10 @@ function itemsOf(c, n){
 /* 左右兩側改用各分類的 45 度角車圖；「新車上市」沒有自己的資料夾，
    借 NEW_SET 第一台所在的分類。右側靠 CSS 水平翻轉，不另外存一份圖。 */
 const side45 = c => src(c.k === 'new' ? NEW_SET[0][0] : c.dir, '45');
+/* 左右兩區的相對大小。基準是量各張 45 圖的前輪像素直徑：同寬渲染時
+   童車的輪子反而比公路車大 1.22 倍，但實車是 12 吋 vs 700c（約 0.43），
+   等比應該是 0.43/1.22 = 0.35。這裡取 0.65，讓它明顯變小又還看得清楚。 */
+const SIDE_SCALE = {kids: .65};
 function bikeHTML(u){
   return '<div class="bike"><img alt="" src="' + u + '">' +
          '<span class="refl" aria-hidden="true"><img alt="" src="' + u + '"></span></div>';
@@ -291,6 +296,7 @@ function paint(dir){
     }
     setTimeout(() => {
       box.innerHTML = (z === 'c' ? itemsOf(cat, n) : [side45(cat)]).map(bikeHTML).join('');
+      if (z !== 'c') box.style.setProperty('--s', SIDE_SCALE[cat.k] || 1);
       ttl.textContent = cat.label;
       /* 先落在反方向的起點，下一拍再滑回原位。
          不用 requestAnimationFrame——分頁在背景時 rAF 不會執行，
