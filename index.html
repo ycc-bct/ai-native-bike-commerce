@@ -123,7 +123,9 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 .zone-c[data-cat="kids"]  {--left-y:1.17vw;--right-y:1.16vw;--main-y:-3.20vw}
 /* 抬升用 vw 不用 %：% 是相對車圖自己的高度，而每台車的圖比例不同，
    換分類時主角車就會忽高忽低。固定成 vw 之後每台的輪底都落在同一條線上。 */
-.zone-l .bike,.zone-r .bike{width:min(84%,31vh)} /* 左右斜台車縮小並受視窗高度限制 */
+.zone-l .bike,.zone-r .bike{width:min(84%,31vh);cursor:pointer;pointer-events:auto;transition:filter .3s ease}
+.zone-l .bike:hover>img,.zone-r .bike:hover>img{filter:drop-shadow(0 10px 15px rgba(6,3,141,.24)) brightness(1.05)}
+.zone-l .bike:focus-visible,.zone-r .bike:focus-visible{outline:2px solid #FFF;outline-offset:8px;border-radius:4px} /* 左右斜台車縮小並受視窗高度限制 */
 /* 45 度原圖是車頭朝右，所以改鏡射左邊：兩台的車頭都朝畫面外側。
    鏡射掛在 .bike 上（不是 img），接地陰影才會一起翻面。
    注意鏡射那一側的 GIANT 字會反、傳動系統會跑到非驅動側——
@@ -644,6 +646,13 @@ function paint(dir){
           bike.onclick = () => picking ? togglePick(renderedItems[index]) : introduceBike(bike.dataset.pick, index);
         });
         renderPicks();
+      } else {
+        /* 左右兩側的車點下去＝切到那個分類，和箭頭同一件事 */
+        const side = box.querySelector('.bike');
+        side.setAttribute('role', 'button'); side.tabIndex = 0;
+        side.setAttribute('aria-label', '前往' + cat.label);
+        side.onclick = () => go(z === 'l' ? -1 : 1);
+        side.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(z === 'l' ? -1 : 1); } };
       }
       if (ttl) ttl.textContent = cat.label;
       /* 先落在反方向的起點，下一拍再滑回原位。
@@ -839,12 +848,7 @@ function engage(){
 }
 function runClerkScript(cat, delay = 0){
   clearClerkSequence();
-  /* 挑選比較中切分類：保留互動狀態，托盤與兩側按鈕不消失 */
-  if (!picking){
-    clerk.classList.remove('engaged','typing');
-    inputChoices.inert = true;
-    clerkForm.inert = true;
-  }
+  /* 兩側按鈕與鍵盤／麥克風只在第一次介紹時才登場，之後切分類一律保留，不再收起。 */
   const intro = (CLERK_SCRIPTS[cat.k] || [])[0];
   const products = itemsOf(cat, 3);
   const segments = intro ? [intro].concat(products.map((item, index) => ({
@@ -858,10 +862,7 @@ function runClerkScript(cat, delay = 0){
   segments.forEach((segment, index) => {
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
-      if (index === 1 && !picking){
-        clerk.classList.add('engaged');
-        inputChoices.inert = false;
-      }
+      if (index === 1) engage();
       setClerkState('speaking'); setBikeFocus(segment.focus);
       showClerkCopy(segment.text); playClerkSound();
     }, elapsed));
