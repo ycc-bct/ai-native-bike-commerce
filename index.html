@@ -1024,6 +1024,9 @@ continueQuick.onclick = () => {
 function closeCompare(){
   compareModal.hidden = true;
   compareQuick.focus();
+  say(picks.length
+    ? '比較先收起來，清單還留著。\n想再比，按車款比較；想縮到一台，跟我說平常怎麼騎。'
+    : '比較先收起來。\n想看哪台，直接點展台上的車。', 4200);
 }
 function comparisonItems(){
   const cat = at(i);
@@ -1251,8 +1254,10 @@ function openSizeModal(height, copy){
 }
 function closeSize(){
   sizeModal.hidden = true;
-  clearClerkSequence();
   sizeQuick.focus();
+  /* 關掉尺寸表店員也要接一句，不能突然安靜 */
+  const frame = knownHeight && at(i).k !== 'kids' ? recommendedFrame(knownHeight) : null;
+  say((frame ? '好，' + frame + ' 尺寸先記著。' : '好，尺寸先記著。') + '\n想看別台直接點展台上的車，或跟我說平常怎麼騎，我幫你挑。', 4200);
 }
 sizeClose.onclick = closeSize;
 sizeModal.onclick = event => { if (event.target === sizeModal) closeSize(); };
