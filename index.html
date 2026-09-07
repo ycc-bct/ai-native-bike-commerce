@@ -75,7 +75,8 @@ body.stage-video .zone-c .bikes{display:block;position:absolute;inset:0;transfor
 body.stage-video .zone-c .bikes.hide{opacity:0;pointer-events:none}
 body.stage-video .zone-c .bike{position:absolute;transform:none!important;margin:0;border-radius:14px;
   transition:background .35s ease,box-shadow .35s ease}
-body.stage-video .zone-c .bike>img,body.stage-video .zone-c .bike::before,body.stage-video .zone-c .bike::after{opacity:0}
+/* 車圖一律藏掉；自動介紹時 .zone-c.talking 那條會把非焦點車圖設回 .56 透明，所以要 !important，不然會和影片裡的車疊圖 */
+body.stage-video .zone-c .bike>img,body.stage-video .zone-c .bike::before,body.stage-video .zone-c .bike::after{opacity:0!important;filter:none!important;transform:none!important}
 body.stage-video .zone-c .bike-info{transform:translateX(-50%)!important;transition:opacity .3s ease}
 body.stage-video .zone-c .bike.talk-focus{background:radial-gradient(ellipse at 50% 92%,rgba(255,255,255,.34),transparent 68%);
   box-shadow:0 0 0 1px rgba(255,255,255,.35),0 0 34px 6px rgba(255,255,255,.22)}
