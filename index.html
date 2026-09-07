@@ -745,6 +745,7 @@ let picking = false, picks = [];
 const stageUp = document.getElementById('stageUp');
 const stageDown = document.getElementById('stageDown');
 let stageMode = null;
+const STAGE_RATE = 1.9;                     /* 台面影片播放倍速：6.75 秒的片約 3.5 秒播完 */
 /* 影片先整支抓下來再餵給 <video>：Safari 遇到不支援 Range 的伺服器（例如 python -m http.server）
    會直接不播、畫面空白；用 blob 就不再依賴伺服器，也等於預載完成。抓不到（file://）就退回直接指路徑。 */
 [stageUp, stageDown].forEach(video => {
@@ -800,10 +801,10 @@ function playStage(video, onEnd, onFail){
     /* 等了 5 秒還沒有畫面（網路慢、分頁在背景）：放棄影片，回到靜態展台用車圖 */
     if (video.readyState < 2){ onFail(); return; }
     if (isFinite(video.duration)) video.currentTime = 0;
-    video.playbackRate = 1.25;
+    video.playbackRate = STAGE_RATE;
     video.classList.add('on');                 /* 有畫面了才蓋上去，載入失敗時展間仍在 */
     /* 分頁在背景時影片會暫停、ended 永遠不來；時間到就直接收尾 */
-    guard = setTimeout(done, (isFinite(video.duration) ? video.duration : 6.75) / 1.25 * 1000 + 800);
+    guard = setTimeout(done, (isFinite(video.duration) ? video.duration : 6.75) / STAGE_RATE * 1000 + 600);
     video.addEventListener('ended', done);
     video.play().catch(() => setTimeout(done, 400));
   });
@@ -837,9 +838,9 @@ function enterStageUp(line){
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
       setClerkState('speaking'); showClerkCopy(line); playClerkSound();
-    }, 1000));
-    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
-  }, 420));
+    }, 700));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3400));
+  }, 380));
 }
 /* 喜歡 Miya：標籤先退 → 台面降下只留 Miya → 配件建議 */
 function enterStageDown(line){
@@ -862,14 +863,14 @@ function enterStageDown(line){
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
       setClerkState('speaking'); showClerkCopy(line); playClerkSound();
-    }, 1000));
-    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
+    }, 700));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3400));
   };
   if (fromUp){ box.classList.add('hide'); start(); }
   else {
     /* 沒先播第一支：車先淡出，再由第二支接手（第一格和靜態背景有落差，用淡入蓋過） */
     box.style.setProperty('--slide', '0px'); box.classList.add('out');
-    clerkTimers.push(setTimeout(start, 420));
+    clerkTimers.push(setTimeout(start, 380));
   }
 }            /* 車款比較：使用者自己挑的 2–3 台，跨分類也保留 */   /* 這次造訪給過的身高；只活在記憶體 */
 
