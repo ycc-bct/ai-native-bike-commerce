@@ -107,7 +107,9 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 .bike .refl{display:none}   /* 照片地板本身就有反射，再疊一層會打架 */
 /* 中央：左右兩台站在前層，中間一台位於較遠的高台，因此尺寸更小。 */
 .zone-c .bikes{gap:0}
-.zone-c .bike{width:min(38%,34vh);z-index:1}     /* 同時受高度限制，超寬螢幕不再把車放到跨出台面 */
+.zone-c .bike{width:min(38%,34vh);z-index:1}
+.zone-c.pair .bike:first-child{--left-x:-3vw;--left-y:.4vw;--left-scale:1.06}
+.zone-c.pair .bike:last-child{--right-x:3vw;--right-y:.4vw;--right-scale:1.06}     /* 同時受高度限制，超寬螢幕不再把車放到跨出台面 */
 /* 兩翼車以輪底為縮放原點，縮小後仍貼著前層平台；往中央收一點，
    避免外側輪胎越過圓台左右邊界。 */
 .zone-c .bike:first-child{transform:translateX(var(--left-x,4vw)) translateY(var(--left-y,1.15vw)) scale(var(--left-scale,1.14));transform-origin:50% 100%}
@@ -335,6 +337,7 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 .compare-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:end center;padding:56px 28px 228px;
   background:linear-gradient(180deg,rgba(25,31,42,.16) 55%,rgba(25,31,42,.6));
   backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+body.has-quick .compare-modal{padding-bottom:290px}
 .compare-panel{position:relative;width:min(940px,94vw);max-height:calc(100vh - 300px);overflow:auto;padding:34px;
   background:linear-gradient(145deg,rgba(255,255,255,.83),rgba(245,248,252,.69));
   backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);
@@ -447,12 +450,14 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
   <div class="dock-mid" id="clerk">
     <p class="clerk-copy" id="clerkCopy" aria-live="polite"></p>
     <div class="quick-actions" id="quickActions" aria-label="建議操作">
-      <button id="continueQuick" type="button">繼續介紹</button>
+      <button id="compareThree" type="button">比較這三台</button>
+      <button id="exploreMore" type="button">繼續探索</button>
     </div>
     <div class="orb-row">
       <button class="side-action l" id="sizeQuick" type="button">我的尺寸</button>
       <button class="orb" id="orb" data-state="idle" type="button" aria-label="請門市人員介紹目前展區">
         <video class="orb-video" id="orbVideo" autoplay muted loop playsinline preload="auto" poster="bg/ai-clerk-orb-v2.webp" aria-hidden="true">
+          <source src="bg/ai-clerk-orb-video.mov" type='video/mp4; codecs="hvc1"' data-for="safari">
           <source src="bg/ai-clerk-orb-video.webm" type="video/webm">
         </video>
       </button>
@@ -553,7 +558,9 @@ const BIKES = {
 };
 /* 「新車上市」不是資料夾，湊各分類的第一台當成新品牆 */
 const NEW_SET = [['Daily','Escape'],['Mountain','Anthem Advanced SL 0'],['Rock','Revolt Advanced SL 0']];
-const CHILD_PICK = ['Miya E+','EA-102','EA-402'];
+/* 接送小孩的推薦：第一組三台；「繼續探索」換第二組。店裡能載小孩的電輔車就這幾台，不硬湊。 */
+const CHILD_SETS = [['Miya E+','EA-102','EA-402'], ['Expressway E+','Faster E+']];
+let childSet = 0;
 // 沿用原展間的車款資料與價格，非即時報價。
 const BIKE_DETAILS = {
   'Escape':[12800,'簡單、輕快的都會入門選擇，平常通勤或週末輕鬆騎，可以先看看這台。'],
@@ -594,8 +601,9 @@ const src = (dir, name) => encodeURI('Bikes/trim/' + dir + '/' + name + '.webp')
 function itemsOf(c, n){
   if (c.k === 'new') return NEW_SET.slice(0, n).map(([d, b]) => ({url:src(d, b), name:b}));
   const names = c.k === 'ebike' && selectedMiya ? ['Miya E+']
-    : c.k === 'ebike' && childRecommendation ? CHILD_PICK : BIKES[c.dir].slice(0, n);
-  return names.slice(0, n).map(name => ({url:src(c.dir, name), name}));
+    : c.k === 'ebike' && childRecommendation ? CHILD_SETS[childSet] : BIKES[c.dir].slice(0, n);
+  /* Faster E+ 放在日常騎乘的資料夾，所以用 bikeUrl 找圖，不能只靠目前分類的 dir */
+  return names.slice(0, n).map(name => ({url:bikeUrl(name) || src(c.dir, name), name}));
 }
 /* 左右兩側改用各分類的 45 度角車圖；「新車上市」沒有自己的資料夾，
    借 NEW_SET 第一台所在的分類。右側靠 CSS 水平翻轉，不另外存一份圖。 */
@@ -641,6 +649,7 @@ function paint(dir){
       if (center) activeBikeIndex = renderedItems.length === 1 ? 0 : 1;
       zone.classList.toggle('recommendation', recommendationView);
       zone.classList.toggle('single', center && selectedMiya && cat.k === 'ebike');
+      zone.classList.toggle('pair', center && renderedItems.length === 2);
       if (center){
         box.querySelectorAll('.bike[data-pick]').forEach((bike, index) => {
           bike.onclick = () => picking ? togglePick(renderedItems[index]) : introduceBike(bike.dataset.pick, index);
@@ -686,7 +695,8 @@ const micChoice = document.getElementById('micChoice');
 const micBtn = document.getElementById('micBtn');
 const orb = document.getElementById('orb');
 const quickActions = document.getElementById('quickActions');
-const continueQuick = document.getElementById('continueQuick');
+const compareThree = document.getElementById('compareThree');
+const exploreMore = document.getElementById('exploreMore');
 const compareQuick = document.getElementById('compareQuick');
 const compareModal = document.getElementById('compareModal');
 const compareClose = document.getElementById('compareClose');
@@ -709,11 +719,13 @@ let activeBikeIndex = 1, sizingMode = false;
 let knownHeight = null, sizeUnit = 'cm';
 let picking = false, picks = [];            /* 車款比較：使用者自己挑的 2–3 台，跨分類也保留 */   /* 這次造訪給過的身高；只活在記憶體 */
 
-const CHILD_INTROS = [
-  {text:'Miya E+ 上下車比較直覺，可以先確認載小朋友時的穩定感。', focus:0},
-  {text:'EA-102 的預算比較好入手，適合一起看看日常接送是否夠用。', focus:1},
-  {text:'EA-402 遇到比較複雜的日常路況，可以再確認它和另外兩台的配備差異。', focus:2}
-];
+const CHILD_INTROS = {
+  'Miya E+':'Miya E+ 上下車比較直覺，可以先確認載小朋友時的穩定感。',
+  'EA-102':'EA-102 的預算比較好入手，適合一起看看日常接送是否夠用。',
+  'EA-402':'EA-402 遇到比較複雜的日常路況，可以再確認它和另外兩台的配備差異。',
+  'Expressway E+':'Expressway E+ 可以折疊，接送完要收進家裡或轉乘都方便。',
+  'Faster E+':'Faster E+ 以日常騎乘為主，偶爾載小孩也省力，騎起來比較輕快。'
+};
 
 /* 每個展區都用短句，避免像產品簡報；focus 是中央三台車的索引。 */
 const CLERK_SCRIPTS = {
@@ -811,6 +823,7 @@ function clearClerkSequence(hideCopy = true){
 }
 function showRecommendationActions(show){
   quickActions.classList.toggle('show', show);
+  document.body.classList.toggle('has-quick', show);   /* 多一排按鈕，彈窗要再往上讓一點 */
 }
 function introduceBike(name, index){
   activeBikeIndex = index;
@@ -824,14 +837,35 @@ function introduceBike(name, index){
   playClerkSound();
   clerkTimers.push(setTimeout(() => { setClerkState('idle'); setBikeFocus(index); }, 2200));
 }
+function childItems(){ return itemsOf(at(i), 3); }
 function introduceChildBike(index){
   if (!childRecommendation) return;
-  clearClerkSequence(false); clerk.classList.add('engaged'); showRecommendationActions(true);
-  const segment = CHILD_INTROS[index];
-  recommendationStep = (index + 1) % CHILD_INTROS.length;
-  setClerkState('speaking'); setBikeFocus(index); showClerkCopy(segment.text); playClerkSound();
-  continueQuick.textContent = recommendationStep === 0 ? '重新介紹' : '介紹下一台';
+  clearClerkSequence(false); engage(); showRecommendationActions(true);
+  const item = childItems()[index];
+  setClerkState('speaking'); setBikeFocus(index); showClerkCopy(CHILD_INTROS[item.name] || item.name); playClerkSound();
   clerkTimers.push(setTimeout(() => { setClerkState('idle'); setBikeFocus(index); }, 2200));
+}
+/* 推薦那句講完後，使用者 3 秒沒動作就自動從左到右逐台介紹，每台 4.5 秒。
+   全部掛在同一個 run 上：打字、點車、按鈕、切分類都會 clearClerkSequence，也就一併中斷。 */
+function autoIntroduceChildren(delay){
+  const run = clerkRun, items = childItems();
+  items.forEach((item, index) => {
+    const t = delay + 3000 + index * 4500;
+    clerkTimers.push(setTimeout(() => {
+      if (run !== clerkRun || !childRecommendation) return;
+      setClerkState('speaking'); setBikeFocus(index); showClerkCopy(CHILD_INTROS[item.name] || item.name); playClerkSound();
+    }, t));
+    clerkTimers.push(setTimeout(() => {
+      if (run !== clerkRun) return;
+      setClerkState('idle'); setBikeFocus(index);
+    }, t + 2200));
+  });
+  clerkTimers.push(setTimeout(() => { if (run === clerkRun) setBikeFocus(null); }, delay + 3000 + items.length * 4500));
+}
+function setChildActions(){
+  const n = childItems().length;
+  compareThree.textContent = n === 3 ? '比較這三台' : '比較這兩台';
+  exploreMore.textContent = childSet === 0 ? '繼續探索' : '回到前三台';
 }
 function showSelectedMiya(){
   clearClerkSequence(false); clerk.classList.add('engaged');
@@ -891,7 +925,7 @@ function runClerkIntro(cat, delay = 0){
 }
 function go(step){
   clearClerkSequence();
-  childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; showRecommendationActions(false);
+  childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; childSet = 0; showRecommendationActions(false);
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   accessoryPanel.hidden = true;
   i += step; paint(step);
@@ -941,10 +975,12 @@ function respondToUser(rawText){
   } else if (/接送|接小孩|載小孩/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
-    childRecommendation = true; selectedMiya = false; recommendationStep = 0;
+    childRecommendation = true; selectedMiya = false; recommendationStep = 0; childSet = 0;
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
-    response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，你可以逐台聽我介紹，或直接打開比較表。'; focus = null;
+    response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
+    setChildActions();
+    autoIntroduceChildren(520);
   } else if (/電輔|電動輔助/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -1018,10 +1054,32 @@ clerkForm.onsubmit = event => {
   clerkSubmit.disabled = true;
   respondToUser(text);
 };
-continueQuick.onclick = () => {
+compareThree.onclick = () => {
   if (!childRecommendation) return;
-  introduceChildBike(recommendationStep % CHILD_INTROS.length);
+  const items = childItems();
+  picks = items.map(item => ({name:item.name, url:item.url}));
+  stopPicking(false);
+  openCompare(picks.slice(), '接送小孩｜車款比較');
 };
+exploreMore.onclick = () => {
+  if (!childRecommendation) return;
+  childSet = childSet === 0 ? 1 : 0;
+  paint(0);
+  setChildActions();
+  clearClerkSequence(false); engage(); showRecommendationActions(true);
+  const line = childSet === 1
+    ? '這兩台也常被拿來接送。\nExpressway E+ 可以折疊收納，Faster E+ 騎起來比較輕快。'
+    : '適合接送的就這幾台，回到剛才那三台。\n想看別的分類，也可以直接切。';
+  const run = clerkRun;
+  clerkTimers.push(setTimeout(() => {
+    if (run !== clerkRun) return;
+    setClerkState('speaking'); setBikeFocus(null); showClerkCopy(line); playClerkSound();
+  }, 380));
+  clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3200));
+  autoIntroduceChildren(380);
+};
+/* 點鍵盤也算「有動作」，把自動介紹停掉 */
+keyboardChoice.addEventListener('click', () => clearClerkSequence(false));
 function closeCompare(){
   compareModal.hidden = true;
   compareQuick.focus();
@@ -1302,6 +1360,14 @@ micBtn.onclick = () => {
 };
 micChoice.onclick = () => micBtn.onclick();
 
+/* Safari 播得動 VP9 webm 但會丟掉 alpha，球就變成一塊灰白方塊；
+   只在 Safari 留 HEVC alpha 的 .mov，其他瀏覽器把它拿掉，免得 Chrome 挑到沒有透明的那份。 */
+(() => {
+  const video = document.getElementById('orbVideo');
+  const safari = /apple/i.test(navigator.vendor || '');
+  if (!safari) video.querySelector('source[data-for="safari"]')?.remove();
+  video.load();
+})();
 paint(0);
 /* 中央不再放分類膠囊；停留片刻後，改由 AI 門市人員說明所在展區。 */
 clerkForm.inert = true;
