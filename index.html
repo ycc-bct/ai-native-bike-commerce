@@ -738,9 +738,20 @@ let stageMode = null;
    會直接不播、畫面空白；用 blob 就不再依賴伺服器，也等於預載完成。抓不到（file://）就退回直接指路徑。 */
 [stageUp, stageDown].forEach(video => {
   fetch(video.dataset.src).then(r => r.ok ? r.blob() : Promise.reject(r.status))
-    .then(blob => { video.src = URL.createObjectURL(blob); })
-    .catch(() => { video.src = video.dataset.src; });
+    .then(blob => { if (!video.classList.contains('on')){ video.src = URL.createObjectURL(blob); video.load(); } })
+    .catch(() => { if (!video.src) video.src = video.dataset.src; });
 });
+/* 等到影片真的能播（或最多等 5 秒）再開始；fetch 還沒回來就直接指檔案路徑讓瀏覽器自己載 */
+function whenPlayable(video){
+  return new Promise(resolve => {
+    if (video.readyState >= 3) return resolve();
+    const ok = () => { video.removeEventListener('canplay', ok); clearTimeout(t); resolve(); };
+    const t = setTimeout(ok, 5000);
+    video.addEventListener('canplay', ok);
+    if (!video.src) video.src = video.dataset.src;
+    video.load();
+  });
+}
 /* 影片裡車的位置（相對影片畫面的 left, top, width, height）。影片重出時這組要跟著量。 */
 const STAGE_SPOTS = {
   up:   {'EA-102':[.31,.48,.16,.15], 'Miya E+':[.40,.39,.21,.21], 'EA-402':[.53,.50,.18,.13]},
@@ -763,20 +774,24 @@ function layoutStageSpots(){
 }
 addEventListener('resize', layoutStageSpots);
 function playStage(video, onEnd){
-  video.currentTime = 0; video.playbackRate = 1.25;
-  video.classList.add('on');
-  let finished = false;
+  let finished = false, guard = null;
   const done = () => {
     if (finished) return;
     finished = true; clearTimeout(guard);
     video.removeEventListener('ended', done);
-    if (!video.ended){ video.pause(); video.currentTime = Math.max(0, video.duration - .05); }   /* 停在最後一格 */
+    /* 停在最後一格；duration 還沒讀到就不要動 currentTime（非有限值會直接丟例外，整個流程卡住） */
+    if (!video.ended && isFinite(video.duration)){ video.pause(); video.currentTime = Math.max(0, video.duration - .05); }
     onEnd();
   };
-  /* 分頁被切到背景時影片會暫停、ended 永遠不來；時間到就直接跳到最後一格收尾 */
-  const guard = setTimeout(done, (video.duration || 6.75) / 1.25 * 1000 + 800);
-  video.addEventListener('ended', done);
-  video.play().catch(done);
+  whenPlayable(video).then(() => {
+    if (isFinite(video.duration)) video.currentTime = 0;
+    video.playbackRate = 1.25;
+    video.classList.add('on');                 /* 有畫面了才蓋上去，載入失敗時展間仍在 */
+    /* 分頁在背景時影片會暫停、ended 永遠不來；時間到就直接收尾 */
+    guard = setTimeout(done, (isFinite(video.duration) ? video.duration : 6.75) / 1.25 * 1000 + 800);
+    video.addEventListener('ended', done);
+    video.play().catch(() => setTimeout(done, 400));
+  });
 }
 function resetStage(){
   if (!stageMode) return;
