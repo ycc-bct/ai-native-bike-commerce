@@ -54,8 +54,10 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 /* 中央標題改成絕對定位、釘在視窗上的固定高度。
    原本它跟在主角車上方（靠 margin），車圖一高就被推上去壓到背景牆上的 GIANT logo——
    E-bike 那台特別高，差距有 7%。改成 vh 之後六個分類都落在同一條線上。 */
+/* 分類列拿掉後，這個標籤是唯一寫著「目前在哪一區」的地方。放在展台前緣的地面上，小而淡。 */
 .zone-c .ztitle{position:absolute;left:50%;transform:translateX(-50%);
-  bottom:33.5vh;margin:0;display:none}
+  bottom:-4.2vh;margin:0;display:inline-block;padding:6px 14px;font-size:12px;letter-spacing:.08em;
+  color:var(--ink-70);background:rgba(255,255,255,.5);box-shadow:0 2px 8px rgba(80,88,104,.12)}
 .zone-l .ztitle,.zone-r .ztitle{display:none}
 
 .bikes{display:flex;align-items:flex-end;justify-content:center;gap:1%;
@@ -139,24 +141,18 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 .zone-r .bike{transform:translateY(-1.8vh) rotate(9deg);transform-origin:50% 100%}
 
 /* ══ 上方分類列 ══════════════════════════════════════════ */
-.top{position:fixed;z-index:20;top:0;left:0;right:0;height:80px;display:flex;align-items:center;
-  justify-content:space-between;padding:0 40px;
-  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,0))}
+/* 上緣只留「有人在」和出口。分類列拿掉了：往左右走靠箭頭、兩側的車、或直接跟店員說。 */
+.top{position:fixed;z-index:20;top:0;left:0;right:0;height:64px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
 .who{display:flex;align-items:center;gap:10px}
-.who .mark{width:25px;color:var(--brand);display:flex}.who .mark svg{width:100%;height:auto}
-.who b{font-size:16px;font-weight:600;display:block;line-height:1}
-.who small{font-size:12px;color:var(--ink-45);display:flex;align-items:center;gap:8px;margin-top:8px;line-height:1}
+.who .mark{width:20px;color:var(--brand);display:flex;opacity:.85}.who .mark svg{width:100%;height:auto}
+.who b{font-size:14px;font-weight:600;display:block;line-height:1;color:var(--ink-70)}
+.who small{font-size:11px;color:var(--ink-45);display:flex;align-items:center;gap:8px;margin-top:6px;line-height:1}
 .who small i{width:4px;height:4px;background:var(--brand);border-radius:50%;display:block}
-.cats{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px}
-.cat{display:flex;align-items:center;gap:8px;padding:12px 10px;color:var(--ink-45);white-space:nowrap;
-  transition:color .3s var(--ease)}
-.cat svg{width:24px;height:24px;flex:none}
-.cat span{font-size:15px;line-height:1}
-.cat:hover{color:var(--ink)}
-.cat.on{color:var(--ink);font-weight:600}
-.cat.on span{border-bottom:2px solid var(--brand);padding-bottom:4px}
-.close{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink)}
-.close svg{width:24px;height:24px}
+.close{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-70);opacity:.85}
+.close:hover{color:var(--ink);opacity:1}
+.close svg{width:20px;height:20px}
 
 /* ══ 左右切換 ══════════════════════════════════════════════ */
 /* 分類切換固定在左右展區下緣，不跟 AI 球一起沉到畫面底部。 */
@@ -407,7 +403,6 @@ body.has-quick .compare-modal{padding-bottom:290px}
   .bikes{transition:none}
 }
 @media(max-width:1100px){
-  .cats{gap:0}.cat span{font-size:13px}.cat{padding:12px 6px}
   .zone-l,.zone-r{width:32%}
 }
 @media(max-width:700px){
@@ -431,7 +426,7 @@ body.has-quick .compare-modal{padding-bottom:290px}
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
-    <div class="zone zone-c"><div class="bikes"></div></div>
+    <div class="zone zone-c"><p class="ztitle" aria-live="polite"></p><div class="bikes"></div></div>
     <div class="zone zone-r"><p class="ztitle"></p><div class="bikes"></div></div>
   </div>
 </div>
@@ -441,7 +436,6 @@ body.has-quick .compare-modal{padding-bottom:290px}
     <span class="mark"><svg viewBox="0 0 22 28" fill="currentColor"><path d="M7.28856 6.32744L10.7042 15.2261C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>
     <div><b>選車現場</b><small>門市人員<i></i>在線中</small></div>
   </div>
-  <nav class="cats" id="cats"></nav>
   <button class="close">結束<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 </header>
 
@@ -682,7 +676,6 @@ function paint(dir){
   document.getElementById('nextLabel').textContent = nextCat.label;
   document.getElementById('prev').setAttribute('aria-label', '前往' + prevCat.label);
   document.getElementById('next').setAttribute('aria-label', '前往' + nextCat.label);
-  [...document.querySelectorAll('.cat')].forEach(c => c.classList.toggle('on', c.dataset.k === at(i).k));
 }
 
 const clerk = document.getElementById('clerk');
@@ -932,6 +925,23 @@ function go(step){
   runClerkScript(at(i), 900);
 }
 
+/* 分類列拿掉後，「我想看登山車」「童車」這類話直接切區，店員照那一區的開場介紹。 */
+const CAT_WORDS = {
+  new:    /新車|新款|剛到店|新上市/,
+  daily:  /日常騎乘|日常|平路|城市車|通勤車/,
+  ebike:  /電輔|電動輔助|e-?bike/i,
+  gravel: /礫石|越野公路|碎石|gravel/i,
+  mtb:    /登山車|登山|林道|越野車|mtb/i,
+  kids:   /童車|親子|兒童|小朋友的車|小孩的車/
+};
+function jumpTo(text){
+  const cat = CATS.find(c => CAT_WORDS[c.k].test(text));
+  if (!cat) return false;
+  const target = CATS.indexOf(cat), current = ((i % CATS.length) + CATS.length) % CATS.length;
+  if (target === current){ say('我們現在就在' + cat.label + '這區。想看哪台直接點，或跟我說平常怎麼騎。'); return true; }
+  go(target - current);
+  return true;
+}
 function respondToUser(rawText){
   const text = rawText.trim();
   if (!text) return;
@@ -981,6 +991,8 @@ function respondToUser(rawText){
     response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
     setChildActions();
     autoIntroduceChildren(520);
+  } else if (jumpTo(text)){
+    return;
   } else if (/電輔|電動輔助/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -1002,16 +1014,6 @@ function respondToUser(rawText){
   }, 2800));
 }
 
-/* 上方分類列 */
-const nav = document.getElementById('cats');
-nav.innerHTML = CATS.map(c => '<button class="cat" data-k="' + c.k + '">' + icon(c.k) + '<span>' + c.label + '</span></button>').join('');
-nav.querySelectorAll('.cat').forEach(b => {
-  b.onclick = () => {
-    const t = CATS.findIndex(c => c.k === b.dataset.k);
-    if (t === ((i % CATS.length) + CATS.length) % CATS.length) return;
-    go(t - ((i % CATS.length) + CATS.length) % CATS.length);
-  };
-});
 document.getElementById('prev').onclick = () => go(-1);
 document.getElementById('next').onclick = () => go(1);
 addEventListener('keydown', e => {
