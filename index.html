@@ -904,13 +904,24 @@ function respondToUser(rawText){
     handleSizeInput(text);
     return;
   }
+  /* 比較清單的增減：有車名就直接做；沒車名就問哪一台、或回到展台讓使用者挑 */
   const named = bikesNamed(text);
-  if (named.length && /移除|移出|拿掉|刪除|刪掉|去掉|不要/.test(text)){
-    afterPickChange(named.map(removePick).join(' ')); return;
+  const comparing = picking || !compareModal.hidden || picks.length > 0;
+  const wantsRemove = /移除|移出|拿掉|刪除|刪掉|去掉|移掉|不要|換掉/.test(text);
+  const wantsAdd = /加入|加進|放進|加一台|再加|其他車|別台|另一台|換一台|想比較|要比較|比較一下|比較看看|比一下|一起比/.test(text);
+  if (wantsRemove && comparing){
+    const targets = named.length ? named : ordinalPicks(text);
+    if (targets.length) afterPickChange(targets.map(removePick).join(' '));
+    else say('要移掉哪一台？目前是 ' + listPicks() + '。\n直接說車名，或說「第二台」也可以。', 4200);
+    return;
   }
-  if (named.length && (/加入|加進|放進|加一台|比較|比一下|一起比/.test(text) || picking || !compareModal.hidden)){
-    afterPickChange(named.map(addPick).join(' ')); return;
+  if (wantsAdd && (named.length || comparing)){
+    if (named.length) afterPickChange(named.map(addPick).join(' '));
+    else if (picks.length >= 3) say('已經三台了，一次最多比三台。\n先跟我說要移掉哪一台：' + listPicks() + '。', 4200);
+    else goPickMore();
+    return;
   }
+  if (named.length && comparing){ afterPickChange(named.map(addPick).join(' ')); return; }
   const typedHeight = parseHeight(text);
   if (typedHeight && (!sizeModal.hidden || /身高|公分|cm/i.test(text) || /^\s*\d{3}(?:\.\d+)?\s*$/.test(text))){
     openSizeModal(typedHeight);
@@ -1030,7 +1041,7 @@ function openCompare(list, title, spoken){
   compareTable.innerHTML =
     '<thead><tr><th>比較項目</th>' + products.map(item =>
       '<th><span class="compare-product"><img src="' + item.url + '" alt="' + item.name + '"><span>' + item.name + '</span>' +
-      (editable ? '<button type="button" class="compare-remove" data-remove="' + item.name + '">移除</button>' : '') + '</span></th>'
+      (editable ? '<button type="button" class="compare-remove" data-remove="' + item.name + '">× 移除</button>' : '') + '</span></th>'
     ).join('') + (addCol ? '<th><button type="button" class="compare-add" id="compareAdd"><i>＋</i>再加一台</button></th>' : '') + '</tr></thead><tbody>' +
     '<tr><th>價格</th>' + products.map(item => '<td class="price">' + BIKE_PRICE[item.name] + '</td>').join('') + (addCol ? '<td></td>' : '') + '</tr>' +
     '<tr><th>適合情境</th>' + products.map(item => '<td>' + BIKE_DETAILS[item.name][1] + '</td>').join('') + (addCol ? '<td></td>' : '') + '</tr>' +
@@ -1083,6 +1094,7 @@ function renderPicks(){
   });
 }
 function startPicking(){
+  sizeModal.hidden = true;                      /* 一次只開一個：尺寸表先收 */
   picking = true;
   document.body.classList.add('picking');
   pickTray.hidden = false;
@@ -1118,10 +1130,22 @@ const bikeUrl = name => {
   return '';
 };
 /* 從一句話裡找出車名；「Escape」「Escape Disc 2」同時命中時只留較長的那個 */
+const squash = t => t.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]/g, '');   /* ea 102 / EA-102 / ea102 都算同一台 */
 function bikesNamed(text){
-  const lower = text.toLowerCase();
-  const hits = Object.keys(BIKE_DETAILS).filter(n => lower.includes(n.toLowerCase()));
-  return hits.filter(n => !hits.some(o => o !== n && o.toLowerCase().includes(n.toLowerCase())));
+  const flat = squash(text);
+  const hits = Object.keys(BIKE_DETAILS).filter(n => flat.includes(squash(n)));
+  return hits.filter(n => !hits.some(o => o !== n && squash(o).includes(squash(n))));
+}
+/* 「第二台」「最後一台」「中間那台」這類指的是比較清單裡的順序 */
+function ordinalPicks(text){
+  const map = [[/第一台|第1台|左邊/, 0], [/第二台|第2台|中間/, 1], [/第三台|第3台/, 2], [/最後一台|右邊/, picks.length - 1]];
+  return map.filter(([re]) => re.test(text)).map(([, n]) => picks[n]).filter(Boolean).map(p => p.name);
+}
+const listPicks = () => picks.map(p => p.name).join('、');
+function goPickMore(){
+  compareModal.hidden = true;
+  startPicking();
+  say('點展台上的車再加一台，或直接跟我說車名。\n想比別的分類，用左右箭頭切過去。', 4200);
 }
 function addPick(name){
   if (picks.some(p => p.name === name)) return name + ' 已經在比較清單裡了。';
@@ -1149,11 +1173,7 @@ function afterPickChange(line){
 compareTable.onclick = event => {
   const remove = event.target.closest('button[data-remove]');
   if (remove){ afterPickChange(removePick(remove.dataset.remove)); return; }
-  if (event.target.closest('#compareAdd')){
-    compareModal.hidden = true;
-    startPicking();
-    say('點展台上的車再加一台，或直接跟我說車名。\n想比別的分類，用左右箭頭切過去。', 4200);
-  }
+  if (event.target.closest('#compareAdd')) goPickMore();
 };
 pickGo.onclick = () => { stopPicking(false); openCompare(picks.slice(), '車款比較'); };
 pickCancel.onclick = () => { stopPicking(true); say('好，比較先取消。想比的時候再按車款比較。'); };
@@ -1215,6 +1235,7 @@ function openSizeModal(height, copy){
   engage();
   sizeTitle.textContent = selectedProduct().name + '｜車架幾何';
   compareModal.hidden = true;
+  if (picking) stopPicking(false);              /* 挑選托盤先收，清單保留 */
   sizeModal.hidden = false;
   renderSizeChart(height);
   const frame = at(i).k === 'kids' ? null : recommendedFrame(height);
