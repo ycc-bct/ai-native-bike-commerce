@@ -26,6 +26,15 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
    用 .room img 會連 .zones 裡的車圖一起吃掉——車就會跟著半透明。 */
 .room>img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;
   opacity:1;filter:saturate(.9) contrast(.97)}
+/* 舞台影片：疊在背景圖上，跟背景吃同一組濾鏡與 object-fit，
+   z-index 留在 .room::after（漸層）之下，光感才與靜態背景一致。 */
+.stage-video{position:absolute;inset:0;z-index:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 50%;filter:saturate(.9) contrast(.97);
+  opacity:0;pointer-events:none;transition:opacity .26s ease}
+.stage-video.show{opacity:1}
+/* 影片播放期間把 DOM 的車淡掉，否則會和影片裡的車重疊成兩台 */
+body.stage-swap .zones{opacity:0}
+.zones{transition:opacity .26s ease}
 /* 上緣淡出，讓導覽列的字壓得住；下緣稍微壓深，車才有重量 */
 .room::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -78,7 +87,9 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 .zone-c .bike:focus-visible{outline:2px solid #FFF;outline-offset:8px;border-radius:4px}
 .zone-c.single .bikes{justify-content:center}
 .zone-c.single .bike,.zone-c.single .bike:first-child,.zone-c.single .bike:last-child{
-  width:min(52%,48vh);transform:translateY(-2.4vw) scale(1);transform-origin:50% 100%;z-index:1}
+  /* 尺寸與高度對齊 stage_down 影片的末幀（Miya 在 x39.2–60.8%、底 56.0%），
+     影片淡出換回 DOM 車時才不會跳位。 */
+  width:min(48%,48vh);transform:translateY(-4.2vw) scale(1);transform-origin:50% 100%;z-index:1}
 .zone-c.single .bike-info{transform:translateX(-50%)}
 /* 接地陰影：前後輪各一顆，不是整台車一道。
    位置是量 25 張去背圖最底 4% 的不透明像素得到的——側視圖後輪中心約 20%、前輪約 80%；
@@ -358,22 +369,35 @@ body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
 
 /* Miya 收斂後的配件建議：深色玻璃仍保留展間與單車的空間感。 */
 .accessory-panel[hidden]{display:none}
-.accessory-panel{position:fixed;z-index:30;top:94px;left:28px;right:28px;padding:28px;
-  color:#FFF;background:linear-gradient(145deg,rgba(8,11,20,.88),rgba(16,20,30,.78));
-  border:1px solid rgba(255,255,255,.2);border-radius:10px;box-shadow:0 20px 60px rgba(19,23,33,.3);
-  backdrop-filter:blur(16px) saturate(.92);-webkit-backdrop-filter:blur(16px) saturate(.92)}
-.accessory-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px}
-.accessory-head h2{font-size:clamp(24px,2.2vw,34px);line-height:1.25;margin-bottom:7px}.accessory-head p{color:rgba(255,255,255,.58);font-size:14px}
-.accessory-skip{min-height:44px;padding:6px 0;color:rgba(255,255,255,.72);text-decoration:underline;text-underline-offset:5px}
-.accessory-skip:hover{color:#FFF}
-.accessory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.accessory-card{min-height:246px;padding:22px;border:1px solid rgba(255,255,255,.24);background:rgba(14,17,25,.38);display:flex;flex-direction:column}
-.accessory-icon{width:48px;height:48px;display:grid;place-items:center;margin-bottom:18px;border-radius:50%;background:rgba(54,76,180,.42);
-  color:#DDE4FF;font-size:20px;font-weight:700}
-.accessory-card h3{font-size:17px;margin-bottom:10px}.accessory-card p{min-height:44px;color:rgba(255,255,255,.58);font-size:13px;line-height:1.65}
-.accessory-price{margin-top:20px;font:700 16px var(--num)}
-.accessory-add{align-self:flex-start;min-height:44px;margin-top:auto;padding:10px 0;color:#FFF;text-decoration:underline;text-underline-offset:5px}
-.accessory-add:hover{color:#BFCBFF}.accessory-add.added{color:#9DB4FF;text-decoration:none}
+/* 配件面板：外觀沿用 .compare-panel 的淺色玻璃。位置改放在車圖下緣與店員之間
+   （量到的空檔是 y514–678），左右內縮到兩顆箭頭之間，所以不會蓋到車也不會擋到切換。 */
+.accessory-panel{position:fixed;z-index:30;left:210px;right:210px;bottom:180px;
+  display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:10px 18px 8px;max-height:146px;
+  color:var(--ink);
+  background:linear-gradient(145deg,rgba(255,255,255,.83),rgba(245,248,252,.69));
+  backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);
+  border:1px solid rgba(255,255,255,.88);border-radius:16px;
+  box-shadow:0 24px 80px rgba(27,32,43,.22),inset 0 1px rgba(255,255,255,.75)}
+/* 「先不要」移到面板正下方置中，取代原本靠在標題區右側的位置 */
+.accessory-skip{align-self:center;min-height:22px;padding:0;color:var(--ink-70);font-size:13px;
+  text-decoration:underline;text-underline-offset:4px}
+.accessory-skip:hover{color:var(--brand)}
+.accessory-grid{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.accessory-card{min-height:0;padding:7px 12px;display:grid;gap:2px 12px;align-items:center;
+  grid-template-columns:56px minmax(0,1fr) auto;
+  grid-template-areas:"icon name name" "icon desc desc" "icon price add";
+  border:1px solid rgba(255,255,255,.9);border-radius:11px;background:rgba(255,255,255,.5)}
+/* 圖示改用實拍配件圖。白底商品照，用 contain 保留完整外形，不裁切 */
+.accessory-icon{grid-area:icon;width:56px;height:56px;margin:0;display:block;border-radius:9px;
+  object-fit:contain;background:#FFF;border:1px solid rgba(255,255,255,.9)}
+.accessory-card h3{grid-area:name;margin:0;font-size:14px;line-height:1.3}
+.accessory-card p{grid-area:desc;min-height:0;color:var(--ink-70);font-size:12px;line-height:1.45;
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.accessory-price{grid-area:price;margin:0;font:700 13px var(--num);color:var(--ink)}
+.accessory-add{grid-area:add;justify-self:end;min-height:28px;margin:0;padding:0;color:var(--brand);font-size:12px;
+  text-decoration:underline;text-underline-offset:4px}
+.accessory-add:hover{color:var(--ink)}
+.accessory-add.added{color:var(--ink-45);text-decoration:none}
 @keyframes orbIdleHalo{0%,100%{transform:scale(.94);opacity:.38}50%{transform:scale(1.04);opacity:.58}}
 @keyframes orbSpeakHalo{0%,100%{transform:scale(.92);opacity:.6}50%{transform:scale(1.16);opacity:1}}
 @keyframes orbListenHalo{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.09);opacity:.86}}
@@ -396,13 +420,14 @@ body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
   .zone-c .bike-info{min-width:90px;padding:3px 5px}.bike-info b,.bike-info small{font-size:11px}
   .compare-modal{padding:12px}.compare-panel{padding:26px 16px}.compare-table{font-size:12px}.compare-table th,.compare-table td{padding:11px 8px}
   .compare-product{min-width:112px}.compare-product img{width:112px;height:72px}
-  .accessory-panel{top:82px;left:12px;right:12px;padding:20px;max-height:70vh;overflow:auto}
-  .accessory-grid{grid-template-columns:1fr}.accessory-card{min-height:210px}.accessory-head h2{font-size:22px}
+  .accessory-panel{left:12px;right:12px;bottom:132px;gap:10px;padding:12px 12px 8px;max-height:56vh;overflow:auto}
+  .accessory-grid{grid-template-columns:1fr;gap:8px}
 }
 </style>
 
 <div class="room">
   <img src="bg/showroom-store7.webp" alt="">
+  <video class="stage-video" id="stageVideo" src="mp4/stage_down_1.5x.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
@@ -451,31 +476,28 @@ body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
   <button class="arrow r" id="next" aria-label="下一組"><span class="arrow-label" id="nextLabel"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M13 5l7 7-7 7"/></svg></button>
 </div>
 
-<section class="accessory-panel" id="accessoryPanel" aria-labelledby="accessoryTitle" hidden>
-  <div class="accessory-head">
-    <div><h2 id="accessoryTitle">接送小孩，這三樣先準備</h2><p>依 Miya E+ 和你的騎乘情境先挑三樣。</p></div>
-    <button class="accessory-skip" id="accessorySkip" type="button">先不要</button>
-  </div>
+<section class="accessory-panel" id="accessoryPanel" aria-label="建議配件" hidden>
   <div class="accessory-grid">
     <article class="accessory-card">
-      <span class="accessory-icon" aria-hidden="true">帽</span>
+      <img class="accessory-icon" src="Bikes/img_helmet.jpg" alt="通勤安全帽">
       <h3>通勤安全帽</h3><p>接送途中先把大人的頭部防護準備好</p>
       <strong class="accessory-price">NT$2,280</strong>
       <button class="accessory-add" type="button">加入清單</button>
     </article>
     <article class="accessory-card">
-      <span class="accessory-icon" aria-hidden="true">椅</span>
+      <img class="accessory-icon" src="Bikes/img_seat.jpg" alt="兒童安全座椅">
       <h3>兒童安全座椅</h3><p>依孩子體重與車架條件確認適配與固定方式</p>
       <strong class="accessory-price">NT$4,680</strong>
       <button class="accessory-add" type="button">加入清單</button>
     </article>
     <article class="accessory-card">
-      <span class="accessory-icon" aria-hidden="true">籃</span>
+      <img class="accessory-icon" src="Bikes/img_cart.jpg" alt="後置物籃">
       <h3>後置物籃</h3><p>書包、雨具與日常用品比較好收納</p>
       <strong class="accessory-price">NT$1,680</strong>
       <button class="accessory-add" type="button">加入清單</button>
     </article>
   </div>
+  <button class="accessory-skip" id="accessorySkip" type="button">先不要</button>
 </section>
 
 <div class="compare-modal" id="compareModal" hidden>
@@ -850,12 +872,45 @@ function runClerkIntro(cat, delay = 0){
   }, delay + 1500));
 }
 function go(step){
-  clearClerkSequence();
+  clearClerkSequence(); resetStage();
   childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; showRecommendationActions(false);
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   accessoryPanel.hidden = true;
   i += step; paint(step);
   runClerkScript(at(i), 900);
+}
+
+/* 舞台轉場：選定 Miya 後，用「另外兩台降下舞台」的影片交代系統整理的過程。
+   影片首幀是三台車、末幀只剩 Miya，兩端都用 .26s 交叉淡入淡出接回 DOM，
+   末幀的 Miya 已與 .zone-c.single 的位置對齊，所以換手看不出來。 */
+const stageVideo = document.getElementById('stageVideo');
+const STAGE_RATE = 1.4;                      /* 轉場播放倍率，6.75s → 約 4.8s */
+let stageRun = 0;
+function resetStage(){
+  stageRun += 1;
+  document.body.classList.remove('stage-swap');
+  stageVideo.classList.remove('show');
+  stageVideo.pause();
+}
+function playStageSwap(after){
+  const run = ++stageRun;
+  if (reduceMotion) return after();          /* 減少動態：直接給結果 */
+  const finish = () => {
+    if (run !== stageRun) return;            /* 期間被切走就不要再回頭改畫面 */
+    stageVideo.removeEventListener('ended', finish);
+    document.body.classList.remove('stage-swap');
+    stageVideo.classList.remove('show');
+    after();
+  };
+  document.body.classList.add('stage-swap');
+  stageVideo.addEventListener('ended', finish);
+  try { stageVideo.currentTime = 0; } catch (e) {}
+  /* 影片檔本身已是 1.5 倍速；再乘 1.4 讓整段收在約 4.8 秒。
+     用 playbackRate 而不是重新壓檔，數值好調、原始檔也保持乾淨。 */
+  stageVideo.playbackRate = STAGE_RATE;
+  stageVideo.classList.add('show');
+  const played = stageVideo.play();
+  if (played) played.catch(finish);          /* 不能自動播就直接落到結果 */
 }
 
 function respondToUser(rawText){
@@ -866,7 +921,7 @@ function respondToUser(rawText){
     return;
   }
   clearClerkSequence(); clerk.classList.add('engaged');
-  let response = '了解。我先依你剛才說的需求，從中間這台開始幫你看。', focus = 1;
+  let response = '了解。我先依你剛才說的需求，從中間這台開始幫你看。', focus = 1, stageSwap = false;
   if (/喜歡.{0,8}miya(?:\s*e\+)?|miya(?:\s*e\+)?.{0,8}喜歡/i.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -875,6 +930,7 @@ function respondToUser(rawText){
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
     response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
+    stageSwap = true;
   } else if (/接送|接小孩|載小孩/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -895,8 +951,9 @@ function respondToUser(rawText){
     if (run !== clerkRun) return;
     setClerkState('speaking'); setBikeFocus(focus); showClerkCopy(response); playClerkSound();
     showRecommendationActions(childRecommendation);
-    accessoryPanel.hidden = !selectedMiya;
+    if (!stageSwap) accessoryPanel.hidden = !selectedMiya;
   }, 520));
+  if (stageSwap) playStageSwap(() => { accessoryPanel.hidden = false; });
   clerkTimers.push(setTimeout(() => {
     if (run !== clerkRun) return;
     setClerkState('idle'); setBikeFocus(null);
@@ -1097,8 +1154,17 @@ micChoice.onclick = () => micBtn.onclick();
 
 paint(0);
 /* 中央不再放分類膠囊；停留片刻後，改由 AI 門市人員說明所在展區。 */
-clerkForm.inert = true;
-inputChoices.inert = true;
+/* 這兩塊「看得到」由 CSS 的 .engaged / .typing 決定，「點得到」原本靠各處手動設 inert，
+   兩者容易脫鉤：introduceBike、respondToUser、showSelectedMiya、openSizePage 這些路徑
+   只加了 engaged 卻沒清 inert，按鈕就會浮出來卻點不動——這是「有時候點了沒反應」的原因。
+   改成從 class 推導，並用 MutationObserver 盯著，兩者不可能再對不上。 */
+function syncInteractive(){
+  const c = clerk.classList;
+  inputChoices.inert = !(c.contains('engaged') && !c.contains('typing') && !c.contains('listening'));
+  clerkForm.inert    = !(c.contains('engaged') && c.contains('typing'));
+}
+new MutationObserver(syncInteractive).observe(clerk, {attributes:true, attributeFilter:['class']});
+syncInteractive();
 runClerkScript(at(i), 1200);
 if (reduceMotion){
   const video = document.getElementById('orbVideo'); video.pause(); video.currentTime = 0;
