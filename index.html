@@ -283,6 +283,15 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
   line-height:1.65;text-align:center;opacity:0;pointer-events:none;
   transition:max-height .18s ease-out,opacity .3s ease,transform .4s var(--ease)}
 .clerk-copy.show{max-height:86px;opacity:1;transform:none}
+/* 我的尺寸：不打字，選一個身高範圍。膠囊樣式與建議操作同一組。 */
+.size-pills[hidden]{display:none}
+.size-pills{order:2;flex:none;align-self:center;width:max-content;max-width:96vw;display:flex;flex-wrap:nowrap;justify-content:center;gap:8px;animation:pillsIn .35s var(--ease)}
+@keyframes pillsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.size-pills button{min-height:40px;padding:8px 14px;border:1px solid rgba(255,255,255,.65);border-radius:999px;
+  color:#FFF;background:rgba(26,31,42,.56);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font:600 13px var(--num);text-shadow:0 1px 3px rgba(0,0,0,.35);transition:background .2s,border-color .2s}
+.size-pills button:hover{background:rgba(26,31,42,.76);border-color:#FFF}
+.size-pills button:focus-visible{outline:2px solid #FFF;outline-offset:3px}
 .quick-actions{order:2;display:flex;justify-content:center;gap:8px;max-height:0;overflow:hidden;opacity:0;
   transform:translateY(6px);transition:max-height .35s var(--ease),opacity .25s ease,transform .35s var(--ease)}
 .quick-actions.show{max-height:52px;opacity:1;transform:none}
@@ -476,6 +485,13 @@ body.acc-on .zone-c .ztitle{opacity:0}   /* 配件按鈕正好落在分類標籤
   <button class="arrow l" id="prev" aria-label="上一組"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M11 5l-7 7 7 7"/></svg><span class="arrow-label" id="prevLabel"></span></button>
   <div class="dock-mid" id="clerk">
     <p class="clerk-copy" id="clerkCopy" aria-live="polite"></p>
+    <div class="size-pills" id="sizePills" aria-label="選擇身高範圍" hidden>
+      <button type="button" data-h="160" data-lo="" data-hi="163">163 cm 以下</button>
+      <button type="button" data-h="168" data-lo="163" data-hi="172">163–172 cm</button>
+      <button type="button" data-h="174" data-lo="169" data-hi="179">169–179 cm</button>
+      <button type="button" data-h="181" data-lo="176" data-hi="186">176–186 cm</button>
+      <button type="button" data-h="190" data-lo="186" data-hi="">186 cm 以上</button>
+    </div>
     <div class="quick-actions" id="quickActions" aria-label="建議操作">
       <button id="compareThree" type="button">比較這三台</button>
       <button id="exploreMore" type="button">繼續探索</button>
@@ -744,6 +760,10 @@ let clerkTimers = [], clerkRun = 0, recognition = null;
 let recommendationStep = 0;
 let activeBikeIndex = 1, sizingMode = false;
 let knownHeight = null, sizeUnit = 'cm';
+let knownRange = null;                      /* 用膠囊選的範圍 {lo,hi}；打字給精確身高時清掉 */
+const sizePills = document.getElementById('sizePills');
+const hideSizePills = () => { sizePills.hidden = true; };
+const fmtRange = r => r.lo && r.hi ? (sizeUnit === 'cm' ? r.lo + '–' + r.hi + ' cm' : fmtHeight(r.lo) + '–' + fmtHeight(r.hi)) : r.hi ? fmtHeight(r.hi) + ' 以下' : fmtHeight(r.lo) + ' 以上';
 let picking = false, picks = [];
 /* 台面影片：null＝靜態背景；'up'＝停在第一支最後一格；'down'＝停在第二支最後一格 */
 const stageUp = document.getElementById('stageUp');
@@ -1084,7 +1104,7 @@ function runClerkIntro(cat, delay = 0){
 }
 function go(step){
   clearClerkSequence();
-  resetStage();
+  resetStage(); hideSizePills();
   childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; childSet = 0; showRecommendationActions(false);
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   accessoryPanel.hidden = true;
@@ -1112,6 +1132,7 @@ function jumpTo(text){
 function respondToUser(rawText){
   const text = rawText.trim();
   if (!text) return;
+  hideSizePills();
   if (sizingMode){
     handleSizeInput(text);
     return;
@@ -1137,6 +1158,7 @@ function respondToUser(rawText){
   if (named.length && comparing && !decides){ afterPickChange(named.map(addPick).join(' ')); return; }
   const typedHeight = parseHeight(text);
   if (typedHeight && (!sizeModal.hidden || /身高|公分|cm/i.test(text) || /^\s*\d{3}(?:\.\d+)?\s*$/.test(text))){
+    knownRange = null;
     openSizeModal(typedHeight);
     return;
   }
@@ -1210,16 +1232,24 @@ keyboardChoice.onclick = () => {
 sizeQuick.onclick = () => {
   /* 這次造訪已經給過身高就直接進圖表；還沒給過才先問一句。 */
   if (knownHeight){ openSizeModal(knownHeight); return; }
-  sizingMode = true;
+  sizingMode = true;                         /* 打字給數字也還是收 */
   clearClerkSequence(false);
-  clerk.classList.add('engaged','typing');
-  inputChoices.inert = true;
-  clerkForm.inert = false;
-  clerkInput.placeholder = '請輸入身高，例如 172 cm';
-  showClerkCopy('可以，先告訴我你的身高，我會依目前這台車幫你找適合的尺寸。');
+  engage();
+  showRecommendationActions(false);
+  sizePills.hidden = false;
+  setClerkState('speaking');
+  showClerkCopy('可以，先選你的身高範圍，我依目前這台車幫你看尺寸。');
   setBikeFocus(activeBikeIndex);
   playClerkSound();
-  clerkInput.focus();
+  clerkTimers.push(setTimeout(() => setClerkState('idle'), 2200));
+};
+sizePills.onclick = event => {
+  const button = event.target.closest('button[data-h]');
+  if (!button) return;
+  knownRange = {lo:Number(button.dataset.lo) || null, hi:Number(button.dataset.hi) || null};
+  sizingMode = false;
+  hideSizePills();
+  openSizeModal(Number(button.dataset.h), '依你選的身高範圍，我把建議尺寸整理在上面了。\n實際還是要試騎，確認跨高和伸展感。');
 };
 clerkInput.addEventListener('input', () => {
   const hasText = clerkInput.value.trim().length > 0;
@@ -1337,7 +1367,7 @@ function renderPicks(){
   });
 }
 function startPicking(){
-  sizeModal.hidden = true;                      /* 一次只開一個：尺寸表先收 */
+  sizeModal.hidden = true; hideSizePills();     /* 一次只開一個：尺寸表先收 */
   picking = true;
   document.body.classList.add('picking');
   pickTray.hidden = false;
@@ -1431,10 +1461,9 @@ function selectedProduct(){
   return products[Math.min(activeBikeIndex, products.length - 1)] || products[0];
 }
 function recommendedFrame(height){
-  if (height < 165) return 'XS';
-  if (height <= 175) return 'S';
-  if (height <= 181) return 'M';
-  return 'M/L';
+  if (height <= 172) return 'S';
+  if (height <= 179) return 'M';
+  return 'L';
 }
 function handleSizeInput(text){
   const match = text.match(/(1[2-9]\d|20\d|210)(?:\.\d+)?/);
@@ -1443,13 +1472,13 @@ function handleSizeInput(text){
     clerkInput.focus();
     return;
   }
-  sizingMode = false;
+  sizingMode = false; knownRange = null;
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   openSizeModal(Number(match[0]));
 }
 /* 尺寸區間是通用示意值（四個尺寸、身高 157–187cm），等接官方 Size Guide 再逐車系換。 */
-const SIZE_RANGES = [['XS',157,169],['S',165,175],['M',171,181],['M/L',177,187]];
-const TRACK_MIN = 150, TRACK_MAX = 195;     /* 圖表橫軸範圍，讓四條 bar 依身高錯開 */
+const SIZE_RANGES = [['S',163,172],['M',169,179],['L',176,186]];
+const TRACK_MIN = 155, TRACK_MAX = 195;     /* 圖表橫軸範圍，讓三條 bar 依身高錯開 */
 const fmtHeight = cm => {
   if (sizeUnit === 'cm') return cm + ' cm';
   const inches = cm / 2.54, ft = Math.floor(inches / 12), inch = Math.round(inches - ft * 12);
@@ -1458,9 +1487,10 @@ const fmtHeight = cm => {
 function renderSizeChart(height){
   const child = at(i).k === 'kids';
   const frame = child ? null : recommendedFrame(height);
+  const who = knownRange ? '你的身高在 <strong class="h">' + fmtRange(knownRange) + '</strong>' : '你的身高是 <strong class="h">' + fmtHeight(height) + '</strong>';
   sizeSummary.innerHTML = child
-    ? '你的身高是 <strong class="h">' + fmtHeight(height) + '</strong>。童車還要一起確認跨高、輪徑與騎乘經驗，建議到店實際試跨。'
-    : '你的身高是 <strong class="h">' + fmtHeight(height) + '</strong>，建議先從 <strong>' + frame + '</strong> 尺寸試起。';
+    ? who + '。童車還要一起確認跨高、輪徑與騎乘經驗，建議到店實際試跨。'
+    : who + '，建議先從 <strong>' + frame + '</strong> 尺寸試起。';
   sizeChart.innerHTML = child
     ? '<div class="size-row recommended"><b>建議</b><div class="size-range text">到門市確認輪徑與跨高</div></div>'
     : SIZE_RANGES.map(([label,min,max]) => {
@@ -1474,6 +1504,7 @@ const parseHeight = text => { const m = text.match(/(1[2-9]\d|20\d|210)(?:\.\d+)
 function openSizeModal(height, copy){
   const changed = knownHeight !== null && knownHeight !== height && !sizeModal.hidden;
   knownHeight = height;
+  hideSizePills();
   clearClerkSequence(false);
   engage();
   sizeTitle.textContent = selectedProduct().name + '｜車架幾何';
@@ -1531,6 +1562,7 @@ accessoryPanel.querySelectorAll('.accessory-add').forEach(button => {
 });
 addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
+  if (!sizePills.hidden){ hideSizePills(); sizingMode = false; return; }
   if (!compareModal.hidden) closeCompare();
   else if (!sizeModal.hidden) closeSize();
   else if (picking) stopPicking(false);
