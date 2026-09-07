@@ -63,6 +63,22 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 .bikes{display:flex;align-items:flex-end;justify-content:center;gap:1%;
   transition:opacity .34s var(--ease),transform .5s var(--ease)}
 .bikes.out{opacity:0;transform:translateX(var(--slide,0)) scale(.98)}
+/* ── 台面影片（接送小孩流程）─────────────────────────────────
+   第一支：台面升起、三台電輔車出現；第二支：只留 Miya 升到中央台。
+   車是烤在影片裡的，所以影片模式下我們的車圖不顯示，只把名字、價格和點擊熱區
+   放到影片裡三台車的位置（STAGE_SPOTS）。打亮改成一圈柔光，其餘功能不變。 */
+.stage-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;
+  opacity:0;transition:opacity .35s ease;pointer-events:none}
+.stage-video.on{opacity:1}
+body.stage-video .zone-c .bikes{display:block;position:fixed;inset:0;transform:none}
+body.stage-video .zone-c .bikes.hide{opacity:0;pointer-events:none}
+body.stage-video .zone-c .bike{position:absolute;transform:none!important;margin:0;border-radius:14px;
+  transition:background .35s ease,box-shadow .35s ease}
+body.stage-video .zone-c .bike>img,body.stage-video .zone-c .bike::before,body.stage-video .zone-c .bike::after{opacity:0}
+body.stage-video .zone-c .bike-info{transform:translateX(-50%)!important;transition:opacity .3s ease}
+body.stage-video .zone-c .bike.talk-focus{background:radial-gradient(ellipse at 50% 92%,rgba(255,255,255,.34),transparent 68%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.35),0 0 34px 6px rgba(255,255,255,.22)}
+body.stage-video .zone-c.talking .bike:not(.talk-focus) .bike-info{opacity:.45}
 .bike{position:relative;flex:none}
 .bike img{width:100%;height:auto;display:block}
 .bike-info{display:none}
@@ -423,6 +439,8 @@ body.has-quick .compare-modal{padding-bottom:290px}
 
 <div class="room">
   <img src="bg/showroom-store7.webp" alt="">
+  <video class="stage-video" id="stageUp" src="bg/stage-up.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="stage-video" id="stageDown" src="bg/stage-down.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
@@ -649,6 +667,7 @@ function paint(dir){
           bike.onclick = () => picking ? togglePick(renderedItems[index]) : introduceBike(bike.dataset.pick, index);
         });
         renderPicks();
+        if (stageMode) layoutStageSpots();
       } else {
         /* 左右兩側的車點下去＝切到那個分類，和箭頭同一件事 */
         const side = box.querySelector('.bike');
@@ -710,7 +729,94 @@ let clerkTimers = [], clerkRun = 0, recognition = null;
 let recommendationStep = 0;
 let activeBikeIndex = 1, sizingMode = false;
 let knownHeight = null, sizeUnit = 'cm';
-let picking = false, picks = [];            /* 車款比較：使用者自己挑的 2–3 台，跨分類也保留 */   /* 這次造訪給過的身高；只活在記憶體 */
+let picking = false, picks = [];
+/* 台面影片：null＝靜態背景；'up'＝停在第一支最後一格；'down'＝停在第二支最後一格 */
+const stageUp = document.getElementById('stageUp');
+const stageDown = document.getElementById('stageDown');
+let stageMode = null;
+/* 影片裡車的位置（相對影片畫面的 left, top, width, height）。影片重出時這組要跟著量。 */
+const STAGE_SPOTS = {
+  up:   {'EA-102':[.31,.48,.16,.15], 'Miya E+':[.40,.39,.21,.21], 'EA-402':[.53,.50,.18,.13]},
+  down: {'Miya E+':[.39,.38,.22,.18]}
+};
+function stageFrame(){
+  const W = innerWidth, H = innerHeight, k = Math.max(W / 1920, H / 1080), w = 1920 * k, h = 1080 * k;
+  return {x:(W - w) / 2, y:(H - h) / 2, w, h};
+}
+function layoutStageSpots(){
+  if (!stageMode) return;
+  const f = stageFrame(), spots = STAGE_SPOTS[stageMode];
+  zones.c.querySelectorAll('.bike[data-pick]').forEach(b => {
+    const sp = spots[b.dataset.pick];
+    if (!sp){ b.style.display = 'none'; return; }
+    b.style.display = '';
+    b.style.left = (f.x + sp[0] * f.w) + 'px'; b.style.top = (f.y + sp[1] * f.h) + 'px';
+    b.style.width = (sp[2] * f.w) + 'px';     b.style.height = (sp[3] * f.h) + 'px';
+  });
+}
+addEventListener('resize', layoutStageSpots);
+function playStage(video, onEnd){
+  video.currentTime = 0; video.playbackRate = 1.25;
+  video.classList.add('on');
+  let finished = false;
+  const done = () => {
+    if (finished) return;
+    finished = true; clearTimeout(guard);
+    video.removeEventListener('ended', done);
+    if (!video.ended){ video.pause(); video.currentTime = Math.max(0, video.duration - .05); }   /* 停在最後一格 */
+    onEnd();
+  };
+  /* 分頁被切到背景時影片會暫停、ended 永遠不來；時間到就直接跳到最後一格收尾 */
+  const guard = setTimeout(done, (video.duration || 6.75) / 1.25 * 1000 + 800);
+  video.addEventListener('ended', done);
+  video.play().catch(done);
+}
+function resetStage(){
+  if (!stageMode) return;
+  stageMode = null;
+  document.body.classList.remove('stage-video');
+  [stageUp, stageDown].forEach(v => { v.classList.remove('on'); v.pause(); });
+  zones.c.querySelectorAll('.bike').forEach(b => b.removeAttribute('style'));
+  zones.c.querySelector('.bikes').classList.remove('hide');
+}
+/* 接送小孩：車先淡出 → 台面升起（店員在 1 秒處開口）→ 影片停在最後一格，三台車的標籤與熱區浮現 */
+function enterStageUp(line){
+  const run = clerkRun, box = zones.c.querySelector('.bikes');
+  box.style.setProperty('--slide', '0px'); box.classList.add('out');
+  clerkTimers.push(setTimeout(() => {
+    if (run !== clerkRun) return;
+    stageMode = 'up'; document.body.classList.add('stage-video');
+    box.classList.remove('out'); box.classList.add('hide');
+    paint(0);
+    playStage(stageUp, () => {
+      if (stageMode !== 'up' || !childRecommendation) return;
+      layoutStageSpots(); box.classList.remove('hide');
+      showRecommendationActions(true); setChildActions();
+      autoIntroduceChildren(0);
+    });
+    clerkTimers.push(setTimeout(() => {
+      if (run !== clerkRun) return;
+      setClerkState('speaking'); showClerkCopy(line); playClerkSound();
+    }, 1000));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
+  }, 420));
+}
+/* 喜歡 Miya：標籤先退 → 台面降下只留 Miya → 配件建議 */
+function enterStageDown(line){
+  const run = clerkRun, box = zones.c.querySelector('.bikes');
+  box.classList.add('hide');
+  stageMode = 'down';
+  playStage(stageDown, () => {
+    if (stageMode !== 'down') return;
+    paint(0); box.classList.remove('hide');
+    accessoryPanel.hidden = false;
+  });
+  clerkTimers.push(setTimeout(() => {
+    if (run !== clerkRun) return;
+    setClerkState('speaking'); showClerkCopy(line); playClerkSound();
+  }, 1000));
+  clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
+}            /* 車款比較：使用者自己挑的 2–3 台，跨分類也保留 */   /* 這次造訪給過的身高；只活在記憶體 */
 
 const CHILD_INTROS = {
   'Miya E+':'Miya E+ 上下車比較直覺，可以先確認載小朋友時的穩定感。',
@@ -918,6 +1024,7 @@ function runClerkIntro(cat, delay = 0){
 }
 function go(step){
   clearClerkSequence();
+  resetStage();
   childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; childSet = 0; showRecommendationActions(false);
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   accessoryPanel.hidden = true;
@@ -979,16 +1086,22 @@ function respondToUser(rawText){
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = false; selectedMiya = true; recommendationStep = 0;
     showRecommendationActions(false);
+    response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
+    if (stageMode === 'up' && !reduceMotion){ enterStageDown(response); return; }
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
-    response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
   } else if (/接送|接小孩|載小孩/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = true; selectedMiya = false; recommendationStep = 0; childSet = 0;
+    response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
+    if (!reduceMotion && stageMode === null){
+      i += target - current;                 /* 不走滑動換區，直接由影片接手 */
+      enterStageUp(response); return;
+    }
+    resetStage();
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
-    response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
     setChildActions();
     autoIntroduceChildren(520);
   } else if (jumpTo(text)){
@@ -997,6 +1110,7 @@ function respondToUser(rawText){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = false; selectedMiya = false; showRecommendationActions(false);
+    resetStage();
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
     response = '好，我們先看電動輔助車。你可以再告訴我主要用途、預算，或平常會騎多遠。'; focus = null;
@@ -1065,6 +1179,7 @@ compareThree.onclick = () => {
 };
 exploreMore.onclick = () => {
   if (!childRecommendation) return;
+  resetStage();
   childSet = childSet === 0 ? 1 : 0;
   paint(0);
   setChildActions();
