@@ -843,22 +843,33 @@ function enterStageUp(line){
 /* 喜歡 Miya：標籤先退 → 台面降下只留 Miya → 配件建議 */
 function enterStageDown(line){
   const run = clerkRun, box = zones.c.querySelector('.bikes');
-  box.classList.add('hide');
-  stageMode = 'down';
-  playStage(stageDown, () => {
-    if (stageMode !== 'down') return;
-    paint(0); box.classList.remove('hide');
-    accessoryPanel.hidden = false;
-  }, () => {
-    if (!selectedMiya) return;
-    resetStage(); paint(0);
-    accessoryPanel.hidden = false;
-  });
-  clerkTimers.push(setTimeout(() => {
+  const fromUp = stageMode === 'up';
+  const start = () => {
     if (run !== clerkRun) return;
-    setClerkState('speaking'); showClerkCopy(line); playClerkSound();
-  }, 1000));
-  clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
+    stageMode = 'down'; document.body.classList.add('stage-video');
+    box.classList.remove('out'); box.classList.add('hide');
+    if (!fromUp) paint(0);                       /* 從靜態展台進來：先把只剩 Miya 的熱區畫好（先藏著） */
+    playStage(stageDown, () => {
+      if (stageMode !== 'down') return;
+      paint(0); box.classList.remove('hide');
+      accessoryPanel.hidden = false;
+    }, () => {
+      if (!selectedMiya) return;
+      resetStage(); paint(0);
+      accessoryPanel.hidden = false;
+    });
+    clerkTimers.push(setTimeout(() => {
+      if (run !== clerkRun) return;
+      setClerkState('speaking'); showClerkCopy(line); playClerkSound();
+    }, 1000));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3800));
+  };
+  if (fromUp){ box.classList.add('hide'); start(); }
+  else {
+    /* 沒先播第一支：車先淡出，再由第二支接手（第一格和靜態背景有落差，用淡入蓋過） */
+    box.style.setProperty('--slide', '0px'); box.classList.add('out');
+    clerkTimers.push(setTimeout(start, 420));
+  }
 }            /* 車款比較：使用者自己挑的 2–3 台，跨分類也保留 */   /* 這次造訪給過的身高；只活在記憶體 */
 
 const CHILD_INTROS = {
@@ -1116,7 +1127,8 @@ function respondToUser(rawText){
     else goPickMore();
     return;
   }
-  if (named.length && comparing){ afterPickChange(named.map(addPick).join(' ')); return; }
+  const decides = /喜歡|留下|就這台|決定|選這台|就它/.test(text);
+  if (named.length && comparing && !decides){ afterPickChange(named.map(addPick).join(' ')); return; }
   const typedHeight = parseHeight(text);
   if (typedHeight && (!sizeModal.hidden || /身高|公分|cm/i.test(text) || /^\s*\d{3}(?:\.\d+)?\s*$/.test(text))){
     openSizeModal(typedHeight);
@@ -1130,7 +1142,10 @@ function respondToUser(rawText){
     childRecommendation = false; selectedMiya = true; recommendationStep = 0;
     showRecommendationActions(false);
     response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
-    if (stageMode === 'up' && !reduceMotion){ enterStageDown(response); return; }
+    if (stageMode !== 'down'){
+      if (target !== current) i += target - current;   /* 不走滑動換區，影片接手 */
+      enterStageDown(response); return;
+    }
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
   } else if (/接送|接小孩|載小孩/.test(text)){
@@ -1138,7 +1153,7 @@ function respondToUser(rawText){
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = true; selectedMiya = false; recommendationStep = 0; childSet = 0;
     response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
-    if (!reduceMotion && stageMode === null){
+    if (stageMode === null){
       i += target - current;                 /* 不走滑動換區，直接由影片接手 */
       enterStageUp(response); return;
     }
