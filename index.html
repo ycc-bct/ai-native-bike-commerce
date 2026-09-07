@@ -745,7 +745,7 @@ let picking = false, picks = [];
 const stageUp = document.getElementById('stageUp');
 const stageDown = document.getElementById('stageDown');
 let stageMode = null;
-const STAGE_RATE = 1.9;                     /* 台面影片播放倍速：6.75 秒的片約 3.5 秒播完 */
+const STAGE_RATE = 2.7;                     /* 台面影片播放倍速：6.75 秒的片約 2.5 秒播完 */
 /* 影片先整支抓下來再餵給 <video>：Safari 遇到不支援 Range 的伺服器（例如 python -m http.server）
    會直接不播、畫面空白；用 blob 就不再依賴伺服器，也等於預載完成。抓不到（file://）就退回直接指路徑。 */
 [stageUp, stageDown].forEach(video => {
@@ -838,8 +838,8 @@ function enterStageUp(line){
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
       setClerkState('speaking'); showClerkCopy(line); playClerkSound();
-    }, 700));
-    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3400));
+    }, 500));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3000));
   }, 380));
 }
 /* 喜歡 Miya：標籤先退 → 台面降下只留 Miya → 配件建議 */
@@ -863,8 +863,8 @@ function enterStageDown(line){
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
       setClerkState('speaking'); showClerkCopy(line); playClerkSound();
-    }, 700));
-    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3400));
+    }, 500));
+    clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3000));
   };
   if (fromUp){ box.classList.add('hide'); start(); }
   else {
