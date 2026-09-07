@@ -347,6 +347,12 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 .compare-product{display:flex;min-width:150px;flex-direction:column;align-items:flex-start;gap:8px}
 .compare-product img{width:150px;height:92px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(34,39,50,.13))}
 .compare-product span{font-weight:700;color:var(--brand)}
+.compare-remove{margin-top:2px;padding:2px 0;color:var(--ink-70);font-size:12px;text-decoration:underline;text-underline-offset:4px}
+.compare-remove:hover{color:var(--ink)}
+.compare-add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:150px;height:130px;
+  border:1px dashed #B9BEC9;border-radius:10px;color:var(--ink-70);font-size:13px;font-weight:600;transition:border-color .2s,color .2s,background .2s}
+.compare-add i{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#ECEEF3;font-style:normal;font-size:18px;color:var(--ink)}
+.compare-add:hover{border-color:var(--brand);color:var(--brand);background:rgba(6,3,141,.04)}
 /* 車架幾何：與車款比較同一種彈窗。球和輸入框留在底下可以繼續用，再打一個身高，圖表就跟著改。 */
 .size-summary{margin:0 0 18px;padding:18px 20px;border-left:4px solid #596FF2;background:rgba(30,43,114,.08);
   color:var(--ink);font-size:16px;line-height:1.65}
@@ -825,11 +831,20 @@ function showSelectedMiya(){
   playClerkSound();
   clerkTimers.push(setTimeout(() => { setClerkState('idle'); setBikeFocus(0); }, 2200));
 }
+/* 進入互動狀態：顯示鍵盤／麥克風並解除 inert。
+   之前只加 class 沒解 inert，切分類後 4 秒內按鍵盤沒反應就是這個原因。 */
+function engage(){
+  clerk.classList.add('engaged');
+  if (!clerk.classList.contains('typing')) inputChoices.inert = false;
+}
 function runClerkScript(cat, delay = 0){
   clearClerkSequence();
-  clerk.classList.remove('engaged','typing');
-  inputChoices.inert = true;
-  clerkForm.inert = true;
+  /* 挑選比較中切分類：保留互動狀態，托盤與兩側按鈕不消失 */
+  if (!picking){
+    clerk.classList.remove('engaged','typing');
+    inputChoices.inert = true;
+    clerkForm.inert = true;
+  }
   const intro = (CLERK_SCRIPTS[cat.k] || [])[0];
   const products = itemsOf(cat, 3);
   const segments = intro ? [intro].concat(products.map((item, index) => ({
@@ -843,7 +858,7 @@ function runClerkScript(cat, delay = 0){
   segments.forEach((segment, index) => {
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
-      if (index === 1){
+      if (index === 1 && !picking){
         clerk.classList.add('engaged');
         inputChoices.inert = false;
       }
@@ -888,6 +903,13 @@ function respondToUser(rawText){
   if (sizingMode){
     handleSizeInput(text);
     return;
+  }
+  const named = bikesNamed(text);
+  if (named.length && /移除|移出|拿掉|刪除|刪掉|去掉|不要/.test(text)){
+    afterPickChange(named.map(removePick).join(' ')); return;
+  }
+  if (named.length && (/加入|加進|放進|加一台|比較|比一下|一起比/.test(text) || picking || !compareModal.hidden)){
+    afterPickChange(named.map(addPick).join(' ')); return;
   }
   const typedHeight = parseHeight(text);
   if (typedHeight && (!sizeModal.hidden || /身高|公分|cm/i.test(text) || /^\s*\d{3}(?:\.\d+)?\s*$/.test(text))){
@@ -999,27 +1021,30 @@ function comparisonItems(){
   }
   return itemsOf(cat,3);
 }
-function openCompare(list, title){
+function openCompare(list, title, spoken){
   const cat = at(i), products = list || comparisonItems();
+  const editable = !!list;                       /* 自己挑的清單才能在表上移除／再加 */
   compareTitle.textContent = title || (cat.label + '｜車款比較');
   document.getElementById('compareIntro').textContent = (list ? '比較你挑的 ' + products.length + ' 台車' : '比較目前展台上的車款') + '；實際配備與售價仍建議到門市確認。';
+  const addCol = editable && products.length < 3;
   compareTable.innerHTML =
     '<thead><tr><th>比較項目</th>' + products.map(item =>
-      '<th><span class="compare-product"><img src="' + item.url + '" alt="' + item.name + '"><span>' + item.name + '</span></span></th>'
-    ).join('') + '</tr></thead><tbody>' +
-    '<tr><th>價格</th>' + products.map(item => '<td class="price">' + BIKE_PRICE[item.name] + '</td>').join('') + '</tr>' +
-    '<tr><th>適合情境</th>' + products.map(item => '<td>' + BIKE_DETAILS[item.name][1] + '</td>').join('') + '</tr>' +
+      '<th><span class="compare-product"><img src="' + item.url + '" alt="' + item.name + '"><span>' + item.name + '</span>' +
+      (editable ? '<button type="button" class="compare-remove" data-remove="' + item.name + '">移除</button>' : '') + '</span></th>'
+    ).join('') + (addCol ? '<th><button type="button" class="compare-add" id="compareAdd"><i>＋</i>再加一台</button></th>' : '') + '</tr></thead><tbody>' +
+    '<tr><th>價格</th>' + products.map(item => '<td class="price">' + BIKE_PRICE[item.name] + '</td>').join('') + (addCol ? '<td></td>' : '') + '</tr>' +
+    '<tr><th>適合情境</th>' + products.map(item => '<td>' + BIKE_DETAILS[item.name][1] + '</td>').join('') + (addCol ? '<td></td>' : '') + '</tr>' +
     '</tbody>';
   sizeModal.hidden = true;
   compareModal.hidden = false;
   /* 開比較表時店員也要說一句：講事實（幾台、價格帶），下一步交給使用者 */
   clearClerkSequence(false);
-  clerk.classList.add('engaged');
+  engage();
   const prices = products.map(item => BIKE_DETAILS[item.name][0]);
   const low = Math.min(...prices), high = Math.max(...prices);
-  const line = products.length > 1
+  const line = spoken || (products.length > 1
     ? '這 ' + products.length + ' 台我放在一起了，價格從 NT$' + low.toLocaleString('en-US') + ' 到 NT$' + high.toLocaleString('en-US') + '。\n跟我說平常怎麼騎、預算大概多少，我幫你縮到一台。'
-    : products[0].name + ' 的價格和適合情境整理在上面了。\n想再看別台，跟我說一聲。';
+    : products[0].name + ' 的價格和適合情境整理在上面了。\n按「再加一台」或直接跟我說要加哪台。');
   const run = clerkRun;
   clerkTimers.push(setTimeout(() => {
     if (run !== clerkRun) return;
@@ -1036,7 +1061,7 @@ const pickGo = document.getElementById('pickGo');
 const pickCancel = document.getElementById('pickCancel');
 function say(line, hold = 3000){
   clearClerkSequence(false);
-  clerk.classList.add('engaged');
+  engage();
   const run = clerkRun;
   clerkTimers.push(setTimeout(() => {
     if (run !== clerkRun) return;
@@ -1088,6 +1113,48 @@ function togglePick(item){
   say(item.name + ' 已加入比較。\n' + (picks.length < 2 ? '再選一台就可以開始比。' : picks.length < 3 ? '還可以再選一台，或直接開始比較。' : '三台都齊了，按開始比較。'));
 }
 compareQuick.onclick = () => { if (compareModal.hidden) startPicking(); };
+const bikeUrl = name => {
+  for (const [dir, names] of Object.entries(BIKES)) if (names.includes(name)) return src(dir, name);
+  return '';
+};
+/* 從一句話裡找出車名；「Escape」「Escape Disc 2」同時命中時只留較長的那個 */
+function bikesNamed(text){
+  const lower = text.toLowerCase();
+  const hits = Object.keys(BIKE_DETAILS).filter(n => lower.includes(n.toLowerCase()));
+  return hits.filter(n => !hits.some(o => o !== n && o.toLowerCase().includes(n.toLowerCase())));
+}
+function addPick(name){
+  if (picks.some(p => p.name === name)) return name + ' 已經在比較清單裡了。';
+  if (picks.length >= 3) return '一次最多比三台，先移掉一台再加 ' + name + '。';
+  picks.push({name, url:bikeUrl(name)});
+  return name + ' 已加入比較。';
+}
+function removePick(name){
+  const idx = picks.findIndex(p => p.name === name);
+  if (idx < 0) return name + ' 不在比較清單裡。';
+  picks.splice(idx, 1);
+  return name + ' 已移出比較。';
+}
+/* 清單變了之後：表開著就重畫表，否則更新托盤 */
+function afterPickChange(line){
+  renderPicks();
+  if (!compareModal.hidden){
+    if (picks.length) openCompare(picks.slice(), '車款比較', line + '\n' + (picks.length < 3 ? '想再加，按「再加一台」或直接說車名。' : '三台都齊了，跟我說平常怎麼騎，我幫你縮到一台。'));
+    else { compareModal.hidden = true; startPicking(); }
+    return;
+  }
+  if (!picking) startPicking();
+  say(line + (picks.length < 2 ? '\n再選一台就可以開始比。' : '\n還可以再加，或直接開始比較。'));
+}
+compareTable.onclick = event => {
+  const remove = event.target.closest('button[data-remove]');
+  if (remove){ afterPickChange(removePick(remove.dataset.remove)); return; }
+  if (event.target.closest('#compareAdd')){
+    compareModal.hidden = true;
+    startPicking();
+    say('點展台上的車再加一台，或直接跟我說車名。\n想比別的分類，用左右箭頭切過去。', 4200);
+  }
+};
 pickGo.onclick = () => { stopPicking(false); openCompare(picks.slice(), '車款比較'); };
 pickCancel.onclick = () => { stopPicking(true); say('好，比較先取消。想比的時候再按車款比較。'); };
 pickChips.onclick = event => {
@@ -1145,7 +1212,7 @@ function openSizeModal(height, copy){
   const changed = knownHeight !== null && knownHeight !== height && !sizeModal.hidden;
   knownHeight = height;
   clearClerkSequence(false);
-  clerk.classList.add('engaged');
+  engage();
   sizeTitle.textContent = selectedProduct().name + '｜車架幾何';
   compareModal.hidden = true;
   sizeModal.hidden = false;
