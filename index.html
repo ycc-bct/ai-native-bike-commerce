@@ -233,7 +233,7 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
   transform:translateY(8px);padding:0;border:0;background:transparent;
   color:#FFF;text-shadow:0 2px 5px rgba(13,19,28,.9),0 0 18px rgba(13,19,28,.72);font-size:16px;font-weight:600;
   line-height:1.65;text-align:center;opacity:0;pointer-events:none;
-  transition:max-height .45s var(--ease),opacity .35s ease,transform .45s var(--ease)}
+  transition:max-height .18s ease-out,opacity .3s ease,transform .4s var(--ease)}
 .clerk-copy.show{max-height:86px;opacity:1;transform:none}
 .quick-actions{order:2;display:flex;justify-content:center;gap:8px;max-height:0;overflow:hidden;opacity:0;
   transform:translateY(6px);transition:max-height .35s var(--ease),opacity .25s ease,transform .35s var(--ease)}
@@ -969,8 +969,22 @@ function openCompare(){
     '<tr><th>價格</th>' + products.map(item => '<td class="price">' + BIKE_PRICE[item.name] + '</td>').join('') + '</tr>' +
     '<tr><th>適合情境</th>' + products.map(item => '<td>' + BIKE_DETAILS[item.name][1] + '</td>').join('') + '</tr>' +
     '</tbody>';
+  sizeModal.hidden = true;
   compareModal.hidden = false;
-  compareClose.focus();
+  /* 開比較表時店員也要說一句：講事實（幾台、價格帶），下一步交給使用者 */
+  clearClerkSequence(false);
+  clerk.classList.add('engaged');
+  const prices = products.map(item => BIKE_DETAILS[item.name][0]);
+  const low = Math.min(...prices), high = Math.max(...prices);
+  const line = products.length > 1
+    ? '這 ' + products.length + ' 台我放在一起了，價格從 NT$' + low.toLocaleString('en-US') + ' 到 NT$' + high.toLocaleString('en-US') + '。\n跟我說平常怎麼騎、預算大概多少，我幫你縮到一台。'
+    : products[0].name + ' 的價格和適合情境整理在上面了。\n想再看別台，跟我說一聲。';
+  const run = clerkRun;
+  clerkTimers.push(setTimeout(() => {
+    if (run !== clerkRun) return;
+    setClerkState('speaking'); showClerkCopy(line); playClerkSound();
+  }, 380));
+  clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3400));
 }
 compareQuick.onclick = openCompare;
 compareClose.onclick = closeCompare;
