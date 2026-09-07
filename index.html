@@ -439,8 +439,8 @@ body.has-quick .compare-modal{padding-bottom:290px}
 
 <div class="room">
   <img src="bg/showroom-store7.webp" alt="">
-  <video class="stage-video" id="stageUp" src="bg/stage-up.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
-  <video class="stage-video" id="stageDown" src="bg/stage-down.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="stage-video" id="stageUp" data-src="bg/stage-up.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="stage-video" id="stageDown" data-src="bg/stage-down.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
@@ -734,6 +734,13 @@ let picking = false, picks = [];
 const stageUp = document.getElementById('stageUp');
 const stageDown = document.getElementById('stageDown');
 let stageMode = null;
+/* 影片先整支抓下來再餵給 <video>：Safari 遇到不支援 Range 的伺服器（例如 python -m http.server）
+   會直接不播、畫面空白；用 blob 就不再依賴伺服器，也等於預載完成。抓不到（file://）就退回直接指路徑。 */
+[stageUp, stageDown].forEach(video => {
+  fetch(video.dataset.src).then(r => r.ok ? r.blob() : Promise.reject(r.status))
+    .then(blob => { video.src = URL.createObjectURL(blob); })
+    .catch(() => { video.src = video.dataset.src; });
+});
 /* 影片裡車的位置（相對影片畫面的 left, top, width, height）。影片重出時這組要跟著量。 */
 const STAGE_SPOTS = {
   up:   {'EA-102':[.31,.48,.16,.15], 'Miya E+':[.40,.39,.21,.21], 'EA-402':[.53,.50,.18,.13]},
