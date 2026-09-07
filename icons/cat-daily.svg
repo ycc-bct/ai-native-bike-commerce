@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
-     fill="none" stroke="currentColor" stroke-width="1.33333"
-     stroke-linecap="round" stroke-linejoin="round">
-  <title>日常騎乘</title>
-  <circle cx="3.667" cy="11.667" r="2.333"/>
-  <circle cx="12.333" cy="11.667" r="2.333"/>
-  <circle cx="10" cy="3.333" r="0.667"/>
-  <path d="M8 11.667V9.333L6 7.333l2.667-2L10 7.333h1.333"/>
-</svg>
