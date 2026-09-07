@@ -773,7 +773,7 @@ function layoutStageSpots(){
   });
 }
 addEventListener('resize', layoutStageSpots);
-function playStage(video, onEnd){
+function playStage(video, onEnd, onFail){
   let finished = false, guard = null;
   const done = () => {
     if (finished) return;
@@ -784,6 +784,8 @@ function playStage(video, onEnd){
     onEnd();
   };
   whenPlayable(video).then(() => {
+    /* 等了 5 秒還沒有畫面（網路慢、分頁在背景）：放棄影片，回到靜態展台用車圖 */
+    if (video.readyState < 2){ onFail(); return; }
     if (isFinite(video.duration)) video.currentTime = 0;
     video.playbackRate = 1.25;
     video.classList.add('on');                 /* 有畫面了才蓋上去，載入失敗時展間仍在 */
@@ -810,11 +812,14 @@ function enterStageUp(line){
     stageMode = 'up'; document.body.classList.add('stage-video');
     box.classList.remove('out'); box.classList.add('hide');
     paint(0);
+    const settle = () => { showRecommendationActions(true); setChildActions(); autoIntroduceChildren(0); };
     playStage(stageUp, () => {
       if (stageMode !== 'up' || !childRecommendation) return;
       layoutStageSpots(); box.classList.remove('hide');
-      showRecommendationActions(true); setChildActions();
-      autoIntroduceChildren(0);
+      settle();
+    }, () => {
+      if (!childRecommendation) return;
+      resetStage(); paint(0); settle();
     });
     clerkTimers.push(setTimeout(() => {
       if (run !== clerkRun) return;
@@ -831,6 +836,10 @@ function enterStageDown(line){
   playStage(stageDown, () => {
     if (stageMode !== 'down') return;
     paint(0); box.classList.remove('hide');
+    accessoryPanel.hidden = false;
+  }, () => {
+    if (!selectedMiya) return;
+    resetStage(); paint(0);
     accessoryPanel.hidden = false;
   });
   clerkTimers.push(setTimeout(() => {
