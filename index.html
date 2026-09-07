@@ -163,7 +163,7 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 .arrow[hidden]{display:none}
 
 /* ══ AI 球（中下） ══════════════════════════════════════════ */
-.dock{--orb:112px;position:fixed;z-index:20;left:0;right:0;bottom:calc(var(--orb)*-.58);
+.dock{--orb:112px;position:fixed;z-index:60;left:0;right:0;bottom:calc(var(--orb)*-.58);
   display:flex;justify-content:center;align-items:flex-end;gap:clamp(16px,3vw,44px);padding:0 20px;pointer-events:none}
 .dock>*{pointer-events:auto}
 .dock-mid{display:flex;flex-direction:column;align-items:center;gap:9px;width:min(380px,54vw)}
@@ -299,9 +299,10 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 
 /* 三車比較：情境完成後由快捷鍵開啟，不中斷展間瀏覽。 */
 .compare-modal[hidden]{display:none}
-.compare-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:28px;background:rgba(25,31,42,.16);
+.compare-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:start center;padding:56px 28px 240px;
+  background:linear-gradient(180deg,rgba(25,31,42,.16) 55%,rgba(25,31,42,.6));
   backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
-.compare-panel{position:relative;width:min(940px,94vw);max-height:86vh;overflow:auto;padding:34px;
+.compare-panel{position:relative;width:min(940px,94vw);max-height:calc(100vh - 300px);overflow:auto;padding:34px;
   background:linear-gradient(145deg,rgba(255,255,255,.83),rgba(245,248,252,.69));
   backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);
   border:1px solid rgba(255,255,255,.88);border-radius:16px;box-shadow:0 24px 80px rgba(27,32,43,.22),inset 0 1px rgba(255,255,255,.75)}
@@ -315,46 +316,28 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 .compare-product{display:flex;min-width:150px;flex-direction:column;align-items:flex-start;gap:8px}
 .compare-product img{width:150px;height:92px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(34,39,50,.13))}
 .compare-product span{font-weight:700;color:var(--brand)}
-/* 車架幾何：按「我的尺寸」後整個展間換成這一頁。圖表靠左、目前這台車在右，
-   球和它的文案留在底部原位（z-index 低於 .dock），所以「整理在左邊了」說得通。 */
-.size-page[hidden]{display:none}
-.size-page{position:fixed;inset:0;z-index:19;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);gap:48px;
-  padding:44px 56px 0;color:#FFF;background:linear-gradient(150deg,#0B0E17 0%,#0D1220 55%,#0A0C14 100%);
-  animation:sizeIn .45s var(--ease)}
-@keyframes sizeIn{from{opacity:0}to{opacity:1}}
-body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
-.size-main{min-width:0;animation:sizeRise .6s var(--ease)}
-@keyframes sizeRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.size-back{position:absolute;right:56px;top:46px;min-height:34px;padding:3px 0;color:#FFF;font-size:15px;font-weight:600;
-  text-decoration:underline;text-underline-offset:6px}
-.size-back:hover{color:#BFCBFF}.size-back:focus-visible{outline:2px solid #FFF;outline-offset:3px}
-.size-page h2{font-size:34px;line-height:1.2;margin-bottom:12px}
-.size-page .size-note{color:rgba(255,255,255,.6);font-size:14px;line-height:1.6;margin-bottom:26px}
-.size-summary{margin:0 0 20px;padding:20px 22px;border-left:4px solid #596FF2;background:rgba(30,43,114,.34);
-  font-size:16px;line-height:1.65}
-.size-summary strong{color:#8FA3FF;font:700 20px var(--num)}
-.size-summary strong.h{font-size:16px;color:#FFF}
-.size-units{display:flex;justify-content:flex-end;margin-bottom:18px}
-.size-units button{min-width:64px;min-height:40px;padding:6px 14px;border:1px solid rgba(255,255,255,.28);color:rgba(255,255,255,.72);
+/* 車架幾何：與車款比較同一種彈窗。球和輸入框留在底下可以繼續用，再打一個身高，圖表就跟著改。 */
+.size-summary{margin:0 0 18px;padding:18px 20px;border-left:4px solid #596FF2;background:rgba(30,43,114,.08);
+  color:var(--ink);font-size:16px;line-height:1.65}
+.size-summary strong{color:var(--brand);font:700 19px var(--num)}
+.size-summary strong.h{font-size:16px;color:var(--ink)}
+.size-units{display:flex;justify-content:flex-end;margin-bottom:14px}
+.size-units button{min-width:60px;min-height:38px;padding:6px 14px;border:1px solid #C9CDD6;color:var(--ink-70);
   font:600 14px var(--num);transition:background .2s,color .2s}
 .size-units button+button{border-left:0}
 .size-units button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#FFF}
-.size-chart{display:grid;gap:0;border-top:1px solid rgba(255,255,255,.16)}
-.size-row{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:18px;min-height:64px;border-bottom:1px solid rgba(255,255,255,.16)}
-.size-row.recommended{background:rgba(52,72,180,.18)}
-.size-row b{padding-left:12px;color:#FFF;font:700 15px var(--num);letter-spacing:.02em}.size-row.recommended b{color:#8FA3FF}
+.size-chart{display:grid;gap:0;border-top:1px solid #DDE0E6}
+.size-row{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:18px;min-height:58px;border-bottom:1px solid #DDE0E6;
+  transition:background .3s ease}
+.size-row.recommended{background:rgba(52,72,180,.08)}
+.size-row b{padding-left:12px;color:var(--ink-70);font:700 15px var(--num);letter-spacing:.02em}.size-row.recommended b{color:var(--brand)}
 .size-track{position:relative;height:28px;margin:0 64px 0 56px}
-.size-range{position:absolute;top:0;left:var(--l);width:var(--w);height:28px;color:rgba(255,255,255,.86);font:600 13px var(--num);white-space:nowrap}
+.size-range{position:absolute;top:0;left:var(--l);width:var(--w);height:28px;color:var(--ink-70);font:600 13px var(--num);white-space:nowrap}
 .size-range i{position:absolute;left:0;right:0;top:10px;height:8px;border-radius:99px;background:#586FF0}
 .size-range span{position:absolute;top:4px}
 .size-range span:first-child{right:100%;margin-right:6px}
 .size-range span:last-child{left:100%;margin-left:6px}
-.size-range.text{position:static;color:rgba(255,255,255,.7)}
-.size-side{align-self:center;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-bottom:18vh;
-  animation:sizeRise .7s var(--ease)}
-.size-side img{width:min(100%,420px);filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
-.size-side b{font-size:20px}.size-side small{color:rgba(255,255,255,.58);font-size:14px}
-.size-side .price{font:700 16px var(--num);color:#FFF}
+.size-range.text{position:static;color:var(--ink-70)}
 
 /* Miya 收斂後的配件建議：深色玻璃仍保留展間與單車的空間感。 */
 .accessory-panel[hidden]{display:none}
@@ -489,20 +472,21 @@ body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
   </section>
 </div>
 
-<section class="size-page" id="sizePage" aria-labelledby="sizeTitle" hidden>
-  <button class="size-back" id="sizeClose" type="button">返回車款</button>
-  <div class="size-main">
+<div class="compare-modal" id="sizeModal" hidden>
+  <section class="compare-panel" role="dialog" aria-labelledby="sizeTitle">
+    <button class="compare-close" id="sizeClose" type="button" aria-label="關閉車架幾何">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
     <h2 id="sizeTitle">車架幾何</h2>
-    <p class="size-note">車架幾何僅供參考，實際尺寸仍建議到門市試乘確認。</p>
+    <p>車架幾何僅供參考，實際尺寸仍建議到門市試乘確認。</p>
     <div class="size-summary" id="sizeSummary"></div>
     <div class="size-units" role="group" aria-label="單位">
       <button type="button" data-unit="cm" aria-pressed="true">cm</button>
       <button type="button" data-unit="ft" aria-pressed="false">feet</button>
     </div>
     <div class="size-chart" id="sizeChart"></div>
-  </div>
-  <figure class="size-side" id="sizeSide"></figure>
-</section>
+  </section>
+</div>
 
 <script>
 /* 五個分類，順序與選車現場一致。左中右各放一個分類，按左右只換車與標題，
@@ -655,11 +639,11 @@ const compareClose = document.getElementById('compareClose');
 const compareTable = document.getElementById('compareTable');
 const compareTitle = document.getElementById('compareTitle');
 const sizeQuick = document.getElementById('sizeQuick');
-const sizePage = document.getElementById('sizePage');
+const sizeModal = document.getElementById('sizeModal');
 const sizeClose = document.getElementById('sizeClose');
+const sizeTitle = document.getElementById('sizeTitle');
 const sizeSummary = document.getElementById('sizeSummary');
 const sizeChart = document.getElementById('sizeChart');
-const sizeSide = document.getElementById('sizeSide');
 const sizeUnits = document.querySelector('.size-units');
 const accessoryPanel = document.getElementById('accessoryPanel');
 const accessorySkip = document.getElementById('accessorySkip');
@@ -865,6 +849,11 @@ function respondToUser(rawText){
     handleSizeInput(text);
     return;
   }
+  const typedHeight = parseHeight(text);
+  if (typedHeight && (!sizeModal.hidden || /身高|公分|cm/i.test(text) || /^\s*\d{3}(?:\.\d+)?\s*$/.test(text))){
+    openSizeModal(typedHeight);
+    return;
+  }
   clearClerkSequence(); clerk.classList.add('engaged');
   let response = '了解。我先依你剛才說的需求，從中間這台開始幫你看。', focus = 1;
   if (/喜歡.{0,8}miya(?:\s*e\+)?|miya(?:\s*e\+)?.{0,8}喜歡/i.test(text)){
@@ -916,7 +905,7 @@ nav.querySelectorAll('.cat').forEach(b => {
 document.getElementById('prev').onclick = () => go(-1);
 document.getElementById('next').onclick = () => go(1);
 addEventListener('keydown', e => {
-  if (!compareModal.hidden || !sizePage.hidden || !accessoryPanel.hidden || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+  if (!compareModal.hidden || !sizeModal.hidden || !accessoryPanel.hidden || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
   if (e.key === 'ArrowLeft') go(-1);
   if (e.key === 'ArrowRight') go(1);
 });
@@ -930,7 +919,7 @@ keyboardChoice.onclick = () => {
 };
 sizeQuick.onclick = () => {
   /* 這次造訪已經給過身高就直接進圖表；還沒給過才先問一句。 */
-  if (knownHeight){ openSizePage(knownHeight); return; }
+  if (knownHeight){ openSizeModal(knownHeight); return; }
   sizingMode = true;
   clearClerkSequence(false);
   clerk.classList.add('engaged','typing');
@@ -1005,7 +994,7 @@ function handleSizeInput(text){
   }
   sizingMode = false;
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
-  openSizePage(Number(match[0]));
+  openSizeModal(Number(match[0]));
 }
 /* 尺寸區間是通用示意值（四個尺寸、身高 157–187cm），等接官方 Size Guide 再逐車系換。 */
 const SIZE_RANGES = [['XS',157,169],['S',165,175],['M',171,181],['M/L',177,187]];
@@ -1030,32 +1019,34 @@ function renderSizeChart(height){
           '<span>' + fmtHeight(min) + '</span><i></i><span>' + fmtHeight(max) + '</span></div></div></div>';
       }).join('');
 }
-function openSizePage(height){
+const parseHeight = text => { const m = text.match(/(1[2-9]\d|20\d|210)(?:\.\d+)?/); return m ? Number(m[0]) : null; };
+function openSizeModal(height, copy){
+  const changed = knownHeight !== null && knownHeight !== height && !sizeModal.hidden;
   knownHeight = height;
-  const product = selectedProduct();
   clearClerkSequence(false);
   clerk.classList.add('engaged');
-  sizeSide.innerHTML = '<img src="' + product.url + '" alt="' + product.name + '"><b>' + product.name + '</b>' +
-    '<small>' + at(i).label + '</small><span class="price">' + BIKE_PRICE[product.name] + '</span>';
-  sizePage.hidden = false;
-  document.body.classList.add('sizing');
+  sizeTitle.textContent = selectedProduct().name + '｜車架幾何';
+  compareModal.hidden = true;
+  sizeModal.hidden = false;
   renderSizeChart(height);
+  const frame = at(i).k === 'kids' ? null : recommendedFrame(height);
+  const line = copy || (changed
+    ? '改成 ' + height + ' 公分的話，' + (frame ? '建議先從 ' + frame + ' 尺寸試起。' : '童車還是要到店確認跨高與輪徑。')
+    : '依你目前輸入的身高，我把建議尺寸整理在上面了。實際還是要試騎，確認跨高和伸展感。');
   const run = clerkRun;
   clerkTimers.push(setTimeout(() => {
     if (run !== clerkRun) return;
-    setClerkState('speaking');
-    showClerkCopy('依你目前輸入的身高，我把建議尺寸整理在左邊了。實際還是要試騎，確認跨高和伸展感。');
-    playClerkSound();
+    setClerkState('speaking'); showClerkCopy(line); playClerkSound();
   }, 420));
   clerkTimers.push(setTimeout(() => { if (run === clerkRun) setClerkState('idle'); }, 3200));
 }
 function closeSize(){
-  sizePage.hidden = true;
-  document.body.classList.remove('sizing');
+  sizeModal.hidden = true;
   clearClerkSequence();
   sizeQuick.focus();
 }
 sizeClose.onclick = closeSize;
+sizeModal.onclick = event => { if (event.target === sizeModal) closeSize(); };
 sizeUnits.onclick = event => {
   const button = event.target.closest('button[data-unit]');
   if (!button || button.dataset.unit === sizeUnit) return;
@@ -1074,7 +1065,7 @@ accessoryPanel.querySelectorAll('.accessory-add').forEach(button => {
 addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   if (!compareModal.hidden) closeCompare();
-  else if (!sizePage.hidden) closeSize();
+  else if (!sizeModal.hidden) closeSize();
   else if (!accessoryPanel.hidden){ accessoryPanel.hidden = true; clerkInput.focus(); }
 });
 micBtn.onclick = () => {
