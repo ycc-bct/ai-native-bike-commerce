@@ -2,7 +2,7 @@
 
 捷安特（GIANT）「沈浸式選車」提案原型。單一 HTML 檔，無 build、無框架。
 
-- **線上預覽**：https://ycc-bct.github.io/ai-native-bike-commerce/
+- **線上預覽**：https://ycc-bct.github.io/showroom/
 
 ## 這一版在做什麼
 
