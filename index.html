@@ -398,22 +398,23 @@ body.has-quick .compare-modal{padding-bottom:290px}
 .accessory-panel[hidden]{display:none}
 /* 配件面板：外觀沿用 .compare-panel 的淺色玻璃。位置改放在車圖下緣與店員之間
    （量到的空檔是 y514–678），左右內縮到兩顆箭頭之間，所以不會蓋到車也不會擋到切換。 */
-.accessory-panel{position:fixed;z-index:30;left:210px;right:210px;bottom:224px;
-  display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:8px 16px 6px;max-height:132px;
-  color:var(--ink);
-  background:linear-gradient(145deg,rgba(255,255,255,.83),rgba(245,248,252,.69));
-  backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);
-  border:1px solid rgba(255,255,255,.88);border-radius:16px;
-  box-shadow:0 24px 80px rgba(27,32,43,.22),inset 0 1px rgba(255,255,255,.75)}
-/* 「先不要」移到面板正下方置中，取代原本靠在標題區右側的位置 */
-.accessory-skip{align-self:center;min-height:22px;padding:0;color:var(--ink-70);font-size:13px;
-  text-decoration:underline;text-underline-offset:4px}
-.accessory-skip:hover{color:var(--brand)}
+.accessory-panel{position:fixed;z-index:30;left:210px;right:210px;bottom:212px;
+  display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:0;color:var(--ink)}
+.accessory-actions{display:flex;justify-content:center;gap:8px}
+body.acc-on .zone-c .ztitle{opacity:0}   /* 配件按鈕正好落在分類標籤上，面板開著時先讓開 */
+.accessory-actions button{min-height:44px;padding:9px 15px;border:1px solid rgba(255,255,255,.65);border-radius:999px;
+  color:#FFF;background:rgba(26,31,42,.56);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font-size:13px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.35);transition:background .2s,border-color .2s}
+.accessory-actions button:hover{background:rgba(26,31,42,.76);border-color:#FFF}
+.accessory-actions button:focus-visible{outline:2px solid #FFF;outline-offset:3px}
 .accessory-grid{flex:1;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.accessory-card{min-height:0;padding:7px 12px;display:grid;gap:2px 12px;align-items:center;
+.accessory-card{min-height:0;padding:9px 14px;display:grid;gap:2px 12px;align-items:center;
   grid-template-columns:56px minmax(0,1fr) auto;
   grid-template-areas:"icon name name" "icon desc desc" "icon price add";
-  border:1px solid rgba(255,255,255,.9);border-radius:11px;background:rgba(255,255,255,.5)}
+  border:1px solid rgba(255,255,255,.88);border-radius:12px;
+  background:linear-gradient(145deg,rgba(255,255,255,.86),rgba(245,248,252,.74));
+  backdrop-filter:blur(18px) saturate(1.1);-webkit-backdrop-filter:blur(18px) saturate(1.1);
+  box-shadow:0 14px 40px rgba(27,32,43,.18),inset 0 1px rgba(255,255,255,.8)}
 /* 圖示改用實拍配件圖。白底商品照，用 contain 保留完整外形，不裁切 */
 .accessory-icon{grid-area:icon;width:56px;height:56px;margin:0;display:block;border-radius:9px;
   object-fit:contain;background:#FFF;border:1px solid rgba(255,255,255,.9)}
@@ -531,7 +532,10 @@ body.has-quick .compare-modal{padding-bottom:290px}
       <button class="accessory-add" type="button">加入清單</button>
     </article>
   </div>
-  <button class="accessory-skip" id="accessorySkip" type="button">先不要</button>
+  <div class="accessory-actions">
+    <button id="accessorySkip" type="button">跳過配件</button>
+    <button id="accessoryCart" type="button">加入購物車</button>
+  </div>
 </section>
 
 <div class="compare-modal" id="compareModal" hidden>
@@ -1504,7 +1508,20 @@ sizeUnits.onclick = event => {
   sizeUnits.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
   if (knownHeight) renderSizeChart(knownHeight);
 };
-accessorySkip.onclick = () => { accessoryPanel.hidden = true; clerkInput.focus(); };
+new MutationObserver(() => document.body.classList.toggle('acc-on', !accessoryPanel.hidden))
+  .observe(accessoryPanel, {attributes:true, attributeFilter:['hidden']});
+accessorySkip.onclick = () => {
+  accessoryPanel.hidden = true;
+  say('好，配件先跳過。Miya E+ 留著，想看尺寸或再比別台都可以。');
+};
+/* 加入購物車：有勾選就加勾選的，沒勾就三樣一起 */
+document.getElementById('accessoryCart').onclick = () => {
+  const cards = [...accessoryPanel.querySelectorAll('.accessory-card')];
+  const chosen = cards.filter(c => c.querySelector('.accessory-add').classList.contains('added'));
+  const items = (chosen.length ? chosen : cards).map(c => c.querySelector('h3').textContent);
+  accessoryPanel.hidden = true;
+  say(items.join('、') + ' 已加入購物車。\n連同 Miya E+，到店可以直接試騎確認。', 4200);
+};
 accessoryPanel.querySelectorAll('.accessory-add').forEach(button => {
   button.onclick = () => {
     const added = button.classList.toggle('added');
