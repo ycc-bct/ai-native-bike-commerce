@@ -32,9 +32,10 @@ button{background:none;border:0;font:inherit;cursor:pointer;color:inherit}
   object-fit:cover;object-position:50% 50%;filter:saturate(.9) contrast(.97);
   opacity:0;pointer-events:none;transition:opacity .26s ease}
 .stage-video.show{opacity:1}
-/* 影片播放期間把 DOM 的車淡掉，否則會和影片裡的車重疊成兩台 */
-body.stage-swap .zones{opacity:0}
-.zones{transition:opacity .26s ease}
+/* 影片播放期間只淡掉中央那組——影片畫的就是台面上的三台車，不淡掉會重疊成兩台。
+   左右兩區保持顯示：兩支影片的側邊就是原始空景，DOM 的側邊車疊上去沒有落差。 */
+body.stage-swap .zone-c{opacity:0}
+.zone-c{transition:opacity .26s ease}
 /* 上緣淡出，讓導覽列的字壓得住；下緣稍微壓深，車才有重量 */
 .room::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -44,7 +45,6 @@ body.stage-swap .zones{opacity:0}
 /* ══ 三個展區：左右各一組較小、中央一組較大 ══════════════════ */
 .zones{position:absolute;inset:0;z-index:3;pointer-events:none}
 .zone{position:absolute;text-align:center;transition:opacity .5s var(--ease)}
-body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 /* 中央那組站在後方的展台上（照片裡台面約在 58%），左右兩組站在側邊斜台上、位置較低較前 */
 .zone-c{bottom:36.5%}          /* 中央階梯台：兩翼台面約在 64%，頂階再高 8% */
 /* 兩側各一台，站在側邊台階上 */
@@ -122,6 +122,14 @@ body.single-focus .zone-l,body.single-focus .zone-r{opacity:0}
 .zone-c[data-cat="gravel"]{--left-y:1.14vw;--right-y:1.16vw;--main-y:-3.22vw}
 .zone-c[data-cat="mtb"]   {--left-y:1.15vw;--right-y:1.15vw;--main-y:-3.24vw}
 .zone-c[data-cat="kids"]  {--left-y:1.17vw;--right-y:1.16vw;--main-y:-3.20vw}
+/* 推薦情境（接送小孩 / 選定 Miya）：三台的位置改成與 stage_up、stage_down
+   兩支影片的首末幀一致。數值是用影片裡三台車的 x/底 反推的——
+   左 x28.9–46.7%、中 x39.2–60.8%、右 x54.4–72.2%，兩翼底 65.0%、主角底 56.0%。
+   放在 [data-cat] 之後才蓋得過各分類的接地微調（兩者特異度相同）。 */
+.zone-c.recommendation{
+  --left-x:6.25vw;--left-y:.84vw;--left-scale:1.041;
+  --right-x:-5.15vw;--right-y:.84vw;--right-scale:1.041;
+  --main-y:-4.22vw;--main-scale:1.091}
 /* 抬升用 vw 不用 %：% 是相對車圖自己的高度，而每台車的圖比例不同，
    換分類時主角車就會忽高忽低。固定成 vw 之後每台的輪底都落在同一條線上。 */
 .zone-l .bike,.zone-r .bike{width:min(84%,31vh)} /* 左右斜台車縮小並受視窗高度限制 */
@@ -427,7 +435,8 @@ body.sizing .top,body.sizing .arrow{opacity:0;pointer-events:none}
 
 <div class="room">
   <img src="bg/showroom-store7.webp" alt="">
-  <video class="stage-video" id="stageVideo" src="mp4/stage_down_1.5x.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="stage-video" id="stageDown" src="mp4/stage_down_1.5x.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <video class="stage-video" id="stageUp" src="mp4/stage_up_1.5x.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="zones">
     <div class="zone zone-l"><p class="ztitle"></p><div class="bikes"></div></div>
@@ -546,7 +555,9 @@ const BIKES = {
 };
 /* 「新車上市」不是資料夾，湊各分類的第一台當成新品牆 */
 const NEW_SET = [['Daily','Escape'],['Mountain','Anthem Advanced SL 0'],['Rock','Revolt Advanced SL 0']];
-const CHILD_PICK = ['Miya E+','EA-102','EA-402'];
+/* 順序＝台面上的左、中、右，與 stage_up 影片末幀的三台一致，
+   影片淡出換回 DOM 車時才不會換人。 */
+const CHILD_PICK = ['EA-402','Miya E+','Expressway E+'];
 // 沿用原展間的車款資料與價格，非即時報價。
 const BIKE_DETAILS = {
   'Escape':[12800,'簡單、輕快的都會入門選擇，平常通勤或週末輕鬆騎，可以先看看這台。'],
@@ -615,7 +626,6 @@ const zones = {
 const at = k => CATS[(k % CATS.length + CATS.length) % CATS.length];
 
 function paint(dir){
-  document.body.classList.toggle('single-focus', selectedMiya);
   const plan = [['l', at(i - 1), 1], ['c', at(i), 3], ['r', at(i + 1), 1]];
   plan.forEach(([z, cat, n]) => {
     const zone = zones[z], box = zone.querySelector('.bikes'), ttl = zone.querySelector('.ztitle');
@@ -693,9 +703,9 @@ let activeBikeIndex = 1, sizingMode = false;
 let knownHeight = null, sizeUnit = 'cm';   /* 這次造訪給過的身高；只活在記憶體 */
 
 const CHILD_INTROS = [
-  {text:'Miya E+ 上下車比較直覺，可以先確認載小朋友時的穩定感。', focus:0},
-  {text:'EA-102 的預算比較好入手，適合一起看看日常接送是否夠用。', focus:1},
-  {text:'EA-402 遇到比較複雜的日常路況，可以再確認它和另外兩台的配備差異。', focus:2}
+  {text:'EA-402 遇到比較複雜的日常路況，可以先確認它的配備夠不夠用。', focus:0},
+  {text:'Miya E+ 上下車比較直覺，可以先確認載小朋友時的穩定感。', focus:1},
+  {text:'Expressway E+ 可以折疊，家裡或車上收納空間有限的話，可以一起看看。', focus:2}
 ];
 
 /* 每個展區都用短句，避免像產品簡報；focus 是中央三台車的索引。 */
@@ -883,33 +893,36 @@ function go(step){
 /* 舞台轉場：選定 Miya 後，用「另外兩台降下舞台」的影片交代系統整理的過程。
    影片首幀是三台車、末幀只剩 Miya，兩端都用 .26s 交叉淡入淡出接回 DOM，
    末幀的 Miya 已與 .zone-c.single 的位置對齊，所以換手看不出來。 */
-const stageVideo = document.getElementById('stageVideo');
+const stageVideos = [document.getElementById('stageDown'), document.getElementById('stageUp')];
+const stageDown = stageVideos[0], stageUp = stageVideos[1];
 const STAGE_RATE = 1.4;                      /* 轉場播放倍率，6.75s → 約 4.8s */
 let stageRun = 0;
 function resetStage(){
   stageRun += 1;
   document.body.classList.remove('stage-swap');
-  stageVideo.classList.remove('show');
-  stageVideo.pause();
+  stageVideos.forEach(v => { v.classList.remove('show'); v.pause(); });
 }
-function playStageSwap(after){
+/* video：stageUp（空台→三台升起，推薦情境）或 stageDown（三台→只剩一台，選定情境）。
+   兩支的首／末幀都與 DOM 車的位置對齊，所以兩端各 .26s 交叉淡接就看不出換手。 */
+function playStageSwap(video, after){
   const run = ++stageRun;
   if (reduceMotion) return after();          /* 減少動態：直接給結果 */
   const finish = () => {
     if (run !== stageRun) return;            /* 期間被切走就不要再回頭改畫面 */
-    stageVideo.removeEventListener('ended', finish);
+    video.removeEventListener('ended', finish);
     document.body.classList.remove('stage-swap');
-    stageVideo.classList.remove('show');
+    video.classList.remove('show');
     after();
   };
+  stageVideos.forEach(v => { if (v !== video){ v.classList.remove('show'); v.pause(); } });
   document.body.classList.add('stage-swap');
-  stageVideo.addEventListener('ended', finish);
-  try { stageVideo.currentTime = 0; } catch (e) {}
+  video.addEventListener('ended', finish);
+  try { video.currentTime = 0; } catch (e) {}
   /* 影片檔本身已是 1.5 倍速；再乘 1.4 讓整段收在約 4.8 秒。
      用 playbackRate 而不是重新壓檔，數值好調、原始檔也保持乾淨。 */
-  stageVideo.playbackRate = STAGE_RATE;
-  stageVideo.classList.add('show');
-  const played = stageVideo.play();
+  video.playbackRate = STAGE_RATE;
+  video.classList.add('show');
+  const played = video.play();
   if (played) played.catch(finish);          /* 不能自動播就直接落到結果 */
 }
 
@@ -921,7 +934,7 @@ function respondToUser(rawText){
     return;
   }
   clearClerkSequence(); clerk.classList.add('engaged');
-  let response = '了解。我先依你剛才說的需求，從中間這台開始幫你看。', focus = 1, stageSwap = false;
+  let response = '了解。我先依你剛才說的需求，從中間這台開始幫你看。', focus = 1, stageSwap = null;
   if (/喜歡.{0,8}miya(?:\s*e\+)?|miya(?:\s*e\+)?.{0,8}喜歡/i.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -930,7 +943,7 @@ function respondToUser(rawText){
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
     response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
-    stageSwap = true;
+    stageSwap = stageDown;                 /* 三台 → 只剩 Miya */
   } else if (/接送|接小孩|載小孩/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -938,6 +951,7 @@ function respondToUser(rawText){
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
     response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，你可以逐台聽我介紹，或直接打開比較表。'; focus = null;
+    stageSwap = stageUp;                   /* 空台 → 三台升起 */
   } else if (/電輔|電動輔助/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
@@ -953,7 +967,7 @@ function respondToUser(rawText){
     showRecommendationActions(childRecommendation);
     if (!stageSwap) accessoryPanel.hidden = !selectedMiya;
   }, 520));
-  if (stageSwap) playStageSwap(() => { accessoryPanel.hidden = false; });
+  if (stageSwap) playStageSwap(stageSwap, () => { accessoryPanel.hidden = !selectedMiya; });
   clerkTimers.push(setTimeout(() => {
     if (run !== clerkRun) return;
     setClerkState('idle'); setBikeFocus(null);
