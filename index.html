@@ -794,6 +794,9 @@ body.zoom-on .zone-c .ztitle{opacity:0}
   <h4>選車現場</h4>
   <ol>
     <li><p>右上「開始搜尋」點開後有<b>「進入選車現場」</b>；「你想騎去哪裡？」下方也有一顆。</p><button class="try" type="button" data-try="enter">Try it</button></li>
+  </ol>
+  <h4>AI 顧問</h4>
+  <ol>
     <li><p>在分類頁逛一陣子（來回看同一台、看了四台、條件改了三次），門市人員會走近：底部出現「幫我整理／先自己逛」。</p><button class="try" type="button" data-try="home:near">Try it</button></li>
   </ol>
   </div>
@@ -5075,6 +5078,21 @@ function enterShowroom(){
   }
   if (!showroomEntered){ showroomEntered = true; runClerkScript(at(i), reduceMotion ? 900 : 1300); }
 }
+/* 結束＝走出店門：狀態全部歸零，再進來就是重新走進去。只留身高，那是使用者自己的資料。 */
+function resetShowroom(){
+  clearClerkSequence();
+  dismissOverlays(true); hideBikeZoom(); hideSizePills();
+  stopPicking(true);
+  budget = null; markBudget();
+  childRecommendation = false; selectedMiya = false; childSet = 0; recommendationStep = 0;
+  showRecommendationActions(false); accessoryPanel.hidden = true;
+  resetStage();
+  sizingMode = false; clerkInput.value = ''; clerkForm.classList.remove('has-text'); clerkSubmit.disabled = true;
+  clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
+  clerk.classList.remove('engaged', 'typing'); inputChoices.inert = true; clerkForm.inert = true;
+  i = 0; activeBikeIndex = 1; paint(0);
+  showroomEntered = false;                                /* 下次進來完整播開場 */
+}
 function exitShowroom(){
   clearClerkSequence();
   compareModal.hidden = true; sizeModal.hidden = true; closeTips();
@@ -5082,6 +5100,7 @@ function exitShowroom(){
   document.body.classList.add('leaving');                /* 0.4 秒淡出，不倒播 */
   setTimeout(() => {
     document.body.classList.remove('mode-showroom', 'leaving'); document.body.classList.add('mode-home');
+    resetShowroom();
   }, reduceMotion ? 0 : 400);
 }
 document.getElementById('exitShowroom').onclick = exitShowroom;
