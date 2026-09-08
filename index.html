@@ -206,7 +206,8 @@ body.entering .zone-c .bike>img{animation:bikeRise calc(.7s * var(--es)) var(--e
 @keyframes bikeRise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 body.entering .zone-c .bike-info{animation:enterFade calc(.4s * var(--es)) ease both;animation-delay:calc(.75s * var(--es))}
 body.entering .zone-l .bike>img,body.entering .zone-r .bike>img{animation:bikeRise calc(.7s * var(--es)) var(--ease) both;animation-delay:calc(.45s * var(--es))}
-body.entering .dock{animation:dockUp calc(.6s * var(--es)) var(--ease) both;animation-delay:calc(.9s * var(--es))}
+/* 只動球那一欄；箭頭在 .dock 裡，動整個 .dock 會把箭頭一起帶著滑 */
+body.entering .dock-mid{animation:dockUp calc(.6s * var(--es)) var(--ease) both;animation-delay:calc(.9s * var(--es))}
 @keyframes dockUp{from{opacity:0;transform:translateY(44px)}to{opacity:1;transform:none}}
 body.entering .orb::before{animation:orbSpeakHalo 1.45s ease-in-out 1;animation-delay:calc(1.1s * var(--es))}
 body.entering .arrow,body.entering .zone-c .ztitle{animation:enterFade calc(.5s * var(--es)) ease both;animation-delay:calc(.45s * var(--es))}
