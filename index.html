@@ -193,6 +193,26 @@ body.picking .zone-c .bike.picked>img{filter:drop-shadow(0 10px 15px rgba(6,3,14
 #showroom{opacity:0;transition:opacity .5s ease}
 body.mode-showroom #showroom{opacity:1}
 body.mode-home #showroom{display:none}
+body.leaving #showroom{opacity:0;transition:opacity .4s ease}
+/* ── 進場：像推門走進店裡，1.5 秒內結束（第二次以後 --es 縮成 .55）──
+   燈亮＋微推近 → 中央三台由台面浮起、名字價格跟著出現 → 兩側的車 → 球從底緣滑上來 → 箭頭與標籤 */
+body.entering{--es:1}
+body.entering .room{animation:roomIn calc(1.2s * var(--es)) var(--ease) both}
+@keyframes roomIn{from{filter:brightness(.7);transform:scale(1.04)}to{filter:brightness(1);transform:none}}
+body.entering .top{animation:enterFade calc(.5s * var(--es)) ease both}
+body.entering .zone-c .bike>img{animation:bikeRise calc(.6s * var(--es)) var(--ease) both}
+body.entering .zone-c .bike:nth-child(1)>img{animation-delay:calc(.4s * var(--es))}
+body.entering .zone-c .bike:nth-child(2)>img{animation-delay:calc(.52s * var(--es))}
+body.entering .zone-c .bike:nth-child(3)>img{animation-delay:calc(.64s * var(--es))}
+@keyframes bikeRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+body.entering .zone-c .bike-info{animation:enterFade calc(.4s * var(--es)) ease both;animation-delay:calc(.85s * var(--es))}
+body.entering .zone-l .bike>img,body.entering .zone-r .bike>img{animation:enterFade calc(.6s * var(--es)) ease both;animation-delay:calc(.8s * var(--es))}
+body.entering .dock{animation:dockUp calc(.6s * var(--es)) var(--ease) both;animation-delay:calc(.9s * var(--es))}
+@keyframes dockUp{from{opacity:0;transform:translateY(44px)}to{opacity:1;transform:none}}
+body.entering .orb::before{animation:orbSpeakHalo 1.45s ease-in-out 1;animation-delay:calc(1.1s * var(--es))}
+body.entering .arrow,body.entering .zone-c .ztitle,body.entering .tips-pill{animation:enterFade calc(.5s * var(--es)) ease both;animation-delay:calc(1.2s * var(--es))}
+@keyframes enterFade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){body.entering *{animation:none!important}}
 body.mode-showroom #home{visibility:hidden}
 .tips [data-mode]{display:none}
 body.mode-home .tips [data-mode="home"],body.mode-showroom .tips [data-mode="showroom"]{display:block}
@@ -4950,15 +4970,28 @@ inputChoices.inert = true;
 const home = document.getElementById('home');
 home.srcdoc = document.getElementById('homeTpl').textContent.replace(/<\\\/script/g, '</script');
 let showroomEntered = false;
+let enterTimer = null;
 function enterShowroom(){
-  document.body.classList.remove('mode-home'); document.body.classList.add('mode-showroom');
+  document.body.classList.remove('mode-home', 'leaving'); document.body.classList.add('mode-showroom');
   closeTips();
-  if (!showroomEntered){ showroomEntered = true; runClerkScript(at(i), 900); }
+  const es = showroomEntered ? .55 : 1;               /* 第二次以後縮短 */
+  if (!reduceMotion){
+    document.body.style.setProperty('--es', es);
+    document.body.classList.remove('entering'); void document.body.offsetWidth;
+    document.body.classList.add('entering');
+    clearTimeout(enterTimer);
+    enterTimer = setTimeout(() => document.body.classList.remove('entering'), 2000 * es);
+  }
+  if (!showroomEntered){ showroomEntered = true; runClerkScript(at(i), reduceMotion ? 900 : 1300); }
 }
 function exitShowroom(){
   clearClerkSequence();
   compareModal.hidden = true; sizeModal.hidden = true; closeTips();
-  document.body.classList.remove('mode-showroom'); document.body.classList.add('mode-home');
+  document.body.classList.remove('entering'); clearTimeout(enterTimer);
+  document.body.classList.add('leaving');                /* 0.4 秒淡出，不倒播 */
+  setTimeout(() => {
+    document.body.classList.remove('mode-showroom', 'leaving'); document.body.classList.add('mode-home');
+  }, reduceMotion ? 0 : 400);
 }
 document.getElementById('exitShowroom').onclick = exitShowroom;
 addEventListener('message', e => { if (e.data === 'enter-showroom') enterShowroom(); });
