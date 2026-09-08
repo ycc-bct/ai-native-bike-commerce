@@ -791,7 +791,7 @@ body.zoom-on .zone-c .ztitle{opacity:0}
 <aside class="tips" id="tips" aria-label="Tips" hidden>
   <div class="tips-head"><b>TIPS</b><button class="tips-close" id="tipsClose" type="button" aria-label="關閉 Tips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div data-mode="home">
-  <h4>首頁</h4>
+  <h4>選車現場</h4>
   <ol>
     <li><p>右上「開始搜尋」點開後有<b>「進入選車現場」</b>；「你想騎去哪裡？」下方也有一顆。</p><button class="try" type="button" data-try="enter">Try it</button></li>
     <li><p>在分類頁逛一陣子（來回看同一台、看了四台、條件改了三次），門市人員會走近：底部出現「幫我整理／先自己逛」。</p><button class="try" type="button" data-try="home:near">Try it</button></li>
@@ -805,7 +805,7 @@ body.zoom-on .zone-c .ztitle{opacity:0}
     <li><p>展台上的車點一下，門市人員會介紹那一台；不點，講完就安靜。</p><button class="try" type="button" data-try="bike">Try it</button></li>
     <li><p>跟它說「我想看登山車」也能直接切區。</p><button class="try" type="button" data-try="say:我想看登山車">Try it</button></li>
   </ol>
-  <h4>底部的門市人員</h4>
+  <h4>AI 顧問</h4>
   <ol>
     <li><p>球的左邊<b>「我的尺寸」</b>：選一個身高範圍，馬上開出車架幾何表，不用打字。</p><button class="try" type="button" data-try="size">Try it</button></li>
     <li><p>球的右邊<b>「車款比較」</b>：點展台上的車打勾，可跨區挑二到三台並排比；表上還能移除、再加。</p><button class="try" type="button" data-try="compare">Try it</button></li>
@@ -4191,7 +4191,7 @@ function runClerkIntro(cat, delay = 0){
 }
 function go(step){
   clearClerkSequence();
-  resetStage(); hideSizePills();
+  resetStage(); hideSizePills(); dismissOverlays(true);
   childRecommendation = false; selectedMiya = false; sizingMode = false; recommendationStep = 0; childSet = 0; showRecommendationActions(false);
   clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   accessoryPanel.hidden = true;
@@ -4216,10 +4216,16 @@ function jumpTo(text){
   go(target - current);
   return true;
 }
+/* 使用者打了新指令：把不吃指令的視窗（車輛細節、結帳）先收掉；換區的指令連比較表、尺寸表也收 */
+function dismissOverlays(all){
+  zoomModal.hidden = true; zoomStage.classList.remove('in');
+  if (typeof checkoutModal !== 'undefined' && checkoutModal) checkoutModal.hidden = true;
+  if (all){ compareModal.hidden = true; sizeModal.hidden = true; }
+}
 function respondToUser(rawText){
   const text = rawText.trim();
   if (!text) return;
-  hideSizePills();
+  hideSizePills(); dismissOverlays(false);
   if (sizingMode){
     if (parseHeight(text)){ handleSizeInput(text); return; }
     sizingMode = false; hideSizePills();      /* 使用者改說別的：以最新的為主，不卡在問身高 */
@@ -4258,7 +4264,7 @@ function respondToUser(rawText){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = false; selectedMiya = true; recommendationStep = 0;
-    showRecommendationActions(false);
+    showRecommendationActions(false); dismissOverlays(true);
     response = '好，那我們就留下 Miya E+。接送小孩的話，我先幫你把三樣實用配件整理出來。'; focus = 0;
     if (stageMode !== 'down'){
       if (target !== current) i += target - current;   /* 不走滑動換區，影片接手 */
@@ -4269,7 +4275,7 @@ function respondToUser(rawText){
   } else if (/接送|接小孩|載小孩/.test(text)){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
-    childRecommendation = true; selectedMiya = false; recommendationStep = 0; childSet = 0;
+    childRecommendation = true; selectedMiya = false; recommendationStep = 0; childSet = 0; dismissOverlays(true);
     response = '了解，是大人騎電輔車接送小孩。這邊先推薦三台比較適合的，我會逐台簡單介紹；想直接比也可以。'; focus = null;
     if (stageMode === null){
       i += target - current;                 /* 不走滑動換區，直接由影片接手 */
@@ -4286,7 +4292,7 @@ function respondToUser(rawText){
     const target = CATS.findIndex(c => c.k === 'ebike');
     const current = ((i % CATS.length) + CATS.length) % CATS.length;
     childRecommendation = false; selectedMiya = false; showRecommendationActions(false);
-    resetStage();
+    resetStage(); dismissOverlays(true);
     if (target !== current){ i += target - current; paint(target - current); }
     else paint(0);
     response = '好，我們先看電動輔助車。你可以再告訴我主要用途、預算，或平常會騎多遠。'; focus = null;
