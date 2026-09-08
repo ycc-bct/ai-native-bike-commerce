@@ -491,6 +491,7 @@ body.zoom-on .zone-c .ztitle{opacity:0}
 
 /* 車輛圖片彈窗：大圖 + 其他視角。沿用比較表那層淺色玻璃。 */
 .zoom-panel{width:min(760px,94vw);max-height:calc(100vh - 256px)}
+.zoom-panel>p#zoomIntro{margin-bottom:16px;font:700 22px var(--num);color:var(--ink)}
 /* 車輛細節比較長：這個彈窗從上方開始排，底下留給店員文案；不夠高時在面板內捲動 */
 #zoomModal{place-items:start center;padding:22px 28px 234px}
 .zoom-panel .zoom-info{gap:14px 24px;margin-top:14px;padding-top:14px}
@@ -511,7 +512,7 @@ body.zoom-on .zone-c .ztitle{opacity:0}
 .zoom-hl li{position:relative;padding-left:14px;font-size:13.5px;line-height:1.6;color:var(--ink)}
 .zoom-hl li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--brand)}
 .zoom-sizes{display:flex;flex-wrap:wrap;gap:6px}
-.zoom-sizes span{min-width:40px;padding:6px 10px;border:1px solid #C9CDD6;border-radius:6px;text-align:center;font:700 13px var(--num);color:var(--ink)}
+.zoom-sizes span{min-width:44px;padding:8px 12px;border:1px solid #C9CDD6;border-radius:6px;background:#FFF;text-align:center;font:700 14px var(--num);color:var(--ink);box-shadow:0 1px 3px rgba(27,32,43,.08)}
 .zoom-sizes em{font-style:normal;font-size:12.5px;color:var(--ink-70);align-self:center}
 .zoom-fit{margin-top:6px;font-size:12.5px;color:var(--ink-70)}
 .zoom-series{grid-column:1/-1}
@@ -752,7 +753,6 @@ body.zoom-on .zone-c .ztitle{opacity:0}
     </button>
     <h2 id="zoomTitle"></h2>
     <p id="zoomIntro"></p>
-    <button class="zoom-compare" id="zoomCompare" type="button">加入比較</button>
     <div class="zoom-stage" id="zoomStage" role="button" tabindex="0" aria-label="點一下放大">
       <img id="zoomImage" alt="">
     </div>
@@ -760,8 +760,6 @@ body.zoom-on .zone-c .ztitle{opacity:0}
     <div class="zoom-info">
       <div><h4>重點特色</h4><ul class="zoom-hl" id="zoomHl"></ul></div>
       <div><h4>尺寸</h4><div class="zoom-sizes" id="zoomSizes"></div><p class="zoom-fit" id="zoomFit"></p></div>
-      <div class="zoom-series"><h4>同車系</h4><div class="zoom-series-row" id="zoomSeries"></div></div>
-      <div class="zoom-actions"><small id="zoomSrc"></small></div>
     </div>
   </section>
 </div>
@@ -4736,8 +4734,7 @@ function openZoom(name){
   zoomList = viewsOf(name);
   zoomImage.alt = name;
   document.getElementById('zoomTitle').textContent = name;
-  document.getElementById('zoomIntro').textContent =
-    (BIKE_PRICE[name] || '') + '　點圖片可以放大細看。45 度為同分類示意圖。';
+  document.getElementById('zoomIntro').textContent = BIKE_PRICE[name] || '';
   renderZoomInfo(name);
   zoomViews.innerHTML = zoomList.map((view, n) =>
     '<button class="zoom-view" type="button" data-view="' + n + '" aria-label="' + view.label +
@@ -4760,38 +4757,7 @@ function renderZoomInfo(name){
   document.getElementById('zoomSizes').innerHTML = info.sizes
     ? info.sizes.map(z => '<span>' + z + '</span>').join('') : '<em>' + (info.fit || '官網未列') + '</em>';
   document.getElementById('zoomFit').textContent = info.sizes && info.fit ? info.fit : '';
-  const here = itemsOf(at(i), 3).map(b => b.name);
-  document.getElementById('zoomSeries').innerHTML = info.series.length
-    ? info.series.map(([n, price]) => {
-        const inStore = !!BIKE_DETAILS[n];
-        return '<button class="zoom-card' + (n === name ? ' here' : '') + '" type="button" data-bike="' + n + '"' + (inStore ? '' : ' disabled') + '>' +
-          '<b>' + n + '</b><small>' + (price ? 'NT$' + price.toLocaleString('en-US') : '官網未列價格') + '</small>' +
-          '<i>' + (inStore ? '看這台' : '官網車款，展廳未展示') + '</i></button>';
-      }).join('')
-    : '<span class="zoom-card" style="cursor:default"><b>' + name + '</b><i>官網此車系目前只有這一款</i></span>';
-  document.getElementById('zoomSrc').textContent = '資料來源：官網車款頁';
-  updateZoomCompare(name);
 }
-function updateZoomCompare(name){
-  const on = picks.some(p => p.name === name);
-  const button = document.getElementById('zoomCompare');
-  button.textContent = on ? '已在比較清單' : '加入比較';
-  button.classList.toggle('on', on);
-  button.setAttribute('aria-pressed', String(on));
-}
-document.getElementById('zoomSeries').onclick = event => {
-  const card = event.target.closest('button[data-bike]');
-  if (!card || card.disabled || card.dataset.bike === zoomImage.alt) return;
-  openZoom(card.dataset.bike);
-};
-document.getElementById('zoomCompare').onclick = () => {
-  const name = zoomImage.alt;
-  const line = picks.some(p => p.name === name) ? removePick(name) : addPick(name);
-  renderPicks(); updateZoomCompare(name);
-  if (picks.length && !picking){ picking = true; document.body.classList.add('picking', 'has-tray'); pickTray.hidden = false; renderPicks(); }
-  if (!picks.length && picking) stopPicking(true);
-  say(line + (picks.length >= 2 ? '\n清單裡有 ' + picks.length + ' 台了，關掉這頁按「開始比較」就能並排看。' : picks.length ? '\n再選一台就可以開始比。' : ''), 4200);
-};
 bikeZoom.onclick = () => { if (zoomBikeName) openZoom(zoomBikeName); };
 zoomViews.onclick = event => {
   const button = event.target.closest('button[data-view]');
