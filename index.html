@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>選車現場 · 展廳視角（淺色版）</title>
+<title>GIANT Ride Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Overpass:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -197,7 +197,7 @@ body.mode-showroom #home{visibility:hidden}
 .tips [data-mode]{display:none}
 body.mode-home .tips [data-mode="home"],body.mode-showroom .tips [data-mode="showroom"]{display:block}
 /* ── Tips：右下角一顆膠囊，點開列出可以體驗的功能，每條有 Try it 直接做 ─── */
-.tips-pill{position:fixed;right:24px;bottom:24px;z-index:63;min-height:40px;padding:9px 16px;border-radius:999px;
+.tips-pill{position:fixed;left:24px;bottom:24px;z-index:63;min-height:40px;padding:9px 16px;border-radius:999px;
   border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   color:var(--ink);font:700 13px var(--num);letter-spacing:.06em;box-shadow:0 6px 20px rgba(54,61,76,.16);
   transition:bottom .3s var(--ease),background .2s,transform .2s var(--ease)}
@@ -205,10 +205,9 @@ body.mode-home .tips [data-mode="home"],body.mode-showroom .tips [data-mode="sho
 .tips-pill:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
 .tips-pill.pulse{animation:tipsPulse 1.6s var(--ease) 2}
 @keyframes tipsPulse{0%,100%{box-shadow:0 6px 20px rgba(54,61,76,.16)}50%{box-shadow:0 6px 20px rgba(54,61,76,.16),0 0 0 8px rgba(6,3,141,.14)}}
-body.has-tray .tips-pill{bottom:196px}
 body.tips-open .tips-pill{opacity:0;pointer-events:none}
 .tips[hidden]{display:none}
-.tips{position:fixed;right:24px;bottom:24px;z-index:63;width:min(360px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;
+.tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(360px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;
   padding:16px 18px 14px;border:1px solid rgba(255,255,255,.7);border-radius:12px;color:var(--ink);
   background:rgba(255,255,255,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   box-shadow:0 14px 40px rgba(54,61,76,.18);animation:tipsIn .4s var(--ease)}
@@ -217,6 +216,7 @@ body.tips-open .tips-pill{opacity:0;pointer-events:none}
 .tips-head b{font:700 14px var(--num);letter-spacing:.08em}
 .tips-close{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;color:var(--ink-70)}
 .tips-close:hover{background:#ECEEF3;color:var(--ink)}.tips-close svg{width:18px;height:18px}
+.tips-note{margin:0 0 10px;padding:8px 10px;border-radius:8px;background:rgba(6,3,141,.06);color:var(--ink-70);font-size:11.5px;line-height:1.55}
 .tips h4{margin:12px 0 6px;font-size:12px;letter-spacing:.06em;color:var(--brand)}
 .tips h4:first-of-type{margin-top:0}
 .tips ol{list-style:none;display:grid;gap:6px}
@@ -490,20 +490,49 @@ body.acc-on .zone-c .ztitle{opacity:0}   /* 配件按鈕正好落在分類標籤
 body.zoom-on .zone-c .ztitle{opacity:0}
 
 /* 車輛圖片彈窗：大圖 + 其他視角。沿用比較表那層淺色玻璃。 */
-.zoom-panel{width:min(760px,94vw)}
+.zoom-panel{width:min(760px,94vw);max-height:calc(100vh - 256px)}
+/* 車輛細節比較長：這個彈窗從上方開始排，底下留給店員文案；不夠高時在面板內捲動 */
+#zoomModal{place-items:start center;padding:22px 28px 234px}
+.zoom-panel .zoom-info{gap:14px 24px;margin-top:14px;padding-top:14px}
 .zoom-stage{position:relative;overflow:hidden;padding:20px 30px;border:1px solid #E6E9EF;border-radius:12px;
   cursor:zoom-in;background:#FFF}
 .zoom-stage.in{cursor:zoom-out}
 /* 白底留出內距，車圖才不會貼著框邊。高度固定、圖用 contain：
    側視圖是 900×500、45 度圖接近 900×830，不定高的話換一張視角面板會整個跳掉，
    下面那排小圖也會被擠出可視範圍。 */
-.zoom-stage img{width:100%;height:min(38vh,320px);display:block;object-fit:contain;transform-origin:50% 50%;
+.zoom-stage img{width:100%;height:min(22vh,200px);display:block;object-fit:contain;transform-origin:50% 50%;
   transition:transform .45s var(--ease);filter:drop-shadow(0 12px 18px rgba(34,39,50,.14))}
 .zoom-stage.in img{transform:scale(2.1);transition:transform .18s ease-out}
 .zoom-views{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+/* 車輛細節：重點特色、尺寸、同車系、加入比較。內容全部來自官網頁面，查不到的寫「官網未列」。 */
+.zoom-info{display:grid;grid-template-columns:1.2fr 1fr;gap:22px 28px;margin-top:20px;padding-top:18px;border-top:1px solid #DDE0E6}
+.zoom-info h4{margin:0 0 8px;font-size:12px;letter-spacing:.06em;color:var(--brand)}
+.zoom-hl{list-style:none;display:grid;gap:6px}
+.zoom-hl li{position:relative;padding-left:14px;font-size:13.5px;line-height:1.6;color:var(--ink)}
+.zoom-hl li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.zoom-sizes{display:flex;flex-wrap:wrap;gap:6px}
+.zoom-sizes span{min-width:40px;padding:6px 10px;border:1px solid #C9CDD6;border-radius:6px;text-align:center;font:700 13px var(--num);color:var(--ink)}
+.zoom-sizes em{font-style:normal;font-size:12.5px;color:var(--ink-70);align-self:center}
+.zoom-fit{margin-top:6px;font-size:12.5px;color:var(--ink-70)}
+.zoom-series{grid-column:1/-1}
+.zoom-series-row{display:flex;flex-wrap:wrap;gap:10px}
+.zoom-card{display:flex;flex-direction:column;gap:6px;min-width:150px;padding:10px 12px;border:1px solid #DDE0E6;border-radius:10px;background:#FFF;text-align:left;
+  transition:border-color .2s,box-shadow .2s}
+.zoom-card b{font-size:13px;color:var(--brand)}
+.zoom-card small{font:700 12px var(--num);color:var(--ink)}
+.zoom-card i{font-style:normal;font-size:11px;color:var(--ink-45)}
+.zoom-card:not([disabled]):hover{border-color:var(--brand);box-shadow:0 4px 14px rgba(6,3,141,.10)}
+.zoom-card[disabled]{cursor:default;opacity:.7}
+.zoom-card.here{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.zoom-actions{grid-column:1/-1;display:flex;justify-content:flex-end;align-items:center;gap:12px;padding-top:2px}
+.zoom-actions small{font-size:12px;color:var(--ink-45)}
+.zoom-compare{position:absolute;right:34px;top:72px;min-height:40px;padding:8px 18px;border-radius:999px;background:var(--brand);color:#FFF;font-size:13px;font-weight:700;transition:background .2s}
+.zoom-compare:hover{background:#0A07B0}
+.zoom-compare.on{background:#FFF;color:var(--brand);box-shadow:inset 0 0 0 1.5px var(--brand)}
+@media(max-width:700px){.zoom-info{grid-template-columns:1fr}}
 .zoom-view{width:130px;padding:8px;border:1px solid #DDE0E6;border-radius:10px;background:#FFF;
   transition:border-color .2s}
-.zoom-view img{width:100%;height:52px;display:block;object-fit:contain}
+.zoom-view img{width:100%;height:44px;display:block;object-fit:contain}
 .zoom-view:hover{border-color:#B9BEC9}
 .zoom-view[aria-pressed="true"]{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
 
@@ -723,10 +752,17 @@ body.zoom-on .zone-c .ztitle{opacity:0}
     </button>
     <h2 id="zoomTitle"></h2>
     <p id="zoomIntro"></p>
+    <button class="zoom-compare" id="zoomCompare" type="button">加入比較</button>
     <div class="zoom-stage" id="zoomStage" role="button" tabindex="0" aria-label="點一下放大">
       <img id="zoomImage" alt="">
     </div>
     <div class="zoom-views" id="zoomViews" aria-label="其他視角"></div>
+    <div class="zoom-info">
+      <div><h4>重點特色</h4><ul class="zoom-hl" id="zoomHl"></ul></div>
+      <div><h4>尺寸</h4><div class="zoom-sizes" id="zoomSizes"></div><p class="zoom-fit" id="zoomFit"></p></div>
+      <div class="zoom-series"><h4>同車系</h4><div class="zoom-series-row" id="zoomSeries"></div></div>
+      <div class="zoom-actions"><small id="zoomSrc"></small></div>
+    </div>
   </section>
 </div>
 
@@ -760,6 +796,7 @@ body.zoom-on .zone-c .ztitle{opacity:0}
   </ol>
   </div>
   <div data-mode="showroom">
+  <p class="tips-note">這是示範版本，不包含所有使用情境；打字未必每一句都有回應。照下面的流程體驗最完整。</p>
   <h4>隨意逛</h4>
   <ol>
     <li><p>沒有選單列，像走進門市。用左右箭頭、或直接點兩側的車，就能換到下一區。</p><button class="try" type="button" data-try="next">Try it</button></li>
@@ -4178,8 +4215,9 @@ function respondToUser(rawText){
   if (!text) return;
   hideSizePills();
   if (sizingMode){
-    handleSizeInput(text);
-    return;
+    if (parseHeight(text)){ handleSizeInput(text); return; }
+    sizingMode = false; hideSizePills();      /* 使用者改說別的：以最新的為主，不卡在問身高 */
+    clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   }
   /* 比較清單的增減：有車名就直接做；沒車名就問哪一台、或回到展台讓使用者挑 */
   const named = bikesNamed(text);
@@ -4646,6 +4684,30 @@ addEventListener('resize', () => {
   if (bike) placeBikeZoom(bike); else hideBikeZoom();
 });
 
+/* 車輛細節：來自 giant-bicycles.com/tw 與 momentum-biking.com/tw 各車款頁（2026-09-08 抓取）。
+   sizes 為 null 代表官網未列；fit 是官網標的適用身高／年齡；series 是官網同車系其他型號與官網售價。 */
+const BIKE_INFO = {
+  'Escape':          {sizes:['XS','S','M'], hl:['鋁合金車架、碳鋼前叉','Shimano 3×7 共 21 速','700×38c 舒適寬胎'], series:[['Escape Disc 2',16800],['Escape Disc 3',13800],['Escape Disc 4',10800]]},
+  'Escape Disc 2':   {sizes:['XS','S','M','L','XL'], hl:['平把運動自行車，通勤與日常都合適','碟煞系統','Shimano CUES 9 速'], series:[['Escape Disc 3',13800],['Escape Disc 4',10800],['Escape',8800]]},
+  'Faster E+':       {sizes:['XS','S','M'], hl:['Panasonic 250Wh 電池藏在車架內','SyncDrive Move 後置電機，30Nm','ECO 模式續航約 75 km'], series:[]},
+  'R2200':           {sizes:['S','M'], hl:['鋁合金車架、碳鋼前叉','Shimano 2×7 速','700×25c 輪胎，市區代步'], series:[]},
+  'Miya E+':         {sizes:null, fit:'單一尺寸', hl:['通過國家親子車 7 項測試','續航最高 65 km','低跨點車架、大置物籃、後貨架'], series:[]},
+  'Expressway E+':   {sizes:null, fit:'單一尺寸', hl:['可折疊，收納約 90×77 cm','車重約 18 kg','前後油壓碟煞'], series:[]},
+  'EA-102':          {sizes:null, fit:'單一尺寸', hl:['低跨點，上下車容易','350W 後置電機、GICS 踏頻助力','續航約 30–35 km'], series:[['EA-402',36800]]},
+  'EA-402':          {sizes:null, fit:'單一尺寸', hl:['通過親子車檢測','GICS 踏頻助力、250W 後置電機','車重約 24 kg，續航 30–35 km'], series:[['EA-102',29800]]},
+  'Revolt Advanced SL 0':{sizes:['XS','S','M','ML'], hl:['Advanced SL 碳纖車架，D-Fuse 減震座管','SRAM RED XPLR AXS 1×13，含功率計','CADEX Max GXR 50mm 碳纖輪組'], series:[['Revolt Advanced SL 1',208000]]},
+  'FastRoad AR Advanced 1-Asia':{sizes:['XS','S','M','ML','L','XL'], hl:['全碳纖車架組','平把幾何，全路況','Shimano CUES 11 速'], series:[['FastRoad AR Advanced 2',38000]]},
+  'Roam Disc 2':     {sizes:['S','M','L'], hl:['平把搭配穩定幾何','D-Fuse 減震座管＋63mm 前避震','車架預留後貨架孔位'], series:[]},
+  'Explore E+':      {sizes:['XS','S','M','L'], hl:['SyncDrive Core 電機，50Nm','500Wh 電池','標配擋泥板、後貨架、前後燈'], series:[]},
+  'Anthem Advanced SL 0':{sizes:['S','M'], hl:['FlexPoint Pro 120mm 後避震','車架比前代輕 89 g','SRAM XX SL 1×12，含功率計'], series:[['Anthem Advanced SL 1',198000],['Anthem Advanced SL 2',158000],['Anthem Advanced SL 3',128000]]},
+  'Trance X Advanced Pro 29 1':{sizes:['S','M','L','XL'], hl:['Maestro 135mm 後避震','Fox 36 Factory 150mm 前叉','Flip Chip 可調幾何'], series:[]},
+  'XTC Advanced 29 3':{sizes:['S','M','L'], hl:['Advanced 碳纖硬尾車架','Shimano Deore 1×12','29 吋無內胎輪組'], series:[]},
+  'Talon E+':        {sizes:['S','M','L'], hl:['ALUXX 鋁合金車架','SyncDrive Sport 2 電機 75Nm，430Wh 可拆電池','E-Lock 電子鎖，App 可上鎖'], series:[]},
+  'Faith':           {sizes:null, fit:'單一尺寸，身高 145–165 cm', hl:['青少年調校的 135mm 後避震','ALUXX SL 車架、青少年幾何','前 27.5 吋／後 26 吋混合輪徑，附升降座管'], series:[['Faith 24',58000]]},
+  'Seek':            {sizes:null, fit:'官網未列', hl:['依青少年身形縮小車架管徑','650b 輪組，更輕更有效率','煞車把手距離縮短 30%'], series:[['Seek 1',78800],['Seek 2',42800]]},
+  'STP 20 FS':       {sizes:null, fit:'單一尺寸，身高 110–130 cm', hl:['低跨高，降低重心','青少年專屬組件','ALUXX 鋁合金車架、油壓碟煞'], series:[['STP 24',22800],['STP 26',39800]]},
+  'Pre rCarbon':     {sizes:null, fit:'單一尺寸，身高 90–110 cm（1.5–5 歲）', hl:['回收碳纖車架，僅 2.5 kg','出廠已完成 90% 預組裝','50% 回收材料，碳排減少過半'], series:[['Pre',null]]}
+};
 const zoomModal = document.getElementById('zoomModal');
 const zoomStage = document.getElementById('zoomStage');
 const zoomImage = document.getElementById('zoomImage');
@@ -4673,9 +4735,10 @@ function setZoomView(n){
 function openZoom(name){
   zoomList = viewsOf(name);
   zoomImage.alt = name;
-  document.getElementById('zoomTitle').textContent = name + '｜車輛圖片';
+  document.getElementById('zoomTitle').textContent = name;
   document.getElementById('zoomIntro').textContent =
     (BIKE_PRICE[name] || '') + '　點圖片可以放大細看。45 度為同分類示意圖。';
+  renderZoomInfo(name);
   zoomViews.innerHTML = zoomList.map((view, n) =>
     '<button class="zoom-view" type="button" data-view="' + n + '" aria-label="' + view.label +
     '" aria-pressed="' + (n === 0) + '"><img src="' + view.url + '" alt=""></button>').join('');
@@ -4690,6 +4753,45 @@ function closeZoom(){
   zoomStage.classList.remove('in');
   if (zoomBikeName) bikeZoom.focus();
 }
+function renderZoomInfo(name){
+  const info = BIKE_INFO[name] || {sizes:null, hl:[], series:[]};
+  document.getElementById('zoomHl').innerHTML = info.hl.length
+    ? info.hl.map(t => '<li>' + t + '</li>').join('') : '<li>官網未列</li>';
+  document.getElementById('zoomSizes').innerHTML = info.sizes
+    ? info.sizes.map(z => '<span>' + z + '</span>').join('') : '<em>' + (info.fit || '官網未列') + '</em>';
+  document.getElementById('zoomFit').textContent = info.sizes && info.fit ? info.fit : '';
+  const here = itemsOf(at(i), 3).map(b => b.name);
+  document.getElementById('zoomSeries').innerHTML = info.series.length
+    ? info.series.map(([n, price]) => {
+        const inStore = !!BIKE_DETAILS[n];
+        return '<button class="zoom-card' + (n === name ? ' here' : '') + '" type="button" data-bike="' + n + '"' + (inStore ? '' : ' disabled') + '>' +
+          '<b>' + n + '</b><small>' + (price ? 'NT$' + price.toLocaleString('en-US') : '官網未列價格') + '</small>' +
+          '<i>' + (inStore ? '看這台' : '官網車款，展廳未展示') + '</i></button>';
+      }).join('')
+    : '<span class="zoom-card" style="cursor:default"><b>' + name + '</b><i>官網此車系目前只有這一款</i></span>';
+  document.getElementById('zoomSrc').textContent = '資料來源：官網車款頁';
+  updateZoomCompare(name);
+}
+function updateZoomCompare(name){
+  const on = picks.some(p => p.name === name);
+  const button = document.getElementById('zoomCompare');
+  button.textContent = on ? '已在比較清單' : '加入比較';
+  button.classList.toggle('on', on);
+  button.setAttribute('aria-pressed', String(on));
+}
+document.getElementById('zoomSeries').onclick = event => {
+  const card = event.target.closest('button[data-bike]');
+  if (!card || card.disabled || card.dataset.bike === zoomImage.alt) return;
+  openZoom(card.dataset.bike);
+};
+document.getElementById('zoomCompare').onclick = () => {
+  const name = zoomImage.alt;
+  const line = picks.some(p => p.name === name) ? removePick(name) : addPick(name);
+  renderPicks(); updateZoomCompare(name);
+  if (picks.length && !picking){ picking = true; document.body.classList.add('picking', 'has-tray'); pickTray.hidden = false; renderPicks(); }
+  if (!picks.length && picking) stopPicking(true);
+  say(line + (picks.length >= 2 ? '\n清單裡有 ' + picks.length + ' 台了，關掉這頁按「開始比較」就能並排看。' : picks.length ? '\n再選一台就可以開始比。' : ''), 4200);
+};
 bikeZoom.onclick = () => { if (zoomBikeName) openZoom(zoomBikeName); };
 zoomViews.onclick = event => {
   const button = event.target.closest('button[data-view]');
@@ -4860,6 +4962,7 @@ tips.onclick = event => {
   if (!button) return;
   const act = button.dataset.try;
   closeTips();                                   /* 先收起來，讓畫面清楚看到效果 */
+  sizingMode = false; hideSizePills();           /* 以最新點的為主，中斷問身高之類的流程 */
   setTimeout(() => {
     if (act === 'enter') enterShowroom();
     else if (act === 'exit') exitShowroom();
