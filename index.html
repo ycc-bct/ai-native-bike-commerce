@@ -217,6 +217,9 @@ body.entering .tips-pill{animation:enterFade calc(.5s * var(--es)) ease both;ani
 body.mode-showroom #home{visibility:hidden}
 .tips [data-mode]{display:none}
 body.mode-home .tips [data-mode="home"],body.mode-showroom .tips [data-mode="showroom"]{display:block}
+/* ── 預算：超過的車壓淡，不拿掉；影片模式下車圖本來就藏著，只壓標籤 ── */
+body.budget .zone-c .bike.over>img{opacity:.38;filter:saturate(.55)}
+body.budget .zone-c .bike.over .bike-info{opacity:.45}
 /* ── Tips：右下角一顆膠囊，點開列出可以體驗的功能，每條有 Try it 直接做 ─── */
 .tips-pill{position:fixed;left:24px;bottom:24px;z-index:63;min-height:40px;padding:9px 16px;border-radius:999px;
   border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
@@ -3777,6 +3780,7 @@ function paint(dir){
         });
         renderPicks();
         if (stageMode) layoutStageSpots();
+        markBudget();
       } else {
         /* 左右兩側的車點下去＝切到那個分類，和箭頭同一件事 */
         const side = box.querySelector('.bike');
@@ -4221,6 +4225,8 @@ function respondToUser(rawText){
     clerkInput.placeholder = '想找什麼樣的車？說說用途或預算';
   }
   /* 比較清單的增減：有車名就直接做；沒車名就問哪一台、或回到展台讓使用者挑 */
+  const budgetAsk = parseBudget(text);
+  if (budgetAsk){ applyBudget(budgetAsk); return; }
   const named = bikesNamed(text);
   const comparing = picking || !compareModal.hidden || picks.length > 0;
   const wantsRemove = /移除|移出|拿掉|刪除|刪掉|去掉|移掉|不要|換掉/.test(text);
@@ -4518,6 +4524,78 @@ function removePick(name){
   return name + ' 已移出比較。';
 }
 /* 清單變了之後：表開著就重畫表，否則更新托盤 */
+/* ── 預算：這次造訪記著，不寫 storage ────────────────────────── */
+let budget = null;                                  /* {min, max, label} */
+const CN_NUM = {零:0,一:1,二:2,兩:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,十:10};
+function cnNumber(str){                             /* 「五萬五」→ 55000、「十萬」→ 100000、「一萬五千」→ 15000 */
+  const m = str.match(/^([零一二兩三四五六七八九十]+)萬([零一二兩三四五六七八九十]*)(千)?$/);
+  if (!m) return null;
+  const digits = t => { let n = 0; for (const ch of t){ if (ch === '十') n = n ? n * 10 : 10; else n = n * 10 + CN_NUM[ch]; } return n; };
+  let v = digits(m[1]) * 10000;
+  if (m[2]) v += digits(m[2]) * 1000;
+  return v;
+}
+function parseBudget(text){
+  const t = text.replace(/\s+/g, '').replace(/,/g, '');
+  if (/預算不限|不設限|沒有預算|都可以|不用管預算|預算沒差/.test(t)) return {clear:true};
+  let amount = null;
+  const cn = t.match(/[零一二兩三四五六七八九十]+萬[零一二兩三四五六七八九十]*千?/);
+  const ar = t.match(/(\d+(?:\.\d+)?)(萬|[wW])/) || t.match(/(\d+(?:\.\d+)?)([kK]|千)/) || t.match(/(\d{4,6})(?:元|塊|$|[^\d])/);
+  if (cn) amount = cnNumber(cn[0]);
+  else if (ar){ const n = Number(ar[1]); amount = /萬|w/i.test(ar[2]) ? n * 10000 : /k|千/i.test(ar[2]) ? n * 1000 : n; }
+  const cue = /預算|以內|以下|之內|不要超過|超過|不要|左右|上下|大概|差不多|太貴|便宜|萬|元|塊/.test(t) || /^\d{4,6}$/.test(t);
+  if (!cue) return null;
+  const wan = v => (v / 10000 % 1 ? (v / 10000).toFixed(1) : v / 10000) + ' 萬';
+  if (amount){
+    if (/左右|上下|大概|差不多/.test(t)){ const lim = wan(amount * .8) + '到 ' + wan(amount * 1.2); return {min:Math.round(amount * .8), max:Math.round(amount * 1.2), label:lim, out:'不在 ' + lim + '之間'}; }
+    return {min:0, max:amount, label:wan(amount) + '內', out:'超過 ' + wan(amount)};
+  }
+  if (/太貴|便宜一點|便宜點|再便宜/.test(t)) return {cheaper:true};
+  return null;
+}
+const overBudget = name => budget && budget.max && (BIKE_DETAILS[name][0] > budget.max || BIKE_DETAILS[name][0] < budget.min);
+function markBudget(){
+  document.body.classList.toggle('budget', !!budget);
+  zones.c.querySelectorAll('.bike[data-pick]').forEach(b => b.classList.toggle('over', !!budget && overBudget(b.dataset.pick)));
+}
+function fitsInCategory(cat){ return itemsOf(cat, 3).filter(b => !overBudget(b.name)).map(b => b.name); }
+function applyBudget(b){
+  if (b.clear){
+    budget = null; markBudget();
+    say('好，預算不設限，都可以看。'); return;
+  }
+  const comparing = picking || !compareModal.hidden || picks.length > 0;
+  if (b.cheaper){
+    if (comparing && picks.length){
+      const top = picks.slice().sort((x, y) => BIKE_DETAILS[y.name][0] - BIKE_DETAILS[x.name][0])[0];
+      afterPickChange(top.name + ' 是裡面最貴的，先拿掉。'); return;   /* 先說，再移 */
+    }
+    const items = itemsOf(at(i), 3).slice().sort((x, y) => BIKE_DETAILS[x.name][0] - BIKE_DETAILS[y.name][0]);
+    say('這區最好入手的是 ' + items[0].name + '，' + BIKE_PRICE[items[0].name] + '。想壓多少預算，跟我說個數字。'); return;
+  }
+  budget = b; markBudget();
+  if (comparing && picks.length){
+    const drop = picks.filter(p => overBudget(p.name)).map(p => p.name);
+    if (!drop.length){ say('這 ' + picks.length + ' 台都在' + b.label + '。'); return; }
+    drop.forEach(removePick);
+    if (!picks.length){
+      compareModal.hidden = true; stopPicking(true);
+      const fits = fitsInCategory(at(i));
+      say(drop.join('、') + ' 都' + b.out + '，先拿掉。\n' + (fits.length ? '這區' + b.label + '的有 ' + fits.join('、') + '。' : '這區沒有' + b.label + '的，換一區看看。'), 5000);
+      return;
+    }
+    renderPicks();
+    if (!compareModal.hidden) openCompare(picks.slice(), '車款比較', drop.join('、') + ' ' + b.out + '，先拿掉。\n剩 ' + picks.map(p => p.name).join(' 和 ') + '。');
+    else say(drop.join('、') + ' ' + b.out + '，先拿掉。\n剩 ' + picks.map(p => p.name).join(' 和 ') + '。');
+    return;
+  }
+  const fits = fitsInCategory(at(i));
+  if (fits.length) say(b.label + '的話，這區是 ' + fits.join(' 和 ') + '。\n超過的我先壓淡，還是留在台上。', 5000);
+  else {
+    const other = CATS.find(c => c.k !== at(i).k && fitsInCategory(c).length);
+    say('這區沒有' + b.label + '的。' + (other ? '\n' + other.label + '那區有，往那邊看看。' : ''), 5000);
+  }
+}
 function afterPickChange(line){
   renderPicks();
   if (!compareModal.hidden){
