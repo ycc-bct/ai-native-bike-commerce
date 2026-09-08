@@ -4709,6 +4709,29 @@ const BIKE_INFO = {
   'STP 20 FS':       {sizes:null, fit:'單一尺寸，身高 110–130 cm', hl:[['低跨高設計','有效降低重心。'],['青少年專屬組件','105mm 曲柄、MicroSHIFT 1×8。'],['ALUXX 鋁合金車架','63mm 前避震、油壓碟煞、20 吋無內胎輪組。']]},
   'Pre rCarbon':     {sizes:null, fit:'單一尺寸，身高 90–110 cm', hl:[['rCarbon 回收碳纖車架','超輕且耐用，整車 2.5 kg。'],['開箱即上手','出廠已完成 90% 預組裝。'],['減碳過半','以回收長纖碳纖製成，碳排減少 50% 以上。']]}
 };
+/* 點放大鏡時店員講的兩句：像門市人員在旁邊分享，數字只用官網有的 */
+const ZOOM_TALK = {
+  'Escape':'Escape 是店裡最多人拿來當第一台的，通勤、週末河濱都合適。平把、坐姿直，市區走走停停很輕鬆，身高 155 到 175 大多落在 S 或 M。',
+  'Escape Disc 2':'Escape Disc 2 是 Escape 的碟煞版，雨天煞車比較安心，很多人就是為了這點升上來。尺寸從 XS 到 XL 都有，高個子也找得到。',
+  'Faster E+':'Faster E+ 外型像一般平把車，電池藏在車架裡，不想被看出來是電輔的人很喜歡。ECO 模式一次能跑約 75 公里，日常通勤一週充一次就夠。',
+  'R2200':'R2200 是入門代步車，鋁合金車架、Shimano 2×7 速，預算有限先上路很剛好。25c 的胎在市區平路輕快，郊區碎石就不太建議。',
+  'Miya E+':'Miya E+ 是接送小孩問最多的一台，低跨點，停紅燈一腳就能踩到地。一次充電最遠 65 公里，車重 25 公斤含電池，兒童座椅通過 7 項親子車測試。',
+  'Expressway E+':'Expressway E+ 是電輔小折，收起來約 90×77 公分，搭捷運或放後車廂都方便。含電池約 18 公斤，前後油壓碟煞，續航約 50 公里。',
+  'EA-102':'EA-102 是最好入手的電輔車，低跨點、車身輕巧，長輩騎也不吃力。670Wh 電池續航 30 到 35 公里，一般插座 3 到 6 小時充飽。',
+  'EA-402':'EA-402 和 EA-102 差在多了 8 速變速和鋁合金車架，路況有起伏會順很多。一樣通過親子車檢測，含電池約 24 公斤。',
+  'Revolt Advanced SL 0':'這台是 Revolt 的頂規，來看的多半已經在跑 gravel 賽事，或想一台車兼顧長途和碎石。原廠配 45c 的胎，車架最寬吃到 53mm，尺寸 XS 到 ML。',
+  'FastRoad AR Advanced 1-Asia':'FastRoad AR Advanced 是平把的全碳纖車，想要碳纖的輕，又不習慣彎把的人最常選它。尺寸 XS 到 XL 六個都有，Shimano CUES 11 速。',
+  'Roam Disc 2':'Roam Disc 2 是日常騎乘之外偶爾想走碎石路的選擇，63mm 前避震加 D-Fuse 座管，路面震動吃掉不少。車架有預留孔位，裝後貨架很方便。',
+  'Explore E+':'Explore E+ 出廠就配好擋泥板、後貨架和前後燈，買回去直接就能通勤。SyncDrive Core 電機 50Nm、500Wh 電池，尺寸 XS 到 L。',
+  'Anthem Advanced SL 0':'Anthem Advanced SL 0 是 XC 競賽取向的全避震，車架比前代輕 89 公克，剛性重量比提高 7.95%。配 SRAM XX SL 傳動加功率計，尺寸有 S 和 M。',
+  'Trance X Advanced Pro 29 1':'Trance X 是認真跑林道的全避震，後避震 135mm、前叉 150mm，下坡有餘裕。Flip Chip 能調頭管角和五通高度，尺寸 S 到 XL。',
+  'XTC Advanced 29 3':'XTC Advanced 29 3 是碳纖硬尾裡最好入手的一台，Shimano Deore 1×12，爬坡和 XC 賽道都直接。29 吋無內胎輪組，尺寸 S、M、L。',
+  'Talon E+':'Talon E+ 是電輔登山車，SyncDrive Sport 2 電機 75Nm，430Wh 電池可拆下來回家充。整車約 22 公斤，E-Lock 用 App 就能上鎖。',
+  'Faith':'Faith 是給青少年的全避震，避震特別為較輕的騎士調校過，適合身高 145 到 165 公分。前 27.5、後 26 吋的混合輪徑，還附升降座管。',
+  'Seek':'Seek 是為青少年縮小的公路車，車架管徑縮小、煞車把手距離也縮短了三成，小手也握得到。尺寸要看身高，來店對一下最準。',
+  'STP 20 FS':'STP 20 FS 是 20 吋的青少年越野車，適合身高 110 到 130 公分。低跨高、油壓碟煞、63mm 前避震，公園土坡玩起來很穩。',
+  'Pre rCarbon':'Pre rCarbon 是 1.5 到 5 歲的滑步車，回收碳纖車架，整車只有 2.5 公斤，小朋友自己抬得起來。出廠已完成九成組裝，開箱就能玩。'
+};
 const zoomModal = document.getElementById('zoomModal');
 const zoomStage = document.getElementById('zoomStage');
 const zoomImage = document.getElementById('zoomImage');
@@ -4746,7 +4769,7 @@ function openZoom(name){
   compareModal.hidden = true; sizeModal.hidden = true;
   if (picking) stopPicking(false);
   zoomModal.hidden = false;
-  say(name + ' 的照片放大在上面了。\n想換個角度看，點下面那排；覺得可以就跟我說。', 4200);
+  say(ZOOM_TALK[name] || (name + '，' + (BIKE_DETAILS[name]?.[1] || '想知道什麼直接問我。')), 6000);
 }
 function closeZoom(){
   zoomModal.hidden = true;
