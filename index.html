@@ -3001,8 +3001,12 @@ function renderRoute(){
   mapOthers.forEach((b, i) => {
     const ring = Math.floor(i / 8), start = ring * 8;
     const count = Math.min(8, mapOthers.length - start), slot = i - start;
-    const a = -Math.PI/2 + (slot / count) * Math.PI * 2 + (ring % 2 ? Math.PI/8 : 0);
-    const rx = ring ? 400 : 260, ry = ring ? 150 : 135;
+    /* 第一圈只用上半弧（-200° 到 20°），不把節點放到中央正下方：
+       中央節點下面有兩行字，正下方的節點會和它黏在一起。 */
+    const a = ring
+      ? -Math.PI/2 + (slot / count) * Math.PI * 2 + Math.PI/8
+      : (-200 + (slot + .5) / count * 220) * Math.PI / 180;
+    const rx = ring ? 400 : 260, ry = ring ? 150 : 160;
     pos[keyOf(b)] = [CX + Math.cos(a) * rx, CY + Math.sin(a) * ry];
   });
   /* 節點一次建立、之後只改 transform，讓重排會滑動 */
