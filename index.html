@@ -2873,7 +2873,7 @@ function openRouteBikePicker(){
   const available = BIKES.filter(b => !b.frameset && !current.has(keyOf(b)));
   $('modalBody').innerHTML =
     '<h3>新增網站其他車款</h3>' +
-    '<p class="sub">搜尋目前網站中的自行車。加入後會設為「我的選擇」，並與最接近的兩台車一起顯示。</p>' +
+    '<p class="sub">搜尋目前網站中的自行車。加入後會設為「我的選擇」，並與最接近的兩台車一起顯示。圖上最多放 6 台，滿了會先拿掉最早加入的。</p>' +
     '<div class="bike-picker-search"><label for="routeBikeSearch">搜尋車名、年式、用途或價格</label>' +
       '<input id="routeBikeSearch" type="search" autocomplete="off" placeholder="例如：Talon、電動、2025、8 萬">' +
       '<p class="bike-picker-count" id="routeBikeCount" aria-live="polite"></p></div>' +
@@ -2897,6 +2897,7 @@ function openRouteBikePicker(){
       btn.onclick = () => {
         const k = btn.dataset.addBike;
         if (!ROUTE_ADDED_KEYS.includes(k)) ROUTE_ADDED_KEYS.push(k);
+        while (ROUTE_ADDED_KEYS.length > 4) ROUTE_ADDED_KEYS.shift();   /* 圖上最多 6 台：推薦 2 台＋手動 4 台 */
         ROUTE_PICKED_KEY = k;
         $('modal').classList.remove('on');
         renderRoute();
@@ -2996,6 +2997,8 @@ function renderRoute(){
     if (top && keyOf(b) === keyOf(top)) return;
     if (!mapOthers.some(x => keyOf(x) === keyOf(b))) mapOthers.push(b);
   });
+  /* 圖上最多 6 台：超過時先拿掉最早手動加入的那台（它排在推薦的兩台之後） */
+  while (mapOthers.length > 6) mapOthers.splice(others.length, 1);
   const pos = {};
   if (top) pos[keyOf(top)] = [CX, CY];
   mapOthers.forEach((b, i) => {
