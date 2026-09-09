@@ -4941,7 +4941,6 @@ function renderCheckout(){
       '<div class="checkout-group"><h3>付款方式</h3>' + optionGroup('pay', PAYMENT, payMode) + '</div>';
   } else {
     checkoutBody.innerHTML =
-      note('這是提案原型，沒有實際送出訂單。接上官網結帳後，這一步會把清單交給現行的取貨與付款流程。') +
       '<div class="checkout-done"><i>✓</i>訂單內容已備妥</div>' + lines(false) +
       '<dl class="checkout-sum"><dt>取貨方式</dt><dd>' + PICKUP[pickupMode] + '</dd>' +
       '<dt>付款方式</dt><dd>' + PAYMENT[payMode] + '</dd></dl>';
