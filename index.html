@@ -1425,9 +1425,9 @@ body.route-film .route-cta .b2{background:transparent;color:#fff;border-color:#6
 @media(prefers-reduced-motion:reduce){.guide-msg,.guide-bike,.voice-bars i{animation:none!important;transition:none!important}}
 /* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
 .amb-frame{--amb-glow:.18;position:fixed;inset:0;pointer-events:none;z-index:205;opacity:0;transition:opacity .8s var(--ease)}
-.amb-frame::before{content:"";position:absolute;inset:-1px;background:linear-gradient(135deg,#03E9EB 0%,#0965AF 50%,#1E2085 100%);opacity:var(--amb-glow);filter:blur(7px) saturate(1.08);-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);-webkit-mask-size:100% 50%,100% 50%,50% 100%,50% 100%;-webkit-mask-position:top,bottom,left,right;-webkit-mask-repeat:no-repeat;mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);mask-size:100% 50%,100% 50%,50% 100%,50% 100%;mask-position:top,bottom,left,right;mask-repeat:no-repeat}
-body.amb-near .amb-frame{--amb-glow:.46;opacity:1;animation:ambBreath 2.2s var(--ease) 1}
-body.amb-on .amb-frame{--amb-glow:.16;opacity:1}
+.amb-frame::before{content:"";position:absolute;inset:0;border:3px solid #06038D;box-shadow:inset 0 0 26px rgba(6,3,141,.5),inset 0 0 64px rgba(6,3,141,.16);opacity:var(--amb-glow)}   /* 深藍細框＋短距離向內暈影，不再大片擴散 */
+body.amb-near .amb-frame{--amb-glow:.92;opacity:1;animation:ambBreath 2.2s var(--ease) 1}
+body.amb-on .amb-frame{--amb-glow:.38;opacity:1}
 body.route-open .amb-frame{opacity:0!important}
 
 /* ---------- 選車現場：直接內嵌於本頁 ---------- */
