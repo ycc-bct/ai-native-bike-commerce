@@ -579,9 +579,9 @@ body.route-film .route-cta .b2{background:transparent;color:#fff;border-color:#6
 @media(prefers-reduced-motion:reduce){.guide-msg,.guide-bike,.voice-bars i{animation:none!important;transition:none!important}}
 /* ---------- 店員模式：走近的外框與邊緣提示、你看過的、FLIP ---------- */
 .amb-frame{--amb-glow:.18;position:fixed;inset:0;pointer-events:none;z-index:205;opacity:0;transition:opacity .8s var(--ease)}
-.amb-frame::before{content:"";position:absolute;inset:-1px;background:linear-gradient(135deg,#03E9EB 0%,#0965AF 50%,#1E2085 100%);opacity:var(--amb-glow);filter:blur(7px) saturate(1.08);-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);-webkit-mask-size:100% 50%,100% 50%,50% 100%,50% 100%;-webkit-mask-position:top,bottom,left,right;-webkit-mask-repeat:no-repeat;mask-image:linear-gradient(to bottom,#000 0%,transparent 24%),linear-gradient(to top,#000 0%,transparent 24%),linear-gradient(to right,#000 0%,transparent 18%),linear-gradient(to left,#000 0%,transparent 18%);mask-size:100% 50%,100% 50%,50% 100%,50% 100%;mask-position:top,bottom,left,right;mask-repeat:no-repeat}
-body.amb-near .amb-frame{--amb-glow:.46;opacity:1;animation:ambBreath 2.2s var(--ease) 1}
-body.amb-on .amb-frame{--amb-glow:.16;opacity:1}
+.amb-frame::before{content:"";position:absolute;inset:0;border:3px solid #06038D;box-shadow:inset 0 0 26px rgba(6,3,141,.5),inset 0 0 64px rgba(6,3,141,.16);opacity:var(--amb-glow)}
+body.amb-near .amb-frame{--amb-glow:.92;opacity:1;animation:ambBreath 2.2s var(--ease) 1}
+body.amb-on .amb-frame{--amb-glow:.38;opacity:1}
 body.route-open .amb-frame{opacity:0!important}
 
 /* ---------- 選車現場：直接內嵌於本頁 ---------- */
@@ -734,10 +734,14 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-peek .answer-box{border-left-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78)}
 .imm-peek .answer-box b{color:#fff}
 /* 比較控制跟著右側對話區，不再遮住左側車款與操作按鈕 */
-.imm-tips-pill{position:absolute;left:26px;bottom:26px;z-index:40;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.34);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.06em;padding:9px 18px;border-radius:999px;backdrop-filter:blur(8px);cursor:pointer}
-.imm-tips-pill:hover{background:rgba(255,255,255,.18)}
-.imm.tips-open .imm-tips-pill{opacity:0;pointer-events:none}
-.imm-tips{position:absolute;left:26px;bottom:26px;z-index:41;width:min(392px,calc(100vw - 52px));max-height:min(74vh,720px);overflow:auto;background:rgba(10,12,20,.92);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:18px 20px 20px;color:#fff;backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.imm-tips-pill{position:fixed;left:24px;bottom:24px;z-index:620;min-height:40px;padding:9px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--ink,#333);font-size:13px;font-weight:700;letter-spacing:.06em;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.14)}
+.imm-tips-pill:hover{background:#fff;transform:translateY(-1px)}
+body.tips-open .imm-tips-pill{opacity:0;pointer-events:none}
+.imm-tips [data-tipmode]{display:none}
+.imm-tips [data-tipmode="home"]{display:block}
+body.imm-open .imm-tips [data-tipmode="home"]{display:none}
+body.imm-open .imm-tips [data-tipmode="stage"]{display:block}
+.imm-tips{position:fixed;left:24px;bottom:24px;z-index:621;width:min(392px,calc(100vw - 52px));max-height:min(74vh,720px);overflow:auto;background:rgba(10,12,20,.92);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:18px 20px 20px;color:#fff;backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
 .imm-tips[hidden]{display:none}
 .imm-tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .imm-tips-head b{font-family:var(--num,inherit);font-size:11.5px;letter-spacing:.2em;opacity:.72}
@@ -819,13 +823,7 @@ body.route-open .amb-frame{opacity:0!important}
 .fin-rel{position:relative;z-index:2;margin-top:20px;width:100%}.fin-rel .h{font-family:var(--num);font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:12px;text-align:center}.fin-row{display:flex;gap:12px;justify-content:center}.fin-card{width:152px;padding:6px 8px 10px;text-align:center;border-radius:12px}.fin-card img{width:100%;height:84px;object-fit:contain}.fin-card b{display:block;font-size:12.5px;margin-top:7px;color:#fff}.fin-card span{display:block;font-family:var(--num);font-size:11.5px;color:rgba(255,255,255,.5)}.fin-x{display:none}/* 結論的文案由下往上依序浮現：眉標→車名→價格→尺寸→按鈕→相關車款 */.finale .fin-cap>*,.finale .fin-rel{opacity:1;transform:none;transition:opacity .85s var(--ease),transform 1.15s var(--ease)}.finale .fin-cap>*:nth-child(1){transition-delay:.02s}.finale .fin-cap>*:nth-child(2){transition-delay:.10s}.finale .fin-cap>*:nth-child(3){transition-delay:.18s}.finale .fin-cap>*:nth-child(4){transition-delay:.26s}.finale .fin-cap>*:nth-child(5){transition-delay:.34s}.finale .fin-rel{transition-delay:.42s}.finale .fin-ring,.finale .fin-sweep,.finale .fin-x{transition:opacity .8s var(--ease) .18s}.finale.intro .fin-cap>*,.finale.intro .fin-rel{opacity:0;transform:translateY(26px)}.finale.intro .fin-ring,.finale.intro .fin-sweep,.finale.intro .fin-x{opacity:0}@media(prefers-reduced-motion:reduce){.fin-hero{transition:none}}
 @media(max-width:1280px){.imm-cats{gap:2px}.imm-ask{right:28px;bottom:56px}}
 @media(max-width:1000px){.imm-stage{width:100%;height:62%}.hero{width:82%}.strip-i,.strip-i img{width:112px}.imm-ask{left:24px;right:24px;bottom:24px;width:auto}.imm-cats{display:none}.fin-rel{display:none}}
-/* 暫時隱藏：拿掉這幾行即可恢復 */
-#route{display:none!important}
-#ambRoute{display:none}
-.amb-tab{display:none!important}
-.amb-frame{display:none!important}
-.ovw-b .guard{display:none}
-.pc .why{display:none}
+/* 店員模式與「你的路線」比照 01 展廳視角，全部啟用 */
 @keyframes ambBreath{0%{opacity:0}38%{opacity:1}100%{opacity:.72}}
 .amb-tab{position:fixed;left:50%;bottom:0;transform:translate(-50%,115%);z-index:160;background:#fff;border:1px solid var(--line);border-bottom:0;border-top:4px solid var(--brand);padding:14px 16px 14px 22px;display:flex;gap:14px;align-items:center;width:max-content;max-width:min(760px,94vw);box-shadow:0 -10px 34px rgba(0,0,0,.08);transition:transform .6s var(--ease),bottom .3s var(--ease)}
 body.amb-near .amb-tab,body.amb-on .amb-tab{transform:translate(-50%,0)}
@@ -1050,13 +1048,24 @@ body.amb-on .amb-tab .a{display:none}
 </div>
 
 <!-- 選車現場：與首頁包在同一份 HTML 內 -->
-<div class="imm" id="imm" role="dialog" aria-modal="true" aria-label="選車現場">
-  <div class="imm-amb" id="immAmb"></div>
-  <button class="imm-tips-pill" id="immTipsPill" type="button" aria-expanded="false" aria-controls="immTips">Tips</button>
-  <aside class="imm-tips" id="immTips" aria-label="Tips" hidden>
-    <div class="imm-tips-head"><b>TIPS</b><button class="imm-tips-close" id="immTipsClose" type="button" aria-label="關閉 Tips">✕</button></div>
-    <p class="imm-tips-note">這是示範版本，不包含所有使用情境；打字未必每一句都有回應。照下面的流程體驗最完整。</p>
-    <h4>隨意逛</h4>
+
+<button class="imm-tips-pill" id="immTipsPill" type="button" aria-expanded="false" aria-controls="immTips">Tips</button>
+<aside class="imm-tips" id="immTips" aria-label="Tips" hidden>
+  <div class="imm-tips-head"><b>TIPS</b><button class="imm-tips-close" id="immTipsClose" type="button" aria-label="關閉 Tips">✕</button></div>
+  <p class="imm-tips-note">這是示範版本，不包含所有使用情境；打字未必每一句都有回應。照下面的流程體驗最完整。</p>
+  <div data-tipmode="home">
+    <h4>選車現場</h4>
+    <ol>
+      <li><p>右上「開始搜尋」點開後有<b>「進入選車現場」</b>；「你想騎去哪裡？」下方也有一顆。</p><button class="imm-try" data-try="enter">Try it</button></li>
+    </ol>
+    <h4>店員走近</h4>
+    <ol>
+      <li><p>在分類頁逛一陣子、來回看兩三台車，視窗四周會亮起光暈，底部出現<b>「幫我整理／先自己逛」</b>。</p><button class="imm-try" data-try="near">Try it</button></li>
+      <li><p>整理過後，上方會出現<b>「你看過的」</b>，點右邊<b>「看整條路線 →」</b>可以調整方向。</p><button class="imm-try" data-try="route">Try it</button></li>
+    </ol>
+  </div>
+  <div data-tipmode="stage">
+<h4>隨意逛</h4>
     <ol>
       <li><p>上方分類列可以直接切換車種，背景與展台會跟著換。</p><button class="imm-try" data-try="cat:ebike">Try it</button></li>
       <li><p>展台的車點一下，門市人員會介紹那一台；左右箭頭換下一台。</p><button class="imm-try" data-try="bike">Try it</button></li>
@@ -1073,8 +1082,12 @@ body.amb-on .amb-tab .a{display:none}
       <li><p>右下<b>「我適合的尺寸」</b>：選身高範圍，直接給建議尺寸。</p><button class="imm-try" data-try="size">Try it</button></li>
       <li><p>右下<b>「比較車款」</b>：挑二到三台並排比規格。</p><button class="imm-try" data-try="compare">Try it</button></li>
     </ol>
-    <p class="imm-tips-note">右上「結束」可以回到首頁。</p>
-  </aside>
+      </div>
+  <p class="imm-tips-note">右上「結束」可以回到首頁。</p>
+</aside>
+
+<div class="imm" id="imm" role="dialog" aria-modal="true" aria-label="選車現場">
+  <div class="imm-amb" id="immAmb"></div>
   <div class="imm-scene" id="immScene"><img alt=""></div>
   <div class="imm-top">
     <div class="who">
@@ -1186,12 +1199,7 @@ body.amb-on .amb-tab .a{display:none}
   <button class="b" id="ambNo">先自己逛</button>
 </div>
 
-<button class="tw-btn" id="twBtn" type="button">TWEAKS</button>
-<aside class="tw" id="tw" aria-label="簡報設定">
-  <h4>TWEAKS</h4>
-  <div class="tw-row"><p>立刻走近<small>簡報用：直接開啟選車現場，示範店員走近的時機。</small></p><button class="tw-go" id="twNear" type="button">走近</button></div>
-  <button class="tw-close" id="twClose" type="button">關閉</button>
-</aside>
+
 
 <script>
 const $ = id => document.getElementById(id);
@@ -3125,23 +3133,35 @@ function immPick(st,v){
   if(IMM.busy)return;IMM.busy=true;if(st.key==='height'){closeImmHeightPicker(false);S.height=v;IMM.heightSet=true}else S[st.key]=v;S.touched=true;immSay(immEsc(st.echo(v)),'me');if(st.key==='terrain')immSetScene(v);setTimeout(()=>{immSay(st.reply(v),'them');if(st.key==='budget')immConverge(2,'超出預算');else immStage();if(st.key==='terrain')catsSync()},420);IMM.step++;setTimeout(()=>{IMM.busy=false;immAdvance()},1550);
 }
 function immAdvance(){while(IMM.step<IMM_STEPS.length&&immFilled(IMM_STEPS[IMM.step].key))IMM.step++;if(IMM.step>0&&S.terrain)immSetScene(S.terrain);if(IMM.step>=IMM_STEPS.length)return immConclude();immAsk()}
-/* Tips：左下角，簡報時照著點就能走完整條流程 */
+/* Tips：左下角，簡報時照著點就能走完整條流程。首頁／分類頁與選車現場各有一組。 */
 function immTipsOpen(v){
   $('immTips').hidden=!v;$('immTipsPill').setAttribute('aria-expanded',String(v));
-  $('imm').classList.toggle('tips-open',v);
+  document.body.classList.toggle('tips-open',v);
 }
 document.addEventListener('click',e=>{
-  const pill=e.target.closest('#immTipsPill'); if(pill){immTipsOpen(true);return}
-  const close=e.target.closest('#immTipsClose'); if(close){immTipsOpen(false);return}
+  if(e.target.closest('#immTipsPill')){immTipsOpen(true);return}
+  if(e.target.closest('#immTipsClose')){immTipsOpen(false);return}
   const t=e.target.closest('.imm-try'); if(!t)return;
   const d=t.dataset.try||'';
   immTipsOpen(false);
-  if(d.startsWith('say:')){setTimeout(()=>immHandle(d.slice(4)),260);return}
-  if(d.startsWith('cat:')){const k=d.slice(4);const btn=[...document.querySelectorAll('#immCats [data-cat]')].find(n=>n.dataset.cat===k);if(btn)btn.click();return}
-  if(d==='bike'){const s=document.querySelector('#immShot img, .imm-stage img');if(s)s.click();return}
-  if(d==='size'){const b=$('immSizeLaunch');if(b)b.click();return}
-  if(d==='compare'){const b=$('immCompareLaunch');if(b)b.click();return}
+  setTimeout(()=>{
+    if(d==='enter'){enterSelectionLive();return}
+    if(d==='near'){if(typeof jNear==='function')jNear(true);return}
+    if(d==='route'){if(typeof openRoute==='function')openRoute();return}
+    if(d.startsWith('say:')){immHandle(d.slice(4));return}
+    if(d.startsWith('cat:')){const k=d.slice(4);const btn=[...document.querySelectorAll('#immCats [data-cat]')].find(n=>n.dataset.cat===k);if(btn)btn.click();return}
+    if(d==='bike'){const s=document.querySelector('#immShot img, .imm-stage img');if(s)s.click();return}
+    if(d==='size'){const b=$('immSizeLaunch');if(b)b.click();return}
+    if(d==='compare'){const b=$('immCompareLaunch');if(b)b.click();return}
+  },260);
 });
+/* 進出選車現場時，Tips 內容跟著換 */
+(()=>{
+  const imm=$('imm');
+  new MutationObserver(()=>{
+    document.body.classList.toggle('imm-open',imm.classList.contains('on'));
+  }).observe(imm,{attributes:true,attributeFilter:['class']});
+})();
 function immHandle(txt){
   txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
   const st=IMM_STEPS[IMM.step],compoundChildPassenger=!!(st&&st.key==='terrain'&&isChildPassengerUse(txt));
@@ -3262,9 +3282,6 @@ const IMM_SPEECH=window.SpeechRecognition||window.webkitSpeechRecognition;let im
 function immStopVoice(){if(immRec&&immListening){try{immRec.stop()}catch(e){}}immListening=false;$('immMic').classList.remove('live')}
 $('immMic').onclick=()=>{if(!IMM_SPEECH||location.protocol==='file:'){$('immInput').placeholder='直接開啟檔案時無法用說的，先用打字⋯';$('immInput').focus();return}if(immListening){immStopVoice();return}immRec=new IMM_SPEECH();immRec.lang='zh-TW';immRec.onstart=()=>{immListening=true;$('immMic').classList.add('live')};immRec.onend=()=>{immListening=false;$('immMic').classList.remove('live')};immRec.onresult=e=>immHandle(e.results[0][0].transcript);immRec.start()};
 
-$('twBtn').onclick=()=>{$('tw').classList.add('open');$('twBtn').style.display='none'};
-$('twClose').onclick=()=>{$('tw').classList.remove('open');$('twBtn').style.display=''};
-$('twNear').onclick=()=>{$('tw').classList.remove('open');$('twBtn').style.display='';immOpen()};
 
 renderHome();
 renderPLP();
