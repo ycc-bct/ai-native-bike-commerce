@@ -2159,7 +2159,7 @@ function openRouteBikePicker(){
   const available = BIKES.filter(b => !b.frameset && !current.has(keyOf(b)));
   $('modalBody').innerHTML =
     '<h3>新增網站其他車款</h3>' +
-    '<p class="sub">搜尋目前網站中的自行車。加入後會設為「我的選擇」，並與最接近的兩台車一起顯示。</p>' +
+    '<p class="sub">搜尋目前網站中的自行車。加入後會設為「我的選擇」，並與最接近的兩台車一起顯示。圖上最多放 6 台，滿了會先拿掉最早加入的。</p>' +
     '<div class="bike-picker-search"><label for="routeBikeSearch">搜尋車名、年式、用途或價格</label>' +
       '<input id="routeBikeSearch" type="search" autocomplete="off" placeholder="例如：Talon、電動、2025、8 萬">' +
       '<p class="bike-picker-count" id="routeBikeCount" aria-live="polite"></p></div>' +
@@ -2282,13 +2282,27 @@ function renderRoute(){
     if (top && keyOf(b) === keyOf(top)) return;
     if (!mapOthers.some(x => keyOf(x) === keyOf(b))) mapOthers.push(b);
   });
+  /* 圖上最多 6 台：超過時先拿掉最早手動加入的那台（它排在推薦的兩台之後） */
+  while (mapOthers.length > 6) mapOthers.splice(others.length, 1);
   const pos = {};
   if (top) pos[keyOf(top)] = [CX, CY];
   mapOthers.forEach((b, i) => {
     const ring = Math.floor(i / 8), start = ring * 8;
     const count = Math.min(8, mapOthers.length - start), slot = i - start;
-    const a = -Math.PI/2 + (slot / count) * Math.PI * 2 + (ring % 2 ? Math.PI/8 : 0);
-    const rx = ring ? 400 : 260, ry = ring ? 150 : 135;
+    /* 第一圈只用上半弧（-200° 到 20°），不把節點放到中央正下方：
+       中央節點下面有兩行字，正下方的節點會和它黏在一起。 */
+    /* 正上方 ±20° 也空下來：中央節點上面有「我的選擇／目前最合適」那行字 */
+    let deg;
+    if (ring) deg = -90 + (slot / count) * 360 + 22.5;
+    else if (count >= 5){ const u = (slot + .5) / count * 200; deg = u < 100 ? -230 + u : -50 + (u - 100); }   /* 五台以上：左右兩側各 100° 的弧，正上方與正下方都空著 */
+    else { const u = (slot + .5) / count * 180; deg = u < 90 ? -200 + u : -70 + (u - 90); }
+    const a = deg * Math.PI / 180;
+    /* 四台以上時奇數位往外推一圈，相鄰兩台的名字與價格才不會疊到 */
+    const out = !ring && count >= 4 && slot % 2 === 1;
+    /* 六台以上：內圈壓扁一點、外圈推更遠，同一側三台的字才排得開 */
+    const base = ring ? [400, 150] : count >= 6 ? [250, 190] : [270, 165];
+    const push = count >= 6 ? [1.6, 1.3] : [1.4, 1.25];
+    const rx = base[0] * (out ? push[0] : 1), ry = base[1] * (out ? push[1] : 1);
     pos[keyOf(b)] = [CX + Math.cos(a) * rx, CY + Math.sin(a) * ry];
   });
   /* 節點一次建立、之後只改 transform，讓重排會滑動 */
