@@ -734,6 +734,23 @@ body.route-open .amb-frame{opacity:0!important}
 .imm-peek .answer-box{border-left-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78)}
 .imm-peek .answer-box b{color:#fff}
 /* 比較控制跟著右側對話區，不再遮住左側車款與操作按鈕 */
+.imm-tips-pill{position:absolute;left:26px;bottom:26px;z-index:40;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.34);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.06em;padding:9px 18px;border-radius:999px;backdrop-filter:blur(8px);cursor:pointer}
+.imm-tips-pill:hover{background:rgba(255,255,255,.18)}
+.imm.tips-open .imm-tips-pill{opacity:0;pointer-events:none}
+.imm-tips{position:absolute;left:26px;bottom:26px;z-index:41;width:min(392px,calc(100vw - 52px));max-height:min(74vh,720px);overflow:auto;background:rgba(10,12,20,.92);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:18px 20px 20px;color:#fff;backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.imm-tips[hidden]{display:none}
+.imm-tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.imm-tips-head b{font-family:var(--num,inherit);font-size:11.5px;letter-spacing:.2em;opacity:.72}
+.imm-tips-close{background:none;border:0;color:#fff;font-size:15px;cursor:pointer;opacity:.7;padding:2px 4px}
+.imm-tips-close:hover{opacity:1}
+.imm-tips h4{font-size:13px;font-weight:700;margin:14px 0 7px;color:#fff}
+.imm-tips ol{list-style:decimal;padding-left:17px;margin:0}
+.imm-tips li{margin-bottom:9px}
+.imm-tips li p{font-size:12.5px;line-height:1.75;color:rgba(255,255,255,.8);margin:0 0 5px}
+.imm-tips li b{color:#fff}
+.imm-tips-note{font-size:11.5px;line-height:1.7;color:rgba(255,255,255,.55);margin:0 0 4px}
+.imm-try{background:none;border:0;padding:0;color:#8EC5FF;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.imm-try:hover{color:#fff}
 .imm-tools{align-self:stretch;display:flex;align-items:center;justify-content:space-between;margin-top:2px}
 .imm-tool-link{width:auto;color:rgba(255,255,255,.72);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:4px;transition:color .2s,opacity .2s}
 .imm-tool-link:hover{color:#fff}
@@ -1035,6 +1052,29 @@ body.amb-on .amb-tab .a{display:none}
 <!-- 選車現場：與首頁包在同一份 HTML 內 -->
 <div class="imm" id="imm" role="dialog" aria-modal="true" aria-label="選車現場">
   <div class="imm-amb" id="immAmb"></div>
+  <button class="imm-tips-pill" id="immTipsPill" type="button" aria-expanded="false" aria-controls="immTips">Tips</button>
+  <aside class="imm-tips" id="immTips" aria-label="Tips" hidden>
+    <div class="imm-tips-head"><b>TIPS</b><button class="imm-tips-close" id="immTipsClose" type="button" aria-label="關閉 Tips">✕</button></div>
+    <p class="imm-tips-note">這是示範版本，不包含所有使用情境；打字未必每一句都有回應。照下面的流程體驗最完整。</p>
+    <h4>隨意逛</h4>
+    <ol>
+      <li><p>上方分類列可以直接切換車種，背景與展台會跟著換。</p><button class="imm-try" data-try="cat:ebike">Try it</button></li>
+      <li><p>展台的車點一下，門市人員會介紹那一台；左右箭頭換下一台。</p><button class="imm-try" data-try="bike">Try it</button></li>
+      <li><p>跟它說<b>「我想看登山車」</b>也能直接切換。</p><button class="imm-try" data-try="say:我想看登山車">Try it</button></li>
+    </ol>
+    <h4>問到適合的車</h4>
+    <ol>
+      <li><p>輸入<b>「電輔接小孩」</b>：留下三台適合接送的電輔車，逐台說明差異。</p><button class="imm-try" data-try="say:電輔接小孩">Try it</button></li>
+      <li><p>接著輸入<b>「就選這台」</b>：只留下當前這一台，展台重新聚焦在它身上。</p><button class="imm-try" data-try="say:就選這台">Try it</button></li>
+      <li><p>跟它說預算，例如<b>「五萬左右」</b>，超出的會先拿掉。</p><button class="imm-try" data-try="say:五萬左右">Try it</button></li>
+    </ol>
+    <h4>兩個工具</h4>
+    <ol>
+      <li><p>右下<b>「我適合的尺寸」</b>：選身高範圍，直接給建議尺寸。</p><button class="imm-try" data-try="size">Try it</button></li>
+      <li><p>右下<b>「比較車款」</b>：挑二到三台並排比規格。</p><button class="imm-try" data-try="compare">Try it</button></li>
+    </ol>
+    <p class="imm-tips-note">右上「結束」可以回到首頁。</p>
+  </aside>
   <div class="imm-scene" id="immScene"><img alt=""></div>
   <div class="imm-top">
     <div class="who">
@@ -1616,19 +1656,19 @@ function keyOf(b){ return b.n + b.y; }
    資料夾只有 20 張、其中對得上車名的僅 5 張，其餘依「避震＋電輔＋童車」配一張最接近的，
    同一張會被多台共用——這是暫時的視覺統一，接上官方產品圖後把 PLP_IMG 與 bikeImg 換掉即可。 */
 const PLP_IMG = {
-  'Anthem Advanced SL'      : 'Bikes/Mountain/Anthem Advanced SL 0.png',
-  'Trance X Advanced Pro 29': 'Bikes/Mountain/Trance X Advanced Pro 29 1.png',
-  'XTC Advanced'            : 'Bikes/Mountain/XTC Advanced 29 3.png',
-  'Talon E+'                : 'Bikes/Mountain/Talon E+.png',
-  'Faith'                   : 'Bikes/Child/Faith.png'
+  'Anthem Advanced SL'      : 'Bikes/Mountain/Anthem Advanced SL 0.webp',
+  'Trance X Advanced Pro 29': 'Bikes/Mountain/Trance X Advanced Pro 29 1.webp',
+  'XTC Advanced'            : 'Bikes/Mountain/XTC Advanced 29 3.webp',
+  'Talon E+'                : 'Bikes/Mountain/Talon E+.webp',
+  'Faith'                   : 'Bikes/Child/Faith.webp'
 };
 function bikeImg(b){
   if (PLP_IMG[b.n]) return encodeURI(PLP_IMG[b.n]);
   let f;
-  if (b.kids)                            f = b.wheel.includes('24') ? 'Bikes/Child/Faith.png' : 'Bikes/Child/STP 20 FS.png';
-  else if (b.ebike)                      f = b.susp === 'full-suspension' ? 'Bikes/Mountain/Trance X Advanced Pro 29 1.png' : 'Bikes/Mountain/Talon E+.png';
-  else if (b.susp === 'full-suspension') f = b.best === 'xc' ? 'Bikes/Mountain/Anthem Advanced SL 0.png' : 'Bikes/Mountain/Trance X Advanced Pro 29 1.png';
-  else                                   f = 'Bikes/Mountain/XTC Advanced 29 3.png';
+  if (b.kids)                            f = b.wheel.includes('24') ? 'Bikes/Child/Faith.webp' : 'Bikes/Child/STP 20 FS.webp';
+  else if (b.ebike)                      f = b.susp === 'full-suspension' ? 'Bikes/Mountain/Trance X Advanced Pro 29 1.webp' : 'Bikes/Mountain/Talon E+.webp';
+  else if (b.susp === 'full-suspension') f = b.best === 'xc' ? 'Bikes/Mountain/Anthem Advanced SL 0.webp' : 'Bikes/Mountain/Trance X Advanced Pro 29 1.webp';
+  else                                   f = 'Bikes/Mountain/XTC Advanced 29 3.webp';
   return encodeURI(f);
 }
 function openTestRideBooking(b){
@@ -2434,7 +2474,7 @@ const IMM_SCENE_ORDER = ['daily','ebike','gravel','mtb','kids'];
    這些車不在官網登山車分類頁的資料集裡，所以只顯示車名與方向，
    價格與規格標「官網未列」，不借用別台的數字。 */
 /* 結尾「你可能也想一起看」的縮圖仍用這五張通用去背圖：那一排的車名與價格來自官網資料集，沒有對應的實拍 */
-const IMM_REL_IMAGES = ['Bikes/bike1.png','Bikes/bike2.png','Bikes/bike3.png','Bikes/bike4.png','Bikes/bike5.png'];
+const IMM_REL_IMAGES = ['Bikes/bike1.webp','Bikes/bike2.webp','Bikes/bike3.webp','Bikes/bike4.webp','Bikes/bike5.webp'];
 const IMM_CAT_DIR = {daily:'Daily', ebike:'E-bike', gravel:'Rock', mtb:'Mountain', kids:'Child'};
 const IMM_CAT_BIKES = {
   daily : [['Escape',12800],['Escape Disc 2',16800],['Faster E+',48000],['R2200',9800]],
@@ -2500,7 +2540,7 @@ const IMM_HERO_DETAIL = {
 };
 const immNTD = v => 'NT$' + v.toLocaleString('en-US');
 function immCatItems(k){
-  return (IMM_CAT_BIKES[k] || []).map(([n,pr]) => ({n: n, pr: pr, cat: k, img: 'Bikes/' + IMM_CAT_DIR[k] + '/' + n + '.png'}));
+  return (IMM_CAT_BIKES[k] || []).map(([n,pr]) => ({n: n, pr: pr, cat: k, img: 'Bikes/' + IMM_CAT_DIR[k] + '/' + n + '.webp'}));
 }
 /* 第一題：五個方向輪流，各出第一台，背景同時換成該方向的場景 */
 /* 五個分類的 icon。風格對齊 Stratis UI Icons：16 格線、stroke 1.33333、
@@ -3079,6 +3119,23 @@ function immPick(st,v){
   if(IMM.busy)return;IMM.busy=true;if(st.key==='height'){closeImmHeightPicker(false);S.height=v;IMM.heightSet=true}else S[st.key]=v;S.touched=true;immSay(immEsc(st.echo(v)),'me');if(st.key==='terrain')immSetScene(v);setTimeout(()=>{immSay(st.reply(v),'them');if(st.key==='budget')immConverge(2,'超出預算');else immStage();if(st.key==='terrain')catsSync()},420);IMM.step++;setTimeout(()=>{IMM.busy=false;immAdvance()},1550);
 }
 function immAdvance(){while(IMM.step<IMM_STEPS.length&&immFilled(IMM_STEPS[IMM.step].key))IMM.step++;if(IMM.step>0&&S.terrain)immSetScene(S.terrain);if(IMM.step>=IMM_STEPS.length)return immConclude();immAsk()}
+/* Tips：左下角，簡報時照著點就能走完整條流程 */
+function immTipsOpen(v){
+  $('immTips').hidden=!v;$('immTipsPill').setAttribute('aria-expanded',String(v));
+  $('imm').classList.toggle('tips-open',v);
+}
+document.addEventListener('click',e=>{
+  const pill=e.target.closest('#immTipsPill'); if(pill){immTipsOpen(true);return}
+  const close=e.target.closest('#immTipsClose'); if(close){immTipsOpen(false);return}
+  const t=e.target.closest('.imm-try'); if(!t)return;
+  const d=t.dataset.try||'';
+  immTipsOpen(false);
+  if(d.startsWith('say:')){setTimeout(()=>immHandle(d.slice(4)),260);return}
+  if(d.startsWith('cat:')){const k=d.slice(4);const btn=[...document.querySelectorAll('#immCats [data-cat]')].find(n=>n.dataset.cat===k);if(btn)btn.click();return}
+  if(d==='bike'){const s=document.querySelector('#immShot img, .imm-stage img');if(s)s.click();return}
+  if(d==='size'){const b=$('immSizeLaunch');if(b)b.click();return}
+  if(d==='compare'){const b=$('immCompareLaunch');if(b)b.click();return}
+});
 function immHandle(txt){
   txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
   const st=IMM_STEPS[IMM.step],compoundChildPassenger=!!(st&&st.key==='terrain'&&isChildPassengerUse(txt));
@@ -3096,6 +3153,19 @@ function immHandle(txt){
       setTimeout(()=>{immSay('好，<b>'+x.n+'</b> 已經加進您的清單。<br>如果確定是它，可以直接說「就選這台」。','them');IMM.busy=false},420);
       return;
     }
+  }
+  /* 接送小孩：只有第一題（路面）原本吃得下這句，其餘步驟會被當成聽不懂。
+     這裡讓任何時候講出來都算改方向：切到電輔、直接給三台。 */
+  if(isChildPassengerUse(txt)&&!(st&&st.key==='terrain')){
+    S.terrain='ebike';S.touched=true;P.ease=true;
+    IMM.usageProfile='childPassenger';IMM.usageAnswered=true;IMM.usageText=txt;IMM.shortlistLimit=5;
+    catsSync();immSetScene('ebike');
+    setTimeout(()=>{
+      immSay('了解，是想找接送小孩用的電輔車。<br>我先留下三台比較合適的給你看。','them');
+      IMM.step=2;immStage();
+      setTimeout(()=>{showImmChildPassengerRecommendations();IMM.busy=false},520);
+    },420);
+    return;
   }
   if(st&&st.key==='usage'){
     IMM.usageAnswered=true;IMM.usageText=txt;S.touched=true;
