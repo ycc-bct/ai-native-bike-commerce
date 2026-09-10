@@ -47,9 +47,10 @@ a{color:inherit;text-decoration:none}
 .card .body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
 .card h2{font-size:18.5px;font-weight:700;margin-bottom:4px}
 .card .en{font-family:var(--num);font-size:11.5px;letter-spacing:.16em;font-weight:700;color:var(--ink-45);margin-bottom:14px}
-.card p{font-size:13px;color:var(--ink-70);line-height:1.9;flex:1}
-.card ul{list-style:none;margin:14px 0 20px;display:flex;flex-wrap:wrap;gap:7px}
-.card li{font-size:12px;color:var(--ink-70);border:1px solid var(--line);padding:5px 11px}
+.card .desc{flex:1;margin-bottom:18px}
+.card .desc p{font-size:13px;color:var(--ink-70);line-height:1.9;margin-bottom:11px}
+.card .desc p:last-child{margin-bottom:0}
+.card .tipnote{font-size:12px;color:var(--ink-45);line-height:1.8;margin:0 0 18px;padding-left:11px;border-left:2px solid var(--line)}
 .card .go{align-self:flex-start;background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:12px 20px;border-radius:3px}
 
 .note{border-top:1px solid var(--line-2);background:var(--grey)}
@@ -86,9 +87,12 @@ a{color:inherit;text-decoration:none}
     <div class="body">
       <h2>選車現場 · 展廳視角</h2>
       <p class="en">RIDE STUDIO</p>
-      <p>從官網版首頁與分類頁開始，維持既有介面與篩選邏輯。逛一陣子後，介面本身會靠過來提供整理；也可以自己打開「你的路線」調整方向。另有展廳視角可以進入。</p>
-      <ul><li>官網版首頁與分類頁</li><li>逛一陣子後主動靠近</li><li>你的路線</li><li>展廳視角</li></ul>
-      <a class="go" href="./showroom/">開啟原型 →</a>
+      <div class="desc">
+        <p>首頁、分類頁與篩選邏輯都維持官網現況，來回看過幾台之後，畫面四周才亮起來主動靠近，把你看過的車整理成一個方向；你也可以自己打開「你的路線」調整。想專心看車時，再走進選車現場。</p>
+        <p>選車現場是整間門市重做：沒有選單列，左右箭頭或直接點兩側的車就換一區，展台升降把車送上來，門市人員只在你點車時開口。中央球的兩側是「我的尺寸」與「車款比較」，上方可以打字或用說的。說「電輔接小孩」，展台升起三台電輔車逐台介紹；再說「喜歡 Miya」只留下它，下方帶出配件，可以直接加入購物車結帳。</p>
+      </div>
+      <p class="tipnote">畫面左下角有 Tips，可以照著點完整個流程。</p>
+      <a class="go" href="./showroom/">立即體驗 →</a>
     </div>
   </article>
 
@@ -100,9 +104,12 @@ a{color:inherit;text-decoration:none}
     <div class="body">
       <h2>選車現場 · 聚光燈視角</h2>
       <p class="en">SELECTION LIVE</p>
-      <p>首頁、分類頁與選車現場整合在同一份檔案裡。現場是暗場聚光，一次專注一台車；上方分類列切換車種，右側可以直接打字或用說的描述需求。</p>
-      <ul><li>首頁與分類頁整合</li><li>暗場聚光視角</li><li>分類列切換</li><li>輸入或語音描述</li></ul>
-      <a class="go" href="./integrated/">開啟原型 →</a>
+      <div class="desc">
+        <p>首頁、分類頁與篩選邏輯都維持官網現況，來回看過幾台之後，畫面四周才亮起來主動靠近，把你看過的車整理成一個方向；你也可以自己打開「你的路線」調整。想專心看車時，再走進選車現場。</p>
+        <p>選車現場以暗場聚光一次只放一台車，上方分類列換車種，右側直接打字或用說的——「電輔接小孩」「五萬左右」「喜歡 Miya」都聽得懂，車單當場重排。</p>
+      </div>
+      <p class="tipnote">畫面左下角有 Tips，可以照著點完整個流程。</p>
+      <a class="go" href="./integrated/">立即體驗 →</a>
     </div>
   </article>
 
@@ -114,9 +121,10 @@ a{color:inherit;text-decoration:none}
     <div class="body">
       <h2>選車顧問 · 左右分割</h2>
       <p class="en">SPLIT VIEW</p>
-      <p>左側情境主視覺、右側常駐對話。從主視覺按下探索更多時，畫面中的車會直接飛進車系頁成為主打車款；車系頁可切換車款，對話同步換成該車介紹。</p>
-      <ul><li>左右分割版型</li><li>情境主視覺輪播</li><li>共享元素轉場</li><li>車系頁切換</li></ul>
-      <a class="go" href="./mia/">開啟原型 →</a>
+      <div class="desc">
+        <p>顧問常駐在畫面旁邊。左邊情境主視覺、右邊對話，兩邊隨時同步；從主視覺按下探索更多，畫面裡那台車會直接飛進車系頁成為主打車款，對話也換成它的介紹。</p>
+      </div>
+      <a class="go" href="./mia/">立即體驗 →</a>
     </div>
   </article>
 
@@ -125,7 +133,7 @@ a{color:inherit;text-decoration:none}
 <section class="note">
   <div class="note-in">
     <h3>ABOUT THESE PROTOTYPES</h3>
-    <p>三個原型皆為提案討論用，非正式產品。車款名稱、價格與規格分類取自 giant-bicycles.com/tw 公開頁面；畫面中出現的活動價與贈品為示範內容，不代表實際銷售條件。尺寸建議為通用示意值，正式版需接官方 Size Guide。</p>
+    <p>三個原型皆為提案討論用，非正式產品。車款名稱、價格與規格分類取自 giant-bicycles.com/tw 公開頁面；畫面中出現的活動價與贈品為示範內容，不代表實際銷售條件。尺寸建議為通用示意值，正式版需接官方 Size Guide。<br>建議使用 Chrome 桌機瀏覽器開啟，視窗寬度約 1440px；三個原型皆為桌機版面，尚未支援手機與平板的響應式排版。</p>
   </div>
 </section>
 
