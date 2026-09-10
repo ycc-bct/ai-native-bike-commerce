@@ -4,7 +4,8 @@
 
 - **提案總覽**：https://ycc-bct.github.io/ai-native-bike-commerce/
 - **01 選車現場 · 展廳視角**：https://ycc-bct.github.io/ai-native-bike-commerce/showroom/
-- **02 選車顧問 · 左右分割**：https://ycc-bct.github.io/ai-native-bike-commerce/mia/
+- **02 選車現場 · 聚光燈視角**：https://ycc-bct.github.io/ai-native-bike-commerce/integrated/
+- **03 選車顧問 · 左右分割**：https://ycc-bct.github.io/ai-native-bike-commerce/mia/
 
 ## 01 選車現場 · 展廳視角（`showroom/`）
 
@@ -17,7 +18,11 @@
 - **車款比較**：目前展區三台車的價格與適合情境並排。
 - 尺寸區間目前是通用示意值，等接上 GIANT 官方 Size Guide 再逐車系換。
 
-## 02 選車顧問 · 左右分割（`mia/`）
+## 02 選車現場 · 聚光燈視角（`integrated/`）
+
+首頁、分類頁與選車現場整合在同一份 HTML。選車現場是暗場聚光視角，一次專注一台車；上方分類列切換車種，右側可直接輸入或用語音描述需求，另有「我適合的尺寸」與「比較車款」。
+
+## 03 選車顧問 · 左右分割（`mia/`）
 
 左側情境主視覺輪播、右側常駐對話。從主視覺按「探索更多」時，畫面裡正在被騎乘的那台車會飛進車系頁成為主打車款（同一張去背圖接手，落點對齊）；車系頁下方六張卡可切換主打，右側對話同步換成該車介紹。
 
@@ -36,7 +41,8 @@ python3 -m http.server 8000
 ```
 index.html      提案總覽
 showroom/       01 展廳視角（index.html + Bikes/ + bg/）
-mia/            02 左右分割（index.html + assets/ + uploads/）
+integrated/     02 聚光燈視角（index.html + Bikes/ + bg/ + icons/）
+mia/            03 左右分割（index.html + assets/ + uploads/）
 _thumbs/        總覽頁縮圖
 ```
 
