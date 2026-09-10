@@ -747,14 +747,17 @@ body.imm-open .imm-tips [data-tipmode="stage"]{display:block}
 .imm-tips-head b{font-family:var(--num,inherit);font-size:11.5px;letter-spacing:.2em;opacity:.72}
 .imm-tips-close{background:none;border:0;color:#fff;font-size:15px;cursor:pointer;opacity:.7;padding:2px 4px}
 .imm-tips-close:hover{opacity:1}
-.imm-tips h4{font-size:13px;font-weight:700;margin:14px 0 7px;color:#fff}
-.imm-tips ol{list-style:decimal;padding-left:17px;margin:0}
-.imm-tips li{margin-bottom:9px}
-.imm-tips li p{font-size:12.5px;line-height:1.75;color:rgba(255,255,255,.8);margin:0 0 5px}
-.imm-tips li b{color:#fff}
-.imm-tips-note{font-size:11.5px;line-height:1.7;color:rgba(255,255,255,.55);margin:0 0 4px}
-.imm-try{background:none;border:0;padding:0;color:#8EC5FF;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.imm-try:hover{color:#fff}
+/* 版面比照 01：不編號，每一項是一列，文字靠左、Try it 固定在右側 */
+.imm-tips h4{margin:12px 0 6px;font-size:12px;font-weight:700;letter-spacing:.06em;color:#fff}
+.imm-tips h4:first-of-type{margin-top:0}
+.imm-tips ol{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.imm-tips li{display:flex;align-items:center;gap:10px;margin:0;padding:8px 10px;border:1px solid rgba(255,255,255,.14);border-radius:9px;background:rgba(255,255,255,.06)}
+.imm-tips li p{flex:1;min-width:0;font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.82);margin:0}
+.imm-tips li b{color:#fff;font-weight:700}
+.imm-tips-note{margin:0 0 10px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.06);font-size:11.5px;line-height:1.55;color:rgba(255,255,255,.6)}
+.imm-try{flex:none;min-height:30px;padding:5px 11px;border:0;border-radius:999px;background:var(--brand);color:#fff;font-family:var(--num,inherit);font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap;cursor:pointer}
+.imm-try:hover{background:#0A07B0}
+.imm-try:focus-visible{outline:2px solid #8EC5FF;outline-offset:3px}
 .imm-tools{align-self:stretch;display:flex;align-items:center;justify-content:space-between;margin-top:2px}
 .imm-tool-link{width:auto;color:rgba(255,255,255,.72);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:4px;transition:color .2s,opacity .2s}
 .imm-tool-link:hover{color:#fff}
@@ -1083,7 +1086,7 @@ body.amb-on .amb-tab .a{display:none}
       <li><p>接著點名其中一台，例如<b>「喜歡 Miya」</b>：只留下它，展台重新聚焦在它身上。車名講前面幾個字就好。</p><button class="imm-try" data-try="say:喜歡 Miya">Try it</button></li>
     </ol>
       </div>
-  <p class="imm-tips-note">右上「結束」可以回到首頁。</p>
+  <p class="imm-tips-note" data-tipmode="stage">右上「結束」可以回到首頁。</p>
 </aside>
 
 <div class="imm" id="imm" role="dialog" aria-modal="true" aria-label="選車現場">
