@@ -1335,6 +1335,12 @@ function cnNum(str){
   return (hi === undefined || lo === undefined) ? NaN : hi * 10 + lo;
 }
 /* 「接送／載小孩」描述的是大人的用車情境；只有明確說要替孩子買車，才進童車分類。 */
+function immNameKeys(n){
+  const parts=n.toLowerCase().replace(/[＋﹢]/g,'+').split(/\s+/).filter(Boolean);
+  const keys=[];let acc='';
+  parts.forEach(p=>{acc+=p;if(acc.length>=3)keys.push(acc)});
+  return keys;
+}
 function isChildPassengerUse(t){
   return /(?:接送?|載|帶著?|陪載)(?:我?的?)?(?:小孩|小朋友|孩子|女兒|兒子)|(?:小孩|小朋友|孩子|女兒|兒子)(?:接送|載送)/.test(t);
 }
@@ -3139,7 +3145,22 @@ document.addEventListener('click',e=>{
 function immHandle(txt){
   txt=txt.trim();if(!txt||IMM.busy)return;IMM.busy=true;immSay(immEsc(txt),'me');$('immInput').value='';
   const st=IMM_STEPS[IMM.step],compoundChildPassenger=!!(st&&st.key==='terrain'&&isChildPassengerUse(txt));
-  const normalizedChoice=txt.toLowerCase().replace(/[＋﹢]/g,'+').replace(/\s+/g,''),namedChoice=/(?:喜歡|中意|想要|就選|選擇|決定)/.test(txt)?(IMM.pool||[]).find(x=>normalizedChoice.includes(x.n.toLowerCase().replace(/\s+/g,''))):null;
+  const normalizedChoice=txt.toLowerCase().replace(/[＋﹢]/g,'+').replace(/\s+/g,'');
+  /* 車名只講前面幾個字也算：「喜歡 Miya」＝ Miya E+、「喜歡 Escape Disc」＝ Escape Disc 2。
+     大小寫、空白、全形＋都不影響；至少要三個字，免得「X」這種單字亂中。
+     同樣長度時完整車名優先，所以「喜歡 Escape」會是 Escape 而不是 Escape Disc 2。 */
+  const namedChoice=/(?:喜歡|中意|想要|就選|選擇|決定)/.test(txt)?(()=>{
+    let best=null,bestLen=0;
+    (IMM.pool||[]).forEach(x=>{
+      const full=x.n.toLowerCase().replace(/[＋﹢]/g,'+').replace(/\s+/g,'');
+      immNameKeys(x.n).forEach(k=>{
+        if(!normalizedChoice.includes(k))return;
+        const len=k.length+(k===full?0.5:0);
+        if(len>bestLen){bestLen=len;best=x}
+      });
+    });
+    return best;
+  })():null;
   if(namedChoice){IMM.busy=false;immFinalizeChoice(namedChoice);return}
   if(/就這台|選這台|決定這台|我要這台|這台就好/.test(txt)){
     const x=IMM.pool&&IMM.pool[IMM.i];IMM.busy=false;if(x)immFinalizeChoice(x);return;
