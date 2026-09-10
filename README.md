@@ -1,10 +1,12 @@
-# 選車現場 · 展廳視角
+# GIANT 沈浸式選車 · 提案原型
 
-捷安特（GIANT）「沈浸式選車」提案原型。單一 HTML 檔，無 build、無框架。
+捷安特（GIANT）「沈浸式選車」的兩個提案方向。皆為單一 HTML 檔，無 build、無框架。
 
-- **線上預覽**：https://ycc-bct.github.io/showroom/
+- **提案總覽**：https://ycc-bct.github.io/ai-native-bike-commerce/
+- **01 選車現場 · 展廳視角**：https://ycc-bct.github.io/ai-native-bike-commerce/showroom/
+- **02 選車顧問 · 左右分割**：https://ycc-bct.github.io/ai-native-bike-commerce/mia/
 
-## 這一版在做什麼
+## 01 選車現場 · 展廳視角（`showroom/`）
 
 打開先是官網版首頁與分類頁（含篩選、清單、逛一陣子後店員走近的「幫我整理／先自己逛」與「你的路線」）。右上「開始搜尋」或「你想騎去哪裡？」下方的「進入選車現場」進到展廳；展廳右上「結束」回首頁。右下角「Tips」列出可以體驗的功能，每條有 Try it。
 
@@ -15,11 +17,29 @@
 - **車款比較**：目前展區三台車的價格與適合情境並排。
 - 尺寸區間目前是通用示意值，等接上 GIANT 官方 Size Guide 再逐車系換。
 
+## 02 選車顧問 · 左右分割（`mia/`）
+
+左側情境主視覺輪播、右側常駐對話。從主視覺按「探索更多」時，畫面裡正在被騎乘的那台車會飛進車系頁成為主打車款（同一張去背圖接手，落點對齊）；車系頁下方六張卡可切換主打，右側對話同步換成該車介紹。
+
+- 車款名稱、價格取自 giant-bicycles.com/tw；畫面中的活動價與贈品為示範內容。
+- 素材：情境合成圖（背景／騎士／車三層）與各車系去背圖。
+
 ## 本機執行
 
 ```bash
-python3 -m http.server 8892
-# open http://localhost:8892
+python3 -m http.server 8000
+# 開 http://localhost:8000/
 ```
 
-主要檔案：`index.html`（首頁＋分類頁＋展廳，單一檔案）、`Bikes/trim/`（20 款去背車圖與各分類 45 度圖）、`bg/`（展廳背景、球的影片與海報）。
+## 結構
+
+```
+index.html      提案總覽
+showroom/       01 展廳視角（index.html + Bikes/ + bg/）
+mia/            02 左右分割（index.html + assets/ + uploads/）
+_thumbs/        總覽頁縮圖
+```
+
+## 說明
+
+兩個原型皆為提案討論用，非正式產品。版型、車款名稱、價格與規格分類取自 giant-bicycles.com/tw 公開頁面；活動價、贈品為示範內容，不代表實際銷售條件。尺寸建議為通用示意值，正式版需接官方 Size Guide。

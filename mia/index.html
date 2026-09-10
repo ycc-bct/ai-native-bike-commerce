@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 導購電商 v3 左右分割</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#ffffff;-webkit-font-smoothing:antialiased;}
+a{color:oklch(58.8% 0.158 241.966);text-decoration:none;}
+a:hover{color:oklch(50% 0.134 242.749);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes dotBlink{0%,80%,100%{opacity:0.25;}40%{opacity:1;}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(56,189,248,0.45);}100%{box-shadow:0 0 0 26px rgba(56,189,248,0);}}
+@keyframes browseIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@keyframes cardIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:oklch(92.9% 0.013 255.508);border-radius:99px;}
+
+.app{height:100vh;display:flex;flex-direction:column;font-family:'Noto Sans TC','Inter',ui-sans-serif,system-ui,sans-serif;color:oklch(20.8% 0.042 265.755);background:oklch(98.4% 0.003 247.858);overflow:hidden;position:relative;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:58px;border-bottom:1px solid oklch(92.9% 0.013 255.508);flex-shrink:0;background:#fff;}
+.topbar img{height:16px;width:auto;max-width:130px;display:block;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.btn-cart{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:9999px;border:1px solid oklch(92.9% 0.013 255.508);background:#fff;font-size:13px;font-weight:600;color:oklch(37.2% 0.044 257.287);cursor:pointer;font-family:inherit;}
+.btn-cart:hover{background:oklch(98.4% 0.003 247.858);}
+.cart-badge{background:oklch(68.5% 0.169 237.323);color:#fff;border-radius:9999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;padding:0 6px;}
+.btn-login{padding:8px 18px;border-radius:9999px;border:none;background:oklch(20.8% 0.042 265.755);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-login:hover{background:oklch(27.9% 0.041 260.031);}
+.main{display:flex;flex:1;min-height:0;}
+
+.scene{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:12px;padding:28px 40px 16px;}
+.hero-visual{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(100deg, rgba(15,23,42,0.5), rgba(15,23,42,0.1) 60%);pointer-events:none;}
+.composite{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);aspect-ratio:3/2;min-width:100%;min-height:100%;pointer-events:none;transition:opacity 0.7s ease;}
+.layer{position:absolute;}
+#lay-shadow{left:29.5%;top:89.744%;width:51%;height:5.917%;background:radial-gradient(closest-side, rgba(15,15,8,0.48), rgba(15,15,8,0) 72%);filter:blur(5px);}
+#lay-group,#lay-rider{left:28.3%;top:25.6%;width:48.7%;}
+#lay-group img,#lay-rider img{width:100%;display:block;}
+.hero-head{position:relative;display:flex;flex-direction:column;gap:14px;}
+.hero-head h1{margin:0;max-width:520px;font-family:'Inter','Noto Sans TC',sans-serif;font-weight:800;font-size:clamp(30px, 3.2vw, 46px);line-height:1.12;color:#fff;letter-spacing:-0.02em;text-shadow:0 2px 14px rgba(15,23,42,0.4);}
+.hero-card{position:relative;margin-top:auto;width:min(320px, 92%);background:rgba(255,255,255,0.62);backdrop-filter:blur(14px);border-radius:1.5rem;padding:18px 20px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(15,23,42,0.18);}
+.hero-card-top{display:flex;align-items:center;gap:12px;}
+.hero-icon{color:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hero-title{font-size:20px;font-weight:800;color:oklch(20.8% 0.042 265.755);}
+.hero-en{font-size:17px;font-weight:700;color:oklch(20.8% 0.042 265.755);}
+.hero-zh{font-size:14px;line-height:1.7;color:oklch(37.2% 0.044 257.287);}
+.btn-explore{align-self:flex-start;margin-top:4px;padding:10px 20px;border-radius:9999px;border:none;background:#001488;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(15,23,42,0.12);}
+.btn-explore:hover{background:#1a2fa8;}
+
+.browse-overlay{position:absolute;inset:0;background:oklch(98.4% 0.003 247.858);display:flex;flex-direction:column;z-index:5;animation:browseIn 0.45s ease both;overflow:hidden;}
+.browse-head{display:flex;align-items:center;justify-content:flex-start;gap:14px;padding:20px 32px 14px;flex-shrink:0;}
+.browse-head-left{display:flex;align-items:center;gap:12px;}
+.browse-icon{color:#000;display:flex;align-items:center;justify-content:center;}
+.browse-title{font-size:20px;font-weight:800;color:oklch(20.8% 0.042 265.755);}
+.browse-count{font-size:13px;color:oklch(55.4% 0.046 257.417);font-weight:600;}
+.btn-back{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:9999px;border:1px solid oklch(86.9% 0.022 252.894);background:#fff;color:oklch(37.2% 0.044 257.287);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-back:hover{background:oklch(96.8% 0.007 247.896);}
+.bold-feature{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px;}
+.bold-ghost{position:absolute;left:50%;top:32%;transform:translate(-50%,-50%);font-family:'Inter','Noto Sans TC',sans-serif;font-weight:800;font-size:clamp(34px,6vw,76px);letter-spacing:-0.03em;color:oklch(90.5% 0.022 255);white-space:nowrap;user-select:none;pointer-events:none;animation:ghostIn 0.6s ease both 0.15s;}
+@keyframes ghostIn{from{opacity:0;}to{opacity:1;}}
+.bold-bike{position:relative;width:clamp(260px,44%,520px);}
+.bold-bike img{position:relative;width:100%;display:block;}
+.bold-shadow{position:absolute;left:9%;top:76.5%;width:82%;height:8%;background:radial-gradient(closest-side, rgba(15,23,42,0.32), rgba(15,23,42,0) 70%);filter:blur(3px);}
+.bold-info{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:2px;animation:fadeUp 0.5s ease both 0.25s;}
+.bold-name{font-size:clamp(19px,2.2vw,26px);font-weight:900;}
+.bold-price .now{font-size:17px;font-weight:800;color:#001488;}
+.bold-price .was{font-size:13px;font-weight:600;color:oklch(55.4% 0.046 257.417);text-decoration:line-through;margin-left:8px;}
+.bold-gift{font-size:12.5px;color:oklch(44.6% 0.043 257.281);font-weight:600;}
+.bold-cta{margin-top:6px;padding:10px 24px;border-radius:9999px;border:none;background:#001488;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 16px rgba(0,20,136,0.25);}
+.bold-cta:hover{background:#1a2fa8;}
+.bold-arc{position:relative;height:210px;flex-shrink:0;}
+.bold-card{position:absolute;background:#fff;border:1px solid oklch(92.9% 0.013 255.508);border-radius:14px;padding:10px 12px;cursor:pointer;box-shadow:0 10px 24px rgba(15,23,42,0.08);transform:rotate(var(--rot,0deg));animation:boldCardIn 0.45s ease both;transition:left 0.5s cubic-bezier(0.22,1,0.36,1), top 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s, border-color 0.2s;}
+.bold-card:hover{box-shadow:0 14px 30px rgba(15,23,42,0.14);}
+.bold-card.sel{border:2px solid #001488;padding:9px 11px;transform:rotate(var(--rot,0deg)) scale(1.06);box-shadow:0 16px 34px rgba(0,20,136,0.18);z-index:2;}
+.bold-card.sel .bold-card-nm{color:#001488;}
+.bold-card-img{width:100%;aspect-ratio:4/3;background-size:contain;background-repeat:no-repeat;background-position:center;}
+.bold-card-nm{font-size:12.5px;font-weight:800;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bold-card-pr{font-size:11.5px;font-weight:700;color:oklch(44.6% 0.043 257.281);margin-top:1px;white-space:nowrap;}
+@keyframes boldCardIn{from{opacity:0;transform:translateY(12px) rotate(var(--rot,0deg));}to{opacity:1;transform:rotate(var(--rot,0deg));}}
+
+.hero-dots{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;}
+.hero-dot{display:block;height:6px;border-radius:9999px;cursor:pointer;transition:all 0.3s;}
+.btn-pause{margin-left:10px;width:34px;height:34px;border-radius:9999px;border:1.5px solid rgba(255,255,255,0.85);background:rgba(15,23,42,0.3);color:#fff;font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;letter-spacing:1px;}
+.hero-tabs{position:relative;display:flex;gap:6px;background:#fff;border-radius:9999px;padding:6px;}
+.hero-tab{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 10px;border-radius:9999px;border:none;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;}
+
+.chat-panel{width:min(520px, 44%);flex-shrink:0;position:relative;background:#fff;display:flex;flex-direction:column;border-left:1px solid oklch(92.9% 0.013 255.508);}
+.chat-head{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid oklch(92.9% 0.013 255.508);background:#fff;flex-shrink:0;}
+.chat-avatar{width:38px;height:38px;border-radius:9999px;background:rgba(0,20,136,0.07);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.chat-avatar img{width:24px;height:24px;display:block;}
+.chat-head-txt{display:flex;flex-direction:column;gap:1px;}
+.chat-head-name{font-size:14px;font-weight:700;}
+.chat-head-status{display:flex;align-items:center;gap:6px;font-size:12px;color:oklch(55.4% 0.046 257.417);}
+.chat-head-status .dot{width:7px;height:7px;border-radius:9999px;background:oklch(69.6% 0.17 162.48);}
+.chat-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;background:oklch(98.4% 0.003 247.858);}
+.msg{display:flex;flex-direction:column;animation:fadeUp 0.25s ease-out;}
+.msg-user{align-self:flex-end;max-width:70%;background:oklch(20.8% 0.042 265.755);color:#fff;padding:11px 16px;border-radius:1rem;border-bottom-right-radius:0.25rem;font-size:14.5px;line-height:1.6;}
+.msg-ai{align-self:flex-start;max-width:78%;background:#fff;border:1px solid oklch(92.9% 0.013 255.508);padding:11px 16px;border-radius:1rem;border-bottom-left-radius:0.25rem;font-size:14.5px;line-height:1.75;color:oklch(27.9% 0.041 260.031);box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);white-space:pre-line;}
+.msg-typing{align-self:flex-start;background:#fff;border:1px solid oklch(92.9% 0.013 255.508);padding:15px 18px;border-radius:1rem;border-bottom-left-radius:0.25rem;display:flex;gap:5px;}
+.msg-typing span{width:7px;height:7px;border-radius:99px;background:oklch(70.4% 0.04 256.788);animation:dotBlink 1.2s infinite;}
+.msg-typing span:nth-child(2){animation-delay:0.2s;}
+.msg-typing span:nth-child(3){animation-delay:0.4s;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;width:100%;}
+.p-card{background:#fff;border:1px solid oklch(92.9% 0.013 255.508);border-radius:0.75rem;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);}
+.p-card-img{height:120px;background:repeating-linear-gradient(45deg, oklch(96.8% 0.007 247.896), oklch(96.8% 0.007 247.896) 8px, oklch(92.9% 0.013 255.508) 8px, oklch(92.9% 0.013 255.508) 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:10px;color:oklch(55.4% 0.046 257.417);cursor:pointer;}
+.p-card-body{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1;}
+.p-card-row{display:flex;justify-content:space-between;gap:8px;align-items:baseline;}
+.p-card-name{font-size:14px;font-weight:700;cursor:pointer;}
+.p-card-price{font-size:13px;font-weight:700;color:oklch(50% 0.134 242.749);white-space:nowrap;}
+.p-card-blurb{font-size:12px;color:oklch(55.4% 0.046 257.417);line-height:1.55;flex:1;}
+.p-card-btns{display:flex;gap:8px;margin-top:8px;}
+.btn-add{flex:1;padding:7px 0;border-radius:0.375rem;border:none;background:oklch(20.8% 0.042 265.755);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-add:hover{background:oklch(27.9% 0.041 260.031);}
+.btn-detail{flex:1;padding:7px 0;border-radius:0.375rem;border:1px solid oklch(92.9% 0.013 255.508);background:#fff;font-size:12px;font-weight:600;color:oklch(37.2% 0.044 257.287);cursor:pointer;font-family:inherit;}
+.btn-detail:hover{background:oklch(98.4% 0.003 247.858);}
+.cmp{background:#fff;border:1px solid oklch(92.9% 0.013 255.508);border-radius:0.75rem;overflow:hidden;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);}
+.cmp-row{display:grid;grid-template-columns:90px 1fr 1fr 1fr;font-size:13px;}
+.cmp-h{padding:11px 10px;background:oklch(98.4% 0.003 247.858);border-bottom:1px solid oklch(92.9% 0.013 255.508);}
+.cmp-hn{font-weight:700;text-align:center;}
+.cmp-body-row{display:grid;grid-template-columns:90px 1fr 1fr 1fr;font-size:13px;border-bottom:1px solid oklch(96.8% 0.007 247.896);}
+.cmp-label{padding:10px;color:oklch(55.4% 0.046 257.417);font-weight:500;}
+.cmp-val{padding:10px;text-align:center;color:oklch(37.2% 0.044 257.287);}
+.bundle{background:#fff;border:1px solid oklch(92.9% 0.013 255.508);border-radius:0.75rem;padding:16px;display:flex;flex-direction:column;gap:10px;max-width:420px;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);}
+.bundle-title{font-size:13px;font-weight:700;}
+.bundle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.bundle-name{font-size:13px;font-weight:500;}
+.bundle-price{font-size:12px;color:oklch(55.4% 0.046 257.417);}
+.btn-bundle-add{padding:5px 12px;border-radius:0.375rem;border:1px solid oklch(92.9% 0.013 255.508);background:#fff;font-size:12px;font-weight:600;color:oklch(37.2% 0.044 257.287);cursor:pointer;font-family:inherit;}
+.btn-bundle-add:hover{background:oklch(98.4% 0.003 247.858);}
+.btn-bundle-all{margin-top:2px;padding:9px;border-radius:0.375rem;border:none;background:oklch(68.5% 0.169 237.323);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-bundle-all:hover{background:oklch(58.8% 0.158 241.966);}
+
+.input-area{flex-shrink:0;padding:12px 16px 16px;border-top:1px solid oklch(92.9% 0.013 255.508);background:#fff;display:flex;flex-direction:column;gap:10px;}
+.quick-replies{display:flex;flex-wrap:wrap;gap:8px;}
+.qr-btn{padding:8px 15px;border-radius:9999px;border:1px solid rgba(0,20,136,0.35);background:#fff;color:#001488;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;box-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);}
+.qr-btn:hover{background:rgba(0,20,136,0.06);}
+.input-pill{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid oklch(92.9% 0.013 255.508);border-radius:9999px;padding:8px 10px 8px 20px;box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);}
+.input-pill input{flex:1;border:none;font-size:15px;font-family:inherit;color:oklch(20.8% 0.042 265.755);outline:none;background:transparent;min-width:0;}
+.btn-voice{width:40px;height:40px;flex-shrink:0;border-radius:9999px;border:1px solid oklch(92.9% 0.013 255.508);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;color:#001488;}
+.btn-voice:hover{background:rgba(0,20,136,0.06);border-color:rgba(0,20,136,0.35);}
+.btn-send{height:40px;padding:0 20px;border-radius:9999px;border:none;background:#001488;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-send:hover{background:#1a2fa8;}
+
+.detail-overlay{position:absolute;inset:0;background:rgba(15,23,42,0.4);z-index:30;display:flex;align-items:center;justify-content:center;padding:32px;}
+.detail-modal{background:#fff;border-radius:1rem;max-width:860px;width:100%;max-height:100%;overflow-y:auto;box-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);animation:fadeUp 0.2s ease-out;}
+.detail-close-row{display:flex;justify-content:flex-end;padding:14px 18px 0;}
+.btn-x{border:none;background:none;font-size:18px;cursor:pointer;color:oklch(55.4% 0.046 257.417);padding:4px;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:0 28px 28px;align-items:start;}
+.detail-imgs{display:flex;flex-direction:column;gap:10px;}
+.detail-hero-img{height:280px;border-radius:0.75rem;background:repeating-linear-gradient(45deg, oklch(96.8% 0.007 247.896), oklch(96.8% 0.007 247.896) 10px, oklch(92.9% 0.013 255.508) 10px, oklch(92.9% 0.013 255.508) 20px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:12px;color:oklch(55.4% 0.046 257.417);}
+.detail-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.detail-thumb{height:56px;border-radius:0.5rem;background:oklch(96.8% 0.007 247.896);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:10px;color:oklch(70.4% 0.04 256.788);}
+.detail-info{display:flex;flex-direction:column;gap:14px;}
+.detail-cat{font-size:13px;color:oklch(55.4% 0.046 257.417);}
+.detail-info h2{margin:0;font-size:26px;font-weight:900;}
+.detail-price{font-size:20px;font-weight:800;color:oklch(50% 0.134 242.749);}
+.detail-desc{margin:0;font-size:14px;line-height:1.8;color:oklch(44.6% 0.043 257.281);text-wrap:pretty;}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:oklch(92.9% 0.013 255.508);border:1px solid oklch(92.9% 0.013 255.508);border-radius:0.5rem;overflow:hidden;}
+.spec-cell{background:#fff;padding:9px 13px;display:flex;flex-direction:column;gap:2px;}
+.spec-label{font-size:11px;color:oklch(55.4% 0.046 257.417);}
+.spec-val{font-size:13px;font-weight:600;}
+.size-label{font-size:13px;font-weight:600;color:oklch(44.6% 0.043 257.281);}
+.size-row{display:flex;gap:8px;}
+.btn-size{min-width:52px;padding:9px 0;border-radius:0.375rem;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+.detail-btns{display:flex;gap:10px;}
+.btn-detail-add{flex:1;padding:12px;border-radius:0.5rem;border:none;background:oklch(20.8% 0.042 265.755);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-detail-add:hover{background:oklch(27.9% 0.041 260.031);}
+.btn-detail-ask{flex:1;padding:12px;border-radius:0.5rem;border:1px solid oklch(90.1% 0.058 230.902);background:oklch(97.7% 0.013 236.62);color:oklch(50% 0.134 242.749);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-detail-ask:hover{background:oklch(95.1% 0.026 236.824);}
+
+.cart-overlay{position:absolute;inset:0;background:rgba(15,23,42,0.35);z-index:40;display:flex;justify-content:flex-end;}
+.cart-drawer{width:360px;background:#fff;height:100%;display:flex;flex-direction:column;box-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);animation:fadeUp 0.2s ease-out;}
+.cart-head{padding:18px 22px;border-bottom:1px solid oklch(92.9% 0.013 255.508);display:flex;justify-content:space-between;align-items:center;}
+.cart-title{font-size:16px;font-weight:800;}
+.cart-body{flex:1;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:14px;}
+.cart-empty{font-size:13px;color:oklch(55.4% 0.046 257.417);text-align:center;padding:40px 0;}
+.cart-row{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.cart-item-name{font-size:13px;font-weight:600;}
+.cart-item-price{font-size:12px;color:oklch(55.4% 0.046 257.417);}
+.btn-remove{border:none;background:none;font-size:12px;color:oklch(55.4% 0.046 257.417);cursor:pointer;font-family:inherit;}
+.btn-remove:hover{color:oklch(63.7% 0.237 25.331);}
+.cart-foot{padding:18px 22px;border-top:1px solid oklch(92.9% 0.013 255.508);display:flex;flex-direction:column;gap:12px;}
+.cart-total-row{display:flex;justify-content:space-between;font-size:14px;}
+.cart-total-label{color:oklch(55.4% 0.046 257.417);}
+.cart-total-val{font-weight:800;}
+.btn-checkout{padding:13px;border-radius:0.5rem;border:none;background:oklch(68.5% 0.169 237.323);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-checkout:hover{background:oklch(58.8% 0.158 241.966);}
+
+.voice-overlay{position:absolute;inset:0;background:rgba(15,23,42,0.5);z-index:50;display:flex;align-items:center;justify-content:center;}
+.voice-modal{background:#fff;border-radius:1rem;padding:36px 48px;display:flex;flex-direction:column;align-items:center;gap:18px;box-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);}
+.voice-mic{width:72px;height:72px;border-radius:9999px;background:oklch(68.5% 0.169 237.323);display:flex;align-items:center;justify-content:center;animation:pulseRing 1.4s ease-out infinite;}
+.voice-mic span{display:block;width:18px;height:28px;border-radius:10px;background:#fff;}
+.voice-title{font-size:16px;font-weight:700;}
+.voice-hint{font-size:13px;color:oklch(55.4% 0.046 257.417);}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="topbar" data-screen-label="頂欄">
+    <img src="logo-blue.svg" alt="LIMO" id="logo" style="cursor:pointer;" title="回到首頁">
+    <div class="topbar-right">
+      <button class="btn-cart" id="btn-cart">購物車<span class="cart-badge" id="cart-badge" style="display:none;"></span></button>
+      <button class="btn-login">登入</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="scene" data-screen-label="情境" id="scene">
+      <div class="hero-visual">
+        <div class="hero-bg" data-hero-bg="1" id="hero-bg"></div>
+        <div class="hero-bg" id="hero-bg-fade" style="opacity:0;"></div>
+        <div class="hero-grad"></div>
+        <div class="composite" id="composite" style="opacity:0;">
+          <div class="layer" id="lay-shadow"></div>
+          <div class="layer" id="lay-group"><img id="group-img" src="assets/offroad-hero-group.png" alt="" draggable="false"></div>
+          <div class="layer" id="lay-rider" style="opacity:0;"><img id="rider-img" src="assets/offroad-hero-rider.png" alt="" draggable="false"></div>
+        </div>
+      </div>
+      <div class="hero-head">
+        <h1>Your perfect bike,<br>found for you.</h1>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-top">
+          <div class="hero-icon" id="hero-icon"></div>
+          <div class="hero-title" id="hero-title"></div>
+        </div>
+        <div class="hero-en" id="hero-en"></div>
+        <div class="hero-zh" id="hero-zh"></div>
+        <button class="btn-explore" id="btn-explore">探索更多 →</button>
+      </div>
+      <div id="browse-root"></div>
+      <div class="hero-dots" id="hero-dots"></div>
+      <div class="hero-tabs" id="hero-tabs"></div>
+    </div>
+    <div class="chat-panel" data-screen-label="對話">
+      <div class="chat-head">
+        <div class="chat-avatar"><img src="uploads/chat.svg" alt="Mia"></div>
+        <div class="chat-head-txt">
+          <div class="chat-head-name">Mia · 你的選車顧問</div>
+          <div class="chat-head-status"><span class="dot"></span>線上 · 用打的或用講的都可以</div>
+        </div>
+      </div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="input-area" data-screen-label="輸入區">
+        <div class="quick-replies" id="quick-replies" style="display:none;"></div>
+        <div class="input-pill">
+          <input id="chat-input" placeholder="說說你的需求，例如：我想找通勤用的車，預算兩萬…">
+          <button class="btn-voice" id="btn-voice" title="用講的（示範）">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor" stroke="none"></rect><path d="M5.5 11.5 a6.5 6.5 0 0 0 13 0"></path><line x1="12" y1="18" x2="12" y2="21"></line><line x1="8.5" y1="21" x2="15.5" y2="21"></line></svg>
+          </button>
+          <button class="btn-send" id="btn-send">送出</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="overlay-root"></div>
+</div>
+<script>
+'use strict';
+/* ===== 資料（與設計稿一致） ===== */
+const categories = [
+  { id: 'onroad', name: '公路車 On-Road', sub: '競速 · 耐力 · 平把公路' },
+  { id: 'xroad', name: '跨界車 X-Road', sub: '礫石 · 混合路面' },
+  { id: 'offroad', name: '登山車 Off-Road', sub: 'XC · 林道' },
+  { id: 'ebike', name: '電動輔助 E-Bike', sub: '通勤 · 運動電輔' },
+  { id: 'lifestyle', name: '城市生活 Lifestyle', sub: '通勤 · 折疊 · 小徑' },
+  { id: 'kids', name: '童車 & 青少年車', sub: '兒童 · 青少年' }
+];
+const products = [
+  { id: 'u2', catId: 'lifestyle', cat: '城市生活 Lifestyle', name: 'Metro U2', price: 14800, blurb: '鋁合金車架、內變 3 速、含貨架擋泥板，上下班最省心。', desc: '為每天 5–15 公里的城市通勤設計：直立騎姿看路況更輕鬆，內變速免保養，出廠即附貨架、擋泥板與腳架。', specs: [['車架','鋁合金 6061'],['變速','內變 3 速'],['重量','13.2 kg'],['適合','日常通勤 · 買菜代步']] },
+  { id: 's1', catId: 'lifestyle', cat: '城市生活 Lifestyle', name: 'City S1', price: 21800, blurb: '輕量平把、外變 9 速，通勤之外也能週末小跑。', desc: '平把設計反應靈活，9 速外變應付坡道有餘裕，11.4 kg 搬上樓也不吃力。通勤與輕度運動一台搞定。', specs: [['車架','鋁合金 6061'],['變速','9 速'],['重量','11.4 kg'],['適合','通勤 + 週末運動']] },
+  { id: 'e1', catId: 'ebike', cat: '電動輔助 E-Bike', name: 'Metro E1', price: 46800, blurb: '電輔通勤車，80km 續航，上坡逆風都不流汗。', desc: '中置馬達電輔系統，三段助力，單次充電最遠 80 公里。到公司不流汗，回程買再多也不怕。', specs: [['車架','鋁合金 · 內藏電池'],['馬達','中置 250W'],['續航','約 80 km'],['適合','長距離通勤 · 多坡路線']] },
+  { id: 'r1', catId: 'onroad', cat: '公路車 On-Road', name: 'Aero R1', price: 52800, blurb: '碳纖車架、22 速，週末長途與自我挑戰之選。', desc: '全碳纖維車架搭配 22 速套件，8.6 kg 的輕快讓長距離爬坡不再是苦行。適合已有騎乘經驗、想認真練的你。', specs: [['車架','碳纖維'],['變速','22 速'],['重量','8.6 kg'],['適合','長途 · 訓練 · 自我挑戰']] },
+  { id: 'g2', catId: 'xroad', cat: '跨界車 X-Road', name: 'Gravel G2', price: 39800, blurb: '礫石車設定，鋪裝與碎石路自由切換。', desc: '彎把礫石車幾何，40c 寬胎吃得下碎石與土路，掛上貨架也能長途旅行。一台車探索更多路線。', specs: [['車架','鋁合金 · 碳纖前叉'],['變速','2×10 速'],['重量','10.8 kg'],['適合','混合路面 · 長途旅行']] },
+  { id: 'k1', catId: 'kids', cat: '童車 & 青少年車', name: 'Youth 20', price: 8800, blurb: '20 吋輪徑、低跨點車架，5–8 歲的第一台真正單車。', desc: '低跨點設計好上下車，兒童專用短曲柄與窄握把，煞車手感為小手調校。附輔助輪安裝孔位。', specs: [['輪徑','20 吋'],['車架','鋁合金 · 低跨點'],['重量','9.8 kg'],['適合','身高 110–135 cm']] },
+  { id: 'x3', catId: 'offroad', cat: '登山車 Off-Road', name: 'Trail X3', price: 28800, blurb: '前避震、寬齒胎，林道碎石都吃得下。', desc: '120mm 前避震搭配 2.35" 寬齒胎，碎石、樹根、階梯照騎。入門越野一步到位。', specs: [['車架','鋁合金'],['避震','前避震 120mm'],['變速','12 速'],['適合','林道 · 越野入門']] }
+];
+const accessories = [
+  { id: 'a1', name: '輕量安全帽', price: 1880 },
+  { id: 'a2', name: '前後車燈組', price: 980 },
+  { id: 'a3', name: '折疊防盜鎖', price: 1480 }
+];
+const browseModels = {
+  offroad: [
+    { name: 'Anthem Advanced 29', price: 'NT$128,000', img: 'assets/bike-anthem-adv-29.jpg', cut: 'assets/bike-anthem-cut.png', cta: '瞭解更多',
+      promo: { now: 'NT$118,000', was: 'NT$128,000', gift: '🎁 本月加贈：輕量安全帽＋前後車燈組' },
+      intro: ['登山車入門款可以看這台 Anthem Advanced 29——為新世代 XC 賽道而生的全碳纖維競賽車：前 110mm、後 100mm FlexPoint Pro 避震、Shimano XT 12 速、29 吋輪組，輕量、高效、好操控。',
+              '🎁 本月門市活動價 NT$118,000（原價 128,000），再加贈輕量安全帽＋前後車燈組。想看其他車系直接點下方卡片，或跟我說你平常騎哪種路線、預算多少，我幫你收斂！'] },
+    { name: 'Trance X Advanced Pro 29', price: 'NT$178,000', img: 'assets/bike-trance-x-adv-pro-29.jpg', cut: 'assets/bike-trance-x-adv-pro-29-cut.png', cta: '瞭解更多',
+      intro: ['Trance X Advanced Pro 29 是碳纖長行程林道車——下坡敢衝、爬坡照樣有效率，想認真玩林道，這台是頂規選擇。',
+              '售價 NT$178,000。想知道適不適合你，跟我說平常騎的路線和預算！'] },
+    { name: 'Anthem Advanced SL', price: 'NT$128,000 - NT$280,000', img: 'assets/bike-anthem-adv-sl.jpg', cut: 'assets/bike-anthem-adv-sl-cut.png', cta: '查看 4 車款',
+      intro: ['Anthem Advanced SL 是 XC 競賽旗艦——Advanced SL 等級碳纖車架更輕更硬，每一次加速、每一段爬坡都是為了贏而生。',
+              '全系列 NT$128,000–280,000，共 4 個車款。想看哪個等級跟我說！'] },
+    { name: 'Trance X Advanced', price: 'NT$188,000', img: 'assets/bike-trance-x-adv.jpg', cut: 'assets/bike-trance-x-adv-cut.png', cta: '瞭解更多',
+      intro: ['Trance X Advanced 是碳纖全避震林道車——輕量車架配上均衡的避震行程，一台車吃下大部分林道路線。',
+              '售價 NT$188,000。跟我說你的路線與預算，我幫你評估！'] },
+    { name: 'Trance X', price: 'NT$78,800 - NT$108,000', img: 'assets/bike-trance-x.jpg', cut: 'assets/bike-trance-x-cut.png', cta: '查看 2 車款',
+      intro: ['Trance X 是鋁合金全避震林道車——性能和價格的甜蜜點，想開始玩全避震，從這台入手最划算。',
+              '全系列 NT$78,800 起，共 2 個車款。要不要幫你跟碳纖版比較？'] },
+    { name: 'Talon', price: 'NT$13,800 - NT$26,800', img: 'assets/bike-talon.jpg', cut: 'assets/bike-talon-cut.png', cta: '查看 2 車款',
+      intro: ['Talon 是入門硬尾登山車——鋁合金車架加前避震，輕度林道、碎石路都能玩，是最好入手的登山車。',
+              '全系列 NT$13,800 起，共 2 個車款。預算有限想入坑，選它就對了！'] }
+  ]
+};
+const heroSlides = [
+  { catId: 'lifestyle', title: '日常騎乘', en: 'Everyday rides, made easy.', zh: '通勤、買菜、城市漫遊，簡單自在。' },
+  { catId: 'ebike', title: 'E-Bike', en: 'Go further with less effort.', zh: '輕鬆上坡、長途騎乘，讓每一段旅程更自在。', img: 'assets/hero-ebike.jpg' },
+  { catId: 'xroad', title: '越野 & 礫石公路', en: 'Any road, any surface.', zh: '鋪裝、礫石、山野小徑，一台車全包。', img: 'assets/hero-xroad.jpg' },
+  { catId: 'offroad', title: '登山車', en: 'Take the road less traveled.', zh: '林道、碎石、山徑，去哪都行。', img: 'assets/offroad-bg2.jpg' },
+  { catId: 'kids', title: '親子/童車', en: 'Little riders, big adventures.', zh: '孩子的第一台車，安全又好騎。', img: 'assets/hero-kids.jpg' }
+];
+const CONCIERGE = 'Mia';
+
+/* ===== 狀態 ===== */
+const S = { msgs: [], quickReplies: [], cart: [], detailId: null, size: 'M', showCart: false, showVoice: false, activeCat: 'lifestyle', heroIdx: 0, heroPaused: false, browseCat: null };
+let transitioning = false, voiceTimer = null, boldSel = 0;
+
+/* ===== 工具 ===== */
+const $ = id => document.getElementById(id);
+const fmt = n => 'NT$ ' + n.toLocaleString('en-US');
+const prod = id => products.find(p => p.id === id);
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+
+/* 分類 icon（與設計稿的 catIcon 一致） */
+const ST = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS = {
+  lifestyle: '<circle cx="5.5" cy="16" r="3.4" ' + ST + '></circle><circle cx="18.5" cy="16" r="3.4" ' + ST + '></circle><path d="M5.5 16 L9.5 9 L15 9 L18.5 16 M9.5 9 L12.5 16 L18.5 16 M8 6.5 L11 6.5 M14 6.5 L15 9" ' + ST + '></path>',
+  ebike: '<path d="M13.5 2.5 L7 13 L11.5 13 L9.5 21.5 L18 10 L13 10 Z" fill="currentColor" stroke="none"></path>',
+  xroad: '<path d="M2 15 Q6 10 10 13 T18 12 L22 9" ' + ST + '></path><circle cx="5" cy="19" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="10" cy="20" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="15" cy="19" r="0.9" fill="currentColor" stroke="none"></circle><circle cx="19.5" cy="20" r="0.9" fill="currentColor" stroke="none"></circle>',
+  offroad: '<path d="M2 19 L8.5 8 L12.5 14.5 L15.5 10 L22 19 Z" ' + ST + '></path><path d="M7 10.5 L8.5 12 L10 10.5" ' + ST + '></path>',
+  kids: '<circle cx="12" cy="12.5" r="8" ' + ST + '></circle><path d="M12 4.5 C11 2.8 9 2.6 8.2 3.6" ' + ST + '></path><circle cx="9.2" cy="11.5" r="1" fill="currentColor" stroke="none"></circle><circle cx="14.8" cy="11.5" r="1" fill="currentColor" stroke="none"></circle><path d="M9 15.2 C10 16.8 14 16.8 15 15.2" ' + ST + '></path>'
+};
+function catIcon(catId) { return '<svg width="18" height="18" viewBox="0 0 24 24" style="flex-shrink:0;">' + (ICONS[catId] || ICONS.lifestyle) + '</svg>'; }
+
+/* ===== Hero 輪播 ===== */
+let lastBgUrl = null;
+function setHeroBg(url) {
+  const base = $('hero-bg'), fade = $('hero-bg-fade');
+  if (url === lastBgUrl) return;
+  if (lastBgUrl === null) { base.style.backgroundImage = "url('" + url + "')"; lastBgUrl = url; return; }
+  lastBgUrl = url;
+  fade.style.backgroundImage = "url('" + url + "')";
+  fade.getAnimations().forEach(a => a.cancel());
+  const a = fade.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: 'ease', fill: 'forwards' });
+  a.onfinish = () => { base.style.backgroundImage = "url('" + url + "')"; fade.getAnimations().forEach(x => x.cancel()); };
+}
+function renderHero() {
+  const sl = heroSlides[S.heroIdx];
+  setHeroBg(sl.img || 'assets/hero-lifestyle.jpg');
+  $('composite').style.opacity = sl.catId === 'offroad' ? '1' : '0';
+  $('hero-icon').innerHTML = catIcon(sl.catId);
+  $('hero-title').textContent = sl.title;
+  $('hero-en').textContent = sl.en;
+  $('hero-zh').textContent = sl.zh;
+  const dots = $('hero-dots'); dots.innerHTML = '';
+  heroSlides.forEach((_, i) => {
+    const d = el('span', 'hero-dot');
+    d.style.width = S.heroIdx === i ? '22px' : '6px';
+    d.style.background = S.heroIdx === i ? '#fff' : 'rgba(255,255,255,0.55)';
+    d.onclick = () => { S.heroIdx = i; renderHero(); scheduleHero(); };
+    dots.appendChild(d);
+  });
+  const tabs = $('hero-tabs'); tabs.innerHTML = '';
+  heroSlides.forEach((t, i) => {
+    const b = el('button', 'hero-tab');
+    b.innerHTML = catIcon(t.catId) + '<span>' + t.title + '</span>';
+    b.style.background = S.heroIdx === i ? 'oklch(93.2% 0.032 255.585)' : 'transparent';
+    b.style.color = S.heroIdx === i ? '#001488' : 'oklch(37.2% 0.044 257.287)';
+    b.onclick = () => { S.heroIdx = i; renderHero(); scheduleHero(); };
+    tabs.appendChild(b);
+  });
+}
+/* 自動輪播：手動切換會重置計時，瀏覽清單／轉場中暫停 */
+let heroTimer = null;
+function scheduleHero() {
+  clearTimeout(heroTimer);
+  heroTimer = setTimeout(() => {
+    if (!S.browseCat && !transitioning) { S.heroIdx = (S.heroIdx + 1) % heroSlides.length; renderHero(); }
+    scheduleHero();
+  }, 5500);
+}
+scheduleHero();
+
+/* ===== 對話 ===== */
+function push(m) { S.msgs.push(m); renderChat(); }
+function setReplies(list) { S.quickReplies = list; renderReplies(); }
+function qr(label, fn) { return { label, fn }; }
+function userSay(text) { push({ isUser: true, text }); }
+function aiSay(items, replies) {
+  setReplies([]);
+  push({ isTyping: true });
+  const step = i => {
+    S.msgs = S.msgs.filter(m => !m.isTyping); S.msgs.push(items[i]);
+    if (i + 1 < items.length) S.msgs.push({ isTyping: true });
+    renderChat();
+    if (i + 1 < items.length) setTimeout(() => step(i + 1), 700);
+    else if (replies) setReplies(replies);
+  };
+  setTimeout(() => step(0), 800);
+}
+function renderChat() {
+  const body = $('chat-body'); body.innerHTML = '';
+  S.msgs.forEach(m => {
+    const wrap = el('div', 'msg');
+    if (m.isUser) wrap.appendChild(el('div', 'msg-user', m.text));
+    else if (m.isAi) wrap.appendChild(el('div', 'msg-ai', m.text));
+    else if (m.isTyping) { const t = el('div', 'msg-typing'); t.append(el('span'), el('span'), el('span')); wrap.appendChild(t); }
+    else if (m.isCards) wrap.appendChild(renderCards(m));
+    else if (m.isCompare) wrap.appendChild(renderCompare(m));
+    else if (m.isBundle) wrap.appendChild(renderBundle(m));
+    body.appendChild(wrap);
+  });
+  body.scrollTop = body.scrollHeight;
+}
+function renderCards(m) {
+  const grid = el('div', 'cards-grid');
+  m.items.forEach(p => {
+    const card = el('div', 'p-card');
+    const img = el('div', 'p-card-img', '產品照 · ' + p.name); img.onclick = p.open;
+    const bd = el('div', 'p-card-body');
+    const row = el('div', 'p-card-row');
+    const nm = el('div', 'p-card-name', p.name); nm.onclick = p.open;
+    row.append(nm, el('div', 'p-card-price', p.priceStr));
+    const btns = el('div', 'p-card-btns');
+    const add = el('button', 'btn-add', '加入購物車'); add.onclick = p.add;
+    const det = el('button', 'btn-detail', '看詳情'); det.onclick = p.open;
+    btns.append(add, det);
+    bd.append(row, el('div', 'p-card-blurb', p.blurb), btns);
+    card.append(img, bd);
+    grid.appendChild(card);
+  });
+  return grid;
+}
+function renderCompare(m) {
+  const box = el('div', 'cmp');
+  const head = el('div', 'cmp-row');
+  head.appendChild(el('div', 'cmp-h'));
+  m.names.forEach(n => head.appendChild(el('div', 'cmp-h cmp-hn', n)));
+  box.appendChild(head);
+  m.rows.forEach(r => {
+    const row = el('div', 'cmp-body-row');
+    row.appendChild(el('div', 'cmp-label', r.label));
+    r.vals.forEach(v => row.appendChild(el('div', 'cmp-val', v)));
+    box.appendChild(row);
+  });
+  return box;
+}
+function renderBundle(m) {
+  const box = el('div', 'bundle');
+  box.appendChild(el('div', 'bundle-title', '通勤安全配套'));
+  m.items.forEach(a => {
+    const row = el('div', 'bundle-row');
+    const col = el('div'); col.style.display = 'flex'; col.style.flexDirection = 'column';
+    col.append(el('span', 'bundle-name', a.name), el('span', 'bundle-price', a.priceStr));
+    const add = el('button', 'btn-bundle-add', '加入'); add.onclick = a.add;
+    row.append(col, add);
+    box.appendChild(row);
+  });
+  const all = el('button', 'btn-bundle-all', '整套加入 · ' + fmt(accessories.reduce((t, a) => t + a.price, 0)));
+  all.onclick = addBundle;
+  box.appendChild(all);
+  return box;
+}
+function renderReplies() {
+  const box = $('quick-replies'); box.innerHTML = '';
+  box.style.display = S.quickReplies.length ? 'flex' : 'none';
+  S.quickReplies.forEach(q => {
+    const b = el('button', 'qr-btn', q.label); b.onclick = q.fn;
+    box.appendChild(b);
+  });
+}
+function useReplies() {
+  return [
+    qr('上下班通勤', () => pickUse('上下班通勤')),
+    qr('假日運動', () => pickUse('假日運動')),
+    qr('越野登山', () => pickUse('越野登山')),
+    qr('看電輔車', () => showCat('ebike')),
+    qr('先看人氣車款', () => browse())
+  ];
+}
+
+/* ===== 對話腳本 ===== */
+function cardsMsg(ids) {
+  return { isCards: true, items: ids.map(id => {
+    const p = prod(id);
+    return { name: p.name, priceStr: fmt(p.price), blurb: p.blurb, add: () => addToCart(p), open: () => openDetail(id) };
+  }) };
+}
+function pickCat(catId, label) {
+  S.activeCat = catId;
+  const ids = products.filter(p => p.catId === catId).map(p => p.id);
+  userSay('我想看「' + label + '」');
+  aiSay([
+    { isAi: true, text: '「' + label + '」這邊目前有這些，我先列給你——跟我說用途和預算，我再幫你收斂：' },
+    cardsMsg(ids)
+  ], useReplies());
+}
+function showCat(catId) {
+  const c = categories.find(x => x.id === catId);
+  userSay('我想看' + c.name);
+  const ids = products.filter(p => p.catId === catId).map(p => p.id);
+  aiSay([
+    { isAi: true, text: c.name + '（' + c.sub + '）目前有這些：' },
+    cardsMsg(ids)
+  ], useReplies());
+}
+function showCatSilent(catId) {
+  const c = categories.find(x => x.id === catId);
+  const ids = products.filter(p => p.catId === catId).map(p => p.id);
+  aiSay([
+    { isAi: true, text: c.name + '（' + c.sub + '）目前有這些：' },
+    cardsMsg(ids)
+  ], useReplies());
+}
+/* 登山車：清單開在左邊，聊天不放商品卡，改追問用途／預算 */
+function openOffroadList() {
+  if (S.browseCat || transitioning) return;
+  const idx = heroSlides.findIndex(x => x.catId === 'offroad');
+  if (S.heroIdx !== idx) {
+    S.heroIdx = idx; S.heroPaused = true; renderHero();
+    setTimeout(() => flyToCard('offroad'), 620);
+  } else {
+    flyToCard('offroad');
+  }
+}
+function offroadReplies() {
+  return [
+    qr('林道入門', () => offroadNarrow('林道入門')),
+    qr('碎石路長途', () => offroadNarrow('碎石路長途')),
+    qr('預算 3 萬以內', () => offroadNarrow('預算 3 萬以內')),
+    qr('先自己看看', () => offroadNarrow('先自己看看'))
+  ];
+}
+function offroadConsult() {
+  aiSay(browseModels.offroad[0].intro.map(t => ({ isAi: true, text: t })), offroadReplies());
+}
+function offroadNarrow(label) {
+  userSay(label);
+  if (label === '林道入門') {
+    aiSay([{ isAi: true, text: '入門跑林道的話，左邊的 Talon（NT$13,800 起，硬尾）最好入手；想一步到位就看 Trail X3——前避震 120mm 加寬齒胎，碎石樹根都穩。' }], [
+      qr('看 Trail X3 詳情', () => openDetail('x3')),
+      qr('有推薦的配件嗎', () => suggestBundle())
+    ]);
+  } else if (label === '碎石路長途') {
+    aiSay([{ isAi: true, text: '常跑碎石、路程拉長的話，全避震會舒服很多——左邊的 Trance X（NT$78,800 起）是甜蜜點，預算再上去 Trance X Advanced 系列更輕更快。' }], [
+      qr('先看入門的就好', () => offroadNarrow('預算 3 萬以內')),
+      qr('先自己看看', () => offroadNarrow('先自己看看'))
+    ]);
+  } else if (label === '預算 3 萬以內') {
+    aiSay([{ isAi: true, text: '3 萬以內我會鎖定兩台：Talon（NT$13,800–26,800）跟 Trail X3（NT$28,800）。差在 X3 的避震行程和胎寬更能吃林道——預算到得了，我推 X3。' }], [
+      qr('看 Trail X3 詳情', () => openDetail('x3')),
+      qr('有推薦的配件嗎', () => suggestBundle())
+    ]);
+  } else {
+    aiSay([{ isAi: true, text: '好，慢慢看！左邊每張卡片都可以點。想比較、問規格，或想知道哪台適合你，隨時叫我。' }], useReplies());
+  }
+}
+function pickUse(label) {
+  userSay(label);
+  if (label === '上下班通勤') {
+    aiSay([{ isAi: true, text: '好的！通勤最重要的是省力、免保養。方便先告訴我大概的預算範圍嗎？' }], [
+      qr('2 萬以內', () => pickBudget('2 萬以內')),
+      qr('2–4 萬', () => pickBudget('2–4 萬')),
+      qr('預算不是問題', () => pickBudget('預算不是問題'))
+    ]);
+  } else if (label === '假日運動') {
+    aiSay([
+      { isAi: true, text: '喜歡週末出去跑！運動騎乘我會看你偏好鋪裝道路還是想練長途。這兩台是我們最有人氣的：' },
+      cardsMsg(['r1', 's1'])
+    ], [
+      qr('幫我比較這兩台', () => compare(['r1', 's1'])),
+      qr('我其實是要通勤', () => pickUse('上下班通勤'))
+    ]);
+  } else {
+    openOffroadList();
+    offroadConsult();
+  }
+}
+function pickBudget(label) {
+  userSay(label);
+  aiSay([
+    { isAi: true, text: '了解！根據「通勤 + ' + label + '」，我幫你挑了三台，各有取向——省心、輕快、或完全不流汗：' },
+    cardsMsg(['u2', 's1', 'e1'])
+  ], [
+    qr('幫我比較這三台', () => compare(['u2', 's1', 'e1'])),
+    qr('有推薦的配件嗎', () => suggestBundle()),
+    qr('看電輔的詳情', () => openDetail('e1'))
+  ]);
+}
+function compare(ids) {
+  userSay('幫我比較這幾台');
+  const ps = ids.map(id => prod(id));
+  const rows = [
+    { label: '售價', vals: ps.map(p => fmt(p.price)) },
+    { label: '車架', vals: ps.map(p => p.specs[0][1]) },
+    { label: '變速/動力', vals: ps.map(p => p.specs[1][1]) },
+    { label: '重量/續航', vals: ps.map(p => p.specs[2][1]) },
+    { label: '適合', vals: ps.map(p => p.specs[3][1]) }
+  ];
+  aiSay([
+    { isAi: true, text: '整理好了！簡單說：預算優先選 ' + ps[0].name + '；想兼顧運動選輕的；路遠或多坡，電輔值得。' },
+    { isCompare: true, names: ps.map(p => p.name), rows }
+  ], [
+    ...ids.map(id => qr('選 ' + prod(id).name, () => chooseProduct(id))),
+    qr('有推薦的配件嗎', () => suggestBundle())
+  ]);
+}
+function chooseProduct(id) {
+  const p = prod(id);
+  userSay('就選 ' + p.name);
+  aiSay([
+    { isAi: true, text: '好眼光！' + p.name + ' 的詳情我幫你打開了。170cm 左右建議 M 尺寸；確定的話我幫你加入購物車，再配一套通勤安全配件？' }
+  ], [
+    qr('加入購物車', () => addToCart(p)),
+    qr('配件也一起看', () => suggestBundle())
+  ]);
+  setTimeout(() => { S.detailId = id; S.size = 'M'; renderOverlays(); }, 1800);
+}
+function suggestBundle() {
+  userSay('有推薦的配件嗎');
+  aiSay([
+    { isAi: true, text: '通勤的話這三樣我都建議備：安全帽保命、車燈保平安、好鎖保車。整套帶走我幫你算 ' + fmt(accessories.reduce((t, a) => t + a.price, 0)) + '：' },
+    { isBundle: true, items: accessories.map(a => ({ name: a.name, priceStr: fmt(a.price), add: () => addToCart(a) })) }
+  ], [
+    qr('整套加入', () => addBundle()),
+    qr('先這樣就好', () => wrapUp())
+  ]);
+}
+function wrapUp() {
+  userSay('先這樣就好');
+  aiSay([{ isAi: true, text: '沒問題！購物車在右上角，隨時想改主意或有問題再叫我。祝騎車愉快！' }], useReplies());
+}
+function browse() {
+  userSay('先看人氣車款');
+  aiSay([
+    { isAi: true, text: '這幾台是店裡最有人氣的，先隨意看看。看到有興趣的點「看詳情」，也可以直接問我「這台適合我嗎」。' },
+    cardsMsg(['u2', 's1', 'e1', 'r1'])
+  ], useReplies());
+}
+function addToCart(p) {
+  const found = S.cart.find(c => c.id === p.id);
+  if (found) found.qty += 1; else S.cart.push({ id: p.id, name: p.name, price: p.price, qty: 1 });
+  S.detailId = null;
+  renderCartBadge(); renderOverlays();
+  aiSay([{ isAi: true, text: '已加入購物車：' + p.name + '。還需要幫你看別的嗎？' }], [
+    qr('有推薦的配件嗎', () => suggestBundle()),
+    qr('先這樣就好', () => wrapUp())
+  ]);
+}
+function addBundle() {
+  accessories.forEach(a => {
+    const found = S.cart.find(c => c.id === a.id);
+    if (found) found.qty += 1; else S.cart.push({ id: a.id, name: a.name, price: a.price, qty: 1 });
+  });
+  renderCartBadge(); renderOverlays();
+  setReplies([]);
+  aiSay([{ isAi: true, text: '整套配件都放進購物車了！安全帽記得試戴，尺寸不合可以免費換。' }], [
+    qr('先這樣就好', () => wrapUp())
+  ]);
+}
+function openDetail(id) { S.detailId = id; S.size = 'M'; renderOverlays(); }
+function askFit(id) {
+  const p = prod(id);
+  S.detailId = null; renderOverlays();
+  userSay('這台 ' + p.name + ' 適合我嗎？');
+  const fit = { u2: '如果你單程 5 公里內、平路為主，U2 完全夠用，而且幾乎不用保養。', s1: '想通勤兼運動、偶爾騎遠一點，S1 的輕量和 9 速是甜蜜點。', e1: '單程超過 8 公里、有坡或不想流汗，E1 是最舒服的答案。', r1: '如果你已經有騎乘經驗、想認真練長途，R1 一步到位；純通勤就有點大材小用。', x3: '想跑林道、碎石路，X3 入門剛剛好；純市區通勤的話避震反而多餘。' }[id];
+  aiSay([{ isAi: true, text: fit + ' 你平常大概騎多遠？路線有坡嗎？跟我說，我可以再幫你確認一次。' }], [
+    qr('加入購物車', () => addToCart(p)),
+    qr('幫我跟別台比較', () => compare(id === 'x3' ? ['x3', 's1', 'e1'] : ['u2', 's1', 'e1']))
+  ]);
+}
+function handleFree(text) {
+  userSay(text);
+  const t = text;
+  if (/通勤|上班|代步/.test(t)) return aiSay([{ isAi: true, text: '通勤是吧！先問個關鍵的——大概的預算範圍？' }], [
+    qr('2 萬以內', () => pickBudget('2 萬以內')),
+    qr('2–4 萬', () => pickBudget('2–4 萬')),
+    qr('預算不是問題', () => pickBudget('預算不是問題'))
+  ]);
+  if (/電輔|電動|e-?bike/i.test(t)) return showCatSilent('ebike');
+  if (/礫石|跨界|gravel/i.test(t)) return showCatSilent('xroad');
+  if (/公路|運動|練/.test(t)) return aiSay([
+    { isAi: true, text: '運動騎乘的話，這兩台是我們最有人氣的：' },
+    cardsMsg(['r1', 's1'])
+  ], [ qr('幫我比較這兩台', () => compare(['r1', 's1'])) ]);
+  if (/登山|越野|林道/.test(t)) { openOffroadList(); return offroadConsult(); }
+  if (/配件|安全帽|車燈|鎖/.test(t)) return aiSay([
+    { isAi: true, text: '配件的話，這三樣我都建議備齊：' },
+    { isBundle: true, items: accessories.map(a => ({ name: a.name, priceStr: fmt(a.price), add: () => addToCart(a) })) }
+  ], [ qr('整套加入', () => addBundle()) ]);
+  aiSay([{ isAi: true, text: '收到！（這是腳本示範，正式版會由 AI 即時理解你的話。）先從用途開始最快——你主要想怎麼騎？' }], useReplies());
+}
+
+/* ===== 官網車系瀏覽（探索更多 → 左側清單） ===== */
+function renderBrowse() {
+  const root = $('browse-root'); root.innerHTML = '';
+  if (!S.browseCat) return;
+  const sl = heroSlides.find(x => x.catId === S.browseCat) || {};
+  const models = browseModels[S.browseCat] || [];
+  const overlay = el('div', 'browse-overlay');
+  overlay.setAttribute('data-browse-overlay', '1');
+  const head = el('div', 'browse-head');
+  const left = el('div', 'browse-head-left');
+  const icon = el('div', 'browse-icon'); icon.innerHTML = catIcon(S.browseCat);
+  left.append(icon, el('div', 'browse-title', sl.title || ''), el('div', 'browse-count', models.length + ' 個車系'));
+  const back = el('button', 'btn-back', '← 返回');
+  back.onclick = () => { if (S.browseCat === 'offroad') flyBack(); else { S.browseCat = null; renderBrowse(); } };
+  head.append(back, left);
+  const askAbout = m => () => {
+    userSay('我想多瞭解 ' + m.name);
+    aiSay([{ isAi: true, text: m.name + '（' + m.price + '）是很受歡迎的選擇！跟我說你的騎乘習慣和預算，我幫你看這台適不適合，或推薦同系列更划算的款式。' }], useReplies());
+  };
+  /* 主打車款：大字在車後、車下接地陰影；點下方卡片可切換主打 */
+  boldSel = 0;
+  const feat = el('div', 'bold-feature');
+  const ghost = el('div', 'bold-ghost'); ghost.id = 'bold-ghost';
+  const bikeWrap = el('div', 'bold-bike');
+  const shadow = el('div', 'bold-shadow'); shadow.id = 'bold-shadow';
+  const bimg = document.createElement('img');
+  bimg.id = 'bold-bike-img'; bimg.alt = ''; bimg.draggable = false;
+  bikeWrap.append(shadow, bimg);
+  const info = el('div', 'bold-info');
+  const nameEl = el('div', 'bold-name'); nameEl.id = 'bold-name';
+  const priceRow = el('div', 'bold-price'); priceRow.id = 'bold-price';
+  const giftEl = el('div', 'bold-gift'); giftEl.id = 'bold-gift';
+  const cta = el('button', 'bold-cta', '瞭解更多 →');
+  info.append(nameEl, priceRow, giftEl, cta);
+  feat.append(ghost, bikeWrap, info);
+  const fillFeature = m => {
+    ghost.textContent = m.name.toUpperCase();
+    bimg.src = m.cut;
+    nameEl.textContent = m.name;
+    if (m.promo) {
+      priceRow.innerHTML = '<span class="now">' + m.promo.now + '</span><span class="was">' + m.promo.was + '</span>';
+      giftEl.textContent = m.promo.gift; giftEl.style.display = '';
+    } else {
+      priceRow.innerHTML = '<span class="now">' + m.price + '</span>';
+      giftEl.style.display = 'none';
+    }
+    cta.onclick = askAbout(m);
+  };
+  fillFeature(models[boldSel]);
+  /* 全部車系小卡：選中的置中、亮起，其餘沿弧線排開 */
+  const arc = el('div', 'bold-arc');
+  overlay.append(head, feat, arc);
+  root.appendChild(overlay);
+  /* 六個等距槽位；選中的固定在中間槽（slot 2），其餘依型錄順序填入 */
+  const SLOTS = [-1, -0.6, -0.2, 0.2, 0.6, 1];
+  const SEL_SLOT = 2;
+  const depth = 30;
+  const cards = [];
+  const layoutCards = () => {
+    const W = overlay.clientWidth || 760;
+    const CW = Math.max(126, Math.min(170, W / 7));
+    const spread = W * 0.94 - CW;
+    let o = 0;
+    models.forEach((m, i) => {
+      let s;
+      if (i === boldSel) { s = SEL_SLOT; } else { s = o; o++; if (o === SEL_SLOT) o++; }
+      const t = SLOTS[s];
+      const card = cards[i];
+      card.style.width = CW + 'px';
+      card.style.left = (W / 2 + t * spread / 2 - CW / 2) + 'px';
+      card.style.top = (34 - (1 - t * t) * depth) + 'px';
+      card.style.setProperty('--rot', (t * 7) + 'deg');
+      card.classList.toggle('sel', i === boldSel);
+    });
+  };
+  const onResize = () => { if (!overlay.isConnected) { window.removeEventListener('resize', onResize); return; } layoutCards(); };
+  window.addEventListener('resize', onResize);
+  const selectBold = i => {
+    if (i === boldSel || transitioning) return;
+    boldSel = i;
+    layoutCards(true);
+    feat.getAnimations().forEach(a => a.cancel());
+    const fadeOut = feat.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, fill: 'forwards' });
+    fadeOut.onfinish = () => {
+      fillFeature(models[i]);
+      feat.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out', fill: 'forwards' });
+    };
+    aiSay(models[i].intro.map(t => ({ isAi: true, text: t })), offroadReplies());
+  };
+  models.forEach((m, i) => {
+    const card = el('div', 'bold-card');
+    card.style.animationDelay = (0.35 + i * 0.05) + 's';
+    const img = el('div', 'bold-card-img');
+    img.style.backgroundImage = "url('" + m.img + "')";
+    card.append(img, el('div', 'bold-card-nm', m.name), el('div', 'bold-card-pr', m.price));
+    card.onclick = () => selectBold(i);
+    cards.push(card);
+    arc.appendChild(card);
+  });
+  layoutCards(false);
+}
+
+/* ===== Shared-element transition（登山車 hero ⇄ 車系清單） =====
+   hero 為三層合成（offroad-bg 背景 + offroad-bike 車 + offroad-rider 騎士）。
+   起飛的浮層直接接手畫面上的車圖層（同圖、同位置），因此起點無縫；
+   騎士做「下車」退場，飛行減速段交叉淡化成棚拍產品照，落進第一張卡片。 */
+function clearAnims(el) { el.getAnimations().forEach(a => a.cancel()); }
+/* 車在 offroad-hero-group.png 畫布中的邊界框（比例），飛行浮層由此接手 */
+const BIKE_FRAC = { x: 0.00963, y: 0.35768, w: 0.98073, h: 0.63140 };
+function bikeRect() {
+  const r = $('lay-group').getBoundingClientRect();
+  return { left: r.left + r.width * BIKE_FRAC.x, top: r.top + r.height * BIKE_FRAC.y, width: r.width * BIKE_FRAC.w, height: r.height * BIKE_FRAC.h };
+}
+function makeFlyer(rect, productImg, showProduct) {
+  const flyer = document.createElement('div');
+  flyer.style.cssText = 'position:fixed; left:' + rect.left + 'px; top:' + rect.top + 'px; width:' + rect.width + 'px; height:' + rect.height + 'px; z-index:9999; pointer-events:none; will-change:left,top,width,height,filter;';
+  const inner = document.createElement('img');
+  inner.src = 'assets/offroad-bike-fly.png';
+  inner.alt = '';
+  inner.style.cssText = 'position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:' + (showProduct ? 0 : 1) + ';';
+  const prodLayer = document.createElement('div');
+  prodLayer.style.cssText = 'position:absolute; inset:0; background-image:url("' + productImg + '"); background-size:contain; background-repeat:no-repeat; background-position:center; opacity:' + (showProduct ? 1 : 0) + ';';
+  flyer.appendChild(inner); flyer.appendChild(prodLayer);
+  document.body.appendChild(flyer);
+  return { flyer, inner, prod: prodLayer };
+}
+function flyToCard(catId) {
+  const panel = $('scene');
+  const layGroup = $('lay-group'), layRider = $('lay-rider'), layShadow = $('lay-shadow'), bg = $('hero-bg');
+  if (transitioning || S.browseCat) return;
+  if (!document.body.animate || !layGroup.offsetWidth) { S.browseCat = catId; S.heroPaused = true; renderBrowse(); return; }
+  transitioning = true; S.heroPaused = true;
+  [layGroup, layRider, layShadow, bg].forEach(clearAnims);
+  const start = bikeRect();
+  const { flyer, inner, prod: prodLayer } = makeFlyer(start, 'assets/bike-anthem-cut.png', false);
+  /* 切層瞬間：整組圖 → 純人層＋飛行車（同一母圖拆出，像素對位） */
+  layGroup.style.visibility = 'hidden';
+  layRider.animate([
+    { opacity: 1, transform: 'translate(0px,0px) rotate(0deg)', filter: 'blur(0px)' },
+    { opacity: 0, transform: 'translate(-12px,-26px) rotate(-5deg)', filter: 'blur(3px)' }
+  ], { duration: 320, delay: 160, easing: 'ease-out', fill: 'both' });
+  layShadow.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+  bg.animate([{ opacity: 1, filter: 'blur(0px)' }, { opacity: 0, filter: 'blur(5px)' }], { duration: 380, easing: 'ease-out', fill: 'forwards' });
+  setTimeout(() => {
+    S.browseCat = catId; renderBrowse();
+    setTimeout(() => {
+      const img = panel.querySelector('#bold-bike-img');
+      const shadowEl = panel.querySelector('#bold-shadow');
+      const bail = () => { layGroup.style.visibility = 'visible'; clearAnims(layRider); if (img) img.style.opacity = '1'; if (shadowEl) shadowEl.style.opacity = '1'; flyer.remove(); transitioning = false; };
+      if (!img) { bail(); return; }
+      img.style.opacity = '0';
+      shadowEl.style.opacity = '0';
+      const r = img.getBoundingClientRect();
+      if (!start.width || !r.width) { bail(); return; }
+      /* 動畫盒子的位置/尺寸（非 transform 縮放）：車圖以 object-fit:contain 置中，全程等比不變形 */
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const mid = t => ({
+        left: lerp(start.left, r.left, t) + 'px',
+        top: (lerp(start.top, r.top, t) - 40) + 'px',
+        width: lerp(start.width, r.width, t) + 'px',
+        height: lerp(start.height, r.height, t) + 'px'
+      });
+      const dur = 680;
+      const anim = flyer.animate([
+        { left: start.left + 'px', top: start.top + 'px', width: start.width + 'px', height: start.height + 'px', filter: 'blur(0px)' },
+        { ...mid(0.42), filter: 'blur(2px)', offset: 0.42 },
+        { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', filter: 'blur(0px)' }
+      ], { duration: dur, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'forwards' });
+      setTimeout(() => {
+        inner.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' });
+        prodLayer.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, fill: 'forwards' });
+      }, dur * 0.55);
+      anim.onfinish = () => {
+        img.style.opacity = '1';
+        shadowEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out', fill: 'forwards' });
+        flyer.remove();
+        transitioning = false;
+      };
+      setTimeout(() => { if (flyer.parentNode) { flyer.remove(); img.style.opacity = '1'; shadowEl.style.opacity = '1'; transitioning = false; } }, 2000);
+    }, 30);
+  }, 140);
+}
+function flyBack() {
+  const panel = $('scene');
+  const img = panel.querySelector('#bold-bike-img');
+  const overlay = panel.querySelector('[data-browse-overlay]');
+  const layGroup = $('lay-group'), layRider = $('lay-rider'), layShadow = $('lay-shadow'), bg = $('hero-bg');
+  if (transitioning || !img || !document.body.animate) {
+    [bg, layRider, layShadow].forEach(clearAnims);
+    layGroup.style.visibility = 'visible';
+    S.browseCat = null; renderBrowse();
+    return;
+  }
+  if (boldSel !== 0) {
+    /* 主打不是 Anthem 時：飛行元素對不上，改用淡出返回 */
+    transitioning = true;
+    if (overlay) overlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' });
+    [bg, layRider, layShadow].forEach(clearAnims);
+    layGroup.style.visibility = 'visible';
+    bg.animate([{ opacity: 0, filter: 'blur(5px)' }, { opacity: 1, filter: 'blur(0px)' }], { duration: 340, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => { S.browseCat = null; renderBrowse(); transitioning = false; }, 280);
+    return;
+  }
+  transitioning = true;
+  panel.querySelectorAll('.bold-card, .bold-info, .bold-ghost, #bold-shadow').forEach(c => {
+    c.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' });
+  });
+  const r = img.getBoundingClientRect();
+  const { flyer, inner, prod: prodLayer } = makeFlyer(r, 'assets/bike-anthem-cut.png', true);
+  img.style.opacity = '0';
+  setTimeout(() => {
+    if (overlay) overlay.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, fill: 'forwards' });
+  }, 100);
+  setTimeout(() => {
+    S.browseCat = null; renderBrowse();
+    setTimeout(() => {
+      clearAnims(bg);
+      bg.animate([{ opacity: 0, filter: 'blur(5px)' }, { opacity: 1, filter: 'blur(0px)' }], { duration: 400, easing: 'ease-out', fill: 'forwards' });
+      const end = bikeRect();
+      if (!end.width || !r.width) { layGroup.style.visibility = 'visible'; flyer.remove(); transitioning = false; return; }
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const mid = t => ({
+        left: lerp(r.left, end.left, t) + 'px',
+        top: (lerp(r.top, end.top, t) - 40) + 'px',
+        width: lerp(r.width, end.width, t) + 'px',
+        height: lerp(r.height, end.height, t) + 'px'
+      });
+      const dur = 680;
+      const anim = flyer.animate([
+        { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', filter: 'blur(0px)' },
+        { ...mid(0.45), filter: 'blur(2px)', offset: 0.45 },
+        { left: end.left + 'px', top: end.top + 'px', width: end.width + 'px', height: end.height + 'px', filter: 'blur(0px)' }
+      ], { duration: dur, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'forwards' });
+      setTimeout(() => {
+        prodLayer.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, fill: 'forwards' });
+        inner.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140, fill: 'forwards' });
+      }, dur * 0.18);
+      clearAnims(layRider); clearAnims(layShadow);
+      layRider.animate([
+        { opacity: 0, transform: 'translate(-12px,-26px) rotate(-5deg)', filter: 'blur(3px)' },
+        { opacity: 1, transform: 'translate(0px,0px) rotate(0deg)', filter: 'blur(0px)' }
+      ], { duration: 300, delay: dur * 0.5, easing: 'ease-out', fill: 'both' });
+      layShadow.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, delay: dur * 0.6, fill: 'both' });
+      const settle = () => {
+        layGroup.style.visibility = 'visible';
+        clearAnims(layRider);
+        flyer.remove(); transitioning = false;
+      };
+      anim.onfinish = settle;
+      setTimeout(() => { if (flyer.parentNode) settle(); }, 2000);
+    }, 30);
+  }, 230);
+}
+
+/* ===== 覆蓋層（詳情 / 購物車 / 語音） ===== */
+function renderCartBadge() {
+  const n = S.cart.reduce((t, c) => t + c.qty, 0);
+  const b = $('cart-badge');
+  b.style.display = n > 0 ? 'inline-flex' : 'none';
+  b.textContent = n;
+}
+function renderOverlays() {
+  const root = $('overlay-root'); root.innerHTML = '';
+  if (S.detailId) {
+    const d = prod(S.detailId);
+    const ov = el('div', 'detail-overlay'); ov.setAttribute('data-screen-label', '商品詳情');
+    ov.onclick = () => { S.detailId = null; renderOverlays(); };
+    const modal = el('div', 'detail-modal'); modal.onclick = e => e.stopPropagation();
+    const closeRow = el('div', 'detail-close-row');
+    const x = el('button', 'btn-x', '✕'); x.onclick = () => { S.detailId = null; renderOverlays(); };
+    closeRow.appendChild(x);
+    const grid = el('div', 'detail-grid');
+    const imgs = el('div', 'detail-imgs');
+    imgs.appendChild(el('div', 'detail-hero-img', '產品照 · ' + d.name));
+    const thumbs = el('div', 'detail-thumbs');
+    ['細節 1','細節 2','細節 3','細節 4'].forEach(t => thumbs.appendChild(el('div', 'detail-thumb', t)));
+    imgs.appendChild(thumbs);
+    const info = el('div', 'detail-info');
+    const head = el('div'); head.style.display = 'flex'; head.style.flexDirection = 'column'; head.style.gap = '4px';
+    head.appendChild(el('div', 'detail-cat', d.cat));
+    const h2 = el('h2', null, d.name); head.appendChild(h2);
+    head.appendChild(el('div', 'detail-price', fmt(d.price)));
+    const desc = el('p', 'detail-desc', d.desc);
+    const specs = el('div', 'spec-grid');
+    d.specs.forEach(s => {
+      const cell = el('div', 'spec-cell');
+      cell.append(el('span', 'spec-label', s[0]), el('span', 'spec-val', s[1]));
+      specs.appendChild(cell);
+    });
+    const sizeWrap = el('div'); sizeWrap.style.display = 'flex'; sizeWrap.style.flexDirection = 'column'; sizeWrap.style.gap = '8px';
+    sizeWrap.appendChild(el('div', 'size-label', '尺寸'));
+    const sizeRow = el('div', 'size-row');
+    ['S','M','L'].forEach(z => {
+      const b = el('button', 'btn-size', z);
+      const on = S.size === z;
+      b.style.border = '1px solid ' + (on ? 'oklch(68.5% 0.169 237.323)' : 'oklch(92.9% 0.013 255.508)');
+      b.style.background = on ? 'oklch(97.7% 0.013 236.62)' : '#fff';
+      b.style.color = on ? 'oklch(50% 0.134 242.749)' : 'oklch(37.2% 0.044 257.287)';
+      b.onclick = () => { S.size = z; renderOverlays(); };
+      sizeRow.appendChild(b);
+    });
+    sizeWrap.appendChild(sizeRow);
+    const btns = el('div', 'detail-btns');
+    const add = el('button', 'btn-detail-add', '加入購物車'); add.onclick = () => addToCart(d);
+    const ask = el('button', 'btn-detail-ask', '問顧問：適合我嗎？'); ask.onclick = () => askFit(S.detailId);
+    btns.append(add, ask);
+    info.append(head, desc, specs, sizeWrap, btns);
+    grid.append(imgs, info);
+    modal.append(closeRow, grid);
+    ov.appendChild(modal);
+    root.appendChild(ov);
+  }
+  if (S.showCart) {
+    const ov = el('div', 'cart-overlay'); ov.setAttribute('data-screen-label', '購物車');
+    ov.onclick = () => { S.showCart = false; renderOverlays(); };
+    const drawer = el('div', 'cart-drawer'); drawer.onclick = e => e.stopPropagation();
+    const head = el('div', 'cart-head');
+    const x = el('button', 'btn-x', '✕'); x.onclick = () => { S.showCart = false; renderOverlays(); };
+    head.append(el('div', 'cart-title', '購物車'), x);
+    const body = el('div', 'cart-body');
+    if (S.cart.length === 0) body.appendChild(el('div', 'cart-empty', '還沒有商品——跟顧問聊聊，讓她幫你挑。'));
+    S.cart.forEach(c => {
+      const row = el('div', 'cart-row');
+      const col = el('div'); col.style.display = 'flex'; col.style.flexDirection = 'column';
+      col.append(el('span', 'cart-item-name', c.name), el('span', 'cart-item-price', fmt(c.price) + ' × ' + c.qty));
+      const rm = el('button', 'btn-remove', '移除');
+      rm.onclick = () => { S.cart = S.cart.filter(x2 => x2.id !== c.id); renderCartBadge(); renderOverlays(); };
+      row.append(col, rm);
+      body.appendChild(row);
+    });
+    const foot = el('div', 'cart-foot');
+    const totalRow = el('div', 'cart-total-row');
+    totalRow.append(el('span', 'cart-total-label', '合計'), el('span', 'cart-total-val', fmt(S.cart.reduce((t, c) => t + c.price * c.qty, 0))));
+    foot.append(totalRow, el('button', 'btn-checkout', '前往結帳'));
+    drawer.append(head, body, foot);
+    ov.appendChild(drawer);
+    root.appendChild(ov);
+  }
+  if (S.showVoice) {
+    const ov = el('div', 'voice-overlay'); ov.setAttribute('data-screen-label', '語音輸入');
+    ov.onclick = () => { clearTimeout(voiceTimer); S.showVoice = false; renderOverlays(); };
+    const modal = el('div', 'voice-modal');
+    const mic = el('div', 'voice-mic'); mic.appendChild(el('span'));
+    modal.append(mic, el('div', 'voice-title', '聆聽中⋯直接說出你的需求'), el('div', 'voice-hint', '（示範）2 秒後會自動送出：「我想找上下班通勤的車，預算兩萬左右」'));
+    ov.appendChild(modal);
+    root.appendChild(ov);
+  }
+}
+
+/* ===== 事件 ===== */
+$('btn-explore').onclick = () => {
+  if (transitioning || S.browseCat) return;
+  const sl = heroSlides[S.heroIdx];
+  S.heroPaused = true;
+  if (sl.catId === 'offroad') {
+    flyToCard(sl.catId);
+    userSay('我想看「登山車」');
+    offroadConsult();
+  } else {
+    if (browseModels[sl.catId]) { S.browseCat = sl.catId; renderBrowse(); }
+    pickCat(sl.catId, sl.title);
+  }
+};
+$('logo').onclick = () => location.reload();
+$('btn-cart').onclick = () => { S.showCart = !S.showCart; renderOverlays(); };
+$('btn-send').onclick = doSend;
+$('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') doSend(); });
+$('btn-voice').onclick = () => {
+  S.showVoice = true; renderOverlays();
+  clearTimeout(voiceTimer);
+  voiceTimer = setTimeout(() => {
+    S.showVoice = false; renderOverlays();
+    handleFree('我想找上下班通勤的車，預算兩萬左右');
+  }, 2200);
+};
+function doSend() {
+  const input = $('chat-input');
+  const v = input.value.trim();
+  if (!v) return;
+  input.value = '';
+  handleFree(v);
+}
+
+/* ===== 啟動 ===== */
+renderHero();
+setTimeout(() => {
+  aiSay(
+    [{ isAi: true, text: '嗨，我是 ' + CONCIERGE + '，你的選車顧問。\n左邊可以先看看 GIANT 不同類型的車款；如果不知道怎麼選也沒關係，告訴我你平常怎麼騎、預算或在意的條件，我來幫你挑。\n今天想怎麼騎？' }],
+    null
+  );
+}, 900);
+</script>
+</body>
+</html>
