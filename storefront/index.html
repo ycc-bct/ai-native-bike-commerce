@@ -285,7 +285,7 @@ const SPARK = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 
 /* ---------- 熱門車款：車名與價格沿用 02 的車款資料；色點為示意 ---------- */
 const BIKES = [
   {k:'fastroad', n:'FastRoad AR Advanced 1',   pr:62800,  cat:'road',   dots:['#C9B79A','#1B1F26','#2A3340','#1D3C7A'], badge:'NEW'},
-  {k:'revolt',   n:'Revolt Advanced SL 0',     pr:168000, cat:'gravel', dots:['#3B3F2C','#5E6470','#1B1F26','#474B52']},
+  {k:'revolt',   n:'Revolt Advanced SL 0',     pr:308000, cat:'gravel', dots:['#3B3F2C','#5E6470','#1B1F26','#474B52']},
   {k:'talon',    n:'Talon E+',                 pr:79800,  cat:'mtb',    dots:['#2B3F6E','#7C858F','#C8CDD3','#5A6068']},
   {k:'escape',   n:'Escape Disc 2',            pr:16800,  cat:'city',   dots:['#1B1F26','#2E5AA8','#D8D3C4'], badge:'BEST SELLER'},
   {k:'explore',  n:'Explore E+',               pr:78000,  cat:'ebike',  dots:['#2B3F6E','#1B1F26','#474B52']},
@@ -303,7 +303,7 @@ const WHY = {
 
 const heart = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg>';
 $('grid').innerHTML = BIKES.map(b =>
-  '<a class="pc" href="#" data-k="' + b.k + '" data-cat="' + b.cat + '">' +
+  '<a class="pc" href="' + (b.k === 'revolt' ? 'product.html' : '#') + '" data-k="' + b.k + '" data-cat="' + b.cat + '">' +
     '<div class="shot"><img src="img/bikes/' + b.k + '.webp" alt="' + b.n + '">' +
       '<span class="fav" role="button" aria-label="收藏">' + heart + '</span>' +
       '<span class="dots">' + b.dots.map(c => '<i style="background:' + c + '"></i>').join('') + '</span>' +
@@ -326,7 +326,7 @@ document.querySelectorAll('.scene,.pc').forEach(el => {
   let t;
   el.addEventListener('mouseenter', () => { t = setTimeout(() => markView(el.dataset.cat), 700); });
   el.addEventListener('mouseleave', () => clearTimeout(t));
-  el.addEventListener('click', e => { e.preventDefault(); markView(el.dataset.cat); });
+  el.addEventListener('click', e => { markView(el.dataset.cat); if (el.getAttribute('href') === '#') e.preventDefault(); });
 });
 function promptCopy(){
   if (VIEWED.length >= 2)
@@ -520,6 +520,7 @@ $('chatPic').onclick = () => ai('<p>之後可以拍一張你常騎的路線照�
 
 /* 「看這台車款」：先收起小幫手，捲到熱門車款並把那一台亮一下 */
 function showInGrid(k){
+  if (k === 'revolt') { location.href = 'product.html'; return; }   /* 目前只有 Revolt 有詳細頁 */
   const card = document.querySelector('.pc[data-k="' + k + '"]');
   if (!card) return;
   closeAssist();
