@@ -29,6 +29,16 @@
 - 車款名稱、價格取自 giant-bicycles.com/tw；畫面中的活動價與贈品為示範內容。
 - 素材：情境合成圖（背景／騎士／車三層）與各車系去背圖。
 
+## storefront · 新版官網（進行中，尚未放上總覽頁）
+
+- **首頁**：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/
+- **產品頁 Revolt Advanced SL 0**：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/product.html
+- **情境 2（預留位置）**：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/
+
+像走進一家自行車店，有需要時 AI 才會出現。首頁逛過兩種車款後，右側小幫手主動出現，按「好，幫我看看」展開成對話框（三台比較、路況題、推薦、預算與尺寸）。產品頁以三種騎乘情境為主視覺，下方保留官網的特色、規格、幾何與尺寸。
+
+下一個情境請放在 `storefront/scenario-2/`，規則見該資料夾的 README.md。
+
 ## 本機執行
 
 ```bash
@@ -43,6 +53,8 @@ index.html      提案總覽
 showroom/       01 展廳視角（index.html + Bikes/ + bg/）
 integrated/     02 聚光燈視角（index.html + Bikes/ + bg/ + icons/）
 mia/            03 左右分割（index.html + assets/ + uploads/）
+storefront/     新版官網（index.html 首頁 + product.html 產品頁 + img/）
+  scenario-2/   情境 2 預留位置（其他人放這裡）
 _thumbs/        總覽頁縮圖
 ```
 

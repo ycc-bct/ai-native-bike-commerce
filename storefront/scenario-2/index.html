@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>情境 2 · 準備中 · GIANT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 預留位置：這個情境做好後，直接用自己的 index.html 取代這個檔案 */
+:root{--bg:#0A111C;--ink:#fff;--ink-70:rgba(255,255,255,.72);--ink-50:rgba(255,255,255,.52);--line:rgba(255,255,255,.14);--ai:#4B86FF;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;font-family:var(--sans);color:var(--ink);background:radial-gradient(90% 70% at 70% 20%,#16223A 0%,var(--bg) 70%);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+.nav{height:76px;padding:0 36px;display:flex;align-items:center;justify-content:space-between}
+.nav svg{height:22px;width:auto;color:#fff}
+.nav .links{display:flex;gap:26px;font-size:15px;color:var(--ink-70)}
+.nav .links a:hover{color:#fff}
+main{flex:1;display:grid;place-items:center;padding:40px 36px 80px}
+.card{width:min(720px,100%)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--ai)}
+h1{margin-top:14px;font-size:clamp(40px,5vw,64px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.lede{margin-top:18px;font-size:17px;line-height:1.9;color:var(--ink-70)}
+.box{margin-top:34px;padding:22px 24px;border:1px dashed rgba(255,255,255,.28);border-radius:12px;background:rgba(255,255,255,.03)}
+.box b{display:block;font-size:14px;letter-spacing:.06em}
+.box code{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:6px;background:rgba(255,255,255,.08);font:500 15px ui-monospace,SFMono-Regular,Menlo,monospace}
+.box ul{margin-top:16px;padding-left:18px;display:grid;gap:8px;font-size:14.5px;line-height:1.7;color:var(--ink-70)}
+.acts{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.acts a{height:48px;padding:0 24px;border-radius:999px;display:inline-flex;align-items:center;font-size:15px;font-weight:700;border:1.5px solid rgba(255,255,255,.7);transition:background .2s,color .2s}
+.acts a:hover{background:#fff;color:#0A111C}
+</style>
+</head>
+<body>
+<header class="nav">
+  <a href="../index.html" aria-label="GIANT 首頁"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
+  <nav class="links"><a href="../index.html">首頁</a><a href="../product.html">Revolt 產品頁</a></nav>
+</header>
+<main>
+  <div class="card">
+    <p class="eyebrow">STOREFRONT · SCENARIO 2</p>
+    <h1>情境 2・準備中</h1>
+    <p class="lede">這裡預留給新版官網的下一個情境，完成後會和首頁、產品頁串起來。</p>
+    <div class="box">
+      <b>檔案放這裡</b>
+      <code>storefront/scenario-2/</code>
+      <ul>
+        <li>入口是 <code style="margin:0;padding:1px 6px;font-size:13px">index.html</code>，做好後直接取代這個佔位頁。</li>
+        <li>共用素材可以引用 <code style="margin:0;padding:1px 6px;font-size:13px">../img/</code>，自己的新素材放 <code style="margin:0;padding:1px 6px;font-size:13px">scenario-2/img/</code>。</li>
+        <li>完整規則寫在同資料夾的 README.md。</li>
+      </ul>
+    </div>
+    <div class="acts"><a href="../index.html">回首頁</a><a href="../product.html">看 Revolt 產品頁</a></div>
+  </div>
+</main>
+</body>
+</html>
