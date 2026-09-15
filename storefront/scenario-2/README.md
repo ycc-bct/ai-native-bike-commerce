@@ -1,9 +1,33 @@
-# storefront / 情境 2（預留位置）
+# storefront / 情境 2 · GIANT Ride Prototype
 
-新版官網（`storefront/`）的下一個情境放這裡，之後會和首頁、產品頁串起來。
+依 Flow 1–5 製作的情境選車 Prototype，之後可與新版官網首頁、產品頁串接。
 
 - 預覽網址：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/
-- 目前是佔位頁，做好後直接用自己的 `index.html` 取代。
+- 入口為 `index.html`，CSS 與程式皆已內嵌；不需安裝套件或執行 build。
+
+## 本版體驗
+
+選路線 → 入口選車與價格 → 第一視角騎乘 → 碎石／陡坡 → 輕量推薦 → 展開比較、同路段換騎與收藏 → 門市預約示範。
+
+- 六款車可選；方向鍵控制轉向與速度，空白鍵暫停。另有手機按鈕。
+- 寫實場景為生成照片的動態視差；「3D」按鈕切至可操控的動態路面。不是實拍影片或實車性能測試。
+- 音景為本機合成音樂／風聲；AI 為本機關鍵字與偏好排序示範，未串接 LLM。
+- 能力圖與比較比例明示為示意資料。預約表單不送出至真實門市，聯絡資料僅存在當次頁面記憶體；收藏使用 localStorage。
+- 預約完成頁可下載標示「未預約」的個人行事曆計畫，並連至官方門市資訊。
+- 新素材在 `img/`，10 張 WebP 皆不超過 1440px。車款圖片為本版相應年款的官方照片，與現有共用車圖不一定是相同配置。
+- Three.js r169（MIT）內嵌於 HTML；保留授權標頭。外部連線僅 Google Fonts，使用者點擊時才開啟官方門市頁。
+- 建議透過下方 HTTP 伺服器預覽；直接使用 file:// 開啟時，瀏覽器可能限制 WebGL 紋理讀取。
+
+已於 repository 子路徑驗證選車、騎乘與推薦面板，瀏覽器無程式錯誤。原版本也已驗證收藏、換車、表單必填與預約示範完成頁。
+
+### 產品來源（參考價格以門市為準）
+
+- https://www.giant-bicycles.com/tw/talon-0
+- https://www.giant-bicycles.com/tw/talon-3
+- https://www.giant-bicycles.com/tw/talon-eplus
+- https://www.giant-bicycles.com/tw/revolt-advanced-pro-1
+- https://www.giant-bicycles.com/tw/fastroad-ar-2-2027
+- https://www.giant-bicycles.com/tw/tcr-advanced-2--kom--2026
 
 ## 放檔案的規則
 
