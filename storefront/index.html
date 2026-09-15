@@ -16,7 +16,7 @@
   --ink-50:rgba(255,255,255,.52);
   --line:rgba(255,255,255,.16);
   --brand:#06038D;
-  --ai:#2F6BFF;
+  --ai:#4B86FF;
   --sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
   --shell:min(1840px,calc(100vw - 72px));
@@ -52,18 +52,22 @@ svg{display:block}
 .btn-ghost:hover{background:#fff;color:#0A111C}
 .btn-ghost svg{width:20px;height:20px}
 
-/* ---------- AI 小幫手：逛一下才出現，可關、可再叫出來 ---------- */
-.assist{position:absolute;z-index:6;right:calc((100vw - var(--shell))/2);top:clamp(270px,22vw,340px);width:min(500px,30vw);
-  padding:26px 26px 24px;border-radius:14px;background:rgba(14,22,36,.78);border:1px solid rgba(255,255,255,.14);
+/* ---------- AI 小幫手：先是提示卡，按「好，幫我看看」後長成對話框 ---------- */
+.assist{position:fixed;z-index:40;right:calc((100vw - var(--shell))/2);top:clamp(270px,22vw,340px);width:min(520px,36vw);
+  display:flex;flex-direction:column;overflow:hidden;
+  padding:26px 26px 24px;border-radius:14px;background:rgba(14,22,36,.8);border:1px solid rgba(255,255,255,.14);
   backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 30px 70px rgba(0,0,0,.45);
-  opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .6s var(--ease),transform .6s var(--ease),top .6s var(--ease),height .6s var(--ease),padding .6s var(--ease)}
 .assist.on{opacity:1;transform:none;pointer-events:auto}
+.assist.chat{top:88px;padding:0}
+.assist.chat .assist-prompt{display:none}
 .assist-top{display:flex;gap:18px}
 .spark{flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0);box-shadow:0 8px 22px rgba(47,107,255,.45)}
 .spark svg{width:26px;height:26px;color:#fff}
-.assist h3{font-size:21px;font-weight:700;letter-spacing:.02em;margin-top:2px}
-.assist p{margin-top:12px;font-size:15.5px;line-height:1.8;color:var(--ink-70)}
-.assist .x{position:absolute;right:18px;top:18px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;color:var(--ink-70)}
+.assist h3{font-size:21px;font-weight:700;letter-spacing:.02em;margin-top:2px;padding-right:30px}
+.assist-prompt p{margin-top:12px;font-size:15.5px;line-height:1.8;color:var(--ink-70)}
+.assist .x{position:absolute;z-index:2;right:18px;top:18px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;color:var(--ink-70)}
 .assist .x:hover{background:rgba(255,255,255,.1);color:#fff}
 .assist .x svg{width:20px;height:20px}
 .assist-acts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
@@ -72,6 +76,89 @@ svg{display:block}
 .assist-acts .yes:hover{background:#E6ECF7}
 .assist-acts .no{border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.88)}
 .assist-acts .no:hover{border-color:#fff}
+
+.chat{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat[hidden]{display:none}
+.chat-hd{flex:none;display:flex;align-items:center;gap:14px;padding:18px 64px 16px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+.spark.sm{width:38px;height:38px;border-radius:9px;box-shadow:0 6px 16px rgba(47,107,255,.4)}
+.spark.sm svg{width:21px;height:21px}
+.chat-hd b{display:block;font-size:17px;font-weight:700;letter-spacing:.02em}
+.chat-hd small{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-50)}
+.chat-log{flex:1;min-height:0;overflow-y:auto;padding:18px 22px 12px;display:flex;flex-direction:column;gap:18px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.msg{display:flex;gap:12px;animation:msgIn .45s var(--ease) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}}
+.msg .av{flex:none;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0)}
+.msg .av svg{width:16px;height:16px;color:#fff}
+.msg .body{flex:1;min-width:0;padding-top:3px}
+.msg .body p{font-size:14.5px;line-height:1.75;color:rgba(255,255,255,.84)}
+.msg .body p b{color:#fff}
+.msg .body p + p{margin-top:6px}
+.msg h4{font-size:16px;font-weight:700;letter-spacing:.02em;margin-bottom:5px;color:#fff}
+.msg.me{justify-content:flex-end}
+.msg.me .bubble{max-width:80%;padding:9px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:#0A111C;font-size:14.5px;font-weight:500;line-height:1.6}
+.typing{display:flex;gap:5px;padding:8px 0}
+.typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* 三台比較 */
+.cmp{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cmp-card{position:relative;aspect-ratio:.8;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.12);text-align:left;transition:border-color .25s}
+.cmp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.cmp-card:hover img{transform:scale(1.06)}
+.cmp-card:hover{border-color:rgba(255,255,255,.4)}
+.cmp-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,18,.94) 0%,rgba(6,10,18,.6) 42%,rgba(6,10,18,0) 72%)}
+.cmp-card .t{position:absolute;z-index:1;left:10px;right:8px;bottom:10px}
+.cmp-card b{display:block;font-size:13px;font-weight:700;line-height:1.3}
+.cmp-card small{display:block;margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.78)}
+.cmp-card.pick{border-color:var(--ai);box-shadow:0 0 0 1px var(--ai)}
+
+/* 路況題 */
+.opts{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.opt{padding:14px 4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s,background .2s,opacity .3s}
+.opt svg{width:30px;height:30px;color:#fff}
+.opt b{font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.opt small{font-size:11px;color:var(--ink-50)}
+.opt:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
+.opt.on{border-color:var(--ai);background:rgba(75,134,255,.16)}
+.opts.done .opt{pointer-events:none}
+.opts.done .opt:not(.on){opacity:.38}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-size:13px;color:rgba(255,255,255,.9);transition:border-color .2s,background .2s,opacity .3s}
+.chip:hover{border-color:#fff}
+.chips.done .chip{pointer-events:none;opacity:.38}
+.chips.done .chip.on{opacity:1;border-color:var(--ai);background:rgba(75,134,255,.16)}
+
+/* 推薦結果 */
+.rec{margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.rec .ph{position:relative;aspect-ratio:2.3;background:radial-gradient(120% 90% at 50% 40%,#FAFBFC 0%,#E3E7EC 70%,#CDD3DA 100%)}
+.rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
+.rec .tag{position:absolute;left:12px;top:12px;padding:4px 9px;border-radius:5px;background:#1F4FE0;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em}
+.rec .in{padding:14px 16px 16px}
+.rec h5{font-size:16px;font-weight:700}
+.rec .pr{margin-top:3px;font-size:14px;color:var(--ink-70)}
+.rec ul{list-style:none;margin:10px 0 14px;display:grid;gap:6px}
+.rec li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:rgba(255,255,255,.82)}
+.rec li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ai)}
+.rec .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rec .acts button{height:40px;border-radius:6px;font-size:13.5px;font-weight:700;transition:background .2s,border-color .2s}
+.rec .acts .yes{background:#fff;color:#0A111C}
+.rec .acts .yes:hover{background:#E6ECF7}
+.rec .acts .no{border:1px solid rgba(255,255,255,.35)}
+.rec .acts .no:hover{border-color:#fff}
+
+/* 輸入列 */
+.chat-in{flex:none;margin:6px 18px 18px;display:flex;align-items:center;gap:12px;height:54px;padding:0 7px 0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);transition:border-color .2s}
+.chat-in:focus-within{border-color:rgba(255,255,255,.45)}
+.chat-in .pic{display:grid;place-items:center;padding-right:12px;border-right:1px solid rgba(255,255,255,.14);color:var(--ink-70)}
+.chat-in .pic svg{width:22px;height:22px}
+.chat-in input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font:inherit;font-size:14.5px}
+.chat-in input::placeholder{color:var(--ink-50)}
+.chat-in .send{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);transition:background .2s,color .2s}
+.chat-in .send.ready{background:#fff;color:#0A111C}
+.chat-in .send svg{width:18px;height:18px}
+
 /* 收起來之後留一顆在右下角，想問的時候自己叫 */
 .fab{position:fixed;right:28px;bottom:28px;z-index:30;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
   background:linear-gradient(145deg,#4B86FF,#1E4FE0);box-shadow:0 12px 30px rgba(30,79,224,.5);
@@ -104,6 +191,8 @@ svg{display:block}
 .pc .shot{position:relative;aspect-ratio:1.38;border-radius:4px;overflow:hidden;background:radial-gradient(120% 90% at 50% 40%,#FAFBFC 0%,#E3E7EC 70%,#CDD3DA 100%)}
 .pc .shot img{position:absolute;left:8%;top:10%;width:84%;height:74%;object-fit:contain;transition:transform .6s var(--ease)}
 .pc:hover .shot img{transform:scale(1.04)}
+.pc.flash .shot{animation:flash 1.1s var(--ease) 2}
+@keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(75,134,255,0)}35%{box-shadow:0 0 0 4px rgba(75,134,255,1)}}
 .pc .fav{position:absolute;right:14px;top:14px;width:30px;height:30px;display:grid;place-items:center;color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
 .pc .fav svg{width:26px;height:26px}
 .pc .fav.on{color:#E0344B}
@@ -138,29 +227,14 @@ svg{display:block}
     <p class="sub">騎，讓世界更大。</p>
     <a class="btn-ghost" href="#popular">探索全部車款<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
   </div>
-
-  <aside class="assist" id="assist" role="dialog" aria-labelledby="assistTitle">
-    <button class="x" id="assistClose" type="button" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <div class="assist-top">
-      <span class="spark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg></span>
-      <div>
-        <h3 id="assistTitle">需要我幫忙嗎？</h3>
-        <p>我可以幫你快速比較你正在看的車款，<br>或依照你的騎乘情境推薦合適的選擇。</p>
-      </div>
-    </div>
-    <div class="assist-acts">
-      <button class="yes" id="assistYes" type="button">好，幫我看看</button>
-      <button class="no" id="assistNo" type="button">我先逛逛</button>
-    </div>
-  </aside>
 </section>
 
 <section class="scenes" aria-label="依騎乘情境選車">
-  <a class="scene" href="#"><img src="img/scenes/city.webp" alt=""><span class="txt"><b>城市移動</b><small>上班・上課・日常騎乘</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-  <a class="scene" href="#"><img src="img/scenes/road.webp" alt=""><span class="txt"><b>長途公路</b><small>追求速度・挑戰更遠</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-  <a class="scene" href="#"><img src="img/scenes/gravel.webp" alt=""><span class="txt"><b>多變路況</b><small>柏油・碎石・探索未知</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-  <a class="scene" href="#"><img src="img/scenes/mtb.webp" alt=""><span class="txt"><b>山林越野</b><small>征服地形・釋放本能</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-  <a class="scene" href="#"><img src="img/scenes/ebike.webp" alt=""><span class="txt"><b>電動輔助</b><small>更輕鬆・去更遠的地方</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <a class="scene" href="#" data-cat="city"><img src="img/scenes/city.webp" alt=""><span class="txt"><b>城市移動</b><small>上班・上課・日常騎乘</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <a class="scene" href="#" data-cat="road"><img src="img/scenes/road.webp" alt=""><span class="txt"><b>長途公路</b><small>追求速度・挑戰更遠</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <a class="scene" href="#" data-cat="gravel"><img src="img/scenes/gravel.webp" alt=""><span class="txt"><b>多變路況</b><small>柏油・碎石・探索未知</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <a class="scene" href="#" data-cat="mtb"><img src="img/scenes/mtb.webp" alt=""><span class="txt"><b>山林越野</b><small>征服地形・釋放本能</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  <a class="scene" href="#" data-cat="ebike"><img src="img/scenes/ebike.webp" alt=""><span class="txt"><b>電動輔助</b><small>更輕鬆・去更遠的地方</small></span><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
 </section>
 
 <section class="popular" id="popular">
@@ -172,41 +246,286 @@ svg{display:block}
   <div class="grid" id="grid"></div>
 </section>
 
-<button class="fab" id="fab" type="button" aria-label="叫出小幫手"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg></button>
+<aside class="assist" id="assist" role="dialog" aria-label="選車小幫手">
+  <button class="x" id="assistClose" type="button" aria-label="收起"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="assist-prompt">
+    <div class="assist-top">
+      <span class="spark"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg></span>
+      <div>
+        <h3>需要我幫忙嗎？</h3>
+        <p id="assistCopy"></p>
+      </div>
+    </div>
+    <div class="assist-acts">
+      <button class="yes" id="assistYes" type="button">好，幫我看看</button>
+      <button class="no" id="assistNo" type="button">不用，先逛逛</button>
+    </div>
+  </div>
+  <div class="chat" id="chat" hidden>
+    <div class="chat-hd">
+      <span class="spark sm"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg></span>
+      <div><b>選車小幫手</b><small>依你看過的車款與騎乘情境整理</small></div>
+    </div>
+    <div class="chat-log" id="chatLog" aria-live="polite"></div>
+    <form class="chat-in" id="chatForm" autocomplete="off">
+      <button class="pic" id="chatPic" type="button" aria-label="上傳照片"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 15.5l-5-5-9 9"/></svg></button>
+      <input id="chatInput" placeholder="告訴我更多你的騎車習慣 ...">
+      <button class="send" id="chatSend" type="submit" aria-label="送出"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19L19 5M9 5h10v10"/></svg></button>
+    </form>
+  </div>
+</aside>
+
+<button class="fab" id="fab" type="button" aria-label="叫出選車小幫手"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg></button>
 
 <script>
 const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-US');
+const SPARK = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 7.9 7.5 9.5-5.1 1.6-7 4.9-7.5 9.5-.5-4.6-2.4-7.9-7.5-9.5 5.1-1.6 7-4.9 7.5-9.5z"/></svg>';
 
-/* 車名與價格沿用 02 的車款資料；色點為示意 */
+/* ---------- 熱門車款：車名與價格沿用 02 的車款資料；色點為示意 ---------- */
 const BIKES = [
-  {n:'FastRoad AR Advanced 1', pr:62800,  img:'fastroad', dots:['#C9B79A','#1B1F26','#2A3340','#1D3C7A'], badge:'NEW'},
-  {n:'Revolt Advanced SL 0',   pr:168000, img:'revolt',   dots:['#3B3F2C','#5E6470','#1B1F26','#474B52']},
-  {n:'Talon E+',               pr:79800,  img:'talon',    dots:['#2B3F6E','#7C858F','#C8CDD3','#5A6068']},
-  {n:'Escape Disc 2',          pr:16800,  img:'escape',   dots:['#1B1F26','#2E5AA8','#D8D3C4'], badge:'BEST SELLER'},
-  {n:'Explore E+',             pr:78000,  img:'explore',  dots:['#2B3F6E','#1B1F26','#474B52']},
-  {n:'Trance X Advanced Pro 29', pr:178000, img:'trance', dots:['#1B1F26','#7FA3A0','#8C7A4E','#474B52']},
+  {k:'fastroad', n:'FastRoad AR Advanced 1',   pr:62800,  cat:'road',   dots:['#C9B79A','#1B1F26','#2A3340','#1D3C7A'], badge:'NEW'},
+  {k:'revolt',   n:'Revolt Advanced SL 0',     pr:168000, cat:'gravel', dots:['#3B3F2C','#5E6470','#1B1F26','#474B52']},
+  {k:'talon',    n:'Talon E+',                 pr:79800,  cat:'mtb',    dots:['#2B3F6E','#7C858F','#C8CDD3','#5A6068']},
+  {k:'escape',   n:'Escape Disc 2',            pr:16800,  cat:'city',   dots:['#1B1F26','#2E5AA8','#D8D3C4'], badge:'BEST SELLER'},
+  {k:'explore',  n:'Explore E+',               pr:78000,  cat:'ebike',  dots:['#2B3F6E','#1B1F26','#474B52']},
+  {k:'trance',   n:'Trance X Advanced Pro 29', pr:178000, cat:'mtb',    dots:['#1B1F26','#7FA3A0','#8C7A4E','#474B52']},
 ];
+const BY = Object.fromEntries(BIKES.map(b => [b.k, b]));
+/* 對話裡用到的重點（不寫官方沒有的規格數字） */
+const WHY = {
+  revolt:  ['Gravel 車款：柏油、碎石路都能騎','寬胎設計，碎石路面更穩定','長距離騎乘姿勢較舒適'],
+  talon:   ['電動輔助，林道爬坡更省力','前避震硬尾，保養相對單純','29 吋輪組，越過坑洞更穩'],
+  trance:  ['前後全避震，下坡與碎石路更有信心','碳纖車架，爬坡不吃力','適合進階山路與越野挑戰'],
+  escape:  ['平把直立姿勢，通勤好上手','碟煞設計，雨天煞車更穩','入門價位，日常代步剛好'],
+  fastroad:['輕量車架，平路巡航更快','平把操控，城市與河濱都好騎','想從通勤進階到運動騎乘的選擇'],
+};
+
 const heart = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg>';
 $('grid').innerHTML = BIKES.map(b =>
-  '<a class="pc" href="#">' +
-    '<div class="shot"><img src="img/bikes/' + b.img + '.webp" alt="' + b.n + '">' +
+  '<a class="pc" href="#" data-k="' + b.k + '" data-cat="' + b.cat + '">' +
+    '<div class="shot"><img src="img/bikes/' + b.k + '.webp" alt="' + b.n + '">' +
       '<span class="fav" role="button" aria-label="收藏">' + heart + '</span>' +
       '<span class="dots">' + b.dots.map(c => '<i style="background:' + c + '"></i>').join('') + '</span>' +
       (b.badge ? '<span class="badge">' + b.badge + '</span>' : '') +
     '</div>' +
-    '<h4 title="' + b.n + '">' + b.n + '</h4><p class="pr">NT$ ' + b.pr.toLocaleString('en-US') + '</p>' +
+    '<h4 title="' + b.n + '">' + b.n + '</h4><p class="pr">NT$ ' + fmt(b.pr) + '</p>' +
   '</a>').join('');
-document.querySelectorAll('.pc .fav').forEach(f => f.onclick = e => { e.preventDefault(); f.classList.toggle('on'); });
+document.querySelectorAll('.pc .fav').forEach(f => f.onclick = e => { e.preventDefault(); e.stopPropagation(); f.classList.toggle('on'); });
 
-/* 小幫手不一進站就跳：停留一下才出現。收起後右下角留一顆，隨時可以自己叫回來。 */
+/* ---------- 瀏覽紀錄：在卡片上停一下或點下去，才算「看過」 ---------- */
+const CAT_LABEL = {city:'城市車', road:'公路車', gravel:'Gravel', mtb:'登山車', ebike:'電輔車'};
+const VIEWED = [];
+function markView(cat){
+  if (VIEWED.includes(cat)) return;
+  VIEWED.push(cat);
+  $('assistCopy').innerHTML = promptCopy();
+  if (VIEWED.length >= 2 && !A.shown) openAssist();
+}
+document.querySelectorAll('.scene,.pc').forEach(el => {
+  let t;
+  el.addEventListener('mouseenter', () => { t = setTimeout(() => markView(el.dataset.cat), 700); });
+  el.addEventListener('mouseleave', () => clearTimeout(t));
+  el.addEventListener('click', e => { e.preventDefault(); markView(el.dataset.cat); });
+});
+function promptCopy(){
+  if (VIEWED.length >= 2)
+    return '我注意到你剛看了 ' + CAT_LABEL[VIEWED[0]] + ' 和 ' + CAT_LABEL[VIEWED[1]] + '，<br>這兩種類型其實適合的路況不太一樣。<br>要我幫你簡單比較一下嗎？';
+  return '我可以幫你快速比較你正在看的車款，<br>或依照你的騎乘情境推薦合適的選擇。';
+}
+
+/* ---------- 小幫手：看過兩種車才主動出現；沒動作的話停留一陣子也會出現 ---------- */
 const assist = $('assist'), fab = $('fab');
-const openAssist = () => { assist.classList.add('on'); fab.classList.remove('on'); };
-const closeAssist = () => { assist.classList.remove('on'); fab.classList.add('on'); };
-setTimeout(openAssist, 2400);
+const A = {shown:false, chat:false, terrain:null};
+$('assistCopy').innerHTML = promptCopy();
+function openAssist(){ A.shown = true; assist.classList.add('on'); fab.classList.remove('on'); if (A.chat) fitChat(); }
+function closeAssist(){ assist.classList.remove('on'); fab.classList.add('on'); }
+setTimeout(() => { if (!A.shown) openAssist(); }, 6000);
 $('assistClose').onclick = closeAssist;
 $('assistNo').onclick = closeAssist;
-$('assistYes').onclick = closeAssist;   /* 下一步（分類頁＋AI 面板）尚未接上 */
+$('assistYes').onclick = startChat;
 fab.onclick = openAssist;
+
+function fitChat(){ assist.style.height = (innerHeight - 112) + 'px'; }
+addEventListener('resize', () => { if (A.chat) fitChat(); });
+
+/* ---------- 對話 ---------- */
+const log = $('chatLog');
+function add(html, who){
+  const m = document.createElement('div');
+  m.className = 'msg ' + (who || 'ai');
+  m.innerHTML = who === 'me' ? '<div class="bubble">' + html + '</div>' : '<span class="av">' + SPARK + '</span><div class="body">' + html + '</div>';
+  log.appendChild(m);
+  log.scrollTop = log.scrollHeight;
+  return m;
+}
+/* AI 回覆一律排隊：先顯示輸入中，再出現內容，避免連點時訊息交錯 */
+let queue = Promise.resolve();
+function ai(html, delay, bind){
+  queue = queue.then(() => new Promise(res => {
+    const t = add('<div class="typing"><i></i><i></i><i></i></div>');
+    setTimeout(() => {
+      t.remove();
+      const m = add(html);
+      if (bind) bind(m);
+      requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });
+      res(m);
+    }, delay || 700);
+  }));
+  return queue;
+}
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* 還沒回答的選項，一旦改用打字或點了別的，就收起來 */
+function lockOpen(){ log.querySelectorAll('.opts:not(.done),.chips:not(.done)').forEach(g => g.classList.add('done')); }
+function chips(list){ return '<div class="chips">' + list.map(([v, t]) => '<button class="chip" type="button" data-v="' + v + '">' + t + '</button>').join('') + '</div>'; }
+function bindChips(m, handler){
+  const g = m.querySelector('.chips'); if (!g) return;
+  g.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+    lockOpen(); c.classList.add('on');
+    add(c.textContent, 'me');
+    handler(c.dataset.v);
+  });
+}
+
+const CMP = [
+  {k:'revolt', img:'img/scenes/gravel.webp',  d:'柏油碎石都能騎<br>長距離更舒適'},
+  {k:'talon',  img:'img/scenes/mtb.webp',     d:'林道坑洞更好過<br>電輔爬坡省力'},
+  {k:'trance', img:'img/scenes/descent.webp', d:'前後全避震<br>適合進階山路'},
+];
+const ICON = {
+  city:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 28h24M7 28V12l7-4v20M14 28V5l9 4v19M23 28V15h4v13"/><path d="M10 15h1M10 19h1M10 23h1M17.5 11h1M17.5 15h1M17.5 19h1M17.5 23h1"/></svg>',
+  gravel:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3 22l8-11 5 6 4-4 9 9"/><path d="M11 11l2 4M20 13l1.5 3"/><path d="M5 27h.1M10 26h.1M15 27h.1M20 26h.1M25 27h.1"/></svg>',
+  trail:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3 26l9-15 4 6 3-4 10 13z"/><path d="M12 11l2.5 4M19 13l2 3"/><path d="M7 26v-3M25 26v-3"/></svg>',
+  unsure:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28c0-4 12-4 12-8s-12-4-12-8 7-4 7-8"/><path d="M17 4h5M8 28h5"/></svg>',
+};
+const OPTS = [['city','城市 / 河濱','平坦的柏油路'],['gravel','柏油 + 碎石','偶爾非鋪裝路'],['trail','林道 / 山路','較多起伏地形'],['unsure','還不確定','幫我再看看']];
+
+function startChat(){
+  if (A.chat) return;
+  A.chat = true;
+  assist.style.height = assist.offsetHeight + 'px';
+  void assist.offsetHeight;
+  assist.classList.add('chat');
+  $('chat').hidden = false;
+  requestAnimationFrame(fitChat);
+
+  add('<p>' + promptCopy().replace(/<br>/g, '') + '</p>');
+  add('好，幫我看看', 'me');
+  const seen = VIEWED.length >= 2;
+  ai('<h4>這是為你整理的比較</h4><p>' + (seen ? '我們從你看過的車款中，挑出三台給你參考，並用實際騎乘情境來幫你理解差異。' : '先挑出三台適合不同路況的車給你參考，並用實際騎乘情境來幫你理解差異。') + '</p>' +
+     '<div class="cmp">' + CMP.map(c => '<button class="cmp-card" type="button" data-k="' + c.k + '"><img src="' + c.img + '" alt=""><span class="t"><b>' + BY[c.k].n + '</b><small>' + c.d + '</small></span></button>').join('') + '</div>',
+     900, m => m.querySelectorAll('.cmp-card').forEach(c => c.onclick = () => {
+       lockOpen();
+       add('想多了解 ' + BY[c.dataset.k].n, 'me');
+       recommend(c.dataset.k, '<p>好，' + BY[c.dataset.k].n + ' 的重點整理給你：</p>', [], '你選的車款');
+     }));
+  askTerrain();
+}
+
+function askTerrain(){
+  ai('<h4>你平常主要會騎在哪種路況？</h4><p>選擇後，我會為你推薦最適合的車款。</p>' +
+     '<div class="opts">' + OPTS.map(([v, t, s]) => '<button class="opt" type="button" data-v="' + v + '">' + ICON[v] + '<b>' + t + '</b><small>' + s + '</small></button>').join('') + '</div>',
+     650, m => m.querySelectorAll('.opt').forEach(o => o.onclick = () => {
+       lockOpen(); o.classList.add('on');
+       add(o.querySelector('b').textContent, 'me');
+       answerTerrain(o.dataset.v);
+     }));
+}
+
+function answerTerrain(v){
+  A.terrain = v;
+  if (v === 'gravel') return recommend('revolt', '<p>以柏油加碎石的路況，三台裡最適合的是 <b>Revolt Advanced SL 0</b>。</p><p>另外兩台的避震與胎紋是為山路設計，平路騎起來會比較費力。</p>');
+  if (v === 'trail') return askTrail();
+  if (v === 'city') return recommend('escape', '<p>如果主要在城市和河濱，這三台其實都偏向越野，會有點大材小用。</p><p>平路通勤我會建議看看 <b>Escape Disc 2</b>。</p>', [['fastroad','想騎快一點']]);
+  ai('<p>沒關係，我換個方式問。你週末通常會想去哪裡？</p>' + chips([['city','河濱或市區'],['gravel','郊外，偶爾走土路'],['trail','山上的步道']]), 700, m => bindChips(m, answerTerrain));
+}
+
+function askTrail(){
+  A.terrain = 'trail';
+  ai('<p>山路的話，<b>Talon E+</b> 和 <b>Trance X</b> 都合適，差在騎起來的感覺。你比較在意哪一點？</p>' +
+     chips([['climb','爬坡想省力'],['descent','下坡想更有信心'],['budget','預算控制在 10 萬內']]), 700,
+     m => bindChips(m, v => {
+       if (v === 'climb') recommend('talon', '<p>想爬坡省力，<b>Talon E+</b> 的電動輔助會很有感。</p>');
+       else if (v === 'descent') recommend('trance', '<p>想要下坡更有信心，前後全避震的 <b>Trance X Advanced Pro 29</b> 會比較適合。</p>');
+       else budgetFlow(100000);
+     }));
+}
+
+function recommend(k, intro, extra, tag){
+  const b = BY[k];
+  ai((intro || '') +
+     '<div class="rec"><div class="ph"><span class="tag">' + (tag || '最適合你') + '</span><img src="img/bikes/' + k + '.webp" alt=""></div>' +
+     '<div class="in"><h5>' + b.n + '</h5><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+     '<div class="acts"><button class="yes" type="button" data-act="view">看這台車款</button><button class="no" type="button" data-act="size">我適合的尺寸</button></div></div></div>' +
+     chips((extra || []).concat([['again','換個條件']])),
+     850, m => {
+       log.querySelectorAll('.cmp-card').forEach(c => c.classList.toggle('pick', c.dataset.k === k));
+       m.querySelector('[data-act="view"]').onclick = () => showInGrid(k);
+       m.querySelector('[data-act="size"]').onclick = () => { lockOpen(); add('我適合的尺寸？', 'me'); sizeFlow(k); };
+       bindChips(m, v => {
+         if (v === 'again') askTerrain();
+         else recommend(v, '<p>想騎快一點的話，可以看看 <b>' + BY[v].n + '</b>。</p>');
+       });
+     });
+}
+
+/* 尺寸只給通用示意值，正式版需接官方 Size Guide */
+function sizeFlow(k){
+  ai('<p>你的身高大概落在哪個範圍？</p>' + chips([['XS','160 cm 以下'],['S','160–170 cm'],['M','170–180 cm'],['L','180 cm 以上']]), 600,
+     m => bindChips(m, s => ai('<p>' + (k ? BY[k].n + ' ' : '') + '建議先試 <b>' + s + '</b> 號車架。</p><p>這是通用的示意值，實際還是建議到門市試騎確認。</p>' + chips([['again','換個條件']]), 700, m2 => bindChips(m2, () => askTerrain()))));
+}
+
+function budgetFlow(n){
+  const pool = A.terrain === 'city' ? ['fastroad','escape'] : A.terrain === 'gravel' ? ['revolt','fastroad','escape'] : A.terrain === 'trail' ? ['trance','talon'] : ['trance','revolt','talon','fastroad','escape'];
+  const fit = pool.filter(k => BY[k].pr <= n).sort((a, b) => BY[b].pr - BY[a].pr);
+  const over = pool.filter(k => BY[k].pr > n);
+  if (!fit.length) return ai('<p>NT$ ' + fmt(n) + ' 以內，這幾台都會超出預算。最入門的是 <b>Escape Disc 2</b>（NT$ ' + fmt(BY.escape.pr) + '）。</p>' + chips([['again','換個條件']]), 700, m => bindChips(m, () => askTerrain()));
+  recommend(fit[0], '<p>預算 NT$ ' + fmt(n) + ' 以內，我推薦 <b>' + BY[fit[0]].n + '</b>（NT$ ' + fmt(BY[fit[0]].pr) + '）。</p>' +
+    (over.length ? '<p>' + over.map(k => BY[k].n).join('、') + ' 會超出預算，先不列入。</p>' : ''));
+}
+
+function parseBudget(s){
+  const zh = {一:1,二:2,兩:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,十:10,十五:15,二十:20};
+  let m = s.match(/(\d+(?:\.\d+)?)\s*萬/); if (m) return Math.round(parseFloat(m[1]) * 10000);
+  m = s.match(/(十五|二十|[一二兩三四五六七八九十])\s*萬/); if (m) return zh[m[1]] * 10000;
+  m = s.match(/(\d{4,6})/); if (m) return parseInt(m[1], 10);
+  return 0;
+}
+
+/* 打字：示範版只聽得懂路況、預算與尺寸 */
+function route(t){
+  const s = t.toLowerCase();
+  const n = parseBudget(s);
+  if (n) return budgetFlow(n);
+  if (/尺寸|身高|多高|size/.test(s)) return sizeFlow();
+  if (/爬坡|省力|電輔|電動/.test(s)) { A.terrain = 'trail'; return recommend('talon', '<p>想爬坡省力的話，<b>Talon E+</b> 的電動輔助會很有感。</p>'); }
+  if (/下坡|避震|挑戰|進階|技術/.test(s)) { A.terrain = 'trail'; return recommend('trance', '<p>想要下坡更有信心，前後全避震的 <b>Trance X Advanced Pro 29</b> 會比較適合。</p>'); }
+  if (/林道|山路|越野|登山|步道|上山|山上/.test(s)) return answerTerrain('trail');
+  if (/碎石|gravel|長途|環島|郊外|土路|一日/.test(s)) return answerTerrain('gravel');
+  if (/城市|通勤|河濱|上班|上學|市區|代步/.test(s)) return answerTerrain('city');
+  if (/不確定|不知道|都可以|沒想法/.test(s)) return answerTerrain('unsure');
+  ai('<p>這句我還沒辦法判斷，這個示範版本目前只聽得懂路況、預算與尺寸。</p><p>可以說說你最常騎的地方，例如「河濱通勤」或「週末上山」。</p>', 650);
+}
+const input = $('chatInput'), send = $('chatSend');
+input.addEventListener('input', () => send.classList.toggle('ready', !!input.value.trim()));
+$('chatForm').onsubmit = e => {
+  e.preventDefault();
+  const t = input.value.trim(); if (!t) return;
+  input.value = ''; send.classList.remove('ready');
+  lockOpen();
+  add(esc(t), 'me');
+  route(t);
+};
+$('chatPic').onclick = () => ai('<p>之後可以拍一張你常騎的路線照片，我會依路面判斷適合的車款。這個示範版本還沒接上照片辨識。</p>', 600);
+
+/* 「看這台車款」：先收起小幫手，捲到熱門車款並把那一台亮一下 */
+function showInGrid(k){
+  const card = document.querySelector('.pc[data-k="' + k + '"]');
+  if (!card) return;
+  closeAssist();
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+  card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+}
 </script>
 </body>
 </html>
