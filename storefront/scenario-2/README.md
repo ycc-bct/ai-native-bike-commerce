@@ -19,7 +19,7 @@
 
 ## 音樂
 
-開始體驗才載入 CORTIS〈JoyRide〉官方 Spotify iframe，路口和暫停時暫停播放。曲目 ID `6T17ZI0glfM2IGLdUwtnLK`。播放長度、登入與自動播放受 Spotify／瀏覽器限制；實測提供 Preview。沒有下載、重製或託管歌曲。需完整兩分鐘背景音樂時，需另提供合法授權音檔。
+CORTIS〈JoyRide〉僅為視覺示意。開始體驗才顯示曲名與狀態，選路及暫停時切換圖示；不載入 Spotify、不請求或播放任何音訊。
 
 ## 素材與限制
 
@@ -34,7 +34,7 @@
 ## 放檔案的規則
 
 1. **只動這個資料夾。** 這個情境的所有檔案都放在 `storefront/scenario-2/`。請不要改 `storefront/index.html`、`storefront/product.html`，串接時再統一處理。
-2. **入口是 `index.html`**，單一 HTML、不用 build、不用框架。外部資源使用 Google Fonts，依本次需求加入 Spotify 官方音樂 iframe（開始體驗才載入）。
+2. **入口是 `index.html`**，單一 HTML、不用 build、不用框架。外部資源使用 Google Fonts。音樂僅為無聲視覺示意，不載入第三方播放器。
 3. **連結寫完整檔名**：回首頁用 `../index.html`、產品頁用 `../product.html`。不要寫 `./` 或 `../`，直接雙擊打開本機檔案時會失效。
 4. **素材**
    - 共用素材可直接引用，不要複製一份：
