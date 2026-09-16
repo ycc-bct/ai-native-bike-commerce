@@ -1,38 +1,40 @@
-# storefront / 情境 2 · GIANT Ride Prototype
+# GIANT Mountain Ride Prototype
 
-依 Flow 1–5 製作的情境選車 Prototype，之後可與新版官網首頁、產品頁串接。
+2026-09-16 修訂。Revolt 產品頁 → 山路挑戰同系列選車 → 120 秒數位體驗 → 騎乘報告 → 官方車款／門市預約示範。
 
-- 預覽網址：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/
-- 入口為 `index.html`，CSS 與程式皆已內嵌；不需安裝套件或執行 build。
+入口 `index.html` 已內嵌 CSS/JS，不需要 build。
 
-## 本版體驗
+預覽：https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/
 
-選路線 → 入口選車與價格 → 第一視角騎乘 → 碎石／陡坡 → 輕量推薦 → 展開比較、同路段換騎與收藏 → 門市預約示範。
+原始碼計時模組測試已通過：涵蓋四種路線組合、選擇與暫停不計時、同段換車紀錄、最後 8 秒與精確 120 秒終點。
 
-- 六款車可選；方向鍵控制轉向與速度，空白鍵暫停。另有手機按鈕。
-- 寫實場景為生成照片的動態視差；「3D」按鈕切至可操控的動態路面。不是實拍影片或實車性能測試。
-- 音景為本機合成音樂／風聲；AI 為本機關鍵字與偏好排序示範，未串接 LLM。
-- 能力圖與比較比例明示為示意資料。預約表單不送出至真實門市，聯絡資料僅存在當次頁面記憶體；收藏使用 localStorage。
-- 預約完成頁可下載標示「未預約」的個人行事曆計畫，並連至官方門市資訊。
-- 新素材在 `img/`，10 張 WebP 皆不超過 1440px。車款圖片為本版相應年款的官方照片，與現有共用車圖不一定是相同配置。
-- Three.js r169（MIT）內嵌於 HTML；保留授權標頭。外部連線僅 Google Fonts，使用者點擊時才開啟官方門市頁。
-- 建議透過下方 HTTP 伺服器預覽；直接使用 file:// 開啟時，瀏覽器可能限制 WebGL 紋理讀取。
+## 互動
 
-已於 repository 子路徑驗證選車、騎乘與推薦面板，瀏覽器無程式錯誤。原版本也已驗證收藏、換車、表單必填與預約示範完成頁。
+- 預設 Revolt Advanced 2；也支援 `?bike=advanced1` 或 `?bike=pro1` 產品入口。入口車款置頂並預選。
+- Hover／鍵盤聚焦／手機 360° 按鈕顯示可拖曳旋轉的 Three.js 車體示意與示範心得。照片為官方素材；模型不是原廠 CAD。
+- 12 秒暖身 → 碎石／陡坡二選一 → 累計 60 秒時泥濘／樹根二選一 → 112 秒起減速 → 120 秒停下並呈現報告。
+- 選路、暫停、背景分頁不計時。暫停展開同系列推薦，可以收藏、換車並延續同一段路。
+- 報告記錄實際體驗的路段、車款與時間；情境適配以本地示意模型估算，非性能量測。
+- 聯絡資料只保存在當次記憶體；預約是示範，不傳送資料、不建立實際門市預約。正式購買和聯繫門市使用官方連結。
 
-### 產品來源（參考價格以門市為準）
+## 音樂
 
-- https://www.giant-bicycles.com/tw/talon-0
-- https://www.giant-bicycles.com/tw/talon-3
-- https://www.giant-bicycles.com/tw/talon-eplus
-- https://www.giant-bicycles.com/tw/revolt-advanced-pro-1
-- https://www.giant-bicycles.com/tw/fastroad-ar-2-2027
-- https://www.giant-bicycles.com/tw/tcr-advanced-2--kom--2026
+開始體驗才載入 CORTIS〈JoyRide〉官方 Spotify iframe，路口和暫停時暫停播放。曲目 ID `6T17ZI0glfM2IGLdUwtnLK`。播放長度、登入與自動播放受 Spotify／瀏覽器限制；實測提供 Preview。沒有下載、重製或託管歌曲。需完整兩分鐘背景音樂時，需另提供合法授權音檔。
+
+## 素材與限制
+
+2026-09-16 核對 Giant 台灣官網參考售價：
+- https://www.giant-bicycles.com/tw/revolt-advanced-2 — 2022，NT$68,800
+- https://www.giant-bicycles.com/tw/revolt-advanced-1 — 2023，NT$88,000
+- https://www.giant-bicycles.com/tw/revolt-advanced-pro-1 — 2026，NT$128,000
+
+供應與實際規格需門市確認。試乘人數、心得及適配分數均標示示意。AI 情境建議為預設內容，未串接 LLM。背景為靜態 AI 圖片，無騎乘影片；輕微縮放營造前進感。Three.js r169（MIT）；Google Fonts Inter / Noto Sans TC。
+
 
 ## 放檔案的規則
 
 1. **只動這個資料夾。** 這個情境的所有檔案都放在 `storefront/scenario-2/`。請不要改 `storefront/index.html`、`storefront/product.html`，串接時再統一處理。
-2. **入口是 `index.html`**，單一 HTML、不用 build、不用框架。外部資源目前只用 Google Fonts。
+2. **入口是 `index.html`**，單一 HTML、不用 build、不用框架。外部資源使用 Google Fonts，依本次需求加入 Spotify 官方音樂 iframe（開始體驗才載入）。
 3. **連結寫完整檔名**：回首頁用 `../index.html`、產品頁用 `../product.html`。不要寫 `./` 或 `../`，直接雙擊打開本機檔案時會失效。
 4. **素材**
    - 共用素材可直接引用，不要複製一份：
