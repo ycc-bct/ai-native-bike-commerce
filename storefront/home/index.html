@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GIANT · More Than a Bike</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A111C;
+  --bg-2:#101A28;
+  --ink:#FFFFFF;
+  --ink-70:rgba(255,255,255,.72);
+  --ink-50:rgba(255,255,255,.52);
+  --line:rgba(255,255,255,.16);
+  --brand:#06038D;
+  --ai:#4B86FF;
+  --sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --shell:min(1840px,calc(100vw - 72px));
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg)}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;min-width:1200px}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+
+/* ---------- 官網式導覽與按需搜尋 ---------- */
+.nav{position:absolute;inset:0 0 auto;z-index:60;height:64px;color:#fff;font-family:"Open Sans",Arial,-apple-system,"PingFang TC",sans-serif}
+.nav-in{margin:0 32px;height:100%;display:flex;align-items:center;justify-content:space-between;position:relative}
+.nav-left{display:flex;align-items:center;gap:48px}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-icon{width:44px;height:44px;display:grid;place-items:center;flex:none;border-radius:999px;background:#fff;color:#101824;transition:background .2s,transform .2s}
+.nav-icon:hover{background:#eaf0f5;transform:translateY(-1px)}
+.nav-icon svg{width:22px;height:22px}
+.logo{display:block;flex:none}
+.logo svg{height:28px;width:148px;color:#fff}
+.links{display:flex;align-items:center;gap:32px;font-size:15px;font-weight:600}
+.links a{padding:20px 0;transition:opacity .2s}
+.links a:hover{opacity:.7}
+.search-toggle{height:44px;display:flex;align-items:center;gap:10px;padding:0 20px;border-radius:999px;background:#fff;color:#101824;font-size:14px;font-weight:600;transition:background .2s,transform .2s}
+.search-toggle:hover{background:#eaf0f5;transform:translateY(-1px)}
+.search-toggle svg,.search-form svg{width:20px;height:20px;flex:none}
+.nav button:focus-visible,.nav a:focus-visible,.search-panel :focus-visible{outline:2px solid #8885ff;outline-offset:4px}
+/* ---------- 主視覺 ---------- */
+.hero{position:relative;height:clamp(640px,56vw,760px);overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 40%}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(6,10,18,.35) 0%,rgba(6,10,18,.16) 30%,rgba(6,10,18,0) 55%),
+             linear-gradient(180deg,rgba(6,10,18,.5) 0%,rgba(6,10,18,0) 16%,rgba(6,10,18,0) 58%,var(--bg) 100%)}
+.hero-copy{position:relative;z-index:2;width:var(--shell);margin:0 auto;padding-top:clamp(128px,11vw,168px)}
+.hero h1{font-size:clamp(78px,6.4vw,112px);line-height:.98;font-weight:800;}
+.hero .sub{margin-top:18px;font-size:clamp(24px,1.9vw,32px);font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,.9)}
+.btn-ghost{margin-top:36px;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border:1.5px solid rgba(255,255,255,.85);border-radius:999px;font-size:17px;font-weight:700;letter-spacing:.04em;transition:background .25s,color .25s}
+.btn-ghost:hover{background:#fff;color:#0A111C}
+.btn-ghost svg{width:20px;height:20px}
+
+/* ---------- AI 小幫手：先是提示卡，按「好，幫我看看」後長成對話框 ---------- */
+.assist{position:fixed;z-index:40;right:calc((100vw - var(--shell))/2);top:clamp(270px,22vw,340px);width:min(520px,36vw);
+  display:flex;flex-direction:column;overflow:hidden;
+  padding:26px 26px 24px;border-radius:14px;background:rgba(14,22,36,.8);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 30px 70px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .6s var(--ease),transform .6s var(--ease),top .6s var(--ease),height .6s var(--ease),padding .6s var(--ease)}
+.assist{visibility:hidden}
+.assist.on{visibility:visible}
+.assist.on{opacity:1;transform:none;pointer-events:auto}
+.assist.chat{top:88px;padding:0}
+.assist.chat .assist-prompt{display:none}
+.assist-top{display:flex;gap:18px}
+.spark{flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0);box-shadow:0 8px 22px rgba(47,107,255,.45)}
+.spark svg{width:26px;height:26px;color:#fff}
+.assist h3{font-size:21px;font-weight:700;letter-spacing:.02em;margin-top:2px;padding-right:30px}
+.assist-prompt p{margin-top:12px;font-size:15.5px;line-height:1.8;color:var(--ink-70)}
+.assist .x{position:absolute;z-index:2;right:18px;top:18px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;color:var(--ink-70)}
+.assist .x:hover{background:rgba(255,255,255,.1);color:#fff}
+.assist .x svg{width:20px;height:20px}
+.assist-acts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.assist-acts button{height:46px;border-radius:6px;font-size:15px;font-weight:700;letter-spacing:.04em;transition:background .2s,border-color .2s}
+.assist-acts .yes{background:#fff;color:#0A111C}
+.assist-acts .yes:hover{background:#E6ECF7}
+.assist-acts .no{border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.88)}
+.assist-acts .no:hover{border-color:#fff}
+
+.chat{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat[hidden]{display:none}
+.chat-hd{flex:none;display:flex;align-items:center;gap:14px;padding:18px 64px 16px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+.spark.sm{width:38px;height:38px;border-radius:9px;box-shadow:0 6px 16px rgba(47,107,255,.4)}
+.spark.sm svg{width:21px;height:21px}
+.chat-hd b{display:block;font-size:17px;font-weight:700;letter-spacing:.02em}
+.chat-hd small{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-50)}
+.chat-log{flex:1;min-height:0;overflow-y:auto;padding:18px 22px 12px;display:flex;flex-direction:column;gap:18px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.msg{display:flex;gap:12px;animation:msgIn .45s var(--ease) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}}
+.msg .av{flex:none;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0)}
+.msg .av svg{width:16px;height:16px;color:#fff}
+.msg .body{flex:1;min-width:0;padding-top:3px}
+.msg .body p{font-size:14.5px;line-height:1.75;color:rgba(255,255,255,.84)}
+.msg .body p b{color:#fff}
+.msg .body p + p{margin-top:6px}
+.msg h4{font-size:16px;font-weight:700;letter-spacing:.02em;margin-bottom:5px;color:#fff}
+.msg.me{justify-content:flex-end}
+.msg.me .bubble{max-width:80%;padding:9px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:#0A111C;font-size:14.5px;font-weight:500;line-height:1.6}
+.typing{display:flex;gap:5px;padding:8px 0}
+.typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* 三台比較 */
+.cmp{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cmp-card{position:relative;aspect-ratio:.8;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.12);text-align:left;transition:border-color .25s}
+.cmp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.cmp-card:hover img{transform:scale(1.06)}
+.cmp-card:hover{border-color:rgba(255,255,255,.4)}
+.cmp-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,18,.94) 0%,rgba(6,10,18,.6) 42%,rgba(6,10,18,0) 72%)}
+.cmp-card .t{position:absolute;z-index:1;left:10px;right:8px;bottom:10px}
+.cmp-card b{display:block;font-size:13px;font-weight:700;line-height:1.3}
+.cmp-card small{display:block;margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.78)}
+.cmp-card.pick{border-color:var(--ai);box-shadow:0 0 0 1px var(--ai)}
+
+/* 路況題 */
+.opts{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.opt{padding:14px 4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s,background .2s,opacity .3s}
+.opt svg{width:30px;height:30px;color:#fff}
+.opt b{font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.opt small{font-size:11px;color:var(--ink-50)}
+.opt:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
+.opt.on{border-color:var(--ai);background:rgba(75,134,255,.16)}
+.opts.done .opt{pointer-events:none}
+.opts.done .opt:not(.on){opacity:.38}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-size:13px;color:rgba(255,255,255,.9);transition:border-color .2s,background .2s,opacity .3s}
+.chip:hover{border-color:#fff}
+.chips.done .chip{pointer-events:none;opacity:.38}
+.chips.done .chip.on{opacity:1;border-color:var(--ai);background:rgba(75,134,255,.16)}
+
+/* 推薦結果 */
+.rec{margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.rec .ph{position:relative;aspect-ratio:2.3;background:radial-gradient(120% 90% at 50% 40%,#FAFBFC 0%,#E3E7EC 70%,#CDD3DA 100%)}
+.rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
+.rec .tag{position:absolute;left:12px;top:12px;padding:4px 9px;border-radius:5px;background:#1F4FE0;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em}
+.rec .in{padding:14px 16px 16px}
+.rec h5{font-size:16px;font-weight:700}
+.rec .pr{margin-top:3px;font-size:14px;color:var(--ink-70)}
+.rec ul{list-style:none;margin:10px 0 14px;display:grid;gap:6px}
+.rec li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:rgba(255,255,255,.82)}
+.rec li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ai)}
+.rec .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rec .acts button{height:40px;border-radius:6px;font-size:13.5px;font-weight:700;transition:background .2s,border-color .2s}
+.rec .acts .yes{background:#fff;color:#0A111C}
+.rec .acts .yes:hover{background:#E6ECF7}
+.rec .acts .no{border:1px solid rgba(255,255,255,.35)}
+.rec .acts .no:hover{border-color:#fff}
+
+/* 輸入列 */
+.chat-in{flex:none;margin:6px 18px 18px;display:flex;align-items:center;gap:12px;height:54px;padding:0 7px 0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);transition:border-color .2s}
+.chat-in:focus-within{border-color:rgba(255,255,255,.45)}
+.chat-in .pic{display:grid;place-items:center;padding-right:12px;border-right:1px solid rgba(255,255,255,.14);color:var(--ink-70)}
+.chat-in .pic svg{width:22px;height:22px}
+.chat-in input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font:inherit;font-size:14.5px}
+.chat-in input::placeholder{color:var(--ink-50)}
+.chat-in .send{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);transition:background .2s,color .2s}
+.chat-in .send.ready{background:#fff;color:#0A111C}
+.chat-in .send svg{width:18px;height:18px}
+
+
+/* ---------- 騎乘情境 ---------- */
+.scenes{position:relative;z-index:5;width:var(--shell);margin:-172px auto 0;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.scene{position:relative;height:clamp(150px,10.5vw,190px);border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.scene:hover img{transform:scale(1.05)}
+.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,18,.66) 0%,rgba(6,10,18,.25) 60%,rgba(6,10,18,.1) 100%),linear-gradient(0deg,rgba(6,10,18,.45),rgba(6,10,18,0) 60%)}
+.scene .txt{position:absolute;z-index:1;left:22px;right:78px;bottom:22px}
+.scene b{display:block;font-size:clamp(22px,1.6vw,28px);font-weight:700;letter-spacing:.04em}
+.scene small{display:block;margin-top:8px;font-size:14px;letter-spacing:.03em;color:rgba(255,255,255,.88);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scene .go{position:absolute;z-index:1;right:20px;bottom:24px;width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);display:grid;place-items:center;transition:background .25s,color .25s}
+.scene:hover .go{background:#fff;color:#0A111C}
+.scene .go svg{width:20px;height:20px}
+
+/* ---------- 熱門車款 ---------- */
+.popular{width:var(--shell);margin:0 auto;padding:36px}
+.pop-head{display:flex;align-items:baseline;gap:22px}
+.pop-head h2{font-size:28px;font-weight:700;letter-spacing:.04em}
+.pop-head p{font-size:16px;color:var(--ink-50);letter-spacing:.04em}
+.pop-head .all{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink-70)}
+.pop-head .all:hover{color:#fff}
+.pop-head .all svg{width:18px;height:18px}
+.grid{margin-top:34px;display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.pc .shot{position:relative;aspect-ratio:1.38;border-radius:4px;overflow:hidden;background:radial-gradient(120% 90% at 50% 40%,#FAFBFC 0%,#E3E7EC 70%,#CDD3DA 100%)}
+.pc .shot img{position:absolute;left:8%;top:10%;width:84%;height:74%;object-fit:contain;transition:transform .6s var(--ease)}
+.pc:hover .shot img{transform:scale(1.04)}
+.pc.flash .shot{animation:flash 1.1s var(--ease) 2}
+@keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(75,134,255,0)}35%{box-shadow:0 0 0 4px rgba(75,134,255,1)}}
+.pc .fav{position:absolute;right:14px;top:14px;width:30px;height:30px;display:grid;place-items:center;color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
+.pc .fav svg{width:26px;height:26px}
+.pc .fav.on{color:#E0344B}
+.pc .fav.on path{fill:currentColor}
+.pc .dots{position:absolute;left:16px;bottom:14px;display:flex;gap:8px}
+.pc .dots i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.pc .badge{position:absolute;right:12px;bottom:12px;padding:4px 9px;border-radius:5px;background:#1F4FE0;color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em}
+.pc h4{margin-top:18px;font-size:16px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc .pr{margin-top:8px;font-size:17px;color:rgba(255,255,255,.86)}
+
+/* 智慧搜尋：同頁側邊面板，提示與對話分開呈現 */
+.assist{z-index:70;right:24px;top:auto;bottom:24px;width:360px;padding:24px;border-radius:12px;background:rgba(15,24,39,.97);border-color:rgba(255,255,255,.2);backdrop-filter:blur(18px);box-shadow:0 16px 60px rgba(0,0,0,.28);transition:opacity .25s var(--ease),transform .35s var(--ease)}
+.assist.chat{top:80px;bottom:24px;width:480px;padding:0;transform:translateX(24px);border-radius:14px}
+.assist.chat.on{transform:translateX(0)}
+.assist-top{gap:12px}
+.assist-top>div{flex:1;min-width:0}
+.assist h3{font-size:18px;line-height:1.5;padding-right:22px;margin:0}
+.assist-prompt p{font-size:14px;line-height:1.8;margin-top:8px}
+.spark,.spark.sm,.msg .av{background:transparent;box-shadow:none;border-radius:0}
+.spark{width:28px;height:28px}
+.spark.sm{width:28px;height:28px}
+.spark svg,.spark.sm svg{width:24px;height:24px}
+.assist-acts button{height:48px;font-size:14px}
+.chat-hd{padding:22px 64px 20px 24px}
+.chat-hd b{font-size:18px}
+.chat-hd small{font-size:12px;margin-top:6px}
+.chat-log{padding:24px;gap:22px}
+.welcome{padding:8px 0}
+.welcome .eyebrow{font-size:11px;letter-spacing:.12em;color:#a9b8d0;margin-bottom:14px}
+.welcome h2{font-size:27px;line-height:1.5;letter-spacing:.01em;margin-bottom:12px}
+.welcome p{font-size:14px;line-height:1.9;color:#b8c2d2}
+.welcome-options{display:grid;gap:10px;margin-top:26px}
+.welcome-options button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid rgba(255,255,255,.18);padding:15px 16px;border-radius:8px;font-size:14px;background:rgba(255,255,255,.025)}
+.welcome-options button:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
+.welcome-options span{color:#aab9d2}
+.chat-in{margin:8px 24px 24px;border-radius:10px;height:56px;background:rgba(255,255,255,.055)}
+.chat-in .send{border-radius:7px}
+.assist .chat-in input:focus-visible{outline:none}
+.assist :focus-visible{outline:2px solid #adbfff;outline-offset:3px}
+@media(max-width:700px){.assist.chat{top:12px;right:12px;bottom:12px;width:calc(100vw - 24px)}.assist{right:12px;bottom:12px;max-width:calc(100vw - 24px)}}
+@media(prefers-reduced-motion:reduce){.assist,.msg{transition:none;animation:none}}
+
+
+/* Editorial homepage: photography surrounds a centered typographic statement. */
+[hidden]{display:none!important}
+body{min-width:0}
+.hero-editorial{height:clamp(700px,62vw,920px);background:linear-gradient(rgba(10,16,15,.32),rgba(10,16,15,.2)),url("img/editorial/mountain-backdrop.png") center/cover no-repeat;isolation:isolate}
+.hero-editorial::before{display:none}
+.hero-tile{position:absolute;margin:0;overflow:hidden;background:#242826;z-index:0}
+.hero-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile-left{left:-3%;top:24%;width:29%;height:61%;transform:rotate(-5deg)}
+.tile-left img{object-position:57% center;filter:brightness(.8)}
+.tile-right{right:-4%;top:10%;width:30%;height:68%;transform:rotate(5deg)}
+.tile-right img{object-position:55% center;filter:brightness(.76)}
+.tile-top{left:27%;top:10%;width:16%;height:17%;transform:rotate(-7deg);background:#e9eae6}
+.tile-top img,.tile-bottom img{object-fit:cover;mix-blend-mode:normal;object-position:center}
+.tile-bottom{right:27%;bottom:7%;width:17%;height:17%;transform:rotate(6deg);background:#d9ded9}
+.hero-editorial .hero-copy{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:76%;margin:0;padding:0;text-align:center;z-index:2}
+.hero-kicker{font-size:11px;letter-spacing:.2em;font-weight:500;margin-bottom:25px;color:#d0d2cc}
+.hero-editorial h1{font-size:clamp(64px,7vw,90px);font-weight:800;line-height:.86;color:#f5f5ed;text-shadow:0 4px 24px #17191825}
+.hero-editorial h1 span{color:#06038d}
+.hero-editorial .sub{font-size:16px;font-weight:400;letter-spacing:.05em;margin-top:30px;color:#dfdfd9}
+.hero-editorial .btn-ghost{margin-top:26px;font-size:14px;gap:10px;background:#f3f4ed;color:#191c19;border-color:#f3f4ed}
+.hero-editorial .btn-ghost:hover{background:#bde688;border-color:#bde688}
+
+.popular{width:auto;padding:36px;background:#f5f5f1;color:#161b19;margin:0}
+.pop-head,.popular .grid{max-width:1768px;margin-left:auto;margin-right:auto}
+.pop-head h2{font-size:30px;letter-spacing:-.04em}.pop-head p{color:#747b73;font-size:14px}.pop-head .all{color:#272e28;font-size:14px}.pop-head .all:hover{color:#536b43}
+.popular .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:38px 24px;margin-top:34px}
+.pc .shot{aspect-ratio:1.4;background:#e9ece6;border-radius:0}.pc .shot img{mix-blend-mode:multiply}.pc h4{font-size:17px;font-weight:600}.pc .pr{color:#646c62;font-size:15px}.pc .fav{color:#28322b}.pc .badge{background:#fff;color:#263226}
+@media(max-width:750px){.hero-editorial{height:760px}.hero-editorial .hero-copy{width:94%;top:47%}.hero-editorial h1{font-size:clamp(54px,12vw,90px)}.hero-kicker{font-size:9px;letter-spacing:.14em}.hero-editorial .sub{font-size:13px}.tile-left{left:-12%;top:8%;width:43%;height:27%}.tile-right{right:-12%;top:66%;width:43%;height:28%}.tile-top{left:auto;right:10%;top:10%;width:32%;height:16%}.tile-bottom{right:auto;left:9%;bottom:10%;width:32%;height:15%}.popular{padding:36px}.pop-head{flex-wrap:wrap;gap:12px}.pop-head h2{font-size:25px}.pop-head p{display:none}.popular .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px}.pc h4{font-size:14px}.pc .pr{font-size:13px}}
+
+
+/* Centered navigation with a visual-only AI orb. */
+.nav{height:64px}
+.nav-in{margin:0 40px;display:grid;grid-template-columns:1fr auto 1fr;gap:24px}
+.nav-left{display:contents}
+.logo{justify-self:start}.logo svg{width:176px;height:28px}
+.links{justify-self:center;gap:30px;font-size:16px;font-weight:500}
+.nav-actions{justify-self:end;gap:22px}
+.nav-icon{background:transparent;color:#fff;width:32px;height:40px;border-radius:0}
+.nav-icon:hover{background:transparent;opacity:.75}
+.nav-icon svg{width:26px;height:26px}
+.search-toggle.ai-orb{height:40px;width:40px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#164aa866 0%,#06038d22 45%,transparent 72%);box-shadow:0 0 17px #06038d35;cursor:default}
+.search-toggle.ai-orb:hover{background:radial-gradient(circle,#164aa866 0%,#06038d22 45%,transparent 72%);transform:none}
+.search-toggle.ai-orb svg{width:38px;height:38px;filter:drop-shadow(0 0 5px #468fff)}
+.tile-top{top:10%}
+@media(max-width:1000px){.nav-in{margin:0 24px;gap:18px}.links{gap:18px;font-size:14px}.logo svg{width:138px}.nav-actions{gap:14px}}
+@media(max-width:700px){.nav{height:64px}.nav-in{margin:0 20px;grid-template-columns:1fr auto;grid-template-rows:36px 28px;gap:0}.links{grid-column:1/-1;grid-row:2;gap:22px;font-size:12px}.nav-actions{grid-column:2;grid-row:1}.logo{grid-column:1;grid-row:1}.logo svg{width:128px}.tile-top{top:10%}.tile-left{top:17%}}
+
+
+/* Shared landscape changes behind text-only category choices. */
+.category-stage{position:relative;isolation:isolate;display:grid;place-items:center;overflow:hidden;background:#202923;color:#fff}
+.category-images,.category-image{position:absolute;inset:0;width:100%;height:100%}
+.category-images{z-index:-2}.category-image{object-fit:cover;object-position:center 55%;opacity:0;transition:opacity .45s ease}.category-image.is-visible{opacity:1}
+.category-stage::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(6,18,13,.53)}
+.category-content{width:100%;padding:70px 32px;text-align:center}
+.category-eyebrow{font-size:11px;letter-spacing:.2em;margin-bottom:26px;color:#e2e7e1}
+.category-options{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px 18px}
+.category-options button{border:1px solid transparent;border-radius:999px;padding:12px 22px;font-size:20px;font-weight:500;line-height:1.4;color:rgba(255,255,255,.8);transition:color .2s,border-color .2s,background .2s}
+.category-options button:hover,.category-options button:focus-visible{color:#fff;border-color:rgba(255,255,255,.65);background:rgba(255,255,255,.08)}
+.category-options button[aria-pressed=true]{color:#fff;border-color:#fff;background:rgba(255,255,255,.12)}
+.category-options button:focus-visible{outline:2px solid #fff;outline-offset:5px}
+@media(max-width:750px){.category-stage{}.category-content{padding:48px 20px}.category-options{gap:8px}.category-options button{font-size:16px;padding:10px 16px}}
+@media(prefers-reduced-motion:reduce){.category-image{transition:none}}
+
+
+/* Keep navigation visible while browsing the page. */
+.nav{position:fixed;top:0;left:0;right:0;transition:background .25s,box-shadow .25s}
+.nav.is-scrolled{background:rgba(16,25,37,.96);box-shadow:0 1px 0 rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+#popular,#scenes{scroll-margin-top:64px}
+@media(prefers-reduced-motion:reduce){.nav{transition:none}}
+
+
+/* Compact assistant reserves its own column beside browsing content. */
+:root{--chat-width:380px;--chat-space:424px}
+.search-toggle.ai-orb{cursor:pointer}
+.category-content{justify-self:start;transition:width .3s ease}
+.popular{transition:padding-right .3s ease}
+.chat-open .category-content{width:calc(100% - var(--chat-space))}
+.chat-open .popular{padding-right:calc(36px + var(--chat-space))}
+.chat-open .popular .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.assist.chat{--ink-70:#56606c;--ink-50:#717985;top:auto;right:24px;bottom:24px;width:var(--chat-width);height:50vh;background:#fff;color:#202833;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 16px 48px #17233424;backdrop-filter:none}
+.assist.chat .chat-hd{padding:20px 48px 18px 20px;border-color:#e9ebee;gap:10px}
+.assist.chat .chat-hd b{font-size:17px}.assist.chat .chat-hd small{font-size:11px}
+.assist.chat .x{color:#68717e;top:16px;right:14px}.assist.chat .x:hover{color:#202833;background:#f0f2f5}
+.assist.chat .chat-log{padding:18px 20px;gap:18px;scrollbar-color:#ced3da transparent}
+.assist.chat .welcome{padding:8px 0}.assist.chat .welcome h2{font-size:22px;color:#202833;line-height:1.45}
+.assist.chat .welcome p,.assist.chat .msg .body p,.assist.chat .rec li{color:#68717e}
+.assist.chat .welcome .eyebrow{color:#06038d}
+.assist.chat .welcome-options{gap:8px;margin-top:18px}
+.assist.chat .welcome-options button{padding:12px;color:#27313d;background:#f7f8fa;border-color:#e5e7eb;font-size:13px}
+.assist.chat .welcome-options button:hover{border-color:#06038d;background:#f0f5ff}
+.assist.chat .msg h4,.assist.chat .msg .body p b{color:#202833}
+.assist.chat .spark path[stroke="white"],.assist.chat .av path[stroke="white"]{stroke:#06038d}
+.assist.chat .spark path[fill="white"],.assist.chat .av path[fill="white"]{fill:#06038d}
+.assist.chat .msg.me .bubble{background:#edf3ff;color:#164bb1}
+.assist.chat .chat-in{height:48px;margin:8px 20px 20px;padding-left:12px;gap:8px;border:1px solid #dce0e5;background:#fff;border-radius:8px}
+.assist.chat .chat-in:focus-within{border-color:#06038d}.assist.chat .chat-in input{color:#202833;font-size:13px}
+.assist.chat .chat-in .pic{border-color:#e5e7eb}.assist.chat .chat-in .send{width:34px;height:34px;background:#edf0f4;color:#76818e;border-radius:6px}
+.assist.chat .chat-in .send.ready{background:#06038d;color:#fff}
+.assist.chat .chip,.assist.chat .opt,.assist.chat .rec{color:#202833;border-color:#dde2e8;background:#f8f9fb}
+.assist.chat .opt svg{color:#06038d}.assist.chat .chip:hover{border-color:#06038d}
+.assist.chat .rec .acts .yes{background:#06038d;color:white}.assist.chat .rec .acts .no{border-color:#ced4dd}
+.assist.chat .cmp-card{color:#fff}.assist.chat .typing i{background:#06038d}
+@media(min-width:1600px){.chat-open .popular .grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){:root{--chat-width:320px;--chat-space:352px}.assist.chat{right:16px;bottom:16px}.chat-open .popular{padding-right:calc(36px + var(--chat-space));padding-left:36px}.chat-open .popular .grid{grid-template-columns:1fr}.chat-open .category-content{padding-left:20px;padding-right:20px}}
+@media(max-width:600px){.chat-open .category-content{width:100%}.chat-open .popular{padding-right:36px}.chat-open .popular .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.assist.chat{width:100%;right:0;bottom:0;height:50vh;border-radius:12px 12px 0 0}.chat-open{height:50vh;overflow-y:auto;padding-bottom:24px}html:has(body.chat-open){height:100dvh;overflow:hidden}.assist.chat .chat-hd{padding:12px 48px 12px 16px}.assist.chat .chat-in{margin:4px 16px 12px}}
+@media(prefers-reduced-motion:reduce){.category-content,.popular{transition:none}}
+
+
+.nav.is-scrolled{background:#fff;color:#202833;box-shadow:0 1px 0 #e7e9ed}
+.nav.is-scrolled .nav-icon,.nav.is-scrolled .links{color:#202833}
+.nav.is-scrolled .logo svg{color:#06038d}
+.btn-ghost:hover,.hero-editorial .btn-ghost:hover{background:#06038d;border-color:#06038d;color:#fff}
+#filterStatus{margin-top:24px;color:#06038d;font-size:13px}
+#voiceStatus{font-size:12px}#filterStatus:empty,#voiceStatus:empty{display:none}
+#filterEmpty{padding:32px 0;color:#68717e}
+.assist.chat .chat-in .pic[aria-pressed=true]{color:#06038d}
+
+.results-toolbar{max-width:1768px;margin:24px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.active-filters,.results-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.results-controls{margin-left:auto;font-size:13px;color:#606873}
+.results-controls select{padding:10px 12px;background:#fff;color:#202833;border:1px solid #d9dde2;border-radius:6px;font:inherit}
+.filter-token{padding:8px 12px;border:1px solid #06038d22;background:#06038d0a;color:#06038d;border-radius:999px;font-size:13px}
+.clear-filters{font-size:13px;color:#606873;text-decoration:underline;padding:8px}
+.filter-token:focus-visible,.clear-filters:focus-visible{outline:2px solid #06038d;outline-offset:3px}
+
+/* A quiet recommendation treatment appears only after the budget response. */
+.popular .grid{align-items:start}
+.pc.is-recommended{padding:0;border-radius:12px;background:#fff;box-shadow:0 0 0 1px #bfcef1,0 0 0 3px #e7eefb;}
+.pc.is-recommended .shot{background:#f4f7fb;border-radius:12px 12px 0 0}
+.recommend-tag{position:absolute;left:12px;top:12px;z-index:1;padding:5px 10px;border-radius:6px;background:#06038d;color:#fff;font-size:12px;font-weight:700;line-height:1.4}
+.pc.is-recommended h4{white-space:normal;line-height:1.4;margin:14px 12px 0}
+.pc.is-recommended>.pr{margin-left:12px;margin-right:12px}
+.pc.is-recommended .recommend-details{padding:14px 12px 12px}
+.recommend-details ul{display:none!important;list-style:none;padding:14px;margin:14px 0 12px;background:#f0f5fc;border-radius:8px;display:grid;gap:9px}
+.recommend-details li{position:relative;padding-left:16px;font-size:13px;line-height:1.6;color:#465369}
+.recommend-details li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;background:#06038d;border-radius:50%}
+.recommend-link{display:flex;align-items:center;justify-content:center;gap:10px;min-height:42px;border:1px solid #cdd5e1;border-radius:6px;font-size:14px;font-weight:600;color:#202833}
+.pc.is-recommended:hover .recommend-link{color:#06038d;border-color:#06038d}
+
+.results-toolbar{gap:16px 24px}
+.results-summary{display:flex;align-items:center;flex-wrap:wrap;gap:12px;min-width:0}
+#resultCount{font-size:16px;font-weight:600;white-space:nowrap;color:#202833}
+.results-controls{gap:12px;flex-shrink:0}.results-controls select{min-width:160px;height:46px;border-radius:6px;padding:0 14px}
+.pc{position:relative}.pc-main{position:absolute;inset:0;z-index:1;border-radius:8px}
+.pc-main:focus-visible{outline:2px solid #06038d;outline-offset:4px}
+.pc .fav{z-index:2}.pc .badge{left:12px;top:12px;right:auto;bottom:auto}
+.recommend-actions{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.recommend-link{padding:8px;font-size:13px;text-align:center}
+.recommend-link.trial-link{background:#06038d;border-color:#06038d;color:#fff}
+.pc.is-recommended:hover .trial-link{color:#fff;background:#100cb0}
+@media(max-width:600px){.results-controls{width:100%;justify-content:space-between}.results-controls select{flex:1}.recommend-actions{grid-template-columns:1fr}}
+
+.hero-actions{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero-editorial .hero-actions .btn-ghost{margin-top:0;width:184px;justify-content:center}
+.hero-editorial .hero-actions .btn-secondary{background:transparent;border-color:rgba(255,255,255,.85);color:#fff}
+.hero-editorial .hero-actions .btn-secondary:hover{background:#06038d;border-color:#06038d;color:#fff}
+
+/* Keep the native sorting control aligned across browser appearances. */
+.results-summary{flex:1 1 240px}
+.results-controls{flex:0 0 auto;max-width:100%;min-width:0}
+.results-controls #bikeSort{appearance:none;-webkit-appearance:none;box-sizing:border-box;display:block;width:176px;min-width:0;max-width:100%;height:46px;margin:0;padding:0 40px 0 16px;font-family:inherit;font-size:14px;line-height:normal;color:#202833;background-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='m4 6 4 4 4-4' stroke='%23606873' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;border:1px solid #d9dde2;border-radius:6px;cursor:pointer}
+.results-controls #bikeSort:focus-visible{outline:2px solid #06038d;outline-offset:3px}
+@media(max-width:600px){.results-summary{flex-basis:100%}.results-controls{width:100%}.results-controls #bikeSort{width:100%;flex:1}}
+
+</style>
+<link rel="stylesheet" href="search-nudge.css">
+<style>
+/* Match the invitation to the same reserved space as the assistant. */
+body .assist:not(.chat){top:auto;bottom:24px;right:24px;width:var(--chat-width);max-height:calc(100dvh - 104px);overflow-y:auto;padding:24px;border-radius:12px}
+body .assist:not(.chat){--ink-70:#56606c;--ink-50:#717985;background:#fff;color:#202833;border:1px solid #e5e7eb;box-shadow:0 16px 48px #17233424;backdrop-filter:none}
+body .assist:not(.chat) .x{color:#68717e}
+body .assist:not(.chat) .x:hover{color:#202833;background:#f0f2f5}
+body .assist:not(.chat) .assist-acts .yes{background:#06038d;color:#fff;border:1px solid #06038d}
+body .assist:not(.chat) .assist-acts .yes:hover{background:#100cb0}
+body .assist:not(.chat) .assist-acts .no{background:#fff;color:#202833;border:1px solid #dce0e5}
+body .assist:not(.chat) .assist-acts .no:hover{background:#f7f8fa;border-color:#06038d}
+body .assist:not(.chat) .assist-top{gap:12px}
+body .assist:not(.chat) .spark{width:36px;height:36px;flex-shrink:0;background:#06038d;border-radius:10px}
+body .assist:not(.chat) h3{font-size:19px}
+body .assist:not(.chat) p{font-size:14px;line-height:1.8}
+body .assist:not(.chat) .assist-acts button{font-size:14px}
+@media(max-width:900px){body .assist:not(.chat){right:16px;bottom:16px;padding:20px}}
+@media(max-width:600px){body .assist:not(.chat){right:0;bottom:0;width:100%;max-height:50vh;border-radius:12px 12px 0 0}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <div class="nav-left">
+      <a class="logo" href="index.html" aria-label="GIANT 首頁"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.9405 15.2748L18.081 8.48522L18.3138 8.64159L10.9161 27.9088L10.6486 27.9088L0 0H21.56L19.179 6.13285H7.42408Z"/><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
+      <nav class="links" aria-label="主導覽"><a href="#popular">Bikes</a><a href="https://www.giant-bicycles.com/tw/gear">Gear</a><a href="https://www.giant-bicycles.com/tw/jerseys">Apparel</a><a href="bikes.html">Explore</a><a href="https://www.giant-bicycles.com/tw/contact">Support</a></nav>
+    </div>
+
+    <div class="nav-actions"><button class="search-toggle ai-orb" id="searchToggle" type="button" aria-label="AI 助理" aria-expanded="false" aria-controls="assist"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="none" stroke="#76aaff" stroke-width=".6" stroke-dasharray="1 3"/><ellipse cx="20" cy="20" rx="7" ry="13" fill="none" stroke="#83b5ff" stroke-width=".5" stroke-dasharray="1 2"/><ellipse cx="20" cy="20" rx="13" ry="5" fill="none" stroke="#83b5ff" stroke-width=".5" stroke-dasharray="1 2"/><g fill="#c6dfff"><circle cx="13" cy="12" r="1"/><circle cx="25" cy="14" r=".8"/><circle cx="19" cy="22" r="1"/><circle cx="29" cy="25" r=".8"/><circle cx="14" cy="28" r=".7"/><circle cx="21" cy="8" r=".7"/><circle cx="8" cy="20" r=".7"/></g></svg></button>
+      <a class="nav-icon" href="#" aria-label="會員" title="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <a class="nav-icon" href="#" aria-label="購物車" title="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+    </div>
+
+  </div>
+</header>
+
+<section class="hero hero-editorial" aria-labelledby="hero-title">
+  <figure class="hero-tile tile-left"><img src="img/editorial/propel-action.jpg" alt="GIANT Propel 公路車騎乘"></figure>
+  <figure class="hero-tile tile-right"><img src="img/editorial/propel-road.jpg" alt="騎士駕馭 GIANT 公路車探索山路"></figure>
+  <figure class="hero-tile tile-top"><img src="img/editorial/riding-detail.png" alt="GIANT 自行車騎乘細節"></figure>
+  <figure class="hero-tile tile-bottom"><img src="img/editorial/mountain-riding.png" alt="GIANT 登山車山林騎乘"></figure>
+  <div class="hero-copy"><p class="hero-kicker">GIANT BICYCLE</p><h1 id="hero-title">MORE THAN<br>A BIKE<span>.</span></h1><p class="sub">不只一台車，是下一個想出發的理由。</p><div class="hero-actions"><a class="btn-ghost btn-secondary" href="#popular">探索車款</a><a class="btn-ghost" href="product.html#findStore">線上試乘體驗</a></div></div>
+</section>
+
+<section id="scenes" class="category-stage" aria-label="依騎乘情境選車">
+<div class="category-images" aria-hidden="true"><img class="category-image is-visible" data-background="all" src="img/editorial/all-bikes-riding.png" alt=""><img class="category-image" data-background="city" src="img/scenes/city.webp" alt=""><img class="category-image" data-background="road" src="img/editorial/propel-action.jpg" alt=""><img class="category-image" data-background="gravel" src="img/scenes/gravel.webp" alt=""><img class="category-image" data-background="mtb" src="img/editorial/mountain-riding.png" alt=""><img class="category-image" data-background="ebike" src="img/scenes/ebike.webp" alt=""></div>
+<div class="category-content"><p class="category-eyebrow">FIND YOUR RIDE</p><div class="category-options" role="group" aria-label="篩選熱門車款"><button type="button" data-category="all" aria-pressed="true" aria-controls="grid">全部車款</button><button type="button" data-category="city" aria-pressed="false" aria-controls="grid">城市移動</button><button type="button" data-category="road" aria-pressed="false" aria-controls="grid">長途公路</button><button type="button" data-category="gravel" aria-pressed="false" aria-controls="grid">多變路況</button><button type="button" data-category="mtb" aria-pressed="false" aria-controls="grid">山林越野</button><button type="button" data-category="ebike" aria-pressed="false" aria-controls="grid">電動輔助</button></div></div>
+</section>
+
+<section class="popular" id="popular">
+  <div class="pop-head">
+    <h2>熱門車款</h2>
+    <p>探索最受歡迎的車款，開啟你的下一段騎乘旅程。</p>
+  </div>
+  <div class="results-toolbar">
+    <div class="results-summary"><span id="resultCount" role="status">14 台車款</span><div class="active-filters" id="activeFilters" aria-label="目前篩選條件"></div></div>
+    <div class="results-controls"><select id="bikeSort" aria-label="車款排序"><option value="recommended">推薦排序</option><option value="price-asc">價格：低到高</option><option value="price-desc">價格：高到低</option><option value="name">車款名稱</option></select></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<aside class="assist" id="assist" role="dialog" aria-label="智慧搜尋" aria-modal="false">
+  <button class="x" id="assistClose" type="button" aria-label="收起"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="assist-prompt">
+    <div class="assist-top">
+      <div>
+        <h3>需要我幫忙嗎？</h3>
+        <p id="assistCopy"></p>
+      </div>
+    </div>
+    <div class="assist-acts">
+      <button class="no" id="assistNo" type="button">不用，先逛逛</button>
+      <button class="yes" id="assistYes" type="button">好，幫我看看</button>
+    </div>
+  </div>
+  <div class="chat" id="chat" hidden>
+    <div class="chat-hd">
+      <div><b>AI 小幫手</b></div>
+    </div>
+    <div class="chat-log" id="chatLog" aria-live="polite"></div>
+    <form class="chat-in" id="chatForm" autocomplete="off">
+      <button class="pic" id="chatVoice" type="button" aria-label="開始語音輸入" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3M9 21h6"/></svg></button>
+      <input id="chatInput" aria-label="輸入找車需求" placeholder="輸入車名，或說說想怎麼騎…">
+      <button class="send" id="chatSend" type="submit" aria-label="送出"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19L19 5M9 5h10v10"/></svg></button>
+    </form>
+  </div>
+</aside>
+
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-US');
+const SPARK = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16.0667 9.53333C16.0667 13.1416 13.1416 16.0667 9.53333 16.0667C5.92507 16.0667 3 13.1416 3 9.53333C3 5.92507 5.92507 3 9.53333 3M14.1057 14.2L17 17" stroke="white" stroke-width="1.3" stroke-linecap="round"/><path d="M13.5131 2.61095C13.7292 2.02272 13.8373 1.72861 14.0031 1.65806C14.1073 1.61374 14.2251 1.61374 14.3293 1.65806C14.4952 1.72861 14.6032 2.02272 14.8194 2.61095L15.1748 3.57829C15.2185 3.69722 15.2403 3.75668 15.2768 3.80545C15.3007 3.8373 15.3289 3.86558 15.3608 3.88941C15.4096 3.9259 15.469 3.94775 15.5879 3.99145L16.5553 4.34688C17.1435 4.56301 17.4376 4.67108 17.5082 4.83693C17.5525 4.94114 17.5525 5.0589 17.5082 5.16311C17.4376 5.32896 17.1435 5.43703 16.5553 5.65316L15.5879 6.00859C15.469 6.05229 15.4096 6.07413 15.3608 6.11063C15.3289 6.13446 15.3007 6.16274 15.2768 6.19459C15.2403 6.24336 15.2185 6.30282 15.1748 6.42175L14.8194 7.38909C14.6032 7.97732 14.4952 8.27143 14.3293 8.34198C14.2251 8.3863 14.1073 8.3863 14.0031 8.34198C13.8373 8.27143 13.7292 7.97732 13.5131 7.38909L13.1576 6.42175C13.114 6.30282 13.0921 6.24336 13.0556 6.19459C13.0318 6.16274 13.0035 6.13446 12.9716 6.11063C12.9229 6.07413 12.8634 6.05229 12.7445 6.00859L11.7771 5.65316C11.1889 5.43703 10.8948 5.32896 10.8243 5.16311C10.7799 5.0589 10.7799 4.94114 10.8243 4.83693C10.8948 4.67108 11.1889 4.56301 11.7771 4.34688L12.7445 3.99145C12.8634 3.94775 12.9229 3.9259 12.9716 3.88941C13.0035 3.86558 13.0318 3.8373 13.0556 3.80545C13.0921 3.75668 13.114 3.69722 13.1576 3.57829L13.5131 2.61095Z" fill="white"/></svg>';
+
+/* ---------- 熱門車款：車名與價格沿用 02 的車款資料；色點為示意 ---------- */
+const BIKES = [
+  {k:'fastroad', n:'FastRoad AR Advanced 1',   pr:62800,  cat:'road',   dots:['#C9B79A','#1B1F26','#2A3340','#1D3C7A'], badge:'NEW'},
+  {k:'revolt',   n:'Revolt Advanced SL 0',     pr:308000, cat:'gravel', dots:['#3B3F2C','#5E6470','#1B1F26','#474B52']},
+  {k:'talon',    n:'Talon E+',                 pr:79800,  cat:'mtb',    dots:['#2B3F6E','#7C858F','#C8CDD3','#5A6068']},
+  {k:'escape',   n:'Escape Disc 2',            pr:16800,  cat:'city',   dots:['#1B1F26','#2E5AA8','#D8D3C4'], badge:'BEST SELLER'},
+  {k:'explore',  n:'Explore E+',               pr:78000,  cat:'ebike',  dots:['#2B3F6E','#1B1F26','#474B52']},
+  {k:'trance',   n:'Trance X Advanced Pro 29', pr:178000, cat:'mtb',    dots:['#1B1F26','#7FA3A0','#8C7A4E','#474B52']},
+];
+const BY = Object.fromEntries(BIKES.map(b => [b.k, b]));
+/* 對話裡用到的重點（不寫官方沒有的規格數字） */
+const WHY = {
+  explore: ['電動輔助車款','先確認預計騎乘的路況','尺寸與配備請以官方商品資料為準'],
+  revolt:  ['Gravel 車款：柏油、碎石路都能騎','寬胎設計，碎石路面更穩定','長距離騎乘姿勢較舒適'],
+  talon:   ['電動輔助，林道爬坡更省力','前避震硬尾，保養相對單純','29 吋輪組，越過坑洞更穩'],
+  trance:  ['前後全避震，下坡與碎石路更有信心','碳纖車架，爬坡不吃力','適合進階山路與越野挑戰'],
+  escape:  ['平把直立姿勢，通勤好上手','碟煞設計，雨天煞車更穩','入門價位，日常代步剛好'],
+  fastroad:['輕量車架，平路巡航更快','平把操控，城市與河濱都好騎','想從通勤進階到運動騎乘的選擇'],
+};
+
+const heart = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg>';
+const HOME_BIKES = [...BIKES, ...[{"k": "bikes-propel-advanced-sl-2027", "n": "Propel Advanced SL", "pr": 238000.0, "cat": "road", "img": "img/catalog/bikes-propel-advanced-sl-2027.jpg", "dots": ["#263540", "#b7b9ac"], "max": 428000.0}, {"k": "bikes-propel-advanced-pro-2027", "n": "Propel Advanced Pro", "pr": 138000.0, "cat": "road", "img": "img/catalog/bikes-propel-advanced-pro-2027.jpg", "dots": ["#263540", "#b7b9ac"], "max": 258000.0}, {"k": "bikes-propel-advanced-2027", "n": "Propel Advanced", "pr": 78800.0, "cat": "road", "img": "img/catalog/bikes-propel-advanced-2027.jpg", "dots": ["#263540", "#b7b9ac"], "max": 78800.0}, {"k": "bikes-tcr-advanced-sl-2027", "n": "TCR Advanced SL", "pr": 258000.0, "cat": "road", "img": "img/catalog/bikes-tcr-advanced-sl-2027.jpg", "dots": ["#263540", "#b7b9ac"], "max": 338000.0}, {"k": "bikes-revolt-advanced-sl-2027", "n": "Revolt Advanced SL", "pr": 208000.0, "cat": "gravel", "img": "img/catalog/bikes-revolt-advanced-sl-2027.jpg", "dots": ["#263540", "#b7b9ac"], "max": 308000.0}, {"k": "bikes-revolt-advanced-pro", "n": "Revolt Advanced Pro", "pr": 128000.0, "cat": "gravel", "img": "img/catalog/bikes-revolt-advanced-pro.jpg", "dots": ["#263540", "#b7b9ac"], "max": 128000.0}, {"k": "bikes-anthem-advanced-sl", "n": "Anthem Advanced SL", "pr": 128000.0, "cat": "mtb", "img": "img/catalog/bikes-anthem-advanced-sl.jpg", "dots": ["#263540", "#b7b9ac"], "max": 280000.0}, {"k": "bikes-trance-x-advanced-pro-29-2023", "n": "Trance X Advanced Pro 29", "pr": 178000.0, "cat": "mtb", "img": "img/catalog/bikes-trance-x-advanced-pro-29-2023.jpg", "dots": ["#263540", "#b7b9ac"], "max": 178000.0}]];
+$('grid').innerHTML = HOME_BIKES.map(b =>
+  '<article class="pc" data-k="' + b.k + '" data-cat="' + b.cat + '">' +
+    '<div class="shot"><img loading="lazy" src="' + (b.img || 'img/bikes/' + b.k + '.webp') + '" alt="' + b.n + '">' +
+      (b.k==='revolt'?'<span class="recommend-tag" hidden>最推薦</span>':'') +
+      '<span class="fav" role="button" aria-label="收藏">' + heart + '</span>' +
+      '<span class="dots">' + b.dots.map(c => '<i style="background:' + c + '"></i>').join('') + '</span>' +
+      (b.badge ? '<span class="badge">' + b.badge + '</span>' : '') +
+    '</div>' +
+    '<h4 title="' + b.n + '">' + b.n + '</h4><p class="pr">NT$ ' + fmt(b.pr) + (b.max > b.pr ? ' 起' : '') + '</p>' +
+    (b.k==='revolt'?'<div class="recommend-details" hidden><ul><li>公路騎乘之外，也能探索碎石路線</li><li>適合想把騎乘距離慢慢拉長的你</li><li>預算不設限，可優先考慮 SL 旗艦車款</li></ul><div class="recommend-actions"><a class="recommend-link" href="product.html">查看詳情 <span aria-hidden="true">↗</span></a><a class="recommend-link trial-link" href="product.html#findStore">線上試乘體驗</a></div></div>':'') +
+  '<a class="pc-main" href="product.html" aria-label="查看 ' + b.n + '"></a></article>').join('');
+document.querySelectorAll('.pc .fav').forEach(f => f.onclick = e => { e.preventDefault(); e.stopPropagation(); f.classList.toggle('on'); const bike=HOME_BIKES.find(b=>b.k===f.closest('.pc').dataset.k);guideAction('favorite',{name:bike.n,saved:f.classList.contains('on')}); });
+
+/* ---------- 瀏覽紀錄：在卡片上停一下或點下去，才算「看過」 ---------- */
+const CAT_LABEL = {city:'城市車', road:'公路車', gravel:'Gravel', mtb:'登山車', ebike:'電輔車'};
+const VIEWED = [];
+function markView(cat){
+  if (VIEWED.includes(cat)) return;
+  VIEWED.push(cat);
+  $('assistCopy').textContent = promptCopy();
+  // 瀏覽只整理上下文；由使用者主動開啟協助。
+}
+document.querySelectorAll('.scene,.pc').forEach(el => {
+  let t;
+  el.addEventListener('mouseenter', () => { t = setTimeout(() => markView(el.dataset.cat), 700); });
+  el.addEventListener('mouseleave', () => clearTimeout(t));
+  el.addEventListener('click', e => { markView(el.dataset.cat); if (el.getAttribute('href') === '#') e.preventDefault(); });
+});
+function promptCopy(){
+  return '我可以幫你快速比較你正在看的車款，或依照你的騎乘情境推薦合適的選擇。';
+}
+
+/* 提示不是偏好判斷：本次進頁最多一次，背景分頁不觸發。 */
+const assist = $('assist');
+const A = {shown:false, chat:false, terrain:null};
+let nudgeTimer, nudgeConsumed = false, assistReturnFocus = null;
+$('assistCopy').textContent = promptCopy();
+
+function stopGlow(){ $('searchToggle').classList.remove('search-glow'); }
+function scheduleNudge(){
+  clearTimeout(nudgeTimer);
+  if($('searchToggle').closest('[hidden]') || nudgeConsumed || document.hidden || assist.classList.contains('on')) return;
+  nudgeTimer=setTimeout(()=>{
+    if(document.hidden || nudgeConsumed || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+    nudgeConsumed=true;
+    assistReturnFocus=document.activeElement;
+    assist.setAttribute('role','region');assist.classList.add('on');
+    document.body.classList.add('chat-open');
+    $('searchToggle').setAttribute('aria-expanded','true');
+  },5000);
+}
+function openAssist(){
+  stopGlow();
+  assistReturnFocus=document.activeElement;
+  clearTimeout(nudgeTimer);nudgeConsumed=true;A.shown=true;
+  assist.setAttribute('role','dialog');assist.classList.add('on');
+  $('searchToggle').setAttribute('aria-expanded','true');
+  document.body.classList.add('chat-open');
+  startChat();showContextGuide();fitChat();$('chatInput').focus({preventScroll:true});
+}
+function closeAssist(){
+  if(recognition) recognition.stop();
+  stopGlow();
+  clearTimeout(nudgeTimer);nudgeConsumed=true;
+  const focusInside=assist.contains(document.activeElement);
+  assist.classList.remove('on');
+  document.body.classList.remove('chat-open');
+  $('searchToggle').setAttribute('aria-expanded','false');
+  if(focusInside){
+    const target=assistReturnFocus && !assist.contains(assistReturnFocus) && assistReturnFocus.isConnected ? assistReturnFocus : $('searchToggle');
+    target.focus({preventScroll:true});
+  }
+}
+$('assistClose').onclick=closeAssist;
+$('assistNo').onclick=closeAssist;
+$('assistYes').onclick=openAssist;
+$('searchToggle').onclick=()=>assist.classList.contains('on')&&assist.classList.contains('chat')?closeAssist():openAssist();
+function fitChat(){assist.style.height='';}
+document.addEventListener('click',()=>{stopGlow();scheduleNudge();},{capture:true});
+document.addEventListener('input',scheduleNudge);
+document.addEventListener('focusout',()=>setTimeout(scheduleNudge,0));
+document.addEventListener('visibilitychange',scheduleNudge);
+document.addEventListener('keydown',e=>{if(e.key==='Escape' && assist.classList.contains('on')){e.preventDefault();closeAssist();}});
+scheduleNudge();
+
+/* ---------- 對話 ---------- */
+const log = $('chatLog');
+function add(html, who){
+  const m = document.createElement('div');
+  m.className = 'msg ' + (who || 'ai');
+  m.innerHTML = who === 'me' ? '<div class="bubble">' + html + '</div>' : '<span class="av">' + SPARK + '</span><div class="body">' + html + '</div>';
+  log.appendChild(m);
+  log.scrollTop = log.scrollHeight;
+  return m;
+}
+/* AI 回覆一律排隊：先顯示輸入中，再出現內容，避免連點時訊息交錯 */
+let queue = Promise.resolve();
+function ai(html, delay, bind){
+  queue = queue.then(() => new Promise(res => {
+    const t = add('<div class="typing"><i></i><i></i><i></i></div>');
+    setTimeout(() => {
+      t.remove();
+      const m = add(html);
+      if (bind) bind(m);
+      requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });
+      res(m);
+    }, delay || 700);
+  }));
+  return queue;
+}
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* 還沒回答的選項，一旦改用打字或點了別的，就收起來 */
+function lockOpen(){ log.querySelectorAll('.opts:not(.done),.chips:not(.done)').forEach(g => g.classList.add('done')); }
+function chips(list){ return '<div class="chips">' + list.map(([v, t]) => '<button class="chip" type="button" data-v="' + v + '">' + t + '</button>').join('') + '</div>'; }
+function bindChips(m, handler){
+  const g = m.querySelector('.chips'); if (!g) return;
+  g.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+    lockOpen(); c.classList.add('on');
+    add(c.textContent, 'me');
+    handler(c.dataset.v);
+  });
+}
+
+const CMP = [
+  {k:'revolt', img:'img/scenes/gravel.webp',  d:'柏油碎石都能騎<br>長距離更舒適'},
+  {k:'talon',  img:'img/scenes/mtb.webp',     d:'林道坑洞更好過<br>電輔爬坡省力'},
+  {k:'trance', img:'img/scenes/descent.webp', d:'前後全避震<br>適合進階山路'},
+];
+const ICON = {
+  city:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 28h24M7 28V12l7-4v20M14 28V5l9 4v19M23 28V15h4v13"/><path d="M10 15h1M10 19h1M10 23h1M17.5 11h1M17.5 15h1M17.5 19h1M17.5 23h1"/></svg>',
+  gravel:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3 22l8-11 5 6 4-4 9 9"/><path d="M11 11l2 4M20 13l1.5 3"/><path d="M5 27h.1M10 26h.1M15 27h.1M20 26h.1M25 27h.1"/></svg>',
+  trail:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3 26l9-15 4 6 3-4 10 13z"/><path d="M12 11l2.5 4M19 13l2 3"/><path d="M7 26v-3M25 26v-3"/></svg>',
+  unsure:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 28c0-4 12-4 12-8s-12-4-12-8 7-4 7-8"/><path d="M17 4h5M8 28h5"/></svg>',
+};
+const OPTS = [['city','城市 / 河濱','平坦的柏油路'],['gravel','柏油 + 碎石','偶爾非鋪裝路'],['trail','林道 / 山路','較多起伏地形'],['unsure','還不確定','幫我再看看']];
+
+function startChat(){
+  if(A.chat) return;
+  A.chat=true;assist.classList.add('chat');$('chat').hidden=false;
+  const welcome=document.createElement('div');welcome.className='welcome';welcome.id='searchWelcome';
+  welcome.innerHTML='<h2>想怎麼騎，我們一起看看。</h2><p>不用先懂規格，輸入車名、預算或任何騎乘想法，交給我們幫你找適合的車。</p><p id="filterStatus" role="status"></p><p id="voiceStatus" role="status"></p>';
+  log.append(welcome);
+}
+
+function compareBrowsing(){
+  const contextual=BIKES.filter(b=>VIEWED.includes(b.cat));
+  const candidates=(contextual.length>=2?contextual:BIKES).slice(0,3);
+  const context=contextual.length>=2?'依你剛逛過的情境，先放這幾台一起看。':'先用本頁三款不同方向的車，一起看差異。';
+  ai('<h4>這幾台，可以這樣看。</h4><p>'+context+' 點一台看看細節。</p><div class="cmp">'+candidates.map(b=>'<button class="cmp-card" type="button" data-k="'+b.k+'"><img src="img/bikes/'+b.k+'.webp" alt="'+b.n+'"><span class="t"><b>'+b.n+'</b><small>'+CAT_LABEL[b.cat]+' · NT$ '+fmt(b.pr)+'</small></span></button>').join('')+'</div>',500,m=>m.querySelectorAll('[data-k]').forEach(button=>button.onclick=()=>{add('看看 '+esc(BY[button.dataset.k].n),'me');recommend(button.dataset.k,'<p>這台的選購重點整理給你：</p>',[],'一起看看');}));
+}
+
+function askTerrain(){
+  ai('<h4>你平常主要會騎在哪種路況？</h4><p>選擇後，我會為你推薦最適合的車款。</p>' +
+     '<div class="opts">' + OPTS.map(([v, t, s]) => '<button class="opt" type="button" data-v="' + v + '">' + ICON[v] + '<b>' + t + '</b><small>' + s + '</small></button>').join('') + '</div>',
+     650, m => m.querySelectorAll('.opt').forEach(o => o.onclick = () => {
+       lockOpen(); o.classList.add('on');
+       add(o.querySelector('b').textContent, 'me');
+       answerTerrain(o.dataset.v);
+     }));
+}
+
+function answerTerrain(v){
+  A.terrain = v;
+  if (v === 'gravel') return recommend('revolt', '<p>以柏油加碎石的路況，可以先看看 <b>Revolt Advanced SL 0</b>。</p><p>這類車款兼顧公路與非鋪裝路面的探索，實際適配仍可到店試騎確認。</p>');
+  if (v === 'trail') return askTrail();
+  if (v === 'city') return recommend('escape', '<p>如果主要在城市和河濱，可以先從平把、適合日常騎乘的車款看起。</p><p>平路通勤我會建議看看 <b>Escape Disc 2</b>。</p>', [['fastroad','想騎快一點']]);
+  ai('<p>沒關係，我換個方式問。你週末通常會想去哪裡？</p>' + chips([['city','河濱或市區'],['gravel','郊外，偶爾走土路'],['trail','山上的步道']]), 700, m => bindChips(m, answerTerrain));
+}
+
+function askTrail(){
+  A.terrain = 'trail';
+  ai('<p>山路的話，<b>Talon E+</b> 和 <b>Trance X</b> 都合適，差在騎起來的感覺。你比較在意哪一點？</p>' +
+     chips([['climb','爬坡想省力'],['descent','下坡想更有信心'],['budget','預算控制在 10 萬內']]), 700,
+     m => bindChips(m, v => {
+       if (v === 'climb') recommend('talon', '<p>想爬坡省力，<b>Talon E+</b> 的電動輔助會很有感。</p>');
+       else if (v === 'descent') recommend('trance', '<p>想要下坡更有信心，前後全避震的 <b>Trance X Advanced Pro 29</b> 會比較適合。</p>');
+       else budgetFlow(100000);
+     }));
+}
+
+function recommend(k, intro, extra, tag){
+  const b = BY[k];
+  ai((intro || '') +
+     '<div class="rec"><div class="ph"><span class="tag">' + (tag || '可以先看看') + '</span><img src="img/bikes/' + k + '.webp" alt=""></div>' +
+     '<div class="in"><h5>' + b.n + '</h5><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+     '<div class="acts"><button class="yes" type="button" data-act="view">看這台車款</button><button class="no" type="button" data-act="size">我適合的尺寸</button></div></div></div>' +
+     chips((extra || []).concat([['again','換個條件']])),
+     850, m => {
+       log.querySelectorAll('.cmp-card').forEach(c => c.classList.toggle('pick', c.dataset.k === k));
+       m.querySelector('[data-act="view"]').onclick = () => showInGrid(k);
+       m.querySelector('[data-act="size"]').onclick = () => { lockOpen(); add('我適合的尺寸？', 'me'); sizeFlow(k); };
+       bindChips(m, v => {
+         if (v === 'again') askTerrain();
+         else recommend(v, '<p>想騎快一點的話，可以看看 <b>' + BY[v].n + '</b>。</p>');
+       });
+     });
+}
+
+/* 尺寸只給通用示意值，正式版需接官方 Size Guide */
+function sizeFlow(k){
+  ai('<p>你的身高大概落在哪個範圍？</p>' + chips([['XS','160 cm 以下'],['S','160–170 cm'],['M','170–180 cm'],['L','180 cm 以上']]), 600,
+     m => bindChips(m, s => ai('<p>' + (k ? BY[k].n + ' ' : '') + '建議先試 <b>' + s + '</b> 號車架。</p><p>這是通用的示意值，實際還是建議到門市試騎確認。</p>' + chips([['again','換個條件']]), 700, m2 => bindChips(m2, () => askTerrain()))));
+}
+
+function budgetFlow(n){
+  const pool = A.terrain === 'city' ? ['fastroad','escape'] : A.terrain === 'gravel' ? ['revolt','fastroad','escape'] : A.terrain === 'trail' ? ['trance','talon'] : ['trance','revolt','talon','fastroad','escape'];
+  const fit = pool.filter(k => BY[k].pr <= n).sort((a, b) => BY[b].pr - BY[a].pr);
+  const over = pool.filter(k => BY[k].pr > n);
+  if (!fit.length) return ai('<p>NT$ ' + fmt(n) + ' 以內，這幾台都會超出預算。最入門的是 <b>Escape Disc 2</b>（NT$ ' + fmt(BY.escape.pr) + '）。</p>' + chips([['again','換個條件']]), 700, m => bindChips(m, () => askTerrain()));
+  recommend(fit[0], '<p>預算 NT$ ' + fmt(n) + ' 以內，我推薦 <b>' + BY[fit[0]].n + '</b>（NT$ ' + fmt(BY[fit[0]].pr) + '）。</p>' +
+    (over.length ? '<p>' + over.map(k => BY[k].n).join('、') + ' 會超出預算，先不列入。</p>' : ''));
+}
+
+function parseBudget(s){
+  const zh = {一:1,二:2,兩:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,十:10,十五:15,二十:20};
+  let m = s.match(/(\d+(?:\.\d+)?)\s*萬/); if (m) return Math.round(parseFloat(m[1]) * 10000);
+  m = s.match(/(十五|二十|[一二兩三四五六七八九十])\s*萬/); if (m) return zh[m[1]] * 10000;
+  m = s.match(/(\d{4,6})/); if (m) return parseInt(m[1], 10);
+  return 0;
+}
+
+/* 打字：示範版只聽得懂路況、預算與尺寸 */
+function route(t){
+  const s = t.toLowerCase();
+  if (/比較|差異|差在哪/.test(s)) return compareBrowsing();
+  const named=BIKES.find(b=>s.includes(b.k));
+  if(named) return recommend(named.k,'<p>先看看這台的重點：</p>',[],'你想了解的車');
+  const n = parseBudget(s);
+  if (n) return budgetFlow(n);
+  if (/尺寸|身高|多高|size/.test(s)) return sizeFlow();
+  if (/爬坡|省力|電輔|電動/.test(s)) { A.terrain = 'trail'; return recommend('talon', '<p>想爬坡省力的話，<b>Talon E+</b> 的電動輔助會很有感。</p>'); }
+  if (/下坡|避震|挑戰|進階|技術/.test(s)) { A.terrain = 'trail'; return recommend('trance', '<p>想要下坡更有信心，前後全避震的 <b>Trance X Advanced Pro 29</b> 會比較適合。</p>'); }
+  if (/林道|山路|越野|登山|步道|上山|山上/.test(s)) return answerTerrain('trail');
+  if (/碎石|gravel|長途|環島|郊外|土路|一日/.test(s)) return answerTerrain('gravel');
+  if (/城市|通勤|河濱|上班|上學|市區|代步/.test(s)) return answerTerrain('city');
+  if (/不確定|不知道|都可以|沒想法/.test(s)) return answerTerrain('unsure');
+  ai('<p>這句我還沒辦法判斷，這個示範版本目前只聽得懂路況、預算與尺寸。</p><p>可以說說你最常騎的地方，例如「河濱通勤」或「週末上山」。</p>', 650);
+}
+const input = $('chatInput'), send = $('chatSend');
+let selectedCategory='all', filterTimer, recognition;
+let appliedFilters=[];
+let searchSelectedRoad=false;
+function applyLiveFilter(){
+ const q=appliedFilters.join(' ').toLowerCase();
+ const unlimited=/無預算|不限預算|預算不限|不設預算|沒有預算限制/.test(q);
+ const budget=unlimited?0:parseBudget(q.replaceAll(',',''));
+ // Fixed presentation scenario; keep the catalogue's actual gravel category intact.
+ const searchedRoad=/公路/.test(q);
+ if(searchedRoad){
+  selectedCategory='road';searchSelectedRoad=true;
+  document.getElementById('scenes').dispatchEvent(new CustomEvent('search-category',{detail:'road'}));
+ }else if(searchSelectedRoad){
+  selectedCategory='all';searchSelectedRoad=false;
+  document.getElementById('scenes').dispatchEvent(new CustomEvent('search-category',{detail:'all'}));
+ }
+ const demoRoad=searchedRoad||selectedCategory==='road';
+ const demoPreference=demoRoad||unlimited||budget>=BY.revolt.pr;
+ const groups=[['city',/城市|通勤|河濱|上班|代步|休閒/],['road',/公路|競速|速度|長途|環島/],['gravel',/碎石|gravel|多變/],['mtb',/山路|登山|越野|林道/],['ebike',/電動|電輔|省力/]];
+ const cats=groups.filter(([,r])=>r.test(q)).map(([cat])=>cat);
+ const names=HOME_BIKES.filter(b=>q.includes(b.n.toLowerCase()) || q.includes(b.n.split(' ')[0].toLowerCase()));
+ const words=q.split(/\s+/).filter(Boolean);
+ let count=0;
+ document.querySelectorAll('#grid .pc').forEach(card=>{
+  const bike=HOME_BIKES.find(b=>b.k===card.dataset.k);
+  const demoMatch=demoPreference&&bike.k==='revolt';
+ const category=selectedCategory==='all'||bike.cat===selectedCategory||(selectedCategory==='ebike'&&bike.k==='talon')||(selectedCategory==='road'&&demoRoad&&demoMatch);
+  const intent=!q || (cats.length?cats.includes(bike.cat)||(cats.includes('ebike')&&bike.k==='talon')||(demoRoad&&demoMatch):true);
+  const name=names.length?names.some(b=>b.k===bike.k):(!q||cats.length||budget||unlimited||words.every(w=>bike.n.toLowerCase().includes(w)));
+  card.hidden=!(category&&intent&&name&&(!budget||bike.pr<=budget));if(!card.hidden)count++;
+  const recommended=unlimited&&bike.k==='revolt'&&!card.hidden;
+  card.classList.toggle('is-recommended',recommended);
+  card.querySelectorAll('.recommend-tag,.recommend-details').forEach(el=>el.hidden=!recommended);
+ });
+ const cards=[...document.querySelectorAll('#grid .pc')];
+ const order=new Map(HOME_BIKES.map((b,i)=>[b.k,i]));
+ cards.sort((a,b)=>{
+  const sort=$('bikeSort').value;
+  const bikeA=HOME_BIKES.find(x=>x.k===a.dataset.k),bikeB=HOME_BIKES.find(x=>x.k===b.dataset.k);
+  if(sort==='price-asc')return bikeA.pr-bikeB.pr;
+  if(sort==='price-desc')return bikeB.pr-bikeA.pr;
+  if(sort==='name')return bikeA.n.localeCompare(bikeB.n);
+  const rank=card=>demoPreference&&card.dataset.k==='revolt'?-1:order.get(card.dataset.k);
+  return rank(a)-rank(b);
+ }).forEach(card=>$('grid').append(card));
+ const status=$('filterStatus');if(status)status.textContent=q?(count?'已為你篩選出 '+count+' 台車款。':'暫時沒有符合的車款，試試其他車名、用途或預算。'):'';
+ let empty=$('filterEmpty');if(!empty){empty=document.createElement('p');empty.id='filterEmpty';empty.textContent='沒有符合條件的車款，試著調整輸入或切換分類。';$('grid').after(empty);}empty.hidden=count>0;
+ $('resultCount').textContent=count+' 台車款';
+ renderAppliedFilters();
+ return count;
+}
+function removeSearchRoad(){
+ if(searchSelectedRoad){
+  appliedFilters=appliedFilters.map(text=>text.replace(/長途公路|公路/g,'').trim()).filter(Boolean);
+  searchSelectedRoad=false;
+ }
+}
+function resetCategory(){
+ removeSearchRoad();selectedCategory='all';
+ $('scenes').dispatchEvent(new CustomEvent('search-category',{detail:'all'}));
+}
+function renderAppliedFilters(){
+ const host=$('activeFilters');host.replaceChildren();
+ function token(text,onRemove){
+  const button=document.createElement('button');button.type='button';button.className='filter-token';button.textContent=text+' ×';button.setAttribute('aria-label','移除條件：'+text);button.onclick=onRemove;host.append(button);
+ }
+ if(selectedCategory!=='all'){
+  const categoryButton=document.querySelector('[data-category="'+selectedCategory+'"]');
+  token(categoryButton.textContent,()=>{const label=categoryButton.textContent;resetCategory();applyLiveFilter();guideAction('remove',{label});});
+ }
+ appliedFilters.forEach((text,index)=>{
+  if(selectedCategory==='road'&&/^(?:長途)?公路$/.test(text))return;
+  token(text,()=>{appliedFilters.splice(index,1);applyLiveFilter();guideAction('remove',{label:text});});
+ });
+ if(appliedFilters.length||selectedCategory!=='all'){
+  const clear=document.createElement('button');clear.type='button';clear.className='clear-filters';clear.textContent='清除條件';
+  clear.onclick=()=>{appliedFilters=[];resetCategory();applyLiveFilter();guideAction('clear');};host.append(clear);
+ }
+}
+// Keep one contextual hint, rather than filling the conversation with click logs.
+let pendingGuide='';
+function showContextGuide(){
+ if(!pendingGuide||!A.chat)return;
+ $('contextGuide')?.remove();
+ const message=add('<p>'+esc(pendingGuide)+'</p>');message.id='contextGuide';
+}
+function guideAction(action,detail={}){
+ const count=[...document.querySelectorAll('#grid .pc')].filter(card=>!card.hidden).length;
+ const conditions=appliedFilters.join(' ');
+ const hasBudget=!!parseBudget(conditions.replaceAll(',',''))||/無預算|不限預算|預算不限|不設預算|沒有預算限制/.test(conditions);
+ const next=!count?'可以先移除部分條件，或換個預算範圍。':!hasBudget?'這次選車，你心裡有大概的預算嗎？':document.querySelector('.pc.is-recommended:not([hidden])')?'可以先看看最推薦的 Revolt Advanced SL 0，或點「線上試乘體驗」繼續了解。':'可以點開喜歡的車款看詳情，或告訴我還想調整哪些條件。';
+ if(action==='category')pendingGuide='已切換到「'+detail.label+'」，目前有 '+count+' 台車款。'+next;
+ else if(action==='remove')pendingGuide='已移除「'+detail.label+'」，現在有 '+count+' 台車款可以看看。'+next;
+ else if(action==='clear')pendingGuide='已清除篩選條件，全部 '+count+' 台車款都回來了。你可以先選想騎的路況，或直接告訴我你的想法。';
+ else if(action==='sort')pendingGuide='已依「'+detail.label+'」排列 '+count+' 台車款，篩選條件保持不變。'+next;
+ else if(action==='favorite')pendingGuide=detail.saved?'已把 '+detail.name+' 加入收藏。可以繼續逛逛其他車款，再從收藏中挑喜歡的。':'已取消收藏 '+detail.name+'。可以再看看其他車款，或告訴我你在意的地方。';
+ else if(action==='browse')pendingGuide='先慢慢看看這 '+count+' 台車款。可以從上方分類開始，也可以告訴我想騎的路況，我幫你縮小範圍。';
+ $('assistCopy').textContent=pendingGuide;
+ if(assist.classList.contains('on')&&A.chat)showContextGuide();
+}
+document.querySelector('.hero-actions a[href="#popular"]').addEventListener('click',()=>guideAction('browse'));
+$('bikeSort').onchange=()=>{applyLiveFilter();guideAction('sort',{label:$('bikeSort').selectedOptions[0].textContent});};
+input.addEventListener('input',()=>send.classList.toggle('ready',!!input.value.trim()));
+// Wait for a confirmed submission, including when composing Chinese text.
+input.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.isComposing)e.preventDefault();});
+$('chatForm').onsubmit=e=>{
+ e.preventDefault();const text=input.value.trim();if(!text)return;
+ if(recognition)recognition.stop();
+ const normalized=text.replace(/(\d),(?=\d{3})/g,'$1');
+ const noLimit=/無預算|不限預算|預算不限|不設預算|沒有預算限制/.test(normalized);
+ const amount=parseBudget(normalized);
+ const budgetOnly=(noLimit||amount>0)&&!(/公路|城市|通勤|河濱|登山|山路|越野|碎石|電動|電輔|gravel/i.test(normalized))&&!HOME_BIKES.some(b=>normalized.toLowerCase().includes(b.n.split(' ')[0].toLowerCase()));
+ if(budgetOnly){
+  // Keep the riding intent and replace the previous budget for follow-up answers.
+  appliedFilters=appliedFilters.map(f=>f.replaceAll(',','').replace(/(?:預算\s*)?(?:\d+(?:\.\d+)?|十五|二十|[一二兩三四五六七八九十])\s*萬(?:元|以內)?|(?:預算\s*)?\d{4,6}(?:元|以內)?|無預算|不限預算|預算不限|不設預算|沒有預算限制/g,'').trim()).filter(Boolean);
+  appliedFilters.push(noLimit?'無預算':'預算 '+fmt(amount)+' 元以內');
+ }else{
+  appliedFilters=normalized.split(/[，,、；;\n]+|\s+(?=預算|無預算|不限預算)/).map(s=>s.trim()).filter(Boolean);
+ }
+ $('searchWelcome')?.setAttribute('hidden','');
+ pendingGuide='';$('contextGuide')?.remove();
+ add(esc(text),'me');input.value='';send.classList.remove('ready');
+ const count=applyLiveFilter();
+ const conditions=appliedFilters.join('、');
+ const askBudget=(selectedCategory==='road'||/公路/.test(conditions))&&!parseBudget(conditions.replaceAll(',',''))&&!/無預算|不限預算|預算不限|不設預算|沒有預算限制/.test(conditions);
+ const reply=askBudget?'先幫你整理了 '+count+' 台適合公路騎乘的車款。這次選車，你心裡有大概的預算嗎？':count?'幫你整理好了！依照「'+conditions+'」，目前找到 '+count+' 台車款，已經更新在左側。你可以清除條件，或切換排序慢慢比較。':'依照「'+conditions+'」，目前沒有找到符合的車款。可以試著放寬預算或移除部分條件，我再幫你找找。';
+ add('<p>'+esc(reply)+'</p>');
+};
+const voice=$('chatVoice'), SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+voice.onclick=()=>{
+ const status=$('voiceStatus');
+ if(!SpeechRecognition){status.textContent='此瀏覽器不支援語音輸入，請使用 Chrome 或直接輸入文字。';return;}
+ if(recognition){recognition.stop();return;}
+ recognition=new SpeechRecognition();recognition.lang='zh-TW';recognition.interimResults=true;
+ recognition.onstart=()=>{voice.setAttribute('aria-pressed','true');voice.setAttribute('aria-label','停止語音輸入');status.textContent='正在聆聽，請說說你想怎麼騎…';};
+ recognition.onresult=e=>{input.value=Array.from(e.results).map(r=>r[0].transcript).join('');send.classList.toggle('ready',!!input.value.trim());};
+ recognition.onerror=e=>{status.textContent=e.error==='not-allowed'?'請允許麥克風權限，或直接輸入文字。':'未能辨識語音，請再試一次或輸入文字。';};
+ recognition.onend=()=>{recognition=null;voice.setAttribute('aria-pressed','false');voice.setAttribute('aria-label','開始語音輸入');if(status.textContent.startsWith('正在聆聽'))status.textContent='';};
+ try{recognition.start();}catch(e){recognition=null;status.textContent='無法啟動語音，請再試一次。';}
+};
+
+/* 「看這台車款」：先收起小幫手，捲到熱門車款並把那一台亮一下 */
+function showInGrid(k){
+  if (k === 'revolt') { location.href = 'product.html'; return; }   /* 目前只有 Revolt 有詳細頁 */
+  const card = document.querySelector('.pc[data-k="' + k + '"]');
+  if (!card) return;
+  closeAssist();
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+  card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+}
+
+
+// Hover/focus only preview; clicking commits the category and product filter.
+(()=>{
+ const section=document.getElementById('scenes');
+ const buttons=[...section.querySelectorAll('[data-category]')];
+ const images=[...section.querySelectorAll('[data-background]')];
+ const cards=[...document.querySelectorAll('#grid .pc')];
+ const title=document.querySelector('#popular h2');
+ let active='all',hovered=null;
+ function preview(key){images.forEach(img=>img.classList.toggle('is-visible',img.dataset.background===key));}
+ section.addEventListener('search-category',event=>{
+  active=event.detail;hovered=null;
+  buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.category===active)));
+  preview(active);
+  title.textContent=active==='all'?'熱門車款':buttons.find(button=>button.dataset.category===active).textContent;
+ });
+ function restore(){const focused=buttons.find(b=>b===document.activeElement);preview(hovered||focused?.dataset.category||active);}
+ buttons.forEach(button=>{
+  const key=button.dataset.category;
+  button.addEventListener('mouseenter',()=>{hovered=key;preview(key)});
+  button.addEventListener('mouseleave',()=>{hovered=null;restore()});
+  button.addEventListener('focus',()=>preview(key));
+  button.addEventListener('blur',()=>requestAnimationFrame(restore));
+  button.addEventListener('click',()=>{
+   if(key!=='road')removeSearchRoad();
+   selectedCategory=key;active=key;buttons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));preview(key);
+   cards.forEach(card=>{card.hidden=key!=='all'&&card.dataset.cat!==key&&!(key==='ebike'&&card.dataset.k==='talon');});
+   title.textContent=key==='all'?'熱門車款':button.textContent;
+   applyLiveFilter();
+   guideAction('category',{label:button.textContent});
+  });
+ });
+})();
+
+
+(()=>{
+ const header=document.querySelector('header.nav');
+ const updateHeader=()=>header.classList.toggle('is-scrolled',window.scrollY>16);
+ window.addEventListener('scroll',updateHeader,{passive:true});
+ updateHeader();
+})();
+
+</script>
+</body>
+</html>

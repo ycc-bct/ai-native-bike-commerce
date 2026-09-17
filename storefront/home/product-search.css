@@ -1,0 +1,144 @@
+.assist{position:fixed;z-index:40;right:calc((100vw - var(--shell))/2);top:clamp(270px,22vw,340px);width:min(520px,36vw);
+  display:flex;flex-direction:column;overflow:hidden;
+  padding:26px 26px 24px;border-radius:14px;background:rgba(14,22,36,.8);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 30px 70px rgba(0,0,0,.45);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .6s var(--ease),transform .6s var(--ease),top .6s var(--ease),height .6s var(--ease),padding .6s var(--ease)}
+.assist{visibility:hidden}
+.assist.on{visibility:visible}
+.assist.on{opacity:1;transform:none;pointer-events:auto}
+.assist.chat{top:88px;padding:0}
+.assist.chat .assist-prompt{display:none}
+.assist-top{display:flex;gap:18px}
+.spark{flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0);box-shadow:0 8px 22px rgba(47,107,255,.45)}
+.spark svg{width:26px;height:26px;color:#fff}
+.assist h3{font-size:21px;font-weight:700;letter-spacing:.02em;margin-top:2px;padding-right:30px}
+.assist-prompt p{margin-top:12px;font-size:15.5px;line-height:1.8;color:var(--ink-70)}
+.assist .x{position:absolute;z-index:2;right:18px;top:18px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;color:var(--ink-70)}
+.assist .x:hover{background:rgba(255,255,255,.1);color:#fff}
+.assist .x svg{width:20px;height:20px}
+.assist-acts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.assist-acts button{height:46px;border-radius:6px;font-size:15px;font-weight:700;letter-spacing:.04em;transition:background .2s,border-color .2s}
+.assist-acts .yes{background:#fff;color:#0A111C}
+.assist-acts .yes:hover{background:#E6ECF7}
+.assist-acts .no{border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.88)}
+.assist-acts .no:hover{border-color:#fff}
+
+.chat{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat[hidden]{display:none}
+.chat-hd{flex:none;display:flex;align-items:center;gap:14px;padding:18px 64px 16px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+.spark.sm{width:38px;height:38px;border-radius:9px;box-shadow:0 6px 16px rgba(47,107,255,.4)}
+.spark.sm svg{width:21px;height:21px}
+.chat-hd b{display:block;font-size:17px;font-weight:700;letter-spacing:.02em}
+.chat-hd small{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-50)}
+.chat-log{flex:1;min-height:0;overflow-y:auto;padding:18px 22px 12px;display:flex;flex-direction:column;gap:18px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.msg{display:flex;gap:12px;animation:msgIn .45s var(--ease) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}}
+.msg .av{flex:none;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,#4B86FF,#1E4FE0)}
+.msg .av svg{width:16px;height:16px;color:#fff}
+.msg .body{flex:1;min-width:0;padding-top:3px}
+.msg .body p{font-size:14.5px;line-height:1.75;color:rgba(255,255,255,.84)}
+.msg .body p b{color:#fff}
+.msg .body p + p{margin-top:6px}
+.msg h4{font-size:16px;font-weight:700;letter-spacing:.02em;margin-bottom:5px;color:#fff}
+.msg.me{justify-content:flex-end}
+.msg.me .bubble{max-width:80%;padding:9px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:#0A111C;font-size:14.5px;font-weight:500;line-height:1.6}
+.typing{display:flex;gap:5px;padding:8px 0}
+.typing i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* 三台比較 */
+.cmp{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cmp-card{position:relative;aspect-ratio:.8;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.12);text-align:left;transition:border-color .25s}
+.cmp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.cmp-card:hover img{transform:scale(1.06)}
+.cmp-card:hover{border-color:rgba(255,255,255,.4)}
+.cmp-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,18,.94) 0%,rgba(6,10,18,.6) 42%,rgba(6,10,18,0) 72%)}
+.cmp-card .t{position:absolute;z-index:1;left:10px;right:8px;bottom:10px}
+.cmp-card b{display:block;font-size:13px;font-weight:700;line-height:1.3}
+.cmp-card small{display:block;margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.78)}
+.cmp-card.pick{border-color:var(--ai);box-shadow:0 0 0 1px var(--ai)}
+
+/* 路況題 */
+.opts{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.opt{padding:14px 4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color .2s,background .2s,opacity .3s}
+.opt svg{width:30px;height:30px;color:#fff}
+.opt b{font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.opt small{font-size:11px;color:var(--ink-50)}
+.opt:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.07)}
+.opt.on{border-color:var(--ai);background:rgba(75,134,255,.16)}
+.opts.done .opt{pointer-events:none}
+.opts.done .opt:not(.on){opacity:.38}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-size:13px;color:rgba(255,255,255,.9);transition:border-color .2s,background .2s,opacity .3s}
+.chip:hover{border-color:#fff}
+.chips.done .chip{pointer-events:none;opacity:.38}
+.chips.done .chip.on{opacity:1;border-color:var(--ai);background:rgba(75,134,255,.16)}
+
+/* 推薦結果 */
+.rec{margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.rec .ph{position:relative;aspect-ratio:2.3;background:radial-gradient(120% 90% at 50% 40%,#FAFBFC 0%,#E3E7EC 70%,#CDD3DA 100%)}
+.rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
+.rec .tag{position:absolute;left:12px;top:12px;padding:4px 9px;border-radius:5px;background:#1F4FE0;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em}
+.rec .in{padding:14px 16px 16px}
+.rec h5{font-size:16px;font-weight:700}
+.rec .pr{margin-top:3px;font-size:14px;color:var(--ink-70)}
+.rec ul{list-style:none;margin:10px 0 14px;display:grid;gap:6px}
+.rec li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:rgba(255,255,255,.82)}
+.rec li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--ai)}
+.rec .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rec .acts button{height:40px;border-radius:6px;font-size:13.5px;font-weight:700;transition:background .2s,border-color .2s}
+.rec .acts .yes{background:#fff;color:#0A111C}
+.rec .acts .yes:hover{background:#E6ECF7}
+.rec .acts .no{border:1px solid rgba(255,255,255,.35)}
+.rec .acts .no:hover{border-color:#fff}
+
+/* 輸入列 */
+.chat-in{flex:none;margin:6px 18px 18px;display:flex;align-items:center;gap:12px;height:54px;padding:0 7px 0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);transition:border-color .2s}
+.chat-in:focus-within{border-color:rgba(255,255,255,.45)}
+.chat-in .pic{display:grid;place-items:center;padding-right:12px;border-right:1px solid rgba(255,255,255,.14);color:var(--ink-70)}
+.chat-in .pic svg{width:22px;height:22px}
+.chat-in input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font:inherit;font-size:14.5px}
+.chat-in input::placeholder{color:var(--ink-50)}
+.chat-in .send{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);color:rgba(255,255,255,.7);transition:background .2s,color .2s}
+.chat-in .send.ready{background:#fff;color:#0A111C}
+.chat-in .send svg{width:18px;height:18px}
+
+
+
+/* 智慧搜尋：同頁側邊面板，提示與對話分開呈現 */
+.assist{z-index:70;right:24px;top:auto;bottom:24px;width:360px;padding:24px;border-radius:12px;background:rgba(15,24,39,.97);border-color:rgba(255,255,255,.2);backdrop-filter:blur(18px);box-shadow:0 16px 60px rgba(0,0,0,.28);transition:opacity .25s var(--ease),transform .35s var(--ease)}
+.assist.chat{top:80px;bottom:24px;width:480px;padding:0;transform:translateX(24px);border-radius:14px}
+.assist.chat.on{transform:translateX(0)}
+.assist-top{gap:12px}
+.assist-top>div{flex:1;min-width:0}
+.assist h3{font-size:18px;line-height:1.5;padding-right:22px;margin:0}
+.assist-prompt p{font-size:14px;line-height:1.8;margin-top:8px}
+.spark,.spark.sm,.msg .av{background:transparent;box-shadow:none;border-radius:0}
+.spark{width:28px;height:28px}
+.spark.sm{width:28px;height:28px}
+.spark svg,.spark.sm svg{width:24px;height:24px}
+.assist-acts button{height:48px;font-size:14px}
+.chat-hd{padding:22px 64px 20px 24px}
+.chat-hd b{font-size:18px}
+.chat-hd small{font-size:12px;margin-top:6px}
+.chat-log{padding:24px;gap:22px}
+.welcome{padding:8px 0}
+.welcome .eyebrow{font-size:11px;letter-spacing:.12em;color:#a9b8d0;margin-bottom:14px}
+.welcome h2{font-size:27px;line-height:1.5;letter-spacing:.01em;margin-bottom:12px}
+.welcome p{font-size:14px;line-height:1.9;color:#b8c2d2}
+.welcome-options{display:grid;gap:10px;margin-top:26px}
+.welcome-options button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1px solid rgba(255,255,255,.18);padding:15px 16px;border-radius:8px;font-size:14px;background:rgba(255,255,255,.025)}
+.welcome-options button:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
+.welcome-options span{color:#aab9d2}
+.chat-in{margin:8px 24px 24px;border-radius:10px;height:56px;background:rgba(255,255,255,.055)}
+.chat-in .send{border-radius:7px}
+.assist .chat-in input:focus-visible{outline:none}
+.assist :focus-visible{outline:2px solid #adbfff;outline-offset:3px}
+@media(max-width:700px){.assist.chat{top:12px;right:12px;bottom:12px;width:calc(100vw - 24px)}.assist{right:12px;bottom:12px;max-width:calc(100vw - 24px)}}
+@media(prefers-reduced-motion:reduce){.assist,.msg{transition:none;animation:none}}
+
+
+.assist{color:#fff;--ink-70:rgba(255,255,255,.72);--ink-50:rgba(255,255,255,.52);--ai:#4B86FF}
