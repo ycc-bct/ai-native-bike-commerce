@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Revolt Advanced SL 0 · GIANT</title>
+<link rel="stylesheet" href="css/header.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -31,12 +32,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 svg{display:block}
 
 /* ================= 主視覺：一台車，三種騎乘情境 ================= */
-.stage{position:relative;height:calc(var(--u) * 941);overflow:hidden;background:linear-gradient(180deg,#EEF2F6 0%,var(--paper) 100%)}
-.nav{position:absolute;z-index:30;left:0;right:0;top:0;height:calc(var(--u)*76)}
-.nav .logo{position:absolute;left:calc(var(--u)*42);top:calc(var(--u)*24)}
-.nav .logo svg{height:calc(var(--u)*20);width:auto;color:var(--ink)}
-.nav .links{position:absolute;left:calc(var(--u)*201);top:calc(var(--u)*22);display:flex;gap:calc(var(--u)*34);font-size:calc(var(--u)*16);font-weight:500}
-.nav .icons{position:absolute;right:calc(var(--u)*40);top:calc(var(--u)*20);display:flex;align-items:center;gap:calc(var(--u)*34)}
+.stage{position:relative;height:max(100vh, calc(var(--u) * 890));overflow:hidden;background:linear-gradient(180deg,#EEF2F6 0%,var(--paper) 100%)}
 .orb-btn{position:relative;display:grid;place-items:center;width:calc(var(--u)*26);height:calc(var(--u)*26);transition:transform .2s}
 /* 這一頁的 header 壓在照片上，光暈會糊掉：改成半透明白底圓，點狀球才讀得清楚 */
 .orb-btn::before{content:"";position:absolute;width:calc(var(--u)*34);height:calc(var(--u)*34);border-radius:50%;pointer-events:none;
@@ -47,46 +43,65 @@ svg{display:block}
 .orb-btn:hover::before{background:rgba(255,255,255,.94);border-color:rgba(31,79,224,.3)}
 @keyframes orbPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.06);opacity:1}}
 @media(prefers-reduced-motion:reduce){.orb-btn::before{animation:none}}
-.nav .icons a{position:relative}
-.nav .icons svg{width:calc(var(--u)*26);height:calc(var(--u)*26);color:var(--ink)}
 .cart-n{position:absolute;right:-8px;top:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ai);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;transform:scale(0);transition:transform .35s var(--ease)}
 .cart-n.on{transform:scale(1)}
 
 /* 三塊情境照：斜切、往下淡出 */
-.panel{position:absolute;top:0;height:calc(var(--u)*505);overflow:hidden;cursor:pointer;
-  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 58%,transparent 100%);
-  transition:filter .6s var(--ease)}
-.panel img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
-.panel.p1{left:calc(var(--u)*400);width:calc(var(--u)*440);clip-path:polygon(0 0,100% 0,calc(100% - var(--u)*25) 100%,0 100%)}
-.panel.p2{left:calc(var(--u)*810);width:calc(var(--u)*460);clip-path:polygon(calc(var(--u)*25) 0,100% 0,calc(100% - var(--u)*25) 100%,0 100%)}
-.panel.p3{left:calc(var(--u)*1240);width:calc(var(--u)*432);clip-path:polygon(calc(var(--u)*25) 0,100% 0,100% 100%,0 100%)}
-.panel.on img{transform:scale(1.035)}
-.pmask{position:absolute;inset:0;background:rgba(8,13,22,.52);transition:opacity .6s var(--ease);pointer-events:none}
+/* 淡出做在外層：照片本身不透明，相鄰照片重疊處就不會疊出亮帶 */
+.panels{position:absolute;left:0;right:0;top:0;height:calc(max(100vh, calc(var(--u) * 890)) - var(--u) * 360);
+  --fade:linear-gradient(180deg,#000 0%,#000 42%,rgba(0,0,0,.9) 52%,rgba(0,0,0,.66) 64%,rgba(0,0,0,.36) 77%,rgba(0,0,0,.12) 90%,transparent 100%);
+  -webkit-mask-image:var(--fade);mask-image:var(--fade)}
+.panel{position:absolute;top:0;height:100%;cursor:pointer}
+.pclip{position:absolute;inset:0;overflow:hidden}
+/* 白色分隔：沿著斜切的細線，往下慢慢淡掉（角度 = atan(.085)） */
+.seam{position:absolute;z-index:4;top:0;left:var(--slant);width:1.5px;height:100.4%;transform-origin:50% 0;transform:rotate(4.86deg);pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.85) 35%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 82%)}
+/* 三張照片：相鄰重疊剛好一個斜切量；第三張一律延伸到畫面最右邊 */
+.panel.p1{left:var(--S);width:var(--w)}
+.panel.p1 .pclip{clip-path:polygon(0 0,100% 0,calc(100% - var(--slant)) 100%,0 100%)}
+.panel.p2{left:calc(var(--S) + var(--w) - var(--slant));width:var(--w)}
+.panel.p2 .pclip{clip-path:polygon(var(--slant) 0,100% 0,calc(100% - var(--slant)) 100%,0 100%)}
+.panel.p3{left:calc(var(--S) + var(--w) * 2 - var(--slant) * 2);right:0;width:auto}
+.panel.p3 .pclip{clip-path:polygon(var(--slant) 0,100% 0,100% 100%,0 100%)}
+.panel .pimg{position:absolute;inset:0;transition:transform 1.2s var(--ease)}
+.panel.on .pimg{transform:scale(1.035)}
+.panel .bg{position:absolute;left:0;top:0;width:100%;height:100%;max-width:none;object-fit:cover}
+.panel.p1 .bg{filter:saturate(1.15) contrast(1.04)}
+/* 探索未知：尺寸與位置由 layoutExplore() 算，人車大小固定、背景用擴圖延伸 */
+.panel.p3 .bg{object-fit:fill;transition:left .55s var(--ease)}
+.panel.p3 .bg-ext{position:absolute;max-width:none;object-fit:fill;transform:scaleX(-1);transition:left .55s var(--ease)}
+.panel.p1 .pclip{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%)}
+
+.pmask{position:absolute;z-index:2;inset:0;background:rgba(8,13,22,.52);transition:opacity .6s var(--ease);pointer-events:none}
 .panel.on .pmask{opacity:0}
-.panel.p3::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,16,24,.55) 0%,rgba(10,16,24,.18) 30%,rgba(10,16,24,0) 48%);pointer-events:none}
 /* 左側接到頁面底色 */
-.stage::before{content:"";position:absolute;z-index:2;left:0;top:0;bottom:0;width:calc(var(--u)*760);pointer-events:none;
-  background:linear-gradient(90deg,var(--paper) 0%,var(--paper) 52%,rgba(243,245,247,.72) 68%,rgba(243,245,247,0) 100%)}
+.stage::before{content:"";position:absolute;z-index:2;left:0;top:0;bottom:0;width:calc(var(--u)*560);pointer-events:none;
+  background:linear-gradient(90deg,var(--paper) 0%,var(--paper) 66%,rgba(243,245,247,.55) 82%,rgba(243,245,247,0) 100%)}
 
 .label{position:absolute;z-index:6;top:calc(var(--u)*78);display:flex;align-items:center;gap:calc(var(--u)*22);padding:calc(var(--u)*14) calc(var(--u)*22) calc(var(--u)*14) calc(var(--u)*14);border-radius:calc(var(--u)*14);border:1px solid transparent;transition:background .5s,border-color .5s,backdrop-filter .5s;cursor:pointer}
-.label::before{content:"";position:absolute;left:calc(var(--u)*42);top:-1px;width:calc(var(--u)*34);height:2px;background:currentColor;opacity:0;transition:opacity .4s}
-.label{opacity:.62;transition:opacity .5s var(--ease)}
+.label{text-align:left;opacity:.5;transition:opacity .5s var(--ease)}
 .label.on{opacity:1}
-.label.on::before{opacity:.9}
-.label.l1{left:calc(var(--u)*458);color:var(--ink)}
-.label.l2{left:calc(var(--u)*850);color:var(--ink)}
-.label.l3{left:calc(var(--u)*1286);color:#fff}
-.label .ic{flex:none;width:calc(var(--u)*72);height:calc(var(--u)*72);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.82);color:var(--ink);box-shadow:0 6px 18px rgba(0,0,0,.08)}
-.label.l3 .ic{background:rgba(255,255,255,.28);color:#fff;border:1px solid rgba(255,255,255,.55)}
+.label.l1{left:calc(var(--S) + var(--u) * 58);color:#fff}
+.label.l2{left:calc(var(--S) + var(--w) + var(--u) * 30);color:#fff}
+.label.l3{left:calc(var(--S) + var(--w) * 2 - var(--slant) + var(--u) * 30);color:#fff}
+.label .ic{flex:none;width:calc(var(--u)*72);height:calc(var(--u)*72);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.6);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.label .ic svg{filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
+.label b,.label small,.label span{text-shadow:0 0 1px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.55),0 3px 16px rgba(0,0,0,.4)}
+.label::after{content:"";position:absolute;z-index:-1;inset:-30% -14%;background:radial-gradient(closest-side,rgba(8,13,22,.3),rgba(8,13,22,0));pointer-events:none}
 .label .ic svg{width:calc(var(--u)*36);height:calc(var(--u)*36)}
-.label small{display:block;font-size:calc(var(--u)*15);font-weight:500;letter-spacing:.04em}
+.label > span:last-child,.label small,.label b,.label span{text-align:left}
+.label small{display:block;font-size:calc(var(--u)*15);font-weight:600;letter-spacing:.06em}
 .label b{display:block;margin-top:calc(var(--u)*2);font-size:calc(var(--u)*28);font-weight:700;letter-spacing:.04em;line-height:1.3}
-.label span{display:block;margin-top:calc(var(--u)*4);font-size:calc(var(--u)*15);letter-spacing:.04em;opacity:.8}
-.label.l3 b,.label.l3 small,.label.l3 span{text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.label span{display:block;margin-top:calc(var(--u)*5);font-size:calc(var(--u)*16.5);font-weight:600;letter-spacing:.05em;white-space:nowrap}
 
 
 /* 左欄商品資訊 */
-.info{position:absolute;z-index:8;left:calc(var(--u)*45);top:calc(var(--u)*92);width:calc(var(--u)*420)}
+/* 左欄、縮圖、配件卡共用一條底線：距主視覺底部 130u。左欄：上區（價格／尺寸／顏色／按鈕）靠上，下區（簡介＋標籤）貼底線 */
+.stage{--base:calc(var(--u)*130);
+  --slant:calc((max(100vh, calc(var(--u) * 890)) - var(--u) * 360) * .085);
+  --S:calc(var(--u)*400);--D:calc(var(--u)*1272);
+  --w:calc((var(--D) + var(--slant) * 2) / 3)}
+.info{position:absolute;z-index:8;left:calc(var(--u)*45);top:calc(var(--u)*92);bottom:var(--base);width:calc(var(--u)*420);display:flex;flex-direction:column;align-items:flex-start}
 .back{display:inline-flex;align-items:center;gap:6px;font-size:calc(var(--u)*14);color:var(--ink-70)}
 .back svg{width:calc(var(--u)*16);height:calc(var(--u)*16)}
 .back:hover{color:var(--ink)}
@@ -94,7 +109,8 @@ svg{display:block}
 .info .tag{margin-top:calc(var(--u)*14);font-size:calc(var(--u)*18);font-weight:500;letter-spacing:.04em}
 .info .intro{margin-top:calc(var(--u)*20);font-size:calc(var(--u)*15.5);line-height:1.62;color:var(--ink-70);letter-spacing:.02em}
 .info .price{margin-top:calc(var(--u)*18);font-size:calc(var(--u)*20);font-weight:700}
-.info .cta{margin-top:calc(var(--u)*34);display:flex;flex-wrap:wrap;gap:calc(var(--u)*12)}
+.info .pitch{margin-top:auto;padding-top:calc(var(--u)*28);white-space:nowrap;font-size:calc(var(--u)*15.5);line-height:1.8;color:var(--ink-70);letter-spacing:.02em}
+.info .cta{margin-top:calc(var(--u)*36);display:flex;flex-wrap:wrap;gap:calc(var(--u)*12)}
 .btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:calc(var(--u)*48);padding:0 calc(var(--u)*24);border-radius:calc(var(--u)*7);background:var(--navy);color:#fff;font-size:calc(var(--u)*15.5);font-weight:700;letter-spacing:.04em;transition:background .2s}
 .btn-dark:hover{background:#1C2A40}
 .btn-dark svg{width:calc(var(--u)*18);height:calc(var(--u)*18)}
@@ -106,11 +122,6 @@ svg{display:block}
 .btn-fav svg{width:calc(var(--u)*22);height:calc(var(--u)*22)}
 .btn-fav.on{color:#E0344B;border-color:#E0344B}
 .btn-fav.on path{fill:currentColor}
-.hl{margin-top:calc(var(--u)*34);display:grid;gap:calc(var(--u)*16)}
-.hl li{list-style:none;display:flex;gap:calc(var(--u)*22);align-items:flex-start}
-.hl svg{flex:none;width:calc(var(--u)*36);height:calc(var(--u)*36);color:var(--ink)}
-.hl b{display:block;font-size:calc(var(--u)*18);font-weight:700;letter-spacing:.04em}
-.hl span{display:block;margin-top:calc(var(--u)*3);font-size:calc(var(--u)*15.5);color:var(--ink-70);letter-spacing:.03em}
 .sizes-pick{margin-top:calc(var(--u)*30)}
 .sizes-pick b,.colors b{display:block;font-size:calc(var(--u)*15.5);font-weight:700;letter-spacing:.04em}
 .size-btns{margin-top:calc(var(--u)*10);display:flex;gap:calc(var(--u)*6)}
@@ -125,22 +136,21 @@ svg{display:block}
 .colors small{display:block;margin-top:calc(var(--u)*9);font-size:calc(var(--u)*13.5);color:var(--ink-70)}
 
 /* 中央車款 */
-.bike{position:absolute;z-index:4;left:calc(var(--u)*490);top:calc(var(--u)*400);width:calc(var(--u)*700);height:calc(var(--u)*410)}
-/* 影子放在前後輪接地點（量測值：容器寬的 28.1% 與 71.9%，距底 12.7%） */
-.bike::after{content:"";position:absolute;left:0;right:0;bottom:12.7%;height:4.6%;z-index:-1;
-  background:radial-gradient(closest-side,rgba(20,26,34,.38),rgba(20,26,34,0)) 28.1% 50%/24% 100% no-repeat,
-             radial-gradient(closest-side,rgba(20,26,34,.38),rgba(20,26,34,0)) 71.9% 50%/24% 100% no-repeat}
+.bike{position:absolute;z-index:4;left:calc(var(--u)*490);bottom:calc(var(--u)*160);width:calc(var(--u)*700);height:calc(var(--u)*410)}
+/* 影子中心對準前後輪接地點（容器寬 28.1% / 71.9%、距底 12.7%）；background-position 需換算成 (c − s/2)/(1 − s) */
+.bike::after{content:"";position:absolute;left:0;right:0;bottom:10.4%;height:4.6%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(20,26,34,.38),rgba(20,26,34,0)) 21.2% 50%/24% 100% no-repeat,
+             radial-gradient(closest-side,rgba(20,26,34,.38),rgba(20,26,34,0)) 78.8% 50%/24% 100% no-repeat}
 .bike img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(20,26,34,.16))}
 
 /* 右側：這個情境的建議配件 */
-.acc{position:absolute;z-index:9;left:calc(var(--u)*1243);top:calc(var(--u)*468);width:calc(var(--u)*388);padding:calc(var(--u)*18) calc(var(--u)*18) calc(var(--u)*18);border-radius:calc(var(--u)*9);background:rgba(255,255,255,.93);box-shadow:0 18px 40px rgba(20,26,34,.12);backdrop-filter:blur(10px)}
+.acc{position:absolute;z-index:9;left:calc(var(--u)*1243);bottom:var(--base);width:calc(var(--u)*388);padding:calc(var(--u)*18) calc(var(--u)*18) calc(var(--u)*18);border-radius:calc(var(--u)*9);background:rgba(255,255,255,.93);box-shadow:0 18px 40px rgba(20,26,34,.12);backdrop-filter:blur(10px)}
 .acc-hd{display:flex;align-items:baseline;justify-content:space-between}
 .acc-hd b{font-size:calc(var(--u)*15.5);font-weight:700;letter-spacing:.04em}
 .acc-hd small{font-size:calc(var(--u)*13);color:var(--ink-50);letter-spacing:.1em}
 .acc-grid{margin-top:calc(var(--u)*16);display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*12);transition:opacity .3s}
 .acc-grid.swap{opacity:0}
 .acc-grid .it .ph{aspect-ratio:1;border-radius:calc(var(--u)*6);background:#fff;border:1px solid #E6EAEE;overflow:hidden;transition:border-color .2s}
-.acc-grid .it:hover .ph{border-color:#9AA4B0}
 .acc-grid .it img{width:100%;height:100%;object-fit:contain;padding:8%}
 .acc-grid .it b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:calc(var(--u)*9);min-height:2.7em;font-size:calc(var(--u)*13);line-height:1.35;font-weight:700}
 .acc-grid .it span{display:block;margin-top:calc(var(--u)*3);font-size:calc(var(--u)*13.5);color:var(--ink-70)}
@@ -150,7 +160,7 @@ svg{display:block}
 .acc .note{margin-top:calc(var(--u)*8);font-size:calc(var(--u)*12);color:var(--ink-50);text-align:center}
 
 /* 主視覺底部分頁 */
-.tabs{position:absolute;z-index:9;left:calc(var(--u)*45);right:calc(var(--u)*40);top:calc(var(--u)*836);display:grid;grid-template-columns:repeat(5,calc(var(--u)*240)) 1fr}
+.tabs{position:absolute;z-index:9;left:calc(var(--u)*45);right:calc(var(--u)*40);bottom:calc(var(--u)*24);display:grid;grid-template-columns:repeat(5,calc(var(--u)*240)) 1fr}
 .tabs::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
 .tab{position:relative;padding-top:calc(var(--u)*14);text-align:left;font-size:calc(var(--u)*13.5);color:var(--ink-50);letter-spacing:.04em}
 
@@ -158,9 +168,6 @@ svg{display:block}
 .tab.on{color:var(--ink);font-weight:700}
 .tab.on::before{width:100%}
 .tab:hover{color:var(--ink)}
-.tagline-l{position:absolute;z-index:9;left:calc(var(--u)*45);top:calc(var(--u)*888);font-size:calc(var(--u)*12);letter-spacing:.24em;line-height:1.6;color:var(--ink-70)}
-.tagline-l::after{content:"";position:absolute;left:calc(100% + var(--u)*34);top:60%;width:calc(var(--u)*104);height:1px;background:#AEB6C0}
-.tagline-r{position:absolute;z-index:9;right:calc(var(--u)*40);top:calc(var(--u)*900);font-size:calc(var(--u)*11.5);letter-spacing:.24em;color:var(--ink-70)}
 
 /* 捲過主視覺後出現的黏著分頁 */
 .subnav{position:fixed;z-index:50;left:0;right:0;top:0;height:60px;background:rgba(243,245,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transform:translateY(-100%);transition:transform .4s var(--ease)}
@@ -170,18 +177,27 @@ svg{display:block}
 .subnav .nm small{font-weight:500;color:var(--ink-50);margin-left:10px}
 .subnav .tab{padding:0;font-size:14px;height:60px;display:flex;align-items:center}
 .subnav .tab::before{top:auto;bottom:-1px}
-.subnav .btn-dark{height:40px;font-size:14px;padding:0 18px;border-radius:6px}
+.subnav-acts{display:flex;gap:8px;margin-left:8px}
+.subnav .btn-dark,.subnav .btn-line{height:40px;font-size:14px;padding:0 16px;gap:8px;border-radius:6px}
+.subnav .btn-fav{width:40px;height:40px;border-radius:6px}
+.subnav .btn-dark svg,.subnav .btn-line svg{width:16px;height:16px}
+.subnav .btn-fav svg{width:18px;height:18px}
 
 /* 車款照片縮圖列與放大檢視 */
 /* 縮圖放在車子下方，小尺寸 */
-.gal{position:absolute;z-index:7;left:calc(var(--u)*490);width:calc(var(--u)*700);top:calc(var(--u)*772);display:flex;justify-content:center;gap:calc(var(--u)*6)}
+.gal{position:absolute;z-index:7;left:calc(var(--u)*490);width:calc(var(--u)*700);bottom:var(--base);display:flex;justify-content:center;gap:calc(var(--u)*6)}
 .gthumb{flex:none;width:calc(var(--u)*52);height:calc(var(--u)*52);padding:calc(var(--u)*3);border:1px solid rgba(20,26,34,.14);border-radius:calc(var(--u)*5);background:rgba(255,255,255,.72);transition:border-color .2s,transform .2s,background .2s}
 .gthumb img{width:100%;height:100%;object-fit:contain}
 .gthumb:hover{border-color:var(--ink);background:#fff;transform:translateY(-2px)}
-.lightbox{position:fixed;inset:0;z-index:70;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:56px 28px;background:rgba(12,17,26,.92);backdrop-filter:blur(6px)}
+/* 主視覺只放前 6 格，第 6 格疊「+N」；點開燈箱可看全部 */
+.gthumb:nth-child(n+7){display:none}
+.gthumb.has-more{position:relative;overflow:hidden}
+.gthumb.has-more::after{content:attr(data-more);position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,23,38,.62);color:#fff;font-size:calc(var(--u)*15);font-weight:700;border-radius:inherit}
+.lightbox{position:fixed;inset:0;z-index:70;height:100vh;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) auto;align-items:center;gap:16px 16px;padding:64px 28px 20px;background:rgba(12,17,26,.92);backdrop-filter:blur(6px)}
 .lightbox[hidden]{display:none}
-.lb-fig{margin:0;height:100%;display:grid;place-items:center;overflow:auto}
-.lb-fig img{max-width:100%;max-height:100%;object-fit:contain;background:#fff;border-radius:10px;cursor:zoom-in;transition:transform .35s var(--ease)}
+/* 圖片絕對定位在圖框內，max-height:100% 才會對到圖框實際高度，整張圖放進視窗 */
+.lb-fig{position:relative;margin:0;height:100%;min-height:0;overflow:hidden}
+.lb-fig img{position:absolute;inset:0;margin:auto;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;background:#fff;border-radius:10px;cursor:zoom-in;transition:transform .35s var(--ease)}
 .lb-fig img.zoom{cursor:zoom-out;transform:scale(2);transform-origin:var(--ox,50%) var(--oy,50%)}
 .lb-close{position:absolute;right:24px;top:20px;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;color:#fff;background:rgba(255,255,255,.12)}
 .lb-close:hover{background:rgba(255,255,255,.22)}
@@ -189,7 +205,11 @@ svg{display:block}
 .lb-nav{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;color:#fff;background:rgba(255,255,255,.12)}
 .lb-nav:hover{background:rgba(255,255,255,.22)}
 .lb-nav svg{width:22px;height:22px}
-.lb-hint{position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.6)}
+.lb-thumbs{grid-column:1/-1;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.lb-thumbs button{width:66px;height:50px;padding:3px;border-radius:6px;border:2px solid transparent;background:#fff;opacity:.5;transition:opacity .2s,border-color .2s}
+.lb-thumbs button:hover{opacity:.85}
+.lb-thumbs button.on{opacity:1;border-color:#4B86FF}
+.lb-thumbs img{width:100%;height:100%;object-fit:contain}
 
 /* ================= 以下：官網原本的詳細內容 ================= */
 .sec{width:var(--shell);margin:0 auto;padding:96px 0 20px;scroll-margin-top:60px}
@@ -200,7 +220,8 @@ svg{display:block}
 
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .feat article{background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px 26px 30px}
-.feat .n{font-size:13px;font-weight:700;color:var(--ai);letter-spacing:.14em}
+.feat .fi{display:block}
+.feat .fi svg{width:36px;height:36px;color:var(--ink)}
 .feat h4{margin-top:10px;font-size:19px;font-weight:700;letter-spacing:.03em}
 .feat p{margin-top:12px;font-size:14.5px;line-height:1.85;color:var(--ink-70)}
 .tech{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
@@ -217,6 +238,7 @@ svg{display:block}
 .spec-head .pdf:hover{border-color:var(--ink)}
 .spec-head .pdf svg{width:16px;height:16px}
 .specs[hidden]{display:none}
+.specs.one .spec-g{grid-column:1/-1}
 .more{margin-top:10px;width:100%;height:44px;border:0;background:none;color:var(--ink-70);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:color .2s}
 .more:hover{color:var(--ink)}
 .more[hidden]{display:none}
@@ -268,11 +290,12 @@ svg{display:block}
 
 .demo{display:inline-block;margin-left:12px;padding:3px 9px;border-radius:5px;border:1px solid #C5CCD5;font-size:12px;font-weight:500;color:var(--ink-50);letter-spacing:.04em;vertical-align:middle}
 .stories{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
-.story{display:flex;flex-direction:column;margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 26px 24px;transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
+.story{position:relative;display:flex;flex-direction:column;margin:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 26px 24px;transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
 .story:hover{box-shadow:0 16px 36px rgba(20,26,34,.08);transform:translateY(-2px)}
-.story .sc{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ai)}
-.story .qm{display:block;margin-top:2px;font-family:Georgia,"Noto Serif TC",serif;font-size:44px;line-height:.75;color:var(--ai)}
-.story blockquote{margin:12px 0 0;font-size:14.5px;line-height:1.95;color:var(--ink)}
+.story .sc{position:relative;z-index:1;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
+/* 大引號：淡藍色，墊在引言開頭的文字下方 */
+.story .qm{position:absolute;z-index:0;left:18px;top:46px;font-family:Georgia,"Noto Serif TC",serif;font-size:132px;line-height:1;color:#DCE7FF;pointer-events:none;user-select:none}
+.story blockquote{position:relative;z-index:1;margin:18px 0 0;font-size:14.5px;line-height:1.95;color:var(--ink)}
 .story figcaption{margin-top:auto;padding-top:22px;display:flex;align-items:center;gap:12px}
 .story figcaption img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#EEF1F4}
 .story figcaption b{display:block;font-size:14.5px;font-weight:700}
@@ -286,7 +309,115 @@ svg{display:block}
 .rel h4{margin-top:14px;font-size:16px;font-weight:600}
 .rel p{margin-top:5px;font-size:15px;color:var(--ink-70)}
 
-.foot{width:var(--shell);margin:90px auto 0;padding:28px 0 56px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.9;color:var(--ink-50)}
+.foot{width:var(--shell);margin:90px auto 0;padding:28px 0 56px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.9;color:var(--ink-50);text-align:center}
+
+/* header 圖示：背景暗時改白 */
+/* 選單壓在情境照上時，深色字後面墊一圈淡淡的淺色光暈 */
+.site-nav .links a{opacity:1;text-shadow:0 0 2px rgba(243,245,247,.95),0 0 8px rgba(243,245,247,.9),0 0 18px rgba(243,245,247,.75)}
+.nav .icons a svg{transition:color .4s}
+.nav .icons.on-dark a svg{color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
+.orb-wrap{position:relative;display:grid;place-items:center}
+.orb-callout{position:absolute;z-index:60;top:calc(100% + 14px);right:-12px;width:300px;padding:16px 18px 14px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,26,34,.18);text-align:left;opacity:0;transform:translateY(-6px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.orb-callout.on{opacity:1;transform:none}
+.orb-callout[hidden]{display:none}
+.orb-callout::before{content:"";position:absolute;right:22px;top:-6px;width:11px;height:11px;transform:rotate(45deg);background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.orb-callout p{font-size:13.5px;line-height:1.75;color:var(--ink-70)}
+.orb-callout b{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}
+.orb-callout .acts{display:flex;gap:8px;margin-top:12px}
+.orb-callout button{height:34px;padding:0 14px;border-radius:6px;font-size:13px;font-weight:700}
+.orb-callout .yes{background:var(--navy);color:#fff}
+.orb-callout .no{border:1px solid #C5CCD5;color:var(--ink-70)}
+
+/* 個人化 */
+.you{margin-top:calc(var(--u)*18);flex:0 1 auto;min-height:0;overflow:auto;max-width:calc(var(--u)*400);padding:calc(var(--u)*14) calc(var(--u)*16);border-radius:calc(var(--u)*10);background:#EEF3FF;border:1px solid #D6E2FF;animation:amIn .4s var(--ease) both}
+.you[hidden]{display:none}
+.keyspecs{margin:calc(var(--u)*16) 0 0;display:grid;gap:calc(var(--u)*8)}
+.keyspecs ul{list-style:none;display:flex;gap:calc(var(--u)*7)}
+.info:has(.you:not([hidden])) .keyspecs{display:none}
+.keyspecs li{padding:calc(var(--u)*6) calc(var(--u)*11);border-radius:999px;border:1px solid #CDD3DA;background:rgba(255,255,255,.55);font-size:calc(var(--u)*13);color:var(--ink-70);white-space:nowrap}
+.you-hd{display:flex;align-items:center;gap:8px;font-size:calc(var(--u)*13.5);font-weight:700;color:var(--ai)}
+.you-hd span{width:7px;height:7px;border-radius:50%;background:var(--ai);box-shadow:0 0 0 4px rgba(31,79,224,.15)}
+.you ul{list-style:none;margin-top:calc(var(--u)*8);display:grid;gap:calc(var(--u)*5)}
+.you li{position:relative;padding-left:16px;font-size:calc(var(--u)*13.5);line-height:1.6;color:var(--ink);animation:amIn .4s var(--ease) both}
+.you li::before{content:"✓";position:absolute;left:0;color:var(--ai);font-weight:700}
+.rel-tag.you-tag{background:var(--ai)}
+.spot{animation:spot 1.8s var(--ease)}
+@keyframes spot{0%{box-shadow:0 0 0 0 rgba(31,79,224,0)}25%{box-shadow:0 0 0 6px rgba(31,79,224,.28)}100%{box-shadow:0 0 0 0 rgba(31,79,224,0)}}
+.sec,.foot{transition:width .4s var(--ease),margin .4s var(--ease)}
+body.adv-open .sec,body.adv-open .foot{width:min(1320px,calc(100vw - 96px - 424px));margin-left:48px;margin-right:auto}
+
+/* Genie 動畫與 orb 上的對話提示點 */
+.genie{position:fixed;inset:0;z-index:67;pointer-events:none}
+.genie-strip{position:absolute;overflow:hidden;transform-origin:50% 50%;will-change:transform}
+.orb-btn.has-chat::after{content:"";position:absolute;right:-2px;top:-2px;width:10px;height:10px;border-radius:50%;background:#1F4FE0;border:2px solid #fff;animation:amIn .3s var(--ease) both}
+.subnav .sub-orb{width:40px;height:40px;margin-left:10px}
+
+/* ==== 試做：chatbox 打開時主視覺讓位、配件交給顧問（要退回時刪掉這一段與 JS 的同名區塊） ==== */
+.panel,.label,.bike,.gal,.acc{transition:left .55s var(--ease),width .55s var(--ease),height .55s var(--ease),opacity .4s,transform .4s var(--ease)}
+body.adv-open .stage{--D:calc(100vw - 440px - var(--u)*400);--C:calc(var(--S) + var(--D) / 2);
+  --bw:min(calc(var(--u)*620), calc(var(--D) * .92));--gw:min(calc(var(--u)*700), var(--D))}
+body.adv-open .label .ic{display:none}
+body.adv-open .label{padding-left:0}
+body.adv-open .label.l1{left:calc(var(--S) + var(--u) * 40)}
+body.adv-open .bike{left:calc(var(--C) - var(--bw) / 2);width:var(--bw);height:calc(var(--bw) * 410 / 700)}
+body.adv-open .gal{left:calc(var(--C) - var(--gw) / 2);width:var(--gw);flex-wrap:wrap}
+body.adv-open .acc{opacity:0;pointer-events:none;transform:translateY(10px)}
+.am.acc-msg{align-self:stretch;max-width:100%}
+.adv-acc-hd{font-size:14px;font-weight:700}
+.adv-acc-hd small{display:block;margin-top:2px;font-size:12px;font-weight:400;color:var(--ink-50)}
+.adv-acc-add{margin-top:10px;width:100%;height:38px;border-radius:6px;border:1px solid #B8C0CA;background:#fff;font-size:13.5px;font-weight:700;transition:border-color .2s}
+.adv-acc-add:hover{border-color:var(--ink)}
+.adv-acc-add.done{background:var(--navy);border-color:var(--navy);color:#fff}
+/* ==== 試做結束 ==== */
+
+/* 選車顧問對話框 */
+.advisor{position:fixed;z-index:66;right:24px;top:80px;width:400px;height:min(680px,calc(100vh - 104px));display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 28px 70px rgba(20,26,34,.2);overflow:hidden;opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.advisor.on{opacity:1;transform:none}
+.advisor[hidden]{display:none}
+.adv-hd{flex:none;display:flex;align-items:center;gap:12px;padding:14px 12px 14px 16px;border-bottom:1px solid var(--line)}
+.adv-av{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#EEF3FF;color:#1F4FE0}
+.adv-av svg{width:16px;height:20px;margin-top:2px}
+.adv-who{flex:1;min-width:0}
+.adv-who b{display:block;font-size:15px}
+.adv-who small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:12px;color:var(--ink-50)}
+.adv-who i{width:7px;height:7px;border-radius:50%;background:#22A55B}
+.adv-x{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-70)}
+.adv-x:hover{background:#EEF1F4;color:var(--ink)}
+.adv-x svg{width:18px;height:18px}
+.adv-log{flex:1;min-height:0;overflow-y:auto;padding:18px 16px 12px;display:flex;flex-direction:column;gap:12px;background:#F6F8FA}
+.am{max-width:88%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.75;animation:amIn .35s var(--ease) both}
+@keyframes amIn{from{opacity:0;transform:translateY(6px)}}
+.am.ai{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;color:var(--ink)}
+.am.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.am.me.pic{padding:4px;background:none}
+.am img.up{display:block;width:180px;border-radius:12px}
+.adv-typing{display:flex;gap:4px;padding:4px 0}
+.adv-typing i{width:6px;height:6px;border-radius:50%;background:#9AA4B0;animation:blinkDot 1s infinite}
+.adv-typing i:nth-child(2){animation-delay:.15s}
+.adv-typing i:nth-child(3){animation-delay:.3s}
+@keyframes blinkDot{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.adv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.adv-chip{padding:6px 12px;border-radius:999px;border:1px solid #C5CCD5;background:#fff;font-size:13px;color:var(--ink);transition:border-color .2s,background .2s}
+.adv-chip:hover{border-color:var(--ink)}
+.adv-chip:disabled{opacity:.4;cursor:default}
+.adv-chip.on{opacity:1;background:var(--navy);border-color:var(--navy);color:#fff}
+.adv-minis{display:grid;gap:8px;margin-top:10px}
+.adv-mini{display:flex;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#FAFBFC}
+.adv-mini img{flex:none;width:70px;height:52px;object-fit:contain}
+.adv-mini b{display:block;font-size:13px;line-height:1.35}
+.adv-mini span{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-70)}
+.adv-in{flex:none;display:flex;align-items:center;gap:2px;margin:10px 12px 12px;padding:5px 5px 5px 14px;border:1px solid #C5CCD5;border-radius:999px;background:#fff;transition:border-color .2s}
+.adv-in:focus-within{border-color:var(--ink)}
+.adv-in input[type=text]{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink);padding:0 4px}
+.adv-in input::placeholder{color:#9AA4B0}
+.adv-ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-70);transition:background .2s,color .2s}
+.adv-ic:hover{background:#EEF1F4;color:var(--ink)}
+.adv-ic svg{width:19px;height:19px}
+.adv-ic.rec{color:#E0344B;background:#FDECEE;animation:micPulse 1s ease-in-out infinite}
+@keyframes micPulse{50%{box-shadow:0 0 0 6px rgba(224,52,75,.12)}}
+.adv-send{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;transition:background .2s}
+.adv-send svg{width:17px;height:17px}
+.adv-send:disabled{background:#D5DAE1;cursor:not-allowed}
 
 .toast{position:fixed;z-index:60;left:50%;bottom:36px;transform:translate(-50%,20px);opacity:0;padding:12px 20px;border-radius:999px;background:var(--navy);color:#fff;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.2);transition:opacity .35s,transform .35s var(--ease);pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -302,24 +433,37 @@ svg{display:block}
     <button class="tab" data-go="geo">車架幾何與尺寸</button>
     <button class="tab" data-go="story">車主故事</button>
     <button class="tab" data-go="related">相關車款</button>
-    <a class="btn-dark" href="#" id="findStore">找門市試騎</a>
+    <div class="subnav-acts">
+      <button class="btn-dark" type="button" data-act="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span>加入購物車</span></button>
+      <button class="btn-line" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
+      <button class="btn-fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
+    </div>
+    <button class="orb-btn sub-orb" id="aiOrb2" type="button" aria-label="AI 選車助理" title="AI 選車助理" data-orb="working" data-orb-size="26" data-orb-preset="64" data-orb-tint="#1F4FE0" data-orb-tint-hi="#5B93FF"></button>
   </div>
 </div>
 
 <section class="stage" id="stage">
-  <header class="nav">
+  <header class="nav site-nav">
     <a class="logo" href="index.html" aria-label="GIANT"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
     <nav class="links"><a href="index.html">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
     <div class="icons">
-      <button class="orb-btn" id="aiOrb" type="button" aria-label="AI 選車助理" title="AI 選車助理｜依你的騎乘情境給建議" data-orb="working" data-orb-size="26" data-orb-preset="64" data-orb-tint="#1F4FE0" data-orb-tint-hi="#5B93FF"></button>
-      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
       <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span class="cart-n" id="cartN">0</span></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <span class="orb-wrap">
+  <button class="orb-btn" id="aiOrb" type="button" aria-label="AI 選車助理" title="AI 選車助理｜依你的騎乘情境給建議" data-orb="working" data-orb-size="26" data-orb-preset="64" data-orb-tint="#1F4FE0" data-orb-tint-hi="#5B93FF"></button>
+        <div class="orb-callout" id="orbCallout" role="status" hidden>
+          <p><b>在看 Revolt Advanced SL 0 嗎？</b>想知道哪個尺寸適合你，或這台適不適合你平常騎的路，我可以幫你看看。</p>
+          <div class="acts"><button class="yes" id="calloutYes" type="button">好，聊聊看</button><button class="no" id="calloutNo" type="button">先自己看</button></div>
+        </div>
+      </span>
     </div>
   </header>
 
-  <div class="panel p1" data-i="0"><span class="pmask"></span><img src="img/pdp/city.webp" alt=""></div>
-  <div class="panel p2" data-i="1"><span class="pmask"></span><img src="img/pdp/long.webp" alt=""></div>
-  <div class="panel p3" data-i="2"><span class="pmask"></span><img src="img/pdp/explore.webp" alt=""></div>
+  <div class="panels">
+  <div class="panel p1" data-i="0"><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/city.webp" alt=""></div><span class="pmask"></span></div></div>
+  <div class="panel p2" data-i="1"><span class="seam"></span><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/long.webp" alt=""></div><span class="pmask"></span></div></div>
+  <div class="panel p3" data-i="2"><span class="seam"></span><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/explore-wide.webp" alt=""><img class="bg-ext" src="img/pdp/explore-wide.webp" alt="" aria-hidden="true"></div><span class="pmask"></span></div></div>
+  </div>
 
   <button class="label l1" data-i="0" type="button">
     <span class="ic"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M4 28h24M7 28V12l7-4v20M14 28V5l9 4v19M23 28V15h4v13"/><path d="M10 15h1M10 19h1M10 23h1M17.5 11h1M17.5 15h1M17.5 19h1M17.5 23h1"/></svg></span>
@@ -343,17 +487,18 @@ svg{display:block}
     <div class="sizes-pick"><b>尺寸</b><div class="size-btns" id="sizeBtns">
       <button type="button" data-size="XS" data-h="160">XS</button><button type="button" data-size="S" data-h="165">S</button><button type="button" data-size="M" data-h="175">M</button><button type="button" data-size="ML" data-h="180">ML</button>
     </div><button class="size-link" id="sizeLink" type="button">看車架幾何與尺寸 →</button></div>
-    <div class="colors"><b>顏色選擇</b><div class="sw" title="Raw Carbon / Prism Mist"></div><small>Raw Carbon / Prism Mist</small></div>
+    <div class="colors"><b>顏色</b><div class="sw" title="Raw Carbon / Prism Mist"></div><small>Raw Carbon / Prism Mist</small></div>
     <div class="cta">
-      <button class="btn-dark" id="addCart" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span>加入購物車</span></button>
-      <button class="btn-line" id="addCompare" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h7M4 12h7M4 17h7M15 9l3-3 3 3M18 6v12"/></svg><span>加入比較</span></button>
-      <button class="btn-fav" id="fav" type="button" aria-label="收藏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
+      <button class="btn-dark" id="addCart" type="button" data-act="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span>加入購物車</span></button>
+      <button class="btn-line" id="addCompare" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
+      <button class="btn-fav" id="fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
     </div>
-    <ul class="hl">
-      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M27 5C16 5 8 12 7 24l-3 4M27 5c0 11-7 19-18 20M12 20l9-9"/></svg><div><b>碳纖車架</b><span>Advanced SL 頂級碳纖複合材質</span></div></li>
-      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 5L5 27M20 5l7 22M16 7v3M16 14v3M16 21v4"/></svg><div><b>多地形相容</b><span>從柏油到碎石・最大胎寬 53mm</span></div></li>
-      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 11c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 18c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 25c4 0 4-4 8-4s4 4 8 4 4-4 8-4"/></svg><div><b>D-Fuse 吸震科技</b><span>D 型座管・長途騎乘過濾震動</span></div></li>
-    </ul>
+    <div class="you" id="youCard" hidden>
+      <p class="you-hd"><span></span>為你調整的內容</p>
+      <ul id="youList"></ul>
+    </div>
+    <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，長途也能維持高速。</p>
+    <div class="keyspecs"><ul><li>2027 年式</li><li>Gravel 競賽</li><li>Advanced SL 碳纖車架</li></ul><ul><li>SRAM RED AXS 1×13</li><li>CADEX 碳纖輪組</li><li>胎寬 53mm</li></ul></div>
   </div>
 
   <div class="bike"><img src="img/bikes/revolt-lg.webp" alt="Revolt Advanced SL 0"></div>
@@ -362,7 +507,6 @@ svg{display:block}
     <div class="acc-hd"><b id="accTitle">這個情境的建議配件</b><small id="accIdx">1 / 3</small></div>
     <div class="acc-grid" id="accGrid"></div>
     <button class="add" id="accAdd" type="button">加入此情境的完整配件</button>
-    <p class="note">品項與價格取自 GIANT 官網配件，點圖可看官網頁面</p>
   </aside>
 
   <div class="gal" id="galRow" aria-label="車款照片"><button class="gthumb" type="button" data-i="0" aria-label="看第 1 張：主圖"><img src="img/pdp/gal-01.webp" alt="主圖" loading="lazy"></button><button class="gthumb" type="button" data-i="1" aria-label="看第 2 張：正面"><img src="img/pdp/gal-02.webp" alt="正面" loading="lazy"></button><button class="gthumb" type="button" data-i="2" aria-label="看第 3 張：背面"><img src="img/pdp/gal-03.webp" alt="背面" loading="lazy"></button><button class="gthumb" type="button" data-i="3" aria-label="看第 4 張：車架細節"><img src="img/pdp/gal-04.webp" alt="車架細節" loading="lazy"></button><button class="gthumb" type="button" data-i="4" aria-label="看第 5 張：傳動"><img src="img/pdp/gal-05.webp" alt="傳動" loading="lazy"></button><button class="gthumb" type="button" data-i="5" aria-label="看第 6 張：後變速"><img src="img/pdp/gal-06.webp" alt="後變速" loading="lazy"></button><button class="gthumb" type="button" data-i="6" aria-label="看第 7 張：大齒盤"><img src="img/pdp/gal-07.webp" alt="大齒盤" loading="lazy"></button><button class="gthumb" type="button" data-i="7" aria-label="看第 8 張：前叉"><img src="img/pdp/gal-08.webp" alt="前叉" loading="lazy"></button><button class="gthumb" type="button" data-i="8" aria-label="看第 9 張：輪組"><img src="img/pdp/gal-09.webp" alt="輪組" loading="lazy"></button><button class="gthumb" type="button" data-i="9" aria-label="看第 10 張：座艙"><img src="img/pdp/gal-10.webp" alt="座艙" loading="lazy"></button><button class="gthumb" type="button" data-i="10" aria-label="看第 11 張：把手"><img src="img/pdp/gal-11.webp" alt="把手" loading="lazy"></button><button class="gthumb" type="button" data-i="11" aria-label="看第 12 張：正視"><img src="img/pdp/gal-12.webp" alt="正視" loading="lazy"></button></div>
@@ -374,8 +518,6 @@ svg{display:block}
     <button class="tab" data-go="story">車主故事</button>
     <button class="tab" data-go="related">相關車款</button>
   </nav>
-  <p class="tagline-l">ONE BIKE.<br>THREE FUTURES.</p>
-  <p class="tagline-r">RIDE A BRIGHTER TOMORROW.</p>
 </section>
 
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="車款照片放大">
@@ -383,19 +525,19 @@ svg{display:block}
   <button class="lb-nav prev" id="lbPrev" type="button" aria-label="上一張"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
   <figure class="lb-fig" id="lbFig"><img id="lbImg" alt=""></figure>
   <button class="lb-nav next" id="lbNext" type="button" aria-label="下一張"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
-  <p class="lb-hint" id="lbHint"></p>
+  <div class="lb-thumbs" id="lbThumbs"></div>
 </div>
 
 <!-- 02 規格亮點：重點特色、科技特色、產品規格（文字取自官網） -->
 <section class="sec" id="spec">
   <h2>規格亮點</h2>
-  <p class="lede">這是 GIANT 有史以來打造過最輕量、最狂暴的 Gravel 頂級礫石賽車。全新 Revolt Advanced SL 採用全系統整合開發，專為在漫長且極具考驗的長途礫石賽事中奪取制勝先機而生。它完美融合了極致的空力效益與流暢精準的轉向操控，能在對手體能見底、速度逐漸崩盤時，助你一路狂飆、強勢維持破風高速！</p>
+  <p class="lede">從車架、座艙到輪組，都為長距離 Gravel 賽事重新設計。以下是這一代最關鍵的三項升級。</p>
 
   <h3>重點特色資訊</h3>
   <div class="feat">
-    <article><p class="n">01</p><h4>極致輕量傳動效率</h4><p>全新車架與前叉皆由手工精心打造，採用我們金字塔頂端、最高級別的 Advanced SL 碳纖維複合材質。整車系統總重量狂省了 288 公克，極致輕量化與更寬外胎的完美結合帶來更具靈活動態的操控性。</p></article>
-    <article><p class="n">02</p><h4>長途破風，極速馳騁</h4><p>空力管型設計專為 Gravel 賽事真實發生的 30-45 km/h 實戰時速進行全面優化，整車系統相較於前一代省了 18.99 瓦的綜合總阻力。</p></article>
-    <article><p class="n">03</p><h4>賽道專屬競技幾何</h4><p>擁有更低的 Stack、更長的 Reach、更戰鬥的座管角度，能引導騎士進入極具侵略性且符合空氣力學的低趴賽車姿態。</p></article>
+    <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M27 5C16 5 8 12 7 24l-3 4M27 5c0 11-7 19-18 20M12 20l9-9"/></svg></span><h4>極致輕量傳動效率</h4><p>車架與前叉皆為手工打造，採用最高級別的 Advanced SL 碳纖維，整車系統總重量省下 288 公克，搭配更寬外胎，操控更加靈活。</p></article>
+    <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 5L5 27M20 5l7 22M16 7v3M16 14v3M16 21v4"/></svg></span><h4>長途破風，極速馳騁</h4><p>空力管型設計專為 Gravel 賽事真實發生的 30-45 km/h 實戰時速進行全面優化，整車系統相較於前一代省了 18.99 瓦的綜合總阻力。</p></article>
+    <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 11c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 18c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 25c4 0 4-4 8-4s4 4 8 4 4-4 8-4"/></svg></span><h4>賽道專屬競技幾何</h4><p>擁有更低的 Stack、更長的 Reach、更戰鬥的座管角度，能引導騎士進入極具侵略性且符合空氣力學的低趴賽車姿態。</p></article>
   </div>
 
   <h3>科技特色</h3>
@@ -476,9 +618,23 @@ svg{display:block}
   <div class="rel" id="rel"></div>
 </section>
 
-<footer class="foot">
-  名稱、價格、特色文字、產品規格與車架幾何取自 giant-bicycles.com/tw Revolt Advanced SL 0 公開頁面；三張情境照片為 AI 生成示意；建議配件的品名、價格與圖片取自 GIANT 官網配件分類（加入購物車為示範）；車主故事為示範文案，尚未串接真實評論。相關車款價格沿用首頁資料。
-</footer>
+<footer class="foot">Copyright © 2026 Giant Bicycles. All rights reserved.</footer>
+
+<aside class="advisor" id="advisor" role="dialog" aria-label="GIANT 選車顧問" hidden>
+  <header class="adv-hd">
+    <span class="adv-av"><svg viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>
+    <div class="adv-who"><b>GIANT 選車顧問</b><small><i></i>線上・通常幾秒內回覆</small></div>
+    <button class="adv-x" id="advClose" type="button" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </header>
+  <div class="adv-log" id="advLog" aria-live="polite"></div>
+  <form class="adv-in" id="advForm" autocomplete="off">
+    <input id="advInput" type="text" placeholder="問我尺寸、騎乘情境或配件…" aria-label="輸入訊息">
+    <button class="adv-ic" id="advPic" type="button" aria-label="用照片找車" title="用照片找車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 15.5l-5-5-9 9"/></svg></button>
+    <button class="adv-ic" id="advMic" type="button" aria-label="語音輸入" title="語音輸入"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>
+    <button class="adv-send" id="advSend" type="submit" aria-label="送出" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    <input id="advFile" type="file" accept="image/*" hidden>
+  </form>
+</aside>
 
 <div class="toast" id="toast"></div>
 
@@ -504,22 +660,43 @@ function setScene(i){
   const g = $('accGrid');
   g.classList.add('swap');
   setTimeout(() => {
-    g.innerHTML = SCENES[i].acc.map(([k, n, p, href]) => '<a class="it" href="https://www.giant-bicycles.com' + href + '" target="_blank" rel="noopener" title="' + n + '"><div class="ph"><img src="img/pdp/acc-' + k + '.webp" alt=""></div><b>' + n + '</b><span>NT$ ' + fmt(p) + '</span></a>').join('');
+    g.innerHTML = SCENES[i].acc.map(([k, n, p, href]) => '<div class="it" title="' + n + '"><div class="ph"><img src="img/pdp/acc-' + k + '.webp" alt=""></div><b>' + n + '</b><span>NT$ ' + fmt(p) + '</span></div>').join('');
     g.classList.remove('swap');
   }, cur === i && g.children.length ? 220 : 0);
   $('accIdx').textContent = (i + 1) + ' / 3';
+  if (typeof updateHeaderTone === 'function') updateHeaderTone();
   $('accTitle').textContent = '「' + SCENES[i].name + '」的建議配件';
   syncAdd();
 }
+/* ==== 試做：配件改由顧問呈現 ==== */
+function accMsgHtml(){
+  const sc = SCENES[cur], done = added.has(cur);
+  return '<div class="adv-acc-hd">「' + sc.name + '」的建議配件<small>點左邊的情境照可以切換</small></div>' +
+    miniHtml(sc.acc.map(([k, n, p]) => ({img:'img/pdp/acc-' + k + '.webp', n:n, t:'NT$ ' + fmt(p)}))) +
+    '<button class="adv-acc-add' + (done ? ' done' : '') + '" type="button">' + (done ? '已加入購物車 ✓' : '加入此情境的完整配件') + '</button>';
+}
+function syncAccMsg(){
+  if (!document.body.classList.contains('adv-open')) return;
+  let m = document.getElementById('advAccMsg'), fresh = false;
+  if (!m) { m = advAdd('', 'ai acc-msg'); m.id = 'advAccMsg'; fresh = true; }
+  m.innerHTML = accMsgHtml();
+  if (fresh) $('advLog').scrollTop = $('advLog').scrollHeight;
+  m.querySelector('.adv-acc-add').onclick = () => { if (!added.has(cur)) $('accAdd').click(); syncAccMsg(); };
+}
+/* ==== 試做結束 ==== */
 function syncAdd(){
   const done = added.has(cur);
   $('accAdd').classList.toggle('done', done);
   $('accAdd').textContent = done ? '已加入購物車 ✓' : '加入此情境的完整配件';
+  syncAccMsg();
 }
 setScene(0);
 /* 自動輪播；點照片或標題就選它，並重新計時 */
 let sceneT = setInterval(() => setScene(cur + 1), 4500);
-function pickScene(i){ clearInterval(sceneT); setScene(i); sceneT = setInterval(() => setScene(cur + 1), 4500); }
+function pickScene(i){
+  clearInterval(sceneT); setScene(i);
+  if (!document.body.classList.contains('adv-open')) sceneT = setInterval(() => setScene(cur + 1), 4500);   /* 聊天時不自動換 */
+}
 document.querySelectorAll('.panel,.label').forEach(el => el.onclick = () => pickScene(+el.dataset.i));
 
 $('accAdd').onclick = () => {
@@ -529,27 +706,326 @@ $('accAdd').onclick = () => {
   cart += items.length;
   $('cartN').textContent = cart; $('cartN').classList.add('on');
   syncAdd();
-  toast('已加入「' + SCENES[cur].name + '」' + items.length + ' 件配件，共 NT$ ' + fmt(total) + '（示範）');
+  toast('已加入「' + SCENES[cur].name + '」' + items.length + ' 件配件，共 NT$ ' + fmt(total));
 };
 
 /* 加入購物車／加入比較：都是示範，只更新畫面狀態 */
-$('addCart').onclick = () => {
+/* 主視覺與上方黏著列各有一組，狀態共用 */
+let inCompare = false, faved = false;
+const acts = sel => document.querySelectorAll('[data-act="' + sel + '"]');
+acts('cart').forEach(b => b.onclick = () => {
   cart += 1;
   $('cartN').textContent = cart; $('cartN').classList.add('on');
-  toast('已將 Revolt Advanced SL 0 加入購物車（示範）');
-};
-$('addCompare').onclick = () => {
-  const b = $('addCompare'), on = b.classList.toggle('on');
-  b.querySelector('span').textContent = on ? '已加入比較' : '加入比較';
-  toast(on ? '已加入比較清單（示範）' : '已從比較清單移除');
-};
-$('fav').onclick = () => $('fav').classList.toggle('on');
+  toast('已將 Revolt Advanced SL 0 加入購物車');
+});
+acts('compare').forEach(b => b.onclick = () => {
+  inCompare = !inCompare;
+  acts('compare').forEach(x => { x.classList.toggle('on', inCompare); x.querySelector('span').textContent = inCompare ? '已加入比較' : '加入比較'; });
+  toast(inCompare ? '已加入比較清單' : '已從比較清單移除');
+});
+acts('fav').forEach(b => b.onclick = () => {
+  faved = !faved;
+  acts('fav').forEach(x => x.classList.toggle('on', faved));
+});
 
 let toastT;
 function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
-$('aiOrb').onclick = () => { location.href = 'index.html?ai=1'; };   /* 這一頁還沒有小幫手，先回首頁打開 */
-$('specPdf').onclick = () => toast('規格 PDF 下載為示範，尚未接上檔案');
-$('findStore').onclick = e => { e.preventDefault(); toast('門市查詢尚未接上（示範）'); };
+/* ---------- 探索未知：照片框變寬時，人車維持原本大小並置中在沒被擋住的區域 ---------- */
+function layoutExplore(){
+  const img = document.querySelector('.panel.p3 .bg');
+  if (!img.naturalWidth) return;
+  const W = innerWidth, u = Math.max(W, 1200) / 1672;
+  const H = Math.max(innerHeight, 890 * u) - 360 * u;       /* 照片框高度（同 CSS） */
+  const slant = H * .085, S = 400 * u;
+  const open = document.body.classList.contains('adv-open');
+  const D = open ? W - 440 - S : 1272 * u;
+  const w = (D + slant * 2) / 3;
+  const left = S + w * 2 - slant * 2;                        /* 第三張照片框的左緣 */
+  /* 騎士的水平位置：關閉時跟原本一樣（原圖置中在照片框），打開時置中在 chatbox 左邊的可見區 */
+  const riderX = (open ? (left + slant + (W - 424)) / 2 : left + (W - left) / 2) + (.49 - .5) * (H * 880 / 1168);
+  /* 原圖在擴圖中的位置（實測比例）：原圖高度對齊照片框高度，人車大小就跟原本一樣 */
+  const OL = .2965, OT = .0052, OW = .4070, OH = .9688;
+  const ih = H / OH, iw = ih * img.naturalWidth / img.naturalHeight;
+  const bgLeft = riderX - left - (OL + OW * .49) * iw;
+  const box = {top: (-OT * ih) + 'px', width: iw + 'px', height: ih + 'px'};
+  Object.assign(img.style, box, {left: bgLeft + 'px'});
+  /* 右邊不夠寬時，接一張鏡像的補滿（多半在 chatbox 後面） */
+  Object.assign(document.querySelector('.panel.p3 .bg-ext').style, box, {left: (bgLeft + iw - 1) + 'px'});
+}
+(() => { const i = document.querySelector('.panel.p3 .bg'); i.complete ? layoutExplore() : i.addEventListener('load', layoutExplore); })();
+addEventListener('resize', layoutExplore);
+
+/* ---------- header 圖示：依背後那張情境照的亮度切換黑／白 ---------- */
+function updateHeaderTone(){
+  const icons = document.querySelector('.nav .icons'), r = icons.getBoundingClientRect(), cx = r.left + r.width / 2;
+  const panel = [...document.querySelectorAll('.panel')].find(p => { const b = p.getBoundingClientRect(); return b.left <= cx && b.right >= cx; });
+  if (!panel) { icons.classList.remove('on-dark'); return; }
+  const masked = !panel.classList.contains('on');
+  const img = panel.querySelector('.bg');
+  let L = null;
+  try {
+    const pb = img.getBoundingClientRect(), sc = Math.max(pb.width / img.naturalWidth, pb.height / img.naturalHeight);
+    const ox = pb.left + (pb.width - img.naturalWidth * sc) / 2, oy = pb.top + (pb.height - img.naturalHeight * sc) / 2;
+    const c = document.createElement('canvas'); c.width = 24; c.height = 8;
+    const x = c.getContext('2d');
+    x.drawImage(img, (r.left - ox) / sc, (r.top - oy) / sc, r.width / sc, r.height / sc, 0, 0, 24, 8);
+    const d = x.getImageData(0, 0, 24, 8).data; let sum = 0;
+    for (let i = 0; i < d.length; i += 4) sum += .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2];
+    L = sum / (d.length / 4) / 255;
+    if (masked) L = L * .48 + .52 * .06;          /* 未選取時上面有 52% 的黑色遮罩 */
+  } catch (e) { L = masked ? .2 : .5; }             /* 直接開本機檔案時讀不到像素，用保守值 */
+  icons.classList.toggle('on-dark', L < .55);
+}
+document.querySelectorAll('.panel img').forEach(i => i.complete ? updateHeaderTone() : i.addEventListener('load', updateHeaderTone));
+addEventListener('resize', updateHeaderTone);
+
+/* ---------- 選車顧問 ---------- */
+const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const adv = {started:false, queue:Promise.resolve(), dismissed:false};
+/* ---------- 開關：仿 macOS Genie，縮進 header 的 orb，對話紀錄保留 ---------- */
+const setOrbs = st => { if (window.Orb) { Orb.set('#aiOrb', st); Orb.set('#aiOrb2', st); } };
+const currentOrb = () => $('subnav').classList.contains('on') ? $('aiOrb2') : $('aiOrb');
+function setOrbDot(on){ ['aiOrb','aiOrb2'].forEach(id => $(id).classList.toggle('has-chat', on)); }
+
+function genie(dir, done){
+  const a = $('advisor');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
+  const pr = a.getBoundingClientRect(), tr = currentOrb().getBoundingClientRect();
+  const N = 48, W = pr.width, H = pr.height, sh = H / N, pcx = pr.left + W / 2;
+  const tx = tr.left + tr.width / 2, ty = tr.bottom < 0 ? -20 : tr.top + tr.height / 2, tw = Math.max(18, tr.width * .8);
+  const layer = document.createElement('div');
+  layer.className = 'genie';
+  const logTop = $('advLog').scrollTop, strips = [];
+  for (let i = 0; i < N; i++) {
+    const st = document.createElement('div');
+    st.className = 'genie-strip';
+    st.style.cssText = 'left:' + pr.left + 'px;top:' + (pr.top + i * sh) + 'px;width:' + W + 'px;height:' + (Math.ceil(sh) + 1) + 'px';
+    const c = a.cloneNode(true);
+    c.removeAttribute('id'); c.removeAttribute('hidden');
+    c.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+    c.classList.add('on');
+    c.style.cssText = 'position:absolute;left:0;top:' + (-i * sh) + 'px;right:auto;width:' + W + 'px;height:' + H + 'px;transform:none;transition:none;visibility:visible;opacity:1';
+    st.appendChild(c);
+    layer.appendChild(st);
+    strips.push({el:st, v:(i + .5) / N, log:c.querySelector('.adv-log')});
+  }
+  document.body.appendChild(layer);
+  strips.forEach(x => { if (x.log) x.log.scrollTop = logTop; });
+  a.style.visibility = 'hidden';
+  const ss = (e0, e1, x) => { const k = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return k * k * (3 - 2 * k); };
+  const dur = 620, t0 = performance.now();
+  (function frame(now){
+    const p = Math.min(1, (now - t0) / dur), t = dir === 'in' ? p : 1 - p;
+    const pinch = ss(0, .5, t), slide = ss(.18, 1, t);
+    for (const x of strips) {
+      const y0 = pr.top + x.v * H;
+      const y = ty + (y0 - ty) * (1 - slide);                                   /* 整片往 orb 收 */
+      const f = ss(0, 1, Math.pow(Math.min(1, Math.max(0, (y - ty) / (pr.bottom - ty))), .75));
+      const w = W + ((tw + (W - tw) * f) - W) * pinch;                           /* 越靠近 orb 越窄 */
+      const cx = pcx + ((tx + (pcx - tx) * f) - pcx) * pinch;
+      x.el.style.transform = 'translate(' + (cx - pcx) + 'px,' + (y - y0) + 'px) scale(' + (w / W) + ',' + Math.max(.001, 1 - slide) + ')';
+      x.el.style.opacity = t > .9 ? String((1 - t) / .1) : '1';
+    }
+    if (p < 1) requestAnimationFrame(frame);
+    else { layer.remove(); a.style.visibility = ''; done(); }
+  })(t0);
+}
+function openAdvisor(){
+  hideCallout();
+  const a = $('advisor');
+  if (adv.anim || !a.hidden) return;
+  a.hidden = false; a.classList.add('on');
+  document.body.classList.add('adv-open');
+  layoutExplore();
+  setOrbDot(false);
+  adv.anim = true;
+  clearInterval(sceneT);
+  setTimeout(updateHeaderTone, 600);
+  genie('out', () => {
+    adv.anim = false;
+    if (!adv.started) { adv.started = true; advGreet(); }
+    adv.queue = adv.queue.then(() => new Promise(r => setTimeout(() => { syncAccMsg(); r(); }, 250)));
+    $('advInput').focus();
+  });
+}
+function closeAdvisor(){
+  const a = $('advisor');
+  if (adv.anim || a.hidden) return;
+  adv.anim = true;
+  document.body.classList.remove('adv-open');
+  layoutExplore();
+  genie('in', () => { a.classList.remove('on'); a.hidden = true; adv.anim = false; setOrbDot(adv.started); });
+  clearInterval(sceneT); sceneT = setInterval(() => setScene(cur + 1), 4500);
+  setTimeout(updateHeaderTone, 600);
+}
+const toggleAdvisor = () => $('advisor').hidden ? openAdvisor() : closeAdvisor();
+$('aiOrb').onclick = toggleAdvisor;
+$('aiOrb2').onclick = toggleAdvisor;
+$('advClose').onclick = closeAdvisor;
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('advisor').hidden && $('lightbox').hidden) closeAdvisor(); });
+
+/* 逛一下才主動出現，不一進來就打擾 */
+function hideCallout(){ const c = $('orbCallout'); c.classList.remove('on'); setTimeout(() => { c.hidden = true; }, 350); adv.dismissed = true; }
+setTimeout(() => {
+  if (adv.started || adv.dismissed || scrollY > 200) return;
+  $('orbCallout').hidden = false; requestAnimationFrame(() => $('orbCallout').classList.add('on'));
+}, 8000);
+$('calloutYes').onclick = openAdvisor;
+$('calloutNo').onclick = hideCallout;
+
+function advAdd(html, who){
+  const m = document.createElement('div');
+  m.className = 'am ' + (who || 'ai');
+  m.innerHTML = html;
+  $('advLog').appendChild(m);
+  $('advLog').scrollTop = $('advLog').scrollHeight;
+  return m;
+}
+/* 回覆一律排隊：先顯示輸入中，再出現內容 */
+function advSay(html, delay){
+  adv.queue = adv.queue.then(() => new Promise(done => {
+    setOrbs('connecting');
+    const t = advAdd('<span class="adv-typing"><i></i><i></i><i></i></span>');
+    setTimeout(() => {
+      t.remove();
+      const m = advAdd(html);
+      m.querySelectorAll('.adv-chip').forEach(c => c.onclick = () => {
+        m.querySelectorAll('.adv-chip').forEach(x => x.disabled = true);
+        c.classList.add('on');
+        advAdd(esc(c.textContent), 'me');
+        advRoute(c.dataset.v);
+      });
+      setOrbs('working');
+      $('advLog').scrollTop = $('advLog').scrollHeight;
+      done();
+    }, delay || 850);
+  }));
+}
+const chipsHtml = list => '<div class="adv-chips">' + list.map(([v, t]) => '<button class="adv-chip" type="button" data-v="' + v + '">' + t + '</button>').join('') + '</div>';
+const miniHtml = list => '<div class="adv-minis">' + list.map(b => '<div class="adv-mini"><img src="' + b.img + '" alt=""><div><b>' + b.n + '</b><span>' + b.t + '</span></div></div>').join('') + '</div>';
+const MAIN = [['size','我適合哪個尺寸？'],['commute','平常通勤也能騎嗎？'],['sl1','跟 SL 1 差在哪？'],['acc','要搭哪些配件？'],['photo','用照片找車']];
+
+function advGreet(){
+  advSay('嗨，我是 GIANT 的選車顧問 👋<br>你現在看的 Revolt Advanced SL 0 是我們最頂級的 Gravel 車，柏油、碎石都能騎。想先聊哪一塊？' + chipsHtml(MAIN), 700);
+}
+/* ---------- 個人化：每次互動都讓頁面更貼近這位使用者 ---------- */
+const YOU = [];
+function addYou(key, text){
+  const i = YOU.findIndex(x => x.key === key);
+  if (i >= 0) YOU[i].text = text; else YOU.push({key, text});
+  $('youCard').hidden = false;
+  $('youList').innerHTML = YOU.map(x => '<li>' + x.text + '</li>').join('');
+}
+function spot(el){ if (!el) return; el.classList.remove('spot'); void el.offsetWidth; el.classList.add('spot'); }
+function goTo(id, then){
+  const el = $(id);
+  el.scrollIntoView({behavior:'smooth'});
+  if (then) setTimeout(then, 650);
+}
+
+function advSize(h){
+  const hit = SIZES.map((s, i) => h >= s[1] && h <= s[2] ? i : -1).filter(i => i >= 0);
+  if (!hit.length) return advSay(h < SIZES[0][1]
+    ? h + ' cm 比官方最小的 XS（155 cm 起）再矮一點，我會建議直接到門市，讓店員幫你調整看看。'
+    : h + ' cm 超過 ML 的建議範圍（到 186 cm），這台可能不是最合身的，我幫你找找其他車款好嗎？');
+  const pick = hit[hit.length - 1], s = SIZES[pick];
+  sizePin = pick; $('hRange').value = h; renderSize(h); markSizeBtn(); bindGeoRows();
+  if (letterOn !== 'K') markLetter('K');
+  goTo('geo', () => { spot(document.querySelector('.finder')); spot(document.querySelector('.gtable-wrap')); });
+  addYou('size', '身高 ' + h + ' cm → 建議尺寸 <b>' + s[0] + '</b>');
+  advSay((hit.length > 1
+      ? h + ' cm 剛好在 <b>' + hit.map(i => SIZES[i][0]).join('</b> 和 <b>') + '</b> 中間。喜歡趴一點、騎快一點選大的，想舒服一點選小的，我先幫你標 <b>' + s[0] + '</b>。'
+      : '以 ' + h + ' cm 來看，官方建議是 <b>' + s[0] + '</b>（' + s[1] + '–' + s[2] + ' cm），我已經幫你在表上標好了。')
+    + '<br>右邊亮起來的 <b>K（Stack）</b>是座艙高度，<b>L（Reach）</b>是往前伸的距離，這兩個數字決定騎起來趴不趴。有機會的話，到門市試騎一下最準。'
+    + chipsHtml([['h:L','看看 Reach'],['acc','順便看配件'],['commute','我平常主要通勤']]));
+}
+function advRoute(v){
+  if (v === 'h:L') { markLetter('L'); spot(document.querySelector('.geo-fig')); return advSay('圖上的 L 就是 Reach：從五通到車頭的水平距離。數字越大，身體會越往前伸，騎起來越有競速感。'); }
+  if (v.indexOf('h:') === 0) return advSize(+v.slice(2));
+  switch (v) {
+    case 'size':
+      goTo('geo', () => spot(document.querySelector('.geo-fig')));
+      addYou('geo', '正在看車架幾何與尺寸');
+      return advSay('我先帶你到「車架幾何與尺寸」。<br>左邊這張圖標出每個數字怎麼量，右邊是四個尺寸的數值；點圖上的字母或表格，兩邊會一起亮。<br>你身高大概多少？我直接幫你對。' + chipsHtml([['h:160','160 cm 左右'],['h:168','165–170 cm'],['h:175','170–180 cm'],['h:183','180 cm 以上']]));
+    case 'commute':
+      pickScene(0);
+      REL.forEach(b => { if (b.n === 'Escape Disc 2') { b.boost = 2; b.ptag = '適合通勤'; } });
+      renderRel();
+      addYou('use', '以通勤為主：切到「城市日常」、通勤車款排前面');
+      goTo('stage', () => spot(document.querySelector('.acc')));
+      return advSay('了解，那我先幫你把畫面切到「城市日常」，右邊換成通勤用的配件，下面的相關車款也把通勤款排到前面了。<br>老實說：這台是競賽取向的車，姿勢比較趴、價格在 30 萬等級；如果主要是上下班，<b>Escape Disc 2</b>（NT$ 16,800）會輕鬆很多。' + chipsHtml([['acc','通勤要帶什麼配件？'],['size','幫我看尺寸']]));
+    case 'sl1':
+      goTo('related', () => spot(document.querySelector('#rel [data-n="Revolt Advanced SL 1"]')));
+      addYou('sl1', '想比較同車系的 SL 1');
+      return advSay('兩台是同一個 Revolt Advanced SL 車系，SL 0 是 NT$ 308,000，SL 1 是 NT$ 208,000，差價主要反映在零件等級。我幫你把 SL 1 標出來了。<br>有機會的話，直接到門市兩台都騎騎看，感受最準。' + chipsHtml([['cmp','幫我加入比較'],['size','先看尺寸']]));
+    case 'cmp':
+      if (!inCompare) acts('compare')[0].click();
+      addYou('cmp', '已加入比較清單');
+      return advSay('好，已經幫你加進比較清單了。之後想對照其他車款，隨時跟我說。' + chipsHtml([['acc','看看配件'],['size','幫我看尺寸']]));
+    case 'acc': {
+      const sc = SCENES[cur];
+      goTo('stage');
+      return advSay('你現在看的是「' + sc.name + '」這個情境，我建議帶這三樣：' +
+        miniHtml(sc.acc.map(([k, n, p]) => ({img:'img/pdp/acc-' + k + '.webp', n:n, t:'NT$ ' + fmt(p)}))) +
+        chipsHtml([['accAdd','三樣都加入購物車'],['size','先看尺寸']]));
+    }
+    case 'accAdd':
+      if (!added.has(cur)) $('accAdd').click();
+      addYou('acc', '已加入「' + SCENES[cur].name + '」情境配件');
+      return advSay('加好了！購物車右上角可以看到。還有其他想了解的嗎？' + chipsHtml(MAIN.filter(x => x[0] !== 'acc')));
+    case 'geo':
+      goTo('geo');
+      return advSay('幫你捲到車架幾何表了，選好的尺寸那一欄已經標起來。');
+    case 'photo':
+      $('advFile').click();
+      return advSay('上傳一張你喜歡的車或騎乘照片，我幫你從網站上找外型、騎法相近的車款。');
+  }
+}
+function advText(t){
+  const s = t.toLowerCase();
+  const m = s.match(/(1[4-9]\d)\s*(cm|公分)?/);
+  if (m) return advSize(+m[1]);
+  if (/尺寸|身高|多高|size/.test(s)) return advRoute('size');
+  if (/通勤|上班|上學|代步|市區/.test(s)) return advRoute('commute');
+  if (/sl\s?1|差在|差別|比較/.test(s)) return advRoute('sl1');
+  if (/配件|車燈|燈|鎖|水壺|打氣/.test(s)) return advRoute('acc');
+  if (/價格|多少錢|預算|貴|便宜|分期/.test(s))
+    return advSay('這台是 NT$ 308,000。預算想抓低一點的話，同車系的 SL 1 是 NT$ 208,000；想看更入門的 Gravel 也可以跟我說。' + chipsHtml([['sl1','SL 0 跟 SL 1 差在哪？']]));
+  if (/照片|圖片|以圖/.test(s)) return advRoute('photo');
+  advSay('嗯，這題我怕講不準。<br>我比較能幫你的是：尺寸、這台適不適合你的騎法，還有要搭什麼配件。' + chipsHtml(MAIN));
+}
+
+/* 輸入列：沒打字不能送出；麥克風只做聆聽示意；圖片按鈕做以圖找車 */
+const advInput = $('advInput'), advSend = $('advSend');
+advInput.addEventListener('input', () => { advSend.disabled = !advInput.value.trim(); });
+$('advForm').onsubmit = e => {
+  e.preventDefault();
+  const t = advInput.value.trim(); if (!t) return;
+  advInput.value = ''; advSend.disabled = true;
+  $('advLog').querySelectorAll('.adv-chip:not(:disabled)').forEach(x => x.disabled = true);
+  advAdd(esc(t), 'me');
+  advText(t);
+};
+$('advMic').onclick = () => {
+  const b = $('advMic'); if (b.classList.contains('rec')) return;
+  b.classList.add('rec'); advInput.placeholder = '正在聆聽…';
+  setTimeout(() => { b.classList.remove('rec'); advInput.placeholder = '問我尺寸、騎乘情境或配件…'; }, 2600);
+};
+$('advPic').onclick = () => $('advFile').click();
+$('advFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  advAdd('<img class="up" src="' + URL.createObjectURL(f) + '" alt="你上傳的照片">', 'me pic');
+  e.target.value = '';
+  REL.forEach(b => { if (b.n === 'Revolt Advanced SL 1' || b.n === 'FastRoad AR Advanced 1') { b.boost = Math.max(b.boost || 0, 1); b.ptag = '與照片相近'; } });
+  renderRel();
+  addYou('photo', '依你上傳的照片，相關車款改成相近車型');
+  advSay('收到照片！我從網站上挑了幾台外型、騎法相近的車給你參考，下面的相關車款也幫你換過了：' + miniHtml([
+    {img:'img/bikes/revolt-lg.webp',       n:'Revolt Advanced SL 0',   t:'NT$ 308,000・你正在看的這台'},
+    {img:'img/pdp/rel-revolt-sl1.webp',    n:'Revolt Advanced SL 1',   t:'NT$ 208,000・同車系'},
+    {img:'img/bikes/fastroad.webp',        n:'FastRoad AR Advanced 1', t:'NT$ 62,800・偏城市與柏油'}
+  ]) + chipsHtml([['size','幫我看尺寸'],['sl1','SL 0 跟 SL 1 差在哪？']]), 1300);
+};
+$('specPdf').onclick = () => toast('規格 PDF 尚未提供下載');
 
 /* ---------- 科技特色（官網文字） ---------- */
 const TECH = [
@@ -580,11 +1056,13 @@ const SPECS = [
   ['其他', [['其他','Tubeless prepared, computer mount, chain guide'],['最大胎寬','700x53mm'],['最大齒盤','54T'],['重量','依車架尺寸與零件而異']]],
 ];
 const specGroup = ([g, rows]) => '<div class="spec-g"><h5>' + g + '</h5><dl>' + rows.map(([k, v]) => '<dt>' + k + '</dt><dd>' + v + '</dd>').join('') + '</dl></div>';
-/* 先只露出車架組與座艙，其餘收在「展開更多規格」後面 */
-$('specs').innerHTML = SPECS.slice(0, 2).map(specGroup).join('');
-$('specsMore').innerHTML = SPECS.slice(2).map(specGroup).join('');
+/* 收合時：車架組 ＋ 座艙前 4 項並排，兩欄等高；展開後全部顯示 */
+$('specs').innerHTML = specGroup(SPECS[0]) + specGroup([SPECS[1][0], SPECS[1][1].slice(0, SPECS[0][1].length)]);
 /* 展開之後就不再收合，按鈕直接收起來 */
-$('specsMoreBtn').onclick = () => { $('specsMore').hidden = false; $('specsMoreBtn').hidden = true; };
+$('specsMoreBtn').onclick = () => {
+  $('specs').innerHTML = SPECS.map(specGroup).join('');
+  $('specsMoreBtn').hidden = true;
+};
 
 /* ---------- 幾何（官網） ---------- */
 const SIZES = [['XS',155,166],['S',159,171],['M',169,181],['ML',174,186]];
@@ -648,7 +1126,6 @@ function markSizeBtn(){
 document.querySelectorAll('#sizeBtns button').forEach(b => b.onclick = () => {
   sizePin = SIZES.findIndex(x => x[0] === b.dataset.size);
   $('hRange').value = b.dataset.h; renderSize(+b.dataset.h); markSizeBtn();
-  $('geo').scrollIntoView({behavior:'smooth'});
 });
 $('sizeLink').onclick = () => $('geo').scrollIntoView({behavior:'smooth'});
 renderSize(172);
@@ -663,23 +1140,31 @@ const REL = [
   {img:'img/bikes/trance.webp',   n:'Trance X Advanced Pro 29', pr:178000},
   {img:'img/bikes/escape.webp',   n:'Escape Disc 2',          pr:16800},
 ];
-$('rel').innerHTML = REL.map(b => {
-  const inner = '<div class="ph"><img src="' + b.img + '" alt="' + b.n + '">' +
-    (b.tag ? '<span class="rel-tag">' + b.tag + '</span>' : '') + '</div>' +
-    '<h4>' + b.n + '</h4><p>NT$ ' + fmt(b.pr) + '</p>';
-  /* 同車系那台首頁沒有，就不做連結 */
-  return b.tag ? '<div class="rel-card">' + inner + '</div>' : '<a href="index.html#popular">' + inner + '</a>';
-}).join('');
+REL[0].nolink = true;   /* 同車系那台首頁沒有，就不做連結 */
+function renderRel(){
+  const list = REL.map((b, i) => ({...b, i})).sort((a, b) => (b.boost || 0) - (a.boost || 0) || a.i - b.i);
+  $('rel').innerHTML = list.map(b => {
+    const tag = b.ptag || b.tag;
+    const inner = '<div class="ph"><img src="' + b.img + '" alt="' + b.n + '">' +
+      (tag ? '<span class="rel-tag' + (b.ptag ? ' you-tag' : '') + '">' + tag + '</span>' : '') + '</div>' +
+      '<h4>' + b.n + '</h4><p>NT$ ' + fmt(b.pr) + '</p>';
+    return b.nolink ? '<div class="rel-card" data-n="' + b.n + '">' + inner + '</div>' : '<a href="index.html#popular" data-n="' + b.n + '">' + inner + '</a>';
+  }).join('');
+}
+renderRel();
 
 /* ---------- 車款照片：縮圖點開放大，可再點一次放大兩倍 ---------- */
 const GAL = [...document.querySelectorAll('#galRow .gthumb img')].map(i => ({src:i.src, alt:i.alt}));
 let galI = 0;
+(() => { const t = document.querySelectorAll('#galRow .gthumb'); if (t.length > 6) { t[5].classList.add('has-more'); t[5].dataset.more = '+' + (t.length - 5); } })();
+$('lbThumbs').innerHTML = GAL.map((g, i) => '<button type="button" aria-label="' + g.alt + '"><img src="' + g.src + '" alt=""></button>').join('');
+document.querySelectorAll('#lbThumbs button').forEach((b, i) => b.onclick = () => showGal(i));
 function showGal(i){
   galI = (i + GAL.length) % GAL.length;
   $('lbImg').src = GAL[galI].src;
   $('lbImg').alt = GAL[galI].alt;
   $('lbImg').classList.remove('zoom');
-  $('lbHint').textContent = (galI + 1) + ' / ' + GAL.length + '　' + GAL[galI].alt + '　·　點圖片可放大，Esc 關閉';
+  document.querySelectorAll('#lbThumbs button').forEach((b, j) => b.classList.toggle('on', j === galI));
 }
 function openGal(i){ showGal(i); $('lightbox').hidden = false; document.body.style.overflow = 'hidden'; }
 function closeGal(){ $('lightbox').hidden = true; document.body.style.overflow = ''; }

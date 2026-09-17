@@ -1,0 +1,16 @@
+/* 全站 header（首頁、產品頁共用）
+   尺寸跟著視窗寬度等比縮放（以 1672 寬的設計稿為準，最小以 1200 計）。
+   文字／圖示顏色用 --nav-ink，各頁自己決定（深色主視覺就設成白色）。 */
+.site-nav{--hu:calc(max(100vw, 1200px) / 1672);position:absolute;z-index:30;left:0;right:0;top:0;height:calc(var(--hu) * 76);color:var(--nav-ink, #141A22)}
+.site-nav .logo{position:absolute;left:calc(var(--hu) * 42);top:0;bottom:0;display:flex;align-items:center;color:inherit}
+.site-nav .logo svg{display:block;height:calc(var(--hu) * 20);width:auto;color:inherit}
+.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:calc(var(--hu) * 16);line-height:1;font-weight:500}
+.site-nav .links a{color:inherit;text-decoration:none;opacity:.92;transition:opacity .2s}
+.site-nav .links a:hover{opacity:1}
+/* 右側順序：購物車、會員、AI 助理（固定在最右邊） */
+.site-nav .icons{position:absolute;right:calc(var(--hu) * 40);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34)}
+.site-nav .icons a{position:relative;display:grid;place-items:center;color:inherit}
+.site-nav .icons svg{display:block;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
+.site-nav .orb-wrap{position:relative;display:grid;place-items:center}
+.site-nav .orb-btn{position:relative;display:grid;place-items:center;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26);transition:transform .2s}
+.site-nav .orb-btn:hover{transform:scale(1.08)}
