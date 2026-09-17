@@ -14,6 +14,17 @@
     c.setTransform(o.dpr, 0, 0, o.dpr, 0, 0);
     c.clearRect(0, 0, o.size, o.size);
     E.MODE_DRAWS[o.mode](c, o.size, t, o.dark, o.opts);
+    /* 把灰階墨點染成品牌藍：source-atop 只上在已經畫過的像素上，保留原本的深淺層次 */
+    if (o.tint) {
+      c.save();
+      c.globalCompositeOperation = 'source-atop';
+      var g = c.createRadialGradient(o.size * .5, o.size * .4, 0, o.size * .5, o.size * .5, o.size * .62);
+      g.addColorStop(0, o.tintHi);
+      g.addColorStop(1, o.tint);
+      c.fillStyle = g;
+      c.fillRect(0, 0, o.size, o.size);
+      c.restore();
+    }
   }
   /* 所有 orb 共用一個時鐘，換狀態不會跳格 */
   function tick() {
@@ -49,6 +60,8 @@
       el: el, ctx: cv.getContext('2d'), size: size, dpr: dpr,
       preset: preset,
       dark: el.getAttribute('data-orb-dark') === '1',
+      tint: el.getAttribute('data-orb-tint') || '',
+      tintHi: el.getAttribute('data-orb-tint-hi') || '#AFCCFF',
       speedMul: +(el.getAttribute('data-orb-speed') || 1),
       paused: false, visible: true
     };

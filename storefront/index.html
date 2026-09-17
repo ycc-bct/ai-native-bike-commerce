@@ -37,8 +37,29 @@ svg{display:block}
 .links a{opacity:.92;transition:opacity .2s}
 .links a:hover{opacity:1}
 .icons{display:flex;align-items:center;gap:30px}
-.orb-btn{display:grid;place-items:center;width:26px;height:26px;opacity:1;transition:opacity .2s,transform .2s}
-.orb-btn:hover{opacity:1;transform:scale(1.08)}
+.orb-wrap{position:relative;display:grid;place-items:center}
+.orb-btn{position:relative;display:grid;place-items:center;width:26px;height:26px;transition:transform .2s}
+.orb-btn::before{content:"";position:absolute;width:40px;height:40px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(80,140,255,.55) 0%,rgba(62,123,255,.22) 42%,rgba(62,123,255,0) 70%);
+  animation:orbPulse 3.4s ease-in-out infinite}
+.orb-btn canvas{position:relative;filter:drop-shadow(0 0 4px rgba(120,170,255,.95)) drop-shadow(0 0 11px rgba(40,90,230,.6))}
+.orb-btn:hover{transform:scale(1.08)}
+.orb-btn:hover canvas{filter:drop-shadow(0 0 6px rgba(160,195,255,1)) drop-shadow(0 0 16px rgba(60,115,255,.75))}
+@keyframes orbPulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+@media(prefers-reduced-motion:reduce){.orb-btn::before{animation:none}}
+.orb-tip{position:absolute;z-index:60;top:44px;right:-10px;width:288px;padding:18px 20px 16px;text-align:left;
+  border-radius:12px;border:1px solid rgba(120,170,255,.34);background:rgba(13,21,36,.94);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 22px 50px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04) inset;
+  opacity:0;transform:translateY(-8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.orb-tip.on{opacity:1;transform:none}
+.orb-tip[hidden]{display:none}
+.orb-tip::before{content:"";position:absolute;right:16px;top:-6px;width:11px;height:11px;transform:rotate(45deg);
+  background:rgba(13,21,36,.94);border-left:1px solid rgba(120,170,255,.34);border-top:1px solid rgba(120,170,255,.34)}
+.orb-tip b{display:block;font-size:15px;font-weight:700;letter-spacing:.03em}
+.orb-tip p{margin-top:8px;font-size:13px;line-height:1.75;color:var(--ink-70)}
+.orb-tip p.sub{margin-top:6px;color:var(--ink-50)}
+.orb-tip .ok{margin-top:14px;height:34px;padding:0 16px;border-radius:6px;background:#fff;color:#0A111C;font-size:13px;font-weight:700}
+.orb-tip .ok:hover{background:#E6ECF7}
 .icons svg{width:26px;height:26px}
 
 /* ---------- 主視覺 ---------- */
@@ -215,7 +236,15 @@ svg{display:block}
     </a>
     <nav class="links"><a href="#">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
     <div class="icons">
-      <button class="orb-btn" id="aiOrb" type="button" aria-label="選車小幫手" title="選車小幫手" data-orb="searching" data-orb-size="26" data-orb-preset="64" data-orb-dark="1"></button>
+      <span class="orb-wrap">
+        <button class="orb-btn" id="aiOrb" type="button" aria-label="AI 選車助理" title="AI 選車助理" data-orb="working" data-orb-size="26" data-orb-preset="64" data-orb-dark="1" data-orb-tint="#3E7BFF" data-orb-tint-hi="#BBD6FF"></button>
+        <div class="orb-tip" id="orbTip" role="status" hidden>
+          <b>這是 AI 選車助理</b>
+          <p>我會記得你看過哪些車，依你的騎乘情境、預算和身高，給你客製化的建議。</p>
+          <p class="sub">想問的時候，隨時點這顆球。</p>
+          <button class="ok" id="orbTipOk" type="button">知道了</button>
+        </div>
+      </span>
       <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
       <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
     </div>
@@ -342,14 +371,31 @@ function promptCopy(){
 const assist = $('assist'), fab = $('fab');
 const A = {shown:false, chat:false, terrain:null};
 $('assistCopy').innerHTML = promptCopy();
-function openAssist(){ A.shown = true; assist.classList.add('on'); fab.classList.remove('on'); if (A.chat) fitChat(); }
+function openAssist(){ A.shown = true; hideOrbTip(); assist.classList.add('on'); fab.classList.remove('on'); if (A.chat) fitChat(); }
 function closeAssist(){ assist.classList.remove('on'); fab.classList.add('on'); }
 setTimeout(() => { if (!A.shown) openAssist(); }, 6000);
 $('assistClose').onclick = closeAssist;
 $('assistNo').onclick = closeAssist;
 $('assistYes').onclick = startChat;
 fab.onclick = openAssist;
-$('aiOrb').onclick = openAssist;
+$('aiOrb').onclick = () => { hideOrbTip(); openAssist(); };
+/* 第一次進站先說明這顆球是什麼；看過之後就不再出現（存在瀏覽器本機） */
+const TIP_KEY = 'giant-storefront-orb-tip';
+const tipSeen = () => { try { return localStorage.getItem(TIP_KEY); } catch (e) { return null; } };
+function hideOrbTip(){
+  const t = $('orbTip');
+  if (t.hidden) return;
+  t.classList.remove('on');
+  setTimeout(() => { t.hidden = true; }, 380);
+  try { localStorage.setItem(TIP_KEY, '1'); } catch (e) {}
+}
+if (!tipSeen()) setTimeout(() => {
+  if (A.shown) return;                      /* 小幫手已經自己出現就不用再提示 */
+  $('orbTip').hidden = false;
+  requestAnimationFrame(() => $('orbTip').classList.add('on'));
+}, 1800);
+$('orbTipOk').onclick = hideOrbTip;
+addEventListener('keydown', e => { if (e.key === 'Escape') hideOrbTip(); });
 /* 從其他頁面按 header orb 過來時（index.html?ai=1）直接打開 */
 if (new URLSearchParams(location.search).get('ai')) openAssist();
 
@@ -376,7 +422,7 @@ function ai(html, delay, bind){
       t.remove();
       const m = add(html);
       if (bind) bind(m);
-      window.Orb && Orb.set('#aiOrb', 'searching');
+      window.Orb && Orb.set('#aiOrb', 'working');
       requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; });
       res(m);
     }, delay || 700);
