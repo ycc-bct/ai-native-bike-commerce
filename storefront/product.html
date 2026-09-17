@@ -37,7 +37,9 @@ svg{display:block}
 .nav .logo{position:absolute;left:calc(var(--u)*42);top:calc(var(--u)*24)}
 .nav .logo svg{height:calc(var(--u)*20);width:auto;color:var(--ink)}
 .nav .links{position:absolute;left:calc(var(--u)*201);top:calc(var(--u)*22);display:flex;gap:calc(var(--u)*34);font-size:calc(var(--u)*16);font-weight:500}
-.nav .icons{position:absolute;right:calc(var(--u)*40);top:calc(var(--u)*20);display:flex;gap:calc(var(--u)*34)}
+.nav .icons{position:absolute;right:calc(var(--u)*40);top:calc(var(--u)*20);display:flex;align-items:center;gap:calc(var(--u)*34)}
+.orb-btn{display:grid;place-items:center;width:calc(var(--u)*26);height:calc(var(--u)*26);opacity:1;transition:opacity .2s,transform .2s}
+.orb-btn:hover{opacity:1;transform:scale(1.08)}
 .nav .icons a{position:relative}
 .nav .icons svg{width:calc(var(--u)*26);height:calc(var(--u)*26);color:var(--ink)}
 .cart-n{position:absolute;right:-8px;top:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ai);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;transform:scale(0);transition:transform .35s var(--ease)}
@@ -243,7 +245,7 @@ svg{display:block}
     <a class="logo" href="index.html" aria-label="GIANT"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
     <nav class="links"><a href="index.html">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
     <div class="icons">
-      <a href="#" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></a>
+      <button class="orb-btn" id="aiOrb" type="button" aria-label="選車小幫手" title="選車小幫手" data-orb="searching" data-orb-size="26" data-orb-preset="64"></button>
       <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
       <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span class="cart-n" id="cartN">0</span></a>
     </div>
@@ -373,6 +375,8 @@ svg{display:block}
 
 <div class="toast" id="toast"></div>
 
+<script src="js/thinking-orbs-engine.js"></script>
+<script src="js/orb.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
@@ -433,6 +437,7 @@ $('fav').onclick = () => $('fav').classList.toggle('on');
 
 let toastT;
 function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
+$('aiOrb').onclick = () => { location.href = 'index.html?ai=1'; };   /* 這一頁還沒有小幫手，先回首頁打開 */
 $('findStore').onclick = e => { e.preventDefault(); toast('門市查詢尚未接上（示範）'); };
 
 /* ---------- 科技特色（官網文字） ---------- */
