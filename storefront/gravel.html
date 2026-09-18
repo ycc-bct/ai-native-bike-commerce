@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GIANT · More Than a Bike</title>
+<title>礫石公路自行車 · GIANT</title>
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/advisor.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,80 +61,6 @@ svg{display:block}
 .kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ai)}
 .lnk{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700}
 
-/* ---------- Border beam（libraries.dev/beam 的純 CSS 移植：一條細藍光沿邊框繞行，尾巴長而柔，不外加光暈） ---------- */
-@property --beam-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
-.beam{position:relative;isolation:isolate}
-.beam::before{content:"";position:absolute;z-index:1;inset:-1px;padding:1px;border-radius:inherit;pointer-events:none;
-  background:conic-gradient(from var(--beam-angle),transparent 0% 30%,rgba(79,141,255,.08) 45%,rgba(79,141,255,.35) 60%,rgba(120,180,255,.85) 70%,#BFE0FF 73%,rgba(120,180,255,.85) 76%,rgba(79,141,255,.35) 86%,rgba(79,141,255,.08) 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
-  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
-  animation:beam-spin 4s linear infinite}
-/* 很淡的外光暈：跟著光束走，只在亮點附近微微透出 */
-.beam::after{content:"";position:absolute;z-index:-1;inset:-2px;border-radius:inherit;pointer-events:none;
-  background:conic-gradient(from var(--beam-angle),transparent 0% 58%,rgba(120,180,255,.5) 70%,rgba(140,195,255,.7) 73%,rgba(120,180,255,.5) 76%,transparent 88% 100%);
-  filter:blur(4px);opacity:.18;animation:beam-spin 4s linear infinite}
-@keyframes beam-spin{to{--beam-angle:360deg}}
-@media (prefers-reduced-motion:reduce){.beam::before,.beam::after{animation:none}}
-
-/* ---------- 主視覺 ---------- */
-.hero{position:relative;height:clamp(650px,74vh,780px);overflow:hidden}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 72%}
-.hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(90deg,rgba(243,245,247,.96) 0%,rgba(243,245,247,.84) 26%,rgba(243,245,247,.36) 44%,rgba(243,245,247,0) 58%),
-             linear-gradient(180deg,rgba(243,245,247,.55) 0%,rgba(243,245,247,0) 18%,rgba(243,245,247,0) 74%,var(--paper) 100%)}
-.hero-copy{position:relative;z-index:2;width:var(--shell);margin:0 auto;padding-top:clamp(112px,9.6vw,148px)}
-.hero h1{font-size:clamp(52px,4.6vw,78px);line-height:1;font-weight:800;letter-spacing:-.03em;text-transform:uppercase}
-.hero .sub{margin-top:18px;font-size:clamp(20px,1.5vw,25px);font-weight:600;letter-spacing:.06em}
-.hero .lead-row{margin-top:18px}
-.hero .lead{font-size:14.5px;line-height:1.85;color:var(--ink-70)}
-.hero .lead span{display:block;margin-top:4px;color:var(--ink-50);font-size:13px;letter-spacing:.04em}
-
-
-/* 線上騎乘體驗：連到 Ginny 的 120 秒數位騎乘（scenario-2）。照片貼齊卡片左側，左上左下跟著卡片圓角 */
-.vride{display:flex;align-items:stretch;gap:22px;width:min(560px,100%);margin-top:56px;padding:0 28px 0 0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 14px 34px rgba(20,26,34,.1);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
-.vride:hover{box-shadow:0 20px 44px rgba(20,26,34,.16);transform:translateY(-3px)}
-.vr-ph{flex:none;width:228px;aspect-ratio:1.42;overflow:hidden;background:#EEF2F6}
-.vr-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform .8s var(--ease)}
-.vride:hover .vr-ph img{transform:scale(1.05)}
-.vr-copy{align-self:center;padding:18px 4px 18px 0}
-.vr-copy b{display:block;font-size:22px;font-weight:800;letter-spacing:.01em}
-.vr-desc{display:block;margin-top:9px;font-size:14.5px;line-height:1.85;color:var(--ink-70)}
-
-/* ---------- Explore：一條寬幅、五段斜切的情境帶（與 product 主視覺同一套斜切） ---------- */
-.scenes{position:relative;height:var(--sh);overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);transition:width .45s var(--ease),margin .45s var(--ease);
-  --sh:clamp(340px,27vw,420px);--slant:calc(var(--sh) * .085);--w:calc((100% + var(--slant) * 4) / 5)}
-.scene{position:absolute;top:0;height:100%;width:var(--w);left:calc(var(--i) * (var(--w) - var(--slant)));display:block}
-.scene .pclip{position:absolute;inset:0;overflow:hidden;clip-path:polygon(var(--slant) 0,100% 0,calc(100% - var(--slant)) 100%,0 100%)}
-.scene:first-child .pclip{clip-path:polygon(0 0,100% 0,calc(100% - var(--slant)) 100%,0 100%)}
-.scene:last-child .pclip{clip-path:polygon(var(--slant) 0,100% 0,100% 100%,0 100%)}
-.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.scene:hover img{transform:scale(1.05)}
-/* 童車：主角在原圖裡偏小，局部放大並置中 */
-.scene img.zoom{transform:scale(1.4);transform-origin:50% 62%}
-.scene:hover img.zoom{transform:scale(1.47)}
-.scene .pclip::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,16,24,.78) 0%,rgba(10,16,24,.34) 42%,rgba(10,16,24,0) 68%);transition:opacity .4s}
-.scene:hover .pclip::after{opacity:.8}
-/* 白色分隔：沿斜切的細線，往下慢慢淡掉（角度 = atan(.085)） */
-.scene .seam{position:absolute;z-index:3;top:0;left:var(--slant);width:1.5px;height:100.4%;transform-origin:50% 0;transform:rotate(4.86deg);pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.85) 35%,rgba(255,255,255,.4) 60%,rgba(255,255,255,0) 82%)}
-.scene:first-child .seam{display:none}
-.scene .txt{position:absolute;z-index:2;left:22px;right:8px;bottom:20px;color:#fff}
-.scene:first-child .txt{left:36px}
-.scene small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
-.scene b{display:block;margin-top:4px;font-size:clamp(15px,1.15vw,20px);font-weight:700;letter-spacing:.02em;line-height:1.3;white-space:nowrap}
-.scene em{display:block;margin-top:8px;font-style:normal;font-size:12.5px;line-height:1.6;opacity:.9}
-
-/* ---------- Featured ---------- */
-.feat-grid{display:grid;grid-template-columns:1.18fr 1fr;gap:18px}
-.feat-main{position:relative;display:block;min-height:0;border-radius:14px;overflow:hidden;background:#141A1C;box-shadow:0 12px 28px rgba(20,26,34,.12);color:#fff}
-/* 官方原圖 + AI 只補左側背景（原圖像素未動）：靠右對齊讓整台車入鏡，文案壓在左邊補出來的暗部 */
-.feat-main .bgph{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;object-position:100% 50%;transition:transform 1.2s var(--ease)}
-.feat-main:hover .bgph{transform:scale(1.03)}
-.feat-main::before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(6,10,16,.5) 0%,rgba(6,10,16,.22) 32%,rgba(6,10,16,0) 55%)}
-.fm-copy{position:relative;z-index:2;padding:36px 38px;max-width:500px}
-.fm-copy .lead{font-size:14px;line-height:1.7;font-weight:500;color:rgba(255,255,255,.85);text-shadow:0 1px 8px rgba(0,0,0,.35)}
-.fm-copy h3{margin-top:10px;font-size:32px;font-weight:800;letter-spacing:-.01em;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.35)}
-.feat-side{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-content:start;align-self:start}
 .card{position:relative;display:block;padding:10px;border-radius:12px;background:#fff;border:1px solid var(--line);transition:box-shadow .3s var(--ease),border-color .3s,transform .3s var(--ease)}
 .card:hover{border-color:#C9D0D8;box-shadow:0 14px 30px rgba(20,26,34,.1);transform:translateY(-3px)}
 .card .ph{position:relative;aspect-ratio:1.3;border-radius:8px;overflow:hidden;background:#fff}
@@ -145,43 +71,6 @@ svg{display:block}
 .card .badge.hot{background:#F26B1D}
 .card b{display:block;margin-top:10px;font-size:12.5px;font-weight:700;line-height:1.4;min-height:2.8em}
 .card span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-70)}
-
-/* ---------- What's Happening ---------- */
-.news-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:14px}
-.news-main{position:relative;display:block;min-height:380px;border-radius:14px;overflow:hidden;background:#0B3F3A;color:#fff}
-.news-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .8s var(--ease)}
-.news-main:hover img{transform:scale(1.04)}
-.news-main::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,18,.86) 0%,rgba(6,10,18,.35) 50%,rgba(6,10,18,0) 80%)}
-.nm-copy{position:absolute;z-index:1;left:28px;right:28px;bottom:26px}
-.nm-copy h3{font-size:22px;font-weight:800;line-height:1.35}
-.nm-copy p{margin-top:8px;font-size:13px;opacity:.85}
-.news-card{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--line);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
-.news-card:hover{box-shadow:0 16px 34px rgba(20,26,34,.1);transform:translateY(-3px)}
-.news-card .ph{aspect-ratio:1.5;overflow:hidden}
-.news-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
-.news-card:hover .ph img{transform:scale(1.05)}
-.nc-copy{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
-.nc-copy .meta{display:flex;align-items:center;gap:10px}
-.nc-copy time{font-size:12px;color:var(--ink-50)}
-.nc-copy h3{margin-top:10px;font-size:16px;font-weight:700;line-height:1.45}
-.nc-copy .dist{margin-top:6px;font-size:12.5px;font-weight:700;color:var(--ink-70)}
-.nc-copy .blurb{margin-top:8px;font-size:12.5px;line-height:1.7;color:var(--ink-50)}
-.news-card .ph{position:relative}
-.news-card .date{position:absolute;left:10px;top:10px;padding:6px 9px 5px;border-radius:8px;background:rgba(255,255,255,.94);color:var(--ink);text-align:center;line-height:1}
-.news-card .date b{display:block;font-size:18px;font-weight:800}
-.news-card .date small{display:block;margin-top:2px;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50)}
-
-/* ---------- 登山車越野基地 ---------- */
-.mtb{position:relative;isolation:isolate;margin-top:78px;height:clamp(380px,37.5vw,540px);overflow:hidden;color:#fff;background:#201E12}
-/* 官方原圖 5:4 不重生：整張鋪滿、垂直取中段讓兩位騎士入鏡；文案放左下角避開騎士，只壓一層淡漸層，底下場景看得到 */
-.mtb img{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 51%}
-.mtb::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(20,22,14,.45) 0%,rgba(20,22,14,.22) 26%,rgba(20,22,14,0) 46%),linear-gradient(0deg,rgba(20,22,14,.25) 0%,rgba(20,22,14,0) 40%)}
-.mtb-copy{position:relative;z-index:2;width:var(--shell);height:100%;margin:0 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-bottom:clamp(48px,6vw,88px)}
-.mtb-copy h2{font-size:clamp(30px,2.8vw,40px);font-weight:800;letter-spacing:.02em;text-shadow:0 2px 14px rgba(0,0,0,.45)}
-.mtb-copy p{text-shadow:0 1px 8px rgba(0,0,0,.45)}
-.mtb-copy p{margin-top:12px;font-size:15px;opacity:.9}
-.mtb-copy .btn{margin-top:26px}
-
 /* ---------- 頁尾 ---------- */
 .foot{background:#fff;border-top:1px solid var(--line)}
 .foot-in{width:var(--shell);margin:0 auto;padding:56px 0 44px;display:grid;grid-template-columns:1.3fr repeat(4,.7fr) 1.3fr;gap:24px}
@@ -204,16 +93,6 @@ svg{display:block}
 .foot-bar .legal{margin-left:auto;display:flex;gap:18px}
 .foot-bar a:hover{color:var(--ink)}
 .foot-bar .region{padding-left:18px;border-left:1px solid var(--line)}
-
-/* 顧問打開時，內容往左讓位（Featured / 最新消息 維持原排版，只把卡片縮窄） */
-body.adv-open .sec,body.adv-open .mtb-copy,body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100vw - 72px - 424px);margin-left:36px}
-body.adv-open .scenes{width:calc(100vw - 424px);margin-left:-36px}
-body.adv-open .scene b{font-size:14.5px;letter-spacing:0}
-body.adv-open .scene .txt{left:14px}
-body.adv-open .scene em{font-size:12px}
-body.adv-open .nm-copy h3{font-size:19px}
-body.adv-open .nm-copy h3 br{display:none}
-body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 
 /* ---------- 顧問對話裡的卡片（對話框本身見 css/advisor.css） ---------- */
 .am.wide{align-self:stretch;max-width:100%}
@@ -265,6 +144,165 @@ a:not([href]){cursor:default}
 @keyframes rvIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes rvFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}}
+
+/* ---------- 車款清單頁 ---------- */
+/* banner 上 header 用白色；捲下去鋪淺底後換回深色 */
+.site-nav{--nav-ink:#fff}
+.site-nav .links a{text-shadow:none}
+.site-nav .icons a svg{filter:none}
+.site-nav.scrolled{--nav-ink:#141A22}
+/* banner：官網情境照滿版，文案壓在左側暗部 */
+.list-hero{position:relative;height:clamp(340px,28vw,440px);overflow:hidden;background:#2B2F33;color:#fff}
+.list-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.list-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,14,20,.7) 0%,rgba(10,14,20,.45) 36%,rgba(10,14,20,.05) 64%),linear-gradient(0deg,rgba(10,14,20,.35) 0%,rgba(10,14,20,0) 40%)}
+.list-hero-in{position:relative;z-index:1;width:var(--shell);height:100%;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(34px,3.4vw,48px)}
+.crumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,.7);margin-bottom:auto;padding-top:96px}
+.crumb a:hover{color:#fff}
+.crumb b{font-weight:600;color:#fff}
+.list-hero .kicker{color:#fff}
+.list-hero h1{margin-top:8px;font-size:clamp(34px,3vw,44px);font-weight:800;letter-spacing:-.01em;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+.list-hero .sub{margin-top:10px;max-width:600px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.list-page{padding-top:26px;padding-bottom:64px;min-height:60vh}
+/* 篩選列：按鈕在左，點了在左側展開一欄（參考 rapha.cc） */
+.fbar{padding:0 0 4px;display:flex;align-items:center;gap:14px}
+.fbar .count{margin-left:auto;font-size:13.5px;color:var(--ink-70)}
+.fbar .count b{color:var(--ink)}
+.applied{display:flex;flex-wrap:wrap;gap:6px}
+.applied button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--ink-70);transition:border-color .2s,color .2s}
+.applied button:hover{border-color:var(--ink);color:var(--ink)}
+.applied button svg{width:11px;height:11px}
+.ftoggle{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:999px;border:1px solid #B8C0CA;background:#fff;font-size:13.5px;font-weight:700;transition:border-color .2s,background .2s}
+.ftoggle:hover,.ftoggle[aria-expanded="true"]{border-color:var(--ink)}
+.ftoggle[aria-expanded="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ftoggle svg{width:15px;height:15px}
+.list-body{margin-top:22px;display:grid;grid-template-columns:1fr;gap:0 40px;transition:grid-template-columns .35s var(--ease)}
+.list-body.open{grid-template-columns:272px 1fr}
+.fside[hidden]{display:none}
+.fside{animation:fdrop .3s var(--ease)}
+@keyframes fdrop{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.fstatus{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 0 16px;border-bottom:1px solid var(--line)}
+.fgroup{border-bottom:1px solid var(--line)}
+.fg-h{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 0;font-size:13.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+.fg-h i{position:relative;width:14px;height:14px;flex:none}
+.fg-h i::before,.fg-h i::after{content:"";position:absolute;background:var(--ink);transition:transform .25s}
+.fg-h i::before{left:0;top:6px;width:14px;height:2px}
+.fg-h i::after{left:6px;top:0;width:2px;height:14px}
+.fg-h[aria-expanded="true"] i::after{transform:scaleY(0)}
+.fgroup .opts{display:flex;flex-wrap:wrap;gap:6px;padding:0 0 16px}
+.fgroup .opts[hidden]{display:none}
+.fopt{position:relative;display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--ink-70);cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.fopt:hover{border-color:var(--ink);color:var(--ink)}
+.fopt input{position:absolute;opacity:0;width:0;height:0}
+.fopt.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:18px}
+.facts .btn{justify-content:center;padding:0 12px}
+/* 卡片：沿用首頁 Featured 的卡片 */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.list-body.open .grid{grid-template-columns:repeat(3,1fr)}
+.grid .card .ph{aspect-ratio:1.4}
+.grid .card .ph img{padding:4%}
+.grid .card b{font-size:14px;min-height:0}
+.grid .card .meta{display:block;margin-top:6px;font-size:12px;color:var(--ink-50)}
+.grid .card .price{display:block;margin-top:4px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.grid .card .badges{position:absolute;z-index:1;left:0;top:0;right:0;display:flex;justify-content:space-between;pointer-events:none}
+.grid .card .badges .badge.best{margin-left:auto}
+.grid .card .badge{position:static}
+.empty{padding:60px 0;text-align:center;color:var(--ink-50)}
+/* 顧問打開時，內容往左讓位，卡片縮欄 */
+body.adv-open .sec,body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100vw - 72px - 424px);margin-left:36px}
+body.adv-open .list-hero-in{width:calc(100vw - 72px - 424px);margin-left:36px}
+body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
+body.adv-open .grid{grid-template-columns:repeat(3,1fr)}
+body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,1fr)}
+
+/* 卡片：商品名右邊的收藏愛心 */
+.grid .card .nm{display:flex;align-items:flex-start;gap:8px;margin-top:10px}
+.grid .card .nm b{flex:1;min-width:0;font-size:14px;font-weight:700;line-height:1.4}
+.fav{flex:none;width:26px;height:26px;margin:-3px -4px 0 0;display:grid;place-items:center;border-radius:50%;color:var(--ink-50);transition:color .2s,background .2s}
+.fav svg{width:17px;height:17px}
+.fav:hover{background:#F1F4F8;color:var(--ink)}
+.fav.on{color:#E2465B}
+.fav.on svg{fill:currentColor;stroke:currentColor}
+/* AI 主動提示時，被點名的兩張卡亮起外框 */
+.grid .card.spot{border-color:#7FA8FF;box-shadow:0 0 0 3px rgba(79,141,255,.18),0 14px 30px rgba(31,79,224,.14)}
+/* Tips：示範用的情境說明，固定在左下角 */
+.tips-pill{position:fixed;left:24px;bottom:24px;z-index:63;height:40px;padding:0 18px;border-radius:999px;background:#fff;border:1px solid var(--line);box-shadow:0 10px 26px rgba(20,26,34,.14);font-size:13px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.tips-pill:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(20,26,34,.18)}
+.tips[hidden]{display:none}
+.tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(330px,calc(100vw - 48px));padding:16px 18px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 20px 48px rgba(20,26,34,.2)}
+.tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.tips-head b{font-size:12px;font-weight:800;letter-spacing:.14em}
+.tips-close{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;color:var(--ink-50)}
+.tips-close:hover{background:#F1F4F8;color:var(--ink)}
+.tips-close svg{width:16px;height:16px}
+.tips h4{margin:0 0 6px;font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--ai)}
+.tips li{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:9px;background:#F5F7FA;list-style:none}
+.tips li p{flex:1;min-width:0;font-size:12.5px;line-height:1.6;color:var(--ink-70)}
+.tips .try{flex:none;height:28px;padding:0 11px;border-radius:999px;background:var(--navy);color:#fff;font-size:11.5px;font-weight:700}
+.tips .try:hover{background:#1C2A40}
+
+/* AI 整理後的推薦區 */
+.rec-wrap[hidden]{display:none}
+.rec-wrap{margin-bottom:34px;padding-bottom:30px;border-bottom:1px solid var(--line);animation:fdrop .4s var(--ease)}
+.rec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:16px}
+.rec-head h2{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.rec-head p{font-size:13px;color:var(--ink-70)}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rec-card{position:relative;padding:14px 14px 16px;display:flex;flex-direction:column}
+.rec-card.top{border-color:#7FA8FF;box-shadow:0 0 0 3px rgba(79,141,255,.16),0 14px 30px rgba(31,79,224,.12)}
+.rec-card .rank{align-self:flex-start;padding:4px 10px;border-radius:999px;background:#EDF0F4;color:var(--ink-70);font-size:11px;font-weight:800;letter-spacing:.06em}
+.rec-card .rank.on{background:var(--ai);color:#fff}
+.rec-card .fav{position:absolute;right:12px;top:12px;z-index:1}
+.rec-card .ph{margin-top:6px;aspect-ratio:1.5;border-radius:8px;overflow:hidden;background:#fff}
+.rec-card .ph img{width:100%;height:100%;object-fit:contain;padding:4%;transition:transform .5s var(--ease)}
+.rec-card:hover .ph img{transform:scale(1.04)}
+.rec-card b{margin-top:8px;font-size:14.5px;font-weight:700}
+.rec-card .price{display:block;margin-top:3px;font-size:13.5px;font-weight:600}
+.rec-card .why{margin:12px 0 14px;padding:12px 12px;border-radius:10px;background:#F5F7FA;list-style:none;display:grid;gap:7px}
+.rec-card.top .why{background:#EEF3FF}
+.rec-card .why li{position:relative;padding-left:16px;font-size:12.5px;line-height:1.55;color:var(--ink-70)}
+.rec-card .why li::before{content:"";position:absolute;left:0;top:.45em;width:8px;height:8px;border-radius:50%;border:2px solid var(--ai)}
+.rec-card .rec-go{margin-top:auto;justify-content:center;width:100%}
+body.adv-open .rec-grid{grid-template-columns:repeat(2,1fr)}
+/* 顧問訊息裡的差異清單 */
+.adv-diff{margin:8px 0 2px;padding-left:2px;list-style:none;display:grid;gap:6px}
+.adv-diff li{position:relative;padding-left:14px;font-size:13px;line-height:1.6}
+.adv-diff li::before{content:"";position:absolute;left:1px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--ai)}
+
+/* 卡片上的比較勾選 */
+.cmp-box{position:absolute;z-index:2;left:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;padding:4px 9px 4px 6px;border-radius:999px;background:rgba(255,255,255,.94);border:1px solid var(--line);font-size:11.5px;font-weight:700;color:var(--ink-70);cursor:pointer}
+.cmp-box:hover{border-color:var(--ink);color:var(--ink)}
+.cmp-box input{position:absolute;opacity:0;width:0;height:0}
+.cmp-box span{width:14px;height:14px;border-radius:4px;border:1.5px solid #B8C0CA;background:#fff;transition:background .15s,border-color .15s}
+.cmp-box input:checked + span{background:var(--navy);border-color:var(--navy);box-shadow:inset 0 0 0 2px #fff}
+.grid .card{position:relative;padding-bottom:44px}
+/* 底部比較工具列 */
+.cmp-bar[hidden]{display:none}
+.cmp-bar{position:fixed;z-index:62;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,26,34,.2)}
+body.adv-open .cmp-bar{left:calc((100vw - 424px) / 2)}
+.cmp-n{font-size:13px;font-weight:700;white-space:nowrap}
+.cmp-picks{display:flex;gap:6px}
+.cmp-picks button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;background:#F1F4F8;font-size:12px;font-weight:600;color:var(--ink-70)}
+.cmp-picks button:hover{color:var(--ink)}
+.cmp-picks svg{width:11px;height:11px}
+.cmp-clear{font-size:12.5px;color:var(--ink-50);text-decoration:underline;text-underline-offset:3px}
+.cmp-clear:hover{color:var(--ink)}
+.cmp-bar .btn:disabled{opacity:.4;cursor:default}
+/* 比較表 */
+.cmp-wrap .rec-head{align-items:center}
+.cmp-back{margin-left:auto;font-size:13px;font-weight:700;color:var(--ink-70);text-decoration:underline;text-underline-offset:3px}
+.cmp-back:hover{color:var(--ink)}
+.cmp-table{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.ct-row{display:grid;grid-template-columns:150px repeat(var(--n),1fr);align-items:center;border-top:1px solid var(--line)}
+.ct-row:first-child{border-top:0}
+.ct-k{padding:12px 16px;font-size:12.5px;color:var(--ink-50);background:#FAFBFC;align-self:stretch;display:flex;align-items:center}
+.ct-v{padding:12px 16px;font-size:13.5px}
+.ct-head .ct-v{display:flex;flex-direction:column;gap:2px;padding:16px}
+.ct-head img{width:100%;max-width:160px;aspect-ratio:1.5;object-fit:contain}
+.ct-head b{margin-top:6px;font-size:14px;font-weight:700}
+.ct-head small{font-size:12px;color:var(--ink-50)}
+.ct-row.diff .ct-v{font-weight:600}
+.ct-row.diff .ct-k{color:var(--ai)}
 </style>
 </head>
 <body>
@@ -287,93 +325,83 @@ a:not([href]){cursor:default}
     </div>
 </header>
 
-<section class="hero">
-  <img class="hero-img rv now" src="img/home-hero.webp" alt="">
-  <div class="hero-copy">
-    <h1 class="rv now">More<br>Than a Bike.</h1>
-    <div class="lead-row rv now" style="--d:.18s">
-      <p class="lead">從城市到山林，從日常到挑戰。<br>自行車不只帶你前進，更帶你看見更大的世界。</p>
-    </div>
-
-    <a class="vride rv" style="--d:.34s" href="scenario-2/index.html">
-      <span class="vr-ph"><img src="img/home/virtual-ride.webp" alt=""></span>
-      <span class="vr-copy">
-        <b>線上騎乘體驗</b>
-        <span class="vr-desc">自由選路、隨時換車，探索不同車款的騎乘感受。完成體驗後，AI 幫你整理數據與偏好，生成專屬騎乘報告。</span>
-      </span>
-    </a>
+<section class="list-hero">
+  <img src="img/list/gravel-banner.webp" alt="">
+  <div class="list-hero-in">
+    <nav class="crumb" aria-label="麵包屑"><a href="index.html">首頁</a><span>/</span><b>越野 &amp; 礫石公路 跨界自行車</b></nav>
+    <p class="kicker">Gravel &amp; X-Road</p>
+    <h1>礫石公路自行車</h1>
+    <p class="sub">柏油之外，探索未知的路。從 GIANT 有史以來最輕量的碳纖礫石賽車，到城市街道與鄉間道路都好騎的平把全路況車款。</p>
   </div>
 </section>
 
-<section class="sec explore" id="explore">
-  <div class="sec-head rv">
-    <div><h2>Explore Your Ride</h2><p class="sub">從你的生活，探索更多可能。</p></div>
-    <a class="more">探索所有車款<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<main class="sec list-page" id="list">
+  <div class="fbar">
+    <button class="ftoggle" id="ftoggle" type="button" aria-expanded="false" aria-controls="fpanel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>篩選與排序
+    </button>
+    <div class="applied" id="applied"></div>
+    <span class="count"><b id="count">0</b> 款車款</span>
   </div>
-  <div class="scenes">
-    <a class="scene rv" style="--i:0" data-cat="road"><span class="pclip"><img src="img/scenes/lifestyle.webp" alt="" style="object-position:55% 40%"></span><span class="seam"></span><span class="txt"><small>Road</small><b>公路自行車</b><em>追求速度，<br>挑戰更遠的自己。</em></span></a>
-    <a class="scene rv" style="--i:1" data-cat="mtb"><span class="pclip"><img src="img/scenes/mtb-road.webp" alt="" style="object-position:100% 50%"></span><span class="seam"></span><span class="txt"><small>Mountain</small><b>登山車</b><em>征服地形，<br>釋放本能。</em></span></a>
-    <a class="scene rv" style="--i:2" data-cat="gravel" href="gravel.html"><span class="pclip"><img src="img/scenes/gravel-field.webp" alt="" style="object-position:50% 55%"></span><span class="seam"></span><span class="txt"><small>Gravel &amp; X-Road</small><b>越野 &amp; 礫石公路跨界自行車</b><em>柏油之外，<br>探索未知的路。</em></span></a>
-    <a class="scene rv" style="--i:3" data-cat="ebike"><span class="pclip"><img src="img/scenes/ebike-park.webp" alt="" style="object-position:80% 50%"></span><span class="seam"></span><span class="txt"><small>E-Bike</small><b>E-Bike 電動輔助自行車</b><em>更輕鬆，<br>去更遠的地方。</em></span></a>
-    <a class="scene rv" style="--i:4" data-cat="kids"><span class="pclip"><img src="img/scenes/kids-trail.webp" alt="" class="zoom" style="object-position:40% 50%"></span><span class="seam"></span><span class="txt"><small>Kids &amp; Youth</small><b>童車 &amp; 青少年車</b><em>從第一次踩踏，<br>開始愛上騎乘。</em></span></a>
-  </div>
-</section>
 
-<section class="sec featured" id="featured">
-  <div class="sec-head rv">
-    <div><h2>Featured Bikes</h2><p class="sub">精選車款，開啟你的下一段騎乘旅程。</p></div>
-    <a class="more">探索全部車款<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </div>
-  <div class="feat-grid">
-    <a class="feat-main pc rv" href="product.html" data-k="revolt" data-cat="gravel">
-      <img class="bgph" src="img/home/revolt-scene.webp" alt="">
-      <div class="fm-copy"><p class="lead">有史以來打造過最輕量、最狂暴的 Gravel 頂級礫石賽車</p><h3>Revolt Advanced SL 0</h3></div>
-    </a>
-    <div class="feat-side">
-      <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><span class="badge best">2027</span><img src="img/home/bike-propel-sl1.webp" alt=""></div><b>Propel Advanced SL 1 Force 特仕車</b><span>NT$ 258,000</span></div>
-      <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><img src="img/home/bike-propel-pro0-da.webp" alt=""></div><b>Propel Advanced Pro 0 Dura-Ace (GTS)</b><span>NT$ 258,000</span></div>
-      <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><img src="img/home/bike-propel-pro0-di2.webp" alt=""></div><b>Propel Advanced Pro 0 Di2 (GTS)</b><span>NT$ 188,000</span></div>
-      <div class="card gear rv"><div class="ph"><span class="badge hot">Best Seller</span><img src="img/home/gear-surge.webp" alt=""></div><b>Giant SURGE PRO 碳纖底公路車鞋</b><span>NT$ 12,800</span></div>
-      <div class="card gear rv"><div class="ph"><img src="img/home/gear-classicfit.webp" alt=""></div><b>Classic Fit Plus 合身短版車衣</b><span>價格請洽門市</span></div>
-      <div class="card gear rv"><div class="ph"><img src="img/home/gear-sendero.webp" alt=""></div><b>Jayco AlUla Team SENDERO 太陽眼鏡</b><span>NT$ 7,200</span></div>
+  <div class="list-body" id="listBody">
+    <aside class="fside" id="fpanel" hidden>
+      <p class="fstatus" id="fstatus">尚未套用篩選</p>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">排序<i></i></button><div class="opts" hidden>
+        <label class="fopt on"><input type="radio" name="sort" value="rec" checked>推薦</label>
+        <label class="fopt"><input type="radio" name="sort" value="asc">價格由低至高</label>
+        <label class="fopt"><input type="radio" name="sort" value="desc">價格由高至低</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">系列<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="series" value="revolt">Revolt</label>
+        <label class="fopt"><input type="checkbox" name="series" value="fastroad">FastRoad AR</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">用途<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="use" value="gravel">礫石公路</label>
+        <label class="fopt"><input type="checkbox" name="use" value="fitness">健身通勤</label>
+        <label class="fopt"><input type="checkbox" name="use" value="endurance">長途耐力</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">等級<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="lv" value="performance">Performance</label>
+        <label class="fopt"><input type="checkbox" name="lv" value="sport">Sport</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">車架材質<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="mat" value="carbon">複合碳纖維</label>
+        <label class="fopt"><input type="checkbox" name="mat" value="aluminium">鋁合金</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">價格<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="price" value="lo">NT$ 10 萬以下</label>
+        <label class="fopt"><input type="checkbox" name="price" value="mid">NT$ 10–20 萬</label>
+        <label class="fopt"><input type="checkbox" name="price" value="hi">NT$ 20 萬以上</label></div></div>
+      <div class="fgroup"><button class="fg-h" type="button" aria-expanded="false">年份<i></i></button><div class="opts" hidden>
+        <label class="fopt"><input type="checkbox" name="yr" value="2027">2027</label>
+        <label class="fopt"><input type="checkbox" name="yr" value="2026">2026</label></div></div>
+      <div class="facts"><button class="btn btn-line sm" id="fclear" type="button">清除全部</button><button class="btn btn-dark sm" id="fapply" type="button"><span>查看車款（<b id="fcount">0</b>）</span></button></div>
+    </aside>
+    <div class="list-main">
+      <section class="rec-wrap cmp-wrap" id="cmpWrap" hidden></section>
+      <section class="rec-wrap" id="recWrap" hidden>
+        <div class="rec-head"><h2>為你推薦（<span id="recCount">0</span>）</h2><p id="recNote"></p></div>
+        <div class="rec-grid" id="recGrid"></div>
+      </section>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>沒有符合條件的車款，試著放寬篩選。</p>
     </div>
   </div>
-</section>
 
-<section class="sec news" id="news">
-  <div class="sec-head rv">
-    <div><h2>最新消息</h2></div>
-    <a class="more">查看更多<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </div>
-  <div class="news-grid">
-    <div class="news-main rv">
-      <img src="img/home/news-hoyenyi.webp" alt="">
-      <div class="nm-copy"><h3>何硯宜打破武嶺最速紀錄<br>攜手捷安特通路全台同慶</h3><p>2026.09.09・以堅定的意志，騎出新的可能。</p></div>
-    </div>
-    <div class="news-card rv">
-      <div class="ph"><img src="img/pdp/long.webp" alt="" style="object-position:50% 58%"><span class="date"><b>20</b><small>Sep</small></span></div>
-      <div class="nc-copy"><p class="meta"><time>2026.09.20・台中后里</time></p><h3>2026 自行車嘉年華・公路挑戰賽</h3><p class="dist">35 KM / 64 KM / 142 KM</p><p class="blurb">從后里花田綠廊出發，串聯東勢、卓蘭到中橫谷關，三種距離適合不同程度的車友。</p></div>
-    </div>
-    <div class="news-card rv">
-      <div class="ph"><img src="img/home/news-testride.webp" alt=""></div>
-      <div class="nc-copy"><p class="meta"><time>2026.09.08</time></p><h3>捷安特自行車、電動自行車體驗試乘活動</h3><p class="blurb">各縣市不定期舉辦體驗場次，現場試騎找出最適合你的車。</p></div>
-    </div>
-    <div class="news-card rv">
-      <div class="ph"><img src="img/home/news-speedroad.webp" alt=""></div>
-      <div class="nc-copy"><p class="meta"><time>2026.08.31</time></p><h3>全新代理品牌 SPEEDROAD 電動輔助自行車</h3><p class="blurb">從每天通勤、週末採買到河濱休閒，自然順暢的電動助力與俐落設計，讓每一次移動更有型。</p></div>
-    </div>
-  </div>
-</section>
+</main>
 
-
-<section class="mtb" id="mtb">
-  <img src="img/home/mtb-trail.webp" alt="">
-  <div class="mtb-copy rv">
-    <h2>台灣登山車越野基地</h2>
-    <p>一手掌握全台最新登山車賽事、路線與技術課程</p>
-    <a class="btn btn-light">立即了解</a>
-  </div>
-</section>
+<div class="cmp-bar" id="cmpBar" hidden>
+  <span class="cmp-n">比較 <b id="cmpCount">0</b>/3<span id="cmpHint"></span></span>
+  <div class="cmp-picks" id="cmpPicks"></div>
+  <button class="cmp-clear" id="cmpClear" type="button">取消比較</button>
+  <button class="btn btn-dark sm" id="cmpGo" type="button" disabled>開始比較</button>
+</div>
+<button class="tips-pill" id="tipsPill" type="button" aria-expanded="false" aria-controls="tips">Tips</button>
+<aside class="tips" id="tips" aria-label="Tips" hidden>
+  <div class="tips-head"><b>TIPS</b><button class="tips-close" id="tipsClose" type="button" aria-label="關閉 Tips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <h4>AI 顧問</h4>
+  <ul>
+    <li><p>在清單上來回看兩台車，AI 會把那兩張卡標起來，並在右上角主動說有建議；打開後直接幫你比較差異。</p><button class="try" id="tipsTry" type="button">Try it</button></li>
+    <li><p>請 AI 幫你整理：說完平常怎麼騎，頁面上方會出現「為你推薦」，每張卡片列出挑它的理由。</p><button class="try" id="tipsTry2" type="button">Try it</button></li>
+    <li><p>卡片左上角勾「比較」最多選三台，下方工具列按「開始比較」，比較表會出現在對話框左邊。</p><button class="try" id="tipsTry3" type="button">Try it</button></li>
+  </ul>
+</aside>
 
 <footer class="foot">
   <div class="foot-in">
@@ -397,7 +425,6 @@ a:not([href]){cursor:default}
     <span class="region">Taiwan（繁體中文）</span>
   </div>
 </footer>
-
 
 <aside class="advisor" id="advisor" role="dialog" aria-label="GIANT 選車顧問" hidden>
   <header class="adv-hd">
@@ -741,8 +768,329 @@ $('advFile').onchange = e => {
 function showInGrid(k){
   if (k === 'revolt') { location.href = 'product.html'; return; }
   closeAdvisor();
-  setTimeout(() => { $('featured').scrollIntoView({behavior:'smooth', block:'start'}); }, 500);
+  setTimeout(() => { $('list').scrollIntoView({behavior:'smooth', block:'start'}); }, 500);
 }
+
+/* ---------- 車款清單：資料取自官網礫石公路分類（2026-09） ---------- */
+const LIST = [
+  {k:'revolt-sl-0',  n:'Revolt Advanced SL 0',        pr:308000, img:'img/list/revolt-sl-0.webp',          series:'revolt',   use:'gravel',    lv:'performance', mat:'carbon',    yr:2027, badges:['NEW'], href:'product.html'},
+  {k:'revolt-sl-1',  n:'Revolt Advanced SL 1',        pr:208000, img:'img/pdp/rel-revolt-sl1.webp',       series:'revolt',   use:'gravel',    lv:'performance', mat:'carbon',    yr:2027, badges:['NEW']},
+  {k:'revolt-pro-1', n:'Revolt Advanced Pro 1',       pr:128000, img:'img/list/revolt-adv-pro.webp',       series:'revolt',   use:'gravel',    lv:'performance', mat:'carbon',    yr:2026},
+  {k:'revolt-sl-fs', n:'Revolt Advanced SL Frameset', pr:100000, img:'img/list/revolt-sl-frameset.webp',   series:'revolt',   use:'gravel',    lv:'performance', mat:'carbon',    yr:2027},
+  {k:'fr-adv-1-27',  n:'FastRoad AR Advanced 1-Asia', pr:45800,  img:'img/list/fastroad-ar-adv-2027.webp', series:'fastroad', use:'fitness',   lv:'sport',       mat:'carbon',    yr:2027, badges:['NEW']},
+  {k:'fr-adv-1-26',  n:'FastRoad AR Advanced 1',      pr:45800,  img:'img/list/fastroad-ar-adv.webp',      series:'fastroad', use:'endurance', lv:'sport',       mat:'carbon',    yr:2026},
+  {k:'fr-adv-2',     n:'FastRoad AR Advanced 2',      pr:38000,  img:'img/list/fastroad-ar-adv-2.webp',    series:'fastroad', use:'fitness',   lv:'sport',       mat:'carbon',    yr:2027, badges:['NEW']},
+  {k:'fr-ar-2',      n:'FastRoad AR 2',               pr:23800,  img:'img/list/fastroad-ar.webp',          series:'fastroad', use:'fitness',   lv:'sport',       mat:'aluminium', yr:2027},
+];
+const LABEL = {
+  series:{revolt:'Revolt', fastroad:'FastRoad AR'},
+  use:{gravel:'礫石公路', fitness:'健身通勤', endurance:'長途耐力'},
+  lv:{performance:'Performance', sport:'Sport'},
+  mat:{carbon:'複合碳纖維', aluminium:'鋁合金'},
+  price:{lo:'NT$ 10 萬以下', mid:'NT$ 10–20 萬', hi:'NT$ 20 萬以上'},
+  yr:{2027:'2027', 2026:'2026'},
+};
+const PRICE_OK = {lo:p => p < 100000, mid:p => p >= 100000 && p < 200000, hi:p => p >= 200000};
+const F = {sort:'rec', series:[], use:[], lv:[], mat:[], price:[], yr:[]};
+const FACETS = ['series','use','lv','mat','price','yr'];
+
+function filtered(){
+  let out = LIST.filter(b =>
+    (!F.series.length || F.series.includes(b.series)) &&
+    (!F.use.length    || F.use.includes(b.use)) &&
+    (!F.lv.length     || F.lv.includes(b.lv)) &&
+    (!F.mat.length    || F.mat.includes(b.mat)) &&
+    (!F.price.length  || F.price.some(k => PRICE_OK[k](b.pr))) &&
+    (!F.yr.length     || F.yr.includes(String(b.yr))));
+  if (F.sort === 'asc')  out = out.slice().sort((a, b) => a.pr - b.pr);
+  if (F.sort === 'desc') out = out.slice().sort((a, b) => b.pr - a.pr);
+  return out;
+}
+/* 只有 Revolt Advanced SL 0 有詳細頁；其他卡片保留 hover，不做連結 */
+function card(b){
+  const tag = b.href ? 'a' : 'div';
+  const badges = (b.badges || []).map(t => '<span class="badge">' + t + '</span>').join('') + (b.yr === 2027 ? '<span class="badge best">2027</span>' : '');
+  return '<' + tag + ' class="card pc" data-k="' + b.k + '" data-cat="gravel"' + (b.href ? ' href="' + b.href + '"' : '') + '>' +
+    '<div class="ph"><span class="badges">' + badges + '</span><img src="' + b.img + '" alt="' + b.n + '" loading="lazy"></div>' +
+    '<label class="cmp-box"><input type="checkbox" data-cmp="' + b.k + '"><span></span>比較</label>' +
+    '<span class="nm"><b>' + b.n + '</b>' +
+      '<button class="fav" type="button" aria-label="收藏 ' + b.n + '" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg></button></span>' +
+    '<small class="meta">' + LABEL.use[b.use] + '・' + LABEL.mat[b.mat] + '</small><span class="price">NT$ ' + fmt(b.pr) + '</span></' + tag + '>';
+}
+function render(){
+  const list = filtered();
+  $('grid').innerHTML = list.map(card).join('');
+  bindCards();
+  $('empty').hidden = !!list.length;
+  $('count').textContent = list.length; $('fcount').textContent = list.length;
+  const n = FACETS.reduce((t, k) => t + F[k].length, 0);
+  $('fstatus').textContent = n ? '已套用 ' + n + ' 個條件' : '尚未套用篩選';
+  /* 已套用的條件顯示成小 chip，收起面板後也能直接點掉 */
+  $('applied').innerHTML = FACETS.flatMap(k => F[k].map(v =>
+    '<button type="button" data-k="' + k + '" data-v="' + v + '">' + LABEL[k][v] + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>')).join('');
+  $('applied').querySelectorAll('button').forEach(x => x.onclick = () => {
+    F[x.dataset.k] = F[x.dataset.k].filter(v => v !== x.dataset.v);
+    const inp = $('fpanel').querySelector('input[name="' + x.dataset.k + '"][value="' + x.dataset.v + '"]');
+    if (inp) { inp.checked = false; inp.parentElement.classList.remove('on'); }
+    render();
+  });
+}
+$('fpanel').querySelectorAll('input').forEach(inp => inp.addEventListener('change', () => {
+  if (inp.type === 'radio') { F.sort = inp.value; $('fpanel').querySelectorAll('input[name="sort"]').forEach(r => r.parentElement.classList.toggle('on', r.checked)); }
+  else { inp.parentElement.classList.toggle('on', inp.checked); F[inp.name] = inp.checked ? F[inp.name].concat(inp.value) : F[inp.name].filter(v => v !== inp.value); }
+  render();
+}));
+/* 左側篩選欄：預設收起；各組是手風琴，點標題展開 */
+function togglePanel(open){
+  $('fpanel').hidden = !open;
+  $('listBody').classList.toggle('open', open);
+  $('ftoggle').setAttribute('aria-expanded', open);
+}
+$('ftoggle').onclick = () => togglePanel($('fpanel').hidden);
+$('fapply').onclick = () => { togglePanel(false); $('grid').scrollIntoView({behavior:'smooth', block:'start'}); };
+$('fpanel').querySelectorAll('.fg-h').forEach(h => h.onclick = () => {
+  const open = h.getAttribute('aria-expanded') !== 'true';
+  h.setAttribute('aria-expanded', open);
+  h.nextElementSibling.hidden = !open;
+});
+$('fclear').onclick = () => {
+  FACETS.forEach(k => { F[k] = []; }); F.sort = 'rec';
+  $('fpanel').querySelectorAll('input').forEach(i => { i.checked = i.value === 'rec'; i.parentElement.classList.toggle('on', i.checked); });
+  render();
+};
+
+/* ---------- 卡片上的收藏與比較（卡片本身是連結，所以統一在卡片層攔掉預設行為） ---------- */
+const FAV = new Set();
+function syncCard(c){
+  const k = c.dataset.k, f = c.querySelector('.fav'), inp = c.querySelector('[data-cmp]');
+  f.classList.toggle('on', FAV.has(k));
+  f.setAttribute('aria-pressed', FAV.has(k));
+  if (inp) inp.checked = CMPS.includes(k);
+}
+function bindCards(){
+  $('grid').querySelectorAll('.card').forEach(c => {
+    const k = c.dataset.k;
+    syncCard(c);
+    c.addEventListener('click', e => {
+      const fav = e.target.closest('.fav'), box = e.target.closest('.cmp-box');
+      if (!fav && !box) { sawBike(k); return; }
+      e.preventDefault();                                  /* 卡片是連結，收藏與比較不該跳頁 */
+      if (fav) { FAV.has(k) ? FAV.delete(k) : FAV.add(k); }
+      else {
+        const i = CMPS.indexOf(k);
+        if (i >= 0) CMPS.splice(i, 1);
+        else if (CMPS.length < 3) CMPS.push(k);
+        syncCmpBar();
+      }
+      syncCard(c);
+    });
+    /* 逛一陣子：在同一張卡停留 700ms 也算看過 */
+    let t;
+    c.addEventListener('mouseenter', () => { t = setTimeout(() => sawBike(k), 700); });
+    c.addEventListener('mouseleave', () => clearTimeout(t));
+  });
+}
+
+/* ---------- 逛一陣子後主動提示：兩張卡亮起外框 + 右上角顧問打招呼 ---------- */
+const BY_K = Object.fromEntries(LIST.map(b => [b.k, b]));
+const SEEN = [];
+let PAIR = null;
+function sawBike(k){
+  if (!k || SEEN.includes(k) || PAIR) return;
+  SEEN.push(k);
+  if (SEEN.length === 2) hintPair(SEEN[0], SEEN[1]);
+}
+function hintPair(a, b){
+  PAIR = [a, b];
+  spotPair();
+  showCallout('我有個建議 👋',
+    '你在 ' + BY_K[a].n + ' 和 ' + BY_K[b].n + ' 之間看了幾次，這兩台差在哪我可以直接幫你講清楚。',
+    '好，幫我分析', true);
+}
+function spotPair(){
+  $('grid').querySelectorAll('.card').forEach(c => c.classList.toggle('spot', !!PAIR && PAIR.includes(c.dataset.k)));
+}
+/* 篩選後重新 render 也要保留亮起的卡 */
+const baseRender = render;
+render = function(){ baseRender(); spotPair(); };
+
+/* 顧問開場：有配對時直接分析這兩台，不再從打招呼開始 */
+const baseStartChat = startChat;
+startChat = function(){
+  if (!PAIR) return baseStartChat();
+  const [x, y] = PAIR.map(k => BY_K[k]);
+  const diff = [];
+  if (x.use !== y.use) diff.push('用途不同：' + x.n + ' 偏「' + LABEL.use[x.use] + '」，' + y.n + ' 偏「' + LABEL.use[y.use] + '」');
+  if (x.mat !== y.mat) diff.push('車架材質不同：' + LABEL.mat[x.mat] + ' vs ' + LABEL.mat[y.mat] + '，重量與路感差比較多');
+  if (x.lv !== y.lv) diff.push('定位不同：' + LABEL.lv[x.lv] + ' 取向比 ' + LABEL.lv[y.lv] + ' 更競技一點');
+  const gap = Math.abs(x.pr - y.pr);
+  if (gap) diff.push('價差 NT$ ' + fmt(gap) + '，' + (x.pr > y.pr ? x.n : y.n) + ' 的配置比較高階');
+  if (!diff.length) diff.push('兩台定位很接近，差別主要在配色與供貨');
+  say('嗨 👋 我看到你在 <b>' + x.n + '</b> 和 <b>' + y.n + '</b> 之間來回看。', 600);
+  say('這兩台我幫你抓出幾個實際會有感的差別：<ul class="adv-diff">' + diff.map(d => '<li>' + d + '</li>').join('') + '</ul>' +
+      '想更準的話，跟我說你平常大多騎在哪裡就好。' +
+      chips([['road','大多柏油路'],['mix','柏油＋碎石'],['budget','以預算為主']]), 950,
+      m => bindChips(m, v => {
+        const pick = v === 'road' ? (x.use === 'fitness' || x.use === 'endurance' ? x : y)
+                   : v === 'mix'  ? (x.use === 'gravel' ? x : y)
+                   : (x.pr <= y.pr ? x : y);
+        recommendOnPage(v === 'road' ? 'road' : v === 'mix' ? 'mix' : 'budget');
+        say('我照這個條件幫你把清單整理好了，<b>為你推薦</b>就在頁面上，每張卡片我都寫了挑它的理由。<br>' +
+            '其中我最推薦 <b>' + pick.n + '</b>（NT$ ' + fmt(pick.pr) + '）。' +
+            (pick.href ? chips([['go','看這台車款']]) : ''),
+            800, m2 => bindChips(m2, () => { location.href = pick.href; }));
+      }), true);
+};
+
+/* ---------- AI 幫我整理：頁面直接秀出推薦，卡片上列重點 ---------- */
+const NEED = {
+  road:{t:'以柏油路為主', use:['fitness','endurance'], why:{
+    fitness:['柏油路巡航效率好','平把姿勢好上手，通勤也適合','city 到郊外都能對付'],
+    endurance:['長距離騎乘舒適度取向','適合一日或長途行程','路面回饋較柔和'],
+    gravel:['碎石路更穩，但柏油路稍重','想偶爾走產業道路可以考慮','車架幾何偏長途取向']}},
+  mix:{t:'柏油加碎石都會騎', use:['gravel'], why:{
+    gravel:['柏油、碎石都能騎','寬胎設定，碎石路更穩定','長距離騎乘姿勢較舒適'],
+    fitness:['柏油路更輕快，碎石路吃力些','平把操控，市區好停好騎','入門價位好入手'],
+    endurance:['舒適取向，長途不易疲勞','偶爾碎石路也能應付','適合週末長程']}},
+  budget:{t:'以預算為主', use:['fitness','gravel','endurance'], why:{
+    fitness:['同級距裡配置完整','日常通勤與運動都能兼顧','入門預算的實際選擇'],
+    gravel:['碳纖車架，重量佔優勢','路況適應範圍最廣','長期使用的耐用度好'],
+    endurance:['舒適取向，長時間好騎','配置均衡，沒有明顯短板','保養相對單純']}},
+};
+const RANK = ['最推薦','次推薦','也值得考慮'];
+function scoreFor(b, key){
+  const n = NEED[key]; let s = 0;
+  if (n.use.includes(b.use)) s += 10;
+  if (key === 'budget') s += (300000 - Math.min(b.pr, 300000)) / 30000;
+  else s += b.pr / 100000;
+  if (b.k === 'revolt-sl-fs') s -= 8;                      /* 車架組不是整車，往後排 */
+  return s;
+}
+function recommendOnPage(key){
+  const picks = LIST.slice().sort((a, b) => scoreFor(b, key) - scoreFor(a, key)).slice(0, 3);
+  const n = NEED[key];
+  $('recNote').textContent = '依你說的「' + n.t + '」整理，重點我列在每張卡片上。';
+  $('recGrid').innerHTML = picks.map((b, i) =>
+    '<' + (b.href ? 'a' : 'div') + ' class="card pc rec-card' + (i ? '' : ' top') + '"' + (b.href ? ' href="' + b.href + '"' : '') + '>' +
+    '<span class="rank' + (i ? '' : ' on') + '">' + RANK[i] + '</span>' +
+    '<button class="fav" type="button" aria-label="收藏" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg></button>' +
+    '<div class="ph"><img src="' + b.img + '" alt="' + b.n + '" loading="lazy"></div>' +
+    '<b>' + b.n + '</b><span class="price">NT$ ' + fmt(b.pr) + '</span>' +
+    '<ul class="why">' + (n.why[b.use] || n.why.gravel).map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+    '<span class="btn btn-line sm rec-go">查看詳情</span></' + (b.href ? 'a' : 'div') + '>').join('');
+  $('recWrap').hidden = false;
+  $('recCount').textContent = picks.length;
+  $('recWrap').querySelectorAll('.rec-card').forEach(c => c.addEventListener('click', e => {
+    const f = e.target.closest('.fav'); if (!f) return;
+    e.preventDefault();
+    const on = f.classList.toggle('on'); f.setAttribute('aria-pressed', on);
+  }));
+  setTimeout(() => $('recWrap').scrollIntoView({behavior:'smooth', block:'start'}), 420);
+}
+
+/* Tips 面板 */
+$('tipsPill').onclick = () => { $('tips').hidden = false; $('tipsPill').hidden = true; };
+$('tipsClose').onclick = () => { $('tips').hidden = true; $('tipsPill').hidden = false; };
+$('tipsTry').onclick = () => {
+  $('tips').hidden = true; $('tipsPill').hidden = false;
+  PAIR = null; SEEN.length = 0;
+  const vis = [...$('grid').querySelectorAll('.card')].map(c => c.dataset.k);
+  if (vis.length >= 2) { hintPair(vis[0], vis[1]); $('grid').scrollIntoView({behavior:'smooth', block:'start'}); }
+};
+
+/* 打字或點 Tips 都能請 AI 直接整理 */
+function askNeed(){
+  say('好，跟我說你平常大多騎在哪裡就好，我直接把清單整理給你。' +
+      chips([['road','大多柏油路'],['mix','柏油＋碎石'],['budget','以預算為主']]), 700,
+      m => bindChips(m, v => {
+        recommendOnPage(v);
+        say('整理好了 👍 <b>為你推薦</b>就在頁面上，每張卡片都寫了挑它的理由；想再縮小範圍隨時跟我說。', 800);
+      }), true);
+}
+const baseRoute = route;
+route = function(t){
+  if (/整理|推薦|幫我挑|挑一台|適合我|哪一台/.test(t)) return askNeed();
+  return baseRoute(t);
+};
+$('tipsTry2').onclick = () => {
+  $('tips').hidden = true; $('tipsPill').hidden = false;
+  if ($('advisor').hidden) openAdvisor(false);
+  setTimeout(askNeed, 400);
+};
+
+/* ---------- 車款比較：勾選後從下方工具列開始，比較表出現在對話框左邊 ---------- */
+const CMPS = [];
+const CMP_ROWS = [
+  ['價格',     b => 'NT$ ' + fmt(b.pr)],
+  ['系列',     b => LABEL.series[b.series]],
+  ['適合用途', b => LABEL.use[b.use]],
+  ['騎乘等級', b => LABEL.lv[b.lv]],
+  ['車架材質', b => LABEL.mat[b.mat]],
+  ['年式',     b => b.yr + ' 年'],
+  ['細節頁',   b => b.href ? '可看完整規格' : '示範站未提供'],
+];
+function syncCmpBar(){
+  const bar = $('cmpBar');
+  bar.hidden = !CMPS.length;
+  $('cmpCount').textContent = CMPS.length;
+  $('cmpHint').textContent = CMPS.length < 2 ? '・再選一台' : CMPS.length < 3 ? '・還可以再加一台' : '・已達上限';
+  $('cmpPicks').innerHTML = CMPS.map(k => '<button type="button" data-k="' + k + '">' + BY_K[k].n + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>').join('');
+  $('cmpPicks').querySelectorAll('button').forEach(x => x.onclick = () => dropCmp(x.dataset.k));
+  $('cmpGo').disabled = CMPS.length < 2;
+  if (!$('cmpWrap').hidden) renderCmp();
+}
+function dropCmp(k){
+  const i = CMPS.indexOf(k); if (i < 0) return;
+  CMPS.splice(i, 1);
+  const c = $('grid').querySelector('.card[data-k="' + k + '"]'); if (c) syncCard(c);
+  if (CMPS.length < 2) $('cmpWrap').hidden = true;
+  syncCmpBar();
+}
+function clearCmp(){
+  CMPS.length = 0;
+  $('grid').querySelectorAll('.card').forEach(syncCard);
+  $('cmpWrap').hidden = true;
+  syncCmpBar();
+}
+function renderCmp(){
+  const list = CMPS.map(k => BY_K[k]);
+  $('cmpWrap').innerHTML =
+    '<div class="rec-head"><h2>車款比較</h2><p>先看真正不同的地方，最多可比較三台。</p><button class="cmp-back" id="cmpBack" type="button">返回車款</button></div>' +
+    '<div class="cmp-table" style="--n:' + list.length + '">' +
+    '<div class="ct-row ct-head"><span class="ct-k">比較項目</span>' + list.map(b =>
+      '<span class="ct-v"><img src="' + b.img + '" alt=""><b>' + b.n + '</b><small>' + b.yr + ' 年</small></span>').join('') + '</div>' +
+    CMP_ROWS.map(([k, f]) => {
+      const vals = list.map(f), same = vals.every(v => v === vals[0]);
+      return '<div class="ct-row' + (same ? '' : ' diff') + '"><span class="ct-k">' + k + '</span>' + vals.map(v => '<span class="ct-v">' + v + '</span>').join('') + '</div>';
+    }).join('') + '</div>';
+  $('cmpWrap').hidden = false;
+  $('cmpBack').onclick = () => { $('cmpWrap').hidden = true; };
+}
+$('cmpGo').onclick = () => {
+  renderCmp();
+  if ($('advisor').hidden) openAdvisor(false);
+  const names = CMPS.map(k => BY_K[k].n);
+  const list = CMPS.map(k => BY_K[k]);
+  const diffs = CMP_ROWS.filter(([, f]) => { const v = list.map(f); return !v.every(x => x === v[0]); }).map(([k]) => k);
+  setTimeout(() => {
+    say(names.join('、') + ' 已經排在一起了。<br>' +
+        (diffs.length ? '你可以先看 <b>' + diffs.slice(0, 3).join('、') + '</b> 的差別，其他欄位其實差不多。' : '這幾台的規格條件很接近，差別主要在配色與供貨。') +
+        chips([['need','幫我判斷哪台適合']]), 700, m => bindChips(m, () => askNeed()), true);
+  }, 300);
+  setTimeout(() => $('cmpWrap').scrollIntoView({behavior:'smooth', block:'start'}), 420);
+};
+$('cmpClear').onclick = clearCmp;
+
+$('tipsTry3').onclick = () => {
+  $('tips').hidden = true; $('tipsPill').hidden = false;
+  clearCmp();
+  [...$('grid').querySelectorAll('.card')].slice(0, 2).forEach(c => { CMPS.push(c.dataset.k); syncCard(c); });
+  syncCmpBar();
+  $('grid').scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+/* 全部定義好之後才第一次繪製 */
+render();
 </script>
 </body>
 </html>

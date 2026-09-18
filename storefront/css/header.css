@@ -14,3 +14,20 @@
 .site-nav .orb-wrap{position:relative;display:grid;place-items:center}
 .site-nav .orb-btn{position:relative;display:grid;place-items:center;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26);transition:transform .2s}
 .site-nav .orb-btn:hover{transform:scale(1.08)}
+
+/* header 的顧問按鈕：白色圓底 + 藍色 V 標，外圈一條細藍光沿邊繞行（與首頁按鈕同一套 beam）。
+   subnav 裡沒有 --hu，退回產品頁的 --u */
+@property --beam-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+.orb-btn.vbtn{--bu:var(--hu,var(--u,1px));position:relative;isolation:isolate;display:grid;place-items:center;width:calc(var(--bu) * 36);height:calc(var(--bu) * 36);border-radius:50%;
+  background:#fff;color:#1F4FE0;border:1px solid rgba(20,26,34,.12);box-shadow:0 2px 10px rgba(20,26,34,.12);transition:transform .2s,box-shadow .2s}
+.orb-btn.vbtn:hover{transform:scale(1.06);box-shadow:0 3px 14px rgba(31,79,224,.22)}
+.orb-btn.vbtn .vmark{position:relative;z-index:2;width:calc(var(--bu) * 13);height:calc(var(--bu) * 17);margin-top:1px}
+.orb-btn.vbtn .beam-ring,.orb-btn.vbtn .beam-glow{position:absolute;inset:-1px;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from var(--beam-angle),transparent 0% 30%,rgba(79,141,255,.08) 45%,rgba(79,141,255,.35) 60%,rgba(120,180,255,.85) 70%,#BFE0FF 73%,rgba(120,180,255,.85) 76%,rgba(79,141,255,.35) 86%,rgba(79,141,255,.08) 100%);
+  animation:beam-spin 4s linear infinite}
+.orb-btn.vbtn .beam-ring{z-index:1;padding:1px;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.orb-btn.vbtn .beam-glow{z-index:0;inset:-3px;filter:blur(4px);opacity:.22}
+@keyframes beam-spin{to{--beam-angle:360deg}}
+@media (prefers-reduced-motion:reduce){.orb-btn.vbtn .beam-ring,.orb-btn.vbtn .beam-glow{animation:none}}
