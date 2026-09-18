@@ -21,7 +21,7 @@
       {key: 'ride', h: '線上騎乘體驗 → 120 秒數位試乘', d: '選一段風景、挑一台車就出發：中途遇到岔路自己選、想換車隨時換，騎完 AI 會整理成你的騎乘報告。',
        href: 'https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/'}
     ]},
-    {id: 'checkout', t: '線上騎乘報告與結帳', page: '', items: [
+    {id: 'checkout', t: '體驗報告與結帳', page: '', items: [
       {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。',
        href: 'https://htmlpreview.github.io/?https://github.com/ycc-bct/ai-native-bike-commerce/blob/main/storefront/report.html#equipment'}
     ]}
