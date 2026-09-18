@@ -87,6 +87,10 @@ window.Tips&&Tips.register('report',function(){
  if(location.hash==='#checkout'){location.hash='';}
  requestAnimationFrame(function(){
   Tips.close();
+  // 勾上建議配件，讓金額當場跳動——這一項要看得出「勾選後可直接結帳」
+  var picks=gear.filter(function(g){return !g.reserve;});
+  picks.forEach(function(g){selected.add(g.id);});
+  renderGear();
   $('equipment').scrollIntoView({behavior:'smooth',block:'start'});
  });
 });
