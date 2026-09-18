@@ -47,7 +47,7 @@
     });
     var body = box.querySelector('.tips-body');
     if (!tab.items.length) {
-      body.innerHTML = '<p class="tips-empty">這一頁的功能整理中 coming soooon</p>';
+      body.innerHTML = '<p class="tips-empty">功能整理中 coming soooon</p>';
       return;
     }
     body.innerHTML = '<ol>' + tab.items.map(function (it, i) {
