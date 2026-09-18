@@ -13,12 +13,12 @@
 
 ```html
 <!-- storefront 根目錄的頁面（例如 report.html） -->
-<link rel="stylesheet" href="css/tips.css?v=e83df3e">
-<script src="js/tips.js?v=e83df3e"></script>
+<link rel="stylesheet" href="css/tips.css?v=b9e4e03">
+<script src="js/tips.js?v=b9e4e03"></script>
 
 <!-- 子資料夾的頁面（例如 scenario-2/index.html） -->
-<link rel="stylesheet" href="../css/tips.css?v=e83df3e">
-<script src="../js/tips.js?v=e83df3e"></script>
+<link rel="stylesheet" href="../css/tips.css?v=b9e4e03">
+<script src="../js/tips.js?v=b9e4e03"></script>
 ```
 
 - `?v=` 是快取版本號（GitHub Pages 對 JS/CSS 只給 10 分鐘快取，瀏覽器常會留更久）。共用檔有改時，三頁會一起換成當時的 commit 短碼；你引用時抄目前 `index.html` 裡的值就好。
@@ -31,7 +31,7 @@
 | 情境 | 行為 |
 |---|---|
 | 打開面板 | 停在「目前這一頁」的分頁（用網址對照：`index.html`、`gravel.html`、`product.html`、`scenario-2/`、`report.html`）。 |
-| 點別的分頁 | 有多個項目的分頁 → 跳到該頁並自動打開 Tips；只有單一項目且有 `href` 的分頁（線上騎乘體驗、體驗報告與結帳）→ 直接前往該連結。 |
+| 點別的分頁 | 有多個項目的分頁 → 跳到該頁並自動打開 Tips；只有單一項目且有 `href` 的分頁（體驗報告與結帳）→ 直接前往該連結。 |
 | Try it（項目有 `href`） | 直接前往該連結。 |
 | Try it（在目前頁） | 執行該頁用 `Tips.register(key, fn)` 註冊的動作。 |
 | Try it（在別頁） | 跳到 `該頁?try=key`，載入後自動執行對應動作。 |
@@ -43,7 +43,7 @@
 在你的頁面腳本裡註冊，key 要對應 `js/tips.js` 裡該項目的 `key`：
 
 ```html
-<script src="../js/tips.js?v=e83df3e"></script>
+<script src="../js/tips.js?v=b9e4e03"></script>
 <script>
   // 例：線上騎乘體驗頁，Try it 直接開始一段示範騎乘
   Tips.register('ride', function () {
@@ -54,7 +54,7 @@
 
 - 註冊要在 `tips.js` 之後執行。
 - 從別頁帶 `?try=ride` 進來時，腳本會在 `load` 後 500ms 呼叫同一個函式，並把網址上的 `?try=` 清掉。
-- 目前「線上騎乘體驗」與「體驗報告與結帳」的項目是用 `href` 直接連結（見下表）；如果你的頁面已經接上共用檔並註冊了動作，把該項目的 `href` 拿掉、改填 `page`，Try it 就會改成在頁內示範。
+- 「線上騎乘體驗」已接上共用檔，三個 Try it 都在 scenario-2 頁內示範（`ride-pick`、`ride-go`、`ride-ai`，註冊在 scenario-2 的 app 原始碼）。目前「體驗報告與結帳」的項目仍用 `href` 直接連結（見下表）；如果你的頁面已經接上共用檔並註冊了動作，把該項目的 `href` 拿掉、改填 `page`，Try it 就會改成在頁內示範。
 
 其他可用 API：`Tips.open()`、`Tips.close()`。
 
@@ -90,7 +90,7 @@
 | 首頁 `index.html` | AI 主動出現 → 需要幫忙挑車嗎？ / 說出車款 → AI 直接帶路 | 頁內示範 |
 | 商品清單 `gravel.html` | 逛一陣子 → AI 主動提示 / AI 幫我整理 → 頁面秀出推薦 / 勾選比較 → 比較表 | 頁內示範 |
 | 詳細頁 `product.html` | 說用途 → 頁面個人化 / AI 問尺寸 → 幾何表直接標亮 | 頁內示範 |
-| 線上騎乘體驗 `scenario-2/` | 線上騎乘體驗 → 120 秒數位試乘 | 連到 scenario-2 |
+| 線上騎乘體驗 `scenario-2/` | 選一段風景 → 挑車出發 / 騎到岔路 → 自己選路 / 騎乘中問 AI → 換一台試試 | 頁內示範 |
 | 體驗報告與結帳 `report.html` | 線上騎乘報告 → 配件建議與結帳 | 連到 report.html#equipment（htmlpreview） |
 
 ## 6. 接上後的檢查
