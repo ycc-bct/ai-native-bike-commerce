@@ -37,7 +37,7 @@
   /* 子資料夾的分頁（page 以 / 結尾）：整個資料夾裡的頁面都算那一頁 */
   var cur = TABS.filter(function (x) { return x.page && (x.page === here || (/\/$/.test(x.page) && here.indexOf(x.page) === 0)); })[0] || TABS[0];
   if (cur.page && /\/$/.test(cur.page) && here.indexOf(cur.page) === 0) here = cur.page;
-  var go = function (page, q) { location.href = ROOT + page + (q || ''); };
+  var go = function (page, q) { location.href = ROOT + page.replace(/\/$/, '/index.html') + (q || ''); };   /* 資料夾要補檔名，file:// 不會自動找 index.html */
   var FN = {};
 
   var pill = document.createElement('button');
