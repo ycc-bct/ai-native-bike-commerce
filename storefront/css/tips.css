@@ -1,0 +1,25 @@
+/* Tips：示範用的情境說明，固定在左下角（首頁、清單頁、詳細頁共用，行為見 js/tips.js） */
+.tips-pill{position:fixed;left:24px;bottom:24px;z-index:63;height:40px;padding:0 18px;border-radius:999px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 10px 26px rgba(20,26,34,.14);font:700 13px/1 "Inter","Noto Sans TC",sans-serif;color:#141A22;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.tips-pill:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(20,26,34,.18)}
+.tips-pill[hidden],.tips[hidden]{display:none}
+.tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(420px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;padding:14px 16px 16px;border-radius:14px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 20px 48px rgba(20,26,34,.2);font-family:"Inter","Noto Sans TC",sans-serif;color:#141A22}
+.tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.tips-head b{font-size:12px;font-weight:800;letter-spacing:.14em}
+.tips-close{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:#7A8492;cursor:pointer}
+.tips-close:hover{background:#F1F4F8;color:#141A22}
+.tips-close svg{width:16px;height:16px}
+/* 分頁：依網站流程排列 */
+.tips-tabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:#F1F4F8;margin-bottom:12px}
+.tips-tabs button{flex:1 1 auto;min-width:0;height:30px;padding:0 8px;border:0;border-radius:8px;background:none;font:600 12px/1 "Inter","Noto Sans TC",sans-serif;color:#4A5563;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s}
+.tips-tabs button:hover{color:#141A22}
+.tips-tabs button.on{background:#fff;color:#141A22;box-shadow:0 1px 3px rgba(20,26,34,.12)}
+.tips-body ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.tips-body li{display:flex;align-items:flex-start;gap:10px;padding:10px 11px;border-radius:10px;background:#F5F7FA}
+.tips-body .n{flex:none;width:20px;height:20px;margin-top:1px;border-radius:50%;background:#141A22;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800}
+.tips-body li div{flex:1;min-width:0}
+.tips-body li b{display:block;font-size:13px;font-weight:700}
+.tips-body li p{margin:3px 0 0;font-size:12px;line-height:1.6;color:#4A5563}
+.tips-body .try{flex:none;align-self:center;padding:4px 2px;border:0;background:none;color:#1F4FE0;font:700 12.5px/1 "Inter","Noto Sans TC",sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:transparent;transition:text-decoration-color .2s}
+.tips-body .try:hover{text-decoration-color:currentColor}
+.tips-empty{margin:4px 2px;padding:18px 14px;border-radius:10px;background:#F5F7FA;font-size:12.5px;line-height:1.7;color:#7A8492;text-align:center}
+.tips-empty a{color:#1F4FE0;font-weight:700}

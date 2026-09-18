@@ -6,6 +6,7 @@
 <title>GIANT · More Than a Bike</title>
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/advisor.css">
+<link rel="stylesheet" href="css/tips.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -41,6 +42,7 @@ svg{display:block}
 
 /* ---------- 共用 ---------- */
 .sec{width:var(--shell);margin:0 auto;padding-top:78px}
+.sec.explore{padding-top:36px}
 .sec-head{display:flex;align-items:flex-end;gap:40px;margin-bottom:24px}
 .sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
 .sec-head .sub{margin-top:6px;font-size:15px;color:var(--ink-70)}
@@ -77,7 +79,7 @@ svg{display:block}
 @media (prefers-reduced-motion:reduce){.beam::before,.beam::after{animation:none}}
 
 /* ---------- 主視覺 ---------- */
-.hero{position:relative;height:clamp(650px,74vh,780px);overflow:hidden}
+.hero{position:relative;height:clamp(600px,68vh,720px);overflow:hidden}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 72%}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(90deg,rgba(243,245,247,.96) 0%,rgba(243,245,247,.84) 26%,rgba(243,245,247,.36) 44%,rgba(243,245,247,0) 58%),
@@ -141,7 +143,10 @@ svg{display:block}
 .card .ph img{width:100%;height:100%;object-fit:contain;padding:6%;transition:transform .5s var(--ease)}
 .card:hover .ph img{transform:scale(1.04)}
 .card .badge{position:absolute;z-index:1;left:0;top:0;padding:3px 7px;border-radius:4px;background:var(--ai);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.card .badge.best{left:auto;right:0;background:var(--navy)}
+.card .badge + .badge{left:auto;margin-left:4px}
+.card .badge.best{background:var(--navy)}
+.card .badges-row{position:absolute;z-index:1;left:0;top:0;display:flex;gap:4px}
+.card .badges-row .badge{position:static}
 .card .badge.hot{background:#F26B1D}
 .card b{display:block;margin-top:10px;font-size:12.5px;font-weight:700;line-height:1.4;min-height:2.8em}
 .card span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-70)}
@@ -330,7 +335,7 @@ a:not([href]){cursor:default}
       <div class="fm-copy"><p class="lead">有史以來打造過最輕量、最狂暴的 Gravel 頂級礫石賽車</p><h3>Revolt Advanced SL 0</h3></div>
     </a>
     <div class="feat-side">
-      <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><span class="badge best">2027</span><img src="img/home/bike-propel-sl1.webp" alt=""></div><b>Propel Advanced SL 1 Force 特仕車</b><span>NT$ 258,000</span></div>
+      <div class="card pc rv" data-cat="road"><div class="ph"><span class="badges-row"><span class="badge">New</span><span class="badge best">2027</span></span><img src="img/home/bike-propel-sl1.webp" alt=""></div><b>Propel Advanced SL 1 Force 特仕車</b><span>NT$ 258,000</span></div>
       <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><img src="img/home/bike-propel-pro0-da.webp" alt=""></div><b>Propel Advanced Pro 0 Dura-Ace (GTS)</b><span>NT$ 258,000</span></div>
       <div class="card pc rv" data-cat="road"><div class="ph"><span class="badge">New</span><img src="img/home/bike-propel-pro0-di2.webp" alt=""></div><b>Propel Advanced Pro 0 Di2 (GTS)</b><span>NT$ 188,000</span></div>
       <div class="card gear rv"><div class="ph"><span class="badge hot">Best Seller</span><img src="img/home/gear-surge.webp" alt=""></div><b>Giant SURGE PRO 碳纖底公路車鞋</b><span>NT$ 12,800</span></div>
@@ -406,6 +411,10 @@ a:not([href]){cursor:default}
     <button class="adv-x" id="advClose" type="button" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </header>
   <div class="adv-log" id="advLog" aria-live="polite"></div>
+  <div class="adv-quick" id="advQuick">
+    <button type="button" data-q="size"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/></svg>我的尺寸</button>
+    <button type="button" data-q="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h6v14H4zM14 5h6v14h-6z"/></svg>比較車款</button>
+  </div>
   <form class="adv-in" id="advForm" autocomplete="off">
     <input id="advInput" type="text" placeholder="說說你平常怎麼騎、預算或身高…" aria-label="輸入訊息">
     <button class="adv-ic" id="advPic" type="button" aria-label="用照片找車" title="用照片找車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 15.5l-5-5-9 9"/></svg></button>
@@ -418,6 +427,7 @@ a:not([href]){cursor:default}
 <script src="js/thinking-orbs-engine.js"></script>
 <script src="js/orb.js"></script>
 <script src="js/advisor.js"></script>
+<script src="js/tips.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 
@@ -494,6 +504,26 @@ function hideCallout(){
 if (!tipSeen()) setTimeout(() => showCallout('這是 GIANT 選車顧問', '我會記得你看過哪些車，依你的騎乘情境、預算和身高，給你客製化的建議。', '好，聊聊看'), 1800);
 else setTimeout(() => showCallout('需要幫忙挑車嗎？', '跟我說你平常怎麼騎，我幫你從熱門車款裡挑出適合的。', '好，聊聊看'), 8000);
 $('calloutYes').onclick = () => openAdvisor(false);
+/* Tips 的示範：不管逛了多久，直接秀出「需要幫忙挑車嗎？」 */
+Tips.register('jump', () => {
+  if ($('advisor').hidden) openAdvisor(false);
+  const t = 'Revolt Advanced SL 0', inp = $('advInput');
+  inp.value = ''; inp.focus();
+  let i = 0;
+  const tick = () => { inp.value = t.slice(0, ++i); inp.dispatchEvent(new Event('input')); if (i < t.length) setTimeout(tick, 55); else setTimeout(() => $('advForm').requestSubmit(), 500); };
+  setTimeout(tick, 700);
+});
+Tips.register('callout', () => {
+  const go = () => {
+    adv.calloutShown = 0;
+    $('calloutTitle').textContent = '需要幫忙挑車嗎？';
+    $('calloutText').textContent = '跟我說你平常怎麼騎，我幫你從熱門車款裡挑出適合的。';
+    $('calloutYes').textContent = '好，聊聊看';
+    const c = $('orbCallout'); c.hidden = false;
+    requestAnimationFrame(() => c.classList.add('on'));
+  };
+  if (!$('advisor').hidden) { closeAdvisor(); setTimeout(go, 900); } else go();
+});
 $('calloutNo').onclick = hideCallout;
 
 /* ---------- 顧問：開關（Genie 縮進 header 的 orb，對話紀錄保留） ---------- */
@@ -501,6 +531,7 @@ const setOrb = st => { window.Orb && Orb.set('#aiOrb', st); };
 /* genie 縮放動畫只用在 header 的 orb；提示框的「好，聊聊看」直接開 */
 function openAdvisor(animate){
   hideCallout();
+  if (window.Tips) Tips.close();
   const a = $('advisor');
   if (adv.anim || !a.hidden) return;
   a.hidden = false; a.classList.add('on');
@@ -581,15 +612,6 @@ const ICON = {
 const OPTS = [['city','城市 / 河濱','平坦的柏油路'],['gravel','柏油 + 碎石','偶爾非鋪裝路'],['trail','林道 / 山路','較多起伏地形'],['unsure','還不確定','幫我再看看']];
 const A = {terrain:null};
 
-/* 開場：先打招呼，主動講門市活動與新車款，不急著問問題 */
-const NEWS_CARDS = [
-  {k:'event', img:'img/pdp/long.webp', t:'2026 自行車嘉年華・公路挑戰賽', d:'9/20 台中后里・35 / 64 / 142 KM'},
-  {k:'ride',  img:'img/home/news-testride.webp', t:'捷安特體驗試乘活動', d:'各縣市不定期場次・現場就能試騎'},
-];
-const NEW_BIKES = [
-  {k:'revolt', n:'Revolt Advanced SL 0', pr:308000, d:'2027 新款・史上最輕量的 Gravel 賽車'},
-  {k:'fastroad', n:'FastRoad AR Advanced 1', pr:62800, d:'平把全路況・城市到郊外都好騎'},
-];
 /* 帶使用者看下方的 Explore 區，並把五個類型列出來（對話框保持開著） */
 const TYPES = [
   ['公路自行車','追求速度、挑戰更遠的自己'],
@@ -611,25 +633,9 @@ function showTypes(intro){
 function startChat(){
   const seen = VIEWED.length >= 2;
   say('嗨，我是 GIANT 的選車顧問 👋<br>' + (seen
-    ? '看到你在逛 ' + CAT_LABEL[VIEWED[0]] + ' 和 ' + CAT_LABEL[VIEWED[1]] + '，眼光不錯。'
-    : '歡迎隨意逛逛，有什麼想問的都可以跟我說。'), 600);
-  say('先跟你分享最近店裡在忙的事 👇' +
-      '<div class="adv-minis">' + NEWS_CARDS.map(c => '<div class="adv-mini"><img src="' + c.img + '" alt=""><div><b>' + c.t + '</b><span>' + c.d + '</span></div></div>').join('') + '</div>' +
-      '想報名或看場次，我可以帶你過去看。', 1000, null, true);
-  say('另外這兩台是最近上市、詢問度最高的：' +
-      '<div class="adv-minis">' + NEW_BIKES.map(b => '<div class="adv-mini"><img src="img/bikes/' + b.k + '.webp" alt=""><div><b>' + b.n + '</b><span>' + b.d + '　NT$ ' + fmt(b.pr) + '</span></div></div>').join('') + '</div>' +
-      '要看哪一個都可以，或想聊聊怎麼挑也行 🙂' +
-      chips([['revolt','看 Revolt SL 0'],['types','有哪些類型'],['news','最近的活動'],['pick','幫我挑一台']]),
-      1100, m => bindChips(m, v => {
-        if (v === 'revolt') return recommend('revolt', '好眼光，Revolt Advanced SL 0 的重點整理給你：', [], '2027 新款');
-        if (v === 'types') return showTypes();
-        if (v === 'news') return say('這兩場最近的活動，時間地點我先放這邊：<br>' +
-          '・<b>2026 自行車嘉年華・公路挑戰賽</b>：9/20 台中后里花田綠廊，35 / 64 / 142 KM 三種距離。<br>' +
-          '・<b>捷安特體驗試乘活動</b>：各縣市不定期場次，現場就能試騎電輔與運動車款。<br>' +
-          '想先試騎再決定，我也可以照你的騎法幫你挑幾台再去現場看。' + chips([['pick','那幫我挑一台'],['later','先這樣就好']]), 900,
-          m2 => bindChips(m2, v2 => v2 === 'pick' ? askTerrain() : showTypes('沒問題，你先隨意逛 👋 我們的車款分成這五種類型：')));
-        askTerrain();
-      }), true);
+    ? '看到你在逛 ' + CAT_LABEL[VIEWED[0]] + ' 和 ' + CAT_LABEL[VIEWED[1]] + '，眼光不錯。有什麼想問的都可以跟我說。'
+    : '歡迎隨意逛逛，有什麼想問的都可以跟我說。') +
+    '<br>順帶一提，現在有 <b>滿千折百</b> 活動，2026/10/20 前消費還能參加抽籤 🎁', 700);
 }
 function askTerrain(){
   say('<h4>你平常大多騎在哪裡？</h4>知道這個就夠了，其他我來想。' +
@@ -676,8 +682,9 @@ function recommend(k, intro, extra, tag){
 }
 /* 尺寸只給通用示意值，正式版需接官方 Size Guide */
 function sizeFlow(k){
-  say('你的身高大概落在哪個範圍？' + chips([['XS','160 cm 以下'],['S','160–170 cm'],['M','170–180 cm'],['L','180 cm 以上']]), 600,
-      m => bindChips(m, s => say((k ? BY[k].n + ' ' : '') + '建議先試 <b>' + s + '</b> 號車架。這是通用的建議，有機會還是到門市試騎一下最準。' + chips([['again','換個條件']]), 700, m2 => bindChips(m2, () => askTerrain()))));
+  let h = 172; try { h = +localStorage.getItem(ADV_H_KEY) || 172; } catch (e) {}
+  say('拉一下身高，我幫你對應車架尺寸：' + advSizer(ADV_SIZES, h), 600, m => advBindSizer(m, ADV_SIZES, (hh, sz) =>
+    say((k ? BY[k].n + ' ' : '') + (sz ? '建議先試 <b>' + sz + '</b> 號車架。這是通用的建議，有機會還是到門市試騎一下最準。' : '這個身高超出通用範圍，到門市讓店員幫你評估最準。') + chips([['again','換個條件']]), 700, m2 => bindChips(m2, () => askTerrain()))), true);
 }
 function budgetFlow(n){
   const pool = A.terrain === 'city' ? ['fastroad','escape'] : A.terrain === 'gravel' ? ['revolt','fastroad','escape'] : A.terrain === 'trail' ? ['trance','talon'] : ['trance','revolt','talon','fastroad','escape'];
@@ -695,8 +702,18 @@ function parseBudget(s){
   return 0;
 }
 /* 打字：示範版聽得懂路況、預算與尺寸 */
+/* 打車款名稱就直接帶路：示範站只有 Revolt Advanced SL 0 有細節頁，其他 Revolt / FastRoad 帶到清單 */
+const JUMP = [
+  {re:/revolt\s*advanced\s*sl\s*0|revolt\s*sl\s*0|sl\s*0/, n:'Revolt Advanced SL 0', href:'product.html'},
+  {re:/revolt|fastroad|礫石|gravel/, n:'礫石公路車款', href:'gravel.html'},
+];
+function jumpTo(j){
+  say('好，<b>' + j.n + '</b> 我帶你過去 🚴', 500, () => setTimeout(() => { location.href = j.href; }, 900));
+}
 function route(t){
   const s = t.toLowerCase();
+  const j = JUMP.find(x => x.re.test(s));
+  if (j) return jumpTo(j);
   const n = parseBudget(s);
   if (n) return budgetFlow(n);
   if (/尺寸|身高|多高|size|\d{3}\s*(cm|公分)/.test(s)) return sizeFlow();
@@ -726,15 +743,21 @@ $('advMic').onclick = () => {
   b.classList.add('rec'); input.placeholder = '正在聆聽…';
   setTimeout(() => { b.classList.remove('rec'); input.placeholder = '說說你平常怎麼騎、預算或身高…'; }, 2600);
 };
-$('advPic').onclick = () => $('advFile').click();
-$('advFile').onchange = e => {
-  const f = e.target.files[0]; if (!f) return;
-  lockOpen();
-  addMsg('<img class="up" src="' + URL.createObjectURL(f) + '" alt="你上傳的照片">', 'me pic');
-  e.target.value = '';
-  say('收到照片！我從熱門車款裡挑了幾台外型、騎法相近的車給你參考：' +
-      '<div class="adv-minis">' + ['revolt','fastroad','trance'].map(k => '<div class="adv-mini"><img src="img/bikes/' + k + '.webp" alt=""><div><b>' + BY[k].n + '</b><span>NT$ ' + fmt(BY[k].pr) + '</span></div></div>').join('') + '</div>' +
-      chips([['again','換個條件']]), 1200, m => bindChips(m, () => askTerrain()), true);
+/* 快捷 chip：我的尺寸 → 對話框裡的身高滑桿；商品比較 → 到清單頁比較模式 */
+window.ADV_SIZES = [['XS',155,166],['S',159,171],['M',169,181],['ML',174,186]];
+function quickSize(){
+  let h = 172; try { h = +localStorage.getItem(ADV_H_KEY) || 172; } catch (e) {}
+  lockOpen(); addMsg('我的尺寸', 'me');
+  say('拉一下身高，我幫你對應車架尺寸：' + advSizer(ADV_SIZES, h), 600, m => advBindSizer(m, ADV_SIZES, (hh, sz) => {
+    say(sz ? '好，記住了：身高 ' + hh + ' cm，尺寸 <b>' + sz + '</b>。之後推薦車款都會用這個尺寸 👍' : '這個身高超出通用範圍，到門市讓店員幫你評估最準。', 700);
+  }), true);
+}
+$('advQuick').querySelector('[data-q="size"]').onclick = () => { if ($('advisor').hidden) openAdvisor(false); quickSize(); };
+/* 比較車款：清單頁直接進比較模式；首頁帶去清單頁 */
+$('advQuick').querySelector('[data-q="compare"]').onclick = () => {
+  lockOpen(); addMsg('比較車款', 'me');
+  if (typeof setCmpMode === 'function') { setCmpMode(true); return; }
+  say('比較功能在車款清單裡，我帶你過去。', 600, () => setTimeout(() => { location.href = 'gravel.html?cmp=1'; }, 900));
 };
 
 /* 「看這台車款」：Revolt 進產品頁，其他車款先帶到精選區（示範站只有 Revolt 有詳細頁） */

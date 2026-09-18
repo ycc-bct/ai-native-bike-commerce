@@ -6,6 +6,7 @@
 <title>Revolt Advanced SL 0 · GIANT</title>
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/advisor.css">
+<link rel="stylesheet" href="css/tips.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -65,6 +66,14 @@ svg{display:block}
 .panel.p3 .bg-ext{position:absolute;max-width:none;object-fit:fill;transform:scaleX(-1);transition:left .55s var(--ease)}
 .panel.p1 .pclip{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%)}
 
+/* 單一情境：顧問聽到「戶外冒險」後只留「探索未知」，照片鋪滿整個框 */
+body.solo-scene .panel.p1,body.solo-scene .panel.p2,body.solo-scene .label.l1,body.solo-scene .label.l2,body.solo-scene .seam{display:none}
+body.solo-scene .panel.p3{left:var(--S)}
+body.solo-scene .panel.p3 .pclip{clip-path:none}
+body.solo-scene .panel.p3 .bg{object-fit:cover;object-position:50% 45%;left:0!important;top:0!important;width:100%!important;height:100%!important}
+body.solo-scene .panel.p3 .bg-ext{display:none}
+body.solo-scene .panel.p3 .pclip{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%)}
+body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
 .pmask{position:absolute;z-index:2;inset:0;background:rgba(8,13,22,.52);transition:opacity .6s var(--ease);pointer-events:none}
 .panel.on .pmask{opacity:0}
 /* 左側接到頁面底色 */
@@ -103,7 +112,18 @@ svg{display:block}
 .info .tag{margin-top:calc(var(--u)*14);font-size:calc(var(--u)*18);font-weight:500;letter-spacing:.04em}
 .info .intro{margin-top:calc(var(--u)*20);font-size:calc(var(--u)*15.5);line-height:1.62;color:var(--ink-70);letter-spacing:.02em}
 .info .price{margin-top:calc(var(--u)*18);font-size:calc(var(--u)*20);font-weight:700}
-.info .pitch{margin-top:auto;padding-top:calc(var(--u)*28);white-space:nowrap;font-size:calc(var(--u)*15.5);line-height:1.8;color:var(--ink-70);letter-spacing:.02em}
+/* 線上騎乘體驗：與首頁同一張卡，連到 scenario-2 的 120 秒數位騎乘 */
+.info .vride{flex:none;display:flex;align-items:stretch;gap:calc(var(--u)*14);width:var(--cta-w,100%);max-width:calc(var(--u)*420);margin-top:calc(var(--u)*22);padding:0 calc(var(--u)*16) 0 0;border-radius:calc(var(--u)*12);overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(20,26,34,.12);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
+.info .vride:hover{box-shadow:0 18px 40px rgba(20,26,34,.18);transform:translateY(-2px)}
+.info .vr-ph{flex:none;width:calc(var(--u)*128);aspect-ratio:1.42;overflow:hidden;background:#EEF2F6}
+.info .vr-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform .8s var(--ease)}
+.info .vride:hover .vr-ph img{transform:scale(1.05)}
+.info .vr-copy{align-self:center;padding:calc(var(--u)*12) 0}
+.info .vr-copy b{display:block;font-size:calc(var(--u)*15);font-weight:800}
+.info .vr-desc{display:block;margin-top:calc(var(--u)*4);font-size:calc(var(--u)*12);line-height:1.6;color:var(--ink-70)}
+/* 矮螢幕左欄放不下：卡片收成一行 */
+@media (max-height:820px){.info .vr-desc{display:none}.info .vr-ph{width:calc(var(--u)*110)}.info .vr-copy b{font-size:calc(var(--u)*15)}}
+.info .pitch{margin-top:auto;padding-top:calc(var(--u)*20);white-space:nowrap;font-size:calc(var(--u)*15.5);line-height:1.8;color:var(--ink-70);letter-spacing:.02em}
 .info .cta{margin-top:calc(var(--u)*36);display:flex;flex-wrap:wrap;gap:calc(var(--u)*12)}
 .btn-dark{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:calc(var(--u)*48);padding:0 calc(var(--u)*24);border-radius:calc(var(--u)*7);background:var(--navy);color:#fff;font-size:calc(var(--u)*15.5);font-weight:700;letter-spacing:.04em;transition:background .2s}
 .btn-dark:hover{background:#1C2A40}
@@ -335,17 +355,6 @@ svg{display:block}
 .orb-wrap{position:relative;display:grid;place-items:center}
 
 /* 個人化 */
-.you{margin-top:calc(var(--u)*18);flex:0 1 auto;min-height:0;overflow:auto;max-width:calc(var(--u)*400);padding:calc(var(--u)*14) calc(var(--u)*16);border-radius:calc(var(--u)*10);background:#EEF3FF;border:1px solid #D6E2FF;animation:amIn .4s var(--ease) both}
-.you[hidden]{display:none}
-.keyspecs{margin:calc(var(--u)*16) 0 0;display:grid;gap:calc(var(--u)*8)}
-.keyspecs ul{list-style:none;display:flex;gap:calc(var(--u)*7)}
-.info:has(.you:not([hidden])) .keyspecs{display:none}
-.keyspecs li{padding:calc(var(--u)*6) calc(var(--u)*11);border-radius:999px;border:1px solid #CDD3DA;background:rgba(255,255,255,.55);font-size:calc(var(--u)*13);color:var(--ink-70);white-space:nowrap}
-.you-hd{display:flex;align-items:center;gap:8px;font-size:calc(var(--u)*13.5);font-weight:700;color:var(--ai)}
-.you-hd span{width:7px;height:7px;border-radius:50%;background:var(--ai);box-shadow:0 0 0 4px rgba(31,79,224,.15)}
-.you ul{list-style:none;margin-top:calc(var(--u)*8);display:grid;gap:calc(var(--u)*5)}
-.you li{position:relative;padding-left:16px;font-size:calc(var(--u)*13.5);line-height:1.6;color:var(--ink);animation:amIn .4s var(--ease) both}
-.you li::before{content:"✓";position:absolute;left:0;color:var(--ai);font-weight:700}
 .rel-tag.you-tag{background:var(--ai)}
 .spot{animation:spot 1.8s var(--ease)}
 @keyframes spot{0%{box-shadow:0 0 0 0 rgba(31,79,224,0)}25%{box-shadow:0 0 0 6px rgba(31,79,224,.28)}100%{box-shadow:0 0 0 0 rgba(31,79,224,0)}}
@@ -449,12 +458,11 @@ a:not([href]){cursor:default}
       <button class="btn-line" id="addCompare" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
       <button class="btn-fav" id="fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
     </div>
-    <div class="you" id="youCard" hidden>
-      <p class="you-hd"><span></span>為你調整的內容</p>
-      <ul id="youList"></ul>
-    </div>
+    <a class="vride" href="scenario-2/index.html?bike=sl0">
+      <span class="vr-ph"><img src="img/home/virtual-ride.webp" alt=""></span>
+      <span class="vr-copy"><b>線上騎乘體驗</b><span class="vr-desc">騎這台上路 120 秒，AI 整理你的騎乘報告。</span></span>
+    </a>
     <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，長途也能維持高速。</p>
-    <div class="keyspecs"><ul><li>2027 年式</li><li>Gravel 競賽</li><li>Advanced SL 碳纖車架</li></ul><ul><li>SRAM RED AXS 1×13</li><li>CADEX 碳纖輪組</li><li>胎寬 53mm</li></ul></div>
   </div>
 
   <div class="bike"><img src="img/bikes/revolt-lg.webp" alt="Revolt Advanced SL 0"></div>
@@ -604,6 +612,10 @@ a:not([href]){cursor:default}
     <button class="adv-x" id="advClose" type="button" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </header>
   <div class="adv-log" id="advLog" aria-live="polite"></div>
+  <div class="adv-quick" id="advQuick">
+    <button type="button" data-q="size"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/></svg>我的尺寸</button>
+    <button type="button" data-q="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h6v14H4zM14 5h6v14h-6z"/></svg>比較車款</button>
+  </div>
   <form class="adv-in" id="advForm" autocomplete="off">
     <input id="advInput" type="text" placeholder="問我尺寸、騎乘情境或配件…" aria-label="輸入訊息">
     <button class="adv-ic" id="advPic" type="button" aria-label="用照片找車" title="用照片找車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M21 15.5l-5-5-9 9"/></svg></button>
@@ -618,6 +630,7 @@ a:not([href]){cursor:default}
 <script src="js/thinking-orbs-engine.js"></script>
 <script src="js/orb.js"></script>
 <script src="js/advisor.js"></script>
+<script src="js/tips.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
@@ -632,6 +645,7 @@ let cur = -1, cart = 0;
 const added = new Set();
 function setScene(i){
   i = (i + 3) % 3;
+  if (document.body.classList.contains('solo-scene')) i = 2;     /* 只剩一張時固定在探索未知 */
   if (i === cur) return;
   cur = i;
   document.querySelectorAll('.panel,.label').forEach(el => el.classList.toggle('on', +el.dataset.i === i));
@@ -654,7 +668,7 @@ function accMsgHtml(){
     '<button class="adv-acc-add' + (done ? ' done' : '') + '" type="button">' + (done ? '已加入購物車 ✓' : '加入此情境的完整配件') + '</button>';
 }
 function syncAccMsg(){
-  if (!document.body.classList.contains('adv-open')) return;
+  if (!document.body.classList.contains('adv-open') || adv.holdAcc) return;
   let m = document.getElementById('advAccMsg'), fresh = false;
   if (!m) { m = advAdd('', 'ai acc-msg'); m.id = 'advAccMsg'; fresh = true; }
   m.innerHTML = accMsgHtml();
@@ -672,6 +686,7 @@ setScene(0);
 /* 自動輪播；點照片或標題就選它，並重新計時 */
 let sceneT = setInterval(() => setScene(cur + 1), 4500);
 function pickScene(i){
+  adv.holdAcc = false;                                  /* 主動切情境 → 配件卡恢復 */
   clearInterval(sceneT); setScene(i);
   if (!document.body.classList.contains('adv-open')) sceneT = setInterval(() => setScene(cur + 1), 4500);   /* 聊天時不自動換 */
 }
@@ -767,6 +782,7 @@ function setOrbDot(on){ ['aiOrb','aiOrb2'].forEach(id => $(id).classList.toggle(
 
 function genie(dir, done){ advisorGenie($('advisor'), $('advLog'), currentOrb(), dir, done); }
 function openAdvisor(){
+  if (window.Tips) Tips.close();
   hideCallout();
   const a = $('advisor');
   if (adv.anim || !a.hidden) return;
@@ -846,11 +862,10 @@ function advGreet(){
 }
 /* ---------- 個人化：每次互動都讓頁面更貼近這位使用者 ---------- */
 const YOU = [];
+/* 「為你調整的內容」卡片已移除；保留記錄供對話參考，不再顯示 */
 function addYou(key, text){
   const i = YOU.findIndex(x => x.key === key);
   if (i >= 0) YOU[i].text = text; else YOU.push({key, text});
-  $('youCard').hidden = false;
-  $('youList').innerHTML = YOU.map(x => '<li>' + x.text + '</li>').join('');
 }
 function spot(el){ if (!el) return; el.classList.remove('spot'); void el.offsetWidth; el.classList.add('spot'); }
 function goTo(id, then){
@@ -859,32 +874,64 @@ function goTo(id, then){
   if (then) setTimeout(then, 650);
 }
 
+/* 依幾何表講這個尺寸：座艙數字、跟鄰近尺寸的差、以及隨尺寸變動的零件 */
+function geoTalk(pick){
+  const col = pick + 2, g = k => GEO.find(r => r[0] === k), num = v => parseFloat(v);
+  const name = SIZES[pick][0];
+  const stack = g('K')[col], reach = g('L')[col], ht = g('D')[col], bar = g('N')[col], stem = g('O')[col], crank = g('P')[col], stand = g('M')[col];
+  let cmp = '';
+  if (pick > 0) {
+    const pn = SIZES[pick - 1][0];
+    cmp = '跟 ' + pn + ' 比，Stack 高 ' + (num(stack) - num(g('K')[col - 1])) + 'mm、Reach 長 ' + (num(reach) - num(g('L')[col - 1])) + 'mm，座艙比較舒展；';
+  } else if (pick < SIZES.length - 1) {
+    const nn = SIZES[pick + 1][0];
+    cmp = '跟 ' + nn + ' 比，Stack 低 ' + (num(g('K')[col + 1]) - num(stack)) + 'mm、Reach 短 ' + (num(g('L')[col + 1]) - num(reach)) + 'mm，姿勢比較直、比較好上手；';
+  }
+  return '<b>' + name + '</b> 的座艙：Stack <b>' + stack + '</b>、Reach <b>' + reach + '</b>，頭管 ' + ht + '。' + cmp +
+    '上管到地面 ' + stand + '，跨站時要留一點餘裕。<br>' +
+    '零件也會跟著尺寸走：' + name + ' 配的是 <b>' + bar + ' 把手</b>、<b>' + stem + ' 龍頭</b>、<b>' + crank + ' 曲柄</b>' +
+    (pick >= 2 ? '，比小尺寸寬 20mm 的把手和更長的曲柄，適合肩寬、腿長的人。' : '，較窄的把手和較短的曲柄，操控會靈活一些。') +
+    '<br>有機會的話，到門市試騎一下最準。';
+}
 function advSize(h){
   const hit = SIZES.map((s, i) => h >= s[1] && h <= s[2] ? i : -1).filter(i => i >= 0);
   if (!hit.length) return advSay(h < SIZES[0][1]
     ? h + ' cm 比官方最小的 XS（155 cm 起）再矮一點，我會建議直接到門市，讓店員幫你調整看看。'
     : h + ' cm 超過 ML 的建議範圍（到 186 cm），這台可能不是最合身的，我幫你找找其他車款好嗎？');
   const pick = hit[hit.length - 1], s = SIZES[pick];
-  sizePin = pick; $('hRange').value = h; renderSize(h); markSizeBtn(); bindGeoRows();
+  sizeTouched = true; sizePin = pick; $('hRange').value = h; renderSize(h); markSizeBtn(); bindGeoRows();
   if (letterOn !== 'K') markLetter('K');
   goTo('geo', () => { spot(document.querySelector('.finder')); spot(document.querySelector('.gtable-wrap')); });
   addYou('size', '身高 ' + h + ' cm → 建議尺寸 <b>' + s[0] + '</b>');
   advSay((hit.length > 1
       ? h + ' cm 剛好在 <b>' + hit.map(i => SIZES[i][0]).join('</b> 和 <b>') + '</b> 中間。喜歡趴一點、騎快一點選大的，想舒服一點選小的，我先幫你標 <b>' + s[0] + '</b>。'
       : '以 ' + h + ' cm 來看，官方建議是 <b>' + s[0] + '</b>（' + s[1] + '–' + s[2] + ' cm），我已經幫你在表上標好了。')
-    + '<br>右邊亮起來的 <b>K（Stack）</b>是座艙高度，<b>L（Reach）</b>是往前伸的距離，這兩個數字決定騎起來趴不趴。有機會的話，到門市試騎一下最準。'
-    + chipsHtml([['h:L','看看 Reach'],['acc','順便看配件'],['commute','我平常主要通勤']]));
+    + '<br>右邊亮起來的 <b>K（Stack）</b>是座艙高度，<b>L（Reach）</b>是往前伸的距離，這兩個數字決定騎起來趴不趴。');
+  advSay('有機會的話，到門市試騎一下最準，也歡迎先體驗線上試乘 👇' +
+    '<a class="adv-ride" href="scenario-2/index.html?bike=sl0"><img src="img/home/virtual-ride.webp" alt=""><span><b>線上騎乘體驗</b><small>騎這台上路 120 秒，AI 整理你的騎乘報告。</small></span></a>');
 }
 function advRoute(v){
   if (v === 'h:L') { markLetter('L'); spot(document.querySelector('.geo-fig')); return advSay('圖上的 L 就是 Reach：從五通到車頭的水平距離。數字越大，身體會越往前伸，騎起來越有競速感。'); }
   if (v.indexOf('h:') === 0) return advSize(+v.slice(2));
   switch (v) {
+    case 'golist': location.href = 'gravel.html?cmp=1'; return;
+    case 'adventure': {
+      pickScene(2);
+      document.body.classList.add('solo-scene');
+      setTimeout(updateHeaderTone, 80);
+      adv.holdAcc = true;                                   /* 先講完，兩秒後再秀配件 */
+      const old = document.getElementById('advAccMsg'); if (old) old.remove();
+      advSay('了解，那我先幫你把情境切到「探索未知」，畫面只留這一段路 🌲<br>碎石、林道這種路況正是這台 Revolt 的主場：寬胎加上穩定的幾何，長距離也不容易累。', 600);
+      setTimeout(() => { adv.holdAcc = false; syncAccMsg(); }, 2600);
+      return;
+    }
     case 'size':
       goTo('geo', () => spot(document.querySelector('.geo-fig')));
       addYou('geo', '正在看車架幾何與尺寸');
       return advSay('我先帶你到「車架幾何與尺寸」。<br>左邊這張圖標出每個數字怎麼量，右邊是四個尺寸的數值；點圖上的字母或表格，兩邊會一起亮。<br>你身高大概多少？我直接幫你對。' + chipsHtml([['h:160','160 cm 左右'],['h:168','165–170 cm'],['h:175','170–180 cm'],['h:183','180 cm 以上']]));
     case 'commute':
-      pickScene(0);
+      adv.holdAcc = false;
+      pickScene(0); syncAccMsg();
       REL.forEach(b => { if (b.n === 'Escape Disc 2') { b.boost = 2; b.ptag = '適合通勤'; } });
       renderRel();
       addYou('use', '以通勤為主：切到「城市日常」、通勤車款排前面');
@@ -899,6 +946,7 @@ function advRoute(v){
       addYou('cmp', '已加入比較清單');
       return advSay('好，已經幫你加進比較清單了。之後想對照其他車款，隨時跟我說。' + chipsHtml([['acc','看看配件'],['size','幫我看尺寸']]));
     case 'acc': {
+      adv.holdAcc = false; syncAccMsg();
       const sc = SCENES[cur];
       goTo('stage');
       return advSay('你現在看的是「' + sc.name + '」這個情境，我建議帶這三樣：' +
@@ -921,7 +969,9 @@ function advText(t){
   const s = t.toLowerCase();
   const m = s.match(/(1[4-9]\d)\s*(cm|公分)?/);
   if (m) return advSize(+m[1]);
+  if (/stack|reach|幾何|把手|龍頭|曲柄/.test(s) && sizePin !== null) return advSay(geoTalk(sizePin));
   if (/尺寸|身高|多高|size/.test(s)) return advRoute('size');
+  if (/戶外|冒險|越野|林道|碎石|探索|山路|上山/.test(s)) return advRoute('adventure');
   if (/通勤|上班|上學|代步|市區/.test(s)) return advRoute('commute');
   if (/sl\s?1|差在|差別|比較/.test(s)) return advRoute('sl1');
   if (/配件|車燈|燈|鎖|水壺|打氣/.test(s)) return advRoute('acc');
@@ -934,6 +984,44 @@ function advText(t){
 /* 輸入列：沒打字不能送出；麥克風只做聆聽示意；圖片按鈕做以圖找車 */
 const advInput = $('advInput'), advSend = $('advSend');
 advInput.addEventListener('input', () => { advSend.disabled = !advInput.value.trim(); });
+/* 快捷 chip：我的尺寸 → 對話框裡的身高滑桿（確認後直接套用到左欄尺寸與幾何表）；商品比較 → 加入比較 */
+/* 線上騎乘卡片寬度跟著上排三顆按鈕 */
+(function fitVride(){
+  const cta = document.querySelector('.info .cta'), items = [...cta.children];
+  const w = Math.round(items[items.length - 1].getBoundingClientRect().right - cta.getBoundingClientRect().left);
+  document.querySelector('.info .vride').style.setProperty('--cta-w', w + 'px');
+  addEventListener('resize', fitVride, {once:true});
+})();
+$('advQuick').querySelector('[data-q="size"]').onclick = () => {
+  adv.holdAcc = true;
+  if ($('advisor').hidden) openAdvisor();
+  let h = 172; try { h = +localStorage.getItem(ADV_H_KEY) || 172; } catch (e) {}
+  advAdd('我的尺寸', 'me');
+  advSay('拉一下身高，我幫你對應這台的尺寸：' + advSizer(SIZES, h), 600);
+  adv.queue = adv.queue.then(() => { const m = [...$('advLog').querySelectorAll('.adv-sizer')].pop().closest('.am'); advBindSizer(m, SIZES, hh => advSize(hh)); });
+};
+/* Tips 示範（詳細頁） */
+Tips.register('size', () => {
+  adv.holdAcc = true;                                   /* 講尺寸時不插配件卡 */
+  if ($('advisor').hidden) { adv.started = true; openAdvisor(); }
+  advAdd('我適合哪個尺寸？', 'me');
+  advSay('好，我帶你到「車架幾何與尺寸」，用 178 cm 幫你對一下 👇', 500);
+  adv.queue = adv.queue.then(() => new Promise(r => setTimeout(() => { advSize(178); r(); }, 500)));
+});
+Tips.register('use', () => {
+  if ($('advisor').hidden) { adv.started = true; openAdvisor(); }
+  const t = '我喜歡戶外冒險', inp = $('advInput');
+  inp.value = ''; inp.focus();
+  let i = 0;
+  const tick = () => { inp.value = t.slice(0, ++i); inp.dispatchEvent(new Event('input')); if (i < t.length) setTimeout(tick, 60); else setTimeout(() => $('advForm').requestSubmit(), 450); };
+  setTimeout(tick, 700);
+});
+$('advQuick').querySelector('[data-q="compare"]').onclick = () => {
+  advAdd('比較車款', 'me');
+  if (!inCompare) acts('compare')[0].click();
+  addYou('cmp', '已加入比較清單');
+  advSay('已把 <b>Revolt Advanced SL 0</b> 加入比較。到車款清單再勾一到兩台，就能並排看規格。' + chipsHtml([['golist','去車款清單']]), 700);
+};
 $('advForm').onsubmit = e => {
   e.preventDefault();
   const t = advInput.value.trim(); if (!t) return;
@@ -1002,6 +1090,7 @@ $('specsMoreBtn').onclick = () => {
 
 /* ---------- 幾何（官網） ---------- */
 const SIZES = [['XS',155,166],['S',159,171],['M',169,181],['ML',174,186]];
+window.ADV_SIZES = SIZES;   /* 對話框「我的尺寸」滑桿用同一張表 */
 const GEO = [
   ['A','座(立)管長','430mm','450mm','470mm','490mm'],
   ['B','座(立)管角度','75.0°','74.5°','74.5°','74.0°'],
@@ -1035,7 +1124,7 @@ function renderSize(h){
   $('gtable').innerHTML = '<thead><tr><th>尺寸</th>' + SIZES.map((s, i) => '<th class="' + (hit.includes(i) ? 'hit' : '') + '">' + s[0] + '</th>').join('') + '</tr></thead><tbody>' +
     GEO.map(r => '<tr data-letter="' + r[0] + '"><td><i>' + r[0] + '</i>' + r[1] + '</td>' + r.slice(2).map((v, i) => '<td class="' + (hit.includes(i) ? 'hit' : '') + '">' + v + '</td>').join('') + '</tr>').join('') + '</tbody>';
 }
-$('hRange').oninput = e => { sizePin = null; renderSize(+e.target.value); markSizeBtn(); bindGeoRows(); };
+$('hRange').oninput = e => { sizeTouched = true; sizePin = null; renderSize(+e.target.value); markSizeBtn(); bindGeoRows(); };
 
 /* 圖上的字母與表格的列互相對應：點任一邊，兩邊一起標起來 */
 let letterOn = null;
@@ -1052,20 +1141,32 @@ function bindGeoRows(){
 }
 document.querySelectorAll('.hot').forEach(h => h.onclick = () => markLetter(h.dataset.letter));
 /* 左欄的尺寸按鈕：帶到車架幾何與尺寸，並把該尺寸標在表上 */
+let sizeTouched = false;                  /* 使用者真的選過尺寸，才把 chip 標成「我的尺寸 M」 */
 function markSizeBtn(){
   const h = +$('hRange').value;
   document.querySelectorAll('#sizeBtns button').forEach(b => {
     const i = SIZES.findIndex(x => x[0] === b.dataset.size);
     b.classList.toggle('on', sizePin !== null ? i === sizePin : (h >= SIZES[i][1] && h <= SIZES[i][2]));
   });
+  if (!sizeTouched) return;
+  const hit = sizePin !== null ? [sizePin] : SIZES.map((s, i) => h >= s[1] && h <= s[2] ? i : -1).filter(i => i >= 0);
+  if (hit.length) advQuickSet('size', '我的尺寸 ' + SIZES[hit[hit.length - 1]][0]);
+  try { localStorage.setItem(ADV_H_KEY, h); } catch (e) {}
 }
 document.querySelectorAll('#sizeBtns button').forEach(b => b.onclick = () => {
+  sizeTouched = true;
   sizePin = SIZES.findIndex(x => x[0] === b.dataset.size);
   $('hRange').value = b.dataset.h; renderSize(+b.dataset.h); markSizeBtn();
 });
 $('sizeLink').onclick = () => $('geo').scrollIntoView({behavior:'smooth'});
-renderSize(172);
-markSizeBtn();
+/* 進頁時把之前記住的身高套到左欄尺寸與幾何表，跟對話框的「我的尺寸」chip 三處一致 */
+(function () {
+  let h = 0; try { h = +localStorage.getItem(ADV_H_KEY) || 0; } catch (e) {}
+  const pick = h ? advSizeFor(SIZES, h) : null;
+  if (pick) { sizeTouched = true; sizePin = SIZES.indexOf(pick); $('hRange').value = h; renderSize(h); }
+  else renderSize(172);
+  markSizeBtn();
+})();
 bindGeoRows();
 
 /* ---------- 相關車款：沿用首頁資料 ---------- */
