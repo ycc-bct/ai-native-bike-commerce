@@ -1120,10 +1120,16 @@ const NEED_ROW = {
 };
 function needSummary(key){
   const r = NEED_ROW[key];
+  /* 身高：有記住的尺寸就用真的（跟「我的尺寸」chip 一致），沒有才用示範值 */
+  let height = r.height;
+  try {
+    const h = +localStorage.getItem(ADV_H_KEY), sz = h ? advSizeFor(ADV_SIZES, h) : null;
+    if (sz) height = h + ' cm（尺寸 ' + sz[0] + '）';
+  } catch (e) {}
   return '<h4>先幫你整理一下需求</h4><ul class="adv-need">' +
     '<li><span>預算</span><b>' + r.budget + '</b></li>' +
     '<li><span>騎乘路況</span><b>' + r.terrain + '</b></li>' +
-    '<li><span>身高</span><b>' + r.height + '</b></li></ul>' +
+    '<li><span>身高</span><b>' + height + '</b></li></ul>' +
     '<small>有不對的地方直接跟我說，例如「預算八萬」「身高 178」，我會重新整理。</small>';
 }
 const baseRoute = route;
