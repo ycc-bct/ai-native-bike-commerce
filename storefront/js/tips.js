@@ -47,7 +47,7 @@
     });
     var body = box.querySelector('.tips-body');
     if (!tab.items.length) {
-      body.innerHTML = '<p class="tips-empty">這一頁的功能整理中，之後會列在這裡。</p>';
+      body.innerHTML = '<p class="tips-empty">這一頁的功能整理中 coming soooon</p>';
       return;
     }
     body.innerHTML = '<ol>' + tab.items.map(function (it, i) {
@@ -70,8 +70,8 @@
   box.querySelectorAll('.tips-tabs button').forEach(function (b) {
     b.onclick = function () {
       var tab = TABS.filter(function (x) { return x.id === b.dataset.tab; })[0];
-      if (tab.page && tab.page !== here) { location.href = tab.page + '?tips=1'; return; }   /* 選別頁就直接跳過去，到了會自動打開 Tips */
-      show(tab.id);
+      if (tab.items.length && tab.page && tab.page !== here) { location.href = tab.page + '?tips=1'; return; }   /* 選別頁就直接跳過去，到了會自動打開 Tips */
+      show(tab.id);                                        /* 還沒整理的分頁（線上騎乘體驗、結帳）留在原頁顯示提示 */
     };
   });
   addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
