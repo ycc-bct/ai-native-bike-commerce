@@ -30,7 +30,7 @@
 .orb-btn.has-chat::after{content:"";position:absolute;right:-2px;top:-2px;width:10px;height:10px;border-radius:50%;background:#1F4FE0;border:2px solid #fff;animation:amIn .3s var(--ease) both}
 
 /* 對話框 */
-.advisor{position:fixed;z-index:66;right:24px;top:80px;width:400px;height:min(680px,calc(100vh - 104px));display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 28px 70px rgba(20,26,34,.2);overflow:hidden;opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.advisor{position:fixed;z-index:66;right:24px;top:80px;width:400px;height:calc(100vh - 104px);display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 28px 70px rgba(20,26,34,.2);overflow:hidden;opacity:0;transform:translateY(10px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
 .advisor.on{opacity:1;transform:none}
 .advisor[hidden]{display:none}
 .adv-hd{flex:none;display:flex;align-items:center;gap:12px;padding:14px 12px 14px 16px;border-bottom:1px solid var(--line)}
