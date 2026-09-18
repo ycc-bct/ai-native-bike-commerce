@@ -1,8 +1,13 @@
-/* Tips：示範用的情境說明，固定在左下角（首頁、清單頁、詳細頁共用）
+/* Tips：示範用的情境說明，固定在左下角（storefront 全站共用，含子資料夾的頁面）
+   使用方式見 storefront/docs/tips.md。
+   路徑一律以這支腳本所在的 storefront 根目錄為準，所以放在 scenario-2/ 之類的子資料夾也能用。
    上方分頁依網站流程排列；每一項的 Try it：
-   - 就在目前這一頁 → 直接執行該頁用 Tips.register(key, fn) 註冊的動作
-   - 在別的頁面     → 跳過去並帶 ?try=key，到了之後自動執行 */
+   - 項目有 href     → 直接前往
+   - 就在目前這一頁  → 執行該頁用 Tips.register(key, fn) 註冊的動作
+   - 在別的頁面      → 跳過去並帶 ?try=key，到了之後自動執行 */
 (function () {
+  var script = document.currentScript || document.querySelector('script[src*="tips.js"]');
+  var ROOT = script ? script.src.replace(/js\/tips\.js.*$/, '') : '';          /* storefront/ 的絕對網址 */
   var TABS = [
     {id: 'home',    t: '首頁',         page: 'index.html', items: [
       {key: 'callout', h: 'AI 主動出現 → 需要幫忙挑車嗎？', d: '逛一陣子後，右上角的顧問會主動問「需要幫忙挑車嗎？」，按「好，聊聊看」直接開始對話，不想理它就「先自己逛」。'},
@@ -17,17 +22,24 @@
       {key: 'use',  h: '說用途 → 頁面個人化', d: '跟顧問說「我喜歡戶外冒險」，主視覺只留下探索未知這段路，配件也換成戶外用的。'},
       {key: 'size', h: 'AI 問尺寸 → 幾何表直接標亮', d: '跟顧問說身高，頁面捲到車架幾何，左欄尺寸自動釘選，表格對應的那一列和圖上的字母一起亮起來。'}
     ]},
-    {id: 'ride',    t: '線上騎乘體驗', page: '', items: [
+    {id: 'ride',    t: '線上騎乘體驗', page: 'scenario-2/', items: [
       {key: 'ride', h: '線上騎乘體驗 → 120 秒數位試乘', d: '選一段風景、挑一台車就出發：中途遇到岔路自己選、想換車隨時換，騎完 AI 會整理成你的騎乘報告。',
        href: 'https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/'}
     ]},
-    {id: 'checkout', t: '體驗報告與結帳', page: '', items: [
+    {id: 'checkout', t: '體驗報告與結帳', page: 'report.html', items: [
       {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。',
        href: 'https://htmlpreview.github.io/?https://github.com/ycc-bct/ai-native-bike-commerce/blob/main/storefront/report.html#equipment'}
     ]}
   ];
-  var here = (location.pathname.split('/').pop() || 'index.html');
-  var cur = TABS.filter(function (x) { return x.page === here; })[0] || TABS[0];
+  /* 目前在哪一頁：相對 storefront 根目錄的路徑，例如 index.html、gravel.html、scenario-2/、report.html */
+  var here = location.href.split(/[?#]/)[0];
+  here = ROOT && here.indexOf(ROOT) === 0 ? here.slice(ROOT.length) : (location.pathname.split('/').pop() || 'index.html');
+  if (here === '' ) here = 'index.html';
+  here = here.replace(/index\.html$/, function (m, off) { return off === 0 ? m : ''; });   /* scenario-2/index.html → scenario-2/ */
+  /* 子資料夾的分頁（page 以 / 結尾）：整個資料夾裡的頁面都算那一頁 */
+  var cur = TABS.filter(function (x) { return x.page && (x.page === here || (/\/$/.test(x.page) && here.indexOf(x.page) === 0)); })[0] || TABS[0];
+  if (cur.page && /\/$/.test(cur.page) && here.indexOf(cur.page) === 0) here = cur.page;
+  var go = function (page, q) { location.href = ROOT + page + (q || ''); };
   var FN = {};
 
   var pill = document.createElement('button');
@@ -64,7 +76,7 @@
       b.onclick = function () {
         var key = b.dataset.key, page = b.dataset.page;
         if (b.dataset.href) { location.href = b.dataset.href; return; }          /* 直接連到指定頁面 */
-        if (page && page !== here) { location.href = page + '?try=' + key; return; }
+        if (page && page !== here) { go(page, '?try=' + key); return; }
         close();
         if (FN[key]) FN[key]();
       };
@@ -77,7 +89,11 @@
   box.querySelectorAll('.tips-tabs button').forEach(function (b) {
     b.onclick = function () {
       var tab = TABS.filter(function (x) { return x.id === b.dataset.tab; })[0];
-      if (tab.items.length && tab.page && tab.page !== here) { location.href = tab.page + '?tips=1'; return; }   /* 選別頁就直接跳過去，到了會自動打開 Tips */
+      if (tab.items.length && tab.page && tab.page !== here) {                 /* 選別頁就直接跳過去，到了會自動打開 Tips */
+        var it = tab.items[0];
+        if (tab.items.length === 1 && it.href) { location.href = it.href; return; }
+        go(tab.page, '?tips=1'); return;
+      }
       show(tab.id);                                        /* 還沒整理的分頁（線上騎乘體驗、結帳）留在原頁顯示提示 */
     };
   });
