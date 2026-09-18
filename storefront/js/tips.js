@@ -26,8 +26,7 @@
       {key: 'ride', h: '選風景 → 挑車 → 騎乘 → 看報告', d: '先選一段風景（城市、公路或山路），再依需求挑一台車出發；騎到路口自己選路，途中可以問 AI 或換車，騎完 AI 整理成你的騎乘報告。'}
     ]},
     {id: 'checkout', t: '體驗報告與結帳', page: 'report.html', items: [
-      {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。',
-       href: 'https://htmlpreview.github.io/?https://github.com/ycc-bct/ai-native-bike-commerce/blob/main/storefront/report.html#equipment'}
+      {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。'}
     ]}
   ];
   /* 目前在哪一頁：相對 storefront 根目錄的路徑，例如 index.html、gravel.html、scenario-2/、report.html */
