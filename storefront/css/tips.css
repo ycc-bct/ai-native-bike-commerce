@@ -2,7 +2,7 @@
 .tips-pill{position:fixed;left:24px;bottom:24px;z-index:63;height:40px;padding:0 18px;border-radius:999px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 10px 26px rgba(20,26,34,.14);font:700 13px/1 "Inter","Noto Sans TC",sans-serif;color:#141A22;cursor:pointer;transition:transform .2s,box-shadow .2s}
 .tips-pill:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(20,26,34,.18)}
 .tips-pill[hidden],.tips[hidden]{display:none}
-.tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(420px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;padding:14px 16px 16px;border-radius:14px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 20px 48px rgba(20,26,34,.2);font-family:"Inter","Noto Sans TC",sans-serif;color:#141A22}
+.tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(460px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;padding:14px 16px 16px;border-radius:14px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 20px 48px rgba(20,26,34,.2);font-family:"Inter","Noto Sans TC",sans-serif;color:#141A22}
 .tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .tips-head b{font-size:12px;font-weight:800;letter-spacing:.14em}
 .tips-close{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:#7A8492;cursor:pointer}
@@ -10,7 +10,7 @@
 .tips-close svg{width:16px;height:16px}
 /* 分頁：依網站流程排列 */
 .tips-tabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:#F1F4F8;margin-bottom:12px}
-.tips-tabs button{flex:1 1 auto;min-width:0;height:30px;padding:0 8px;border:0;border-radius:8px;background:none;font:600 12px/1 "Inter","Noto Sans TC",sans-serif;color:#4A5563;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s}
+.tips-tabs button{flex:1 1 auto;min-width:0;height:30px;padding:0 7px;border:0;border-radius:8px;background:none;font:600 12px/1 "Inter","Noto Sans TC",sans-serif;color:#4A5563;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s}
 .tips-tabs button:hover{color:#141A22}
 .tips-tabs button.on{background:#fff;color:#141A22;box-shadow:0 1px 3px rgba(20,26,34,.12)}
 .tips-body ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}

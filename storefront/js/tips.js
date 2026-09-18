@@ -17,8 +17,14 @@
       {key: 'use',  h: '說用途 → 頁面個人化', d: '跟顧問說「我喜歡戶外冒險」，主視覺只留下探索未知這段路，配件也換成戶外用的。'},
       {key: 'size', h: 'AI 問尺寸 → 幾何表直接標亮', d: '跟顧問說身高，頁面捲到車架幾何，左欄尺寸自動釘選，表格對應的那一列和圖上的字母一起亮起來。'}
     ]},
-    {id: 'ride',    t: '線上騎乘體驗', page: 'scenario-2/index.html', items: []},
-    {id: 'checkout', t: '結帳',        page: '', items: []}
+    {id: 'ride',    t: '線上騎乘體驗', page: '', items: [
+      {key: 'ride', h: '線上騎乘體驗 → 120 秒數位試乘', d: '選一段風景、挑一台車就出發：中途遇到岔路自己選、想換車隨時換，騎完 AI 會整理成你的騎乘報告。',
+       href: 'https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/'}
+    ]},
+    {id: 'checkout', t: '線上騎乘報告與結帳', page: '', items: [
+      {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。',
+       href: 'https://htmlpreview.github.io/?https://github.com/ycc-bct/ai-native-bike-commerce/blob/main/storefront/report.html#equipment'}
+    ]}
   ];
   var here = (location.pathname.split('/').pop() || 'index.html');
   var cur = TABS.filter(function (x) { return x.page === here; })[0] || TABS[0];
@@ -52,11 +58,12 @@
     }
     body.innerHTML = '<ol>' + tab.items.map(function (it, i) {
       return '<li><span class="n">' + (i + 1) + '</span><div><b>' + it.h + '</b><p>' + it.d + '</p></div>' +
-        '<button class="try" type="button" data-key="' + it.key + '" data-page="' + tab.page + '">Try it</button></li>';
+        '<button class="try" type="button" data-key="' + it.key + '" data-page="' + tab.page + '"' + (it.href ? ' data-href="' + it.href + '"' : '') + '>Try it</button></li>';
     }).join('') + '</ol>';
     body.querySelectorAll('.try').forEach(function (b) {
       b.onclick = function () {
         var key = b.dataset.key, page = b.dataset.page;
+        if (b.dataset.href) { location.href = b.dataset.href; return; }          /* 直接連到指定頁面 */
         if (page && page !== here) { location.href = page + '?try=' + key; return; }
         close();
         if (FN[key]) FN[key]();
