@@ -57,7 +57,7 @@
       return;
     }
     body.innerHTML = '<ol>' + tab.items.map(function (it, i) {
-      return '<li><span class="n">' + (i + 1) + '</span><div><b>' + it.h + '</b><p>' + it.d + '</p></div>' +
+      return '<li>' + (tab.items.length > 1 ? '<span class="n">' + (i + 1) + '</span>' : '') + '<div><b>' + it.h + '</b><p>' + it.d + '</p></div>' +
         '<button class="try" type="button" data-key="' + it.key + '" data-page="' + tab.page + '"' + (it.href ? ' data-href="' + it.href + '"' : '') + '>Try it</button></li>';
     }).join('') + '</ol>';
     body.querySelectorAll('.try').forEach(function (b) {
