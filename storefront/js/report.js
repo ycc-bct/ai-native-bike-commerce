@@ -28,8 +28,8 @@ function renderCheckout(){refreshAccessorySuggestions();const count=Object.value
  $('checkoutBody').classList.toggle('is-empty',!count);
  if(!count){$('checkoutBody').innerHTML='<h3>購物車目前沒有商品</h3><p class="fine">回到報告，挑選適合這次旅程的裝備。</p><a class="btn" href="#equipment">挑選商品</a>';return;}
  if(step===0)$('checkoutBody').innerHTML='<h3>你的商品</h3>'+cartRows(true);
- if(step===1)$('checkoutBody').innerHTML='<fieldset><legend>取貨方式</legend>'+['門市取貨','宅配到府'].map(v=>`<label class="choice"><input type="radio" name="pickup" value="${v}" ${pickup===v?'checked':''}>${v}</label>`).join('')+'</fieldset><fieldset><legend>付款方式</legend>'+['門市付款','信用卡'].map(v=>`<label class="choice"><input type="radio" name="payment" value="${v}" ${payment===v?'checked':''} ${pickup==='宅配到府'&&v==='門市付款'?'disabled':''}>${v}</label>`).join('')+'</fieldset><p class="fine">此步驟僅記錄偏好，尚未收取費用；配送與付款可用方式以正式結帳為準。</p>';
- if(step===2)$('checkoutBody').innerHTML='<div class="done-mark">✓</div><h3>商品清單已備妥</h3><p class="fine">已保留你的選擇，尚未建立訂單或扣款。</p>'+cartRows(false)+`<div class="specs"><dl><dt>取貨方式</dt><dd>${pickup}</dd><dt>付款方式</dt><dd>${payment}</dd></dl></div><a class="btn" style="margin-top:20px" href="https://www.giant-bicycles.com/tw/stores" target="_blank" rel="noopener">聯繫門市完成購買 ↗</a>`;}
+ if(step===1)$('checkoutBody').innerHTML='<fieldset><legend>取貨方式</legend>'+['門市取貨','宅配到府'].map(v=>`<label class="choice"><input type="radio" name="pickup" value="${v}" ${pickup===v?'checked':''}>${v}</label>`).join('')+'</fieldset><fieldset><legend>付款方式</legend>'+['門市付款','信用卡'].map(v=>`<label class="choice"><input type="radio" name="payment" value="${v}" ${payment===v?'checked':''} ${pickup==='宅配到府'&&v==='門市付款'?'disabled':''}>${v}</label>`).join('')+'</fieldset>';
+ if(step===2)$('checkoutBody').innerHTML='<div class="done-mark">✓</div><h3>商品清單已備妥</h3><p class="fine">門市會與你聯繫，確認取貨時間。</p>'+cartRows(false)+`<div class="specs"><dl><dt>取貨方式</dt><dd>${pickup}</dd><dt>付款方式</dt><dd>${payment}</dd></dl></div><a class="btn" style="margin-top:20px" href="https://www.giant-bicycles.com/tw/stores" target="_blank" rel="noopener">聯繫門市完成購買 ↗</a>`;}
 $('checkoutBody').onclick=e=>{const button=e.target.closest('[data-remove]');if(button){delete cart[button.dataset.remove];save();renderCheckout();}};
 $('checkoutBody').onchange=e=>{if(e.target.name==='pickup'){pickup=e.target.value;if(pickup==='宅配到府')payment='信用卡';renderCheckout();}else if(e.target.name==='payment')payment=e.target.value;};
 $('checkoutNext').onclick=()=>{if(step===2){location.hash='equipment';return;}step++;renderCheckout();if(step===2){cart={};selected.clear();for(const g of gear)quantities[g.id]=1;save();renderGear();}$('checkoutTitle').setAttribute('tabindex','-1');$('checkoutTitle').focus();};$('checkoutBack').onclick=()=>{step=0;renderCheckout();};
@@ -65,19 +65,18 @@ refreshAccessorySuggestions();
  const show=(state,text,focusEl)=>{note.dataset.state=state;note.textContent=text;note.hidden=false;if(focusEl)focusEl.focus({preventScroll:false});};
  form.addEventListener('submit',e=>{
   e.preventDefault();
-  const date=$('bkDate'),slot=$('bkSlot'),name=$('bkName'),phone=$('bkPhone'),email=$('bkEmail'),ack=$('bkAck');
+  const date=$('bkDate'),slot=$('bkSlot'),name=$('bkName'),phone=$('bkPhone'),email=$('bkEmail');
   const checks=[
    [!date.value,'請選擇希望日期。',date],
    [!slot.value,'請選擇希望時段。',slot],
    [!name.value.trim(),'請填寫你的稱呼。',name],
    [!/^09\d{8}$/.test(phone.value.trim()),'請填寫 10 碼手機號碼，例如 0912345678。',phone],
    [!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()),'請填寫可收信的電子信箱。',email],
-   [!ack.checked,'請先確認這是預約示範。',ack],
   ];
   const bad=checks.find(c=>c[0]);
   if(bad)return show('error',bad[1],bad[2]);
-  show('ok','已記錄 '+$('bkStore').value+'　'+date.value+'　'+slot.value+' 的試乘示範，未建立真實預約。正式預約請聯繫門市。');
-  toast('試騎預約示範已完成，未建立真實預約。');
+  show('ok','已記錄 '+$('bkStore').value+'　'+date.value+'　'+slot.value+' 的試乘預約，門市會與你確認。');
+  toast('試騎預約已送出。');
  });
  form.addEventListener('input',()=>{if(note.dataset.state==='error')note.hidden=true;});
 })();
@@ -94,3 +93,88 @@ window.Tips&&Tips.register('report',function(){
   $('equipment').scrollIntoView({behavior:'smooth',block:'start'});
  });
 });
+
+// 章節導覽的目前段落：product.html 的分頁有 .on 狀態，這裡用捲動位置推
+(function(){
+ const nav=document.querySelector('.section-nav');if(!nav)return;
+ const links=[...nav.querySelectorAll('a[href^="#"]')];
+ const targets=links.map(a=>({a,el:document.getElementById(a.getAttribute('href').slice(1))})).filter(t=>t.el);
+ const sync=()=>{
+  const line=nav.getBoundingClientRect().bottom+1;
+  let current=null;
+  for(const t of targets){if(t.el.hidden)continue;
+   if(t.el.getBoundingClientRect().top<=line)current=t;}
+  if(!current)current=targets.find(t=>!t.el.hidden)||null;
+  links.forEach(a=>a.classList.toggle('on',!!current&&a===current.a));
+ };
+ addEventListener('scroll',sync,{passive:true});
+ addEventListener('resize',sync);
+ sync();
+})();
+
+/* ───────── 結帳情境的選車顧問 ─────────
+   開關與推移比照 product.html：body 加 adv-open，內容往左推，面板從右側出現。
+   回答只用這一頁已有的資料：配件清單與價格、結帳流程的取貨與付款選項、目前選取金額。
+   PROMO 是為了 demo 放的檔期，正式上線要換成真實活動。 */
+const PROMO={name:'秋季整備優惠',detail:'配件任選三件，第三件五折；到門市取車再送一次基礎調校。',until:'2026-11-30'};
+let advStarted=false,advAnim=false;
+function advMsg(text,who){
+ const log=$('advLog');if(!log)return;
+ const d=document.createElement('div');d.className='am '+(who==='me'?'me':'ai');d.textContent=text;
+ log.appendChild(d);log.scrollTop=log.scrollHeight;
+}
+function advAccessoryAnswer(){
+ const rest=gear.filter(g=>g.id!=='revolt'&&!selected.has(g.id));
+ if(!rest.length)return '建議的配件你都選了，直接結帳就可以。';
+ const list=rest.slice(0,3).map(g=>`${g.name} ${money(g.price)}`).join('、');
+ return `這趟是山路與碎石路，先準備補水與收納最實用：${list}。`;
+}
+function advTotalAnswer(){
+ const count=[...selected].reduce((s,id)=>s+quantities[id],0);
+ const total=gear.reduce((s,g)=>s+(selected.has(g.id)?g.price*quantities[g.id]:0),0);
+ return `目前選了 ${count} 件，合計 ${money(total)}。`;
+}
+function advAnswer(q){
+ const t=(q||'').trim();if(!t)return null;
+ if(/配件|裝備|要買|加購|推薦/.test(t))return advAccessoryAnswer();
+ if(/折扣|優惠|活動|促銷|檔期|便宜/.test(t))return `${PROMO.name}：${PROMO.detail}活動到 ${PROMO.until}。`;
+ if(/結帳|付款|信用卡|分期/.test(t))return '付款可選門市付款或信用卡。選宅配到府時會自動切成信用卡。';
+ if(/取貨|宅配|運費|到府|門市拿/.test(t))return '取貨可選門市取貨或宅配到府，兩種都在結帳的第二步選。';
+ if(/多少|總共|金額|合計|價格/.test(t))return advTotalAnswer();
+ if(/尺寸|身高|幾何|重量|規格/.test(t))return '車架尺寸與規格要看車款頁，這裡主要處理配件與結帳。';
+ return null;
+}
+function advAsk(q){
+ advMsg(q,'me');
+ const a=advAnswer(q)||'這裡可以回答配件建議、活動折扣、結帳與取貨，以及目前選取的金額。';
+ setTimeout(()=>advMsg(a,'ai'),280);
+}
+function advGreet(){
+ advMsg('車已經幫你整理好了。配件、折扣或結帳有問題都可以問我。','ai');
+}
+function openAdvisor(){
+ const a=$('advisor');if(!a||advAnim||!a.hidden)return;
+ if(window.Tips)Tips.close();
+ a.hidden=false;a.classList.add('on');document.body.classList.add('adv-open');
+ advAnim=true;
+ advisorGenie(a,$('advLog'),$('aiOrb'),'out',()=>{
+  advAnim=false;if(!advStarted){advStarted=true;advGreet();}
+  $('advInput').focus({preventScroll:true});
+ });
+}
+function closeAdvisor(){
+ const a=$('advisor');if(!a||advAnim||a.hidden)return;
+ advAnim=true;document.body.classList.remove('adv-open');
+ advisorGenie(a,$('advLog'),$('aiOrb'),'in',()=>{a.classList.remove('on');a.hidden=true;advAnim=false;});
+}
+if($('advisor')){
+ const toggle=()=>$('advisor').hidden?openAdvisor():closeAdvisor();
+ $('aiOrb').onclick=toggle;
+ $('advClose').onclick=closeAdvisor;
+ $('advQuick').onclick=e=>{const b=e.target.closest('[data-q]');if(!b)return;advAsk(b.textContent.trim());};
+ $('advForm').addEventListener('submit',e=>{
+  e.preventDefault();const i=$('advInput');const v=i.value.trim();if(!v)return;
+  advAsk(v);i.value='';i.focus({preventScroll:true});
+ });
+ addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('advisor').hidden)closeAdvisor();});
+}

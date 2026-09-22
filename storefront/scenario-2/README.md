@@ -48,4 +48,4 @@
 python3 -m http.server 8000
 ```
 
-然後開 http://localhost:8000/storefront/scenario-2/
+然後開 http://localhost:8000/storefront/scenario-2/index_pick.html

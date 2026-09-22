@@ -6,7 +6,7 @@
 <title>Revolt Advanced SL 0 · GIANT</title>
 <link rel="stylesheet" href="css/header.css?v=b9e4e03">
 <link rel="stylesheet" href="css/advisor.css?v=b9e4e03">
-<link rel="stylesheet" href="css/tips.css?v=8f497c7">
+<link rel="stylesheet" href="css/tips.css?v=1d342fe-5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -466,7 +466,7 @@ a:not([href]){cursor:default}
       <button class="btn-line" id="addCompare" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
       <button class="btn-fav" id="fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
     </div>
-    <a class="vride" href="scenario-2/index.html?bike=sl0">
+    <a class="vride" href="scenario-2/index_pick.html?bike=sl0">
       <span class="vr-ph"><img src="img/home/virtual-ride.webp" alt=""></span>
       <span class="vr-copy"><b>線上騎乘體驗</b><span class="vr-desc">騎這台上路 120 秒，AI 整理你的騎乘報告。</span></span>
     </a>
@@ -638,7 +638,7 @@ a:not([href]){cursor:default}
 <script src="js/thinking-orbs-engine.js?v=b9e4e03"></script>
 <script src="js/orb.js?v=b9e4e03"></script>
 <script src="js/advisor.js?v=b9e4e03"></script>
-<script src="js/tips.js?v=8f497c7"></script>
+<script src="js/tips.js?v=1d342fe-5"></script>
 <script>
 const $ = id => document.getElementById(id);
 /* ---------- 進場動態：.rv.now 載入即進場；其他捲進畫面才進場 ---------- */
@@ -919,7 +919,7 @@ function advSize(h){
       : '以 ' + h + ' cm 來看，官方建議是 <b>' + s[0] + '</b>（' + s[1] + '–' + s[2] + ' cm），我已經幫你在表上標好了。')
     + '<br>右邊亮起來的 <b>K（Stack）</b>是座艙高度，<b>L（Reach）</b>是往前伸的距離，這兩個數字決定騎起來趴不趴。');
   advSay('有機會的話，到門市試騎一下最準，也歡迎先體驗線上試乘 👇' +
-    '<a class="adv-ride" href="scenario-2/index.html?bike=sl0"><img src="img/home/virtual-ride.webp" alt=""><span><b>線上騎乘體驗</b><small>騎這台上路 120 秒，AI 整理你的騎乘報告。</small></span></a>');
+    '<a class="adv-ride" href="scenario-2/index_pick.html?bike=sl0"><img src="img/home/virtual-ride.webp" alt=""><span><b>線上騎乘體驗</b><small>騎這台上路 120 秒，AI 整理你的騎乘報告。</small></span></a>');
 }
 function advRoute(v){
   if (v === 'h:L') { markLetter('L'); spot(document.querySelector('.geo-fig')); return advSay('圖上的 L 就是 Reach：從五通到車頭的水平距離。數字越大，身體會越往前伸，騎起來越有競速感。'); }
