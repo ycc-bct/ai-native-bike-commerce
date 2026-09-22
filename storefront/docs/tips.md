@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="css/tips.css?v=b9e4e03">
 <script src="js/tips.js?v=b9e4e03"></script>
 
-<!-- 子資料夾的頁面（例如 scenario-2/index_pick.html） -->
+<!-- 子資料夾的頁面（例如 scenario-2/index.html） -->
 <link rel="stylesheet" href="../css/tips.css?v=b9e4e03">
 <script src="../js/tips.js?v=b9e4e03"></script>
 ```
@@ -30,7 +30,7 @@
 
 | 情境 | 行為 |
 |---|---|
-| 打開面板 | 停在「目前這一頁」的分頁（用網址對照：`index.html`、`gravel.html`、`product.html`、`scenario-2/index_pick.html`、`report.html`）。 |
+| 打開面板 | 停在「目前這一頁」的分頁（用網址對照：`index.html`、`gravel.html`、`product.html`、`scenario-2/`、`report.html`）。 |
 | 點別的分頁 | 有多個項目的分頁 → 跳到該頁並自動打開 Tips；只有單一項目且有 `href` 的分頁（體驗報告與結帳）→ 直接前往該連結。 |
 | Try it（項目有 `href`） | 直接前往該連結。 |
 | Try it（在目前頁） | 執行該頁用 `Tips.register(key, fn)` 註冊的動作。 |
@@ -63,10 +63,10 @@
 只改 `js/tips.js` 最上面的 `TABS` 陣列：
 
 ```js
-{id: 'ride', t: '線上騎乘體驗', page: 'scenario-2/index_pick.html', items: [
+{id: 'ride', t: '線上騎乘體驗', page: 'scenario-2/', items: [
   {key: 'ride', h: '線上騎乘體驗 → 120 秒數位試乘',
    d: '選一段風景、挑一台車就出發：中途遇到岔路自己選、想換車隨時換，騎完 AI 會整理成你的騎乘報告。',
-   href: 'https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/index_pick.html'}
+   href: 'https://ycc-bct.github.io/ai-native-bike-commerce/storefront/scenario-2/'}
 ]}
 ```
 
@@ -74,7 +74,7 @@
 |---|---|
 | `id` | 分頁代號，唯一即可。 |
 | `t` | 分頁名稱（五個分頁要維持一行，名稱盡量 ≤ 8 字）。 |
-| `page` | 相對 `storefront/` 的路徑，用來判斷「目前在哪一頁」與跨頁跳轉；子資料夾用 `scenario-2/index_pick.html`。 |
+| `page` | 相對 `storefront/` 的路徑，用來判斷「目前在哪一頁」與跨頁跳轉；子資料夾用 `scenario-2/`。 |
 | `items[].key` | Try it 的動作代號，對應 `Tips.register(key, fn)`。 |
 | `items[].h` | 標題，格式「觸發 → 結果」，例如「說用途 → 頁面個人化」。 |
 | `items[].d` | 一到兩句說明，寫給第一次看的人：怎麼觸發、會看到什麼。 |
@@ -90,7 +90,7 @@
 | 首頁 `index.html` | AI 主動出現 → 需要幫忙挑車嗎？ / 說出車款 → AI 直接帶路 | 頁內示範 |
 | 商品清單 `gravel.html` | 逛一陣子 → AI 主動提示 / AI 幫我整理 → 頁面秀出推薦 / 勾選比較 → 比較表 | 頁內示範 |
 | 詳細頁 `product.html` | 說用途 → 頁面個人化 / AI 問尺寸 → 幾何表直接標亮 | 頁內示範 |
-| 線上騎乘體驗 `scenario-2/index_pick.html` | 選風景 → 挑車 → 騎乘 → 看報告 | 頁內示範 |
+| 線上騎乘體驗 `scenario-2/` | 選風景 → 挑車 → 騎乘 → 看報告 | 頁內示範 |
 | 體驗報告與結帳 `report.html` | 線上騎乘報告 → 配件建議與結帳 | 連到 report.html#equipment（htmlpreview） |
 
 ## 6. 接上後的檢查
