@@ -350,8 +350,9 @@ body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
 /* header 圖示：背景暗時改白 */
 /* 選單壓在情境照上時，深色字後面墊一圈淡淡的淺色光暈 */
 .site-nav .links a{opacity:1;text-shadow:0 0 2px rgba(243,245,247,.95),0 0 8px rgba(243,245,247,.9),0 0 18px rgba(243,245,247,.75)}
-.nav .icons a svg{transition:color .4s}
-.nav .icons.on-dark a svg{color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
+.nav .icons a svg,.nav .icons .icon-btn svg{transition:color .4s}
+/* 我的最愛是 button 不是 a，原本的 `a svg` 選不到，情境照變暗時只有它沒跟著轉白 */
+.nav .icons.on-dark a svg,.nav .icons.on-dark .icon-btn svg{color:#fff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35))}
 .orb-wrap{position:relative;display:grid;place-items:center}
 
 /* 個人化 */
