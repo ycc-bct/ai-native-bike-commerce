@@ -13,7 +13,7 @@
 
 .bike-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}.bike-heading h2{margin:0}.bike-heading a{font-size:12px;color:var(--muted);white-space:nowrap;margin-left:auto}.bike-heading a:hover{color:var(--brand)}.bike-heading+p{margin-top:8px}
 
-.ride-intro{color:var(--muted);font-size:14px;margin-bottom:20px}.suggested-rides{display:grid;grid-template-columns:1fr 1fr;gap:16px}.suggested-rides article{background:white;border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;align-items:start}.suggested-rides img{width:100%;height:150px;object-fit:contain}.suggested-rides h3{font-size:17px;margin:12px 0 8px}.suggested-rides p{font-size:13px;color:var(--muted);margin-bottom:20px}.suggested-rides .btn{margin-top:auto;width:100%}.equipment .reason:empty{display:none}.equipment h3+.reason:empty+.price-line{margin-top:12px}@media(max-width:500px){.suggested-rides{grid-template-columns:1fr}}
+.ride-intro{color:var(--muted);font-size:14px;margin-bottom:20px}.suggested-rides{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.suggested-rides article{background:white;border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;align-items:start}.suggested-rides img{width:100%;height:150px;object-fit:contain}.suggested-rides h3{font-size:17px;margin:12px 0 8px}.suggested-rides p{font-size:13px;color:var(--muted);margin-bottom:20px}.suggested-rides .btn{margin-top:auto;width:100%}.equipment .reason:empty{display:none}.equipment h3+.reason:empty+.price-line{margin-top:12px}@media(max-width:500px){.suggested-rides{grid-template-columns:1fr}}
 
 .feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.feat article{background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px 26px 30px}.feat .fi{display:block}.feat .fi svg{width:36px;height:36px;color:var(--ink)}.feat h4{margin-top:10px;font-size:19px;font-weight:700;letter-spacing:.03em}.feat p{margin-top:12px;font-size:14.5px;line-height:1.85;color:var(--muted)}.section-nav{overflow-x:auto;white-space:nowrap}.section-nav a{flex-shrink:0}@media(max-width:1000px) and (min-width:761px),(max-width:500px){.feat{grid-template-columns:1fr}}
 
@@ -124,3 +124,17 @@ body.adv-open .shell{width:min(1320px,calc(100vw - 96px - 424px));margin-left:48
    report.css 只做了 font:inherit，缺背景/外框/內距，所以關閉與送出鈕會露出瀏覽器預設樣式。
    用 :where() 讓權重維持在元素選擇器等級（0,0,1），advisor.css 的 class 規則仍然蓋得過。 */
 :where(#advisor) button{font:inherit;color:inherit;background:none;border:0;padding:0}
+
+/* 建議試乘：三張卡。用 subgrid 讓圖／車名／價格／推薦理由／按鈕五列各自跨卡對齊，
+   否則三段長短不一的文案會讓按鈕與理由上方的分隔線各停在不同高度。
+   列距靠元素自己的 margin，所以容器只留欄距（row-gap 0）。 */
+.suggested-rides{column-gap:16px;row-gap:0}
+.suggested-rides article{display:grid;grid-template-rows:subgrid;grid-row:span 5;
+ justify-items:start;align-content:start}
+.suggested-rides strong{font-size:15px;color:var(--ink-70);margin-bottom:10px}
+.ride-why{width:100%;margin:0 0 16px!important;font-size:13px;line-height:1.6;color:var(--ink)}
+/* 窄欄就收成一欄：視窗本身窄，或選車顧問把主欄推到只剩 440px 寬的時候 */
+@media(max-width:1100px){.suggested-rides{grid-template-columns:1fr}
+ .suggested-rides article{display:flex;flex-direction:column;align-items:start}}
+body.adv-open .suggested-rides{grid-template-columns:1fr}
+body.adv-open .suggested-rides article{display:flex;flex-direction:column;align-items:start}

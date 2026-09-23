@@ -104,6 +104,9 @@ window.Tips&&Tips.register('report',function(){
   let current=null;
   for(const t of targets){if(t.el.hidden)continue;
    if(t.el.getBoundingClientRect().top<=line)current=t;}
+  // 最後一段比一個視窗還短時，它的頂端永遠碰不到導覽列；捲到底就直接點亮它
+  if(scrollY+innerHeight>=document.documentElement.scrollHeight-2){
+   const last=[...targets].reverse().find(t=>!t.el.hidden);if(last)current=last;}
   if(!current)current=targets.find(t=>!t.el.hidden)||null;
   links.forEach(a=>a.classList.toggle('on',!!current&&a===current.a));
  };
