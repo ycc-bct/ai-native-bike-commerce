@@ -4775,10 +4775,17 @@ function Wc(){const list=ie('.garage-cards');if(!list)return;list.innerHTML=gara
    改成記住使用者捲到哪裡，重繪後捲回同一個位置，位置交給使用者自己決定。
    重繪當下圖還沒排好、scrollWidth 偏小會把 scrollLeft 夾掉，所以分三次補捲；
    補捲期間上鎖，免得這幾次程式性捲動被當成使用者捲動寫回變數。 */
-var garageRailScroll=0,garageRailLock=!1;
+var garageRailScroll=0,garageRailLock=!1,garageRailFirst=!0;
 function garageRailRestore(list){garageRailLock=!0;
- const put=()=>{list.scrollLeft=garageRailScroll};
- put();requestAnimationFrame(put);setTimeout(()=>{put();garageRailLock=!1},150);
+ /* 只有第一次進選車現場把選取的卡捲到正中間當起點，之後一律沿用使用者捲到的位置。
+    置中要跟著三次補捲一起重算——前兩次圖還沒排好，offsetLeft 量出來是錯的。 */
+ /* 用 rect 差值算置中，不用 offsetLeft：卡片的 offsetParent 就是列表本身，
+    再減 list.offsetLeft 會多扣一次（列表原本就有 scroll-snap center，才把這個誤差蓋掉）。 */
+ const centre=()=>{const a=list.querySelector('.active');if(!a||!a.clientWidth)return;
+  const lr=list.getBoundingClientRect(),ar=a.getBoundingClientRect();
+  garageRailScroll=Math.max(0,list.scrollLeft+(ar.left+ar.width/2)-(lr.left+lr.width/2))};
+ const put=()=>{if(garageRailFirst)centre();list.scrollLeft=garageRailScroll};
+ put();requestAnimationFrame(put);setTimeout(()=>{put();garageRailFirst=!1;garageRailLock=!1},150);
  list.onscroll=()=>{if(!garageRailLock)garageRailScroll=list.scrollLeft};}
 document.addEventListener('click',event=>{const arrow=event.target.closest('[data-garage-direction]');if(!arrow)return;const bikes=garageChoices(),index=bikes.findIndex(b=>b.id===Y.bike);Y.bike=bikes[(index+Number(arrow.dataset.garageDirection)+bikes.length)%bikes.length].id;nt();ie(`[data-garage-direction="${arrow.dataset.garageDirection}"]`).focus({preventScroll:true});});  /* 同上：改用 nt()，顧問開著時按方向鍵才不會把它關掉 */
 document.addEventListener('click',event=>{const pick=event.target.closest('[data-ai-pick]');if(!pick)return;Y.bike=pick.dataset.aiPick;nt();});  /* 用 nt() 而非 Gc()：顧問是由 nt() 掛上畫面的，只呼叫 Gc() 會讓它消失 */
