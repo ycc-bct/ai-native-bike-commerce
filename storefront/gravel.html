@@ -254,6 +254,7 @@ body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,1fr)}
 .rec-card .price{display:block;margin-top:3px;font-size:13.5px;font-weight:600}
 .rec-card .why{margin:12px 0 2px;padding:12px 12px;border-radius:10px;background:#EEF3FF;list-style:none;display:grid;gap:8px}
 .rec-card .why li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:var(--ink)}
+.rec-card .why li b{font-weight:800;color:var(--ink)}
 .rec-card .why li::before{content:"";position:absolute;left:1px;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--ai)}
 body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 /* 顧問訊息裡的差異清單 */
@@ -1037,15 +1038,29 @@ function scoreFor(b, key){
   return s;
 }
 /* 每張卡三點：前兩點看用途，第三點講這台自己的特色，避免同用途的車理由一模一樣 */
+/* 推薦卡的三點理由：第一點依這次的需求，後兩點是這台車自己的特色；重點字加粗 */
+const REASON = {
+  'fr-ar-2':      {budget:'<b>全系列最入門</b>，NT$ 23,800 就能入手', road:'<b>鋁合金車架＋平把</b>，通勤好上手', mix:'寬胎也能應付<b>偶爾的碎石路</b>',
+                   fixed:['<b>鋁合金車架</b>耐操、好保養', 'Shimano 變速，<b>零件好找好維修</b>']},
+  'fr-adv-2':     {budget:'<b>4 萬內的碳纖車架</b>，同價位少見', road:'<b>碳纖車架</b>比鋁合金輕，巡航更省力', mix:'平把好操控，<b>郊外小路</b>也順手',
+                   fixed:['Shimano CUES <b>10 速</b>，入門好上手', '<b>2027 年式</b>新配色']},
+  'fr-adv-1-27':  {budget:'比 Advanced 2 多 7,800，<b>升級 11 速</b>', road:'<b>11 速＋碳纖</b>，平路拉速更順', mix:'<b>P-R2 輪組</b>剛性好，路況變化也穩',
+                   fixed:['<b>P-R2 輪組</b>，滾動更輕快', '<b>2027 年式</b>，規格最新']},
+  'fr-adv-1-26':  {budget:'<b>同規格前一年式</b>，常有庫存優惠', road:'<b>舒適幾何</b>，長時間騎不易腰痠', mix:'舒適取向，<b>週末長程</b>很合適',
+                   fixed:['<b>長途耐力</b>取向的坐姿', 'Shimano CUES <b>11 速</b>']},
+  'revolt-pro-1': {budget:'<b>15 萬內的碳纖 Gravel</b>', road:'柏油路也順，<b>想探索時</b>隨時可以', mix:'<b>碳纖 Gravel 入門款</b>，柏油碎石都能騎',
+                   fixed:['Shimano <b>GRX</b> 礫石專用變速', '<b>寬胎</b>設定，碎石路更穩']},
+  'revolt-sl-1':  {budget:'<b>頂級 SL 車架</b>，比 SL 0 省 10 萬', road:'<b>空力車架</b>，柏油路一樣跑得快', mix:'<b>和 SL 0 同一支車架</b>，賽事級剛性',
+                   fixed:['SRAM Force <b>無線電變</b>', 'Giant <b>CXR 0 碳輪</b>']},
+  'revolt-sl-0':  {budget:'<b>全系列頂規</b>，一次到位', road:'<b>最輕量</b>的 Gravel，柏油爬坡也輕鬆', mix:'<b>最輕量、最狂暴</b>的 Gravel 賽車',
+                   fixed:['SRAM RED XPLR <b>1×13 無線電變</b>', '<b>CADEX</b> 碳纖輪組']},
+  'revolt-sl-fs': {budget:'<b>車架組</b>，零件依預算慢慢升級', road:'<b>SL 級車架</b>，想怎麼配都行', mix:'<b>SL 級碳纖車架</b>打底',
+                   fixed:['可<b>自行搭配</b>變速與輪組', '適合<b>已有零件</b>的車友']},
+};
 function reasonsFor(b, key){
-  const base = (NEED[key].why[b.use] || NEED[key].why.gravel).slice(0, 2);
-  const own = b.k === 'revolt-sl-fs' ? '車架組，可自行搭配零件'
-            : b.pr >= 300000 ? 'SRAM RED 無線電變＋CADEX 碳輪，頂規配置'
-            : b.pr >= 200000 ? 'SRAM Force 無線電變，性能與價格的平衡點'
-            : b.pr >= 100000 ? '中高階配置，性價比均衡'
-            : b.mat === 'aluminium' ? '鋁合金車架，入門預算好入手'
-            : '碳纖車架，入門價位少見';
-  return base.concat(own);
+  const r = REASON[b.k];
+  if (!r) return (NEED[key].why[b.use] || NEED[key].why.gravel);
+  return [r[key] || r.budget].concat(r.fixed);
 }
 function recommendOnPage(key){
   const picks = LIST.slice().sort((a, b) => scoreFor(b, key) - scoreFor(a, key)).slice(0, 3);
