@@ -254,7 +254,7 @@ body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,1fr)}
 .rec-card .price{display:block;margin-top:3px;font-size:13.5px;font-weight:600}
 .rec-card .why{margin:12px 0 2px;padding:12px 12px;border-radius:10px;background:#EEF3FF;list-style:none;display:grid;gap:8px}
 .rec-card .why li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:var(--ink)}
-.rec-card .why li b{font-weight:800;color:var(--ink)}
+.rec-card .why li b{display:inline;margin:0;font-size:inherit;line-height:inherit;font-weight:800;color:var(--ink)}   /* 蓋掉卡片標題用的 b{display:block} */
 .rec-card .why li::before{content:"";position:absolute;left:1px;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--ai)}
 body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 /* 顧問訊息裡的差異清單 */
