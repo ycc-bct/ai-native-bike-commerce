@@ -4855,4 +4855,17 @@ var Zc={favorites:favOpen,finishReplay:openFinishReplay,advisor:dg,cart(){oi("\u
  * Copyright 2010-2024 Three.js Authors
  * SPDX-License-Identifier: MIT
  */
-</script></body></html>
+</script><script>
+/* 全站統一：左上角 GIANT logo 回首頁（原本是回到場景選擇）。
+   用 capture 階段攔截，先於上面 app 的 click 委派執行，不動到 app 本身的程式 */
+document.addEventListener('click', function (e) {
+  var b = e.target.closest('.brand');
+  if (!b) return;
+  e.stopPropagation(); e.preventDefault();
+  location.href = '../index.html';
+}, true);
+new MutationObserver(function () {
+  document.querySelectorAll('.brand[data-action="home"]').forEach(function (b) { b.setAttribute('aria-label', 'GIANT 首頁'); b.title = '回到首頁'; });
+}).observe(document.body, {childList: true, subtree: true});
+</script>
+</body></html>

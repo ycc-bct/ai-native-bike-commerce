@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/header.css?v=b9e4e03"><link rel="stylesheet" href="css/favorites.css?v=821287c">
-<link rel="stylesheet" href="css/advisor.css?v=b9e4e03">
-<link rel="stylesheet" href="css/tips.css?v=e8c8663">
+<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
+<link rel="stylesheet" href="css/advisor.css?v=n83aaaf">
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@ svg{display:block}
 
 /* ---------- 共用 ---------- */
 .sec{width:var(--shell);margin:0 auto;padding-top:78px}
-.sec.explore{padding-top:36px}
+.sec.explore{padding-top:64px}
 .sec-head{display:flex;align-items:flex-end;gap:40px;margin-bottom:24px}
 .sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
 .sec-head .sub{margin-top:6px;font-size:15px;color:var(--ink-70)}
@@ -79,12 +79,12 @@ svg{display:block}
 @media (prefers-reduced-motion:reduce){.beam::before,.beam::after{animation:none}}
 
 /* ---------- 主視覺 ---------- */
-.hero{position:relative;height:clamp(600px,68vh,720px);overflow:hidden}
+.hero{position:relative;height:clamp(520px,60vh,640px);overflow:hidden}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 72%}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(90deg,rgba(243,245,247,.96) 0%,rgba(243,245,247,.84) 26%,rgba(243,245,247,.36) 44%,rgba(243,245,247,0) 58%),
              linear-gradient(180deg,rgba(243,245,247,.55) 0%,rgba(243,245,247,0) 18%,rgba(243,245,247,0) 74%,var(--paper) 100%)}
-.hero-copy{position:relative;z-index:2;width:var(--shell);margin:0 auto;padding-top:clamp(112px,9.6vw,148px)}
+.hero-copy{position:relative;z-index:2;width:var(--shell);margin:0 auto;padding-top:clamp(150px,13vw,200px)}
 .hero h1{font-size:clamp(52px,4.6vw,78px);line-height:1;font-weight:800;letter-spacing:-.03em;text-transform:uppercase}
 .hero .sub{margin-top:18px;font-size:clamp(20px,1.5vw,25px);font-weight:600;letter-spacing:.06em}
 .hero .lead-row{margin-top:18px}
@@ -92,15 +92,17 @@ svg{display:block}
 .hero .lead span{display:block;margin-top:4px;color:var(--ink-50);font-size:13px;letter-spacing:.04em}
 
 
-/* 線上騎乘體驗：連到 Ginny 的 120 秒數位騎乘（scenario-2）。照片貼齊卡片左側，左上左下跟著卡片圓角 */
-.vride{display:flex;align-items:stretch;gap:22px;width:min(560px,100%);margin-top:56px;padding:0 28px 0 0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 14px 34px rgba(20,26,34,.1);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
-.vride:hover{box-shadow:0 20px 44px rgba(20,26,34,.16);transform:translateY(-3px)}
-.vr-ph{flex:none;width:228px;aspect-ratio:1.42;overflow:hidden;background:#EEF2F6}
-.vr-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform .8s var(--ease)}
-.vride:hover .vr-ph img{transform:scale(1.05)}
-.vr-copy{align-self:center;padding:18px 4px 18px 0}
-.vr-copy b{display:block;font-size:22px;font-weight:800;letter-spacing:.01em}
-.vr-desc{display:block;margin-top:9px;font-size:14.5px;line-height:1.85;color:var(--ink-70)}
+/* 線上騎乘體驗：全寬 banner，用 scenario-2 的入口景（山路木門），連到 Ginny 的 120 秒數位騎乘 */
+.sec.ride-sec{padding-top:28px}
+/* 情境式問卷入口：跟 Featured 的 Revolt 卡同款（圓角卡、暗角漸層、文案在左上） */
+.ride-banner{position:relative;isolation:isolate;display:block;height:clamp(300px,27vw,400px);border-radius:14px;overflow:hidden;color:#fff;background:#2A3320;box-shadow:0 12px 28px rgba(20,26,34,.12)}
+.ride-banner img{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform 1.2s var(--ease)}
+.ride-banner:hover img{transform:scale(1.03)}
+.ride-banner::before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(6,10,16,.5) 0%,rgba(6,10,16,.3) 45%,rgba(6,10,16,.12) 75%)}
+.rb-copy{position:absolute;z-index:2;inset:0;padding:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.rb-copy h2{font-size:36px;font-weight:800;letter-spacing:-.01em;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.rb-sub{margin-top:10px;font-size:14px;line-height:1.7;font-weight:500;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.rb-copy .btn{margin-top:22px}
 
 /* ---------- Explore：一條寬幅、五段斜切的情境帶（與 product 主視覺同一套斜切） ---------- */
 .scenes{position:relative;height:var(--sh);overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);transition:width .45s var(--ease),margin .45s var(--ease);
@@ -177,7 +179,7 @@ svg{display:block}
 .news-card .date small{display:block;margin-top:2px;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50)}
 
 /* ---------- 登山車越野基地 ---------- */
-.mtb{position:relative;isolation:isolate;margin-top:78px;height:clamp(380px,37.5vw,540px);overflow:hidden;color:#fff;background:#201E12}
+.mtb{position:relative;isolation:isolate;margin-top:78px;height:clamp(360px,34vw,480px);overflow:hidden;color:#fff;background:#201E12}
 /* 官方原圖 5:4 不重生：整張鋪滿、垂直取中段讓兩位騎士入鏡；文案放左下角避開騎士，只壓一層淡漸層，底下場景看得到 */
 .mtb img{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 51%}
 .mtb::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,rgba(20,22,14,.45) 0%,rgba(20,22,14,.22) 26%,rgba(20,22,14,0) 46%),linear-gradient(0deg,rgba(20,22,14,.25) 0%,rgba(20,22,14,0) 40%)}
@@ -301,14 +303,18 @@ a:not([href]){cursor:default}
       <p class="lead">從城市到山林，從日常到挑戰。<br>自行車不只帶你前進，更帶你看見更大的世界。</p>
     </div>
 
-    <a class="vride rv" style="--d:.34s" href="scenario-2/index.html">
-      <span class="vr-ph"><img src="img/home/virtual-ride.webp" alt=""></span>
-      <span class="vr-copy">
-        <b>線上騎乘體驗</b>
-        <span class="vr-desc">自由選路、隨時換車，探索不同車款的騎乘感受。完成體驗後，AI 幫你整理數據與偏好，生成專屬騎乘報告。</span>
-      </span>
-    </a>
   </div>
+</section>
+
+<section class="sec ride-sec" id="ride">
+<a class="ride-banner rv" href="ride.html">
+  <img src="img/ride/landscape.webp" alt="">
+  <div class="rb-copy">
+    <h2>這段路，你想怎麼騎？</h2>
+    <p class="rb-sub">你的日常，就是最好的答案。<br>不用填表，看照片就好。你選的路，會替你選出那台車。</p>
+    <span class="btn btn-light">立即體驗<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
 </section>
 
 <section class="sec explore" id="explore">
@@ -425,11 +431,11 @@ a:not([href]){cursor:default}
   </form>
 </aside>
 
-<script src="js/favorites.js?v=821287d"></script>
-<script src="js/thinking-orbs-engine.js?v=b9e4e03"></script>
-<script src="js/orb.js?v=b9e4e03"></script>
-<script src="js/advisor.js?v=b9e4e03"></script>
-<script src="js/tips.js?v=e8c8663"></script>
+<script src="js/favorites.js?v=n83aaaf"></script>
+<script src="js/thinking-orbs-engine.js?v=n83aaaf"></script>
+<script src="js/orb.js?v=n83aaaf"></script>
+<script src="js/advisor.js?v=n83aaaf"></script>
+<script src="js/tips.js?v=n83aaaf"></script>
 <script>
 const $ = id => document.getElementById(id);
 
@@ -539,6 +545,7 @@ function openAdvisor(animate){
   a.hidden = false; a.classList.add('on');
   document.body.classList.add('adv-open');
   $('aiOrb').classList.remove('has-chat');
+  advKeepOpen(true);
   const ready = () => {
     adv.anim = false;
     if (!adv.started) { adv.started = true; startChat(); }
@@ -551,6 +558,7 @@ function openAdvisor(animate){
 function closeAdvisor(){
   const a = $('advisor');
   if (adv.anim || a.hidden) return;
+  advKeepOpen(false);                                   /* 使用者自己關掉，換頁就不再自動打開 */
   adv.anim = true;
   document.body.classList.remove('adv-open');
   advisorGenie(a, $('advLog'), $('aiOrb'), 'in', () => {
@@ -563,6 +571,15 @@ $('advClose').onclick = closeAdvisor;
 addEventListener('keydown', e => { if (e.key !== 'Escape') return; hideCallout(); closeAdvisor(); });
 /* 從其他頁面按 header orb 過來時（index.html?ai=1）直接打開 */
 if (new URLSearchParams(location.search).get('ai')) setTimeout(openAdvisor, 300);
+/* 上一頁開著顧問就直接接續：不跑動畫、不重新自我介紹，紀錄一起帶過來 */
+advWatchLog($('advLog'));
+if (advWantsOpen()) setTimeout(() => {                 /* 等整段腳本載完（後面才定義的 LIST / chips 才用得到） */
+  const had = advRestoreLog($('advLog'));
+  if (had) adv.started = true;
+  openAdvisor(false);
+  if (had) say('回到首頁了 🏠 想看有哪些類型可以往下捲到 <b>Explore Your Ride</b>，或直接跟我說你平常怎麼騎。' +
+    chips([['types','有哪些類型'],['pick','幫我挑一台']]), 700, m => bindChips(m, v => v === 'types' ? showTypes() : askTerrain()));
+}, 0);
 
 /* ---------- 對話 ---------- */
 const log = $('advLog');

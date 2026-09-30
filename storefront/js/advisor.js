@@ -91,3 +91,39 @@ addEventListener('DOMContentLoaded', function () {
     if (h && sizes) { var s = advSizeFor(sizes, h); if (s) advQuickSet('size', '我的尺寸 ' + s[0]); }
   } catch (e) {}
 });
+
+
+/* ---------- 顧問對話框跨頁保留 ----------
+   使用者叫出顧問後，除非自己關掉，換頁時對話框要維持打開，紀錄也跟著帶過去（同一個分頁內有效）。
+   各頁在 openAdvisor / closeAdvisor 呼叫 advKeepOpen(true/false)，載入時用 advWantsOpen() 決定要不要直接打開 */
+var ADV_OPEN_KEY = 'giant-storefront-adv-open', ADV_LOG_KEY = 'giant-storefront-adv-log';
+function advKeepOpen(on){
+  try {
+    if (on) sessionStorage.setItem(ADV_OPEN_KEY, '1');
+    else { sessionStorage.removeItem(ADV_OPEN_KEY); sessionStorage.removeItem(ADV_LOG_KEY); }
+  } catch (e) {}
+}
+function advWantsOpen(){ try { return sessionStorage.getItem(ADV_OPEN_KEY) === '1'; } catch (e) { return false; } }
+/* 對話紀錄一有變動就存起來（正在打字的「…」不存） */
+function advWatchLog(log){
+  var t;
+  new MutationObserver(function () {
+    clearTimeout(t);
+    t = setTimeout(function () {
+      if (log.querySelector('.adv-typing')) return;
+      try { sessionStorage.setItem(ADV_LOG_KEY, log.innerHTML.slice(0, 300000)); } catch (e) {}
+    }, 150);
+  }).observe(log, {childList: true, subtree: true});
+}
+/* 換頁後把紀錄放回去：舊訊息裡的按鈕都停用（它們的動作屬於上一頁），回傳是否有紀錄 */
+function advRestoreLog(log){
+  try {
+    var h = sessionStorage.getItem(ADV_LOG_KEY);
+    if (!h) return false;
+    log.innerHTML = h;
+    log.querySelectorAll('.adv-typing').forEach(function (x) { var m = x.closest('.am'); if (m) m.remove(); });
+    log.querySelectorAll('button,input').forEach(function (b) { b.disabled = true; });
+    log.scrollTop = log.scrollHeight;
+    return true;
+  } catch (e) { return false; }
+}

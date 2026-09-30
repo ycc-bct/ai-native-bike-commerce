@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>情境式問卷 · 五段路 · GIANT</title>
+<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.22,.61,.36,1);--shell:min(1368px,calc(100vw - 72px))}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#0B1018}
+body{font-family:var(--sans);color:var(--ink);background:#0B1018;-webkit-font-smoothing:antialiased;min-width:1200px;overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+.site-nav{position:absolute;color:#fff}
+.site-nav .links a,.site-nav .logo,.site-nav .icons a,.site-nav .icons button{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+.site-nav .links a{text-shadow:0 1px 8px rgba(0,0,0,.5)}
+
+/* ---------- 舞台：全幅第一人稱路景 ---------- */
+.stage{position:relative;height:100vh;min-height:720px;overflow:hidden}
+.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.02);transition:opacity .45s var(--ease),transform 8s linear}
+.scene.out{opacity:0;transform:scale(1.12);transition:opacity .45s var(--ease),transform .5s var(--ease)}
+.scene.in{transform:scale(1.02)}
+.scene.ride{transform:scale(1.08)}
+/* 有些圖（路牌那張）比例太寬，改成完整顯示，上下用同一張模糊圖補滿 */
+.scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.9);transform:scale(1.1);opacity:0;transition:opacity .45s}
+.scene.fit{object-fit:contain;object-position:50% 46%;transform:none}
+.scene.fit.out{transform:scale(1.06)}
+.stage.fit .scene-bg{opacity:1}
+.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.28) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 55%,rgba(0,0,0,.42) 100%);pointer-events:none}
+.stage-in{position:relative;z-index:2;height:100%}
+
+/* 進度條 */
+.prog{position:absolute;left:50%;top:84px;transform:translateX(-50%);width:560px;text-align:center;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.prog small{display:block;font-size:12.5px;letter-spacing:.14em;font-weight:700;opacity:.9}
+.prog .bars{display:flex;gap:6px;margin-top:8px}
+.prog .bars i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.35);overflow:hidden;position:relative}
+.prog .bars i::after{content:"";position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.prog .bars i.on::after{transform:scaleX(1)}
+.prog .bars i.cur::after{background:var(--ai);transform:scaleX(1)}
+.prog b{display:block;margin-top:10px;font-size:15px;font-weight:700}
+
+/* 場景上的選項釘點 */
+.pin{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:center;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.55);transform:translate(-50%,-100%);opacity:0;transition:opacity .4s .2s;pointer-events:none}
+.pin.on{opacity:1}
+.pin b{display:flex;align-items:center;gap:8px;font-size:26px;font-weight:800;letter-spacing:.02em}
+.pin b::before{content:"";width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pin small{margin-top:4px;font-size:15px;font-weight:700;letter-spacing:.06em}
+.pin i{width:1.5px;height:70px;margin-top:12px;background:rgba(255,255,255,.85)}
+.pin i::after{content:"";display:block;width:12px;height:12px;margin:70px 0 0 -5px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+
+/* 底部卡片 */
+.qcard{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);width:720px;padding:22px 28px 20px;border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.82) 0%,rgba(255,255,255,.6) 100%);backdrop-filter:blur(28px) saturate(1.5);-webkit-backdrop-filter:blur(28px) saturate(1.5);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),0 24px 60px rgba(0,0,0,.22);text-align:center;transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.qcard.out{opacity:0;transform:translate(-50%,10px)}
+.qcard h2{font-size:19px;font-weight:800;letter-spacing:.02em;color:var(--navy)}
+.qcard .sub{display:none}
+.opts{display:flex;justify-content:center;gap:16px;margin-top:14px}
+.opt{display:flex;align-items:center;gap:0;height:64px;padding:0 22px 0 0;border-radius:999px;background:rgba(255,255,255,.9);border:1.5px solid var(--navy);overflow:hidden;text-align:left;transition:transform .2s,box-shadow .2s,background .2s}
+.opt:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(14,23,38,.18)}
+.opt.on{background:var(--navy);color:#fff}
+.opt .th{width:112px;height:100%;flex:none;overflow:hidden;background:#E8EDF3}
+.opt .th img.pic{transform:none}
+.opt .th img{width:100%;height:100%;object-fit:cover;transform:scale(1.9)}
+.opt .th.bike{display:grid;place-items:center;background:#EEF2F7;padding:8px}
+.opt .th.bike img{object-fit:contain;filter:drop-shadow(0 6px 6px rgba(0,0,0,.2))}
+.opt .tx{padding:0 14px 0 16px}
+.opt .tx b{display:block;font-size:18px;font-weight:800;letter-spacing:.03em;white-space:nowrap;color:var(--navy)}
+.opt .tx small{display:block;margin-top:1px;font-size:11.5px;font-weight:600;color:var(--ink-50);letter-spacing:.08em}
+.opt.on .tx b{color:#fff}
+.opt.on .tx small{color:rgba(255,255,255,.75)}
+.opt svg{width:22px;height:22px;flex:none;transition:transform .2s}
+.opt:hover svg{transform:translateX(3px)}
+.qsub{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px}
+.pillb{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border-radius:999px;border:1.5px solid var(--navy);background:rgba(255,255,255,.72);font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;transition:background .2s,opacity .2s}
+.pillb:hover{background:#fff}
+.pillb:disabled{opacity:.35;cursor:default}
+.pillb img{width:40px;height:24px;object-fit:contain}
+.pillb small{font-weight:600;color:var(--ink-70)}
+.pillb b{font-weight:800}
+.pillb.ghost{border-color:rgba(14,23,38,.35)}
+
+/* 換車面板：蓋在選項那一列 */
+.swap{display:none;margin-top:12px}
+.swap.on{display:block}
+.swap.on + .opts{display:none}
+.swap h3{font-size:16px;font-weight:800;color:var(--navy)}
+.swap p{margin-top:2px;font-size:13px;color:var(--ink-70)}
+.swap .row{display:flex;justify-content:center;gap:12px;margin-top:14px}
+.swap .sb{width:200px;padding:12px 10px 12px;border-radius:18px;border:1.5px solid rgba(14,23,38,.18);background:rgba(255,255,255,.85);text-align:center;transition:border-color .2s,transform .2s,box-shadow .2s}
+.swap .sb:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 10px 24px rgba(14,23,38,.14)}
+.swap .sb.now{border-color:var(--ai);background:#F3F6FF}
+.swap .sb img{height:64px;width:auto;margin:0 auto;filter:drop-shadow(0 6px 6px rgba(0,0,0,.18))}
+.swap .sb b{display:block;margin-top:8px;font-size:14px;font-weight:800}
+.swap .sb small{display:block;margin-top:2px;font-size:12px;color:var(--ink-70)}
+.swap .sb em{display:block;margin-top:6px;font-style:normal;font-size:11.5px;font-weight:700;color:var(--ai)}
+.swap .keep{margin-top:12px;font-size:13px;font-weight:700;color:var(--ink-70);text-decoration:underline;text-underline-offset:4px}
+.swap .keep:hover{color:var(--ink)}
+.tips-pill{bottom:24px}
+@media (max-height:820px){.prog{top:74px}.qcard{bottom:48px;padding:16px 22px 14px}.opt{height:58px}.opt .th{width:110px}.opt .tx b{font-size:16px}.pin i{height:44px}.pin i::after{margin-top:44px}.swap .sb img{height:62px}}
+</style>
+</head>
+<body>
+
+<header class="nav site-nav">
+    <a class="logo" href="index.html" aria-label="GIANT">
+      <svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg>
+    </a>
+    <nav class="links"><a href="index.html#explore">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
+    <div class="icons">
+      <button type="button" class="icon-btn" id="openFav" aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg><span class="fav-n" hidden>0</span></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+    </div>
+</header>
+
+<section class="stage" id="stage">
+  <img class="scene-bg" id="sceneBg" src="img/quiz/river-fork.webp" alt="" aria-hidden="true">
+  <img class="scene" id="scene" src="img/quiz/river-fork.webp" alt="">
+  <div class="stage-in">
+    <div class="prog" id="prog" aria-live="polite"></div>
+    <div class="pin" id="pinA"><b></b><small></small><i></i></div>
+    <div class="pin" id="pinB"><b></b><small></small><i></i></div>
+
+    <div class="qcard" id="qcard">
+      <h2 id="qTitle"></h2>
+      <p class="sub" id="qSub"></p>
+      <div class="swap" id="swap"></div>
+      <div class="opts" id="opts"></div>
+      <div class="qsub">
+        <button class="pillb" type="button" id="swapBtn"></button>
+        <button class="pillb ghost" type="button" id="prev">上一段</button>
+        <a class="pillb ghost" href="ride.html" id="quit">結束體驗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="js/favorites.js?v=n83aaaf"></script>
+<script src="js/ride-data.js?v=n83aaaf"></script>
+<script src="js/tips.js?v=n83aaaf"></script>
+<script>
+const $ = id => document.getElementById(id);
+const AXES = RIDE.AXES, BIKES = RIDE.BIKES;
+const fmt = n => n.toLocaleString('en-US');
+/* 同一條路線可以換的車（跟 ride.html 的場景池一致） */
+const POOL = {
+  city:     ['fast','escape','explore','advanced2','propelpro','tcr'],
+  river:    ['propelpro','fast','tcr','propelsl','advanced2','explore'],
+  mountain: ['ebike','trance','sl0','pro1','talon','advanced2'],
+  any:      ['fast','advanced2','ebike','propelpro','trance','escape'],
+};
+/* 五段路：依 ride.html 選的場景走不同的一組題（市區／河濱／山裡／還沒決定）。
+   w 是這個選項在五軸（爬坡／舒適／操控／效率／多用途）上加的偏好；pin 是場景上的釘點位置（%）；
+   thumb 是選項縮圖取景（object-position）、img 是選項自己的圖；swap 表示選了會先打開換車面板（電輔） */
+const EB = ['explore','ebike'], EBM = ['ebike','explore'];   /* 電輔車：山裡先推 Talon E+，其他先推 Explore E+ */
+const TRACKS = {
+  city: [
+    {img:'img/quiz/city-fork.webp', q:'出門上路，先走哪邊？', sub:'一樣到得了，走法不一樣。',
+     opts:[{t:'大道車道', s:'效率・操控', w:[0,0,2,3,0], pin:[30,45], thumb:'22% 60%'},
+           {t:'巷弄穿梭', s:'舒適・多用途', w:[0,2,2,0,3], pin:[80,42], thumb:'80% 55%'}]},
+    {img:'img/quiz/city-street.webp', q:'這台車，需要載人或載東西嗎？', sub:'接小孩、買菜、通勤包，都算。',
+     opts:[{t:'會載人載貨', s:'舒適・多用途', w:[0,3,0,0,3], img:'img/quiz/opt-cargo.webp'},
+           {t:'一個人輕裝', s:'效率・操控', w:[0,0,2,3,0], img:'img/quiz/opt-solo.webp'}]},
+    {img:'img/quiz/city-bridge.webp', q:'紅綠燈多、橋也多，要電輔嗎？', sub:'要的話現在就換一台電輔上橋。',
+     opts:[{t:'要電輔', s:'省力・穩定', w:[3,3,0,0,1], swap:EB, img:'img/quiz/opt-ebike.webp'},
+           {t:'自己踩', s:'爬坡・效率', w:[3,0,0,2,0], img:'img/quiz/opt-pedal.webp'}]},
+    {img:'img/quiz/city-bridge.webp', ride:true, q:'上橋這段，怎麼上？', sub:'橋不長，但每天都要過。',
+     opts:[{t:'站起來衝上去', s:'爬坡・效率', w:[3,0,0,2,0], img:'img/quiz/opt-sprint.webp'},
+           {t:'換低檔慢慢上', s:'舒適・節奏', w:[1,3,0,0,1], img:'img/quiz/opt-cruise.webp'}]},
+    {img:'img/quiz/city-dusk.webp', q:'回家這段，想怎麼騎？', sub:'天色剛暗，看你想快點到還是繞一下。',
+     opts:[{t:'大道直線快點到', s:'效率・操控', w:[0,0,2,3,0], pin:[32,45], thumb:'25% 60%'},
+           {t:'巷弄繞一下再回', s:'舒適・多用途', w:[0,3,1,0,2], pin:[80,42], thumb:'82% 55%'}]},
+  ],
+  river: [
+    {img:'img/quiz/river-fork.webp', q:'河濱出發，先走哪一條？', sub:'第一段路，看你想怎麼開始。',
+     opts:[{t:'平整車道', s:'效率・節奏', w:[0,1,0,3,0], pin:[27,47], thumb:'22% 60%'},
+           {t:'堤外碎石', s:'多用途・操控', w:[0,1,2,0,3], pin:[72,45], thumb:'78% 60%'}]},
+    {img:'img/quiz/river-straight.webp', ride:true, q:'河濱長直線，這一段想怎麼騎？', sub:'路很直、風不大，看你怎麼用力。',
+     opts:[{t:'拉高速度衝一段', s:'效率・操控', w:[0,0,2,3,0], img:'img/quiz/opt-sprint.webp'},
+           {t:'維持節奏慢慢騎', s:'舒適・多用途', w:[0,3,0,0,2], img:'img/quiz/opt-cruise.webp'}]},
+    {img:'img/quiz/river-park.webp', q:'這趟是一個人，還是帶人一起？', sub:'帶家人可能還要載小孩、載野餐。',
+     opts:[{t:'帶家人載小孩', s:'舒適・多用途', w:[0,3,0,0,3], img:'img/quiz/opt-cargo.webp'},
+           {t:'一個人練一下', s:'效率・操控', w:[0,0,2,3,0], img:'img/quiz/opt-solo.webp'}]},
+    {img:'img/quiz/river-park.webp', ride:true, q:'逆風段開始了，要電輔嗎？', sub:'要的話現在就換一台電輔。',
+     opts:[{t:'要電輔', s:'省力・穩定', w:[2,3,0,0,1], swap:EB, img:'img/quiz/opt-ebike.webp'},
+           {t:'自己踩', s:'效率・節奏', w:[1,0,1,3,0], img:'img/quiz/opt-pedal.webp'}]},
+    {img:'img/quiz/river-bridge.webp', q:'回程上大橋，怎麼上？', sub:'最後一段爬坡。',
+     opts:[{t:'站起來衝上去', s:'爬坡・效率', w:[3,0,0,2,0], img:'img/quiz/opt-sprint.webp'},
+           {t:'換低檔慢慢上', s:'舒適・節奏', w:[1,3,0,0,1], img:'img/quiz/opt-cruise.webp'}]},
+  ],
+  mountain: [
+    {img:'img/quiz/mtn-fork.webp', q:'進山了，路口怎麼走？', sub:'兩條路都到得了山頂，走法不一樣。',
+     opts:[{t:'山區碎石', s:'穩定・操控・舒適', w:[1,2,3,0,2], pin:[22,46], thumb:'18% 62%'},
+           {t:'連續陡坡', s:'省力・重量・節奏', w:[3,0,1,2,0], pin:[78,42], thumb:'84% 58%'}]},
+    {img:'img/quiz/mtn-climb.webp', q:'髮夾彎爬坡中，腿開始酸，要電輔嗎？', sub:'要的話現在就換一台電輔再上。',
+     opts:[{t:'要電輔', s:'省力・穩定', w:[3,2,0,0,1], swap:EBM, img:'img/quiz/opt-ebike.webp'},
+           {t:'咬牙踩上去', s:'爬坡・效率', w:[3,0,0,2,0], img:'img/quiz/opt-pedal.webp'}]},
+    {img:'img/quiz/mtn-trail.webp', q:'到林道了，碎石下坡怎麼下？', sub:'落差和碎石都在這一段。',
+     opts:[{t:'穩穩控著下', s:'操控・舒適', w:[0,3,3,0,1], img:'img/quiz/opt-descend.webp'},
+           {t:'放開來衝', s:'操控・效率', w:[0,0,3,2,0], img:'img/quiz/opt-sprint.webp'}]},
+    {img:'img/quiz/mtn-fork.webp', q:'今天打算騎多久？', sub:'時間長短決定要多舒服。',
+     opts:[{t:'兩三小時就好', s:'效率・操控', w:[1,0,2,2,0], thumb:'84% 58%'},
+           {t:'一整天慢慢騎', s:'舒適・多用途', w:[1,3,0,0,2], thumb:'18% 62%'}]},
+    {img:'img/quiz/mtn-descent.webp', ride:true, q:'回程下山長直線，怎麼下？', sub:'最後一段，看你想快還是想穩。',
+     opts:[{t:'放開來衝', s:'效率・操控', w:[0,0,2,3,0], img:'img/quiz/opt-sprint.webp'},
+           {t:'穩穩慢慢下', s:'舒適・穩定', w:[0,3,2,0,1], img:'img/quiz/opt-descend.webp'}]},
+  ],
+};
+/* 還沒決定：河濱→山裡→市區各挑一段 */
+TRACKS.any = [TRACKS.river[0], TRACKS.river[1], TRACKS.mountain[0], TRACKS.mountain[1], TRACKS.city[4]];
+const q = new URLSearchParams(location.search);
+const S = {
+  i: 0,
+  bike: BIKES[q.get('bike')] ? q.get('bike') : 'fast',
+  scene: TRACKS[q.get('scene')] ? q.get('scene') : 'river',
+  start: null, answers: [], swaps: [], busy: false,
+};
+S.start = S.bike;
+const STEPS = TRACKS[S.scene];
+
+function pinAt(el, o){
+  if (!o || !o.pin) { el.classList.remove('on'); return; }
+  el.querySelector('b').textContent = o.t; el.querySelector('small').textContent = o.s;
+  el.style.left = o.pin[0] + '%'; el.style.top = o.pin[1] + '%';
+  el.classList.add('on');
+}
+function renderProg(){
+  $('prog').innerHTML = '<small>五段路 · 第 ' + (S.i + 1) + ' 段</small><div class="bars">' +
+    STEPS.map((_, k) => '<i class="' + (k < S.i ? 'on' : k === S.i ? 'cur' : '') + '"></i>').join('') + '</div>';
+}
+function renderCur(){
+  const b = BIKES[S.bike];
+  $('swapBtn').innerHTML = '<img src="' + b.img + '" alt=""><small>目前騎的</small><b>' + b.n + '</b><span>· 換一台試騎</span>';
+  $('swapBtn').onclick = () => openSwap(POOL[S.scene].filter(k => k !== S.bike).slice(0, 3), null);
+}
+function optHtml(o, i){
+  const st = STEPS[S.i];
+  const th = o.img ? '<span class="th"><img class="pic" src="' + o.img + '" alt=""></span>'
+           : o.bikeThumb ? '<span class="th bike"><img src="' + BIKES[o.bikeThumb].img + '" alt=""></span>'
+                         : '<span class="th"><img src="' + st.img + '" alt="" style="object-position:' + (o.thumb || '50% 50%') + ';transform-origin:' + (o.thumb || '50% 50%') + ';transform:scale(' + (o.zoom || 1.9) + ')"></span>';
+  return '<button class="opt" type="button" data-i="' + i + '">' + th + '<span class="tx"><b>' + o.t + '</b><small>' + o.s + '</small></span>' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
+}
+function renderStep(){
+  const st = STEPS[S.i];
+  renderProg();
+  $('qTitle').textContent = st.q; $('qSub').textContent = st.sub;
+  $('swap').classList.remove('on');
+  $('opts').innerHTML = st.opts.map(optHtml).join('');
+  $('opts').querySelectorAll('.opt').forEach(b => b.onclick = () => choose(+b.dataset.i));
+  pinAt($('pinA'), st.opts[0]); pinAt($('pinB'), st.opts[1]);
+  $('prev').disabled = S.i === 0;
+  renderCur();
+}
+function showScene(st, cb){
+  const img = $('scene');
+  img.classList.add('out');
+  setTimeout(() => {
+    img.src = st.img; $('sceneBg').src = st.img;
+    img.classList.toggle('fit', !!st.fit); $('stage').classList.toggle('fit', !!st.fit);
+    img.classList.remove('out'); img.classList.remove('ride');
+    requestAnimationFrame(() => requestAnimationFrame(() => { if (st.ride) img.classList.add('ride'); }));
+    cb && cb();
+  }, 460);
+}
+function goto(i){
+  S.busy = true;
+  $('qcard').classList.add('out'); $('pinA').classList.remove('on'); $('pinB').classList.remove('on');
+  showScene(STEPS[i], () => { S.i = i; renderStep(); $('qcard').classList.remove('out'); S.busy = false; });
+}
+function choose(i){
+  if (S.busy) return;
+  const st = STEPS[S.i], o = st.opts[i];
+  $('opts').querySelectorAll('.opt').forEach((b, k) => b.classList.toggle('on', k === i));
+  S.answers[S.i] = i;
+  if (o.swap) { openSwap(o.swap.filter(k => k !== S.bike), () => advance(), '換一台電輔再上', '接下來的路交給電輔，選一台。'); return; }
+  setTimeout(advance, 280);
+}
+function advance(){
+  if (S.i < STEPS.length - 1) goto(S.i + 1); else finish();
+}
+/* 換車面板：list 是可換的車；after 是換完（或不換）要做的事（第 4 段用），沒有就留在本段 */
+function openSwap(list, after, title, sub){
+  const box = $('swap');
+  box.innerHTML = '<h3>' + (title || '換一台再上') + '</h3><p>' + (sub || '同一條路線裡挑一台，接下來的路就騎它。') + '</p><div class="row">' +
+    list.map(k => { const b = BIKES[k]; return '<button class="sb" type="button" data-k="' + k + '"><img src="' + b.img + '" alt=""><b>' + b.n + '</b><small>' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</small><em>' + swapWhy(k) + '</em></button>'; }).join('') +
+    '</div><button class="keep" type="button">不換，繼續騎 ' + BIKES[S.bike].n + '</button>';
+  box.classList.add('on');
+  box.querySelectorAll('.sb').forEach(b => b.onclick = () => {
+    S.swaps.push({step: S.i + 1, from: S.bike, to: b.dataset.k});
+    S.bike = b.dataset.k; renderCur();
+    box.classList.remove('on');
+    if (after) setTimeout(after, 200);
+  });
+  box.querySelector('.keep').onclick = () => { box.classList.remove('on'); if (after) setTimeout(after, 200); };
+}
+function swapWhy(k){
+  const b = BIKES[k], top = b.ax.map((v, i) => [v, i]).sort((a, c) => c[0] - a[0])[0];
+  return AXES[top[1]] + ' ' + top[0] + '，' + ({ebike:'電輔上坡最省力', explore:'電輔＋直立騎姿', tcr:'輕，爬坡有效率', trance:'避震吃落差', sl0:'碎石也能全速', pro1:'寬胎更穩', talon:'越障更穩', propelpro:'平路最快', propelsl:'空力最省力', fast:'平把好操控', escape:'最輕鬆', advanced2:'什麼路都能騎'}[k] || '');
+}
+/* 算分：把五段的偏好加起來，拿最後騎的那台跟全部車款比 */
+function finish(){
+  const P = [0,0,0,0,0];
+  S.answers.forEach((a, k) => STEPS[k].opts[a].w.forEach((v, i) => P[i] += v));
+  const sum = P.reduce((a, b) => a + b, 0) || 1, pw = P.map(v => v / sum);
+  /* 比「形狀」不比「總分」：每台車的五軸先各自標準化，才不會永遠是最貴的那台贏 */
+  const prof = k => { const a = BIKES[k].ax, m = a.reduce((x, y) => x + y, 0) / 5, sd = Math.sqrt(a.reduce((x, y) => x + (y - m) * (y - m), 0) / 5) || 1; return a.map(v => (v - m) / sd); };
+  const score = k => prof(k).reduce((s, v, i) => s + v * (pw[i] - 0.2), 0);
+  const rank = Object.keys(BIKES).map(k => [k, score(k)]).sort((a, b) => b[1] - a[1]);
+  const lo = rank[rank.length - 1][1], hi = rank[0][1];
+  const pos = rank.findIndex(r => r[0] === S.bike), fit = (score(S.bike) - lo) / ((hi - lo) || 1);
+  const ok = pos <= 2 || fit >= 0.8;
+  const out = {answers: S.answers, labels: S.answers.map((a, k) => STEPS[k].opts[a].t), axs: S.answers.map((a, k) => STEPS[k].opts[a].w.map((v, i) => v >= 2 ? i : -1).filter(i => i >= 0)), P, pw, rode: S.bike, start: S.start, swaps: S.swaps,
+               ok, fit: +fit.toFixed(3), rank: rank.slice(0, 4).map(r => r[0]), rec: ok ? S.bike : rank[0][0], scene: S.scene, at: Date.now()};
+  try { sessionStorage.setItem('giant-quiz', JSON.stringify(out)); } catch (e) {}
+  $('qcard').classList.add('out'); $('scene').classList.add('out');
+  setTimeout(() => { location.href = 'result.html?bike=' + out.rec + '&rode=' + out.rode + '&ok=' + (ok ? 1 : 0); }, 500);
+}
+$('prev').onclick = () => { if (S.i > 0 && !S.busy) goto(S.i - 1); };
+addEventListener('keydown', e => { if (e.key === '1' || e.key === '2') choose(+e.key - 1); });
+$('scene').src = STEPS[0].img; $('sceneBg').src = STEPS[0].img;   /* 第一段的背景依場景不同 */
+renderStep();
+requestAnimationFrame(() => requestAnimationFrame(() => { if (STEPS[0].ride) $('scene').classList.add('ride'); }));
+/* Tips 示範：自動走完五段，第 4 段換成 Talon E+ */
+Tips.register('quiz', () => {
+  const seq = [0, 0, 1, 0, 0]; let k = 0;
+  const step = () => {
+    if (k >= seq.length) return;
+    let i = seq[k++];
+    if (STEPS[S.i].opts.some(o => o.swap)) i = STEPS[S.i].opts.findIndex(o => o.swap);   /* 有電輔的那一段一定選電輔 */
+    choose(i);
+    if (STEPS[S.i].opts[i].swap) setTimeout(() => { const b = $('swap').querySelector('.sb[data-k="ebike"]') || $('swap').querySelector('.sb'); if (b) b.click(); }, 900);
+    setTimeout(step, 1900);
+  };
+  step();
+});
+</script>
+</body>
+</html>

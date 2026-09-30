@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Revolt Advanced SL 0 · GIANT</title>
-<link rel="stylesheet" href="css/header.css?v=b9e4e03"><link rel="stylesheet" href="css/favorites.css?v=821287c">
-<link rel="stylesheet" href="css/advisor.css?v=b9e4e03">
-<link rel="stylesheet" href="css/tips.css?v=e8c8663">
+<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
+<link rel="stylesheet" href="css/advisor.css?v=n83aaaf">
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -116,7 +116,7 @@ body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
 .info .vride{flex:none;display:flex;align-items:stretch;gap:calc(var(--u)*14);width:var(--cta-w,100%);max-width:calc(var(--u)*420);margin-top:calc(var(--u)*22);padding:0 calc(var(--u)*16) 0 0;border-radius:calc(var(--u)*12);overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(20,26,34,.12);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
 .info .vride:hover{box-shadow:0 18px 40px rgba(20,26,34,.18);transform:translateY(-2px)}
 .info .vr-ph{flex:none;width:calc(var(--u)*128);aspect-ratio:1.42;overflow:hidden;background:#EEF2F6}
-.info .vr-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform .8s var(--ease)}
+.info .vr-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;transition:transform .8s var(--ease)}
 .info .vride:hover .vr-ph img{transform:scale(1.05)}
 .info .vr-copy{align-self:center;padding:calc(var(--u)*12) 0}
 .info .vr-copy b{display:block;font-size:calc(var(--u)*15);font-weight:800}
@@ -468,9 +468,9 @@ a:not([href]){cursor:default}
       <button class="btn-line" id="addCompare" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
       <button class="btn-fav" id="fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
     </div>
-    <a class="vride" href="scenario-2/index.html?bike=sl0">
-      <span class="vr-ph"><img src="img/home/virtual-ride.webp" alt=""></span>
-      <span class="vr-copy"><b>線上騎乘體驗</b><span class="vr-desc">騎這台上路 120 秒，AI 整理你的騎乘報告。</span></span>
+    <a class="vride" href="ride.html?bike=sl0">
+      <span class="vr-ph"><img src="scenario-2/img/entry.webp" alt=""></span>
+      <span class="vr-copy"><b>這段路，你想怎麼騎？</b><span class="vr-desc">不用填表，你選的路會替你選出那台車。</span></span>
     </a>
     <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，長途也能維持高速。</p>
   </div>
@@ -637,11 +637,11 @@ a:not([href]){cursor:default}
 
 <div class="toast" id="toast"></div>
 
-<script src="js/favorites.js?v=821287d"></script>
-<script src="js/thinking-orbs-engine.js?v=b9e4e03"></script>
-<script src="js/orb.js?v=b9e4e03"></script>
-<script src="js/advisor.js?v=b9e4e03"></script>
-<script src="js/tips.js?v=e8c8663"></script>
+<script src="js/favorites.js?v=n83aaaf"></script>
+<script src="js/thinking-orbs-engine.js?v=n83aaaf"></script>
+<script src="js/orb.js?v=n83aaaf"></script>
+<script src="js/advisor.js?v=n83aaaf"></script>
+<script src="js/tips.js?v=n83aaaf"></script>
 <script>
 const $ = id => document.getElementById(id);
 /* ---------- 進場動態：.rv.now 載入即進場；其他捲進畫面才進場 ---------- */
@@ -806,7 +806,7 @@ const currentOrb = () => $('subnav').classList.contains('on') ? $('aiOrb2') : $(
 function setOrbDot(on){ ['aiOrb','aiOrb2'].forEach(id => $(id).classList.toggle('has-chat', on)); }
 
 function genie(dir, done){ advisorGenie($('advisor'), $('advLog'), currentOrb(), dir, done); }
-function openAdvisor(){
+function openAdvisor(animate){
   if (window.Tips) Tips.close();
   hideCallout();
   const a = $('advisor');
@@ -815,19 +815,23 @@ function openAdvisor(){
   document.body.classList.add('adv-open');
   layoutExplore();
   setOrbDot(false);
-  adv.anim = true;
+  advKeepOpen(true);
   clearInterval(sceneT);
   setTimeout(updateHeaderTone, 600);
-  genie('out', () => {
+  const ready = () => {
     adv.anim = false;
     if (!adv.started) { adv.started = true; advGreet(); }
     adv.queue = adv.queue.then(() => new Promise(r => setTimeout(() => { syncAccMsg(); r(); }, 250)));
     $('advInput').focus();
-  });
+  };
+  if (animate === false) return ready();                /* 從別頁接續過來：不跑動畫 */
+  adv.anim = true;
+  genie('out', ready);
 }
 function closeAdvisor(){
   const a = $('advisor');
   if (adv.anim || a.hidden) return;
+  advKeepOpen(false);                                   /* 使用者自己關掉，換頁就不再自動打開 */
   adv.anim = true;
   document.body.classList.remove('adv-open');
   layoutExplore();
@@ -1033,20 +1037,23 @@ Tips.register('size', () => {
   advSay('好，我帶你到「車架幾何與尺寸」，用 178 cm 幫你對一下 👇', 500);
   adv.queue = adv.queue.then(() => new Promise(r => setTimeout(() => { advSize(178); r(); }, 500)));
 });
-Tips.register('use', () => {
-  if ($('advisor').hidden) { adv.started = true; openAdvisor(); }
-  const t = '我喜歡戶外冒險', inp = $('advInput');
-  inp.value = ''; inp.focus();
-  let i = 0;
-  const tick = () => { inp.value = t.slice(0, ++i); inp.dispatchEvent(new Event('input')); if (i < t.length) setTimeout(tick, 60); else setTimeout(() => $('advForm').requestSubmit(), 450); };
-  setTimeout(tick, 700);
-});
 $('advQuick').querySelector('[data-q="compare"]').onclick = () => {
   advAdd('比較車款', 'me');
   if (!inCompare) acts('compare')[0].click();
   addYou('cmp', '已加入比較清單');
   advSay('已把 <b>Revolt Advanced SL 0</b> 加入比較。到車款清單再勾一到兩台，就能並排看規格。' + chipsHtml([['golist','去車款清單']]), 700);
 };
+/* 上一頁開著顧問就直接接續：不跑動畫、不重新自我介紹，紀錄一起帶過來 */
+advWatchLog($('advLog'));
+if (advWantsOpen()) {
+  const had = advRestoreLog($('advLog'));
+  if (had) { adv.started = true; adv.holdAcc = true; }
+  openAdvisor(false);
+  if (had) {
+    advSay('你現在看的是 <b>Revolt Advanced SL 0</b>，我們最頂級的 Gravel 車：SL 級碳纖車架、SRAM RED 無線電變、CADEX 碳輪，柏油、碎石都能騎。想先聊哪一塊？' + chipsHtml(MAIN), 700);
+    adv.queue = adv.queue.then(() => { adv.holdAcc = false; syncAccMsg(); });
+  }
+}
 $('advForm').onsubmit = e => {
   e.preventDefault();
   const t = advInput.value.trim(); if (!t) return;

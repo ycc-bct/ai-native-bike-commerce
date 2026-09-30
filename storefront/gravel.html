@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>礫石公路自行車 · GIANT</title>
-<link rel="stylesheet" href="css/header.css?v=b9e4e03"><link rel="stylesheet" href="css/favorites.css?v=821287c">
-<link rel="stylesheet" href="css/advisor.css?v=b9e4e03">
-<link rel="stylesheet" href="css/tips.css?v=e8c8663">
+<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
+<link rel="stylesheet" href="css/advisor.css?v=n83aaaf">
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -471,11 +471,11 @@ body.cmp-mode .tips-pill{bottom:100px}
   </form>
 </aside>
 
-<script src="js/favorites.js?v=821287d"></script>
-<script src="js/thinking-orbs-engine.js?v=b9e4e03"></script>
-<script src="js/orb.js?v=b9e4e03"></script>
-<script src="js/advisor.js?v=b9e4e03"></script>
-<script src="js/tips.js?v=e8c8663"></script>
+<script src="js/favorites.js?v=n83aaaf"></script>
+<script src="js/thinking-orbs-engine.js?v=n83aaaf"></script>
+<script src="js/orb.js?v=n83aaaf"></script>
+<script src="js/advisor.js?v=n83aaaf"></script>
+<script src="js/tips.js?v=n83aaaf"></script>
 <script>
 const $ = id => document.getElementById(id);
 
@@ -585,6 +585,7 @@ function openAdvisor(animate){
   a.hidden = false; a.classList.add('on');
   document.body.classList.add('adv-open');
   $('aiOrb').classList.remove('has-chat');
+  advKeepOpen(true);
   const ready = () => {
     adv.anim = false;
     if (!adv.started) { adv.started = true; startChat(); }
@@ -597,6 +598,7 @@ function openAdvisor(animate){
 function closeAdvisor(){
   const a = $('advisor');
   if (adv.anim || a.hidden) return;
+  advKeepOpen(false);                                   /* 使用者自己關掉，換頁就不再自動打開 */
   adv.anim = true;
   document.body.classList.remove('adv-open');
   advisorGenie(a, $('advLog'), $('aiOrb'), 'in', () => {
@@ -609,6 +611,15 @@ $('advClose').onclick = closeAdvisor;
 addEventListener('keydown', e => { if (e.key !== 'Escape') return; hideCallout(); closeAdvisor(); });
 /* 從其他頁面按 header orb 過來時（index.html?ai=1）直接打開 */
 if (new URLSearchParams(location.search).get('ai')) setTimeout(openAdvisor, 300);
+/* 上一頁開著顧問就直接接續：不跑動畫、不重新自我介紹，紀錄一起帶過來 */
+advWatchLog($('advLog'));
+if (advWantsOpen()) setTimeout(() => {                 /* 等整段腳本載完（後面才定義的 LIST / chips 才用得到） */
+  const had = advRestoreLog($('advLog'));
+  if (had) adv.started = true;
+  openAdvisor(false);
+  if (had) say('這裡是<b>礫石公路自行車</b>，共 ' + LIST.length + ' 台：<b>Revolt</b> 系列是碳纖 Gravel 賽車，柏油、碎石都能騎；<b>FastRoad AR</b> 是平把全路況車，通勤兼運動的實惠選擇。<br>逛一逛，想比較或請我整理都可以：' +
+    chips([['curate','幫我整理'],['cmp','比較車款']]), 700, m => bindChips(m, v => v === 'cmp' ? setCmpMode(true) : askNeed()));
+}, 0);
 
 /* ---------- 對話 ---------- */
 const log = $('advLog');
@@ -1006,7 +1017,7 @@ startChat = function(){
                    : v === 'mix'  ? (x.use === 'gravel' ? x : y)
                    : (x.pr <= y.pr ? x : y);
         recommendOnPage(v === 'road' ? 'road' : v === 'mix' ? 'mix' : 'budget');
-        say('我照這個條件幫你把清單整理好了，<b>為你推薦</b>就在頁面上，每張卡片我都寫了挑它的理由。<br>' +
+        say('我照這個條件幫你把清單整理好了，為你推薦就在頁面上，每張卡片我都寫了挑它的理由。<br>' +
             '其中我最推薦 <b>' + pick.n + '</b>（NT$ ' + fmt(pick.pr) + '）。' +
             (pick.href ? chips([['go','看這台車款']]) : ''),
             800, m2 => bindChips(m2, () => { location.href = pick.href; }));
@@ -1126,7 +1137,7 @@ function askNeed(){
       m => bindChips(m, v => {
         say(needSummary(v), 700, null, true);
         recommendOnPage(v);
-        say('整理好了 👍 <b>為你推薦</b>就在頁面上，每張卡片都寫了挑它的理由；往下滑還有這三台的<b>比較表</b>可以對照。想再縮小範圍隨時跟我說。', 800);
+        say('整理好了 👍 為你推薦就在頁面上，每張卡片都寫了挑它的理由；往下滑還有這三台的比較表可以對照。想再縮小範圍隨時跟我說。', 800);
       }), true);
 }
 /* 整理一次需求：預算、路況、身高（示範站沒問到的用預設值，並標示可以改） */
@@ -1161,7 +1172,7 @@ Tips.register('curate', () => {
   say('好，我來依你的需求推薦車款給你 👋', 500);
   say(needSummary('budget'), 900, null, true);
   recommendOnPage('budget');
-  say('清單已經整理好了，<b>為你推薦</b>的三台就在左邊，每張卡片都寫了挑它的理由。<br>往下滑還有這三台的<b>比較表</b>，價格、用途、車架材質一眼就能對照。<br>如果你平常騎的路況不同，換個條件我再整理一次：' +
+  say('清單已經整理好了，為你推薦的三台就在左邊，每張卡片都寫了挑它的理由。<br>往下滑還有這三台的比較表，價格、用途、車架材質一眼就能對照。<br>如果你平常騎的路況不同，換個條件我再整理一次：' +
       chips([['road','大多柏油路'],['mix','柏油＋碎石']]), 900,
       m => bindChips(m, v => { say(needSummary(v), 700, null, true); recommendOnPage(v); say('好，改用「' + NEED[v].t + '」整理好了 👍', 700); }), true);
 });

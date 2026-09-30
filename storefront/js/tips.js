@@ -19,23 +19,22 @@
       {key: 'compare', h: '勾選比較 → 比較表', d: '卡片勾「比較」最多三台，按「開始比較」後，比較表出現在對話框左邊。'}
     ]},
     {id: 'detail',  t: '詳細頁',       page: 'product.html', items: [
-      {key: 'use',  h: '說用途 → 頁面個人化', d: '跟顧問說「我喜歡戶外冒險」，主視覺只留下探索未知這段路，配件也換成戶外用的。'},
       {key: 'size', h: 'AI 問尺寸 → 幾何表直接標亮', d: '跟顧問說身高，頁面捲到車架幾何，左欄尺寸自動釘選，表格對應的那一列和圖上的字母一起亮起來。'}
     ]},
-    {id: 'ride',    t: '線上騎乘體驗', page: 'scenario-2/', items: [
-      {key: 'ride', h: '選風景 → 挑車 → 騎乘 → 看報告', d: '先選一段風景（城市、公路或山路），再依需求挑一台車出發；騎到路口自己選路，途中可以問 AI 或換車，騎完 AI 整理成你的騎乘報告。'}
-    ]},
-    {id: 'checkout', t: '體驗報告與結帳', page: 'report.html', items: [
-      {key: 'report', h: '線上騎乘報告 → 配件建議與結帳', d: '完成線上騎乘後，AI 依你選的路況整理成分析報告：性能解讀、適合的尺寸，再列出建議配件，勾選後可直接結帳。'}
+    {id: 'ride',    t: '情境式問卷', page: 'ride.html', items: [
+      {key: 'quiz',   page: 'quiz.html', h: '騎完判定不適合 → AI 怎麼分析、推哪台', d: '自動走完五段路，最後騎的車跟你選的路對不上。結果頁直接說這台有點勉強，列出換成推薦車在你最看重的幾軸會差多少、路線貼合度變多少，顧問再說明方向。'},
+      {key: 'member', page: 'result.html', h: 'AI 記得你買過什麼 → 建議跟著變', d: '結果頁的顧問先講結論；點「我之前買過 GIANT 的車」，它翻出購買紀錄，改成升級或分工的建議，門市、尺寸、配件也一起調整。'}
     ]}
   ];
-  /* 目前在哪一頁：相對 storefront 根目錄的路徑，例如 index.html、gravel.html、scenario-2/、report.html */
+  /* 項目可以有自己的 page（同一個分頁串好幾頁的流程，例如 ride.html → quiz.html → result.html）；沒有就用分頁的 page。
+     目前在哪一頁：相對 storefront 根目錄的路徑，例如 index.html、gravel.html、scenario-2/、report.html */
   var here = location.href.split(/[?#]/)[0];
   here = ROOT && here.indexOf(ROOT) === 0 ? here.slice(ROOT.length) : (location.pathname.split('/').pop() || 'index.html');
   if (here === '' ) here = 'index.html';
   here = here.replace(/index\.html$/, function (m, off) { return off === 0 ? m : ''; });   /* scenario-2/index.html → scenario-2/ */
   /* 子資料夾的分頁（page 以 / 結尾）：整個資料夾裡的頁面都算那一頁 */
-  var cur = TABS.filter(function (x) { return x.page && (x.page === here || (/\/$/.test(x.page) && here.indexOf(x.page) === 0)); })[0] || TABS[0];
+  var onPage = function (pg) { return pg && (pg === here || (/\/$/.test(pg) && here.indexOf(pg) === 0)); };
+  var cur = TABS.filter(function (x) { return onPage(x.page) || x.items.some(function (it) { return onPage(it.page); }); })[0] || TABS[0];
   if (cur.page && /\/$/.test(cur.page) && here.indexOf(cur.page) === 0) here = cur.page;
   var go = function (page, q) { location.href = ROOT + page.replace(/\/$/, '/index.html') + (q || ''); };   /* 資料夾要補檔名，file:// 不會自動找 index.html */
   var FN = {};
@@ -68,7 +67,7 @@
     }
     body.innerHTML = '<ol>' + tab.items.map(function (it, i) {
       return '<li>' + (tab.items.length > 1 ? '<span class="n">' + (i + 1) + '</span>' : '') + '<div><b>' + it.h + '</b><p>' + it.d + '</p></div>' +
-        '<button class="try" type="button" data-key="' + it.key + '" data-page="' + tab.page + '"' + (it.href ? ' data-href="' + it.href + '"' : '') + '>Try it</button></li>';
+        '<button class="try" type="button" data-key="' + it.key + '" data-page="' + (it.page || tab.page) + '"' + (it.href ? ' data-href="' + it.href + '"' : '') + '>Try it</button></li>';
     }).join('') + '</ol>';
     body.querySelectorAll('.try').forEach(function (b) {
       b.onclick = function () {

@@ -14,7 +14,14 @@
     advanced2: { name: 'Revolt Advanced 2',     price:  68800, img: 'img/bikes/revolt.webp' },
     talon:     { name: 'Talon 0',               price:  26800, img: 'img/bikes/talon.webp' },
     fast:      { name: 'FastRoad AR 2',         price:  23800, img: 'img/bikes/fastroad.webp' },
-    faith:     { name: 'Faith 24',              price:  18800, img: 'scenario-2/img/product-faith.webp' }
+    faith:     { name: 'Faith 24',              price:  18800, img: 'scenario-2/img/product-faith.webp' },
+    // 情境式問卷（ride.html）多出來的車款：scenario-2 沒有這些 id，所以連回 ride.html
+    escape:    { name: 'Escape Disc 2',         price:  16800, img: 'img/bikes/escape.webp',            href: 'ride.html?bike=escape' },
+    explore:   { name: 'Explore E+',            price:  78000, img: 'img/bikes/explore.webp',           href: 'ride.html?bike=explore' },
+    sl1:       { name: 'Revolt Advanced SL 1',  price: 208000, img: 'img/pdp/rel-revolt-sl1.webp',      href: 'ride.html?bike=sl1' },
+    propelpro: { name: 'Propel Advanced Pro',   price: 188000, img: 'img/ride/propel-pro0.webp',        href: 'ride.html?bike=propelpro' },
+    propelsl:  { name: 'Propel Advanced SL',    price: 258000, img: 'img/ride/propel-sl1.webp',         href: 'ride.html?bike=propelsl' },
+    tcr:       { name: 'TCR Advanced',          price: 0,      img: 'img/ride/tcr.webp',                href: 'ride.html?bike=tcr' }
   };
 
   const money = n => 'NT$ ' + n.toLocaleString('en-US');
@@ -100,7 +107,7 @@
       const href = base() + (b.href || ('scenario-2/index.html?bike=' + id));
       return '<li><a class="fav-item" href="' + href + '">' +
         '<img src="' + base() + b.img + '" alt="">' +
-        '<span><b>' + esc(b.name) + '</b><small>' + money(b.price) + '</small></span></a>' +
+        '<span><b>' + esc(b.name) + '</b><small>' + (b.price ? money(b.price) : '價格請洽門市') + '</small></span></a>' +
         '<button type="button" class="fav-rm" data-fav-remove="' + id + '" aria-label="移除 ' + esc(b.name) + '">&times;</button>' +
         '</li>';
     }).join('') + '</ul>';

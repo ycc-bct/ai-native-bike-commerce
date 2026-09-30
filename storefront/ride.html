@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>情境式問卷 · GIANT</title>
+<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--shell:min(1840px,calc(100vw - 72px))}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--paper)}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+.site-nav{position:absolute}
+.site-nav .links a{text-shadow:0 0 2px rgba(243,245,247,.95),0 0 8px rgba(243,245,247,.9),0 0 18px rgba(243,245,247,.75)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.04em;transition:background .2s,border-color .2s,color .2s}
+.btn.sm{height:42px;padding:0 20px;font-size:14px}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-dark:hover{background:#1C2A40}
+.btn-line{border:1px solid #B8C0CA;background:rgba(255,255,255,.6)}
+.btn-line:hover{border-color:var(--ink);background:#fff}
+.btn svg{width:16px;height:16px}
+.ride-shell{width:var(--shell);margin:0 auto;transition:width .45s var(--ease),margin .45s var(--ease)}
+
+/* ---------- 情境舞台：一張橫幅風景（城市 → 河濱 → 山路），車排在前面的廣場上 ---------- */
+.stage{--bar:236px;--phh:clamp(150px,22vh,230px);position:relative;height:100vh;min-height:760px;overflow:hidden;background:#DCE6EE}
+.stage > img{position:absolute;left:0;top:0;width:100%;height:calc(100% - var(--bar));object-fit:cover;object-position:50% 78%}
+/* 景深：上半部（山、河、樹）用模糊的第二層蓋住，欄杆以下的地磚保持清楚，車子才跳得出來 */
+.stage > img.dof{filter:blur(5px) saturate(.92) brightness(1.04);transform:scale(1.02);-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 52%,transparent 71%);mask-image:linear-gradient(to bottom,#000 0,#000 52%,transparent 71%)}
+.stage::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(243,245,247,.35) 0%,rgba(243,245,247,0) 22%,rgba(243,245,247,0) 70%,rgba(243,245,247,.25) 100%)}
+.stage-in{position:relative;z-index:2;height:100%}
+.ask{position:absolute;left:0;top:clamp(72px,8vw,100px);max-width:780px}
+.stage h1{font-size:clamp(34px,3.2vw,48px);font-weight:800;letter-spacing:.02em;line-height:1.15;text-shadow:0 2px 24px rgba(255,255,255,.6)}
+.ask-row{display:inline-flex;flex-direction:column;align-items:stretch;margin-top:20px}
+.ask-sub{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:14px}
+/* 地景上的三個場景標籤 */
+/* 四台車 */
+.lineup{position:absolute;left:0;right:0;bottom:var(--bar);display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end}
+.lb{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 6px 8px;border-radius:14px;cursor:pointer;transition:transform .35s var(--ease)}
+.lb:hover{transform:translateY(-4px)}
+.lb .ph{position:relative;width:100%;height:var(--phh);display:flex;align-items:flex-end;justify-content:center;transition:transform .5s var(--ease)}
+/* 接地陰影：每個輪胎正下方一小片貼著胎底的影子（位置由圖片的透明邊算出來，見 groundShadows） */
+.lb .pic{position:relative;display:block;max-width:100%}
+.lb img{position:relative;z-index:1;display:block;max-height:var(--phh);width:auto;max-width:100%;filter:drop-shadow(0 2px 2px rgba(10,14,20,.28))}
+.lb .sh{position:absolute;z-index:0;left:22%;top:100%;width:30%;height:4.6%;transform:translate(-50%,-32%);border-radius:50%;background:rgba(20,26,34,.4);filter:blur(.6px)}
+.lb .sk{display:none}
+
+.lb.on .ph{transform:scale(1.06)}
+/* 選中的車：車身後面一圈柔光、車名變藍 */
+.lb .ph::before{content:"";position:absolute;left:50%;bottom:-2px;width:104%;height:64%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.55) 0,rgba(205,220,255,.28) 40%,rgba(205,220,255,0) 68%);filter:blur(10px);opacity:0;transition:opacity .4s}
+.lb.on .ph::before{opacity:1}
+.lb.on b{color:var(--ai)}
+.lb .meta{min-height:72px;display:flex;flex-direction:column;align-items:center}
+.lb b{margin-top:12px;font-size:14.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-shadow:0 1px 10px rgba(255,255,255,.9)}
+.lb .pr{margin-top:4px;font-size:13.5px;font-weight:700;color:var(--ink);text-shadow:0 1px 8px rgba(255,255,255,.9)}
+.lb .go svg{width:14px;height:14px}
+/* 選中車上方的建議泡泡 */
+/* ---------- 下方選路列 ---------- */
+.ride-bar{position:absolute;left:0;right:0;bottom:0;z-index:4;height:var(--bar);background:#fff;border-top:1px solid var(--line)}
+.ride-bar .ride-shell{height:100%;display:flex;align-items:center;gap:32px}
+.chips{display:flex;gap:12px;flex-wrap:wrap}
+.chip{height:46px;padding:0 22px;border-radius:999px;border:1.5px solid var(--navy);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:15px;font-weight:700;color:var(--navy);transition:background .2s,color .2s,transform .2s}
+.chip:hover{background:#fff}
+.chip.on{background:var(--navy);color:#fff}
+.rb-hint{display:block;font-size:13.5px;font-weight:600;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.rb-shuffle{display:inline-flex;align-items:center;gap:6px;padding:0;background:none;font-size:14px;font-weight:700;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.5);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;white-space:nowrap;transition:opacity .2s}
+.rb-shuffle:hover{opacity:.8}
+.rb-shuffle svg{width:15px;height:15px;transition:transform .5s var(--ease)}
+.rb-shuffle:hover svg{transform:rotate(-180deg)}
+@media (max-width:1400px){.lb b{font-size:13px;letter-spacing:.09em}.ride-bar .ride-shell{gap:24px}.chips{gap:8px}.chip{height:42px;padding:0 16px;font-size:14px}}
+@media (max-height:820px){.stage{--bar:212px;--phh:clamp(130px,18vh,180px);min-height:720px}.lb .meta{min-height:72px}.ask{top:64px}.stage h1{font-size:clamp(30px,3vw,40px)}.ask-row{margin-top:14px}}
+/* ---------- 底部橫條：選中車的五軸圖與介紹 ---------- */
+.pf{flex:1;min-width:0;display:grid;grid-template-columns:220px 200px minmax(0,1fr);gap:28px;align-items:center;opacity:0;transform:translateY(6px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.pf.on{opacity:1;transform:none}
+.pf .hd small{display:block;font-size:11.5px;letter-spacing:.16em;color:var(--ink-50)}
+.pf .hd b{display:block;margin-top:4px;font-size:24px;font-weight:800;line-height:1.2}
+.pf .hd .nm{display:flex;align-items:center;gap:12px;margin-top:6px}
+.pf .hd .pr{font-size:14px;font-weight:700;color:var(--ink-70)}
+.pf .fav{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--ink-70);flex:none;cursor:pointer}
+.pf .fav svg{width:17px;height:17px}
+.pf .fav.on{color:#E2465B;border-color:#F3C9CF}
+.pf .fav.on svg{fill:currentColor}
+.radar{width:100%;overflow:visible;display:block}
+.radar .g{fill:none;stroke:#C5D0E4;stroke-width:1}
+.radar .f{fill:rgba(31,79,224,.16);stroke:var(--ai);stroke-width:2.5;stroke-linejoin:round}
+.radar text{font-size:12.5px;fill:var(--ink);font-weight:600}
+.pf .txs{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.pf h4{margin:0 0 4px;font-size:14px;font-weight:800}
+.pf p{margin:0;font-size:13px;line-height:1.7;color:var(--ink)}
+.pf p + p{margin-top:4px}
+#goRide{flex:none}
+@media (max-width:1400px){.pf{grid-template-columns:196px 180px minmax(0,1fr);gap:20px}.pf .txs{gap:20px}.pf .hd b{font-size:21px}}
+@media (max-height:820px){.pf{grid-template-columns:180px 168px minmax(0,1fr);gap:16px}.pf .txs{gap:16px}.pf .hd b{font-size:20px}.pf p{font-size:12.5px;line-height:1.6}}
+</style>
+</head>
+<body>
+
+<header class="nav site-nav">
+    <a class="logo" href="index.html" aria-label="GIANT">
+      <svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg>
+    </a>
+    <nav class="links"><a href="index.html#explore">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
+    <div class="icons">
+      <button type="button" class="icon-btn" id="openFav" aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg><span class="fav-n" hidden>0</span></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+    </div>
+</header>
+
+
+<section class="stage" id="stage">
+  <img src="img/ride/landscape.webp" alt="">
+  <img class="dof" src="img/ride/landscape.webp" alt="" aria-hidden="true">
+  <div class="stage-in ride-shell">
+    <div class="ask">
+      <h1>這段路，你想怎麼騎？</h1>
+      <div class="ask-row">
+        <div class="chips" id="chips">
+          <button class="chip" type="button" data-scene="city">市區續繞</button>
+          <button class="chip" type="button" data-scene="river">河濱吹風</button>
+          <button class="chip" type="button" data-scene="mountain">往山裡走</button>
+          <button class="chip" type="button" data-scene="any">還沒決定</button>
+        </div>
+        <div class="ask-sub">
+          <p class="rb-hint" id="hint">照你想騎的路，幫你換幾台看看。</p>
+          <button class="rb-shuffle" id="shuffle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>換幾台看看</button>
+        </div>
+      </div>
+    </div>
+    <div class="lineup" id="lineup"></div>
+  </div>
+  <div class="ride-bar">
+    <div class="ride-shell">
+      <div class="pf" id="perfPanel" aria-live="polite"></div>
+      <a class="btn btn-dark" id="goRide" href="quiz.html">開始體驗<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+
+<script src="js/favorites.js?v=n83aaaf"></script>
+<script src="js/ride-data.js?v=n83aaaf"></script>
+<script src="js/tips.js?v=n83aaaf"></script>
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('en-US');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- 車款：五軸為示意分數（爬坡／舒適／操控／效率／多用途），gid 是 scenario-2 認得的 id ---------- */
+const AXES = RIDE.AXES, BIKES = RIDE.BIKES;
+/* 場景：對應地景上的標籤、車款池（前四台先秀）、預設選的車與提示語 */
+const SCENES = {
+  city:     {pin:'city',     label:'城市日常', pool:['fast','escape','explore','advanced2','propelpro','tcr'],   pick:'fast',      say:'市區走走停停，這台最輕鬆。', also:{k:'explore', t:'紅綠燈多、坡也多？電輔更省力。'}},
+  river:    {pin:'river',    label:'河濱時光', pool:['propelpro','fast','tcr','propelsl','advanced2','explore'],  pick:'fast',      say:'先從這台看看，喜歡再慢慢挑。', also:{k:'tcr', t:'想多騎一段？這台也一起看看。'}},
+  mountain: {pin:'mountain', label:'山路挑戰', pool:['ebike','trance','sl0','pro1','talon','advanced2'],           pick:'ebike',     say:'上山省力，先從這台開始。', also:{k:'trance', t:'下坡想更穩？全避震更有信心。'}},
+  any:      {pin:null,       label:'隨意逛逛', pool:['fast','advanced2','ebike','propelpro','trance','escape'],   pick:'advanced2', say:'什麼路都能騎的一台，先看看再說。', also:{k:'fast', t:'想先從輕鬆的開始也可以。'}},
+};
+const CHIP_LABEL = {city:'市區續繞', river:'河濱吹風', mountain:'往山裡走', any:'還沒決定'};
+const S = {scene:'river', off:0, sel:null};
+
+/* 我的最愛：每台車名旁一顆愛心，跟底部橫條的愛心、全站清單同步（gid 沒有的車用這頁的 key 當 id） */
+const HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg>';
+const favHas = id => !!(window.GiantFav && GiantFav.has(id));
+function favBtn(id){ return '<button class="fav' + (favHas(id) ? ' on' : '') + '" type="button" data-fav="' + id + '" aria-label="加入我的最愛">' + HEART + '</button>'; }
+function syncHearts(){ document.querySelectorAll('.fav[data-fav]').forEach(f => f.classList.toggle('on', favHas(f.dataset.fav))); }
+document.addEventListener('click', e => {
+  const f = e.target.closest('.fav[data-fav]'); if (!f || !window.GiantFav) return;
+  e.preventDefault(); e.stopPropagation(); GiantFav.toggle(f.dataset.fav); syncHearts();
+}, true);
+addEventListener('giant-fav-change', syncHearts);
+function visible(){ const pool = SCENES[S.scene].pool; return [0,1,2,3].map(i => pool[(S.off + i) % pool.length]); }
+function render(){
+  const sc = SCENES[S.scene], vis = visible();
+  if (!vis.includes(S.sel)) S.sel = vis.includes(sc.pick) ? sc.pick : vis[0];
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.scene === S.scene));
+  $('lineup').innerHTML = vis.map(k => {
+    const b = BIKES[k], on = k === S.sel;
+    return '<div class="lb' + (on ? ' on' : '') + '" data-k="' + k + '">' +
+      '<div class="ph"><span class="pic"><img src="' + b.img + '" alt="' + b.n + '"><i class="sh"></i><i class="sk"></i><i class="sh"></i><i class="sk"></i></span></div>' +
+      '<div class="meta"><b>' + b.n + '</b><span class="pr">' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</span>' +
+      '</div></div>';
+  }).join('');
+  $('lineup').querySelectorAll('.pic').forEach(RIDE.groundShadows);
+  $('lineup').querySelectorAll('.lb').forEach(el => el.addEventListener('click', e => {
+    selectBike(el.dataset.k, true);
+  }));
+  $('goRide').href = rideHref(S.sel);
+  $('hint').textContent = S.scene === 'any' ? '還沒想好也沒關係，先挑一台看看五軸分析。' : '照你想騎的路，幫你換幾台看看。';
+}
+function rideHref(k){ return 'quiz.html?bike=' + k + '&scene=' + S.scene; }
+function setScene(s){ if (!SCENES[s]) return; S.scene = s; S.off = 0; S.sel = null; render(); showPerf(S.sel); }
+function selectBike(k, talk){
+  S.sel = k; render();
+  showPerf(k);
+}
+document.querySelectorAll('.chip').forEach(c => c.onclick = () => setScene(c.dataset.scene));
+$('shuffle').onclick = () => { S.off = (S.off + 4) % SCENES[S.scene].pool.length; S.sel = null; render(); showPerf(S.sel); };
+
+/* ---------- 舞台上的五軸圖 + 選車分析 + 適用地形 ---------- */
+function radar(ax){
+  const cx = 130, cy = 118, R = 84, N = 5;
+  const pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / N; return [cx + Math.cos(a) * R * v / 100, cy + Math.sin(a) * R * v / 100]; };
+  const ring = v => '<polygon class="g" points="' + AXES.map((_, i) => pt(i, v).join(',')).join(' ') + '"/>';
+  const spokes = AXES.map((_, i) => { const p = pt(i, 100); return '<line class="g" x1="' + cx + '" y1="' + cy + '" x2="' + p[0] + '" y2="' + p[1] + '"/>'; }).join('');
+  const labels = AXES.map((n, i) => { const p = pt(i, 130); return '<text x="' + p[0] + '" y="' + (p[1] + 4) + '" text-anchor="middle">' + n + ' ' + ax[i] + '</text>'; }).join('');
+  return '<svg class="radar" viewBox="-10 -6 280 250" aria-label="五軸能力圖">' + [25,50,75,100].map(ring).join('') + spokes +
+    '<polygon class="f" points="' + ax.map((v, i) => pt(i, v).join(',')).join(' ') + '"/>' + labels + '</svg>';
+}
+function showPerf(k){
+  const b = BIKES[k], pool = visible(), n = pool.length;
+  const avg = AXES.map((_, i) => Math.round(pool.reduce((s, p) => s + BIKES[p].ax[i], 0) / n));
+  const bestAxis = avg.indexOf(Math.max(...avg));
+  const order = b.ax.map((v, i) => [v, i]).sort((a, c) => c[0] - a[0]);
+  const [t1, t2] = order;
+  const groupMax = Math.max(...pool.map(p => BIKES[p].ax[t1[1]]));
+  const rank = pool.map(p => BIKES[p].ax[t1[1]]).sort((a, c) => c - a).indexOf(b.ax[t1[1]]) + 1;
+  const sceneName = S.scene === 'any' ? '還沒決定' : CHIP_LABEL[S.scene];
+  const fid = b.gid || k;
+  const el = $('perfPanel');
+  el.innerHTML = '<div class="hd"><small>PERFORMANCE</small><b>' + b.n + '</b><div class="nm"><span class="pr">' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</span>' +
+    favBtn(fid) +
+    '</div></div>' +
+    radar(b.ax) +
+    '<div class="txs"><div class="tx"><h4>選車分析</h4>' +
+    '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</p>' +
+    '<p>' + b.n + ' 以' + AXES[t1[1]] + '（' + t1[0] + '）和' + AXES[t2[1]] + '（' + t2[0] + '）最突出，' + AXES[t1[1]] + (b.ax[t1[1]] === groupMax ? '是這 ' + n + ' 台裡最高。' : '在這 ' + n + ' 台裡排第 ' + rank + '。') + '</p></div>' +
+    '<div class="tx"><h4>適用地形</h4><p>' + b.t + '</p></div></div>';
+  el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+}
+
+/* ---------- 進頁：帶 ?bike= 直接選那台 ---------- */
+(function init(){
+  const q = new URLSearchParams(location.search).get('bike');
+  const key = q && (BIKES[q] ? q : Object.keys(BIKES).find(k => BIKES[k].gid === q));
+  if (key) { S.scene = Object.keys(SCENES).find(x => SCENES[x].pool.includes(key)) || 'any'; S.off = 0; S.sel = key; }
+  render();
+  showPerf(S.sel);
+})();
+/* Tips 示範：山路 → 點 Talon E+ */
+Tips.register('ride', () => { setScene('mountain'); setTimeout(() => selectBike('ebike', true), 350); });
+</script>
+</body>
+</html>

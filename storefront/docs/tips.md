@@ -13,12 +13,12 @@
 
 ```html
 <!-- storefront 根目錄的頁面（例如 report.html） -->
-<link rel="stylesheet" href="css/tips.css?v=b9e4e03">
-<script src="js/tips.js?v=b9e4e03"></script>
+<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
+<script src="js/tips.js?v=n83aaaf"></script>
 
 <!-- 子資料夾的頁面（例如 scenario-2/index.html） -->
-<link rel="stylesheet" href="../css/tips.css?v=b9e4e03">
-<script src="../js/tips.js?v=b9e4e03"></script>
+<link rel="stylesheet" href="../css/tips.css?v=n83aaaf">
+<script src="../js/tips.js?v=n83aaaf"></script>
 ```
 
 - `?v=` 是快取版本號（GitHub Pages 對 JS/CSS 只給 10 分鐘快取，瀏覽器常會留更久）。共用檔有改時，三頁會一起換成當時的 commit 短碼；你引用時抄目前 `index.html` 裡的值就好。
@@ -43,7 +43,7 @@
 在你的頁面腳本裡註冊，key 要對應 `js/tips.js` 裡該項目的 `key`：
 
 ```html
-<script src="../js/tips.js?v=b9e4e03"></script>
+<script src="../js/tips.js?v=n83aaaf"></script>
 <script>
   // 例：線上騎乘體驗頁，Try it 直接開始一段示範騎乘
   Tips.register('ride', function () {
@@ -79,6 +79,7 @@
 | `items[].h` | 標題，格式「觸發 → 結果」，例如「說用途 → 頁面個人化」。 |
 | `items[].d` | 一到兩句說明，寫給第一次看的人：怎麼觸發、會看到什麼。 |
 | `items[].href` | （選用）Try it 直接前往的網址；有 `href` 就不會執行 `register` 的動作。 |
+| `items[].page` | （選用）這一項所在的頁面；同一個分頁串好幾頁的流程時用（例如情境式問卷：ride.html → quiz.html → result.html）。沒填就用分頁的 `page`。 |
 
 - 只有一個項目的分頁不顯示編號；兩個以上會顯示 1、2、3。
 - 分頁順序依網站流程排列：首頁 → 商品清單 → 詳細頁 → 線上騎乘體驗 → 體驗報告與結帳。
@@ -90,8 +91,7 @@
 | 首頁 `index.html` | AI 主動出現 → 需要幫忙挑車嗎？ / 說出車款 → AI 直接帶路 | 頁內示範 |
 | 商品清單 `gravel.html` | 逛一陣子 → AI 主動提示 / AI 幫我整理 → 頁面秀出推薦 / 勾選比較 → 比較表 | 頁內示範 |
 | 詳細頁 `product.html` | 說用途 → 頁面個人化 / AI 問尺寸 → 幾何表直接標亮 | 頁內示範 |
-| 線上騎乘體驗 `scenario-2/` | 選風景 → 挑車 → 騎乘 → 看報告 | 頁內示範 |
-| 體驗報告與結帳 `report.html` | 線上騎乘報告 → 配件建議與結帳 | 連到 report.html#equipment（htmlpreview） |
+| 情境式問卷 `ride.html` → `quiz.html` → `result.html` | 騎完判定不適合 → AI 怎麼分析、推哪台 / AI 記得你買過什麼 → 建議跟著變 | 頁內示範（兩個項目各在自己的頁面，用 `items[].page`） |
 
 ## 6. 接上後的檢查
 
