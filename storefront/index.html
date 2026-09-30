@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/header.css?v=nd248dc"><link rel="stylesheet" href="css/favorites.css?v=nd248dc">
-<link rel="stylesheet" href="css/advisor.css?v=nd248dc">
-<link rel="stylesheet" href="css/tips.css?v=nd248dc">
+<link rel="stylesheet" href="css/header.css?v=nb2deaf"><link rel="stylesheet" href="css/favorites.css?v=nb2deaf">
+<link rel="stylesheet" href="css/advisor.css?v=nb2deaf">
+<link rel="stylesheet" href="css/tips.css?v=nb2deaf">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -94,13 +94,28 @@ svg{display:block}
 
 /* 線上騎乘體驗：全寬 banner，用 scenario-2 的入口景（山路木門），連到 Ginny 的 120 秒數位騎乘 */
 .sec.ride-sec{padding-top:28px}
+.ride-row{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}
+/* 右邊：選車顧問宣傳卡，點了直接打開對話框 */
+.adv-card{position:relative;isolation:isolate;display:flex;align-items:center;gap:26px;height:clamp(300px,27vw,400px);padding:36px 34px;border-radius:14px;overflow:hidden;text-align:left;color:#fff;background:radial-gradient(120% 90% at 100% 0%,#2D5BFF 0,#1F4FE0 30%,#0E1726 78%);box-shadow:0 12px 28px rgba(20,26,34,.12);transition:transform .25s var(--ease),box-shadow .25s}
+.adv-card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(31,79,224,.28)}
+.adv-card::before{content:"";position:absolute;z-index:0;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.22),rgba(255,255,255,0))}
+.ac-mark{position:relative;z-index:1;flex:none;display:grid;place-items:center;width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),0 0 40px rgba(31,79,224,.5)}
+.ac-mark svg{width:40px;height:52px}
+.ac-copy{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.ac-copy small{font-size:12.5px;letter-spacing:.16em;font-weight:700;color:rgba(255,255,255,.75)}
+.ac-copy b{margin-top:8px;font-size:clamp(22px,1.8vw,26px);font-weight:800;line-height:1.3}
+.ac-sub{margin-top:10px;font-size:14px;line-height:1.7;color:rgba(255,255,255,.85)}
+.ac-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.ac-chips i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.9)}
+.adv-card .btn{margin-top:18px;height:44px;padding:0 20px;font-size:14px}
+@media (max-width:1400px){.ride-row{grid-template-columns:1.1fr 1fr}.adv-card{padding:28px 26px;gap:20px}.ac-mark{width:88px;height:88px}.ac-mark svg{width:34px;height:44px}.ac-chips{display:none}}
 /* 情境式問卷入口：跟 Featured 的 Revolt 卡同款（圓角卡、暗角漸層、文案在左上） */
 .ride-banner{position:relative;isolation:isolate;display:block;height:clamp(300px,27vw,400px);border-radius:14px;overflow:hidden;color:#fff;background:#2A3320;box-shadow:0 12px 28px rgba(20,26,34,.12)}
 .ride-banner img{position:absolute;z-index:0;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;transition:transform 1.2s var(--ease)}
 .ride-banner:hover img{transform:scale(1.03)}
 .ride-banner::before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(6,10,16,.5) 0%,rgba(6,10,16,.3) 45%,rgba(6,10,16,.12) 75%)}
 .rb-copy{position:absolute;z-index:2;inset:0;padding:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.rb-copy h2{font-size:36px;font-weight:800;letter-spacing:-.01em;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.rb-copy h2{font-size:clamp(28px,2.6vw,36px);font-weight:800;letter-spacing:-.01em;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.35)}
 .rb-sub{margin-top:10px;font-size:14px;line-height:1.7;font-weight:500;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .rb-copy .btn{margin-top:22px}
 
@@ -307,6 +322,7 @@ a:not([href]){cursor:default}
 </section>
 
 <section class="sec ride-sec" id="ride">
+<div class="ride-row">
 <a class="ride-banner rv" href="ride.html">
   <img src="img/ride/landscape.webp" alt="">
   <div class="rb-copy">
@@ -315,6 +331,17 @@ a:not([href]){cursor:default}
     <span class="btn btn-light">立即體驗<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
 </a>
+<button class="adv-card rv" id="advPromo" type="button" style="--d:.1s">
+  <span class="ac-mark"><svg viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>
+  <span class="ac-copy">
+    <small>GIANT 選車顧問</small>
+    <b>不知道從哪台開始？<br>跟它聊聊就好。</b>
+    <span class="ac-sub">說你想騎去哪、身高多少，它幫你挑車、對尺寸、比車款，還記得你看過哪些。</span>
+    <span class="ac-chips"><i>幫我找適合的車</i><i>我的尺寸</i><i>比較車款</i></span>
+    <span class="btn btn-light">聊聊看<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </span>
+</button>
+</div>
 </section>
 
 <section class="sec explore" id="explore">
@@ -431,11 +458,11 @@ a:not([href]){cursor:default}
   </form>
 </aside>
 
-<script src="js/favorites.js?v=nd248dc"></script>
-<script src="js/thinking-orbs-engine.js?v=nd248dc"></script>
-<script src="js/orb.js?v=nd248dc"></script>
-<script src="js/advisor.js?v=nd248dc"></script>
-<script src="js/tips.js?v=nd248dc"></script>
+<script src="js/favorites.js?v=nb2deaf"></script>
+<script src="js/thinking-orbs-engine.js?v=nb2deaf"></script>
+<script src="js/orb.js?v=nb2deaf"></script>
+<script src="js/advisor.js?v=nb2deaf"></script>
+<script src="js/tips.js?v=nb2deaf"></script>
 <script>
 const $ = id => document.getElementById(id);
 
@@ -512,6 +539,7 @@ function hideCallout(){
 if (!tipSeen()) setTimeout(() => showCallout('這是 GIANT 選車顧問', '我會記得你看過哪些車，依你的騎乘情境、預算和身高，給你客製化的建議。', '好，聊聊看'), 1800);
 else setTimeout(() => showCallout('需要幫忙挑車嗎？', '跟我說你平常怎麼騎，我幫你從熱門車款裡挑出適合的。', '好，聊聊看'), 8000);
 $('calloutYes').onclick = () => openAdvisor(false);
+$('advPromo').onclick = () => { if ($('advisor').hidden) openAdvisor(); else $('advInput').focus(); };
 /* Tips 的示範：不管逛了多久，直接秀出「需要幫忙挑車嗎？」 */
 Tips.register('jump', () => {
   if ($('advisor').hidden) openAdvisor(false);
