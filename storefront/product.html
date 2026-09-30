@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Revolt Advanced SL 0 · GIANT</title>
-<link rel="stylesheet" href="css/header.css?v=n83aaaf"><link rel="stylesheet" href="css/favorites.css?v=n83aaaf">
-<link rel="stylesheet" href="css/advisor.css?v=n83aaaf">
-<link rel="stylesheet" href="css/tips.css?v=n83aaaf">
+<link rel="stylesheet" href="css/header.css?v=nd248dc"><link rel="stylesheet" href="css/favorites.css?v=nd248dc">
+<link rel="stylesheet" href="css/advisor.css?v=nd248dc">
+<link rel="stylesheet" href="css/tips.css?v=nd248dc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -637,11 +637,11 @@ a:not([href]){cursor:default}
 
 <div class="toast" id="toast"></div>
 
-<script src="js/favorites.js?v=n83aaaf"></script>
-<script src="js/thinking-orbs-engine.js?v=n83aaaf"></script>
-<script src="js/orb.js?v=n83aaaf"></script>
-<script src="js/advisor.js?v=n83aaaf"></script>
-<script src="js/tips.js?v=n83aaaf"></script>
+<script src="js/favorites.js?v=nd248dc"></script>
+<script src="js/thinking-orbs-engine.js?v=nd248dc"></script>
+<script src="js/orb.js?v=nd248dc"></script>
+<script src="js/advisor.js?v=nd248dc"></script>
+<script src="js/tips.js?v=nd248dc"></script>
 <script>
 const $ = id => document.getElementById(id);
 /* ---------- 進場動態：.rv.now 載入即進場；其他捲進畫面才進場 ---------- */
@@ -937,7 +937,7 @@ function advSize(h){
       : '以 ' + h + ' cm 來看，官方建議是 <b>' + s[0] + '</b>（' + s[1] + '–' + s[2] + ' cm），我已經幫你在表上標好了。')
     + '<br>右邊亮起來的 <b>K（Stack）</b>是座艙高度，<b>L（Reach）</b>是往前伸的距離，這兩個數字決定騎起來趴不趴。');
   advSay('有機會的話，到門市試騎一下最準，也歡迎先體驗線上試乘 👇' +
-    '<a class="adv-ride" href="scenario-2/index.html?bike=sl0"><img src="img/home/virtual-ride.webp" alt=""><span><b>線上騎乘體驗</b><small>騎這台上路 120 秒，AI 整理你的騎乘報告。</small></span></a>');
+    '<a class="adv-ride" href="ride.html?bike=sl0"><img src="img/home/virtual-ride.webp" alt=""><span><b>情境式問卷</b><small>騎這台走五段路，看它適不適合你。</small></span></a>');
 }
 function advRoute(v){
   if (v === 'h:L') { markLetter('L'); spot(document.querySelector('.geo-fig')); return advSay('圖上的 L 就是 Reach：從五通到車頭的水平距離。數字越大，身體會越往前伸，騎起來越有競速感。'); }

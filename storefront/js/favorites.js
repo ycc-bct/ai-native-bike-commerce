@@ -99,12 +99,12 @@
       body.innerHTML =
         '<div class="fav-empty"><p>還沒有收藏任何車款。</p>' +
         '<p>在選車現場看到想再比較的車，按一下愛心就會留在這裡。</p>' +
-        '<a class="fav-cta" href="' + base() + 'scenario-2/index.html">進入選車現場</a></div>';
+        '<a class="fav-cta" href="' + base() + 'ride.html">去情境式問卷挑一台</a></div>';
       return;
     }
     body.innerHTML = '<ul class="fav-list">' + ids.map(id => {
       const b = BIKES[id];
-      const href = base() + (b.href || ('scenario-2/index.html?bike=' + id));
+      const href = base() + (b.href || ('ride.html?bike=' + id));   /* 清單裡的車連到情境式問卷（舊的選車現場不再連） */
       return '<li><a class="fav-item" href="' + href + '">' +
         '<img src="' + base() + b.img + '" alt="">' +
         '<span><b>' + esc(b.name) + '</b><small>' + (b.price ? money(b.price) : '價格請洽門市') + '</small></span></a>' +
