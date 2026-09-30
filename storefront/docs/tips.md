@@ -13,12 +13,12 @@
 
 ```html
 <!-- storefront 根目錄的頁面（例如 report.html） -->
-<link rel="stylesheet" href="css/tips.css?v=n8e75f8">
-<script src="js/tips.js?v=n8e75f8"></script>
+<link rel="stylesheet" href="css/tips.css?v=n045ad3">
+<script src="js/tips.js?v=n045ad3"></script>
 
 <!-- 子資料夾的頁面（例如 scenario-2/index.html） -->
-<link rel="stylesheet" href="../css/tips.css?v=n8e75f8">
-<script src="../js/tips.js?v=n8e75f8"></script>
+<link rel="stylesheet" href="../css/tips.css?v=n045ad3">
+<script src="../js/tips.js?v=n045ad3"></script>
 ```
 
 - `?v=` 是快取版本號（GitHub Pages 對 JS/CSS 只給 10 分鐘快取，瀏覽器常會留更久）。共用檔有改時，三頁會一起換成當時的 commit 短碼；你引用時抄目前 `index.html` 裡的值就好。
@@ -43,7 +43,7 @@
 在你的頁面腳本裡註冊，key 要對應 `js/tips.js` 裡該項目的 `key`：
 
 ```html
-<script src="../js/tips.js?v=n8e75f8"></script>
+<script src="../js/tips.js?v=n045ad3"></script>
 <script>
   // 例：線上騎乘體驗頁，Try it 直接開始一段示範騎乘
   Tips.register('ride', function () {
