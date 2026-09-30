@@ -48,8 +48,9 @@ svg{display:block}
 .lb .ph{position:relative;width:100%;height:var(--phh);display:flex;align-items:flex-end;justify-content:center;transition:transform .5s var(--ease)}
 /* 接地陰影：每個輪胎正下方一小片貼著胎底的影子（位置由圖片的透明邊算出來，見 groundShadows） */
 .lb .pic{position:relative;display:block;max-width:100%}
-.lb img{position:relative;z-index:1;display:block;max-height:var(--phh);width:auto;max-width:100%;filter:drop-shadow(0 2px 2px rgba(10,14,20,.28))}
-.lb .sh{position:absolute;z-index:0;left:22%;top:100%;width:30%;height:4.6%;transform:translate(-50%,-32%);border-radius:50%;background:rgba(20,26,34,.4);filter:blur(.6px)}
+.lb img{position:relative;z-index:1;display:block;max-height:var(--phh);width:auto;max-width:100%;filter:drop-shadow(0 18px 24px rgba(20,26,34,.16))}
+/* 跟詳細頁同一套：柔邊放射漸層，中心對準輪胎接地點 */
+.lb .sh{position:absolute;z-index:0;left:22%;top:100%;width:24%;height:4.6%;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(20,26,34,.38),rgba(20,26,34,0))}
 .lb .sk{display:none}
 
 .lb.on .ph{transform:scale(1.06)}
