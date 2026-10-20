@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GIANT · 打造你的專屬 DEFY</title>
+<meta name="description" content="GIANT 客製車：塗裝配色、尺寸與配備、確認配置及購物車。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--muted:var(--ink-70);--line:#DCE1E7;--bg:var(--paper);--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--shell:min(1840px,calc(100vw - 72px));--surface:#fff;--ease:cubic-bezier(.16,1,.3,1);--error:#b23932}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:wait;opacity:.65}button,a,input,select{ -webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #64748b;outline-offset:4px}button{border:0;background:none}a{color:inherit}svg{display:block}h1,h2,h3,p{margin:0}h1{font-size:clamp(24px,2.3vw,34px);letter-spacing:-.8px;line-height:1.25}h2{font-size:24px;letter-spacing:-.6px;line-height:1.4}h3{font-size:15px}small{font-size:12px}.muted{color:var(--muted)}.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.7px}.icon{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.icon-button{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;position:relative}.icon-button:hover{background:#edf0f2}.topbar{height:72px;border-bottom:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 40px;gap:24px}.wordmark{font-weight:900;letter-spacing:-1.5px;font-size:30px;font-style:italic}.header-left,.header-right{display:flex;align-items:center;gap:40px}.header-right{gap:12px}.header-context{font-size:12px;color:var(--muted);border-left:1px solid var(--line);padding-left:32px}.badge{position:absolute;top:0;right:0;min-width:18px;height:18px;line-height:18px;background:var(--ink);color:white;border-radius:20px;font-size:10px}.page{max-width:1680px;margin:auto;padding:32px 40px 126px}.intro{display:flex;justify-content:space-between;gap:32px;align-items:center;margin-bottom:26px}.product-code{margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.6px;color:var(--muted)}.crumb{font-size:12px;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px}.steps{display:flex;align-items:center;gap:18px;margin:16px 0 0;padding:0;list-style:none}.steps li{display:flex;align-items:center;gap:18px}.steps li:not(:last-child):after{content:'';width:24px;height:1px;background:#dce1e6}.step{display:flex;align-items:center;gap:10px;font-size:12px;white-space:nowrap;color:#707b87;padding:8px 0}.step span{border-radius:50%;width:28px;height:28px;display:grid;place-items:center;background:#e7eaed;font-weight:600}.step[aria-current=step]{font-weight:700;color:var(--ink)}.step[aria-current=step] span{background:var(--ink);color:#fff}.step.done span{background:#dfe7e0;color:#465748}.workspace{display:grid;grid-template-columns:minmax(0,1.64fr) minmax(390px,1fr);gap:28px;align-items:start}.preview-column{position:sticky;top:22px;min-width:0}.stage{position:relative;width:100%;max-width:100%;min-width:0;min-height:500px;aspect-ratio:1.29;background:#edf0f1;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:background .25s var(--ease)}.stage[data-background=white]{background:#fff}.stage[data-background=dark]{background:#303538}.stage[data-background=dark] .stage-caption,.stage[data-background=dark] .stage-top{color:#d6dbdd}.stage-top{position:absolute;left:30px;top:27px;right:30px;display:flex;justify-content:space-between;color:#747f77;z-index:1}.stage-name{font-size:11px;letter-spacing:.3px;color:#727c86}.stage[data-background=dark] .stage-name{color:#cdd3d8}.bike-wrap{width:94%;transition:transform .45s var(--ease);transform-origin:50% 45%}.bike-wrap.detail{transform:scale(1.65) translate(-3%,10%)}.bike-wrap.zoom{transform:scale(1.23)}.bike-wrap.detail.zoom{transform:scale(1.95) translate(-3%,12%)}.bike-art{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 20px 12px #17212608)}.stage-controls{position:absolute;bottom:25px;left:28px;right:28px;display:flex;align-items:center;justify-content:space-between;gap:12px}.view-tabs{display:flex;gap:4px;padding:4px;background:#ffffffb8;border-radius:30px}.view-tabs button{padding:8px 18px;border-radius:30px;font-size:12px;color:#69727d}.view-tabs button[aria-pressed=true]{background:white;color:var(--ink);box-shadow:0 1px 5px #1721260b}.zoom-control{background:white;border-radius:25px;width:46px;height:40px;display:grid;place-items:center}.stage-caption{position:absolute;left:30px;bottom:85px;font-size:10px;color:#808990}.preview-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 6px}.preview-footer p{font-size:13px;color:var(--muted)}.preview-footer small{display:block;font-size:10px;margin-top:6px;color:#7b8691}.background-controls{display:flex;gap:8px;align-items:center}.bg-swatch{width:24px;height:24px;border-radius:50%;border:1px solid #c9d0d6;position:relative}.bg-swatch[aria-pressed=true]:after{content:'';position:absolute;inset:-4px;border:1px solid #77828c;border-radius:50%}.panel{border-radius:18px;background:var(--surface);padding:28px;min-height:620px}.panel-head{margin-bottom:22px}.panel-head p{font-size:13px;color:var(--muted);margin-top:8px}.segmented{background:#f0f2f4;border-radius:9px;padding:4px;display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:22px}.segmented button{padding:12px 6px;font-size:13px;border-radius:6px;color:var(--muted)}.segmented button[aria-pressed=true]{color:#fff;background:var(--ink);font-weight:600}.paint-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.paint-card{position:relative;border:1px solid var(--line);border-radius:10px;text-align:left;padding:8px 8px 13px;transition:border-color .2s,transform .2s;background:white;min-width:0}.paint-card:hover{border-color:#8d969e;transform:translateY(-2px)}.paint-card[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}.paint-thumb{background:#f4f5f5;border-radius:6px;padding:3px 6px;margin-bottom:10px;aspect-ratio:1.65;display:flex;align-items:center}.paint-card strong,.paint-card small{display:block;padding:0 5px}.paint-card strong{font-size:12px;line-height:1.5;padding-right:16px}.paint-card small{font-size:11px;color:var(--muted);margin-top:4px}.checkmark{position:absolute;right:11px;bottom:36px;display:none;width:16px;height:16px;border-radius:50%;background:var(--ink);color:#fff;font-size:10px;text-align:center;line-height:16px}.paint-card[aria-pressed=true] .checkmark{display:block}.selection-note{margin-top:23px}.selection-note strong{font-size:13px}.selection-note p{font-size:12px;color:var(--muted);margin-top:6px}.signature-entry{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.signature-entry p{font-size:12px;color:var(--muted);margin-top:3px}.text-button{font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:4px;padding:7px 0;white-space:nowrap}.field-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px}.field-head small{color:var(--muted);font-size:11px}.color-set{display:flex;gap:13px;flex-wrap:wrap;margin:14px 0}.color-swatch{height:32px;width:32px;border-radius:50%;border:1px solid #cbd1d5;position:relative;background:var(--swatch)}.color-swatch[aria-pressed=true]{outline:1px solid var(--ink);outline-offset:3px}.color-swatch[aria-pressed=true]:after{content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:var(--check,#fff);font-size:13px;text-shadow:0 1px 3px #0004}.custom-group{padding:17px 0}.custom-group:first-child{padding-top:0}.finish-options{display:flex;gap:10px}.pill-option{padding:9px 20px;border:1px solid var(--line);border-radius:7px;font-size:12px;background:white}.pill-option[aria-pressed=true]{background:#eef1f2;border-color:var(--ink);font-weight:600}.size-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.size-choice{min-height:44px;border:1px solid var(--line);border-radius:6px;font-weight:600}.size-choice[aria-pressed=true]{background:var(--ink);color:white;border-color:var(--ink)}.size-help{font-size:11px;color:var(--muted);margin-top:12px}.error{font-size:12px;color:var(--error);margin-top:9px;min-height:18px}.part-heading{border-top:1px solid var(--line);margin-top:21px;padding-top:22px;margin-bottom:17px}.part-heading h3{font-size:17px}.part-heading p{color:var(--muted);font-size:12px;margin-top:4px}.part{border-bottom:1px solid var(--line)}.part[open]{border:1px solid var(--line);border-radius:9px;background:#f7f8f9;margin:10px 0}.part summary{cursor:pointer;padding:17px 0;display:flex;list-style:none;align-items:center;gap:12px}.part[open] summary{padding:15px}.part summary::-webkit-details-marker{display:none}.part summary .part-title{flex:1;min-width:0}.part summary strong{font-size:13px}.part summary small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.part summary .part-price{font-size:11px;white-space:nowrap;color:var(--muted)}.chevron{font-size:17px;color:#8a939c}.part[open] .chevron{transform:rotate(90deg)}.part-options{padding:0 14px 14px;display:grid;gap:8px}.part-option{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:6px;background:white;padding:12px;cursor:pointer}.part-option:has(input:checked){border-color:var(--ink)}input[type=radio],input[type=checkbox]{accent-color:var(--ink);width:16px;height:16px;margin:0;flex-shrink:0}.part-option strong{font-size:12px;font-weight:600}.part-option small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.review-group{padding:19px 0;border-bottom:1px solid var(--line)}.review-group:first-child{padding-top:0}.review-group .field-head{margin-bottom:9px}.review-group p{font-size:13px;line-height:1.8}.review-group small{display:block;color:var(--muted);font-size:12px;line-height:1.8}.costs{padding-top:22px}.cost-row{display:flex;justify-content:space-between;gap:16px;font-size:12px;margin-top:10px;color:var(--muted)}.cost-row strong{color:var(--ink);font-weight:500}.cost-row.total{padding-top:14px;border-top:1px solid var(--line);margin-top:17px;color:var(--ink);font-size:15px}.cost-row.total strong{font-weight:700}.disclaimer{font-size:10px;color:#7b8691;line-height:1.7;margin-top:18px}.purchase-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:14px 40px;z-index:5;box-shadow:0 -6px 30px #17212603}.purchase-inner{max-width:1600px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.price-cluster{display:flex;align-items:flex-end;gap:22px}.price-cluster small{display:block;color:var(--muted);font-size:11px}.price-number{font-size:27px;font-weight:700;letter-spacing:-.7px;font-variant-numeric:tabular-nums;line-height:1.3}.price-description{font-size:11px;color:var(--muted);margin-bottom:4px}.actions{display:flex;align-items:center;gap:12px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:14px 22px;border-radius:8px;background:var(--ink);color:#fff;border:1px solid var(--ink);font-size:13px;font-weight:600;min-height:48px;transition:background .2s,transform .2s}.btn:hover{background:#353e48}.btn.secondary{background:white;color:var(--ink);border-color:#d8dfe5}.btn.secondary:hover{background:#f2f4f5}.btn:active{transform:translateY(1px)}#next{min-width:234px}.back-button{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;padding:12px}.return-banner{padding:12px 18px;margin-bottom:18px;border:1px solid #c9d6cb;border-radius:9px;background:#edf3ee;font-size:12px;display:flex;justify-content:space-between;align-items:center}.hidden,[hidden]{display:none!important}.dialog{border:0;border-radius:18px;padding:28px;width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;background:white;color:var(--ink);box-shadow:0 28px 100px #0003}.dialog::backdrop{background:#1d252955;backdrop-filter:blur(4px)}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}.dialog-header h2{font-size:22px}.dialog-description{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.8}.dialog-actions{display:flex;gap:10px;margin-top:24px;justify-content:flex-end}.dialog-actions .btn{flex:1}.signature-switch{display:flex;justify-content:space-between;align-items:center;font-weight:600;padding-bottom:16px}.input-label{display:block;font-size:12px;margin-bottom:8px}.text-input,select{width:100%;padding:12px;border:1px solid #ced5dc;border-radius:7px;background:#fff;color:var(--ink)}.input-helper{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:7px}.signature-preview{background:#edf0f1;border-radius:8px;text-align:center;margin:18px 0;padding:30px 12px;font-size:27px;min-height:100px;overflow-wrap:anywhere}.signature-tools{display:grid;grid-template-columns:1fr 1fr;gap:15px}.signature-tools label{font-size:12px}.signature-tools select{margin-top:7px;font-size:12px}.success-icon{width:52px;height:52px;border-radius:50%;background:#edf3ee;color:#4a684e;display:grid;place-items:center;margin-bottom:18px;font-size:24px}.success-bike{background:#f1f3f3;border-radius:10px;margin:18px 0;padding:16px 45px}.success-details{font-size:13px;color:var(--muted);line-height:1.9}.success-total{font-size:24px;font-weight:700;margin-top:10px}.cart-dialog{width:min(650px,calc(100vw - 32px))}.cart-item{border-bottom:1px solid var(--line);padding:18px 0;display:grid;grid-template-columns:145px 1fr;gap:20px}.cart-picture{border-radius:9px;background:#f1f3f3;align-self:start;padding:12px 6px}.cart-info h3{font-size:14px}.cart-info p{font-size:12px;color:var(--muted);margin:4px 0}.cart-info .money{font-size:16px;font-weight:700;color:var(--ink);margin-top:12px}.cart-actions{display:flex;gap:20px;margin-top:9px}.empty-state{padding:40px 12px;text-align:center;color:var(--muted)}.toast{position:fixed;bottom:110px;left:50%;transform:translate(-50%,15px);background:var(--ink);color:#fff;border-radius:8px;padding:12px 22px;font-size:12px;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:90vw}.toast.visible{opacity:1;transform:translate(-50%,0)}.save-status{font-size:11px;color:#6b796d}.help-list{padding-left:20px;font-size:13px;color:var(--muted);line-height:2}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}#panel:focus{outline:none}.noscript{padding:20px;background:#fff1d8}
+@media(min-width:1500px){.stage{min-height:660px}.panel{min-height:660px}.paint-thumb{aspect-ratio:1.85}.page{padding-top:38px}}
+@media(max-width:1150px){.page{padding:26px 24px 125px}.workspace{gap:20px;grid-template-columns:minmax(0,1.2fr) minmax(360px,1fr)}.topbar,.purchase-bar{padding-left:24px;padding-right:24px}.intro{align-items:flex-start;flex-direction:column;gap:4px}.steps{margin-top:10px}.stage{min-height:490px}.panel{padding:23px}.price-description{display:none}}
+@media(max-width:800px){.topbar{height:64px;padding:0 20px}.header-left{gap:17px}.header-context{padding-left:17px;font-size:11px}.header-right{gap:2px}.page{padding:22px 20px 146px}.crumb{margin-bottom:16px}.intro{margin-bottom:20px}.steps{gap:8px;width:100%;justify-content:space-between}.steps li{gap:8px}.steps li:not(:last-child):after{width:10px}.step{font-size:11px;gap:6px}.step span{width:23px;height:23px;font-size:10px}.workspace{grid-template-columns:1fr;gap:14px}.preview-column{position:static}.stage{aspect-ratio:1.65;min-height:260px;max-height:450px}.bike-wrap{width:83%}.stage-top{top:20px;left:20px;right:20px}.stage-controls{bottom:14px;left:18px;right:18px}.stage-caption{bottom:63px;left:20px;font-size:9px}.stage-name{display:none}.stage-top .eyebrow{font-size:9px}.preview-footer{padding:14px 2px}.preview-footer p{font-size:12px}.preview-footer small{font-size:9px}.panel{min-height:0;padding:24px}.paint-thumb{aspect-ratio:1.7}.purchase-bar{padding:12px 20px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}.purchase-inner{gap:12px}.price-number{font-size:22px}.actions{gap:8px}#back{display:none}#next{min-width:0;padding:13px 18px;font-size:12px}.toast{bottom:95px}.save-status{display:none}}
+@media(max-width:420px){.page{padding-left:15px;padding-right:15px}.topbar{padding:0 15px}.header-context{display:none}.wordmark{font-size:27px}.steps{gap:3px}.steps li{gap:3px}.steps li:not(:last-child):after{display:none}.step{font-size:10px}.stage{min-height:240px}.stage-caption{display:none}.view-tabs button{padding:7px 12px}.panel{padding:20px}.size-row{gap:7px}.paint-grid{gap:11px}.cart-item{grid-template-columns:95px 1fr;gap:12px}.dialog{padding:22px}.price-number{font-size:20px}.purchase-bar{padding-left:15px;padding-right:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+/* 全站 header（首頁、產品頁共用）
+   尺寸跟著視窗寬度等比縮放（以 1672 寬的設計稿為準，最小以 1200 計）。
+   文字／圖示顏色用 --nav-ink，各頁自己決定（深色主視覺就設成白色）。 */
+.site-nav{--hu:calc(max(100vw, 1200px) / 1672);position:absolute;z-index:30;left:0;right:0;top:0;height:calc(var(--hu) * 76);color:var(--nav-ink, #141A22)}
+.site-nav .logo{position:absolute;left:calc(var(--hu) * 42);top:0;bottom:0;display:flex;align-items:center;color:inherit}
+.site-nav .logo svg{display:block;height:calc(var(--hu) * 20);width:auto;color:inherit}
+.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:calc(var(--hu) * 16);line-height:1;font-weight:500}
+.site-nav .links a{color:inherit;text-decoration:none;opacity:.92;transition:opacity .2s}
+.site-nav .links a:hover{opacity:1}
+/* 右側順序：購物車、會員、AI 助理（固定在最右邊） */
+.site-nav .icons{position:absolute;right:calc(var(--hu) * 40);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34)}
+.site-nav .icons a{position:relative;display:grid;place-items:center;color:inherit}
+.site-nav .icons svg{display:block;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
+.site-nav .orb-wrap{position:relative;display:grid;place-items:center}
+.site-nav .orb-btn{position:relative;display:grid;place-items:center;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26);transition:transform .2s}
+.site-nav .orb-btn:hover{transform:scale(1.08)}
+
+/* header 的顧問按鈕：白色圓底 + 藍色 V 標，外圈一條細藍光沿邊繞行（與首頁按鈕同一套 beam）。
+   subnav 裡沒有 --hu，退回產品頁的 --u */
+@property --beam-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+.orb-btn.vbtn{--bu:var(--hu,var(--u,1px));position:relative;isolation:isolate;display:grid;place-items:center;width:calc(var(--bu) * 36);height:calc(var(--bu) * 36);border-radius:50%;
+  background:#fff;color:#1F4FE0;border:1px solid rgba(20,26,34,.12);box-shadow:0 2px 10px rgba(20,26,34,.12);transition:transform .2s,box-shadow .2s}
+.orb-btn.vbtn:hover{transform:scale(1.06);box-shadow:0 3px 14px rgba(31,79,224,.22)}
+.orb-btn.vbtn .vmark{position:relative;z-index:2;width:calc(var(--bu) * 13);height:calc(var(--bu) * 17);margin-top:1px}
+.orb-btn.vbtn .beam-ring,.orb-btn.vbtn .beam-glow{position:absolute;inset:-1px;border-radius:50%;pointer-events:none;
+  background:conic-gradient(from var(--beam-angle),transparent 0% 30%,rgba(79,141,255,.08) 45%,rgba(79,141,255,.35) 60%,rgba(120,180,255,.85) 70%,#BFE0FF 73%,rgba(120,180,255,.85) 76%,rgba(79,141,255,.35) 86%,rgba(79,141,255,.08) 100%);
+  animation:beam-spin 4s linear infinite}
+.orb-btn.vbtn .beam-ring{z-index:1;padding:1px;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.orb-btn.vbtn .beam-glow{z-index:0;inset:-3px;filter:blur(4px);opacity:.22}
+@keyframes beam-spin{to{--beam-angle:360deg}}
+@media (prefers-reduced-motion:reduce){.orb-btn.vbtn .beam-ring,.orb-btn.vbtn .beam-glow{animation:none}}
+
+/* Reference: storefront/index.html + css/header.css. Desktop header geometry is shared verbatim. */
+.site-nav{position:fixed;transition:background .3s,box-shadow .3s;background:var(--paper)}
+.site-nav .links a{opacity:1;text-shadow:0 0 2px rgba(243,245,247,.95),0 0 8px rgba(243,245,247,.9),0 0 18px rgba(243,245,247,.75)}
+.site-nav .icons .icon-btn{position:relative;display:grid;place-items:center;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+.site-nav .icons .icon-btn svg{width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
+.site-nav .fav-n,.site-nav .cart-n{position:absolute;right:-8px;top:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ai);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;line-height:1}
+.site-nav .logo{padding:8px 0}.site-nav .logo:focus-visible{outline-offset:5px}
+.site-nav #openFav[aria-pressed=true] path{fill:currentColor}
+.mobile-nav-toggle{display:none}
+.page{width:var(--shell);max-width:none;padding:calc(max(100vw,1200px) / 1672 * 76 + 36px) 0 126px}
+.intro{margin-bottom:28px}h1{font-weight:800;letter-spacing:-.01em}h2{font-weight:800;letter-spacing:-.01em}
+.crumb{color:var(--ink-50)}.product-code{color:var(--ink-70)}
+.preview-column{top:calc(max(100vw,1200px) / 1672 * 76 + 20px)}
+.stage{background:#EEF2F6;border-radius:14px}.stage[data-background=classic]{background:linear-gradient(180deg,#EEF2F6 0%,var(--paper) 100%)}
+.panel{border:1px solid var(--line);border-radius:14px}.paint-card{border-radius:12px;padding:10px}.paint-thumb{border-radius:8px;background:#fff}
+.paint-card:hover{border-color:#C9D0D8;box-shadow:0 14px 30px rgba(20,26,34,.1);transform:translateY(-3px)}
+.paint-card[aria-pressed=true]{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
+.paint-card strong{font-size:12.5px;font-weight:700}.paint-card small{font-size:12px;color:var(--ink-70)}
+.segmented button[aria-pressed=true],.size-choice[aria-pressed=true],.step[aria-current=step] span,.checkmark{background:var(--navy)}
+.btn{height:50px;padding:0 24px;border-radius:999px;background:var(--navy);border-color:var(--navy);font-size:15px;font-weight:700;letter-spacing:.04em;gap:10px}
+.btn:hover{background:#1C2A40}.btn.secondary{border-color:#B8C0CA;background:rgba(255,255,255,.6)}
+.btn.secondary:hover{border-color:var(--ink);background:#fff}.pill-option{border-color:#B8C0CA}.text-button{font-weight:700}
+.purchase-bar{padding-left:36px;padding-right:36px}.purchase-inner{max-width:1840px}
+.price-number{font-weight:800;color:var(--ink)}.price-description{color:var(--ink-50)}
+.disclaimer,.preview-footer small{color:var(--ink-50)}.dialog{border-radius:16px;border:1px solid var(--line)}
+@media(max-width:1150px){.page{width:calc(100% - 48px)}.purchase-bar{padding-left:24px;padding-right:24px}.btn{font-size:13px}.stage{min-height:490px}}
+@media(max-width:800px){
+ .site-nav{--hu:1px;height:64px}.site-nav .logo{left:20px}.site-nav .logo svg{height:16px}
+ .site-nav .icons{right:64px;gap:17px}.site-nav .icons svg,.site-nav .icons .icon-btn svg{width:21px;height:21px}
+ .site-nav .orb-btn.vbtn{--bu:1px;width:30px;height:30px}.site-nav .orb-btn.vbtn .vmark{width:11px;height:15px}
+ .mobile-nav-toggle{display:grid;place-items:center;position:absolute;right:15px;top:12px;width:40px;height:40px}.mobile-nav-toggle svg{width:22px;height:22px}
+ .site-nav .links{display:none;position:absolute;top:64px;left:0;right:0;bottom:auto;background:var(--paper);border-bottom:1px solid var(--line);padding:18px 24px;gap:24px;font-size:13px;flex-wrap:wrap;box-shadow:0 12px 20px #141a220b}
+ .site-nav.menu-open .links{display:flex}.site-nav .icons .icon-btn:before{content:'';position:absolute;inset:-8px}
+ .page{padding-top:86px;width:calc(100% - 40px);padding-bottom:146px}.preview-column{position:static}.stage{min-height:260px}
+ .purchase-bar{padding-left:20px;padding-right:20px}.btn{font-size:13px}.dialog-actions .btn{padding:0 16px}#next{font-size:12px}
+}
+@media(max-width:420px){.page{width:calc(100% - 30px)}.site-nav .logo{left:15px}.site-nav .logo svg{height:14px}.site-nav .icons{gap:13px;right:57px}.site-nav .icons svg,.site-nav .icons .icon-btn svg{width:20px;height:20px}.stage{min-height:240px}.purchase-bar{padding-left:15px;padding-right:15px}}
+@media(prefers-reduced-motion:reduce){.site-nav *{animation:none!important;transition:none!important}}
+
+
+/* Viewport-sized configurator: the page stays still while content fits the available height. */
+:root{--header-height:calc(max(100vw,1200px) / 1672 * 76);--footer-height:82px}
+html,body{height:100%;overflow:hidden}
+.page{height:calc(100dvh - var(--footer-height));padding:calc(var(--header-height) + 14px) 0 14px;display:flex;flex-direction:column;min-height:0}
+.crumb{flex:none;margin-bottom:10px;font-size:11px}
+.intro{flex:none;margin-bottom:16px;gap:24px;flex-direction:row;align-items:center}
+h1{font-size:clamp(24px,2.1vw,32px)}.product-code{margin-top:7px;font-size:11px}.steps{margin:0;gap:13px}.steps li{gap:13px}
+.workspace{flex:1;min-height:0;align-items:stretch;gap:24px}
+.preview-column{position:static;min-height:0;display:flex;flex-direction:column}
+.stage{flex:1;height:auto;min-height:0;max-height:none;aspect-ratio:auto}
+.bike-wrap{height:calc(100% - 86px);width:94%;display:flex;align-items:center;justify-content:center}
+.bike-wrap .bike-art{height:100%;width:100%;object-fit:contain}
+.stage-top{justify-content:flex-end;top:18px;left:22px;right:22px}
+.stage-controls{bottom:18px;left:22px;right:22px}.preview-footer{flex:none;padding:13px 4px 0}.preview-footer p{font-size:12px}
+.panel{min-height:0;height:100%;padding:20px 24px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#cbd2da transparent}
+.panel-head{margin-bottom:16px}.panel-head h2{font-size:22px}.panel-head p{font-size:12px;margin-top:5px}
+.segmented{margin-bottom:16px}.segmented button{padding:10px 6px}
+.paint-grid{gap:12px}.paint-card{padding:8px}.paint-thumb{aspect-ratio:auto;height:clamp(54px,calc((100dvh - 580px) / 2),140px);margin-bottom:7px;justify-content:center}
+.paint-thumb .bike-art{height:100%;width:auto;max-width:100%}.paint-card small{margin-top:2px}.checkmark{bottom:30px}
+.selection-note{margin-top:14px}.selection-note p{margin-top:3px;font-size:11px}
+.signature-entry{margin-top:15px;padding-top:12px}.signature-entry h3{font-size:13px}
+.custom-group{padding:12px 0}.field-head{margin-bottom:9px}.color-set{margin:10px 0;gap:13px}.color-swatch{width:29px;height:29px}
+.review-group{padding:12px 0}.review-group .field-head{margin-bottom:4px}.review-group p{font-size:12px}.review-group small{font-size:11px}.text-button{padding:3px 0}
+.costs{padding-top:15px}.cost-row{margin-top:8px}.cost-row.total{padding-top:10px;margin-top:12px}
+.size-help{margin-top:8px}.part-heading{margin-top:15px;padding-top:15px;margin-bottom:10px}
+.part summary{padding:13px 0}.part[open] summary{padding:12px}.part[open] summary small{display:none}
+.part-options{padding:0 11px 11px;gap:7px}.part-option{padding:9px;gap:9px}.part-option small{font-size:10px;margin-top:2px}
+.part-option small:first-of-type{display:none}.part[open]{margin:7px 0}
+.purchase-bar{height:var(--footer-height);display:flex;align-items:center;padding-top:10px;padding-bottom:10px}.purchase-inner{width:100%}
+.return-banner{flex:none;margin-bottom:10px;padding:7px 14px}
+@media(min-width:801px) and (max-height:820px){
+ .page{padding-top:calc(var(--header-height) + 9px);padding-bottom:10px}.crumb{margin-bottom:7px}.intro{margin-bottom:12px}h1{font-size:26px}
+ .panel{padding:16px 20px}.panel-head{margin-bottom:10px}.panel-head h2{font-size:20px}.panel-head p{font-size:11px;margin-top:4px}
+ .segmented{margin-bottom:12px}.segmented button{padding:8px 6px;font-size:12px}.paint-grid{gap:10px}.paint-thumb{height:clamp(42px,calc((100dvh - 600px) / 2),90px)}
+ .paint-card strong{font-size:12px}.paint-card small{font-size:11px}.selection-note{display:none}.signature-entry{margin-top:12px;padding-top:10px}
+ .custom-group{padding:9px 0}.custom-group .field-head{margin-bottom:6px}.color-set{margin:8px 0}.color-swatch{width:26px;height:26px}
+ .part-heading{margin-top:12px;padding-top:10px;margin-bottom:6px}.part-heading p{font-size:11px}.part-heading h3{font-size:15px}
+ .size-choice{min-height:38px}.part summary{padding:11px 0}.part summary small{font-size:10px}.part[open] summary{padding:9px 11px}.part-option{padding:7px 9px}
+ .part-options{grid-template-columns:1fr 1fr}.part-title{display:flex;align-items:center;gap:8px;min-width:0}.part-title small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:145px;margin-top:0}.part summary{padding:9px 0}.part-heading p{display:none}
+ .review-group{padding:5px 0}.review-group h3,.costs h3{font-size:13px}.review-group p,.review-group small{line-height:1.5}.review-group p{margin-top:4px}.review-group small{margin-top:2px}
+ .costs{padding-top:6px}.cost-row{margin-top:4px;font-size:11px}.cost-row.total{padding-top:8px;margin-top:8px}
+}
+@media(min-width:801px) and (max-width:1150px){.intro{gap:10px}h1{font-size:23px}.steps,.steps li{gap:9px}.steps li:not(:last-child):after{width:10px}.step{gap:7px;font-size:11px}.step span{width:25px;height:25px}}
+@media(max-width:800px){
+ :root{--header-height:64px;--footer-height:calc(76px + env(safe-area-inset-bottom))}
+ .page{height:calc(100dvh - var(--footer-height));padding-top:76px;padding-bottom:10px}.crumb{display:none}
+ .intro{flex-direction:column;align-items:stretch;gap:9px;margin-bottom:12px}.intro h1{font-size:23px}.product-code{margin-top:5px;font-size:10px}
+ .steps{width:100%;justify-content:space-between;gap:4px}.steps li{gap:5px}.step{font-size:10px;padding:3px 0}
+ .workspace{display:flex;flex-direction:column;gap:12px}.preview-column{flex:none;height:clamp(135px,22dvh,200px)}
+ .stage{min-height:0}.preview-footer{display:none}.stage-top{top:10px;right:15px}.stage-name{display:block;font-size:10px}
+ .bike-wrap{height:calc(100% - 25px);width:88%;margin-top:-12px}.stage-controls{bottom:8px;left:12px;right:12px}.view-tabs{padding:2px}.view-tabs button{padding:4px 10px;font-size:10px}.zoom-control{width:32px;height:28px}.zoom-control .icon{width:17px;height:17px}
+ .panel{flex:1;height:auto;min-height:0;padding:16px 18px}.panel-head{margin-bottom:12px}.panel-head h2{font-size:20px}.panel-head p{font-size:11px}
+ .paint-thumb{height:54px}.paint-grid{gap:10px}.paint-card strong{font-size:11px}.paint-card small{font-size:10px}.segmented{margin-bottom:12px}.segmented button{padding:8px 6px;font-size:12px}.selection-note{display:none}
+ .signature-entry{margin-top:12px;padding-top:10px}.signature-entry p{font-size:11px}.purchase-bar{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+ .review-group{padding:9px 0}.costs{padding-top:12px}.cost-row{margin-top:7px}.part-heading{margin-top:12px;padding-top:12px}
+}
+
+
+/* Match the storefront ride CTA. Keep page clearance consistent at every breakpoint. */
+.page{padding-bottom:20px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;min-height:50px;padding:0 24px;border:0;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.04em;background:var(--navy);color:#fff;transition:background .2s,border-color .2s,color .2s}
+.btn:hover{background:#1C2A40}.btn:active{transform:none}
+.btn.secondary{border:1px solid #B8C0CA;background:rgba(255,255,255,.6);color:var(--ink)}
+.btn.secondary:hover{border-color:var(--ink);background:#fff}
+.btn svg{width:16px;height:16px;flex:none}
+#next{min-width:0;padding:0 24px;font-size:15px}
+@media(max-width:800px){#next{padding:0 16px;font-size:14px}.purchase-inner{gap:8px}.price-number{font-size:20px}}
+
+
+/* Open section hierarchy; only selectable options carry outlines. */
+.panel{background:#fff;border:0;border-radius:14px;padding:12px 20px;box-shadow:none}
+.panel .panel-head{margin-bottom:16px}.panel .panel-head h2{font-size:24px;line-height:1.3;font-weight:700;letter-spacing:-.5px}.panel .panel-head p{font-size:13px;line-height:1.5;margin-top:6px;color:var(--ink-70)}
+.panel h3{font-size:17px;font-weight:600}.panel .field-head small{font-size:12px;font-weight:400}.panel .text-button{font-size:12px;font-weight:500;text-decoration:none}.panel .text-button:hover{text-decoration:underline}
+.panel .segmented{background:transparent;border-radius:0;padding:0;gap:20px;display:flex;margin-bottom:16px;border-bottom:1px solid var(--line)}
+.panel .segmented button{background:transparent;border-radius:0;padding:0 0 9px;font-size:14px;color:var(--ink-70);border-bottom:2px solid transparent}
+.panel .segmented button[aria-pressed=true]{background:transparent;color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.panel .paint-grid{grid-template-columns:1fr;gap:9px}.panel .paint-card{display:grid;grid-template-columns:66px minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px 14px;min-height:64px;border:1px solid #aeb5be;border-radius:12px;background:transparent;transform:none;box-shadow:none}
+.panel .paint-card[aria-pressed=true]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:#fff}
+.panel .paint-card:hover{border-color:var(--ink)}.panel .paint-thumb{height:42px;margin:0;padding:0;background:transparent;aspect-ratio:auto}.panel .paint-card strong{font-size:15px;font-weight:600;line-height:1.3;padding:0}.panel .paint-card small{font-size:12px;white-space:nowrap;margin:0;padding:0;color:var(--ink-70)}.panel .checkmark,.panel .paint-card[aria-pressed=true] .checkmark{display:none}.panel .selection-note{display:none}
+.panel .signature-entry{border:0;margin-top:16px;padding-top:0}.panel .signature-entry p{font-size:12px}
+.panel .custom-group{padding:12px 0;border:0}.panel .custom-group .field-head{margin-bottom:9px}.panel .color-set{margin:10px 0;gap:14px}.panel .color-swatch{width:30px;height:30px}.panel .pill-option{border-radius:10px;padding:9px 20px;background:transparent;font-size:14px}.panel .pill-option[aria-pressed=true]{background:#fff;color:var(--ink);border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.panel .size-row{gap:10px}.panel .size-choice{min-height:44px;border:1px solid #aeb5be;border-radius:10px;background:transparent;font-size:15px;font-weight:500}.panel .size-choice[aria-pressed=true]{background:#fff;color:var(--ink);border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.panel .size-help{font-size:12px;margin-top:8px}.panel .part-heading{margin:18px 0 4px;padding:0;border:0}.panel .part-heading p{display:none}
+.panel .part,.panel .part[open]{border:0;border-radius:0;background:transparent;margin:0;box-shadow:none}
+.panel .part summary,.panel .part[open] summary{padding:12px 0;gap:10px}.panel .part-title{display:flex;align-items:baseline;gap:10px}.panel .part-title strong{font-size:15px;font-weight:600;white-space:nowrap}.panel .part-title small{font-size:12px;font-weight:400;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0}.panel .part-price{font-size:12px;white-space:nowrap}.panel .part[open] .part-price{visibility:hidden}
+.panel .part-options{grid-template-columns:1fr;gap:8px;padding:0 0 8px}.panel .part-option{position:relative;padding:12px 14px;border:1px solid #aeb5be;border-radius:12px;background:transparent;min-height:48px}.panel .part-option:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:#fff}.panel .part-option input{position:absolute;opacity:0;width:1px;height:1px}.panel .part-option:has(input:focus-visible){outline:3px solid #64748b;outline-offset:3px}.panel .part-option>span{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}.panel .part-option strong{font-size:14px;font-weight:600;line-height:1.4}.panel .part-option small:last-child{font-size:12px;white-space:nowrap;margin:0}
+.panel .review-group{border:0;padding:10px 0}.panel .review-group h3,.panel .costs h3{font-size:15px}.panel .review-group p{font-size:14px;line-height:1.5}.panel .review-group small{font-size:12px;line-height:1.5}.panel .costs{border-top:1px solid var(--line);padding-top:12px}.panel .cost-row{font-size:12px;margin-top:6px}.panel .cost-row strong{font-weight:500}.panel .cost-row.total{border:0;padding-top:4px;margin-top:6px}.panel .cost-row.total strong{font-weight:700}
+@media(min-width:801px) and (max-height:760px){.panel{padding-top:4px;padding-bottom:4px}.panel .panel-head{margin-bottom:12px}.panel .panel-head h2{font-size:22px}.panel .paint-card{min-height:60px;padding-top:6px;padding-bottom:6px}.panel .signature-entry{margin-top:12px}.panel .custom-group{padding:4px 0}.panel .custom-group .field-head{margin-bottom:6px}.panel .color-set{margin:2px 0}.panel .part-heading{margin-top:12px}.panel .part summary,.panel .part[open] summary{padding:9px 0}.panel .review-group{padding:5px 0}.panel .costs{padding-top:8px}}
+@media(max-width:800px){.panel{padding:8px 2px}.panel .panel-head h2{font-size:22px}.panel .paint-card{grid-template-columns:54px minmax(0,1fr) auto;gap:9px;padding:8px 10px}.panel .paint-card strong{font-size:14px}.panel .paint-card small{font-size:11px}.panel .part-title small{max-width:125px}}
+
+
+/* Shared spacing rhythm across paint, parts and review. */
+.panel{--section-space:24px;--option-space:10px;padding:24px}
+.panel .panel-head{margin-bottom:24px}
+.panel .segmented{margin-bottom:10px}
+.panel .paint-grid,.panel .part-options,.panel .size-row,.panel .finish-options{gap:10px}
+.panel .signature-entry{margin-top:24px;padding-top:0}
+.panel .field-head,.panel .custom-group .field-head{margin-bottom:10px}
+.panel .custom-group{padding:0;margin:0 0 24px;border:0}
+.panel .custom-group:last-of-type{margin-bottom:0}
+.panel .color-set{margin:0;gap:10px}
+.panel .part-heading{margin:24px 0 10px;padding:0}
+.panel .part summary,.panel .part[open] summary{padding:10px 0}
+.panel .part-options{padding:0 0 10px}
+.panel .review-group{padding:0;margin-bottom:24px}
+.panel .review-group .field-head{margin-bottom:10px}
+.panel .review-group p{margin-top:0}
+.panel .review-group small{margin-top:4px}
+.panel .costs{margin-top:24px;padding-top:24px}
+.panel .cost-row{margin-top:10px}
+.panel .cost-row.total{margin-top:10px;padding-top:10px}
+/* Upgrade list: add/remove toggles, standard parts implied. */
+.panel .parts-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0 4px}
+.panel .parts-total strong{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.parts-list{list-style:none;margin:0;padding:0}.parts-list li{border-bottom:1px solid var(--line)}.parts-list li:last-child{border-bottom:0}
+.part-row{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) auto 12px;align-items:center;gap:14px;padding:13px 0;text-align:left}
+.part-row:hover .part-row-text strong{text-decoration:underline;text-underline-offset:3px}
+.part-icon{width:44px;height:44px;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--ink)}.part-icon svg{width:26px;height:26px}
+.part-row-text strong{display:block;font-size:15px;font-weight:600}
+.part-row-text small{display:block;font-size:12px;color:var(--ink-70);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.part-row-price{font-size:13px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}.part-row .chevron{font-size:20px}
+.part-back{font-size:12px;color:var(--ink-70);padding:4px 0;margin-bottom:10px}.part-back:hover{color:var(--ink)}
+.option-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;animation:part-in .35s var(--ease)}
+.option-card{display:flex;flex-direction:column;gap:10px;text-align:left;min-width:0}
+.option-visual{position:relative;display:grid;place-items:center;aspect-ratio:1.25;border:3px solid #CFD9E1;border-radius:10px;background:linear-gradient(180deg,#fff,var(--paper));color:var(--ink);transition:border-color .2s}
+.option-visual svg{width:42%;height:auto}
+.option-toggle{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(20,26,34,.15);display:grid;place-items:center;font-size:18px;line-height:1;transition:background .2s,color .2s}
+.option-card:hover .option-visual{border-color:#9AA5B1}
+.option-card[aria-checked=true] .option-visual{border-color:var(--navy)}
+.option-card[aria-checked=true] .option-toggle{background:var(--navy);color:#fff;font-size:15px}
+.option-copy{font-size:13px;line-height:1.6;color:var(--ink-70)}.option-copy strong{color:var(--ink);font-weight:700}
+.option-price{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+@keyframes part-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+
+/* Purchase bar sits at the bottom of the settings panel instead of the viewport. */
+:root{--footer-height:0px}
+.panel-column{display:flex;flex-direction:column;min-width:0;min-height:0;height:100%;background:#fff;border-radius:14px;overflow:hidden}
+.panel-column .panel{flex:1;height:auto;min-height:0;border-radius:0}
+.panel-column .purchase-bar{position:static;height:auto;display:block;padding:14px 24px 18px;border-top:1px solid var(--line);box-shadow:none;background:#fff;z-index:auto}
+.panel-column .purchase-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:none}
+.panel-column .price-cluster{flex:none}
+.panel-column .price-number{font-size:20px;white-space:nowrap}
+.panel-column .actions{gap:16px;min-width:0}
+.panel-column #back{display:flex;padding:12px 0;white-space:nowrap;font-size:15px}
+.panel-column #next{white-space:nowrap}
+@media(max-width:1150px){.panel-column .purchase-bar{padding-left:20px;padding-right:20px}.panel-column .purchase-inner,.panel-column .actions{gap:12px}.panel-column #next{padding:0 18px;font-size:14px}.panel-column #back{font-size:14px}}
+@media(max-width:800px){:root{--footer-height:0px}.panel-column{flex:1;height:auto}.panel-column .purchase-bar{padding:10px 18px calc(10px + env(safe-area-inset-bottom))}.panel-column .purchase-inner{gap:8px}.panel-column .actions{gap:8px}.panel-column .next-prefix{display:none}.panel-column #next{padding:0 14px}.panel-column #next svg{display:none}.panel-column .purchase-bar{padding-left:16px;padding-right:16px}.panel-column #back{font-size:14px}.panel-column #next{flex:none}}
+/* Signature lives inline in the paint panel. */
+.signature-pane .size-help{margin:0 0 16px}
+.signature-pane .signature-switch{padding:12px 0 16px}
+.signature-pane .signature-preview{margin:14px 0}
+/* Panel title and tabs stay pinned while the panel content scrolls. */
+.panel-top{position:sticky;top:-24px;z-index:2;background:#fff;margin:-24px 0 0;padding-top:24px}
+.panel-top .segmented{margin-bottom:0}
+.panel-top{padding-bottom:20px}.panel-top>.panel-head:last-child{margin-bottom:0}
+.panel-top:has(.segmented){padding-bottom:16px}
+/* Selects: custom chevron with room on the right. */
+select{-webkit-appearance:none;appearance:none;padding-right:40px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center/16px;cursor:pointer}
+.signature-pane .signature-color{margin-top:18px}
+.panel .signature-color .field-head{margin-bottom:7px}.signature-label{font-size:12px}
+/* Review: every choice as an icon row, same rhythm as the parts list. */
+.review-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:14px;padding:12px 0}
+.review-row .part-row-text small{white-space:normal}
+.part-icon.color-icon,.color-icon{display:block;width:44px;height:44px;border-radius:50%;border:1px solid #0002}
+.review-row .part-icon .bike-art{width:34px;height:auto}
+.sig-sample{font-size:14px;color:var(--ink)}
+.panel .review-group{margin-bottom:28px}.panel .review-group:last-child{margin-bottom:0}.panel .review-group .field-head{margin-bottom:2px}
+/* Review head: save-for-later heart on the right. */
+.review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.fav-toggle{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid #B8C0CA;display:grid;place-items:center;color:var(--ink);transition:border-color .2s,background .2s}
+.fav-toggle svg{width:22px;height:22px}
+.fav-toggle:hover{border-color:var(--ink)}
+.fav-toggle[aria-pressed=true]{border-color:var(--navy);color:var(--navy)}
+.fav-toggle[aria-pressed=true] path{fill:currentColor}
+.head-save{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.head-actions{display:flex;align-items:center;gap:14px}.head-actions strong{font-size:16px;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* Favorites list: card grid, filled heart removes, edit or add to cart. */
+.fav-page{height:100dvh;overflow-y:auto;overscroll-behavior:contain;padding:calc(var(--header-height) + 24px) 0 64px}
+.fav-shell{width:var(--shell);margin:0 auto}
+.fav-heading{display:flex;align-items:baseline;gap:12px;margin:0 0 28px}
+.fav-heading h1:focus{outline:none}
+#favTotal{font-size:14px;color:var(--ink-70)}
+.fav-page .fav-picture{background:#fff}
+.site-nav .links a[aria-current=page]{font-weight:700}
+.fav-page .empty-state{padding:80px 12px;border-radius:14px;background:#fff}
+.fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:32px 24px}
+@media(max-width:800px){.fav-page{padding-top:84px}.fav-shell{width:calc(100% - 40px)}}
+.fav-card{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fav-picture{position:relative;border-radius:12px;background:#f1f3f3;padding:28px 20px 20px}
+.fav-remove{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--navy);box-shadow:0 2px 8px rgba(20,26,34,.12);transition:color .2s}
+.fav-remove svg{width:20px;height:20px}.fav-remove path{fill:currentColor}.fav-remove:hover{color:var(--ink-70)}
+.fav-info h3{font-size:16px;margin-bottom:6px}
+.fav-info p{font-size:12px;color:var(--ink-70);line-height:1.6;margin:0}
+.fav-info .fav-price{font-size:16px;font-weight:700;color:var(--ink);margin-top:8px}
+.fav-info small{display:block;color:var(--ink-50);font-size:12px;margin-top:2px}
+.fav-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
+.fav-actions .btn{padding:0 12px;width:100%}
+@media(max-width:640px){.fav-grid{grid-template-columns:1fr}}
+/* Custom paint: template row, then per-zone swatches. */
+.detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.detail-head>strong{font-size:16px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.zone-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;color:var(--ink-70);font-weight:400}
+.chip i{width:12px;height:12px;border-radius:50%;border:1px solid #0002}
+.reset-template{margin-top:14px}
+.zone-section{padding:4px 0 20px}.zone-section+.zone-section{border-top:1px solid var(--line);padding-top:20px}
+.zone-section h3{margin-bottom:12px}
+.finish-list{display:grid;gap:8px}
+.finish-row{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1px solid #aeb5be;border-radius:10px;font-size:14px;text-align:left}
+.finish-row:hover{border-color:var(--ink)}
+.finish-row[aria-checked=true]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.radio-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid #8a939c;display:grid;place-items:center}
+.finish-row[aria-checked=true] .radio-dot{border-color:var(--navy)}.finish-row[aria-checked=true] .radio-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--navy)}
+.zone-section .size-help{margin-top:8px}
+.swatch-group+.swatch-group{margin-top:16px}
+.swatch-label{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin-bottom:10px}.swatch-label small{color:var(--ink-70)}
+.zone-section .color-set{display:grid;grid-template-columns:repeat(auto-fill,34px);gap:12px}
+.zone-section .color-swatch{width:34px;height:34px;background:var(--swatch)}
+.option-cards-wrap{animation:part-in .35s var(--ease)}
+.sig-field{margin-top:18px}.sig-field .signature-label{display:block;margin-bottom:7px}
+/* Size guide card (rider height → suggested size). */
+.size-dialog{width:min(560px,calc(100vw - 32px))}
+.size-guide-title{font-size:16px;margin:4px 0 8px}
+.size-guide-height{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.size-guide-height b{font-size:56px;font-weight:800;letter-spacing:-1.5px;line-height:1.1;font-variant-numeric:tabular-nums}
+.size-guide-height span{font-size:20px;color:var(--ink-50)}
+#sizeRange{width:100%;accent-color:var(--navy);margin:0 0 20px}
+.size-guide-note{background:#EBEFF6;border-radius:10px;padding:16px;font-size:14px;line-height:1.6;margin:0 0 12px}
+.size-guide-note b,.size-guide-row[aria-current] b,.size-guide-row[aria-current] span{color:var(--ai)}
+.size-guide-row{display:grid;grid-template-columns:120px 1fr;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.size-guide-row:last-child{border-bottom:0}
+.size-guide-row[aria-current] span{font-weight:700}
+.size-help strong{color:var(--ink)}
+/* Toggle switch (styled checkbox, keeps native keyboard and form behaviour). */
+input.switch{-webkit-appearance:none;appearance:none;position:relative;width:44px;height:26px;border-radius:13px;background:#c4cbd3;cursor:pointer;flex:none;transition:background .2s var(--ease)}
+input.switch::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(20,26,34,.25);transition:transform .2s var(--ease)}
+input.switch:checked{background:var(--navy)}
+input.switch:checked::after{transform:translateX(18px)}
+input.switch:focus-visible{outline:3px solid #64748b;outline-offset:3px}
+.swatch-tip{position:fixed;z-index:50;white-space:pre;background:var(--ink);color:#fff;font-size:12px;line-height:1.5;padding:6px 10px;border-radius:6px;pointer-events:none}
+/* Step-in / step-back affordances share one chevron and one text style. */
+.chev{width:16px;height:16px;flex:none}
+.part-back{display:inline-flex;align-items:center;gap:4px}
+.part-row .chevron{display:grid;place-items:center;color:var(--ink-50)}
+.card-link{display:inline-flex;align-items:center;gap:4px;margin-left:12px;color:var(--ink);font-size:14px;font-weight:400}
+/* 3D preview: canvas fills the stage; drag to rotate. */
+.stage.is-3d .bike-wrap{position:absolute;inset:0;width:100%;height:100%;transform:none!important;margin:0}
+.bike-canvas{display:block;width:100%;height:100%;cursor:grab}
+.stage.dragging .bike-canvas{cursor:grabbing}
+.drag-hint{display:none}
+.stage.is-3d .drag-hint{position:absolute;top:18px;left:22px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#ffffffb8;font-size:12px;color:var(--ink-70);pointer-events:none;transition:opacity .3s}
+.drag-hint svg{width:14px;height:14px}
+.stage.dragging .drag-hint{opacity:0}
+.stage.is-3d .stage-controls{z-index:2}
+/* Preview stage sits directly on the page: no backdrop, no controls. */
+.stage,.stage[data-background]{background:transparent}
+/* Type scale — 12 meta/labels · 14 body, tabs, buttons, inputs · 16 item titles · 20 price · 24 titles */
+:root{--fs-xs:12px;--fs-sm:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:24px}
+.site-nav .links,.step,.view-tabs button,.panel .segmented button,.btn,.panel-column #next,.panel-column #back,.panel .text-button,.panel .pill-option,.panel .size-choice,.part-back,.text-input,select,.signature-tools select,.panel .signature-switch,.cart-actions .text-button{font-size:var(--fs-sm)}
+.panel .panel-head p,.option-copy,.option-price,.panel .review-group p,.dialog-description,.help-list,.success-details,.toast,.empty-state,.cart-info h3{font-size:var(--fs-sm)}
+.step span,.stage-name,.product-code,.crumb,.price-cluster small,.panel .paint-card small,.panel .field-head small,.panel .size-help,.input-label,.input-helper,.signature-tools label,.signature-label,.part-row-text small,.panel .review-group small,.panel .cost-row,.cart-info p,.error,.preview-footer p{font-size:var(--fs-xs)}
+.panel .paint-card strong,.panel h3,.part-row-text strong,.panel .review-group h3,.panel .costs h3,.panel .parts-total h3,.panel .parts-total strong,.panel .cost-row.total,.cart-dialog .cost-row.total,.cart-info .money{font-size:var(--fs-md)}
+.panel-column .price-number{font-size:var(--fs-lg)}
+.panel .panel-head h2,.dialog-header h2{font-size:var(--fs-xl)}
+
+/* Bottom breathing room under the workspace, all breakpoints. */
+.page{padding-bottom:36px}
+</style>
+</head>
+<body>
+<noscript><p class="noscript">請啟用 JavaScript 以操作客製車。</p></noscript>
+<header class="nav site-nav">
+    <a class="logo" href="#" data-site-nav="首頁" aria-label="GIANT">
+      <svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg>
+    </a>
+    <nav class="links" id="storeNavigation" aria-label="商城導覽"><a href="#" data-site-nav="Bikes">Bikes</a><a href="#" data-site-nav="Gear">Gear</a><a href="#" data-site-nav="Apparel">Apparel</a><a href="#" data-site-nav="Explore">Explore</a><a href="#" data-site-nav="Support">Support</a><a href="#" id="navCustomized" aria-current="page">Customized</a></nav>
+    <div class="icons">
+      <button type="button" class="icon-btn" id="openFav" aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg><span class="fav-n" id="favCount" hidden>0</span></button>
+      <button type="button" class="icon-btn" id="openCart" aria-label="開啟購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span class="cart-n" id="cartCount" hidden>0</span></button>
+      <button type="button" class="icon-btn" id="openMember" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></button>
+      <span class="orb-wrap">
+        <button class="orb-btn vbtn" id="aiOrb" type="button" aria-label="GIANT 選車顧問" title="GIANT 選車顧問｜依你的騎乘情境給建議"><span class="beam-glow"></span><span class="beam-ring"></span><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></button>
+      </span>
+    </div>
+<button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="展開商城選單" aria-controls="storeNavigation" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></header>
+<main class="page" id="configPage"><div class="intro"><div><h1>打造你的專屬 DEFY</h1><p class="product-code">DEFY ADVANCED SL · DURA-ACE</p></div><ol class="steps" aria-label="客製步驟"><li><button class="step" data-step="paint"><span>1</span>塗裝配色</button></li><li><button class="step" data-step="parts"><span>2</span>尺寸與配備</button></li><li><button class="step" data-step="review"><span>3</span>確認配置</button></li></ol></div><div id="editingBanner" class="return-banner" hidden><span>正在編輯購物車中的客製車，完成後將更新原品項。</span><button id="cancelEdit" class="text-button">取消編輯</button></div><div class="workspace"><section class="preview-column" aria-label="客製車預覽"><div class="stage" id="stage"><div class="bike-wrap" id="bikePreview"></div><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"/><path d="M18.5 3v4.4h-4.4M5.5 21v-4.4h4.4"/></svg>拖曳旋轉</span></div></section><div class="panel-column"><section class="panel" id="panel" tabindex="-1" aria-label="客製設定"></section><footer class="purchase-bar"><div class="purchase-inner"><div class="price-cluster"><div><small>目前總價</small><div class="price-number" id="totalPrice" aria-live="polite" aria-atomic="true"></div></div></div><div class="actions"><button class="btn" id="next"></button></div></div></footer></div></div></main>
+<main class="fav-page" id="favPage" aria-labelledby="favTitle" hidden><div class="fav-shell"><div class="fav-heading"><h1 id="favTitle">已儲存配置</h1><span id="favTotal"></span></div><div id="favBody"></div></div></main>
+<dialog class="dialog size-dialog" id="sizeDialog" aria-labelledby="sizeTitle"><div class="dialog-header"><h2 id="sizeTitle">尺寸指南</h2><button class="icon-button" data-close="sizeDialog" aria-label="關閉尺寸指南">✕</button></div><h3 class="size-guide-title">我適合的尺寸</h3><div class="size-guide-height"><b id="sizeHeight"></b><span>cm</span></div><input type="range" id="sizeRange" min="150" max="195" step="1" aria-label="身高（公分）"><p class="size-guide-note" id="sizeNote"></p><div class="size-guide-table" id="sizeTable"></div><p class="disclaimer">尺寸範圍為示意值，接上 DEFY 官方 Size Guide 前僅供參考；實際仍建議到門市試騎確認。</p></dialog>
+<dialog class="dialog" id="infoDialog" aria-labelledby="infoTitle"><div class="dialog-header"><h2 id="infoTitle"></h2><button class="icon-button" data-close="infoDialog" aria-label="關閉說明">✕</button></div><div id="infoBody"></div><div class="dialog-actions"><button class="btn" data-close="infoDialog">知道了</button></div></dialog>
+<dialog class="dialog" id="successDialog" aria-labelledby="successTitle"><div class="dialog-header"><div class="success-icon">✓</div><button class="icon-button" data-close="successDialog" aria-label="關閉加入成功訊息">✕</button></div><h2 id="successTitle">已加入購物車</h2><p class="muted" style="margin-top:8px;font-size:13px">你的專屬 DEFY 已準備好。</p><div class="success-bike" id="successBike"></div><h3>DEFY Advanced SL · DURA-ACE</h3><div class="success-details" id="successDetails"></div><div class="success-total" id="successPrice"></div><div class="dialog-actions"><button class="btn secondary" id="continueDesign">繼續調整</button><button class="btn" id="viewCart">查看購物車</button></div></dialog>
+<dialog class="dialog cart-dialog" id="cartDialog" aria-labelledby="cartTitle"><div class="dialog-header"><h2 id="cartTitle">購物車</h2><button class="icon-button" data-close="cartDialog" aria-label="關閉購物車">✕</button></div><div id="cartBody"></div><div class="dialog-actions"><button class="btn secondary" data-close="cartDialog">繼續客製</button></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'NT$ '+n.toLocaleString('en-US');
+const clone=x=>JSON.parse(JSON.stringify(x));
+const PAINTS=[{id:'sand',name:'Sand Storm',color:'#a3ae78',price:0,description:'自然砂金色調，搭配霧面車架與白色標誌。'},{id:'star',name:'I-Ti Star',color:'#849cb0',price:3650,description:'冷調鈦藍色，讓俐落車架線條更加鮮明。'},{id:'gold',name:'Pure Gold & Silver',color:'#b7a17b',price:2850,description:'低調香檳金，點綴每一段騎乘旅程。'},{id:'team',name:'TEAM',color:'#b5463c',price:4030,description:'醒目競速紅，為你的下一次出發注入熱情。'}];
+// Paint palette for custom zones (prototype values): the template's own colour is free, classic colours and gradients add a surcharge.
+const COLORS=[{name:'白色',hex:'#ffffff'},{name:'石墨灰',hex:'#3d3a38'},{name:'金綠',hex:'#88e145'},{name:'萊姆',hex:'#c9ea3c'},{name:'橙',hex:'#f0902c'},{name:'桃紅',hex:'#e6409e'},{name:'鮮紅',hex:'#e8233f'},{name:'朱紅',hex:'#c4231c'},{name:'酒紅',hex:'#8c1d1d'},{name:'紫',hex:'#4b1b8f'},{name:'天藍',hex:'#2f8ee0'},{name:'寶藍',hex:'#1f5fd6'}];
+const GRADIENTS=[{id:'grad-sand',name:'沙丘',from:'#6b5a45',to:'#c7b38a'},{id:'grad-olive',name:'橄欖',from:'#d8d39a',to:'#4a4a3a'},{id:'grad-lagoon',name:'潟湖',from:'#2f7fa0',to:'#5a6f7a'},{id:'grad-dusk',name:'暮光',from:'#d77a6a',to:'#6a3a8a'},{id:'grad-deep',name:'深海',from:'#1d6b8a',to:'#2a3f7a'},{id:'grad-aurora',name:'極光',from:'#1fa37a',to:'#3a2fd0'}];
+const CLASSIC_PRICE=1000,GRADIENT_PRICE=2000,FINISHES=['霧面','亮面'];
+const LOGO_COLORS=[{name:'白色',hex:'#ffffff',price:0},{name:'黑色',hex:'#333333',price:0},{name:'金色',hex:'#b59b48',price:600}];
+const gradient=v=>GRADIENTS.find(g=>g.id===v);
+const paintCss=v=>{const g=gradient(v);return g?`linear-gradient(135deg,${g.from},${g.to})`:v};
+// Custom paint: start from a designer scheme, then recolour each zone. Special colours carry a surcharge (prototype values).
+const CUSTOM_TEMPLATES=[{id:'t1',name:'Type 1',color:'#56789c',swatch:'霧藍',price:3380},{id:'t2',name:'Type 2',color:'#d4b33a',swatch:'亮黃',price:3380},{id:'t3',name:'Type 3',color:'#c8b18f',swatch:'奶茶金',price:4330},{id:'t4',name:'Type 4',color:'#8f2228',swatch:'酒紅',price:7360}];
+const customTemplate=c=>CUSTOM_TEMPLATES.find(t=>t.id===c.custom.template);
+const ZONES=[{key:'upper',name:'上半車架'},{key:'lower',name:'下半車架'},{key:'fork',name:'前叉'},{key:'logo',name:'GIANT Logo'}];
+
+const zonePrice=(c,key)=>{const v=c.custom[key];if(key==='logo')return LOGO_COLORS.find(x=>x.hex===v)?.price||0;if(v===templateColors(c.custom.template)[key])return 0;return gradient(v)?GRADIENT_PRICE:CLASSIC_PRICE};
+const templateColors=id=>{const t=CUSTOM_TEMPLATES.find(x=>x.id===id);return {upper:t.color,lower:t.color,fork:t.color,logo:'#ffffff'}};
+const isRecoloured=c=>{const t=templateColors(c.custom.template);return ZONES.some(z=>c.custom[z.key]!==t[z.key]||c.custom.finishes[z.key]!=='霧面')};
+const defaultFinishes=()=>({upper:'霧面',lower:'霧面',fork:'霧面',logo:'霧面'});
+const PARTS=[{id:'bar',name:'車把',options:[{name:'標準車把',description:'原車預設配置',price:0},{name:'GIANT CONTACT SLR',description:'碳纖維車把 · 400 mm',price:1280}]},{id:'tape',name:'把手帶',options:[{name:'標準把手帶',description:'原車預設配置',price:0},{name:'Eco Stratus Pro 3.0',description:'升級把手帶',price:660}]},{id:'stem',name:'龍頭',options:[{name:'標準龍頭',description:'原車預設配置',price:0},{name:'GIANT CONTACT SLR AERO STEM',description:'限電子變速 · MY23 PROPEL Gen 3',price:4320}]},{id:'cassette',name:'飛輪',options:[{name:'標準飛輪',description:'原車預設配置',price:0},{name:'SHIMANO CS-HG50-8',description:'11-28T',price:1460}]},{id:'chain',name:'鏈條',options:[{name:'Z99 Chain',description:'原車預設配置',price:0}]},{id:'chainring',name:'大盤',options:[{name:'標準大盤',description:'原車預設配置',price:0},{name:'M101',description:'升級大盤',price:1860}]}];
+// Rider-height size guide. Ranges follow the official size-guide format; prototype values until DEFY's own guide is wired in.
+const SIZE_GUIDE=[{s:'XS',min:155,max:166},{s:'S',min:159,max:171},{s:'M',min:169,max:181},{s:'ML',min:174,max:186},{s:'L',min:null,max:null}];
+const sizeRange=s=>{const g=SIZE_GUIDE.find(x=>x.s===s);return g&&g.min?`${g.min}–${g.max} cm`:'待接官方 Size Guide'};
+function recommendSize(h){const fits=SIZE_GUIDE.filter(g=>g.min&&h>=g.min&&h<=g.max);if(fits.length)return fits.sort((a,b)=>Math.abs((a.min+a.max)/2-h)-Math.abs((b.min+b.max)/2-h))[0].s;return h<155?'XS':'ML'}
+// One chevron for every step-in / step-back affordance, so arrows match in size and weight.
+const CHEV_R='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+const CHEV_L='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>';
+const PART_ICONS={bar:'<path d="M6 17h21c8 0 13 4.5 13 11s-4.5 11-11 11h-3"/><path d="M14 17v-3"/>',tape:'<rect x="6" y="19" width="36" height="10" rx="5"/><path d="M15 19l-4 10M23 19l-4 10M31 19l-4 10M39 20l-3.5 9"/>',stem:'<path d="M8 31l22-8"/><rect x="29" y="14" width="12" height="20" rx="4"/><path d="M8 27v8"/>',cassette:'<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="7"/><circle cx="24" cy="24" r="2"/>',chain:'<rect x="5" y="18" width="21" height="12" rx="6"/><rect x="22" y="18" width="21" height="12" rx="6"/><circle cx="11" cy="24" r="1.5"/><circle cx="37" cy="24" r="1.5"/>',chainring:'<circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="4"/><path d="M24 20V9M27.5 26l9.5 5.5M20.5 26L11 31.5"/>'};
+const BASE_PRICE=250920;
+const initialConfig=()=>({mode:'designer',paint:'sand',custom:{template:'t1',upper:'#56789c',lower:'#56789c',fork:'#56789c',logo:'#ffffff',finishes:{upper:'霧面',lower:'霧面',fork:'霧面',logo:'霧面'}},signature:{enabled:false,text:'',font:'script',color:'#b59b48',position:'left'},size:'M',height:172,sizeAuto:true,parts:{bar:0,tape:0,stem:0,cassette:0,chain:0,chainring:0}});
+let config=initialConfig(),page='paint',paintTab='designer',paintDetail=false,paintZone=null,partsTab='size',partDetail=null,editingId=null,returnToReview=false,cart=[],cartSeq=0,adding=false,view='full',zoomed=false;
+const selectedPaint=c=>PAINTS.find(p=>p.id===c.paint);
+const paintPrice=c=>c.mode==='designer'?selectedPaint(c).price:customTemplate(c).price+ZONES.reduce((sum,z)=>sum+zonePrice(c,z.key),0);
+const partsPrice=c=>PARTS.reduce((sum,p)=>sum+p.options[c.parts[p.id]].price,0);
+const total=c=>BASE_PRICE+paintPrice(c)+partsPrice(c);
+const paintName=c=>c.mode==='designer'?selectedPaint(c).name:`自由配色 ${customTemplate(c).name}`;
+const colorName=hex=>gradient(hex)?.name||CUSTOM_TEMPLATES.find(t=>t.color===hex)?.swatch||[...COLORS,...LOGO_COLORS].find(c=>c.hex===hex)?.name||({'#ffffff':'白色','#333333':'黑色','#b59b48':'金色'}[hex]||hex);
+const zoneSummary=(c,key)=>`${colorName(c.custom[key])}（${c.custom.finishes[key]}）`;
+const paintDescription=c=>c.mode==='designer'?'霧面 · 白色 GIANT Logo':ZONES.map(z=>`${z.name} ${zoneSummary(c,z.key)}`).join('／');
+const signatureSummary=c=>c.signature.enabled?`${c.signature.text} · ${c.signature.font==='script'?'Font 1':'Font 2'}`:'未加入簽名';
+function bike(c,mini=false){const p=selectedPaint(c),upper=c.mode==='designer'?p.color:c.custom.upper,lower=c.mode==='designer'?p.color:c.custom.lower,fork=c.mode==='designer'?p.color:c.custom.fork,stroke=v=>gradient(v)?`url(#${v})`:v,used=c.mode==='custom'?GRADIENTS.filter(g=>[upper,lower,fork].includes(g.id)):[],gloss=k=>c.mode==='custom'&&c.custom.finishes[k]==='亮面',logo=c.mode==='designer'?'#fff':c.custom.logo;let wheels='';for(const cx of [125,550]){wheels+=`<circle cx="${cx}" cy="292" r="105" fill="none" stroke="#22282c" stroke-width="13"/><circle cx="${cx}" cy="292" r="96" fill="none" stroke="#929b9f" stroke-width="1.5"/>`;for(let i=0;i<20;i++){let a=i*Math.PI/10;wheels+=`<path d="M${cx} 292L${cx+95*Math.cos(a)} ${292+95*Math.sin(a)}" fill="none" stroke="#abb3b7" stroke-width=".8"/>`;}wheels+=`<circle cx="${cx}" cy="292" r="8" fill="#656d71"/><circle cx="${cx}" cy="292" r="22" fill="none" stroke="#959da1" stroke-width="2"/>`;}
+let signature=c.signature.enabled&&!mini?`<text x="280" y="141" transform="rotate(3 280 141)" font-family="${c.signature.font==='script'?'cursive':'Arial,sans-serif'}" font-style="${c.signature.font==='script'?'italic':'normal'}" font-size="11" fill="${c.signature.color}">${escapeHTML(c.signature.text)}</text>`:'';
+return `<svg class="bike-art" viewBox="0 0 690 445" role="img" aria-label="${escapeHTML(paintName(c))} 客製車配色預覽">${used.length?`<defs>${used.map(g=>`<linearGradient id="${g.id}" gradientUnits="userSpaceOnUse" x1="120" y1="90" x2="560" y2="320"><stop offset="0" stop-color="${g.from}"/><stop offset="1" stop-color="${g.to}"/></linearGradient>`).join('')}</defs>`:''}<ellipse cx="339" cy="407" rx="258" ry="6" fill="#18242a" opacity=".04"/>${wheels}<path d="M125 292L277 286L226 123L125 292" fill="none" stroke="${stroke(upper)}" stroke-width="11" stroke-linejoin="round"/><path d="M226 123L449 137" fill="none" stroke="${stroke(upper)}" stroke-width="14"/><path d="M449 137L277 286L226 123" fill="none" stroke="${stroke(lower)}" stroke-width="19" stroke-linejoin="round"/><path d="M444 118L466 176L550 292" fill="none" stroke="${stroke(fork)}" stroke-width="12"/><path d="M226 123L214 76" stroke="#282e32" stroke-width="9"/><path d="M180 69Q209 65 247 73L244 79L186 80Z" fill="#282e32"/><path d="M445 127L435 98L490 88Q521 88 516 117L498 133L484 130" fill="none" stroke="#282e32" stroke-width="8" stroke-linejoin="round"/><path d="M497 91Q519 96 514 115L498 133" fill="none" stroke="${c.parts.tape?'#657f93':'#282e32'}" stroke-width="8"/><path d="M485 107L493 131" stroke="#171d25" stroke-width="4"/><path d="M120 286L271 261Q299 261 300 287L296 307L125 301Z" fill="none" stroke="#555e65" stroke-width="2.3"/><circle cx="277" cy="286" r="28" fill="#333b40"/><circle cx="277" cy="286" r="20" fill="none" stroke="#b1b8bb" stroke-width="3"/><path d="M277 286L313 316L339 316M277 286L249 261" stroke="#282e32" stroke-width="7" fill="none"/><path d="M124 293L134 324L148 323" fill="none" stroke="#414a50" stroke-width="6"/><text x="312" y="246" transform="rotate(-40 312 246)" font-family="Arial,sans-serif" font-weight="900" font-style="italic" font-size="28" fill="${logo}">GIANT</text>${signature}${gloss('upper')?'<path d="M232 118L438 132" stroke="white" stroke-opacity=".35" stroke-width="3"/>':''}${gloss('lower')?'<path d="M295 271L442 146" stroke="white" stroke-opacity=".35" stroke-width="3"/>':''}${gloss('fork')?'<path d="M449 128L463 168" stroke="white" stroke-opacity=".35" stroke-width="2.5"/>':''}</svg>`;}
+function swatch(key,v,name,current){const c=config.custom,price=key==='logo'?(LOGO_COLORS.find(x=>x.hex===v)?.price||0):v===templateColors(c.template)[key]?0:gradient(v)?GRADIENT_PRICE:CLASSIC_PRICE,g=gradient(v),code=g?`${g.from} → ${g.to}`:v.toUpperCase(),light=['#ffffff','#c9ea3c','#88e145'].includes(v);return `<button class="color-swatch" style="--swatch:${paintCss(v)};--check:${light?'#333':'#fff'}" data-tip="${c.finishes[key]}　${code}
+${name}${price?'　+ '+money(price):''}" aria-label="${name}${price?'，加價 '+money(price):''}" aria-pressed="${current===v}" data-color-key="${key}" data-color="${v}"></button>`}
+function swatchGroup(label,note,items){return `<div class="swatch-group"><div class="swatch-label"><span>${label}</span>${note?`<small>${note}</small>`:''}</div><div class="color-set">${items}</div></div>`}
+const zoneIcon='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="31" r="7"/><circle cx="37" cy="31" r="7"/><path d="M11 31l9-14h14l-8 14H11zM20 17l-2-4M34 17l3 14M31 13h6"/></svg>';
+function renderPaintSettings(){const t=customTemplate(config);return `<div class="panel-top"><button class="part-back" data-close-paint>${CHEV_L}返回自由配色</button><div class="panel-head detail-head"><div><h2>${t.name} 塗裝設定</h2><p>選擇要調整的部位，每個部位可分別設定漆面與顏色。</p></div><strong>${priceTag(t.price)}</strong></div></div><ul class="parts-list option-cards-wrap">${ZONES.map(z=>{const price=zonePrice(config,z.key);return `<li><button class="part-row" data-open-zone="${z.key}" aria-label="${z.name}：${zoneSummary(config,z.key)}${price?'，'+priceTag(price):''}。調整"><span class="part-icon">${zoneIcon}</span><span class="part-row-text"><strong>${z.name}</strong><span class="zone-chips"><span class="chip">${config.custom.finishes[z.key]}</span><span class="chip"><i style="background:${paintCss(config.custom[z.key])}"></i>${colorName(config.custom[z.key])}</span></span></span><span class="part-row-price">${priceTag(price)}</span><span class="chevron" aria-hidden="true">${CHEV_R}</span></button></li>`}).join('')}</ul>${isRecoloured(config)?`<button class="text-button reset-template" data-reset-template>還原 ${t.name} 預設塗裝</button>`:''}`;}
+function renderZone(key){const z=ZONES.find(x=>x.key===key),c=config.custom,price=zonePrice(config,key),t=customTemplate(config);const colors=key==='logo'?swatchGroup('Logo 顏色','',LOGO_COLORS.map(x=>swatch(key,x.hex,x.name,c[key])).join('')):swatchGroup('範本原色','',swatch(key,t.color,t.swatch,c[key]))+swatchGroup('經典色',`每個部位 + ${money(CLASSIC_PRICE)}`,COLORS.map(x=>swatch(key,x.hex,x.name,c[key])).join(''))+swatchGroup('漸層色',`每個部位 + ${money(GRADIENT_PRICE)}`,GRADIENTS.map(g=>swatch(key,g.id,g.name,c[key])).join(''));
+return `<div class="panel-top"><button class="part-back" data-close-zone>${CHEV_L}返回塗裝設定</button><div class="panel-head detail-head"><div><h2>${z.name}塗裝</h2><div class="zone-chips"><span class="chip">${c.finishes[key]}</span><span class="chip"><i style="background:${paintCss(c[key])}"></i>${colorName(c[key])}</span></div></div><strong>${priceTag(price)}</strong></div></div><div class="option-cards-wrap"><div class="zone-section"><h3>漆面</h3><div class="finish-list" role="radiogroup" aria-label="${z.name}漆面">${FINISHES.map(f=>`<button class="finish-row" role="radio" aria-checked="${c.finishes[key]===f}" data-zone-finish="${f}"><span class="radio-dot" aria-hidden="true"></span>${f}</button>`).join('')}</div><p class="size-help">部分顏色可能因漆面選擇而受限。</p></div><div class="zone-section"><h3>選擇顏色</h3>${colors}</div></div>`;}
+function renderCustomDetail(){return paintZone?renderZone(paintZone):renderPaintSettings();}
+function renderPaint(){if(paintTab==='custom'&&paintDetail)return renderCustomDetail();let content=config.mode==='designer'?`<div class="paint-grid">${PAINTS.map(p=>{const demo=clone(config);demo.mode='designer';demo.paint=p.id;return `<button class="paint-card" data-paint="${p.id}" aria-pressed="${config.paint===p.id}"><div class="paint-thumb">${bike(demo,true)}</div><strong>${p.name}</strong><small>${priceTag(p.price)}</small><span class="checkmark" aria-hidden="true">✓</span></button>`}).join('')}</div><div class="selection-note"><strong>已選擇 ${selectedPaint(config).name}</strong><p>${selectedPaint(config).description}</p></div>`:`<div class="paint-grid">${CUSTOM_TEMPLATES.map(t=>{const demo=initialConfig();demo.mode='custom';Object.assign(demo.custom,{template:t.id},templateColors(t.id));const on=config.custom.template===t.id;return `<button class="paint-card" data-template="${t.id}" aria-pressed="${on}" aria-label="${t.name}，${priceTag(t.price)}，塗裝設定"><div class="paint-thumb">${bike(demo,true)}</div><strong>${t.name}${on&&isRecoloured(config)?' <span class="muted">已自訂</span>':''}</strong><small>${priceTag(t.price)}<span class="card-link">塗裝設定${CHEV_R}</span></small></button>`}).join('')}</div>`;
+return `<div class="panel-top"><div class="panel-head head-save"><div><h2>選擇你的塗裝</h2><p>從精選設計出發，或搭配自己的風格。</p></div>${saveButton()}</div><div class="segmented" role="group" aria-label="塗裝方式"><button data-paint-tab="designer" aria-pressed="${paintTab==='designer'}">專屬配色</button><button data-paint-tab="custom" aria-pressed="${paintTab==='custom'}">自由配色</button><button data-paint-tab="signature" aria-pressed="${paintTab==='signature'}">專屬簽名</button></div></div>${paintTab==='signature'?renderSignature():content}`;}
+const partIcon=id=>`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${PART_ICONS[id]}</svg>`;
+const priceTag=n=>n?'+ '+money(n):'';
+function renderSize(){return `<div class="field-head"><h3>車架尺寸</h3><button class="text-button" data-action="size-guide">尺寸指南 ↗</button></div><div class="size-row" role="group" aria-label="車架尺寸">${['XS','S','M','ML','L'].map(s=>`<button class="size-choice" data-size="${s}" aria-pressed="${config.size===s}">${s}</button>`).join('')}</div><p class="size-help">${config.sizeAuto?`依身高 ${config.height} cm 建議 <strong>${config.size}</strong>（建議身高 ${sizeRange(config.size)}）`:`已選 <strong>${config.size}</strong>（建議身高 ${sizeRange(config.size)}）`}　<button class="text-button" data-action="size-guide">調整身高</button></p>`;}
+function renderPartList(){return `<div class="parts-total"><h3>配備加價合計</h3><strong>${priceTag(partsPrice(config))}</strong></div><ul class="parts-list">${PARTS.map(p=>{const o=p.options[config.parts[p.id]];return `<li><button class="part-row" data-open-part="${p.id}" aria-label="${p.name}：${o.name}，${priceTag(o.price)}。查看選項"><span class="part-icon">${partIcon(p.id)}</span><span class="part-row-text"><strong>${p.name}</strong><small>${o.name}</small></span><span class="part-row-price">${o.price?'+ '+money(o.price):''}</span><span class="chevron" aria-hidden="true">${CHEV_R}</span></button></li>`}).join('')}</ul>`;}
+function renderPartDetail(p){return `<div class="panel-top"><button class="part-back" data-close-part>${CHEV_L}返回騎乘配備</button><div class="panel-head"><h2>${p.name}</h2><p>${p.options.length>1?'選擇一款，總價即時更新。':`此車款的${p.name}為原廠配置。`}</p></div></div><div class="option-cards" role="radiogroup" aria-label="${p.name}">${p.options.map((o,j)=>{const on=config.parts[p.id]===j;return `<button class="option-card" role="radio" aria-checked="${on}" data-part="${p.id}" data-option="${j}"><span class="option-visual">${partIcon(p.id)}</span><span class="option-copy"><strong>${o.name}。</strong>${o.description}</span><span class="option-price">${priceTag(o.price)}</span></button>`}).join('')}</div>`;}
+const SIGNATURE_POSITIONS=[['left','上管左側'],['right','上管右側'],['both','上管兩側都要']];
+const signaturePosition=v=>SIGNATURE_POSITIONS.find(([k])=>k===v)?.[1]||'';
+const SIGNATURE_COLORS=[{name:'金色',hex:'#b59b48'},{name:'黑色',hex:'#333333'},{name:'白色',hex:'#ffffff'}];
+function styleSignaturePreview(el,s){el.textContent=s.text||'Your signature';el.style.fontFamily=s.font==='script'?'cursive':'Arial,sans-serif';el.style.fontStyle=s.font==='script'?'italic':'normal';el.style.color=s.color;el.style.background=s.color==='#ffffff'?'#737f83':'#edf0f1';}
+const sigRadios=(label,key,opts,current)=>`<div class="sig-field"><span class="signature-label">${label}</span><div class="finish-list" role="radiogroup" aria-label="簽名${label}">${opts.map(([v,t])=>`<button class="finish-row" role="radio" aria-checked="${current===v}" data-sig-${key}="${v}"><span class="radio-dot" aria-hidden="true"></span>${t}</button>`).join('')}</div></div>`;
+function renderSignature(){const s=config.signature;return `<div class="signature-pane"><p class="size-help">在車架上留下名字，讓每一段旅程都有你的印記。</p><label class="signature-switch">加入車主簽名 <input type="checkbox" role="switch" class="switch" id="signatureEnabled" ${s.enabled?'checked':''}></label><div id="signatureFields" ${s.enabled?'':'hidden'}><label class="input-label" for="signatureText">簽名文字</label><input class="text-input" id="signatureText" maxlength="15" autocomplete="off" placeholder="例如 HOWARD" value="${escapeHTML(s.text)}" aria-describedby="signatureHint"><div class="input-helper" id="signatureHint"><span>英文、數字及空格，最多 15 字</span><span id="signatureCount">${s.text.length} / 15</span></div><div class="signature-preview" id="signaturePreview"></div>${sigRadios('字體','font',[['script','Font 1 · 手寫'],['sans','Font 2 · 俐落']],s.font)}<div class="custom-group signature-color"><div class="field-head"><span class="signature-label">文字顏色</span><small>${colorName(s.color)}</small></div><div class="color-set" role="group" aria-label="簽名文字顏色">${SIGNATURE_COLORS.map(c=>`<button class="color-swatch" style="--swatch:${c.hex};--check:${c.hex==='#ffffff'?'#333':'#fff'}" aria-label="${c.name}" title="${c.name}" aria-pressed="${s.color===c.hex}" data-sig-color="${c.hex}"></button>`).join('')}</div></div>${sigRadios('位置','position',SIGNATURE_POSITIONS,s.position)}</div></div>`;}
+function updateSignature(){const s=config.signature;s.enabled=$('#signatureEnabled').checked;const clean=$('#signatureText').value.replace(/[^A-Za-z0-9 ]/g,'');if(clean!==$('#signatureText').value)$('#signatureText').value=clean;s.text=clean;$('#signatureFields').hidden=!s.enabled;$('#signatureCount').textContent=`${s.text.length} / 15`;styleSignaturePreview($('#signaturePreview'),s);paintPreview();}
+// Leaving the paint step never blocks: drop characters the frame can't print, and an empty signature simply means none.
+function requireSignature(){const s=config.signature;s.text=s.text.replace(/[^A-Za-z0-9 ]/g,'').trim().slice(0,15);if(!s.text)s.enabled=false;return true}
+function renderParts(){if(partDetail)return renderPartDetail(PARTS.find(p=>p.id===partDetail));return `<div class="panel-top"><div class="panel-head head-save"><div><h2>尺寸與配備</h2><p>選擇合適尺寸，再調整你的騎乘配置。</p></div>${saveButton()}</div><div class="segmented" role="group" aria-label="尺寸與配備"><button data-parts-tab="size" aria-pressed="${partsTab==='size'}">車架尺寸</button><button data-parts-tab="parts" aria-pressed="${partsTab==='parts'}">騎乘配備</button></div></div>${partsTab==='size'?renderSize():renderPartList()}`;}
+let favorites=[],favSeq=0;
+const findFavorite=c=>favorites.find(f=>cartIdentity(f.config)===cartIdentity(c));
+const isFavorite=()=>!!findFavorite(config);
+const saveButton=()=>`<button type="button" class="fav-toggle" id="saveToggle" aria-pressed="false">${SAVE_ICON}</button>`;
+const SAVE_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11a1 1 0 0 1 1 1v16.2l-6.5-4.3-6.5 4.3V4.5a1 1 0 0 1 1-1z"/></svg>';
+function syncFavorite(){const on=isFavorite(),n=favorites.length;const b=$('#saveToggle');if(b){b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-label',on?'從已儲存配置移除':'儲存這個配置，之後再回來編輯');b.title=on?'已儲存':'儲存配置'}}
+function toggleFavorite(){const f=findFavorite(config);if(f)favorites=favorites.filter(x=>x!==f);else favorites.unshift({id:++favSeq,config:clone(config),savedAt:new Date()});syncFavorite();notify(f?'已從已儲存配置移除':'已儲存這個配置')}
+function favoriteMeta(c){const ups=PARTS.filter(p=>p.options[c.parts[p.id]].price);return [`${paintName(c)} · ${paintDescription(c)}`,`尺寸 ${c.size||'未選擇'} · ${signatureSummary(c)}`,ups.length?`升級：${ups.map(p=>p.options[c.parts[p.id]].name).join('、')}`:'原廠標準配備']}
+function renderFavorites(){const body=$('#favBody');$('#favTotal').textContent=favorites.length?`${favorites.length} 個配置`:'';if(!favorites.length){body.innerHTML='<div class="empty-state">還沒有儲存的配置。<br>在設定時按下標題右側的儲存圖示，就能把整台車的配置存起來，之後回來繼續編輯。</div>';return}
+body.innerHTML=`<div class="fav-grid">${favorites.map(f=>`<article class="fav-card"><div class="fav-picture">${bike(f.config,true)}<button class="fav-remove" data-fav-remove="${f.id}" aria-label="從已儲存配置移除" title="移除">${SAVE_ICON}</button></div><div class="fav-info"><h3>DEFY Advanced SL · DURA-ACE</h3>${favoriteMeta(f.config).map(t=>`<p>${escapeHTML(t)}</p>`).join('')}<p class="fav-price">${money(total(f.config))}</p><small>儲存於 ${f.savedAt.toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false})}</small></div><div class="fav-actions"><button class="btn secondary" data-fav-edit="${f.id}">繼續編輯</button><button class="btn" data-fav-cart="${f.id}">${f.config.size?'加入購物車':'選擇尺寸'}</button></div></article>`).join('')}</div>`;}
+function showView(name){const fav=name==='favorites';$('#configPage').hidden=fav;$('#favPage').hidden=!fav;if(fav){renderFavorites();$('#favPage').scrollTop=0;$('#openFav').setAttribute('aria-current','page');$('#navCustomized').removeAttribute('aria-current');$('#favTitle').setAttribute('tabindex','-1');$('#favTitle').focus({preventScroll:true})}else{$('#openFav').removeAttribute('aria-current');$('#navCustomized').setAttribute('aria-current','page')}}
+// The favorites view gets its own history entry so the browser back button returns to the configurator.
+function openFavorites(){showView('favorites');try{if(location.hash!=='#favorites')history.pushState({view:'favorites'},'','#favorites')}catch(e){}}
+function closeFavorites(){showView('config');try{if(location.hash==='#favorites')history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+const syncViewFromUrl=()=>showView(location.hash==='#favorites'?'favorites':'config');
+addEventListener('popstate',syncViewFromUrl);addEventListener('hashchange',syncViewFromUrl);
+function loadFavorite(f,target){config=clone(f.config);editingId=null;returnToReview=false;closeFavorites();navigate(target);notify('已載入儲存的配置')}
+// Review lists every choice as a row: icon, name, detail, surcharge (blank when the item is standard).
+const SIZE_ICON='<path d="M9 33a6 6 0 1 0 0-.1zM39 33a6 6 0 1 0 0-.1zM9 33l9-14h12l-6 14H9zM18 19l-2-5M30 19l3 14M28 14h6"/><path d="M20 8h8M24 6v4"/>';
+const SIGN_ICON='<path d="M10 34c6-2 9-10 12-18 1-3 4-3 4 0-1 6-5 14-9 18m3-9h12M30 34c2-1 4-1 6 0"/>';
+const POS_ICON='<path d="M8 22h32M12 22l4-6h16l4 6"/><path d="M14 28h6M28 28h6"/>';
+const svgIcon=d=>`<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const reviewRow=(icon,name,detail,price)=>`<li class="review-row"><span class="part-icon">${icon}</span><span class="part-row-text"><strong>${name}</strong><small>${detail}</small></span><span class="part-row-price">${priceTag(price)}</span></li>`;
+const colorIcon=v=>`<span class="part-icon color-icon" style="background:${paintCss(v)}"></span>`;
+const reviewSection=(title,edit,rows)=>`<div class="review-group"><div class="field-head"><h3>${title}</h3><button class="text-button" data-edit="${edit}" aria-label="編輯${title}">編輯</button></div><ul class="parts-list review-list">${rows}</ul></div>`;
+function reviewPaintRows(c){if(c.mode==='designer'){const p=selectedPaint(c);return reviewRow(colorIcon(p.color).replace(/^<span class="part-icon color-icon"/,'<span class="color-icon"'),'專屬配色',`${p.name} · ${paintDescription(c)}`,p.price)}const t=customTemplate(c);return reviewRow(bike(Object.assign(initialConfig(),{mode:'custom',custom:{...c.custom}}),true),'自由配色範本',t.name,t.price)+ZONES.map(z=>reviewRow('',`${z.name}`,`${c.custom.finishes[z.key]}／${colorName(c.custom[z.key])}`,zonePrice(c,z.key)).replace('<span class="part-icon"></span>',colorIcon(c.custom[z.key]))).join('')}
+function reviewSignatureRows(c){const s=c.signature;if(!s.enabled)return reviewRow(svgIcon(SIGN_ICON),'車主簽名','未加入簽名',0);return reviewRow(svgIcon(SIGN_ICON),'簽名樣式',`<span class="sig-sample" style="font-family:${s.font==='script'?'cursive':'Arial,sans-serif'};font-style:${s.font==='script'?'italic':'normal'}">${escapeHTML(s.text)}</span> · ${s.font==='script'?'Font 1 · 手寫':'Font 2 · 俐落'}`,0)+reviewRow('','文字顏色',colorName(s.color),0).replace('<span class="part-icon"></span>',colorIcon(s.color))+reviewRow(svgIcon(POS_ICON),'簽名位置',signaturePosition(s.position),0)}
+function reviewPartsRows(c){return reviewRow(svgIcon(SIZE_ICON),'車架尺寸',c.size,0)+PARTS.map(p=>{const o=p.options[c.parts[p.id]];return reviewRow(partIcon(p.id),p.name,o.name,o.price)}).join('')}
+function renderReview(){return `<div class="panel-top"><div class="panel-head head-save"><div><h2>你的 DEFY，準備就緒</h2><p>確認每一處細節，完成你的專屬配置。</p></div>${saveButton()}</div></div>${reviewSection('塗裝配色','paint',reviewPaintRows(config)+reviewSignatureRows(config))}${reviewSection('尺寸與配備','parts',reviewPartsRows(config))}`;}
+function render(focus=false){const focused=document.activeElement;const focusKey=focused?.matches('button,input')?['data-paint','data-paint-tab','data-sig-color','data-template','data-open-zone','data-zone-finish','data-sig-font','data-sig-position','data-size','data-finish','data-color','data-parts-tab','data-option'].find(a=>focused.hasAttribute(a)):null;const focusValue=focusKey?focused.getAttribute(focusKey):null;const colorKey=focused?.dataset.colorKey;const inputValue=focused?.value;
+$('#panel').dataset.screen=page;$('#panel').innerHTML=page==='paint'?renderPaint():page==='parts'?renderParts():renderReview();
+paintPreview();$('#totalPrice').textContent=money(total(config));$('#editingBanner').hidden=editingId===null;
+if(page==='paint'&&paintTab==='signature')styleSignaturePreview($('#signaturePreview'),config.signature);
+markSteps(page);syncFavorite();
+
+$('#next').textContent=adding?'加入中…':returnToReview?'儲存並返回確認 →':page==='paint'?'下一步：尺寸與配備 →':page==='parts'?(partsTab==='size'?'下一步：騎乘配備 →':'下一步：確認配置 →'):editingId!==null?'更新購物車':'加入購物車';if($('#next').textContent.endsWith(' →')){$('#next').innerHTML='<span>'+$('#next').textContent.slice(0,-2).replace(/^下一步：/,'<span class="next-prefix">下一步：</span>')+'</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';}$('#next').disabled=adding;$('#next').hidden=(page==='parts'&&!!partDetail)||(page==='paint'&&paintDetail);
+if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
+const STEPS=['paint','parts','review'];
+function markSteps(current){$$('.step').forEach(b=>{b.removeAttribute('aria-current');if(b.dataset.step===current)b.setAttribute('aria-current','step');b.classList.toggle('done',STEPS.indexOf(b.dataset.step)<STEPS.indexOf(current));});}
+function requireSize(message){if(config.size)return true;page='parts';partsTab='size';partDetail=null;render(true);$('.size-choice').focus({preventScroll:true});return false}
+function navigate(target){paintDetail=false;paintZone=null;if(target==='signature'){page='paint';paintTab='signature';partDetail=null;render(true);return}if(target!=='paint'&&!requireSignature())return;if(target==='paint')paintTab=config.mode;if(target==='review'&&!requireSize('請先選擇車架尺寸，再確認配置。'))return;if(target==='parts'&&page!=='parts')partsTab=page==='review'?'parts':'size';partDetail=null;page=target;render(true);}
+function notify(msg){const t=$('#toast');t.textContent=msg;t.classList.add('visible');clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.classList.remove('visible'),2800);}
+function openDialog(id){$(id).showModal()}
+function showInfo(title,body){$('#infoTitle').textContent=title;$('#infoBody').innerHTML=body;openDialog('#infoDialog')}
+function cartIdentity(c){return JSON.stringify({mode:c.mode,paint:c.mode==='designer'?c.paint:null,custom:c.mode==='custom'?c.custom:null,signature:c.signature.enabled?c.signature:null,size:c.size,parts:c.parts});}
+function putInCart(snapshot){const same=cart.find(i=>cartIdentity(i.config)===cartIdentity(snapshot));if(same)same.qty++;else cart.push({id:++cartSeq,qty:1,config:snapshot});syncCart()}
+function syncCart(){const n=cart.reduce((s,item)=>s+item.qty,0);$('#cartCount').textContent=n;$('#cartCount').hidden=!n;$('#openCart').setAttribute('aria-label',`開啟購物車，${n} 件商品`);}
+async function addToCart(){if(adding)return;if(!config.size){navigate('review');return}adding=true;render();const snapshot=clone(config),wasEditing=editingId!==null;await new Promise(r=>setTimeout(r,450));if(wasEditing){const index=cart.findIndex(i=>i.id===editingId);if(index!==-1)cart[index].config=snapshot;editingId=null;}else{putInCart(snapshot);}adding=false;syncCart();render();$('#successTitle').textContent=wasEditing?'購物車已更新':'已加入購物車';$('#successBike').innerHTML=bike(snapshot,true);$('#successDetails').textContent=`${paintName(snapshot)} · ${snapshot.size} · ${signatureSummary(snapshot)}`;$('#successPrice').textContent=money(total(snapshot));openDialog('#successDialog');}
+function renderCart(){const body=$('#cartBody');if(!cart.length){body.innerHTML='<div class="empty-state">購物車還沒有商品。<br>完成你的客製配置，再把它加入購物車。</div>';return}body.innerHTML=cart.map(item=>`<article class="cart-item"><div class="cart-picture">${bike(item.config,true)}</div><div class="cart-info"><h3>DEFY Advanced SL</h3><p>${paintName(item.config)} · 尺寸 ${item.config.size}</p><p>${escapeHTML(signatureSummary(item.config))}</p><p>數量 ${item.qty}</p><p class="money">${money(total(item.config)*item.qty)}</p><div class="cart-actions"><button class="text-button" data-cart-edit="${item.id}">編輯配置</button><button class="text-button" data-cart-delete="${item.id}">移除</button></div></div></article>`).join('')+`<div class="cost-row total"><span>購物車總計</span><strong>${money(cart.reduce((s,i)=>s+total(i.config)*i.qty,0))}</strong></div>`;}
+function renderSizeGuide(){const c=config;$('#sizeHeight').textContent=c.height;$('#sizeRange').value=c.height;const outside=c.height<155||c.height>186;$('#sizeNote').innerHTML=c.sizeAuto?(outside?`身高 ${c.height} cm 超出建議範圍，先選最接近的 <b>${c.size}</b>（官方建議身高 ${sizeRange(c.size)}），建議到門市量身確認。`:`依身高 ${c.height} cm 建議 <b>${c.size}</b>（官方建議身高 ${sizeRange(c.size)}）。`):`已選 <b>${c.size}</b>（官方建議身高 ${sizeRange(c.size)}）。拉一下身高可以改成用身高推算。`;$('#sizeTable').innerHTML=SIZE_GUIDE.map(g=>`<div class="size-guide-row" ${g.s===c.size?'aria-current="true"':''}><b>${g.s}</b><span>${sizeRange(g.s)}</span></div>`).join('')}
+function openSizeGuide(){renderSizeGuide();openDialog('#sizeDialog')}
+function openCart(){renderCart();openDialog('#cartDialog')}
+// Swatch tooltip lives outside the scrolling panel (position:fixed), so it can stay centred over the swatch without being clipped.
+const tip=document.createElement('div');tip.className='swatch-tip';tip.setAttribute('role','tooltip');tip.hidden=true;document.body.append(tip);
+function showTip(e){const sw=e.target.closest?.('[data-tip]');if(!sw)return;tip.textContent=sw.dataset.tip;tip.hidden=false;const r=sw.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;tip.style.left=Math.min(Math.max(8,r.left+r.width/2-w/2),innerWidth-w-8)+'px';tip.style.top=Math.max(8,r.top-h-8)+'px'}
+const hideTip=()=>{tip.hidden=true};
+$('#panel').addEventListener('pointerover',showTip);$('#panel').addEventListener('focusin',showTip);
+$('#panel').addEventListener('pointerout',e=>{if(e.target.closest?.('[data-tip]'))hideTip()});$('#panel').addEventListener('focusout',hideTip);$('#panel').addEventListener('scroll',hideTip,{passive:true});$('#panel').addEventListener('click',hideTip);
+$('#panel').addEventListener('input',e=>{if(e.target.closest('.signature-pane'))updateSignature()});
+$('#panel').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.id==='saveToggle')toggleFavorite();else if(b.dataset.template){if(config.custom.template!==b.dataset.template)Object.assign(config.custom,{template:b.dataset.template,finishes:defaultFinishes()},templateColors(b.dataset.template));config.mode='custom';paintDetail=true;paintZone=null;render(true)}else if(b.dataset.openZone){paintZone=b.dataset.openZone;render(true)}else if(b.hasAttribute('data-close-zone')){const k=paintZone;paintZone=null;render();$(`[data-open-zone="${k}"]`)?.focus({preventScroll:true})}else if(b.dataset.zoneFinish){config.custom.finishes[paintZone]=b.dataset.zoneFinish;render()}else if(b.hasAttribute('data-close-paint')){const id=config.custom.template;paintDetail=false;paintZone=null;render();$(`[data-template="${id}"]`)?.focus({preventScroll:true})}else if(b.hasAttribute('data-reset-template')){Object.assign(config.custom,{finishes:defaultFinishes()},templateColors(config.custom.template));render()}else if(b.dataset.sigColor){config.signature.color=b.dataset.sigColor;render()}else if(b.dataset.sigFont){config.signature.font=b.dataset.sigFont;render()}else if(b.dataset.sigPosition){config.signature.position=b.dataset.sigPosition;render()}else if(b.dataset.paintTab){const t=b.dataset.paintTab;paintDetail=false;paintZone=null;if(t!=='signature')config.mode=t;paintTab=t;render()}else if(b.dataset.paint){config.paint=b.dataset.paint;render()}else if(b.dataset.colorKey){config.custom[b.dataset.colorKey]=b.dataset.color;render()}else if(b.dataset.size){config.size=b.dataset.size;config.sizeAuto=false;render()}else if(b.dataset.action==='size-guide')openSizeGuide();else if(b.dataset.edit){returnToReview=true;page=b.dataset.edit==='signature'?'paint':b.dataset.edit;paintTab=b.dataset.edit==='signature'?'signature':config.mode;partsTab='parts';partDetail=null;render(true)}else if(b.dataset.partsTab){partsTab=b.dataset.partsTab;render()}else if(b.dataset.openPart){partDetail=b.dataset.openPart;render(true)}else if(b.hasAttribute('data-close-part'))closePartDetail();else if(b.dataset.option){const id=b.dataset.part,j=Number(b.dataset.option);config.parts[id]=config.parts[id]===j&&j!==0?0:j;render()}});
+function closePartDetail(){const id=partDetail;partDetail=null;render();const row=$(`[data-open-part="${id}"]`);row?.focus({preventScroll:true});row?.scrollIntoView({block:'nearest'})}
+$$('.step').forEach(b=>b.addEventListener('click',()=>{if(adding)return;returnToReview=false;navigate(b.dataset.step)}));
+$('#next').addEventListener('click',()=>{if(returnToReview){if(!config.size){navigate('review');return}returnToReview=false;navigate('review')}else if(page==='paint')navigate('parts');else if(page==='parts'&&partsTab==='size'){if(requireSize('請先選擇車架尺寸，再挑選配備。')){partsTab='parts';partDetail=null;render(true)}}else if(page==='parts')navigate('review');else addToCart()});
+$$('[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close).close()));
+$('#aiOrb').addEventListener('click',()=>showInfo('客製車選擇說明','<p class="dialog-description">從配色到配備，打造你的專屬自行車：</p><ol class="help-list"><li>選擇專屬配色，或自由搭配車架顏色。</li><li>選填專屬簽名，再設定尺寸與配備。</li><li>確認總價、返回編輯並加入購物車。</li></ol>'));
+$('#openCart').addEventListener('click',openCart);$('#viewCart').addEventListener('click',()=>{$('#successDialog').close();openCart()});$('#continueDesign').addEventListener('click',()=>{$('#successDialog').close();navigate('paint')});
+$('#sizeRange').addEventListener('input',e=>{config.height=Number(e.target.value);config.size=recommendSize(config.height);config.sizeAuto=true;renderSizeGuide();render()});
+$('#cartBody').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.cartDelete){const id=Number(b.dataset.cartDelete);cart=cart.filter(i=>i.id!==id);if(editingId===id){editingId=null;render()}syncCart();renderCart();$('#cartDialog [data-close]').focus();notify('商品已移除')}else if(b.dataset.cartEdit){const item=cart.find(i=>i.id===Number(b.dataset.cartEdit));config=clone(item.config);editingId=item.id;returnToReview=false;$('#cartDialog').close();navigate('review')}});
+$('#cancelEdit').addEventListener('click',()=>{editingId=null;returnToReview=false;render();notify('已取消編輯，購物車配置未變更')});
+// Storefront navigation is visually shared; cart retains this prototype's configured items.
+const siteNav=document.querySelector('.site-nav');
+$('#mobileNavToggle').addEventListener('click',()=>{const opened=siteNav.classList.toggle('menu-open');$('#mobileNavToggle').setAttribute('aria-expanded',String(opened));$('#mobileNavToggle').setAttribute('aria-label',opened?'收合商城選單':'展開商城選單')});
+$$('[data-site-nav]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();siteNav.classList.remove('menu-open');$('#mobileNavToggle').setAttribute('aria-expanded','false');showInfo(a.dataset.siteNav==='首頁'?'GIANT 商城':a.dataset.siteNav,'<p class="dialog-description">你目前的客製配置已保留，可關閉此視窗繼續設定。</p>')}));
+$('#openMember').addEventListener('click',()=>showInfo('會員中心','<p class="dialog-description">你可以先完成客製配置，再前往購物車。</p>'));
+// Header heart keeps its original behaviour (favourite the current setup); the saved-setups list has no entry point for now.
+let navFavorite=null;
+$('#openFav').addEventListener('click',()=>{navFavorite=navFavorite?null:clone(config);$('#openFav').setAttribute('aria-pressed',String(!!navFavorite));$('#favCount').hidden=!navFavorite;$('#favCount').textContent=navFavorite?'1':'0';notify(navFavorite?'已將目前配置加入我的最愛（本次操作有效）':'已從我的最愛移除配置')});
+// Header entry to the customizer start (paint step) until a dedicated customized landing page exists.
+$('#navCustomized').addEventListener('click',e=>{e.preventDefault();siteNav.classList.remove('menu-open');$('#mobileNavToggle').setAttribute('aria-expanded','false');closeFavorites();returnToReview=false;navigate('paint')});
+$('#favBody').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=Number(b.dataset.favRemove||b.dataset.favEdit||b.dataset.favCart),f=favorites.find(x=>x.id===id);if(!f)return;if(b.dataset.favRemove){favorites=favorites.filter(x=>x!==f);renderFavorites();syncFavorite();notify('已從已儲存配置移除')}else if(b.dataset.favEdit)loadFavorite(f,f.config.size?'review':'parts');else if(!f.config.size)loadFavorite(f,'parts');else{putInCart(clone(f.config));notify('已加入購物車')}});
+
+// 3D preview (three.js). A procedural stand-in road bike: frame tubes are grouped into the same paint zones as the
+// configurator (upper / lower / fork / logo), so colours, finishes, gradients and the signature map 1:1.
+// Replace with GIANT's own DEFY model (glTF with the same zone names) when it is available.
+function createViewer(host){
+  const T=THREE,stage=host.closest('.stage');
+  const renderer=new T.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=T.sRGBEncoding;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.VSMShadowMap;
+  renderer.domElement.className='bike-canvas';renderer.domElement.setAttribute('aria-label','DEFY 3D 預覽，拖曳可旋轉');renderer.domElement.setAttribute('role','img');
+  host.replaceChildren(renderer.domElement);
+  const scene=new T.Scene(),camera=new T.PerspectiveCamera(28,1,0.1,100);
+  scene.add(new T.HemisphereLight(0xffffff,0x6f7680,0.55));
+  const key=new T.DirectionalLight(0xffffff,0.7);key.position.set(4,6,6);scene.add(key);
+  // Overhead light that only exists to cast a soft shadow onto an invisible floor (fixed in the world, so the shadow changes as the bike turns).
+  const sun=new T.DirectionalLight(0xffffff,0.3);sun.position.set(1.2,9,2.2);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
+  Object.assign(sun.shadow.camera,{left:-4.5,right:4.5,top:4.5,bottom:-4.5,near:2,far:20});sun.shadow.bias=-0.0006;sun.shadow.radius=14;scene.add(sun);
+  const floor=new T.Mesh(new T.PlaneGeometry(30,30),new T.ShadowMaterial({opacity:.16}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.645;floor.receiveShadow=true;scene.add(floor);
+  const rim=new T.DirectionalLight(0xffffff,0.6);rim.position.set(-5,3,-6);scene.add(rim);
+  const fill=new T.DirectionalLight(0xffffff,0.35);fill.position.set(0,-3,4);scene.add(fill);
+
+  const lin=c=>new T.Color(c).convertSRGBToLinear();
+  // SVG side-view coordinates (the 2D thumbnails) → 3D metres-ish; wheels sit on y=0.
+  const P=(x,y,z=0)=>new T.Vector3((x-338)/100,(292-y)/100,z);
+  const bike=new T.Group(),root=new T.Group();root.add(bike);scene.add(root);bike.position.set(0,-0.56,0);
+
+  const zoneMat={upper:new T.MeshPhysicalMaterial(),lower:new T.MeshPhysicalMaterial(),fork:new T.MeshPhysicalMaterial()};
+  const dark=new T.MeshStandardMaterial({color:lin('#22282c'),roughness:.55,metalness:.2});
+  const black=new T.MeshStandardMaterial({color:lin('#15191c'),roughness:.9});
+  const alloy=new T.MeshStandardMaterial({color:lin('#4a5257'),roughness:.4,metalness:.6});
+  const tapeMat=new T.MeshStandardMaterial({roughness:.8});
+  const tube=(pts,r,mat,seg=24)=>{const m=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pts),seg,r,14,false),mat);bike.add(m);return m};
+  const cap=(p,r,mat)=>{const m=new T.Mesh(new T.SphereGeometry(r,16,12),mat);m.position.copy(p);bike.add(m)};
+
+  // key points
+  const R=P(125,292),F=P(550,292),BB=P(277,286),ST=P(226,123),HT=P(444,118),HB=P(458,162),TT=P(447,132),DT=P(454,150);
+  // frame — upper zone: top tube + seat stays; lower zone: down tube, seat tube, head tube, chain stays; fork zone: fork
+  tube([ST,TT],.07,zoneMat.upper);
+  for(const z of [-.09,.09]){tube([P(226,140,z*.4),P(175,215,z*.8),P(125,292,z)],.032,zoneMat.upper);tube([P(277,286,z*.4),P(200,290,z*.85),P(125,292,z)],.036,zoneMat.lower)}
+  tube([DT,BB],.1,zoneMat.lower);tube([BB,ST],.08,zoneMat.lower);tube([HT,HB],.09,zoneMat.lower);
+  cap(BB,.11,zoneMat.lower);cap(ST,.08,zoneMat.upper);
+  for(const z of [-.075,.075])tube([P(458,162,z*.6),P(472,200,z),P(520,255,z),P(550,292,z)],.042,zoneMat.fork);
+  // cockpit
+  tube([P(226,123),P(214,76)],.035,dark);
+  const saddle=new T.Mesh(new T.BoxGeometry(.7,.06,.16),black);saddle.position.copy(P(214,70));bike.add(saddle);
+  tube([P(444,112),P(492,98)],.04,dark);
+  const bar=new T.Mesh(new T.CylinderGeometry(.025,.025,.42,12),dark);bar.rotation.x=Math.PI/2;bar.position.copy(P(492,98));bike.add(bar);
+  const tapeTubes=[];for(const z of [-.21,.21]){tube([P(492,98,z*.95),P(512,98,z),P(518,112,z)],.025,dark);tapeTubes.push(tube([P(518,112,z),P(514,126,z),P(498,134,z),P(484,131,z)],.028,tapeMat))}
+  // drivetrain
+  const ring=new T.Mesh(new T.CylinderGeometry(.3,.3,.012,40),alloy);ring.rotation.x=Math.PI/2;ring.position.copy(BB).setZ(.14);bike.add(ring);
+  const cog=new T.Mesh(new T.CylinderGeometry(.13,.13,.06,32),alloy);cog.rotation.x=Math.PI/2;cog.position.copy(R).setZ(.12);bike.add(cog);
+  tube([P(277,256,.14),P(125,276,.12)],.008,dark,8);tube([P(277,316,.14),P(125,308,.12)],.008,dark,8);
+  for(const [z,dir] of [[.17,1],[-.17,-1]]){const arm=tube([P(277,286,z),P(277+dir*30,286+dir*25,z)],.022,dark,4);const pedal=new T.Mesh(new T.BoxGeometry(.18,.03,.1),dark);pedal.position.copy(P(277+dir*30,286+dir*25,z+(z>0?.06:-.06)));bike.add(pedal)}
+  // wheels
+  for(const c of [R,F]){
+    const tire=new T.Mesh(new T.TorusGeometry(1.03,.055,14,64),black);tire.position.copy(c);bike.add(tire);
+    const rimM=new T.Mesh(new T.TorusGeometry(.96,.035,10,64),dark);rimM.position.copy(c);bike.add(rimM);
+    const hub=new T.Mesh(new T.CylinderGeometry(.05,.05,.2,16),alloy);hub.rotation.x=Math.PI/2;hub.position.copy(c);bike.add(hub);
+    const pts=[];for(let i=0;i<24;i++){const a=i/24*Math.PI*2,z=i%2?.06:-.06;pts.push(c.x,c.y,z,c.x+Math.cos(a)*.94,c.y+Math.sin(a)*.94,0)}
+    const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(pts,3));bike.add(new T.LineSegments(g,new T.LineBasicMaterial({color:0x9aa2a6})));
+  }
+  // contact shadows: a tight dark core where each tyre meets the floor, plus a very faint ambient pool under the bike
+  function blob(w,d,alpha,x){const c=document.createElement('canvas');c.width=128;c.height=128;const g=c.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,`rgba(20,26,34,${alpha})`);r.addColorStop(.55,`rgba(20,26,34,${alpha*.35})`);r.addColorStop(1,'rgba(20,26,34,0)');g.fillStyle=r;g.fillRect(0,0,128,128);
+    const m=new T.Mesh(new T.PlaneGeometry(w,d),new T.MeshBasicMaterial({map:new T.CanvasTexture(c),transparent:true,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set(x,-1.082,0);m.renderOrder=-1;bike.add(m)}
+  blob(.8,.3,.7,R.x);blob(.8,.3,.7,F.x);blob(6.6,1.5,.07,0);
+
+  bike.traverse(o=>{if(o.isMesh&&!o.material.transparent)o.castShadow=true});
+  // decals: text drawn to canvas, laid flat against a tube, one per side
+  function decal(a,b,offset,len,h){const holder=new T.Group(),mid=a.clone().lerp(b,.5);holder.position.copy(mid);holder.rotation.z=Math.atan2(b.y-a.y,b.x-a.x);bike.add(holder);
+    const cv=document.createElement('canvas');cv.width=1024;cv.height=128;const tex=new T.CanvasTexture(cv);tex.encoding=T.sRGBEncoding;tex.anisotropy=4;
+    const mat=new T.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false});const sides={};
+    for(const [side,z,flip] of [['left',offset,false],['right',-offset,true]]){const m=new T.Mesh(new T.PlaneGeometry(len,h),mat);m.position.z=z;if(flip)m.rotation.y=Math.PI;holder.add(m);sides[side]=m}
+    return {sides,draw(text,color,font){const x=cv.getContext('2d');x.clearRect(0,0,1024,128);x.fillStyle=color;x.textAlign='center';x.textBaseline='middle';x.font=font;x.fillText(text,512,68);tex.needsUpdate=true}}}
+  const logo=decal(BB,DT,.102,1.6,.2);
+  const sign=decal(ST,TT,.072,1.2,.15);
+
+  const gradTex={};
+  function gradientMap(g){if(gradTex[g.id])return gradTex[g.id];const cv=document.createElement('canvas');cv.width=256;cv.height=4;const x=cv.getContext('2d'),l=x.createLinearGradient(0,0,256,0);l.addColorStop(0,g.from);l.addColorStop(1,g.to);x.fillStyle=l;x.fillRect(0,0,256,4);const t=new T.CanvasTexture(cv);t.encoding=T.sRGBEncoding;return gradTex[g.id]=t}
+  function paint(mat,value,finish){const g=gradient(value);mat.map=g?gradientMap(g):null;mat.color.copy(g?new T.Color(0xffffff):lin(value));const glossy=finish==='亮面';mat.roughness=glossy?.18:.62;mat.clearcoat=glossy?1:0;mat.clearcoatRoughness=.08;mat.metalness=.05;mat.needsUpdate=true}
+
+  // camera: framing presets, drag to rotate, wheel / button to zoom
+  const view={yaw:.42,pitch:.08,vyaw:0,dist:1,distTarget:1,target:new T.Vector3(),targetGoal:new T.Vector3()};
+  let base=9,dirty=true,drag=null;
+  function fit(){const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();const t=Math.tan(camera.fov*Math.PI/360)*2;base=Math.max(3.9/t,7.0/(t*camera.aspect))*1.05;dirty=true}
+  new ResizeObserver(fit).observe(host);fit();
+  const el=renderer.domElement;el.style.touchAction='none';
+  el.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};view.vyaw=0;el.setPointerCapture(e.pointerId);stage.classList.add('dragging')});
+  el.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag={x:e.clientX,y:e.clientY};view.yaw+=dx*.008;view.vyaw=dx*.008;view.pitch=Math.max(-.25,Math.min(.45,view.pitch+dy*.004));dirty=true});
+  const end=()=>{drag=null;stage.classList.remove('dragging')};el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
+  el.addEventListener('wheel',e=>{e.preventDefault();view.distTarget=Math.max(.45,Math.min(1.25,view.distTarget*(e.deltaY>0?1.08:.92)));dirty=true},{passive:false});
+  function frame(){requestAnimationFrame(frame);
+    if(!drag&&Math.abs(view.vyaw)>.0002){view.yaw+=view.vyaw;view.vyaw*=.93;dirty=true}
+    if(Math.abs(view.dist-view.distTarget)>.0005||view.target.distanceTo(view.targetGoal)>.0005){view.dist+=(view.distTarget-view.dist)*.12;view.target.lerp(view.targetGoal,.12);dirty=true}
+    if(!dirty)return;dirty=false;root.rotation.set(0,view.yaw,0);
+    const d=base*view.dist;camera.position.set(view.target.x,view.target.y+Math.sin(view.pitch)*d,view.target.z+Math.cos(view.pitch)*d);camera.lookAt(view.target);renderer.render(scene,camera)}
+  requestAnimationFrame(frame);
+
+  return {
+    update(c){const p=selectedPaint(c),custom=c.mode==='custom',fin=k=>custom?c.custom.finishes[k]:'霧面';
+      paint(zoneMat.upper,custom?c.custom.upper:p.color,fin('upper'));paint(zoneMat.lower,custom?c.custom.lower:p.color,fin('lower'));paint(zoneMat.fork,custom?c.custom.fork:p.color,fin('fork'));
+      tapeMat.color.copy(lin(c.parts.tape?'#657f93':'#282e32'));
+      logo.draw('GIANT',custom?c.custom.logo:'#ffffff','italic 900 104px Arial, sans-serif');
+      const s=c.signature,show=s.enabled&&s.text;sign.draw(show?s.text:'',s.color,`${s.font==='script'?'italic 400':'600'} 100px ${s.font==='script'?'cursive':'Arial, sans-serif'}`);
+      sign.sides.left.visible=show&&s.position!=='right';sign.sides.right.visible=show&&s.position!=='left';dirty=true},
+    // 全車 / 車架細節 presets and the zoom button drive the camera instead of CSS transforms
+    setView(v){view.targetGoal.set(v==='detail'?-.3:0,v==='detail'?.35:0,0);view.distTarget=v==='detail'?.55:1;dirty=true},
+    setZoom(on){view.distTarget=on?Math.min(view.distTarget,.72):(view.targetGoal.x?.55:1);dirty=true}
+  };
+}
+// Fall back to the flat SVG preview when three.js can't load (offline) or WebGL is unavailable.
+let viewer=null;
+try{if(window.THREE&&document.createElement('canvas').getContext('webgl')){viewer=createViewer($('#bikePreview'));$('#stage').classList.add('is-3d')}}catch(e){console.warn('3D preview unavailable',e);viewer=null}
+function paintPreview(){if(viewer)viewer.update(config);else $('#bikePreview').innerHTML=bike(config)}
+render();
+if(location.hash==='#favorites')showView('favorites');
+</script>
+</body>
+</html>
