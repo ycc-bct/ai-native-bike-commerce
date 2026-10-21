@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>客製化自行車 · 工廠逐層組裝（靜態稿）· GIANT</title>
+<link rel="stylesheet" href="../css/header.css?v=n0acc12"><link rel="stylesheet" href="../css/favorites.css?v=n0acc12">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;
+--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--shell:min(1320px,calc(100vw - 96px))}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--paper)}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+img{display:block;max-width:none}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}svg{display:block}
+/* header：同首頁，固定在頂端，捲動後淺色底 */
+.site-nav{position:fixed;transition:background .3s,box-shadow .3s}
+.site-nav.scrolled{background:rgba(243,245,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+/* 共用按鈕（同首頁） */
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.04em}
+.btn svg{width:16px;height:16px}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-line{border:1px solid #B8C0CA;background:rgba(255,255,255,.6)}
+.btn-light{background:#fff;color:var(--ink)}
+.kicker{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ai)}
+
+/* 每一站 = 一個 1440×900 畫面 */
+.fr{position:relative;height:900px;overflow:hidden}
+.fr-in{position:relative;width:1440px;height:900px;margin:0 auto}
+.fr + .fr::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line);z-index:1}
+.abs{position:absolute}
+
+/* 產線：沿用客製車頁的五步驟樣式，底下多一條輸送帶 */
+.line{position:absolute;left:60px;top:84px;width:1320px}
+.line ol{position:relative;list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.line li{position:relative;z-index:1;height:52px;display:flex;align-items:center;gap:12px;padding:0 18px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:700}
+.line li .n{font-weight:800;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--ink-70)}
+.line li.done .n{color:var(--ai)}
+.line li.done .n::after{content:" ✓"}
+.line li.cur{background:var(--navy);border-color:var(--navy);color:#fff}
+.line li.cur .n{color:#fff}
+.line .belt{position:absolute;left:0;right:0;top:62px;height:3px;border-radius:2px;background:repeating-linear-gradient(90deg,#C9D0D8 0 8px,transparent 8px 14px)}
+.line .belt i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--ai)}
+
+/* 標題（同首頁 .sec-head） */
+.hd h2{margin-top:10px;font-size:30px;font-weight:800;letter-spacing:-.01em;line-height:1.25}
+.hd p{margin-top:10px;font-size:15px;line-height:1.85;color:var(--ink-70)}
+
+/* 藍圖台：白卡 + 淡藍格線 */
+.bp{position:absolute;border-radius:14px;background-color:#fff;border:1px solid var(--line);box-shadow:0 12px 28px rgba(20,26,34,.08);
+  background-image:linear-gradient(rgba(31,79,224,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(31,79,224,.10) 1px,transparent 1px),
+  linear-gradient(rgba(31,79,224,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(31,79,224,.045) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;background-position:-1px -1px}
+.bp .tag{position:absolute;top:18px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-70)}
+.bp .tag.l{left:22px}.bp .tag.r{right:22px}
+.cap{position:absolute;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.94);border:1px solid var(--line)}
+.cap b{display:block;font-size:13px;font-weight:700;line-height:1.4}
+.cap small{display:block;font-size:12px;color:var(--ink-70);line-height:1.5}
+.ov{position:absolute;left:0;top:0;width:1440px;height:900px;pointer-events:none}
+.dimlbl{position:absolute;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ink-70);background:#fff;padding:0 6px;transform:translate(-50%,-50%)}
+.chipc{position:absolute;display:inline-flex;align-items:center;height:32px;padding:0 14px;border-radius:999px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;white-space:nowrap}
+.mk{position:absolute;width:26px;height:26px;border-radius:50%;background:var(--ai);color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center;transform:translate(-50%,-50%);box-shadow:0 0 0 3px #fff}
+
+/* 卡片（同首頁 .card） */
+.card{position:absolute;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.card.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy),0 12px 28px rgba(20,26,34,.10)}
+.card .ck{position:absolute;right:14px;top:14px;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center}
+.card .ck svg{width:14px;height:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:700;color:var(--ink-70)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.sm{height:28px;padding:0 11px;font-size:12px}
+.glabel{font-size:15px;font-weight:700}
+
+/* 00 */
+.hero h1{margin-top:14px;font-size:52px;line-height:1.1;font-weight:800;letter-spacing:-.01em}
+.hero .sub{margin-top:14px;font-size:22px;font-weight:700;letter-spacing:.06em}
+.hero .lead{margin-top:22px;font-size:15px;line-height:1.85;color:var(--ink-70)}
+.hero .acts{margin-top:30px;display:flex;gap:12px}
+/* 01 */
+.mcard .ph{position:absolute;left:12px;right:12px;top:12px;height:270px;border-radius:10px;display:grid;place-items:center;background:#fff}
+.mcard.on .ph{background-color:#fff;background-image:linear-gradient(rgba(31,79,224,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(31,79,224,.08) 1px,transparent 1px);background-size:24px 24px}
+.mcard .ph img{width:282px;height:auto}
+.mcard .tx{position:absolute;left:24px;right:24px;top:306px}
+.mcard .ser{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.mcard .pn{margin-top:8px;font-size:14px;font-weight:700;line-height:1.5}
+.mcard .ct{margin-top:4px;font-size:13px;color:var(--ink-70)}
+/* 02 */
+.gcard .ph{position:absolute;left:12px;top:12px;bottom:12px;width:170px;border-radius:10px;display:grid;place-items:center;background:#F7F9FB}
+.gcard .ph img{width:150px;height:auto}
+.gcard .tx{position:absolute;left:200px;right:20px;top:50%;transform:translateY(-50%)}
+.gcard .gn{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.gcard .pn{margin-top:6px;font-size:13px;font-weight:700;line-height:1.5;color:var(--ink-70)}
+/* 03 */
+.sw{display:flex;gap:12px}
+.sw .s{width:150px;border-radius:12px;border:1.5px solid var(--line);background:#fff;padding:8px}
+.sw .s.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.sw .s img{width:132px;height:auto}
+.sw .s b{display:block;margin-top:6px;font-size:13px;font-weight:700}
+.sw .s small{display:block;font-size:12px;color:var(--ink-70)}
+/* 04 */
+.plist{list-style:none}
+.plist li{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:4px 10px;padding:13px 0;border-top:1px solid var(--line)}
+.plist li i{grid-row:span 2;align-self:start;width:26px;height:26px;border-radius:50%;background:var(--ai);color:#fff;font-style:normal;font-size:13px;font-weight:800;display:grid;place-items:center}
+.plist li b{font-size:15px;font-weight:700}
+.plist li>span{grid-column:2 / 4;font-size:13px;color:var(--ink-70);line-height:1.5}
+.plist li .chips{gap:6px;justify-content:flex-end}
+/* 05 */
+.ord{position:absolute;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 28px rgba(20,26,34,.08);padding:28px}
+.ord h3{font-size:20px;font-weight:800}
+.ord .meta{margin-top:4px;font-size:13px;color:var(--ink-70)}
+.ord dl{margin-top:16px}
+.ord .row{display:grid;grid-template-columns:34px 1fr;gap:2px 8px;padding:12px 0;border-top:1px solid var(--line)}
+.ord dt{grid-row:span 2;font-size:14px;font-weight:800;color:var(--ai);font-variant-numeric:tabular-nums}
+.ord dd{font-size:14px;font-weight:700;line-height:1.5}
+.ord dd small{display:block;font-size:13px;font-weight:500;color:var(--ink-70)}
+.ord .note{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;line-height:1.8;color:var(--ink-70)}
+.ord .btn{margin-top:18px;width:100%;justify-content:center}
+/* 06 */
+.fin h2{margin-top:14px;font-size:44px;line-height:1.2;font-weight:800;letter-spacing:-.01em}
+.fin p{margin-top:18px;font-size:15px;line-height:1.85;color:var(--ink-70)}
+.fin .acts{margin-top:30px;display:flex;gap:12px}
+
+/* 頁尾（同首頁） */
+.foot{background:#fff;border-top:1px solid var(--line)}
+.foot-in{width:var(--shell);margin:0 auto;padding:56px 0 44px;display:grid;grid-template-columns:1.3fr repeat(4,.7fr) 1.3fr;gap:24px}
+.foot-brand svg{height:20px;width:auto;color:var(--ink)}
+.foot-brand p{margin-top:14px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-70)}
+.foot-col b{display:block;font-size:13.5px;font-weight:700;margin-bottom:12px}
+.foot-col a{display:block;font-size:13px;color:var(--ink-70);margin-top:8px}
+.foot-sub b{display:block;font-size:13.5px;font-weight:700;margin-bottom:12px}
+.sub-form{display:flex;height:42px;border:1px solid #C9D0D8;border-radius:8px;overflow:hidden;background:#fff}
+.sub-form input{flex:1;min-width:0;border:0;outline:0;padding:0 14px;font:inherit;font-size:13.5px}
+.sub-form button{width:44px;background:var(--navy);color:#fff;display:grid;place-items:center}
+.sub-form button svg{width:16px;height:16px}
+.social{margin-top:16px;display:flex;gap:12px}
+.social a{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-70)}
+.social svg{width:16px;height:16px}
+.foot-bar{border-top:1px solid var(--line);width:var(--shell);margin:0 auto;padding:18px 0 28px;display:flex;align-items:center;gap:24px;font-size:12px;color:var(--ink-70)}
+.foot-bar .legal{margin-left:auto;display:flex;gap:18px}
+.foot-bar .region{padding-left:18px;border-left:1px solid var(--line)}
+
+/* ===== v3：固定舞台，逐層加上零件 ===== */
+.bike{position:absolute}
+.bike img{position:absolute;left:0;top:0;width:100%;height:100%}
+.bike img.ghost{opacity:.38;filter:saturate(.6)}
+.col{position:absolute;left:60px;top:120px;width:400px}
+.scards{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sc{position:relative;border-radius:12px;background:#fff;border:1.5px solid var(--line);padding:10px 12px 12px}
+.sc.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.sc img{width:100%;height:auto;aspect-ratio:1.6;object-fit:contain}
+.sc b{display:block;margin-top:6px;font-size:16px;font-weight:800}
+.sc small{display:block;margin-top:2px;font-size:12px;color:var(--ink-70);line-height:1.45}
+.sc .ck{position:absolute;right:10px;top:10px;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center}
+.sc .ck svg{width:12px;height:12px}
+.grades{margin-top:24px;display:grid;gap:12px}
+.gr{position:relative;display:grid;grid-template-columns:150px 1fr;align-items:center;gap:16px;border-radius:12px;background:#fff;border:1.5px solid var(--line);padding:10px}
+.gr.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.gr img{width:150px;height:100px;object-fit:contain;background:#F7F9FB;border-radius:8px}
+.gr b{display:block;font-size:20px;font-weight:800}
+.gr small{display:block;margin-top:4px;font-size:13px;color:var(--ink-70);line-height:1.5}
+.gr .ck{position:absolute;right:12px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center}
+.gr .ck svg{width:12px;height:12px}
+.grp{margin-top:22px}.grp .chips{margin-top:10px}
+.parts{margin-top:18px;list-style:none;display:grid;gap:8px}
+.parts li{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.parts li img{width:64px;height:48px;object-fit:contain}
+.parts li b{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
+.parts li b i{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
+.parts li span{display:block;margin-top:2px;font-size:12px;color:var(--ink-70);line-height:1.45}
+.parts li em{font-style:normal;font-size:12px;font-weight:700;color:var(--ink-70);white-space:nowrap}
+.parts li em.ok{color:var(--ai)}
+.olist{margin-top:18px;border-radius:14px;background:#fff;border:1px solid var(--line);padding:6px 18px}
+.olist .row{display:grid;grid-template-columns:30px 1fr;gap:0 8px;padding:9px 0;border-top:1px solid var(--line)}
+.olist .row:first-child{border-top:0}
+.olist dt{font-size:13px;font-weight:800;color:var(--ai)}
+.olist dd{font-size:13px;font-weight:700;line-height:1.5}
+.olist dd small{font-size:13px;font-weight:500;color:var(--ink-70);margin-left:6px}
+.onote{margin-top:12px;font-size:13px;line-height:1.8;color:var(--ink-70)}
+.split{position:absolute;width:0;border-left:1.5px dashed var(--ai)}
+</style></head><body>
+<header class="nav site-nav">
+    <a class="logo" href="../index.html" aria-label="GIANT">
+      <svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg>
+    </a>
+    <nav class="links"><a href="../index.html#popular">Bikes</a><a href="#">Gear</a><a href="#">Apparel</a><a href="#">Explore</a><a href="#">Support</a></nav>
+    <div class="icons">
+      <button type="button" class="icon-btn" id="openFav" aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg><span class="fav-n" hidden>0</span></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <span class="orb-wrap">
+        <button class="orb-btn vbtn" id="aiOrb" type="button" aria-label="GIANT 選車顧問" title="GIANT 選車顧問｜依你的騎乘情境給建議"><span class="beam-glow"></span><span class="beam-ring"></span><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></button>
+        <div class="orb-callout" id="orbCallout" role="status" hidden><i class="tip"></i>
+          <p><b id="calloutTitle"></b><span id="calloutText"></span></p>
+          <div class="acts"><button class="yes" id="calloutYes" type="button">好，聊聊看</button><button class="no" id="calloutNo" type="button">先自己逛</button></div>
+        </div>
+      </span>
+    </div>
+</header>
+<main><section class="fr" id="f0" data-frame="0"><div class="fr-in"><div class="col" style="top:120px"><div class="hero" style="margin-top:110px"><span class="kicker">Giant Custom</span><h1>客製化自行車</h1><p class="sub">你的自行車，由你做主</p>
+<p class="lead">以熱銷車款為基礎，提供車架、塗裝及零件規格客製化，五個步驟打造專屬於你的自行車。</p>
+<div class="acts"><a class="btn btn-dark">開始客製<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-line">查看服務門市</a></div></div></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Station 00 · 工作台</span><span class="tag r">車架輪廓</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/frame-line.webp" alt="" class="" style=""></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><circle cx="704.6" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="704.6" cy="559.4" r="4" fill="#9AA6B8"/><circle cx="1175.4" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="1175.4" cy="559.4" r="4" fill="#9AA6B8"/></svg><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>車架線稿</small></div></div></section><section class="fr" id="f1" data-frame="1"><div class="fr-in"><div class="col" style="top:120px"><div class="hd"><span class="kicker">Station 01</span><h2>選定車款</h2><p>目前推出 On-Road 系列車款供選擇。</p></div><div class="scards"><div class="sc on"><i class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><img src="img/tcr-sl0red.webp" alt="TCR Advanced SL 0-Red"><b>TCR</b><small>TCR Advanced SL 0-Red<br>Race</small></div><div class="sc "><img src="img/propel-sl1.webp" alt="Propel Advanced SL 1"><b>Propel</b><small>Propel Advanced SL 1<br>Aero Race</small></div><div class="sc "><img src="img/defy-pro0.webp" alt="Defy Advanced Pro 0-AXS"><b>Defy</b><small>Defy Advanced Pro 0-AXS<br>Endurance</small></div><div class="sc "><img src="img/trinity-sl1.webp" alt="Trinity Advanced SL 1"><b>Trinity</b><small>Trinity Advanced SL 1<br>Triathlon / TT</small></div></div></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Station 01 · 車款</span><span class="tag r">TCR</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/frame-line.webp" alt="" class="" style=""></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><circle cx="704.6" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="704.6" cy="559.4" r="4" fill="#9AA6B8"/><circle cx="1175.4" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="1175.4" cy="559.4" r="4" fill="#9AA6B8"/></svg><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><line x1="892" y1="595" x2="892" y2="284" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="1087" y1="326" x2="1087" y2="284" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="1087" y1="326" x2="1223" y2="326" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="892" y1="595" x2="1223" y2="595" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="705" y1="559" x2="705" y2="753" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="1175" y1="559" x2="1175" y2="753" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><g stroke="#7A8492" stroke-width="1.2"><line x1="892" y1="292" x2="1087" y2="292"/><line x1="892" y1="286" x2="892" y2="298"/><line x1="1087" y1="286" x2="1087" y2="298"/></g><g stroke="#7A8492" stroke-width="1.2"><line x1="1215" y1="326" x2="1215" y2="595"/><line x1="1209" y1="326" x2="1221" y2="326"/><line x1="1209" y1="595" x2="1221" y2="595"/></g><g stroke="#7A8492" stroke-width="1.2"><line x1="705" y1="745" x2="1175" y2="745"/><line x1="705" y1="739" x2="705" y2="751"/><line x1="1175" y1="739" x2="1175" y2="751"/></g></svg><span class="dimlbl" style="left:990px;top:292px">REACH</span><span class="dimlbl" style="left:1215px;top:461px">STACK</span><span class="dimlbl" style="left:940px;top:745px">軸距</span><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>車架線稿 · 幾何</small></div></div></section><section class="fr" id="f2" data-frame="2"><div class="fr-in"><div class="col" style="top:120px"><div class="hd"><span class="kicker">Station 02</span><h2>確認等級</h2><p>車款選定後，可依車架等級訂購：<br>Advanced SL 與 Advanced PRO。</p></div><div class="grades"><div class="gr on"><i class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><img src="img/tcr-slff-a.webp" alt="TCR Advanced SL-FF（2027）車架組"><div><b>Advanced SL</b><small>TCR Advanced SL-FF（2027）車架組</small></div></div><div class="gr "><img src="img/tcr-proff.webp" alt="TCR Advanced Pro-FF（2027）車架組"><div><b>Advanced PRO</b><small>TCR Advanced Pro-FF（2027）車架組</small></div></div></div></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Layer 01 · 碳纖維車架</span><span class="tag r">Advanced SL</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/frame-carbon.webp" alt="" class="" style=""><img src="img/stage/frame-line.webp" alt="" class="" style="opacity:.5"></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><circle cx="704.6" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="704.6" cy="559.4" r="4" fill="#9AA6B8"/><circle cx="1175.4" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="1175.4" cy="559.4" r="4" fill="#9AA6B8"/></svg><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><line x1="997" y1="457" x2="1117" y2="577" stroke="#1F4FE0" stroke-width="1.5" stroke-dasharray="5 5"/><circle cx="997" cy="457" r="4.5" fill="#fff" stroke="#1F4FE0" stroke-width="2"/><line x1="963" y1="357" x2="933" y2="267" stroke="#1F4FE0" stroke-width="1.5" stroke-dasharray="5 5"/><circle cx="963" cy="357" r="4.5" fill="#fff" stroke="#1F4FE0" stroke-width="2"/></svg><span class="chipc" style="left:1111px;top:561px">碳纖維車架 · Advanced SL</span><span class="chipc" style="left:863px;top:235px">Layer 01</span><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>車架 · 碳纖維層</small></div></div></section><section class="fr" id="f3" data-frame="3"><div class="fr-in"><div class="col" style="top:120px"><div class="hd"><span class="kicker">Station 03</span><h2>選版型／調配色</h2><p>從 TCR TYPE 版型出發，再挑選塗裝系列與表面處理。</p></div><div class="grp"><p class="glabel">版型</p><div class="chips"><span class="chip on">TCR TYPE 1</span><span class="chip ">TCR TYPE 2</span><span class="chip ">TCR TYPE 3</span></div></div><div class="grp"><p class="glabel">塗裝系列</p><div class="chips"><span class="chip on">經典塗裝</span><span class="chip ">SD 手工亂紋</span><span class="chip ">CL 變色龍</span><span class="chip ">EP 電鍍</span><span class="chip ">漸層塗裝</span></div></div><div class="grp"><p class="glabel">表面處理</p><div class="chips"><span class="chip on">亮光</span><span class="chip ">消光</span></div></div></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Layer 02 · 塗裝</span><span class="tag r">TCR TYPE 1</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/frame-matte.webp" alt="" class="" style="clip-path:inset(0 53% 0 0)"><img src="img/stage/frame-gloss.webp" alt="" class="" style="clip-path:inset(0 0 0 47%)"></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><circle cx="704.6" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="704.6" cy="559.4" r="4" fill="#9AA6B8"/><circle cx="1175.4" cy="559.4" r="164.0" fill="none" stroke="#9AA6B8" stroke-width="1.2" stroke-dasharray="4 6"/><circle cx="1175.4" cy="559.4" r="4" fill="#9AA6B8"/></svg><span class="split" style="left:916px;top:160px;height:590px"></span><span class="chipc" style="left:824px;top:170px">消光</span><span class="chipc" style="left:930px;top:170px">亮光</span><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>車架 · 塗裝層</small></div></div></section><section class="fr" id="f4" data-frame="4"><div class="fr-in"><div class="col" style="top:120px"><div class="hd"><span class="kicker">Station 04</span><h2>六大零件</h2><p>六大零件可在選項清單內自由搭配更換。</p></div><ul class="parts"><li><img src="img/saddle.webp" alt="Contact SLR Saddle"><div><b><i>1</i>坐墊</b><span>Contact SLR Saddle</span></div><em class="ok">已就位</em></li><li><img src="img/bar.webp" alt="Contact SLR Handlebar"><div><b><i>2</i>車把手</b><span>Contact SLR Handlebar</span></div><em class="">組裝中</em></li><li><img src="img/stem.webp" alt="Contact SLR 碳纖維龍頭"><div><b><i>3</i>車手豎桿</b><span>Contact SLR 碳纖維龍頭</span></div><em class="">組裝中</em></li><li><img src="img/crank.webp" alt="Power Pro 雙邊功率計（Ultegra R8100）"><div><b><i>4</i>大齒盤</b><span>Power Pro 雙邊功率計（Ultegra R8100）</span></div><em class="ok">已就位</em></li><li><img src="img/cassette-lens.webp" alt="官網未單售，取自 TCR Advanced SL 0-Red"><div><b><i>5</i>飛輪</b><span>官網未單售，取自 TCR Advanced SL 0-Red</span></div><em class="ok">已就位</em></li><li><img src="img/wheel.webp" alt="SLR 0 40 DISC"><div><b><i>6</i>前後輪組</b><span>SLR 0 40 DISC</span></div><em class="ok">已就位</em></li></ul></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Layer 03 · 零件</span><span class="tag r">組裝中</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/frame-dock.webp" alt="" class="" style=""><img src="img/stage/base.webp" alt="" class="" style=""><img src="img/stage/saddle.webp" alt="" class="" style=""><img src="img/stage/cockpit.webp" alt="" class="ghost" style="transform:translate(70px,-60px)"></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><line x1="1271" y1="231" x2="1201" y2="291" stroke="#1F4FE0" stroke-width="1.5" stroke-dasharray="3 5"/><line x1="1181" y1="254" x2="1111" y2="314" stroke="#1F4FE0" stroke-width="1.5" stroke-dasharray="3 5"/><circle cx="1201" cy="291" r="5" fill="#fff" stroke="#1F4FE0" stroke-width="2"/><circle cx="1111" cy="314" r="5" fill="#fff" stroke="#1F4FE0" stroke-width="2"/></svg><span class="mk" style="left:734px;top:233px">1</span><span class="mk" style="left:1287px;top:227px">2</span><span class="mk" style="left:1175px;top:234px">3</span><span class="mk" style="left:1004px;top:621px">4</span><span class="mk" style="left:699px;top:507px">5</span><span class="mk" style="left:1297px;top:437px">6</span><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>舞台為原廠配置；零件選項見左側</small></div></div></section><section class="fr" id="f5" data-frame="5"><div class="fr-in"><div class="col" style="top:120px"><div class="hd"><span class="kicker">Station 05</span><h2>Fitting 與客訂確認</h2><p>依既有的騎乘習慣，或透過捷安特 RRS 及 DCF Fitting 系統，找到合身的零件規格。</p></div><div class="grp"><p class="glabel">Fitting 方式</p><div class="chips"><span class="chip ">既有的騎乘習慣</span><span class="chip on">RRS</span><span class="chip ">DCF</span></div></div><dl class="olist"><div class="row"><dt>01</dt><dd>選定車款<small>TCR</small></dd></div><div class="row"><dt>02</dt><dd>確認等級<small>Advanced SL</small></dd></div><div class="row"><dt>03</dt><dd>選版型／調配色<small>TYPE 1 · 經典塗裝 · 亮光</small></dd></div><div class="row"><dt>04</dt><dd>選零件／定規格<small>六大零件</small></dd></div><div class="row"><dt>05</dt><dd>Fitting<small>RRS</small></dd></div></dl><p class="onote">由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn btn-dark" style="margin-top:16px">查詢服務門市<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">Layer 04 · Fitting</span><span class="tag r">RRS</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/complete.webp" alt="" class="" style=""></div><svg class="ov" viewBox="0 0 1440 900" aria-hidden="true"><circle cx="794" cy="223" r="13" fill="none" stroke="#1F4FE0" stroke-width="2"/><circle cx="794" cy="223" r="3.5" fill="#1F4FE0"/><circle cx="1201" cy="291" r="13" fill="none" stroke="#1F4FE0" stroke-width="2"/><circle cx="1201" cy="291" r="3.5" fill="#1F4FE0"/><circle cx="974" cy="603" r="13" fill="none" stroke="#1F4FE0" stroke-width="2"/><circle cx="974" cy="603" r="3.5" fill="#1F4FE0"/><line x1="794" y1="223" x2="516" y2="223" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="892" y1="595" x2="516" y2="595" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="794" y1="223" x2="794" y2="175" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><line x1="1201" y1="291" x2="1201" y2="175" stroke="#7A8492" stroke-width="1" stroke-dasharray="2 4"/><g stroke="#7A8492" stroke-width="1.2"><line x1="524" y1="223" x2="524" y2="595"/><line x1="518" y1="223" x2="530" y2="223"/><line x1="518" y1="595" x2="530" y2="595"/></g><g stroke="#7A8492" stroke-width="1.2"><line x1="794" y1="183" x2="1201" y2="183"/><line x1="794" y1="177" x2="794" y2="189"/><line x1="1201" y1="177" x2="1201" y2="189"/></g></svg><span class="dimlbl" style="left:524px;top:409px">座高</span><span class="dimlbl" style="left:997px;top:183px">把手距離</span><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>整車 · 2027</small></div></div></section><section class="fr" id="f6" data-frame="6"><div class="fr-in"><div class="col" style="top:120px"><div class="fin" style="margin-top:130px"><span class="kicker">Build Complete</span><h2>從碳纖維車架開始<br>為你量身打造</h2>
+<p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p>
+<div class="acts"><a class="btn btn-dark">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-line">查看服務門市</a></div></div></div><div class="bp" style="left:500px;top:100px;width:880px;height:740px"><span class="tag l">出廠</span><span class="tag r">TCR</span></div><div class="bike" style="left:540px;top:217px;width:800px;height:507px" aria-label="TCR Advanced SL 0-Red"><img src="img/stage/complete.webp" alt="" class="" style=""></div><div class="cap" style="left:522px;top:766px"><b>TCR Advanced SL 0-Red · Prism Pearl</b><small>整車 · 2027</small></div></div></section></main>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg><p>Ride a brighter tomorrow.</p></div>
+    <div class="foot-col"><b>車款</b><a>公路車</a><a>登山車</a><a>Gravel</a><a>電動輔助車</a><a>童車</a></div>
+    <div class="foot-col"><b>裝備</b><a>安全帽</a><a>車衣</a><a>車鞋</a><a>配件</a><a>全部裝備</a></div>
+    <div class="foot-col"><b>探索</b><a>最新消息</a><a>活動賽事</a><a>車隊與選手</a><a>科技新知</a><a>關於 Giant</a></div>
+    <div class="foot-col"><b>支援</b><a>門市據點</a><a>客服信箱</a><a>保固聲明</a><a>常見問題</a><a>產品使用說明書</a></div>
+    <div class="foot-sub"><b>訂閱最新消息</b>
+      <form class="sub-form" onsubmit="return false"><input type="email" placeholder="輸入你的 Email" aria-label="Email"><button type="submit" aria-label="訂閱"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+      <div class="social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M14 8h2.5V4.5H14A3.5 3.5 0 0 0 10.5 8v2.5H8V14h2.5v6H14v-6h2.5l.5-3.5h-3V8.5c0-.3.2-.5.5-.5z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 8.5C3 6.6 4.6 5 6.5 5h11C19.4 5 21 6.6 21 8.5v7c0 1.9-1.6 3.5-3.5 3.5h-11C4.6 19 3 17.4 3 15.5z"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bar">
+    <span>© 2026 Giant Manufacturing Co., Ltd. All rights reserved.</span>
+    <span class="legal"><a href="#">隱私權政策</a><a href="#">使用條款</a><a href="#">Cookie 設定</a></span>
+    <span class="region">Taiwan（繁體中文）</span>
+  </div>
+</footer>
+<script>/* 靜態稿：只保留首頁 header 的捲動底色 */
+const nav=document.querySelector('.site-nav');const on=()=>nav.classList.toggle('scrolled',scrollY>8);addEventListener('scroll',on,{passive:true});on();</script>
+</body></html>

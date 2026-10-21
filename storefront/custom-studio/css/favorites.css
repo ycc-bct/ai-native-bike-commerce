@@ -1,0 +1,60 @@
+/* 我的最愛（全站共用）
+   需要頁面提供色彩變數：--ink --ink-70 --line --brand --ease
+   面板幾何刻意對齊 css/advisor.css 的 .advisor，兩個抽屜寬度與位置一致。 */
+
+/* header 入口：跟 .icons a 同一組尺寸，只是元素是 button */
+.icons .icon-btn{position:relative;display:grid;place-items:center;color:inherit;
+  border:0;background:none;padding:0;cursor:pointer}
+.icons .icon-btn svg{display:block;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
+.fav-n{position:absolute;right:-8px;top:-6px;min-width:18px;height:18px;padding:0 5px;
+  border-radius:9px;background:var(--brand,#06038d);color:#fff;font-size:11px;font-weight:700;
+  display:grid;place-items:center;line-height:1}
+.fav-n[hidden]{display:none}
+
+.fav-scrim{position:fixed;inset:0;z-index:65;background:rgba(14,22,36,.28);
+  opacity:0;transition:opacity .28s var(--ease,cubic-bezier(.16,1,.3,1))}
+.fav-scrim.on{opacity:1}
+.fav-scrim[hidden]{display:none}
+
+.fav-panel{position:fixed;z-index:66;right:24px;top:80px;width:400px;height:calc(100vh - 104px);
+  display:flex;flex-direction:column;background:#fff;border:1px solid var(--line,#DCE1E7);
+  border-radius:16px;box-shadow:0 28px 70px rgba(20,26,34,.2);overflow:hidden;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .3s var(--ease,cubic-bezier(.16,1,.3,1)),transform .3s var(--ease,cubic-bezier(.16,1,.3,1))}
+.fav-panel.on{opacity:1;transform:none}
+.fav-panel[hidden]{display:none}
+
+.fav-hd{flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px;border-bottom:1px solid var(--line,#DCE1E7)}
+.fav-hd h2{margin:0;font-size:17px;font-weight:700;color:var(--ink,#141A22)}
+.fav-close{border:0;background:none;padding:0;width:32px;height:32px;border-radius:6px;
+  font-size:22px;line-height:1;color:var(--ink-70,#4A5563);cursor:pointer}
+.fav-close:hover{background:#F3F5F7;color:var(--ink,#141A22)}
+
+.fav-body{flex:1;min-height:0;overflow-y:auto;padding:8px 12px 16px}
+
+.fav-list{list-style:none;margin:0;padding:0}
+.fav-list li{display:flex;align-items:center;gap:4px;border-bottom:1px solid var(--line,#DCE1E7)}
+.fav-list li:last-child{border-bottom:0}
+.fav-item{flex:1;min-width:0;display:flex;align-items:center;gap:14px;padding:14px 8px;
+  color:inherit;text-decoration:none;border-radius:8px}
+.fav-item:hover{background:#F3F5F7}
+.fav-item img{flex:none;width:72px;height:52px;object-fit:contain}
+.fav-item span{min-width:0}
+.fav-item b{display:block;font-size:14px;font-weight:600;color:var(--ink,#141A22);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fav-item small{display:block;margin-top:3px;font-size:13px;color:var(--ink-70,#4A5563)}
+.fav-rm{flex:none;border:0;background:none;padding:0;width:30px;height:30px;border-radius:6px;
+  font-size:19px;line-height:1;color:#9AA4B0;cursor:pointer}
+.fav-rm:hover{background:#F3F5F7;color:var(--ink,#141A22)}
+
+.fav-empty{padding:32px 12px;text-align:center}
+.fav-empty p{margin:0 0 8px;font-size:14px;line-height:1.7;color:var(--ink-70,#4A5563)}
+.fav-cta{display:inline-flex;align-items:center;justify-content:center;margin-top:12px;
+  min-height:44px;padding:10px 20px;border-radius:6px;
+  background:var(--brand,#06038d);color:#fff;font-size:14px;font-weight:600;text-decoration:none}
+.fav-cta:hover{background:#1511ac}
+
+@media(max-width:650px){
+  .fav-panel{right:12px;left:12px;width:auto;top:72px;height:calc(100vh - 88px)}
+}

@@ -1,0 +1,10 @@
+/* Header dimensions follow the original storefront and supplied reference. */
+.site-nav{min-width:1200px;background:#F3F5F7;z-index:100}
+.site-nav .icon-btn{position:relative;display:grid;place-items:center}
+.site-nav a:focus-visible,.site-nav button:focus-visible{outline:2px solid #1F4FE0;outline-offset:6px;border-radius:4px}
+html{scroll-behavior:smooth}
+main>section{scroll-margin-top:88px}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
