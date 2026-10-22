@@ -31,3 +31,48 @@
 .orb-btn.vbtn .beam-glow{z-index:0;inset:-3px;filter:blur(4px);opacity:.22}
 @keyframes beam-spin{to{--beam-angle:360deg}}
 @media (prefers-reduced-motion:reduce){.orb-btn.vbtn .beam-ring,.orb-btn.vbtn .beam-glow{animation:none}}
+
+/* ---------- 共用 header 的主選單與下拉（js/header.js 產生；見 docs/header.md） ---------- */
+.site-nav .links{gap:calc(var(--hu) * 26);font-weight:600;letter-spacing:.02em}
+.site-nav .links .top{position:relative;display:inline-flex;align-items:center;height:100%;white-space:nowrap}
+.site-nav .links .top::after{content:"";position:absolute;left:0;right:0;bottom:calc(var(--hu) * 22);height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.22,.61,.36,1)}
+.site-nav .links .top.on::after,.site-nav .links .top.cur::after,.site-nav .links .top:hover::after{transform:scaleX(1)}
+.site-nav .links .top.cur{font-weight:700}
+.site-nav .links .sep{width:1px;height:calc(var(--hu) * 18);background:currentColor;opacity:.25;margin:0 calc(var(--hu) * 4)}
+.site-nav .icons{gap:calc(var(--hu) * 26)}
+.site-nav .icons .icon-btn{position:relative;display:grid;place-items:center;color:inherit}
+.site-nav .icons .icon-btn svg{display:block;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
+/* 下拉打開時：整條變白底黑字，底下的頁面不動 */
+.site-nav.open{--nav-ink:#141A22;background:#fff;box-shadow:0 1px 0 #DCE1E7}
+.site-nav.open .links a{text-shadow:none}
+.site-nav.open .icons svg{filter:none}
+.site-nav .dd-wrap{position:absolute;left:0;right:0;top:100%}
+.site-nav .dd{background:#fff;border-top:1px solid #DCE1E7;box-shadow:0 18px 40px rgba(20,26,34,.14);color:#141A22;animation:ddin .22s cubic-bezier(.22,.61,.36,1) both}
+.site-nav .dd[hidden]{display:none}
+@keyframes ddin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+/* 下拉內容左緣對齊主選單第一個字 */
+.site-nav .dd-in{padding:22px calc(var(--hu) * 40) 24px calc(var(--hu) * 232);display:flex;align-items:flex-start;gap:40px}
+.site-nav .dd-kv{display:flex;align-items:center;gap:16px;min-width:300px;color:inherit;text-decoration:none}
+.site-nav .dd-kv img{width:124px;height:84px;border-radius:12px;object-fit:cover;flex:none}
+.site-nav .dd-kv b{display:block;font-size:17px;font-weight:800;line-height:1.3}
+.site-nav .dd-kv small{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12.5px;font-weight:600;color:#1F4FE0}
+.site-nav .dd-kv small svg{width:14px;height:14px}
+.site-nav .dd-list{list-style:none;margin:0;padding:4px 0 0;display:grid;grid-template-columns:repeat(2,auto);gap:4px 36px}
+.site-nav .dd-list.one{grid-template-columns:1fr;gap:2px}
+.site-nav .dd-list a{display:block;padding:5px 0;font-size:14px;font-weight:500;color:inherit;text-decoration:none;opacity:1;white-space:nowrap}
+.site-nav .dd-list a:hover{color:#1F4FE0}
+.site-nav .dd-feat{margin-left:auto;display:flex;align-items:center;gap:14px;padding:8px 14px 8px 8px;border-radius:14px;border:1px solid #DCE1E7;color:inherit;text-decoration:none;transition:border-color .2s,box-shadow .2s}
+.site-nav .dd-feat:hover{border-color:#9AA4B0;box-shadow:0 10px 24px rgba(20,26,34,.08)}
+.site-nav .dd-feat img{width:120px;height:72px;object-fit:contain;flex:none}
+.site-nav .dd-feat small{display:block;font-size:10.5px;letter-spacing:.14em;font-weight:700;color:#7A8492}
+.site-nav .dd-feat b{display:block;margin-top:2px;font-size:14px;font-weight:800;max-width:200px;line-height:1.3}
+.site-nav .dd-feat em{display:block;margin-top:2px;font-style:normal;font-size:13px;font-weight:600;color:#4A5563}
+.site-nav .dd-ask{display:inline-flex;align-items:center;gap:10px;align-self:center;height:44px;padding:0 16px 0 8px;border-radius:999px;border:1px solid #DCE1E7;background:#fff;font-size:13px;font-weight:700;color:#0E1726;white-space:nowrap;cursor:pointer;transition:border-color .2s,background .2s}
+.site-nav .dd-ask:hover{border-color:#1F4FE0;background:#F3F6FF}
+.site-nav .dd-ask .vv{width:28px;height:28px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#1F4FE0;box-shadow:0 2px 8px rgba(31,79,224,.22)}
+.site-nav .dd-ask .vv svg{width:11px;height:14px;fill:currentColor}
+.site-nav .dd-gear .dd-in{gap:64px}
+.site-nav .dd-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;font-weight:700;color:#7A8492}
+/* 下拉打開時：主動跳出的顧問氣泡先讓開；深色主視覺頁（產品頁）的白色圖示要變回深色 */
+.site-nav.open .orb-callout{visibility:hidden}
+header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{color:#141A22;filter:none}

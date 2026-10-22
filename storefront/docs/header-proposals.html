@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Header 提案示意 · GIANT storefront</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.22,.61,.36,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);color:var(--ink);background:#E8EBEF;-webkit-font-smoothing:antialiased;min-width:1200px;padding:40px 0 80px}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}svg{display:block}img{display:block}
+.intro{width:1200px;margin:0 auto 28px}
+.intro h1{font-size:28px;font-weight:800}.intro p{margin-top:8px;font-size:14.5px;color:var(--ink-70);line-height:1.7}
+.prop{width:1200px;margin:0 auto 56px}
+.prop .lab{display:flex;align-items:baseline;gap:14px;margin-bottom:12px}
+.prop .lab b{font-size:20px;font-weight:800}.prop .lab b i{font-style:normal;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:14px;margin-right:10px;vertical-align:2px}
+.prop .lab span{font-size:13.5px;color:var(--ink-70)}
+.frame{position:relative;height:560px;border-radius:14px;overflow:hidden;background:#141A22 url(../img/home-hero.webp) center 30%/cover;box-shadow:0 12px 34px rgba(20,26,34,.14)}
+.frame.flat{background:var(--paper)}
+.frame .hero{position:absolute;left:60px;bottom:64px;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.frame .hero h2{font-size:52px;font-weight:800;line-height:1.05}.frame .hero p{margin-top:12px;font-size:15px;opacity:.9}
+.note{margin-top:12px;font-size:13.5px;color:var(--ink-70);line-height:1.75}
+.note b{color:var(--ink)}
+/* ---- shared header bits ---- */
+.hd{position:absolute;left:0;right:0;top:0;z-index:5;height:64px;display:flex;align-items:center;padding:0 36px;color:#fff;transition:background .25s,color .25s,box-shadow .25s}
+.hd .logo svg{width:112px;height:16px;fill:currentColor}
+.hd .links{display:flex;gap:30px;font-size:14.5px;font-weight:600;letter-spacing:.02em}
+.hd .links a,.hd .links button{display:inline-flex;align-items:center;gap:6px;height:64px;position:relative;white-space:nowrap}
+.hd .links .dd::after{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);opacity:.7}
+.hd .links a::before,.hd .links button::before{content:"";position:absolute;left:0;right:0;bottom:14px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease)}
+.hd .links a:hover::before,.hd .links button:hover::before,.hd .links .on::before{transform:scaleX(1)}
+.hd .util{margin-left:auto;display:flex;align-items:center;gap:18px}
+.hd .util svg{width:22px;height:22px}
+.hd .util a,.hd .util button{display:grid;place-items:center;width:28px;height:28px}
+.hd .vbtn{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--ai);border:1px solid rgba(20,26,34,.12);box-shadow:0 2px 10px rgba(20,26,34,.12)}
+.hd .vbtn svg{width:13px;height:17px;fill:currentColor}
+.frame.flat .hd,.hd.solid{color:var(--ink);background:#fff;box-shadow:0 1px 0 var(--line)}
+.frame:has(.hd.open) .hd{color:var(--ink);background:#fff}
+.frame.flat .hero{color:var(--ink);text-shadow:none}
+.dim{position:absolute;inset:0;background:rgba(10,14,20,.35);opacity:0;pointer-events:none;transition:opacity .25s;z-index:4}
+.frame:has(.hd.open) .dim{opacity:1}
+.cat-thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;flex:none}
+/* ---- 1. mega menu ---- */
+.mega{position:absolute;left:0;right:0;top:64px;z-index:6;background:#fff;border-top:1px solid var(--line);box-shadow:0 24px 50px rgba(20,26,34,.16);display:none;grid-template-columns:300px 1fr 360px;min-height:320px}
+.hd.open[data-open="bikes"] .mega.bikes,.hd.open[data-open="gear"] .mega.gear{display:grid}
+.mega .c1{padding:22px 16px 22px 36px;border-right:1px solid var(--line)}
+.mega .c1 button{display:flex;align-items:center;gap:14px;width:100%;padding:8px 12px;border-radius:12px;text-align:left;font-size:15px;font-weight:700;color:var(--ink);transition:background .15s}
+.mega .c1 button small{display:block;font-size:11.5px;font-weight:600;letter-spacing:.1em;color:var(--ink-50);text-transform:uppercase}
+.mega .c1 button:hover,.mega .c1 button.on{background:#F3F5F7}
+.mega .c1 button.red{color:#C8102E}
+.mega .c2{padding:30px 36px}
+.mega .c2 h4{font-size:12px;letter-spacing:.14em;color:var(--ink-50);font-weight:700;text-transform:uppercase}
+.mega .c2 ul{list-style:none;margin-top:14px;columns:2;column-gap:40px}
+.mega .c2 li{break-inside:avoid;font-size:14.5px;font-weight:500;padding:7px 0;color:var(--ink)}
+.mega .c2 li:hover{color:var(--ai)}
+.mega .c2 .all{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:13.5px;font-weight:700;color:var(--ai)}
+.mega .c2 .all svg{width:15px;height:15px}
+.mega .c3{padding:22px 36px 22px 0;display:grid;grid-template-rows:1fr auto;gap:12px}
+.mega .feat{position:relative;border-radius:14px;overflow:hidden;background:#0B1018;color:#fff;min-height:190px}
+.mega .feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}
+.mega .feat div{position:relative;padding:18px;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 60%)}
+.mega .feat small{font-size:11px;letter-spacing:.14em;font-weight:700;opacity:.85}.mega .feat b{display:block;font-size:17px;margin-top:4px}
+.mega .ask{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:#EEF2FF;color:var(--navy)}
+.mega .ask .vv{width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--ai);flex:none;box-shadow:0 2px 8px rgba(31,79,224,.2)}
+.mega .ask .vv svg{width:11px;height:14px;fill:currentColor}
+.mega .ask b{display:block;font-size:13.5px}.mega .ask span{font-size:12px;color:var(--ink-70)}
+/* ---- 2. drawer ---- */
+.drawer{position:absolute;left:0;top:0;bottom:0;width:360px;background:#fff;z-index:7;transform:translateX(-100%);transition:transform .35s var(--ease);padding:22px 28px;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.drawer .top{display:flex;justify-content:space-between;align-items:center;height:28px}
+.drawer .top button{width:28px;height:28px;display:grid;place-items:center}.drawer .top svg{width:18px;height:18px}
+.drawer h3{margin-top:22px;font-size:20px;font-weight:800}
+.drawer ul{list-style:none;margin-top:22px}
+.drawer li{font-size:16px;font-weight:600;padding:11px 0;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.drawer li .chev{width:16px;height:16px;opacity:.5}
+.drawer li.red{color:#C8102E}.drawer li:hover{color:var(--ai)}
+.drawer .foot{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;display:grid;gap:10px;font-size:13.5px;color:var(--ink-70)}
+.drawer2{position:absolute;left:360px;top:0;bottom:0;width:360px;background:#F3F5F7;z-index:6;transform:translateX(-200%);transition:transform .35s var(--ease);padding:22px 28px}
+.drawer2.on{transform:none}
+.drawer2 h3{margin-top:50px;font-size:20px;font-weight:800}
+.drawer2 .all{display:block;margin-top:22px;font-size:13.5px;font-weight:700;color:var(--ai)}
+.drawer2 ul{list-style:none;margin-top:18px}.drawer2 li{font-size:14.5px;font-weight:500;padding:9px 0}
+.drawer2 li:hover{color:var(--ai)}
+.frame:has(.drawer.on) .dim{opacity:1}
+.frame:has(.drawer.on) .hd{color:var(--ink);background:#fff}
+.hd.center{justify-content:space-between}
+.hd.center .logo{position:absolute;left:50%;top:50%;translate:-50% -50%}
+/* ---- 3. flat ---- */
+.hd.flat2{height:72px}
+.hd.flat2 .links{gap:26px;font-size:14px}
+.hd.flat2 .links a{height:72px}
+.hd.flat2 .links a.sub{opacity:.75;font-weight:500}
+.hd.flat2 .links .sep{width:1px;height:18px;background:currentColor;opacity:.25;align-self:center}
+.sdd{position:absolute;left:0;right:0;top:72px;z-index:6;background:#fff;border-top:1px solid var(--line);box-shadow:0 18px 40px rgba(20,26,34,.14);display:none;padding:22px 36px 26px;gap:40px;align-items:flex-start}
+.hd.open .sdd{display:flex}
+.sdd .kv{display:flex;gap:14px;align-items:center;min-width:280px}
+.sdd .kv img{width:120px;height:80px;border-radius:12px;object-fit:cover}
+.sdd .kv b{display:block;font-size:17px}.sdd .kv span{display:block;font-size:12.5px;color:var(--ink-70);margin-top:4px}
+.sdd ul{list-style:none;display:grid;grid-template-columns:repeat(3,auto);gap:8px 36px;padding-top:4px}
+.sdd li{font-size:14px;font-weight:500;padding:5px 0}.sdd li:hover{color:var(--ai)}
+.sdd .ask{margin-left:auto;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap}
+.sdd .ask .vv{width:26px;height:26px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--ai);box-shadow:0 2px 8px rgba(31,79,224,.2)}
+.sdd .ask .vv svg{width:10px;height:13px;fill:currentColor}
+/* compare table */
+.cmp{width:1200px;margin:0 auto;background:#fff;border-radius:14px;padding:24px 28px}
+.cmp h3{font-size:18px;font-weight:800;margin-bottom:14px}
+.cmp table{width:100%;border-collapse:collapse;font-size:13.5px}
+.cmp th,.cmp td{text-align:left;padding:10px 12px;border-top:1px solid var(--line);vertical-align:top;line-height:1.6}
+.cmp th{font-weight:700;color:var(--ink-50);font-size:12px;letter-spacing:.08em;border-top:0}
+.cmp td:first-child{font-weight:700;white-space:nowrap}
+</style></head><body>
+<div class="intro"><h1>Header 提案示意（中文標籤）</h1><p>三個都可以直接操作：第 1、3 個是 hover 展開，第 2 個照官網點擊滑出。第一層都照官網分法：自行車／精品配件／客製化／門市專區／關於 Giant；右側工具列維持搜尋、我的最愛、購物車、會員和選車顧問。</p></div>
+
+<!-- ============ 1. Mega menu ============ -->
+<section class="prop" id="p1">
+<div class="lab"><b><i>1</i>Mega menu</b><span>hover「自行車」或「精品配件」展開三欄：車種（含縮圖）→ 第三層 → 精選＋問顧問</span></div>
+<div class="frame">
+  <div class="dim"></div>
+  <header class="hd" id="h1">
+    <a class="logo" href="#"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
+    <nav class="links" style="margin-left:40px">
+      <button class="dd" data-m="bikes">自行車</button>
+      <button class="dd" data-m="gear">精品配件</button>
+      <a href="#">客製化</a><a href="#">門市專區</a><a href="#">關於 Giant</a>
+    </nav>
+    <div class="util"><button aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
+      <button type="button" class="icon-btn"  aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <button class="vbtn" aria-label="選車顧問"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></button></div>
+    <div class="mega bikes">
+      <div class="c1" id="m1cats"></div>
+      <div class="c2" id="m1sub"></div>
+      <div class="c3">
+        <a class="feat" href="#"><img src="../img/list/revolt-sl-0.webp" alt=""><div><small>NEW · 2027</small><b>Revolt Advanced SL 0</b></div></a>
+        <a class="ask" href="#"><span class="vv"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span><div><b>不知道從哪台開始？</b><span>跟 GIANT 選車顧問聊聊，或走一趟情境式問卷</span></div></a>
+      </div>
+    </div>
+    <div class="mega gear">
+      <div class="c1" id="m1gcats"></div>
+      <div class="c2" id="m1gsub"></div>
+      <div class="c3">
+        <a class="feat" href="#"><img src="../img/home/gear-surge.webp" alt="" style="object-fit:contain;background:#fff;opacity:1"><div style="background:none"><small style="color:#141A22">BEST SELLER</small><b style="color:#141A22">SURGE PRO 碳纖底公路車鞋</b></div></a>
+        <a class="ask" href="#"><span class="vv"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span><div><b>搭配你那台車的配件</b><span>顧問會依車種和路線幫你挑</span></div></a>
+      </div>
+    </div>
+  </header>
+  <div class="hero"><h2>More<br>Than a Bike.</h2><p>從城市到山林，從日常到挑戰。</p></div>
+</div>
+<p class="note"><b>優點</b>：一次看到三層，示範節奏快；右欄可以放活動、新車或顧問入口，是我們跟官網最不一樣的地方。<b>要注意</b>：面板高度要壓在 320px 內，第三層兩欄排；手機版另外做抽屜。</p>
+</section>
+
+<!-- ============ 2. 官網抽屜 ============ -->
+<section class="prop" id="p2">
+<div class="lab"><b><i>2</i>官網同款抽屜</b><span>logo 置中、左邊第一層文字；點「自行車」左側滑出第二層，再點滑出第三層</span></div>
+<div class="frame">
+  <div class="dim"></div>
+  <header class="hd center" id="h2">
+    <nav class="links"><button data-d="bikes">自行車</button><button data-d="gear">精品配件</button><a href="#">門市專區</a><a href="#">關於 Giant</a></nav>
+    <a class="logo" href="#"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
+    <div class="util" style="margin-left:0"><button aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
+      <button type="button" class="icon-btn"  aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <button class="vbtn" aria-label="選車顧問"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></button></div>
+  </header>
+  <aside class="drawer" id="d1">
+    <div class="top"><button aria-label="返回"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button class="x" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <h3 id="d1h">自行車</h3><ul id="d1list"></ul>
+    <div class="foot"><span>門市專區</span><span>關於 Giant</span><span>Liv · momentum · Dynamic Cycling Fit</span></div>
+  </aside>
+  <aside class="drawer2" id="d2"><h3 id="d2h"></h3><a class="all" href="#" id="d2all"></a><ul id="d2list"></ul></aside>
+  <div class="hero"><h2>More<br>Than a Bike.</h2><p>從城市到山林，從日常到挑戰。</p></div>
+</div>
+<p class="note"><b>優點</b>：跟官網一模一樣，客戶最沒有適應成本；桌機手機同一套。<b>要注意</b>：第三層要點兩下才看得到，示範時慢；抽屜裡放不下圖和顧問入口。</p>
+</section>
+
+<!-- ============ 3. 扁平一列 ============ -->
+<section class="prop" id="p3">
+<div class="lab"><b><i>3</i>車種直接放第一層</b><span>把官網的第二層拉上來當主導覽，hover 任一車種只掉一條細的第三層</span></div>
+<div class="frame flat">
+  <div class="dim"></div>
+  <header class="hd flat2" id="h3">
+    <a class="logo" href="#"><svg viewBox="35 6 113 16" fill="currentColor" aria-hidden="true"><path d="M124.059 7.36985H147.59L141.381 10.9245H135.512L129.796 21.5918H122.687L128.403 10.9245H122.155L124.059 7.36985Z"/><path d="M66.9978 7.36985L59.3743 21.5918H65.8164L73.4399 7.36985H66.9978Z"/><path d="M73.433 10.9245C74.4858 8.96126 76.932 7.36985 78.8952 7.36985H98.8574L91.2304 21.5918H83.6277L85.4276 18.2352H77.7242L81.6159 15.9767H86.6473L89.4548 10.7264H82.078C81.9147 10.7334 80.6221 10.8133 80.0835 11.7827L76.7096 18.0789C75.6776 20.0212 73.2662 21.5918 71.3273 21.5918H67.7136L73.433 10.9245Z"/><path d="M119.546 7.36985H100.807L93.2213 21.5918H100.331L106.123 10.7264H112.568C112.568 10.7264 114.212 10.7264 113.5 12.0398L108.406 21.5918H115.515L121.203 10.9245C122.252 8.96126 121.509 7.36985 119.546 7.36985Z"/><path d="M53.8183 12.839H62.0638L59.277 18.0789C58.2451 20.0212 55.8336 21.5918 53.8947 21.5918H35.5796L41.3129 10.9245C42.3657 8.96126 44.8154 7.36985 46.7786 7.36985H65.3404L59.496 10.7264H49.4228C49.4228 10.7264 48.5472 10.7229 48.092 11.5395L44.4957 18.2352H51.9628L53.1859 15.9767H48.4117L53.8183 12.839Z"/></svg></a>
+    <nav class="links" style="margin-left:40px">
+      <a href="#" class="sub" data-f="road">公路</a><a href="#" class="sub" data-f="mtb">登山</a><a href="#" class="sub" data-f="gravel">越野 &amp; 礫石</a><a href="#" class="sub" data-f="ebike">E-Bike</a><a href="#" class="sub" data-f="kids">童車</a>
+      <span class="sep"></span><a href="#">精品配件</a><a href="#">客製化</a><a href="#">門市專區</a>
+    </nav>
+    <div class="util"><button aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
+      <button type="button" class="icon-btn"  aria-label="我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
+      <a href="#" aria-label="購物車"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></a>
+      <a href="#" aria-label="會員"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg></a>
+      <button class="vbtn" aria-label="選車顧問"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></button></div>
+    <div class="sdd" id="sdd"></div>
+  </header>
+  <div class="hero"><h2>More<br>Than a Bike.</h2><p>從城市到山林，從日常到挑戰。</p></div>
+</div>
+<p class="note"><b>優點</b>：少一層，所有車種一眼看完、一步到清單頁，最像電商；跟首頁 Explore 的五個分類對應。<b>要注意</b>：標籤要縮短（官網的「越野 &amp; 礫石公路 跨界自行車」放不下），第一層會比較長，手機要收成抽屜。</p>
+</section>
+
+<div class="cmp"><h3>三案比較</h3><table>
+<tr><th></th><th>1 Mega menu</th><th>2 官網抽屜</th><th>3 車種放第一層</th></tr>
+<tr><td>跟官網的關係</td><td>分法一樣，呈現不同</td><td>一樣</td><td>分法重排</td></tr>
+<tr><td>到清單頁的步驟</td><td>hover → 點（1 步）</td><td>點 → 點 → 點（3 步）</td><td>點（1 步）</td></tr>
+<tr><td>可放圖／活動／顧問入口</td><td>可以，空間最多</td><td>很少</td><td>一張小圖＋一顆顧問</td></tr>
+<tr><td>手機版</td><td>另做抽屜</td><td>同一套</td><td>另做抽屜</td></tr>
+<tr><td>開發量</td><td>中</td><td>中（兩層抽屜動畫）</td><td>低</td></tr>
+<tr><td>我的建議</td><td>★ 示範最有感</td><td>給「要跟官網一致」的情況</td><td>給「越快到清單越好」的情況</td></tr>
+</table></div>
+
+<script>
+const BIKES=[
+ {k:'road',n:'公路自行車',en:'Road',img:'../img/scenes/lifestyle.webp',sub:['公路競賽','鐵人三項競賽用車','平把運動公路自行車','運動通勤車款','折疊自行車款','E+ 公路自行車']},
+ {k:'mtb',n:'登山車',en:'Mountain',img:'../img/scenes/mtb-road.webp',sub:['雙避震登山車','單避震登山車','登山車 29"','登山車 27.5"','登山車 26"','E+ 越野登山車']},
+ {k:'gravel',n:'越野 & 礫石公路 跨界自行車',en:'Gravel & X-Road',img:'../img/scenes/gravel-field.webp',sub:['礫石公路自行車','跨界多功自行車','E+ 混合路面車']},
+ {k:'ebike',n:'E-Bike 電動輔助自行車',en:'E-Bike',img:'../img/scenes/ebike-park.webp',sub:['E+ 公路車','E+ 越野登山車','E+ 混合路面車']},
+ {k:'kids',n:'童車 & 青少年車',en:'Kids & Youth',img:'../img/scenes/kids-trail.webp',sub:['兒童滑步車','兒童自行車 12"–16"','20"（身高 115–135cm）','24"（身高 130–150cm）','10–16 歲（26–27.5"）']},
+ {k:'custom',n:'客製化自行車',en:'Custom',red:true,sub:[]},
+];
+const GEAR=[
+ {k:'rider',n:'人身商品',en:'Rider gear',img:'../img/home/gear-classicfit.webp',sub:['安全帽','太陽眼鏡','自行車衣','自行車褲','自行車鞋','手套','內著衣','風雨衣、防風背心','袖腿套']},
+ {k:'bike',n:'車身商品',en:'Bike gear',img:'../img/pdp/acc-light.webp',sub:['車燈','碼表、雷達','水壺、壺架','車袋','鎖具','打氣筒']},
+ {k:'service',n:'維修商品',en:'Service',img:'../img/pdp/acc-sealant.webp',sub:['補胎液','內胎、外胎','鏈條油、清潔','工具']},
+ {k:'parts',n:'自行車零件',en:'Components',img:'../img/pdp/acc-cage.webp',sub:['輪組','座墊、座管','把手、龍頭','踏板']},
+];
+const $=s=>document.querySelector(s);
+/* 1 mega */
+function megaCats(box,sub,list,featDefault){
+  box.innerHTML=list.map((c,i)=>'<button data-i="'+i+'" class="'+(i===0?'on':'')+(c.red?' red':'')+'">'+(c.img?'<img class="cat-thumb" src="'+c.img+'" alt="">':'<span class="cat-thumb" style="background:#FDECEF"></span>')+'<span><small>'+c.en+'</small>'+c.n+'</span></button>').join('');
+  const show=i=>{const c=list[i];box.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+    sub.innerHTML=c.sub.length?'<h4>'+c.n+'</h4><ul>'+c.sub.map(s=>'<li>'+s+'</li>').join('')+'</ul><a class="all" href="#">看全部'+c.n+' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>':'<h4>'+c.n+'</h4><p style="margin-top:14px;font-size:14px;color:var(--ink-70);line-height:1.7">選車架、配色與零件，打造只屬於你的一台。</p><a class="all" href="../../customized.html#series">前往客製化 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>';};
+  box.querySelectorAll('button').forEach(b=>b.addEventListener('mouseenter',()=>show(+b.dataset.i)));show(0);
+}
+megaCats($('#m1cats'),$('#m1sub'),BIKES);megaCats($('#m1gcats'),$('#m1gsub'),GEAR);
+(function(){const h=$('#h1');let t;const open=m=>{clearTimeout(t);h.classList.add('open');h.dataset.open=m;h.querySelectorAll('.dd').forEach(b=>b.classList.toggle('on',b.dataset.m===m))};const close=()=>{t=setTimeout(()=>{h.classList.remove('open');h.querySelectorAll('.dd').forEach(b=>b.classList.remove('on'))},160)};
+ h.querySelectorAll('.dd').forEach(b=>{b.addEventListener('mouseenter',()=>open(b.dataset.m));b.addEventListener('click',()=>open(b.dataset.m))});
+ h.addEventListener('mouseleave',close);h.querySelectorAll('.mega').forEach(m=>m.addEventListener('mouseenter',()=>clearTimeout(t)));})();
+/* 2 drawer */
+(function(){const d1=$('#d1'),d2=$('#d2');let cur=BIKES;
+ const fill=list=>{$('#d1list').innerHTML=list.map((c,i)=>'<li data-i="'+i+'" class="'+(c.red?'red':'')+'">'+c.n+(c.sub.length?'<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>':'')+'</li>').join('');
+   $('#d1list').querySelectorAll('li').forEach(li=>li.onclick=()=>{const c=list[+li.dataset.i];if(!c.sub.length)return;$('#d2h').textContent=c.n;$('#d2all').textContent='Show all '+c.n;$('#d2list').innerHTML=c.sub.map(s=>'<li>'+s+'</li>').join('');d2.classList.add('on')})};
+ $('#h2').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{cur=b.dataset.d==='bikes'?BIKES:GEAR;$('#d1h').textContent=b.textContent;fill(cur);d2.classList.remove('on');d1.classList.add('on')});
+ d1.querySelector('.x').onclick=()=>{d1.classList.remove('on');d2.classList.remove('on')};
+ d1.querySelector('.top button').onclick=()=>d2.classList.remove('on');
+ $('#p2 .dim').style.pointerEvents='auto';$('#p2 .dim').onclick=()=>{d1.classList.remove('on');d2.classList.remove('on')};})();
+/* 3 flat */
+(function(){const h=$('#h3'),dd=$('#sdd');let t;
+ const show=k=>{const c=BIKES.find(x=>x.k===k);clearTimeout(t);h.classList.add('open');h.querySelectorAll('[data-f]').forEach(a=>a.classList.toggle('on',a.dataset.f===k));
+   dd.innerHTML='<div class="kv"><img src="'+c.img+'" alt=""><div><b>'+c.n+'</b><span>看全部 '+c.en+' →</span></div></div><ul>'+c.sub.map(s=>'<li>'+s+'</li>').join('')+'</ul><a class="ask" href="#"><span class="vv"><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>不知道選哪台？問顧問</a>'};
+ h.querySelectorAll('[data-f]').forEach(a=>a.addEventListener('mouseenter',()=>show(a.dataset.f)));
+ h.addEventListener('mouseleave',()=>{t=setTimeout(()=>{h.classList.remove('open');h.querySelectorAll('[data-f]').forEach(a=>a.classList.remove('on'))},160)});
+ dd.addEventListener('mouseenter',()=>clearTimeout(t));})();
+</script>
+</body></html>
