@@ -13,7 +13,7 @@
   copy.style.opacity=reduced.matches?1:1-clamp(hp*1.8);
   copy.style.translate=reduced.matches?'none':`0 ${hp*-80}px`;
   const r=models.getBoundingClientRect();
-  cards.forEach((card,i)=>{const t=reduced.matches?1:clamp((h-r.top-140-i*85)/(h*.55));card.style.translate=`0 ${(1-t)*220}px`;card.style.opacity=clamp(t*2);});
+  cards.forEach((card,i)=>{const t=reduced.matches?1:clamp((h-r.top-140)/(h*.55));card.style.translate=`0 ${(1-t)*220}px`;card.style.opacity=clamp(t*2);});
   const sr=stores.getBoundingClientRect();
   const t=reduced.matches?1:clamp((h*.7-sr.top)/(h*.48));
   const offset=(stores.querySelector('.smap').clientWidth-map.offsetWidth)/2;
@@ -27,19 +27,24 @@
  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!reduced.matches)video.play().catch(()=>{});else video.pause();});}).observe(hero);
  update();
  const section=document.querySelector('#templates'), bike=section.querySelector('.bk9'), tray=section.querySelector('.trayin');
+ bike.dataset.family='tcr';
  const counts={tcr:3,propel:3,defy:1,trinity:3};let family='tcr',selected=1,request=0;
  const tabs=[...section.querySelectorAll('.tab9')];
  function selectPaint(n){
   selected=n;const token=++request,src=`img/templates-cut/${family}-type${n}.webp`,label=`${family.toUpperCase()} TYPE ${n}`;
   tray.querySelectorAll('.th9').forEach((el,i)=>{el.classList.toggle('on',i===n-1);el.setAttribute('aria-pressed',String(i===n-1));});
-  const asset=new Image();asset.onload=()=>{if(token!==request)return;bike.src=src;bike.alt=label;if(!reduced.matches)bike.animate([{opacity:0,translate:'24px 0'},{opacity:1,translate:'0 0'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});};asset.src=src;
+  const asset=new Image();asset.onload=()=>{if(token!==request)return;bike.src=src;bike.alt=label;bike.dataset.family=family;if(!reduced.matches)bike.animate([{opacity:0,translate:'24px 0'},{opacity:1,translate:'0 0'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});};asset.src=src;
  }
  function selectFamily(value){
   family=value;tabs.forEach(el=>{const active=el.textContent.trim().toLowerCase()===family;el.classList.toggle('on',active);el.setAttribute('aria-pressed',String(active));});
   tray.replaceChildren();
-  for(let n=1;n<=counts[family];n++){const el=document.createElement('a');el.href='#templates';el.className='th9';el.setAttribute('role','button');el.setAttribute('aria-label',`${family.toUpperCase()} TYPE ${n}`);el.innerHTML=`<img src="img/templates-thumb/${family}-type${n}.png" alt="${family.toUpperCase()} TYPE ${n}"><b>${family.toUpperCase()} TYPE ${n}</b>`;el.addEventListener('click',e=>{e.preventDefault();selectPaint(n);});el.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();selectPaint(n);}});tray.append(el);}
+  for(let n=1;n<=counts[family];n++){const el=document.createElement('a');el.href='#templates';el.className='th9';el.setAttribute('role','button');el.setAttribute('aria-label',`${family.toUpperCase()} TYPE ${n}`);el.innerHTML=`<img src="img/templates-cut/${family}-type${n}.webp" alt="${family.toUpperCase()} TYPE ${n}"><b>${family.toUpperCase()} TYPE ${n}</b>`;el.addEventListener('click',e=>{e.preventDefault();selectPaint(n);});el.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();selectPaint(n);}});tray.append(el);}
   selectPaint(1);
  }
  tabs.forEach(el=>{el.setAttribute('role','button');el.addEventListener('click',e=>{e.preventDefault();selectFamily(el.textContent.trim().toLowerCase());});});
  selectFamily(family);
+ models.querySelectorAll('.model-link').forEach(link=>link.addEventListener('click',()=>{
+  const familyName=link.closest('[data-family]').dataset.family;
+  selectFamily(familyName);
+ }));
 })();
