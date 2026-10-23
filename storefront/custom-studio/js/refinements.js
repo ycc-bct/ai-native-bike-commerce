@@ -32,11 +32,13 @@
  const counts={tcr:3,propel:3,defy:1,trinity:3};
  const special={tcr:['giant-white','經典塗裝・捷安特白'],propel:['silver-green','幻綠耀銀'],defy:['phantom-red','幻影紅'],trinity:['chameleon','超級變色龍']};
  const catalog=Object.fromEntries(families.map(f=>[f,[...Array.from({length:counts[f]},(_,i)=>({src:`img/templates-cut/${f}-type${i+1}.webp`,label:`樣板 ${i+1}`})),{src:`img/templates-cut/${f}-${special[f][0]}.png`,label:special[f][1]}]]));
+ catalog.propel[1]={src:'img/templates-cut/propel-team-jayco.webp',label:'Team Jayco 特仕塗裝'};
  const tabs=[...section.querySelectorAll('.tab9')];
  const caption=document.createElement('p');caption.className='paint-caption';section.querySelector('.in').append(caption);
+ const choosePaint=document.createElement('button');choosePaint.type='button';choosePaint.className='paint-choose-action';choosePaint.textContent='選擇你的塗裝';section.querySelector('.in').append(choosePaint);
  section.classList.add('arc-showroom');
  const display=document.createElement('div');display.className='paint-display';bike.before(display);display.append(bike);
- const entrance=document.createElement('div');entrance.className='showroom-motion';section.querySelector('.in').append(entrance);entrance.append(display,section.querySelector('.tabs9'),section.querySelector('.tray9'),caption);
+ const entrance=document.createElement('div');entrance.className='showroom-motion';section.querySelector('.in').append(entrance);entrance.append(display,section.querySelector('.tabs9'),section.querySelector('.tray9'),caption,choosePaint);
  let family='tcr',selected=0,request=0,timer,visible=false,holdUntil=0;
  let layout={},motion=null;
  const layoutReady=fetch('img/templates-cut/layout.json').then(r=>r.json()).then(data=>{layout=data;positionBike(bike.getAttribute('src'));});
@@ -84,5 +86,34 @@
 
 
  document.addEventListener('visibilitychange',restart);reducedMotion.addEventListener('change',()=>{motion?.cancel();restart();});
+ choosePaint.addEventListener('click',()=>{
+  const paint=catalog[family][selected];
+  choosePaint.textContent=`已選擇 ${family.toUpperCase()}・${paint.label}`;
+  choosePaint.classList.add('is-selected');
+  clearTimeout(choosePaint._reset);
+  choosePaint._reset=setTimeout(()=>{choosePaint.textContent='選擇你的塗裝';choosePaint.classList.remove('is-selected');},2200);
+ });
  selectFamily('tcr');
+})();
+
+/* Official GIANT component highlights: compact detail appears only for the active part. */
+(() => {
+ const details={
+  'p-saddle':'DCF 適配 Forward、Neutral、Upright 三種騎姿；高彈泡棉提升支撐與吸震。',
+  'p-cassette':'12 速 11–34T 齒比，兼顧高速巡航與陡坡節奏。',
+  'p-crank-ring':'36/52T 盤片搭配車架尺寸選用曲柄長度，並可整合功率計追蹤輸出。',
+  'p-stem':'Advanced SL 碳纖維結構整合內走線，80–140 mm 長度提供精準設定。',
+  'p-bar-drop':'全碳纖維、短 Reach 與淺 Drop；外擴幾何兼顧空力、操控與長途舒適。',
+  'p-wheel':'40 mm 碳纖維輪框、空力碳纖維輻條與無內胎設定，兼顧速度與穩定。'
+ };
+ const section=document.querySelector('#parts'),parts=[...section.querySelectorAll('.pp10')];
+ const panel=document.createElement('div');panel.className='parts-live-detail';panel.setAttribute('aria-live','polite');panel.innerHTML='<strong></strong><p></p>';section.querySelector('.phd9').append(panel);
+ function update(){
+  const part=parts.find(item=>item.classList.contains('hov'))||parts[0];
+  const key=[...part.classList].find(name=>details[name]);
+  panel.querySelector('strong').textContent=part.querySelector('.dc b').textContent;
+  panel.querySelector('p').textContent=details[key];
+  panel.classList.toggle('is-visible',parts.some(item=>item.classList.contains('hov')));
+ }
+ const observer=new MutationObserver(update);parts.forEach(part=>observer.observe(part,{attributes:true,attributeFilter:['class']}));update();
 })();

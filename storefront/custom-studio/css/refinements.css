@@ -326,7 +326,7 @@
 @media(max-width:900px){.tpl9 .paint-display{top:180px}}
 
 /* A quiet circular model dial with paint swatches inside the arc. */
-.tpl9.arc-showroom{background:#f3f3f1 url('../img/backgrounds/custom-paint-studio-v1.jpg') center/cover no-repeat!important;overflow:hidden;border-radius:0}
+.tpl9.arc-showroom{background:#eef0f1 url('../img/backgrounds/custom-paint-studio-v2.jpg') center/cover no-repeat!important;overflow:hidden;border-radius:0}
 .tpl9.arc-showroom::before{display:none}
 .tpl9.arc-showroom .in{height:920px;min-height:920px}
 .tpl9.arc-showroom .sh9{top:64px}
@@ -429,7 +429,7 @@
 .tpl9.arc-showroom .tab9{font-size:0!important;width:44px;padding:0;color:transparent!important;background:transparent!important}
 .tpl9.arc-showroom .tab9::after{width:10px;height:10px;left:17px;bottom:6px}
 .tpl9.arc-showroom .paint-caption{display:none}
-.tpl9.arc-showroom .tray9{bottom:38px}
+.tpl9.arc-showroom .tray9{bottom:68px}
 /* Desaturate only the blueprint, keeping product components in their original colors. */
 .parts10 .la{filter:grayscale(1)}
 /* Center the smaller hero copy in the lower part of the film. */
@@ -441,7 +441,7 @@
 @media(max-width:600px){
  .tpl9.arc-showroom .paint-display{top:165px}
  .tpl9.arc-showroom .tabs9{bottom:-35px!important}
- .tpl9.arc-showroom .tray9{bottom:24px}
+ .tpl9.arc-showroom .tray9{bottom:50px}
  .hero11 .hx{bottom:7%}
 }
 
@@ -449,7 +449,7 @@
 .tpl9.arc-showroom .sh9 p{margin:10px 0 0;color:var(--muted,#526071);font-size:15px;line-height:1.85;max-width:720px}
 .tpl9.arc-showroom .paint-display{top:180px;width:min(510px,calc((100svh - 450px)*1.4),76vw)}
 .tpl9.arc-showroom .tabs9{width:min(660px,94vw);height:min(220px,31.33vw);bottom:-26px!important}
-.tpl9.arc-showroom .tab9{font-size:18px!important;width:auto;padding:0 10px;color:#777b78!important;background:#f3f3f1!important}
+.tpl9.arc-showroom .tab9{font-size:18px!important;width:auto;padding:0 10px;color:#777b78!important;background:transparent!important;text-shadow:0 0 10px #eef0f1,0 0 10px #eef0f1}
 .tpl9.arc-showroom .tab9.on{color:#17202b!important}
 .tpl9.arc-showroom .tab9:nth-child(1){--label-x:11%;--label-y:90px;--label-angle:-46deg}
 .tpl9.arc-showroom .tab9:nth-child(2){--label-x:35%;--label-y:-10px;--label-angle:-17deg}
@@ -465,3 +465,20 @@
  .tpl9.arc-showroom .tab9:nth-child(1),.tpl9.arc-showroom .tab9:nth-child(4){--label-y:40px}
  .tpl9.arc-showroom .tabs9{bottom:0!important}
 }
+
+/* Paint confirmation sits beneath the circular swatches as a lightweight text action. */
+.tpl9.arc-showroom .showroom-motion .paint-choose-action{pointer-events:auto;position:absolute;left:50%;bottom:28px;translate:-50% 0;z-index:6;padding:5px 2px;border-bottom:1px solid currentColor;color:#17202b;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:.02em;white-space:nowrap;transition:color .2s,border-color .2s}
+.tpl9.arc-showroom .paint-choose-action:hover,.tpl9.arc-showroom .paint-choose-action:focus-visible{color:#1f4fe0}
+.tpl9.arc-showroom .paint-choose-action.is-selected{color:#16704a}
+@media(max-width:600px){.tpl9.arc-showroom .showroom-motion .paint-choose-action{bottom:12px;font-size:14px}}
+
+/* Active component grows while the remaining installed components stay softly present. */
+.parts10.parts-ready .pp10{opacity:.8!important;scale:1;transition:opacity .28s ease,scale .42s cubic-bezier(.16,1,.3,1),filter .28s ease!important}
+.parts10.parts-ready .pp10.hov,.parts10.parts-ready .pp10:hover,.parts10.parts-ready .pp10:focus-visible{opacity:1!important;scale:1.16;filter:drop-shadow(0 12px 14px rgba(23,32,43,.16));z-index:20!important}
+.parts10 .pp10 .dc .chips{opacity:0;max-height:0;margin-top:0;overflow:hidden;transition:opacity .22s ease,max-height .3s ease,margin .3s ease}
+.parts10 .pp10.hov .dc .chips,.parts10 .pp10:hover .dc .chips,.parts10 .pp10:focus-visible .dc .chips{opacity:1;max-height:28px;margin-top:5px}
+.parts10 .parts-live-detail{position:static;width:430px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(31,79,224,.2);opacity:0;translate:0 8px;transition:opacity .28s ease,translate .38s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.parts10 .parts-live-detail.is-visible{opacity:1;translate:0 0}
+.parts10 .parts-live-detail strong{display:block;color:#1d46d0;font-size:17px;line-height:1.3}
+.parts10 .parts-live-detail p{margin:6px 0 0;color:#314568;font-size:14px;line-height:1.65}
+@media(max-width:900px){.parts10 .parts-live-detail{display:none}.parts10.parts-ready .pp10.hov,.parts10.parts-ready .pp10:hover,.parts10.parts-ready .pp10:focus-visible{scale:1.04}}
