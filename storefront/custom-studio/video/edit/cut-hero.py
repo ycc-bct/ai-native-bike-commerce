@@ -22,19 +22,19 @@ GRADE = {A: "curves=all='0/0 0.5/0.36 1/0.9',eq=contrast=1.1:saturation=0.88", B
 def run(args): subprocess.run([FF, '-hide_banner', '-loglevel', 'error', '-y', *args], check=True)
 def seg(i, s, kind):
   src, t, d, cx, (x, y, w, h) = s
-  if kind == 'desk': crop = f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y},scale=1920:1080"
-  else: crop = f"crop=ih*9/16:ih:min(max(iw*{cx}-ih*9/32\\,0)\\,iw-ih*9/16):0,scale=1080:1920"
+  if kind == 'desk': crop = f"crop=iw*{w}:ih*{h}:iw*{x}:ih*{y},scale=1600:900"
+  else: crop = f"crop=ih*9/16:ih:min(max(iw*{cx}-ih*9/32\\,0)\\,iw-ih*9/16):0,scale=720:1280"
   out = os.path.join(HERE, f'_{kind}{i}.mp4')
   run(['-c:v', 'libaom-av1', '-ss', str(t), '-t', str(d), '-i', src, '-an', '-vf', f"{crop},fps=25,{GRADE[src]},format=yuv420p",
        '-c:v', 'libx264', '-crf', '12', '-preset', 'fast', out])
   return out
-for kind, size in (('desk', '1920x1080'), ('mob', '1080x1920')):
+for kind, size in (('desk', '1600x900'), ('mob', '720x1280')):
   parts = [seg(i, s, kind) for i, s in enumerate(SHOTS)]
   lst = os.path.join(HERE, f'_{kind}.txt'); open(lst, 'w').write(''.join(f"file '{p}'\n" for p in parts))
   total = sum(s[2] for s in SHOTS)
   name = 'custom-hero' if kind == 'desk' else 'custom-hero-mobile'
   vf = f"vignette=PI/5,fade=t=in:st=0:d=0.4,fade=t=out:st={total-0.6:.2f}:d=0.6"
-  run(['-f', 'concat', '-safe', '0', '-i', lst, '-vf', vf, '-c:v', 'libx264', '-crf', '29' if kind == 'desk' else '30', '-preset', 'slow',
+  run(['-f', 'concat', '-safe', '0', '-i', lst, '-vf', vf, '-c:v', 'libx264', '-crf', '31', '-preset', 'veryslow', '-tune', 'film',
        '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-an', os.path.join(OUT, name + '.mp4')])
   run(['-ss', '0.9', '-i', os.path.join(OUT, name + '.mp4'), '-frames:v', '1', '-q:v', '3', os.path.join(OUT, name + '-poster.jpg')])
   for p in parts + [lst]: os.remove(p)
