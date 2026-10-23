@@ -326,7 +326,7 @@
 @media(max-width:900px){.tpl9 .paint-display{top:180px}}
 
 /* A quiet circular model dial with paint swatches inside the arc. */
-.tpl9.arc-showroom{background:#f3f3f1!important;overflow:hidden;border-radius:0}
+.tpl9.arc-showroom{background:#f3f3f1 url('../img/backgrounds/custom-paint-studio-v1.jpg') center/cover no-repeat!important;overflow:hidden;border-radius:0}
 .tpl9.arc-showroom::before{display:none}
 .tpl9.arc-showroom .in{height:920px;min-height:920px}
 .tpl9.arc-showroom .sh9{top:64px}
