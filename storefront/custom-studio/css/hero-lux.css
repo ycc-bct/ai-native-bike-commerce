@@ -1,0 +1,23 @@
+/* Hero: a cut of studio close-ups (video/custom-hero*.mp4) with sparse type, in the manner of a luxury-car launch page. */
+.hero-lux .hx{left:calc((100vw - var(--shell))/2);right:auto;top:50%;bottom:auto;transform:translateY(-50%);width:auto;max-width:620px;text-align:left}
+.hero-lux h1{margin-top:0;font-size:clamp(32px,3.4vw,44px);font-weight:600;line-height:1.05;letter-spacing:.02em;white-space:normal}
+.hero-lux .hx>p{margin-top:20px;max-width:440px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.74)}
+.hero-lux .acts{margin-top:36px;justify-content:flex-start}
+@media (max-width:700px){.hero-lux .hx{left:16px;right:16px}.hero-lux h1{font-size:min(9vw,44px)}}
+/* Header over the hero: transparent with white type until the visitor hovers it, opens a menu or scrolls (.scrolled is set
+   by the page script); then it returns to the usual light bar. The AI orb keeps its own colours either way. */
+.site-nav{transition:background .3s,box-shadow .3s,color .3s,backdrop-filter .3s}
+.site-nav:not(.scrolled):not(.open):not(:hover):not(:focus-within){--nav-ink:#fff;color:#fff;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.site-nav:not(.scrolled):not(.open):not(:hover):not(:focus-within) .orb-wrap{color:#141A22}
+.hero-lux{margin-top:0;height:100vh}
+.hero-lux .scrim{background:linear-gradient(180deg,rgba(5,7,10,.5) 0,rgba(5,7,10,0) 160px),linear-gradient(0deg,rgba(5,7,10,.82) 0%,rgba(5,7,10,.35) 38%,rgba(5,7,10,0) 62%),linear-gradient(90deg,rgba(5,7,10,.55) 0%,rgba(5,7,10,0) 55%)}
+@media (max-width:700px){.hero-lux{height:100svh}}
+/* Rolling title: the first two characters sit on drums that flip through what can be customised —
+   專屬 → 塗裝 → 車架 → 零件 → 簽名 — so the line reads 「塗裝客製化自行車」, 「車架客製化自行車」… js/hero-lux.js turns them. */
+.kin-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.roll{display:inline-flex;vertical-align:baseline;margin:-.125em 0;perspective:7em;clip-path:inset(0 -.1em);-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.drum{position:relative;width:1em;line-height:1.3em;transform-style:preserve-3d;transform:translateZ(-.89em) rotateX(calc(var(--k,0) * 72deg));transition:transform 1s cubic-bezier(.65,0,.35,1) calc(var(--i) * .1s)}
+/* an invisible character gives the drum a real text baseline, so its faces line up with the rest of the title */
+.drum::before{content:'專';visibility:hidden}
+.drum b{position:absolute;inset:0;font-weight:inherit;text-align:center;backface-visibility:hidden;transform:rotateX(calc(var(--n) * -72deg)) translateZ(.89em)}
+@media (prefers-reduced-motion:reduce){.drum{transition:none}}
