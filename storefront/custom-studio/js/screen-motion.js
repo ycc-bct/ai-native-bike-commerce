@@ -5,7 +5,7 @@
  const groups={
   hero:['.hx'],
   models:['.sh'],
-  templates:['.sh9','.plat','.cs','.bk9','.tabs9','.tray9'],
+  templates:['.sh9','.showroom-motion'],
   colors:['.stg','.cp'],
   parts:['.phd9'],
   stores:['.sh'],
@@ -20,9 +20,9 @@
    const targets=[...entry.target.querySelectorAll(selectors.join(','))];
    targets.forEach((target,index)=>{
     const animation=target.animate([
-     {opacity:0,translate:'0 36px'},
-     {opacity:1,translate:'0 0'}
-    ],{duration:680,delay:Math.min(index*65,260),easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+     {opacity:0,translate:target.classList.contains('showroom-motion')?'0 72px':'0 36px',scale:target.classList.contains('showroom-motion')?.86:1},
+     {opacity:1,translate:'0 0',scale:1}
+    ],{duration:target.classList.contains('showroom-motion')?850:680,delay:Math.min(index*65,260),easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
     animations.add(animation);
     animation.onfinish=animation.oncancel=()=>animations.delete(animation);
    });

@@ -296,3 +296,171 @@
 .foot .foot-bar a{
  font-size:14px!important;
 }
+
+/* Keep every paint at the same display coordinates. */
+.tpl9 .bk9,.tpl9 .bk9[data-family]{top:54px!important;width:800px!important;height:600px!important;object-fit:contain;object-position:center;left:50%!important;transform:translateX(-50%)}
+.models5 .model-intro{white-space:normal;max-width:100%;line-height:1.6}
+@media(max-width:900px){
+ .tpl9 .bk9,.tpl9 .bk9[data-family]{top:225px!important;width:min(82vw,560px)!important;height:auto!important;aspect-ratio:4/3}
+}
+/* Align the actual bicycle silhouettes, including transparent image margins. */
+.tpl9 .paint-display{position:absolute;width:660px;height:462px;left:50%;top:110px;transform:translateX(-50%);pointer-events:none}
+.tpl9 .paint-display .bk9[data-family]{position:absolute;top:auto!important;bottom:var(--paint-bottom,0%);left:var(--paint-left,0%)!important;width:var(--paint-width,100%)!important;height:auto!important;aspect-ratio:auto;transform:none;max-width:none;object-fit:contain}
+.tpl9 .paint-caption{position:absolute;top:615px;left:0;width:100%;text-align:center;color:#17202b;font-size:18px;font-weight:600}
+.tpl9 .tray9{height:auto;overflow:visible}
+.tpl9 .trayin{display:flex;justify-content:center;gap:12px}
+.tpl9 button.th9{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:150px;height:105px;flex:0 0 150px;padding:4px 8px 26px;border:1px solid #d6d7da;border-radius:12px;color:#17202b;font:inherit;cursor:pointer}
+.tpl9 button.th9.on{border-color:#17202b;box-shadow:0 0 0 1px #17202b}
+.tpl9 button.th9 img{width:100%;height:72px;object-fit:contain}
+.tpl9 button.th9 b{position:absolute;bottom:7px;left:0;width:100%;font-size:14px;text-align:center;white-space:nowrap}
+@media(max-width:900px){
+ .tpl9 .paint-display{width:78vw;height:54.6vw;top:180px}
+ .tpl9 .paint-caption{top:calc(190px + 54.6vw);font-size:16px}
+ .tpl9 .in{min-height:850px}
+ .tpl9 .tray9{overflow-x:auto;padding:4px 4px 12px}
+ .tpl9 .trayin{justify-content:flex-start;width:max-content;margin:auto}
+ .tpl9 button.th9{width:130px;flex-basis:130px}
+}
+.tpl9 .paint-display{top:88px}
+.tpl9 button.th9 b,.tpl9 button.th9.on b{display:block!important;top:auto!important;bottom:5px!important;height:auto!important;line-height:20px!important;transform:none!important;background:none!important;padding:0!important;color:#17202b!important}
+@media(max-width:900px){.tpl9 .paint-display{top:180px}}
+
+/* A quiet circular model dial with paint swatches inside the arc. */
+.tpl9.arc-showroom{background:#f3f3f1!important;overflow:hidden;border-radius:0}
+.tpl9.arc-showroom::before{display:none}
+.tpl9.arc-showroom .in{height:920px;min-height:920px}
+.tpl9.arc-showroom .sh9{top:64px}
+.tpl9.arc-showroom .paint-display{top:100px;width:660px;height:462px}
+.tpl9.arc-showroom .paint-display img{filter:drop-shadow(0 12px 7px #17202b20)}
+.tpl9.arc-showroom .tabs9{position:absolute;left:50%!important;top:620px!important;width:660px;height:660px;inset:auto;transform:translateX(-50%);display:block;border:1px solid #b1b3b3;border-radius:50%;margin:0}
+.tpl9.arc-showroom .tabs9::after{content:"";position:absolute;inset:24px;border:1px solid #d5d6d4;border-radius:50%;pointer-events:none}
+.tpl9.arc-showroom .tab9{position:absolute!important;top:0!important;left:50%!important;width:130px;height:44px;padding:0;margin:0!important;border:0;background:none!important;box-shadow:none!important;border-radius:0;display:flex;align-items:center;justify-content:center;transform-origin:50% 352px!important;transform:translate(-50%,-22px) rotate(var(--dial-angle))!important;color:#858783!important;font-size:20px!important;letter-spacing:.02em;transition:color .2s}
+.tpl9.arc-showroom .tab9:nth-child(1){--dial-angle:-54deg}
+.tpl9.arc-showroom .tab9:nth-child(2){--dial-angle:-18deg}
+.tpl9.arc-showroom .tab9:nth-child(3){--dial-angle:18deg}
+.tpl9.arc-showroom .tab9:nth-child(4){--dial-angle:54deg}
+.tpl9.arc-showroom .tab9::after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#a6a7a3;bottom:-8px;left:calc(50% - 4px)}
+.tpl9.arc-showroom .tab9.on,.tpl9.arc-showroom .tab9:hover{color:#121915!important}
+.tpl9.arc-showroom .tab9.on::after{background:#121915;box-shadow:0 0 0 5px #f3f3f1,0 0 0 6px #121915}
+.tpl9.arc-showroom .paint-caption{top:805px;margin:0;font-size:16px;font-weight:500}
+.tpl9.arc-showroom .tray9{position:absolute;top:710px;left:50%;width:auto;height:auto;transform:translateX(-50%);padding:8px;background:none;border:0;box-shadow:none;border-radius:0;overflow:visible}
+.tpl9.arc-showroom .trayin{display:flex;gap:18px;padding:0;width:max-content;justify-content:center}
+.tpl9.arc-showroom button.th9{width:58px;height:58px;flex:0 0 58px;border-radius:50%;padding:0;border:2px solid #fff;background:#e2e3df;box-shadow:0 0 0 1px #c9cbc7;overflow:hidden;transition:box-shadow .2s,transform .2s}
+.tpl9.arc-showroom button.th9 img{width:260px;height:195px;max-width:none;flex:none;object-fit:cover;padding:0;transform:translate(-2px,4px) scale(1.8)}
+.tpl9.arc-showroom button.th9.on{box-shadow:0 0 0 3px #f3f3f1,0 0 0 5px #17202b}
+.tpl9.arc-showroom button.th9:hover{transform:translateY(-3px)}
+.tpl9.arc-showroom button.th9 b{display:none!important}
+@media(max-width:900px){
+ .tpl9.arc-showroom .in{height:800px;min-height:800px}
+ .tpl9.arc-showroom .paint-display{width:82vw;height:57.4vw;top:150px}
+ .tpl9.arc-showroom .tabs9{top:calc(190px + 57.4vw)!important;width:360px;height:360px}
+ .tpl9.arc-showroom .tab9{width:100px;font-size:16px!important;transform-origin:50% 202px!important}
+ .tpl9.arc-showroom .tray9{top:calc(270px + 57.4vw);width:auto}
+ .tpl9.arc-showroom .paint-caption{top:calc(345px + 57.4vw)}
+ .tpl9.arc-showroom button.th9{width:46px;height:46px;flex-basis:46px}
+ .tpl9.arc-showroom .trayin{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){.tpl9.arc-showroom .tab9,.tpl9.arc-showroom button.th9{transition:none}}
+.tpl9.arc-showroom button.th9 img{position:absolute;width:400px;height:300px;left:-225px;top:-100px;transform:none;object-fit:fill}
+.tpl9.arc-showroom .tray9::before,.tpl9.arc-showroom .tray9::after{display:none!important}
+.tpl9.arc-showroom .trayin{background:none!important;box-shadow:none!important;border-radius:0}
+.tpl9.arc-showroom .trayin{border:0!important}
+@media(min-width:601px) and (max-width:900px){.tpl9.arc-showroom .in{height:1040px;min-height:1040px}}
+
+/* Keep the complete showroom within one viewport, below the shared header. */
+.tpl9.arc-showroom{scroll-margin-top:68px}
+.tpl9.arc-showroom .in{height:calc(100svh - 68px);min-height:610px;position:relative}
+.tpl9.arc-showroom .sh9{display:block!important;visibility:visible!important;opacity:1!important;top:24px;left:var(--page-gutter,36px)!important;z-index:2}
+.tpl9.arc-showroom .sh9 h2{margin:0;font-size:clamp(24px,2.1vw,32px);line-height:1.3}
+.tpl9.arc-showroom .paint-display{top:80px;width:min(600px,calc((100svh - 380px)*1.4),80vw);height:auto;aspect-ratio:10/7;left:50%;transform:translateX(-50%)}
+.tpl9.arc-showroom .tabs9{top:auto!important;bottom:8px;left:50%!important;width:min(580px,88vw);height:176px;transform:translateX(-50%);border:0;border-radius:0;z-index:2}
+.tpl9.arc-showroom .tabs9::before{content:"";position:absolute;inset:22px 0 0;border:1px solid #b1b3b3;border-bottom:0;border-radius:50% 50% 0 0 / 100% 100% 0 0;pointer-events:none}
+.tpl9.arc-showroom .tabs9::after{inset:42px 22px 0;border:1px solid #d5d6d4;border-bottom:0;border-radius:50% 50% 0 0 / 100% 100% 0 0}
+.tpl9.arc-showroom .tab9{top:0!important;left:var(--label-x)!important;translate:0 var(--label-y);width:auto;height:38px;padding:0 10px;transform:translateX(-50%) rotate(var(--label-angle))!important;transform-origin:center!important;background:#f3f3f1!important;font-size:18px!important;white-space:nowrap;z-index:3}
+.tpl9.arc-showroom .tab9:nth-child(1){--label-x:7%;--label-y:48px;--label-angle:-34deg}
+.tpl9.arc-showroom .tab9:nth-child(2){--label-x:34%;--label-y:-10px;--label-angle:-10deg}
+.tpl9.arc-showroom .tab9:nth-child(3){--label-x:66%;--label-y:-10px;--label-angle:10deg}
+.tpl9.arc-showroom .tab9:nth-child(4){--label-x:93%;--label-y:48px;--label-angle:34deg}
+.tpl9.arc-showroom .tab9::after{bottom:-9px}
+.tpl9.arc-showroom .tray9{top:auto!important;bottom:62px;z-index:4}
+.tpl9.arc-showroom .paint-caption{top:auto;bottom:23px;z-index:4}
+.tpl9.arc-showroom button.th9{width:48px;height:48px;flex-basis:48px}
+@media(max-width:600px){
+ .tpl9.arc-showroom .in{height:calc(100svh - 68px);min-height:570px}
+ .tpl9.arc-showroom .sh9{left:20px!important;top:28px}
+ .tpl9.arc-showroom .paint-display{width:84vw;top:110px}
+ .tpl9.arc-showroom .tabs9{width:86vw;height:150px;bottom:12px}
+ .tpl9.arc-showroom .tab9{font-size:14px!important;padding:0 6px}
+ .tpl9.arc-showroom .tab9:nth-child(1){--label-x:5%;--label-y:42px}
+ .tpl9.arc-showroom .tab9:nth-child(4){--label-x:95%;--label-y:42px}
+ .tpl9.arc-showroom .tray9{bottom:58px}
+ .tpl9.arc-showroom button.th9{width:40px;height:40px;flex-basis:40px}
+ .tpl9.arc-showroom .trayin{gap:12px}
+}
+.tpl9.arc-showroom .tabs9{bottom:8px!important}
+@media(max-width:600px){.tpl9.arc-showroom .tabs9{bottom:12px!important}}
+
+/* A true circle, clipped at its diameter by the showroom frame. */
+.tpl9.arc-showroom .showroom-motion{position:absolute;inset:0;transform-origin:50% 72%;pointer-events:none}
+.tpl9.arc-showroom .showroom-motion nav,.tpl9.arc-showroom .showroom-motion .tray9{pointer-events:auto}
+.tpl9.arc-showroom .sh9{top:88px;left:calc((100vw - var(--shell))/2)!important}
+.tpl9.arc-showroom .sh9 h2{margin-top:10px;font-size:30px;line-height:1.25}
+.tpl9.arc-showroom .paint-display{top:130px;width:min(550px,calc((100svh - 430px)*1.4),80vw)}
+.tpl9.arc-showroom .tabs9{width:min(420px,80vw);height:min(210px,40vw);bottom:0!important}
+.tpl9.arc-showroom .tabs9::before{inset:0 auto auto 0;width:100%;height:auto;aspect-ratio:1;border:1px solid #b1b3b3;border-radius:50%;box-sizing:border-box}
+.tpl9.arc-showroom .tabs9::after{inset:20px auto auto 20px;width:calc(100% - 40px);height:auto;aspect-ratio:1;border:1px solid #d5d6d4;border-radius:50%;box-sizing:border-box}
+.tpl9.arc-showroom .tab9:nth-child(1){--label-x:4%;--label-y:75px;--label-angle:-56deg}
+.tpl9.arc-showroom .tab9:nth-child(2){--label-x:33%;--label-y:-29px;--label-angle:-18deg}
+.tpl9.arc-showroom .tab9:nth-child(3){--label-x:67%;--label-y:-29px;--label-angle:18deg}
+.tpl9.arc-showroom .tab9:nth-child(4){--label-x:96%;--label-y:75px;--label-angle:56deg}
+.tpl9.arc-showroom .tray9{bottom:58px}
+@media(max-width:900px){.tpl9.arc-showroom .sh9{top:64px;left:16px!important}}
+@media(max-width:600px){
+ .tpl9.arc-showroom .paint-display{top:145px;width:80vw}
+ .tpl9.arc-showroom .tab9:nth-child(1){--label-y:48px}
+ .tpl9.arc-showroom .tab9:nth-child(4){--label-y:48px}
+ .tpl9.arc-showroom .tray9{bottom:44px}
+ .tpl9.arc-showroom .paint-caption{bottom:14px}
+}
+
+/* Larger circular dial and lower bicycle placement. */
+.tpl9.arc-showroom .paint-display{top:150px}
+.tpl9.arc-showroom .tabs9{width:min(520px,86vw);height:min(260px,43vw);bottom:-70px!important}
+.tpl9.arc-showroom .tab9{font-size:0!important;width:44px;padding:0;color:transparent!important;background:transparent!important}
+.tpl9.arc-showroom .tab9::after{width:10px;height:10px;left:17px;bottom:6px}
+.tpl9.arc-showroom .paint-caption{display:none}
+.tpl9.arc-showroom .tray9{bottom:38px}
+/* Desaturate only the blueprint, keeping product components in their original colors. */
+.parts10 .la{filter:grayscale(1)}
+/* Center the smaller hero copy in the lower part of the film. */
+.hero11 .hx{left:50%;right:auto;top:auto;bottom:9%;transform:translateX(-50%);width:min(760px,calc(100% - 40px));max-width:760px;text-align:center}
+.hero11 h1{font-size:clamp(28px,3vw,42px);white-space:normal;margin-top:0}
+.hero11 p{font-size:16px;margin-top:16px}
+.hero11 .acts{justify-content:center;margin-top:24px}
+.hero11 .scrim{background:linear-gradient(0deg,rgba(6,10,18,.68),rgba(6,10,18,.12) 48%,transparent 75%)}
+@media(max-width:600px){
+ .tpl9.arc-showroom .paint-display{top:165px}
+ .tpl9.arc-showroom .tabs9{bottom:-35px!important}
+ .tpl9.arc-showroom .tray9{bottom:24px}
+ .hero11 .hx{bottom:7%}
+}
+
+/* Readable model names around an enlarged circular dial. */
+.tpl9.arc-showroom .sh9 p{margin:14px 0 0;color:var(--muted,#526071);font-size:18px;line-height:1.6;max-width:720px}
+.tpl9.arc-showroom .tabs9{width:min(660px,94vw);height:min(220px,31.33vw);bottom:-26px!important}
+.tpl9.arc-showroom .tab9{font-size:18px!important;width:auto;padding:0 10px;color:#777b78!important;background:#f3f3f1!important}
+.tpl9.arc-showroom .tab9.on{color:#17202b!important}
+.tpl9.arc-showroom .tab9:nth-child(1){--label-x:11%;--label-y:90px;--label-angle:-46deg}
+.tpl9.arc-showroom .tab9:nth-child(2){--label-x:35%;--label-y:-10px;--label-angle:-17deg}
+.tpl9.arc-showroom .tab9:nth-child(3){--label-x:65%;--label-y:-10px;--label-angle:17deg}
+.tpl9.arc-showroom .tab9:nth-child(4){--label-x:89%;--label-y:90px;--label-angle:46deg}
+.tpl9.arc-showroom .tab9::after{left:calc(50% - 5px);bottom:-12px}
+.parts10 .la{filter:grayscale(1);opacity:.3}
+@media(min-width:901px){.parts10 .pp10.p-wheel .dc{left:calc(100% + 26px)!important;right:auto!important;top:24px!important}}
+@media(max-width:600px){
+ .tpl9.arc-showroom .sh9 p{font-size:16px;max-width:calc(100vw - 32px)}
+ .tpl9.arc-showroom .paint-display{top:200px}
+ .tpl9.arc-showroom .tab9{font-size:14px!important;padding:0 5px}
+ .tpl9.arc-showroom .tab9:nth-child(1),.tpl9.arc-showroom .tab9:nth-child(4){--label-y:40px}
+ .tpl9.arc-showroom .tabs9{bottom:0!important}
+}
