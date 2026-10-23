@@ -446,7 +446,8 @@
 }
 
 /* Readable model names around an enlarged circular dial. */
-.tpl9.arc-showroom .sh9 p{margin:14px 0 0;color:var(--muted,#526071);font-size:18px;line-height:1.6;max-width:720px}
+.tpl9.arc-showroom .sh9 p{margin:10px 0 0;color:var(--muted,#526071);font-size:15px;line-height:1.85;max-width:720px}
+.tpl9.arc-showroom .paint-display{top:180px;width:min(510px,calc((100svh - 450px)*1.4),76vw)}
 .tpl9.arc-showroom .tabs9{width:min(660px,94vw);height:min(220px,31.33vw);bottom:-26px!important}
 .tpl9.arc-showroom .tab9{font-size:18px!important;width:auto;padding:0 10px;color:#777b78!important;background:#f3f3f1!important}
 .tpl9.arc-showroom .tab9.on{color:#17202b!important}
@@ -458,8 +459,8 @@
 .parts10 .la{filter:grayscale(1);opacity:.3}
 @media(min-width:901px){.parts10 .pp10.p-wheel .dc{left:calc(100% + 26px)!important;right:auto!important;top:24px!important}}
 @media(max-width:600px){
- .tpl9.arc-showroom .sh9 p{font-size:16px;max-width:calc(100vw - 32px)}
- .tpl9.arc-showroom .paint-display{top:200px}
+ .tpl9.arc-showroom .sh9 p{font-size:15px;line-height:1.75;max-width:calc(100vw - 32px)}
+ .tpl9.arc-showroom .paint-display{top:215px;width:76vw}
  .tpl9.arc-showroom .tab9{font-size:14px!important;padding:0 5px}
  .tpl9.arc-showroom .tab9:nth-child(1),.tpl9.arc-showroom .tab9:nth-child(4){--label-y:40px}
  .tpl9.arc-showroom .tabs9{bottom:0!important}
