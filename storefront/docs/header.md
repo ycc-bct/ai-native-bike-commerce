@@ -10,15 +10,15 @@
 
 ```html
 <!-- </head> 前 -->
-<link rel="stylesheet" href="css/header.css?v=hdr1022">
+<link rel="stylesheet" href="css/header.css?v=hdr1023">
 
 <!-- <body> 裡原本放 header 的位置：一個空的 header，緊接著載入 header.js -->
 <header class="nav site-nav" id="siteHeader" data-page="report"></header>
-<script src="js/header.js?v=hdr1022"></script>
+<script src="js/header.js?v=hdr1023"></script>
 
 <!-- 子資料夾的頁面（例如 scenario-2/index.html）路徑往上一層 -->
-<link rel="stylesheet" href="../css/header.css?v=hdr1022">
-<script src="../js/header.js?v=hdr1022"></script>
+<link rel="stylesheet" href="../css/header.css?v=hdr1023">
+<script src="../js/header.js?v=hdr1023"></script>
 ```
 
 - `header.js` 一定要放在**空 header 之後、你頁面自己的腳本之前**：它會同步把內容塞進去，之後 `favorites.js`、`advisor.js` 和你的程式才找得到 `#openFav`、`#aiOrb`、`#orbCallout`。
@@ -39,7 +39,7 @@
 
 - 五個車種各有一條下拉：車種大圖＋「看全部」、第三層（文字取自官網），內容左緣對齊主選單第一個字。
 - 精品配件一條下拉四欄：人身／車身／維修／零件。
-- 連結只接我們做過的頁：越野 & 礫石 → `gravel.html`、Revolt SL 0 → `product.html`、Talon E+ → `ride.html?bike=ebike`、客製化 → `../customized.html#series`。其他是 `#`，hover 有效果但不跳頁（示範原則：不連官網）。
+- 連結只接我們做過的頁：越野 & 礫石 → `gravel.html`、Revolt SL 0 → `product.html`、Talon E+ → `ride.html?bike=ebike`、客製化 → `custom-studio/index.html`（介紹頁）。其他是 `#`，hover 有效果但不跳頁（示範原則：不連官網）。
 - 要改文字或連結：只改 `js/header.js` 最上面的 `BIKES` / `GEAR` / `MORE`。
 
 ## 4. 「問顧問」的掛勾（目前下拉裡沒有放這顆按鈕，先保留接口）
@@ -73,11 +73,11 @@ window.GiantHeaderAsk = function (cat, name) {   // cat: road / mtb / gravel / e
 
 ```html
 <!-- </head> 前 -->
-<link rel="stylesheet" href="css/footer.css?v=hdr1022">
+<link rel="stylesheet" href="css/footer.css?v=hdr1023b">
 
 <!-- 頁面最後、原本 footer 的位置 -->
 <footer class="foot" id="siteFooter"></footer>
-<script src="js/footer.js?v=hdr1022"></script>
+<script src="js/footer.js?v=hdr1023b"></script>
 ```
 
 - 四欄（車款／精品配件／探索／支援）＋訂閱＋社群＋版權列，文字和連結集中在 `js/footer.js` 的 `COLS`。

@@ -68,7 +68,7 @@
 }
 .pp10 img{object-fit:contain}
 #stores{overflow:hidden}
-#stores .mapc,#stores .slist{will-change:transform}
+
 @media(prefers-reduced-motion:reduce){.hero11 .hv{display:none}.hero11 .hp{display:block}}
 
 .tpl9 .bk9{top:170px!important}
@@ -129,7 +129,7 @@
 .tpl9 .th9{overflow:hidden;background:#f8f7f5}
 .tpl9 .th9 img{object-fit:contain;object-position:center;width:100%;height:100%;padding:4px}
 /* Official GIANT road image: scenery and bike behind the final invitation. */
-#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(6,11,20,.9) 0%,rgba(6,11,20,.72) 30%,rgba(6,11,20,.28) 58%,rgba(6,11,20,.04) 78%),url('../img/cta/giant-carbon-custom-ride.jpg') center center/cover no-repeat}
+#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(4,6,10,.92) 0%,rgba(4,6,10,.78) 32%,rgba(4,6,10,.3) 56%,rgba(4,6,10,0) 72%),#05070b url('../img/cta/carbon-frame-studio.jpg') 70% center/cover no-repeat}
 #cta .cta .tx{position:relative;z-index:1;max-width:590px}
 #cta .cta .kicker{display:none}
 #cta .cta h2,#cta .cta .kicker{color:#fff}
@@ -142,7 +142,8 @@
  .tpl9 .sh9,.parts10 .phd9{left:16px!important}
  .tpl9 .bk9,.tpl9 .bk9[data-family]{top:205px!important;width:min(116vw,780px)!important;height:auto!important;aspect-ratio:4/3;left:50%!important;transform:translateX(-50%)}
  .tpl9 .tab9{margin-left:0}
- #cta .cta{min-height:500px;padding:40px 24px;background-position:55% center}
+ #cta .cta h2{font-size:clamp(28px,8.4vw,36px)}
+ #cta .cta{min-height:500px;padding:40px 24px;align-items:flex-end;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%),#05070b url('../img/cta/carbon-frame-studio.jpg') 76% 30%/cover no-repeat}
 }
 @media(prefers-reduced-motion:reduce){.tpl9 .bk9{transition:none!important}.parts10 .pp10{transition:none!important}}
 /* Keep all six part choices visible on narrow screens, below the frame drawing. */
@@ -482,3 +483,281 @@
 .parts10 .parts-live-detail strong{display:block;color:#1d46d0;font-size:17px;line-height:1.3}
 .parts10 .parts-live-detail p{margin:6px 0 0;color:#314568;font-size:14px;line-height:1.65}
 @media(max-width:900px){.parts10 .parts-live-detail{display:none}.parts10.parts-ready .pp10.hov,.parts10.parts-ready .pp10:hover,.parts10.parts-ready .pp10:focus-visible{scale:1.04}}
+
+/* 客製化自行車服務門市（方案 A）：地圖約 58%、清單約 42%，兩張卡同高 480px；清單固定顯示約 4 筆，其餘在卡片內捲動 */
+@media(min-width:901px){
+ #stores .smap{grid-template-columns:minmax(0,1.38fr) minmax(0,1fr);height:480px}
+ #stores .mapc{padding:12px;overflow:hidden;min-height:0}
+ #stores .tw{width:100%;height:100%;max-height:456px}
+ #stores .slist{display:flex;flex-direction:column;min-height:0;overflow:hidden;padding:20px 22px 8px}
+ #stores .slist .q{flex:none;height:46px}
+ #stores .slist .chips{flex:none;flex-wrap:wrap;row-gap:8px}
+ #stores .slist .cnt{flex:none;margin-top:14px}
+ #stores .slist ul{flex:1;min-height:0;overflow-y:auto;margin-top:6px;padding-right:6px;scrollbar-width:thin;scrollbar-color:#C9D0D8 transparent}
+ #stores .slist li{padding:12px 0}
+}
+
+/* ---------- 六大零件規格：鉛筆藍圖進場（js/parts-draw.js） ---------- */
+.parts10 .pd-ov{position:absolute;display:block;pointer-events:none}
+.parts10 .pp10>.pd-sk{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:0;filter:none!important;transform:none!important}
+.parts10 .pd-rear{pointer-events:none;opacity:0}
+.parts10 .pd-sk.pd-conic{-webkit-mask-image:conic-gradient(from 0deg,#000 var(--a,0deg),transparent calc(var(--a,0deg) + .6deg));mask-image:conic-gradient(from 0deg,#000 var(--a,0deg),transparent calc(var(--a,0deg) + .6deg))}
+.parts10 .pd-sk.pd-lin{-webkit-mask-image:linear-gradient(90deg,#000 var(--p,0%),transparent calc(var(--p,0%) + 3%));mask-image:linear-gradient(90deg,#000 var(--p,0%),transparent calc(var(--p,0%) + 3%))}
+.parts10 .pd-ptip{position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#5F6670;opacity:0;pointer-events:none;z-index:40}
+
+/* ---------- 六大零件規格：聚焦與標籤（桌機） ----------
+   拿掉藍色描邊光、投影與 116% 放大；選到的零件浮起，其他只淡到約 60%；
+   說明直接展開在零件旁的標籤裡；圖片與文字都能 hover／點擊。 */
+@media(min-width:901px){
+ .parts10 .pp10 img{filter:none!important}
+ .parts10.parts-ready .pp10{opacity:1!important;scale:1!important;filter:none!important}
+ .parts10 .pp10>img:not(.pd-sk){transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)!important}
+ .parts10 .rear-wheel:not(.pd-sk){transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+ .parts10.has-focus .pp10:not(.hov)>img:not(.pd-sk),.parts10.has-focus:not(.wheel-on) .rear-wheel:not(.pd-sk){opacity:.6!important}
+ .parts10 .pp10.hov>img:not(.pd-sk){transform:translateY(-6px) scale(1.04)}
+ .parts10.wheel-on .rear-wheel:not(.pd-sk){transform:translateY(-6px) scale(1.02)}
+ /* 浮起時底下一圈很淡的接地陰影 */
+ .parts10 .pp10::after{content:"";position:absolute;left:12%;right:12%;bottom:-10px;height:12px;border-radius:50%;background:radial-gradient(closest-side,rgba(20,26,34,.16),rgba(20,26,34,0));opacity:0;transition:opacity .35s ease;pointer-events:none;z-index:-1}
+ .parts10 .pp10.p-wheel::after{left:18%;right:18%;bottom:-6px;height:16px}
+ .parts10 .pp10.hov::after{opacity:1}
+ .parts10.parts-ready .pp10.hov{z-index:20!important}
+
+ /* 標籤：平常只有名稱；選到時展開成白色小卡（名稱、規格、說明） */
+ .parts10 .pp10 .dc{pointer-events:auto!important;cursor:pointer;text-shadow:none!important;padding:10px 13px!important;border:1px solid transparent!important;border-radius:12px!important;background:transparent!important;max-width:280px!important;transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)!important}
+ .parts10 .pp10 .dc b{color:#141A22!important;font-size:15px!important;font-weight:700;opacity:.78;transition:opacity .25s ease}
+ .parts10.has-focus .pp10:not(.hov) .dc b{opacity:.5}
+ .parts10 .pp10.hov .dc{background:#fff!important;border-color:#E3E7EC!important;box-shadow:0 10px 24px rgba(20,26,34,.07)!important}
+ .parts10 .pp10.hov .dc b{opacity:1}
+ .parts10 .pp10 .dc .chip{color:#4A5563!important}
+ .parts10 .pp10 .dc .chip + .chip::before{color:#9AA4B0!important}
+ .parts10 .pp10 .dc::before{top:20px!important;border-top-color:#C3CAD3!important;transition:border-color .3s ease}
+ .parts10 .pp10.hov .dc::before{border-top-color:#141A22!important}
+ .parts10 .pd-desc{display:block;width:250px;max-height:0;margin-top:0;overflow:hidden;opacity:0;white-space:normal;text-align:left;font-size:13px;line-height:1.6;color:#4A5563;transition:max-height .35s ease,opacity .3s ease,margin .3s ease}
+ .parts10 .pp10.hov .pd-desc{max-height:84px;margin-top:6px;opacity:1}
+}
+@media(max-width:900px){.parts10 .pd-desc{display:none}}
+@media(prefers-reduced-motion:reduce){.parts10 .pp10>img,.parts10 .rear-wheel,.parts10 .pp10 .dc,.parts10 .pd-desc{transition:none!important}}
+/* 左側的標籤（飛輪）：靠右對齊、離零件近一點，小卡收窄，避免超出畫面 */
+@media(min-width:901px){
+ .parts10 .pp10.l .dc{text-align:right}
+ .parts10 .pp10.l .dc b,.parts10 .pp10.l .dc .chips{justify-content:flex-end}
+ .parts10 .pp10.l .pd-desc{width:200px;margin-left:auto}
+ .parts10 .pp10.p-cassette .dc{right:calc(100% + 104px)!important;top:6px!important}
+ .parts10 .pp10.p-cassette .dc::before{width:94px!important}
+}
+@media(min-width:901px){
+ .parts10 .pd-desc{width:0}
+ .parts10 .pp10.hov .pd-desc{width:250px}
+ .parts10 .pp10.l.hov .pd-desc{width:200px}
+ .parts10 .pp10.l.hov .dc{text-align:left}
+ .parts10 .pp10.l.hov .dc b,.parts10 .pp10.l.hov .dc .chips{justify-content:flex-start}
+}
+
+/* 零件標籤改成白色膠囊＋柔和陰影：平常只有名稱；選到時同一顆膠囊展開成小卡（規格、說明）。不再畫引線。 */
+@media(min-width:901px){
+ .parts10 .pp10 .dc{padding:9px 17px!important;border:0!important;border-radius:20px!important;background:#fff!important;box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.08)!important;transition:box-shadow .3s ease,border-radius .3s ease,padding .3s ease,opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)!important}
+ .parts10 .pp10 .dc::before{display:none!important}
+ .parts10 .pp10 .dc b{opacity:1!important;font-size:15px!important;letter-spacing:.02em}
+ .parts10.has-focus .pp10:not(.hov) .dc{box-shadow:0 1px 2px rgba(20,26,34,.04),0 4px 12px rgba(20,26,34,.05)!important}
+ .parts10.has-focus .pp10:not(.hov) .dc b{opacity:.55!important}
+ .parts10 .pp10.hov .dc{padding:13px 17px 14px!important;border-radius:16px!important;box-shadow:0 2px 4px rgba(20,26,34,.05),0 14px 32px rgba(20,26,34,.11)!important}
+ .parts10 .pp10:not(.hov) .dc:hover{box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12)!important}
+ .parts10 .pp10.p-cassette .dc{right:calc(100% + 118px)!important}
+ .parts10 .pp10.l.hov .pd-desc{width:180px!important}
+ .parts10 .pp10:not(.hov) .dc .chips,.parts10 .pp10:not(.hov) .pd-desc{display:none!important}
+ .parts10 .pp10 .dc b{line-height:1.4!important;margin:0!important}
+}
+
+/* 窄一點的桌機：飛輪的小卡收窄、必要時貼近車輪，避免超出畫面左緣 */
+@media(min-width:901px) and (max-width:1300px){.parts10 .pp10.l.hov .pd-desc{width:150px!important}}
+@media(min-width:901px) and (max-width:1100px){.parts10 .pp10.p-cassette .dc{right:calc(100% + 80px)!important}}
+
+/* ---------- 客製化自行車服務門市：搜尋、地區篩選、地圖連動（js/stores.js） ---------- */
+#stores .slist .q input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:15px;font-weight:600;color:var(--ink)}
+#stores .slist .q input::placeholder{color:#9AA4B0;font-weight:500}
+#stores .slist .q:focus-within{border-color:#141A22}
+#stores .slist .chips button.chip{font:inherit;cursor:pointer;background:#fff;transition:background .2s,color .2s,border-color .2s}
+#stores .slist .chips button.chip:hover:not(.on){border-color:#141A22}
+#stores .slist li[data-i]{cursor:default;margin:0 -10px;padding-left:10px!important;padding-right:10px!important;border-radius:10px;transition:background .2s}
+#stores .slist li.hl{background:#F3F5F7}
+#stores .slist li.st-empty{display:block;padding:28px 0;text-align:center;color:#7A8492;font-size:14px;border-top:0}
+#stores .tw .pins circle{cursor:pointer;transition:opacity .25s ease,r .2s ease,stroke-width .2s ease}
+#stores .tw .pins circle.off{opacity:.14;pointer-events:none}
+#stores .tw .pins circle.hl{r:8px;stroke-width:3px;fill-opacity:1}
+#stores .tw .rl{cursor:pointer}
+#stores .tw .rl rect,#stores .tw .rl text{transition:fill .2s ease,stroke .2s ease}
+#stores .tw .rl.dim rect{fill:#fff;stroke:#C9D0D8;stroke-width:1}
+#stores .tw .rl.dim text{fill:#141A22}
+#stores .tw .rl:focus-visible{outline:none}
+#stores .tw .rl:focus-visible rect{stroke:#1F4FE0;stroke-width:2}
+#stores .slist .chips button.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* 門市：點清單或地圖上的點 → 地圖拉近、選到的點變成脈動藍點＋白色店名膠囊；其他點淡掉 */
+#stores .mapc{position:relative}
+#stores .tw .land path{vector-effect:non-scaling-stroke}
+#stores .tw .pins circle{r:calc(4.2px * var(--pz,1));vector-effect:non-scaling-stroke}
+#stores .tw .pins circle.hl{r:calc(8px * var(--pz,1))}
+#stores .tw.has-sel .pins circle:not(.sel):not(.off):not(.hl){opacity:.38}
+#stores .tw .pins circle.sel{r:calc(9px * var(--pz,1));stroke-width:3px;fill:#1F4FE0;fill-opacity:1}
+#stores .tw .pins .st-ring{r:calc(9px * var(--pz,1));fill:#1F4FE0;stroke:none;pointer-events:none;transform-box:fill-box;transform-origin:center;opacity:0}
+#stores .tw .pins .st-ring.go{animation:st-pulse 1.8s ease-out .5s infinite}
+@keyframes st-pulse{0%{opacity:.35;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+#stores .tw .rl{transition:opacity .3s ease}
+#stores .tw.zoomed .rl{opacity:0;pointer-events:none}
+#stores .st-tag{position:absolute;left:0;top:0;z-index:3;pointer-events:none;padding:8px 14px 9px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12);white-space:nowrap;opacity:0;transition:opacity .2s ease}
+#stores .mapc.has-sel .st-tag{opacity:1;transition-delay:.45s}
+#stores .st-tag b{display:block;font-size:14px;font-weight:700;color:#141A22}
+#stores .st-tag span{display:block;margin-top:2px;font-size:12px;color:#7A8492}
+#stores .st-tag span:empty{display:none}
+#stores .st-reset{position:absolute;left:16px;top:16px;z-index:3;display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px 0 10px;border:0;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.1);font:inherit;font-size:13.5px;font-weight:700;color:#141A22;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease,box-shadow .2s ease}
+#stores .st-reset svg{width:16px;height:16px}
+#stores .st-reset:hover{box-shadow:0 1px 2px rgba(20,26,34,.08),0 8px 22px rgba(20,26,34,.16)}
+#stores .mapc.zoomed .st-reset{opacity:1;pointer-events:auto}
+#stores .slist li[data-i]{cursor:pointer}
+#stores .slist li[data-i]:focus-visible{outline:2px solid #1F4FE0;outline-offset:-2px}
+#stores .slist li.sel{background:#EEF3FF}
+#stores .slist li.sel b{color:#1F4FE0}
+@media(prefers-reduced-motion:reduce){#stores .tw .pins .st-ring.go{animation:none}}
+#stores .tw.zoomed{cursor:grab;touch-action:none}
+#stores .tw.dragging{cursor:grabbing}
+#stores .tw.dragging .pins circle{transition:none}
+#stores .st-zoom{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;flex-direction:column;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.1);overflow:hidden}
+#stores .st-zoom button{display:grid;place-items:center;width:40px;height:40px;border:0;background:none;color:#141A22;cursor:pointer;transition:background .2s,color .2s}
+#stores .st-zoom button+button{border-top:1px solid #E6E9EE}
+#stores .st-zoom button:hover:not(:disabled){background:#F3F5F7}
+#stores .st-zoom button:disabled{color:#C3CAD3;cursor:default}
+#stores .st-zoom button:focus-visible{outline:2px solid #1F4FE0;outline-offset:-2px}
+#stores .st-zoom svg{width:18px;height:18px}
+/* 地圖鋪滿整張卡（放大後邊緣不留白框） */
+@media(min-width:901px){#stores .mapc{padding:0}#stores .tw{max-height:none}}
+
+/* 門市地圖：真實街道圖（MapLibre）。載好之前顯示手繪 SVG，載好後淡入取代 */
+#stores .st-gl{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .5s ease}
+#stores .mapc.gl-on .st-gl{opacity:1}
+#stores .mapc.gl-on .tw{visibility:hidden}
+#stores .st-reset,#stores .st-zoom{z-index:4}
+#stores .st-gl .maplibregl-canvas{outline:none}
+#stores .st-gl .maplibregl-ctrl-attrib{font-size:10.5px;background:rgba(255,255,255,.8)}
+#stores .st-gl .maplibregl-ctrl-bottom-left{margin:0 0 6px 6px}
+#stores .st-mk{position:relative;width:20px;height:20px}
+#stores .st-mk-dot{position:absolute;inset:0;border-radius:50%;background:#1F4FE0;border:3px solid #fff;box-shadow:0 2px 8px rgba(31,79,224,.35)}
+#stores .st-mk::before{content:"";position:absolute;inset:0;border-radius:50%;background:#1F4FE0;opacity:0;animation:st-pulse 1.8s ease-out .6s infinite}
+#stores .st-mk-tag{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);padding:8px 14px 9px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12);white-space:nowrap;pointer-events:none;opacity:0;animation:st-tag-in .3s ease .7s forwards}
+#stores .st-mk-tag b{display:block;font-size:14px;font-weight:700;color:#141A22}
+#stores .st-mk-tag span{display:block;margin-top:2px;font-size:12px;color:#7A8492}
+@keyframes st-tag-in{from{opacity:0;transform:translate(-50%,4px)}to{opacity:1;transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){#stores .st-mk::before{animation:none}#stores .st-mk-tag{animation:none;opacity:1}}
+
+/* 零件標籤位置（依 10/23 參考圖微調）：標籤貼在零件旁邊、部分可壓在零件上；前後輪組只標在前輪右下 */
+@media(min-width:901px){
+ .parts10 .pp10.p-saddle .dc{left:130px!important;right:auto!important;top:-26px!important;bottom:auto!important;transform:none!important}
+ .parts10 .pp10.p-stem .dc{left:auto!important;right:42px!important;top:-30px!important;bottom:auto!important;transform:none!important}
+ .parts10 .pp10.p-bar-drop .dc{left:132px!important;right:auto!important;top:-20px!important;bottom:auto!important;transform:none!important}
+ .parts10 .pp10.p-cassette .dc{left:74px!important;right:auto!important;top:-6px!important;bottom:auto!important;transform:none!important}
+ .parts10 .pp10.p-crank-ring .dc{left:calc(50% + 10px)!important;right:auto!important;top:78px!important;bottom:auto!important;transform:translateX(-50%)!important}
+ .parts10 .pp10.p-wheel .dc{left:auto!important;right:-57px!important;top:auto!important;bottom:33px!important;transform:none!important}
+ /* 原本靠右對齊的飛輪改回靠左 */
+ .parts10 .pp10.p-cassette .dc,.parts10 .pp10.p-cassette.hov .dc{text-align:left}
+ .parts10 .pp10.p-cassette .dc b,.parts10 .pp10.p-cassette .dc .chips{justify-content:flex-start}
+ .parts10 .pp10.p-cassette .pd-desc{margin-left:0}
+}
+@media(min-width:901px) and (max-width:1180px){.parts10 .pp10.p-wheel .dc{right:8px!important}.parts10 .pp10.p-bar-drop .dc{left:auto!important;right:-20px!important}}
+
+/* 車款客製化塗裝：拿掉往上的陰影（那條陰影就是卡片左右兩側的分界線），背景照片頂端用漸層接上「可選客製車款」的淺灰底 */
+.tpl9.arc-showroom{box-shadow:none!important}
+.tpl9.arc-showroom{background:linear-gradient(to bottom,#F3F5F7 0,rgba(243,245,247,.85) 60px,rgba(243,245,247,0) 260px),url('../img/backgrounds/custom-paint-studio-v2.jpg') center/cover no-repeat,#eef0f1!important}
+
+/* 車款客製化塗裝：「用 TCR 開始客製 →」主要按鈕（取代原本的「選擇你的塗裝」文字） */
+.tpl9.arc-showroom .showroom-motion .paint-start{bottom:18px;display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 24px 0 26px;border:0;border-radius:999px;background:#0E1726;color:#fff;font-size:15.5px;font-weight:700;letter-spacing:.02em;text-decoration:none;box-shadow:0 8px 22px rgba(14,23,38,.18);transition:background .2s ease,box-shadow .2s ease}
+.tpl9.arc-showroom .paint-start svg{width:18px;height:18px;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.tpl9.arc-showroom .paint-start:hover,.tpl9.arc-showroom .paint-start:focus-visible{background:#1C2A40;color:#fff;box-shadow:0 10px 26px rgba(14,23,38,.24)}
+.tpl9.arc-showroom .paint-start:hover svg{transform:translateX(3px)}
+.tpl9.arc-showroom .paint-start:focus-visible{outline:2px solid #1F4FE0;outline-offset:3px}
+@media(max-width:600px){.tpl9.arc-showroom .showroom-motion .paint-start{height:46px;padding:0 20px 0 22px;font-size:14.5px}}
+
+/* 六大零件規格（桌機）：整區一個螢幕高；車子整組等比縮放置中（.pd-stage，由 index.html 計算）；
+   標籤維持膠囊、選到時變深色；名稱／規格／說明放在底部說明列，不再壓在車子上 */
+.parts10 .pd-stage{display:contents}
+.parts10 .pd-strip{display:none}
+@media(min-width:901px){
+ .parts10{height:100vh;height:100svh;min-height:640px}
+ .parts10 .pd-stage{display:block;position:absolute;left:0;top:0;width:1440px;height:900px;will-change:transform}
+ .parts10 .pp10 .dc .chips,.parts10 .pp10 .pd-desc{display:none!important}
+ .parts10 .pp10.hov .dc{padding:9px 17px!important;border-radius:20px!important;background:#0E1726!important;box-shadow:0 6px 18px rgba(14,23,38,.22)!important}
+ .parts10 .pp10.hov .dc b{color:#fff!important}
+ .parts10 .pp10 .dc{transition:background .25s ease,box-shadow .25s ease,opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)!important}
+ .parts10 .pp10 .dc b{transition:color .25s ease,opacity .25s ease!important}
+ .parts10 .pd-strip{position:absolute;left:50%;bottom:24px;z-index:30;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:22px;width:min(900px,calc(100vw - 72px));min-height:66px;padding:12px 28px;border-radius:999px;background:#fff;box-shadow:0 2px 4px rgba(20,26,34,.05),0 14px 32px rgba(20,26,34,.1);translate:-50% 0;transition:opacity .3s ease}
+ .parts10:not(.parts-ready) .pd-strip{opacity:0}
+ .parts10 .pd-strip-nm{font-size:16px;font-weight:700;color:#141A22;white-space:nowrap}
+ .parts10 .pd-strip-txt{display:flex;flex-direction:column;gap:2px;padding-left:22px;border-left:1px solid #E3E7EC;transition:opacity .14s ease}
+ .parts10 .pd-strip.swap .pd-strip-txt,.parts10 .pd-strip.swap .pd-strip-nm{opacity:0}
+ .parts10 .pd-strip-nm{transition:opacity .14s ease}
+ .parts10 .pd-strip-sp{font-size:13px;font-weight:600;color:#4A5563}
+ .parts10 .pd-strip-ds{font-size:13px;line-height:1.5;color:#4A5563}
+}
+
+/* 門市清單：拿掉「全台 · 共 130 家」這行（地區按鈕已有數量）；清單列左右留內距，選到／滑過時的底色不貼著文字 */
+#stores .slist .cnt{display:none!important}
+#stores .slist .chips{margin-bottom:6px}
+#stores .slist ul{margin-top:10px}
+#stores .slist li[data-i]{margin:0!important;padding:12px 14px!important;border-radius:12px}
+#stores .slist li[data-i]+li[data-i]{margin-top:2px!important}
+#stores .slist li[data-i]{position:relative;border-top:0!important}
+#stores .slist li[data-i]+li[data-i]::before{content:"";position:absolute;left:14px;right:14px;top:-1px;border-top:1px solid #E3E7EC;transition:opacity .2s}
+#stores .slist li.hl::before,#stores .slist li.sel::before,#stores .slist li.hl+li::before,#stores .slist li.sel+li::before{opacity:0}
+/* 門市：右側清單卡收窄到地區按鈕一列的寬度（離島右緣＝搜尋框右緣）；電話與搜尋文字不用粗體 */
+@media(min-width:901px){#stores .smap{grid-template-columns:minmax(0,1fr) calc(var(--chips-w,420px) + 46px)!important}#stores .slist .chips{flex-wrap:nowrap}}
+#stores .slist .q input{font-weight:400!important}
+#stores .slist .q input::placeholder{font-weight:400}
+#stores .slist .tel{font-weight:400!important}
+#stores .slist .chips .chip{flex:none;white-space:nowrap}
+/* 說明列：寬度由 JS 對齊左右輪胎；沒有選零件時隱藏，滑到或點選零件才出現 */
+@media(min-width:901px){
+ .parts10 .pd-strip{translate:0 0;transition:opacity .3s ease,translate .35s cubic-bezier(.16,1,.3,1)}
+ .parts10:not(.has-focus) .pd-strip{opacity:0;translate:0 10px;pointer-events:none}
+}
+/* 搜尋時才顯示「搜尋「士林」，共 3 筆」 */
+#stores .slist .cnt.on{display:block!important;margin:12px 0 0;padding-left:14px;font-size:13px;font-weight:500;color:#4A5563}
+/* 說明列精簡版：一行排開（名稱｜規格 說明），寬度依內容，置中在兩輪之間、尺寸線下方 */
+@media(min-width:901px){
+ .parts10 .pd-strip{display:flex;align-items:center;gap:16px;width:max-content;min-height:0;padding:11px 22px;translate:-50% 0;border-radius:999px}
+ .parts10:not(.has-focus) .pd-strip{translate:-50% 8px}
+ .parts10 .pd-strip-nm{font-size:15px}
+ .parts10 .pd-strip-txt{flex-direction:row;align-items:baseline;flex-wrap:wrap;column-gap:10px;row-gap:0;padding-left:16px}
+ .parts10 .pd-strip-sp{color:#141A22;white-space:nowrap}
+}
+
+/* 「從碳纖維車架開始」：改成滿版（同首頁「台灣登山車越野基地」），文字對齊內容欄 */
+#cta{width:100%;padding-bottom:0}
+#cta .cta{border:0;border-radius:0;box-shadow:none}
+@media(min-width:901px){
+ #cta .cta{min-height:0;height:clamp(420px,34vw,520px);padding:0 calc((100vw - var(--shell))/2)}
+}
+@media(max-width:900px){#cta{padding-left:0!important;padding-right:0!important}#cta .cta{padding-left:16px;padding-right:16px}}
+/* 說明列：固定寬度、兩行（第一行規格、第二行說明） */
+@media(min-width:901px){
+ .parts10 .pd-strip{width:640px;padding:13px 28px 14px 26px;border-radius:999px}
+ .parts10 .pd-strip-nm{flex:none;width:auto;font-size:16px}
+ .parts10 .pd-strip-txt{flex:1;min-width:0;flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:3px;padding-left:20px}
+ .parts10 .pd-strip-sp{font-size:13.5px;font-weight:700;color:#141A22}
+ .parts10 .pd-strip-ds{font-size:13.5px;line-height:1.5;color:#4A5563}
+}
+/* 後輪可以滑過／點擊（等同前後輪組），點擊範圍只限輪子圓形 */
+@media(min-width:901px){.parts10 .rear-wheel.rear-hit{pointer-events:auto;cursor:pointer;clip-path:circle(50%)}}
+
+/* 「從碳纖維車架開始」（提案 3）：照片高度＝區塊高度、車架左端固定在文字欄右側約 100px、右緣淡出到底色；按鈕下方三個重點數字 */
+@media(min-width:901px){
+ #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 2.3346);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
+  background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
+   linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px)),
+   #060709 url('../img/cta/carbon-frame-studio.jpg') var(--ix) center/auto 100% no-repeat}
+}
+#cta .cta-stats{display:flex;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
+#cta .cta-stats div{padding-right:32px;margin-right:32px;border-right:1px solid rgba(255,255,255,.14)}
+#cta .cta-stats div:last-child{border-right:0;margin-right:0;padding-right:0}
+#cta .cta-stats b{display:block;font:800 30px/1 "Inter",sans-serif;color:#fff;letter-spacing:-.01em}
+#cta .cta-stats b small{font-size:15px;font-weight:700;margin-left:3px}
+#cta .cta-stats span{display:block;margin-top:8px;font-size:13px;color:#AEB7C4}
+@media(max-width:900px){#cta .cta-stats{margin-top:28px;padding-top:18px}#cta .cta-stats div{padding-right:18px;margin-right:18px}#cta .cta-stats b{font-size:24px}#cta .cta-stats span{font-size:12px}}
+@media(max-width:900px){#cta .cta{min-height:620px}}

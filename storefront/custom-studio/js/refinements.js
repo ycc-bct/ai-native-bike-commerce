@@ -2,25 +2,16 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const hero=document.querySelector('#hero'), video=hero.querySelector('video'), copy=hero.querySelector('.hx');
  const models=document.querySelector('#models'), cards=[...models.querySelectorAll('article')];
- const stores=document.querySelector('#stores'), map=stores.querySelector('.mapc'), list=stores.querySelector('.slist');
  const clamp=v=>Math.max(0,Math.min(1,v));
  let scheduled=false;
  function update(){
   scheduled=false;
-  const h=innerHeight;
   const hp=clamp(-hero.getBoundingClientRect().top/hero.offsetHeight);
   video.style.transform=reduced.matches?'none':`translateY(${hp*120}px) scale(${1+hp*.08})`;
   copy.style.opacity=reduced.matches?1:1-clamp(hp*1.8);
   copy.style.translate=reduced.matches?'none':`0 ${hp*-80}px`;
-  const r=models.getBoundingClientRect();
-  cards.forEach((card,i)=>{const t=reduced.matches?1:clamp((h-r.top-140)/(h*.55));card.style.translate=`0 ${(1-t)*220}px`;card.style.opacity=clamp(t*2);});
-  const sr=stores.getBoundingClientRect();
-  const t=reduced.matches?1:clamp((h*.7-sr.top)/(h*.48));
-  const offset=(stores.querySelector('.smap').clientWidth-map.offsetWidth)/2;
-  map.style.transform=`translateX(${offset*(1-t)}px)`;
-  list.style.transform=`translateX(${180*(1-t)}px)`;
-  list.style.opacity=t;
-  list.style.visibility=t===0?'hidden':'visible';
+  /* 車款卡片的進場改由 screen-motion.js 一次性播放（同首頁的 .rv 進場），這裡不再跟著捲動推移 */
+  /* 門市地圖與清單也改由 screen-motion.js 一次性淡入上浮，不再橫向推移 */
  }
  function schedule(){if(!scheduled){scheduled=true;requestAnimationFrame(update);}}
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);reduced.addEventListener('change',()=>{if(reduced.matches)video.pause();else video.play().catch(()=>{});schedule();});
@@ -35,7 +26,10 @@
  catalog.propel[1]={src:'img/templates-cut/propel-team-jayco.webp',label:'Team Jayco 特仕塗裝'};
  const tabs=[...section.querySelectorAll('.tab9')];
  const caption=document.createElement('p');caption.className='paint-caption';section.querySelector('.in').append(caption);
- const choosePaint=document.createElement('button');choosePaint.type='button';choosePaint.className='paint-choose-action';choosePaint.textContent='選擇你的塗裝';section.querySelector('.in').append(choosePaint);
+ /* 原本的「選擇你的塗裝」改成主要按鈕：用目前選的車款開始客製，連到客製頁該車款的等級選擇 */
+ const choosePaint=document.createElement('a');choosePaint.className='paint-choose-action paint-start';section.querySelector('.in').append(choosePaint);
+ const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+ const setStart=f=>{const name=f.toUpperCase();choosePaint.href=`../../customized.html#levels/${f}`;choosePaint.innerHTML=`用 ${name} 開始客製${ARROW}`;choosePaint.setAttribute('aria-label',`用 ${name} 開始客製`);};
  section.classList.add('arc-showroom');
  const display=document.createElement('div');display.className='paint-display';bike.before(display);display.append(bike);
  const entrance=document.createElement('div');entrance.className='showroom-motion';section.querySelector('.in').append(entrance);entrance.append(display,section.querySelector('.tabs9'),section.querySelector('.tray9'),caption,choosePaint);
@@ -74,7 +68,7 @@
   };asset.onerror=()=>{if(token===request)restart();};asset.src=paint.src;
  }
  function selectFamily(value){
-  family=value;
+  family=value;setStart(family);
   tabs.forEach(el=>{const active=el.textContent.trim().toLowerCase()===family;el.classList.toggle('on',active);el.setAttribute('aria-pressed',String(active));});
   tray.replaceChildren();
   catalog[family].forEach((paint,index)=>{const el=document.createElement('button');el.type='button';el.className='th9';el.setAttribute('aria-label',`${family.toUpperCase()} ${paint.label}`);el.title=paint.label;const img=new Image();img.src=paint.src;img.alt='';const label=document.createElement('b');label.textContent=paint.label;el.append(img,label);el.addEventListener('click',()=>{holdUntil=Date.now()+12000;selectPaint(index);});tray.append(el);});
@@ -86,13 +80,6 @@
 
 
  document.addEventListener('visibilitychange',restart);reducedMotion.addEventListener('change',()=>{motion?.cancel();restart();});
- choosePaint.addEventListener('click',()=>{
-  const paint=catalog[family][selected];
-  choosePaint.textContent=`已選擇 ${family.toUpperCase()}・${paint.label}`;
-  choosePaint.classList.add('is-selected');
-  clearTimeout(choosePaint._reset);
-  choosePaint._reset=setTimeout(()=>{choosePaint.textContent='選擇你的塗裝';choosePaint.classList.remove('is-selected');},2200);
- });
  selectFamily('tcr');
 })();
 
@@ -106,14 +93,20 @@
   'p-bar-drop':'全碳纖維、短 Reach 與淺 Drop；外擴幾何兼顧空力、操控與長途舒適。',
   'p-wheel':'40 mm 碳纖維輪框、空力碳纖維輻條與無內胎設定，兼顧速度與穩定。'
  };
+ /* 說明直接放進零件旁的標籤裡（選到時展開成小卡），不再另外放在標題下方 */
  const section=document.querySelector('#parts'),parts=[...section.querySelectorAll('.pp10')];
- const panel=document.createElement('div');panel.className='parts-live-detail';panel.setAttribute('aria-live','polite');panel.innerHTML='<strong></strong><p></p>';section.querySelector('.phd9').append(panel);
- function update(){
-  const part=parts.find(item=>item.classList.contains('hov'))||parts[0];
-  const key=[...part.classList].find(name=>details[name]);
-  panel.querySelector('strong').textContent=part.querySelector('.dc b').textContent;
-  panel.querySelector('p').textContent=details[key];
-  panel.classList.toggle('is-visible',parts.some(item=>item.classList.contains('hov')));
- }
- const observer=new MutationObserver(update);parts.forEach(part=>observer.observe(part,{attributes:true,attributeFilter:['class']}));update();
+ parts.forEach(part=>{const key=[...part.classList].find(name=>details[name]),dc=part.querySelector('.dc');if(key&&dc&&!dc.querySelector('.pd-desc'))dc.insertAdjacentHTML('beforeend','<small class="pd-desc">'+details[key]+'</small>');});
+ /* 桌機：說明不再展開在標籤上（會擋住零件），改放在車子下方的說明列，選到哪個零件就換成它的名稱、規格與說明 */
+ const strip=document.createElement('div');strip.className='pd-strip';strip.setAttribute('aria-live','polite');section.appendChild(strip);
+ const fill=i=>{
+  const part=parts[i];
+  if(!part){strip.innerHTML='<b class="pd-strip-nm">六大零件</b><span class="pd-strip-txt"><span class="pd-strip-ds">滑到或點選零件，看規格與說明</span></span>';return;}
+  const b=part.querySelector('.dc b'),name=b?b.childNodes[0].textContent.trim():'',spec=[...part.querySelectorAll('.dc .chip')].map(c=>c.textContent.trim()).join('・'),key=[...part.classList].find(n=>details[n]);
+  strip.innerHTML=`<b class="pd-strip-nm">${name}</b><span class="pd-strip-txt"><span class="pd-strip-sp">${spec}</span><span class="pd-strip-ds">${key?details[key]:''}</span></span>`;
+ };
+ fill(-1);
+ /* 說明列：放在尺寸線正下方、左右輪之間置中；固定寬度 640（不超過兩輪外緣），每個零件一樣寬 */
+ const alignStrip=()=>{const rear=section.querySelector('.rear-wheel:not(.pd-sk)'),front=section.querySelector('.p-wheel img:not(.pd-sk)'),wrap=section.querySelector('.pd-stage');if(!rear||!front||!wrap||!matchMedia('(min-width:901px)').matches)return;const S=section.getBoundingClientRect(),W=wrap.getBoundingClientRect(),l=rear.getBoundingClientRect().left-S.left,r=front.getBoundingClientRect().right-S.left;if(r-l<200)return;strip.style.left=(l+r)/2+'px';strip.style.width=Math.min(640,r-l)+'px';strip.style.maxWidth='';strip.style.top=(W.top-S.top+784*W.height/900)+'px';strip.style.bottom='auto';};
+ alignStrip();addEventListener('resize',alignStrip);addEventListener('load',alignStrip);
+ section.addEventListener('partchange',e=>{strip.classList.add('swap');clearTimeout(strip._t);strip._t=setTimeout(()=>{fill(e.detail);strip.classList.remove('swap');},140);});
 })();

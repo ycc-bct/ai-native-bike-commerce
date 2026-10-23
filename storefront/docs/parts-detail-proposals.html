@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>六大零件說明位置 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:720px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>六大零件規格：說明不擋住零件的三個做法</h1>
+<p class="lead">三個提案的標籤都維持白色膠囊、不再展開成小卡（選到時變深色膠囊），規格與說明移到別的位置。下面都是實際頁面，會自動輪播，也可以滑到零件或點一下鎖定、點空白處看全部。</p>
+<div class="nav"><a href="#A">A 標題下方固定說明卡</a><a href="#B">B 就近留白放置</a><a href="#C">C 底部說明列</a></div>
+<section class="prop" id="A"><div class="hd"><h2><i>A</i>標題下方固定說明卡</h2></div><p>說明固定出現在「六大零件規格」標題下方的留白，永遠在同一個位置，眼睛知道去哪裡看；標籤只負責指出零件（選到變深色膠囊）。完全不會擋到車，但說明離零件比較遠。</p><div class="box" data-v="A"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="B"><div class="hd"><h2><i>B</i>就近留白放置</h2></div><p>說明卡出現在離該零件最近的空白處：坐墊在左上、豎桿與車把在右上、飛輪在後輪左側、大齒盤在地面線下方、輪組在前輪右側。離零件近、又不壓在車上；卡片位置會跟著零件移動。</p><div class="box" data-v="B"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="C"><div class="hd"><h2><i>C</i>底部說明列</h2></div><p>車子下方一條橫向說明列：編號、名稱、規格、說明排成一列，切換零件時內容替換。位置固定、閱讀節奏像字幕，車子完全不被擋；但說明在畫面最下方，離上方的坐墊、車把較遠。</p><div class="box" data-v="C"><div class="ld">載入中…</div></div></section>
+<script>
+const PD=new URL('parts-fx/pd.js?v=2',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../custom-studio/index.html?pd='+v+'#parts'; box.appendChild(f);
+  f.addEventListener('load',()=>{setTimeout(()=>{const w=f.contentWindow,s=w.document.createElement('script');s.src=PD;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),300);w.document.body.appendChild(s);},900);});
+});
+</script>
+</body></html>

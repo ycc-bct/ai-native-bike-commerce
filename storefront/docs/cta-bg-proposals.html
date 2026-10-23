@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>收尾 CTA 底圖 提案示意</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#F3F5F7;color:var(--ink);padding:40px 36px 80px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:960px;line-height:1.7}
+.prop{margin-top:44px;max-width:1368px}.prop h2{font-size:17px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p.d{margin:6px 0 14px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:960px}
+/* 跟 custom-studio #cta .cta 同一組尺寸與排版 */
+.cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:#05080d center/cover no-repeat}
+.cta::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,6,11,.82) 0%,rgba(3,6,11,.55) 34%,rgba(3,6,11,0) 62%);z-index:0}
+.tx{position:relative;z-index:2;max-width:560px}
+.tx h2{font-size:clamp(34px,3.4vw,52px);font-weight:900;line-height:1.18;letter-spacing:.01em}
+.tx p{margin-top:18px;font-size:16px;line-height:1.75;color:#e9edf3;max-width:470px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;margin-top:28px;border-radius:999px;background:#fff;color:#0e1726;font-size:15px;font-weight:700}
+.btn svg{width:16px;height:16px}
+.now{background-image:url(../custom-studio/img/cta/giant-carbon-custom-ride.jpg)}
+.now::before{background:linear-gradient(90deg,rgba(6,11,20,.9) 0%,rgba(6,11,20,.72) 30%,rgba(6,11,20,.28) 58%,rgba(6,11,20,.04) 78%)}
+.b1{background-image:url(cta-bg/cta-1.jpg);background-position:70% 50%}
+.b2{background-image:url(cta-bg/cta-2.jpg);background-position:80% 50%}
+.b3{background-image:url(cta-bg/cta-3.jpg);background-position:70% 40%}
+.b4{background-image:url(cta-bg/cta-4.jpg);background-position:72% 50%}
+/* 3 的光掃：捲進畫面時一道冷白光從左掃到右，掃過車架輪廓一次 */
+.sweep::after{content:"";position:absolute;inset:-20% -40%;z-index:1;pointer-events:none;background:linear-gradient(100deg,transparent 42%,rgba(190,215,255,.0) 44%,rgba(190,215,255,.22) 50%,rgba(190,215,255,0) 56%,transparent 58%);mix-blend-mode:screen;transform:translateX(-60%);opacity:0}
+.sweep.go::after{animation:sweep 2.4s cubic-bezier(.45,.05,.2,1) .2s forwards}
+@keyframes sweep{0%{transform:translateX(-60%);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(60%);opacity:0}}
+.replay{margin-top:10px;font-size:12.5px;font-weight:700;color:#1F4FE0;background:none;border:0;cursor:pointer}
+.cmp{margin-top:44px;max-width:1368px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+.note{margin-top:14px;font-size:12px;color:var(--ink-50)}
+</style></head><body>
+<h1>收尾區「從碳纖維車架開始 為你量身打造」：底圖提案</h1>
+<p class="lead">版面、文案、按鈕都照介紹頁目前的 CTA，只換底圖。四張都是 AI 生成的示意（無品牌字樣），定案後可以再用同一副編輯頁的車架或官方素材重做。最上面是現在的樣子。</p>
+<section class="prop"><h2><i style="background:#7A8492">今</i>目前</h2><p class="d">官網 2022 桌布：峽谷騎車。跟車架沒有關係，大片藍天壓深色漸層後偏髒。</p><div class="cta now "><div class="tx"><h2>從碳纖維車架開始<br>為你量身打造</h2><p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+<section class="prop"><h2><i>1</i>暗室打光的裸車架</h2><p class="d">暗室打光的裸碳車架：車架偏右，一道側逆光沿著上管、下管勾邊，底下一點霧氣；左邊大片黑留給文案。</p><div class="cta b1 "><div class="tx"><h2>從碳纖維車架開始<br>為你量身打造</h2><p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+<section class="prop"><h2><i>2</i>碳纖維紋理特寫</h2><p class="d">碳纖維紋理特寫：一道斜光掃過碳纖編織紋，其他都沉在黑裡。最抽象，但看不出是一整台車。</p><div class="cta b2 "><div class="tx"><h2>從碳纖維車架開始<br>為你量身打造</h2><p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+<section class="prop"><h2><i>3</i>輪廓光剪影＋光掃</h2><p class="d">輪廓光剪影：車架幾乎全黑，只有管材邊緣一圈細亮光，像新車發表會開燈前。捲到這裡時一道冷白光從左掃到右一次。</p><div class="cta b3 sweep"><div class="tx"><h2>從碳纖維車架開始<br>為你量身打造</h2><p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div><button class="replay">重播光掃</button></section>
+<section class="prop"><h2><i>4</i>工作檯上的車架</h2><p class="d">工作檯上的車架：夾在維修架上，暗色工作室、一盞暖色吊燈、工具。呼應「由專業技師確認」，故事感最強。</p><div class="cta b4 "><div class="tx"><h2>從碳纖維車架開始<br>為你量身打造</h2><p>親臨客製化自行車服務門市，由專業技師確認零件搭配性與尺寸規格，簽訂工單即完成訂購。</p><a class="btn">開始打造我的客製車<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+
+<div class="cmp"><table>
+<tr><th></th><th>1 暗室打光車架</th><th>2 碳纖紋理特寫</th><th>3 輪廓光剪影＋光掃</th><th>4 工作檯上的車架</th></tr>
+<tr><td>跟「車架」的關係</td><td>最直接，一眼是一副車架</td><td>只看得到材質</td><td>看得出車架，但只剩線條</td><td>車架＋技師工作的情境</td></tr>
+<tr><td>神秘感</td><td>高</td><td>最高</td><td>最高</td><td>中（背景元素多）</td></tr>
+<tr><td>跟文案的呼應</td><td>「從碳纖維車架開始」</td><td>「碳纖維」</td><td>「為你量身打造」前的揭曉</td><td>「由專業技師確認」</td></tr>
+<tr><td>文案可讀性</td><td>左邊全黑，最好讀</td><td>最好讀</td><td>最好讀</td><td>左邊有暗暗的層架，稍弱</td></tr>
+<tr><td>建議</td><td>★ 穩，最貼題</td><td></td><td>★ 動態加分，示範時最有感</td><td></td></tr>
+</table></div>
+<p class="note">示意圖放在 storefront/docs/cta-bg/，尚未換到介紹頁。</p>
+<script>
+const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+document.querySelectorAll('.cta').forEach(c=>{});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove('go');void e.target.offsetWidth;e.target.classList.add('go')}}),{threshold:.5});
+document.querySelectorAll('.sweep').forEach(el=>io.observe(el));
+document.querySelectorAll('.replay').forEach(b=>b.onclick=()=>{const el=b.previousElementSibling;el.classList.remove('go');void el.offsetWidth;el.classList.add('go')});
+</script>
+</body></html>

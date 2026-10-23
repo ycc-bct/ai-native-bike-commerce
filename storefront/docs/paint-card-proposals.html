@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自由配色卡片 提案示意</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);color:var(--ink);background:#E8EBEF;padding:40px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:8px;font-size:14px;color:var(--ink-70);line-height:1.7;max-width:900px}
+.row{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:36px;align-items:start}
+.prop h2{font-size:16px;font-weight:800;margin-bottom:4px}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:8px;vertical-align:1px}
+.prop p.d{font-size:12.5px;color:var(--ink-70);line-height:1.6;min-height:60px;margin-bottom:14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px}
+.card{position:relative;border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;background:#fff;text-align:left}
+.card.on{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
+.card .th{height:76px;border-radius:8px;background:var(--paper);margin-bottom:10px;display:grid;place-items:center;overflow:hidden}
+.card .th svg{width:84%;height:auto}
+.hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.hd b{font-size:15px;font-weight:700}.hd .pr{font-size:14px;font-weight:600}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:#EEF2FF;color:var(--ai);vertical-align:2px;margin-left:6px}
+.tag.gray{background:#F0F2F4;color:var(--ink-70)}
+.chev{position:absolute;right:12px;bottom:12px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-70)}
+.chev svg{width:13px;height:13px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:-1px;margin-right:5px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.note{margin-top:14px;font-size:12px;color:var(--ink-50);line-height:1.6}
+/* A 三行 */
+.A .l2{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink)}.A .l2 small{color:var(--ink-50);margin-right:3px;font-size:11px}
+.A .l3{margin-top:6px;font-size:12px;color:var(--ink-70)}
+/* B 色條 */
+.B .bar{margin-top:10px;display:grid;grid-template-columns:5fr 5fr 2fr;height:14px;border-radius:7px;overflow:hidden;gap:2px}
+.B .bar i{display:block}
+.B .lab{display:grid;grid-template-columns:5fr 5fr 2fr;gap:2px;margin-top:6px;font-size:11.5px;color:var(--ink-70)}
+.B .lab span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.B .lab small{display:block;font-size:10px;color:var(--ink-50)}
+.B .l3{margin-top:8px;font-size:12px;color:var(--ink-70)}
+/* C 表格 */
+.C table{margin-top:8px;border-collapse:collapse;width:100%;font-size:12.5px}.C td{padding:3px 0;vertical-align:middle}.C td:first-child{width:46px;color:var(--ink-50);font-size:11px}
+.C .l3{margin-top:4px;font-size:12px;color:var(--ink-70)}
+/* D 色票 */
+.D .chips{margin-top:10px;display:flex;gap:6px}.D .chip{flex:1;min-width:0;height:40px;border-radius:8px;display:flex;align-items:flex-end;padding:4px 6px;font-size:10.5px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.D .chip.light{color:#141A22;text-shadow:none}.D .chip small{display:block;font-weight:500;opacity:.85;font-size:9.5px}
+.D .l3{margin-top:8px;font-size:12px;color:var(--ink-70)}
+.cmp{margin-top:40px;background:#fff;border-radius:14px;padding:22px 26px;max-width:1100px}
+.cmp h3{font-size:16px;font-weight:800;margin-bottom:10px}.cmp table{border-collapse:collapse;font-size:13px;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.55}.cmp th{border-top:0;font-size:11.5px;letter-spacing:.08em;color:var(--ink-50)}
+
+/* 霧面／亮面：色點與色塊本身也看得出來（亮面有一點高光），旁邊再寫字 */
+.dot.g{background-image:radial-gradient(circle at 32% 28%,rgba(255,255,255,.85) 0,rgba(255,255,255,0) 45%)}
+.dot.m{background-image:none}
+.fin{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.04em;padding:1px 5px;border-radius:4px;margin-left:5px;vertical-align:1px}
+.fin.m{background:#EEF1F4;color:var(--ink-70)}.fin.g{background:#E7F1FF;color:#1F4FE0}
+.B .bar i.g{background-image:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 55%)}
+.B .lab .fin{margin-left:0;display:inline-block;margin-top:3px}
+.C td:nth-child(3){width:46px;text-align:right}.C td:nth-child(3) .fin{margin-left:0}
+.D .cw{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.D .chip{height:38px}.D .chip.g{background-image:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,0) 50%)}
+.D .cf{font-size:10px;color:var(--ink-70)}
+</style></head><body>
+<h1>自由配色卡片：四個排版提案</h1>
+<p class="lead">每一欄都是同一組內容：Type 1 預設（鈷藍亮／捷安特黑亮／捷安特白亮）、Type 2 已調整（鈦銀霧／檸檬黃亮／捷安特白霧，+NT$ 4,380）、特仕塗裝「武嶺晨霧」。上半／下半／Logo 各自可選霧面或亮面，所以表面處理跟著每個區塊標，亮面的色點、色條、色塊多一道高光。右下角圓鈕是「調整配色」入口，卡片本身點了只預覽＋選取。</p>
+<div class="row" id="row"></div>
+<div class="cmp"><h3>比較</h3><table>
+<tr><th></th><th>A 三行文字＋色點</th><th>B 比例色條</th><th>C 兩欄表格</th><th>D 色票塊</th></tr>
+<tr><td>一眼看出配色</td><td>中</td><td>高（還看得出上下半比例）</td><td>中</td><td>最高</td></tr>
+<tr><td>名字好讀</td><td>中（一行塞三組）</td><td>中（窄欄會截字）</td><td>最好（每行一組）</td><td>低（字在色塊上）</td></tr>
+<tr><td>卡片高度</td><td>最矮</td><td>矮</td><td>最高</td><td>中</td></tr>
+<tr><td>霧／亮一眼分</td><td>靠小標</td><td>色條高光＋小標</td><td>色點高光＋獨立一欄最清楚</td><td>色塊高光＋小字</td></tr>
+<tr><td>長名字（超級變色龍）</td><td>會折行</td><td>會截掉</td><td>沒問題</td><td>會截掉</td></tr>
+<tr><td>我的建議</td><td></td><td>★ 2×2 格放得下、配色一眼看懂</td><td>★ 如果改成一欄直列</td><td></td></tr>
+</table></div>
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="bike" viewBox="0 0 200 90"><g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="62" r="24" stroke="#2a2f36" stroke-width="7"/><circle cx="160" cy="62" r="24" stroke="#2a2f36" stroke-width="7"/><path class="up" d="M40 62 L78 24 L134 24 L160 62"/><path class="lo" d="M78 24 L96 62 L40 62 M96 62 L134 24"/><path d="M70 20 L82 24 M128 22 L138 16" stroke="#2a2f36"/></g><rect class="lg" x="88" y="38" width="22" height="6" rx="2"/></symbol></defs></svg>
+<script>
+const DATA=[
+ {name:'Type 1',price:'+ NT$ 3,380',up:['鈷藍','#034aa2','g'],lo:['捷安特黑','#191919','g'],lg:['捷安特白','#dcdcdc','g'],edited:false},
+ {name:'Type 2',price:'+ NT$ 4,380',up:['鈦銀','#91919d','m'],lo:['檸檬黃','#d7c93a','g'],lg:['捷安特白','#dcdcdc','m'],edited:true,on:true,diff:'較原廠 +1,000'},
+ {name:'武嶺晨霧',price:'含',up:['砂金','#a3ae78','m'],lo:['砂金','#8f9a68','m'],lg:['白色標誌','#eeeeee','g'],special:'設計師推薦'},
+];
+const bike=d=>`<div class="th"><svg viewBox="0 0 200 90"><use href="#bike" style="--u:${d.up[1]}"/><g><use href="#bike"/></g></svg></div>`;
+const thumb=d=>`<div class="th"><svg viewBox="0 0 200 90"><g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="40" cy="62" r="24" stroke="#2a2f36" stroke-width="7"/><circle cx="160" cy="62" r="24" stroke="#2a2f36" stroke-width="7"/><path d="M40 62 L78 24 L134 24 L160 62" stroke="${d.up[1]}"/><path d="M78 24 L96 62 L40 62 M96 62 L134 24" stroke="${d.lo[1]}"/><path d="M70 20 L82 24 M128 22 L138 16" stroke="#2a2f36"/></g><rect x="86" y="36" width="24" height="6" rx="2" fill="${d.lg[1]}" stroke="rgba(0,0,0,.15)"/></svg></div>`;
+const head=d=>`<div class="hd"><b>${d.name}${d.edited?'<span class="tag">已調整</span>':''}${d.special?'<span class="tag gray">'+d.special+'</span>':''}</b><span class="pr">${d.price}</span></div>`;
+const chev='<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>';
+const FIN={m:'霧面',g:'亮面'};const fin=v=>`<em class="fin ${v[2]}">${FIN[v[2]]}</em>`;
+const dot=(c,f)=>`<i class="dot ${f||''}" style="background:${c}"></i>`;
+const light=h=>{const n=parseInt(h.slice(1),16);return ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000>170};
+const V={
+ A:{t:'三行文字＋色點',d:'第一行名稱與價格，第二行三組「前綴＋色點＋名字」，第三行表面處理。最接近你截圖，只是把斜線分隔改成色點。',
+    card:d=>`${thumb(d)}${head(d)}<div class="l2"><span><small>上半</small>${dot(d.up[1],d.up[2])}${d.up[0]}${fin(d.up)}</span><span><small>下半</small>${dot(d.lo[1],d.lo[2])}${d.lo[0]}${fin(d.lo)}</span><span><small>Logo</small>${dot(d.lg[1],d.lg[2])}${d.lg[0]}${fin(d.lg)}</span></div>${d.diff?'<div class="l3">'+d.diff+'</div>':''}${d.special?'':chev}`},
+ B:{t:'比例色條',d:'用一條依車架比例切成三段的色條表示上半／下半／Logo，名字排在色條正下方。配色一眼看懂，也看得出哪一塊佔多少。',
+    card:d=>`${thumb(d)}${head(d)}<div class="bar"><i class="${d.up[2]}" style="background:${d.up[1]}"></i><i class="${d.lo[2]}" style="background:${d.lo[1]}"></i><i class="${d.lg[2]}" style="background:${d.lg[1]}"></i></div><div class="lab"><span><small>上半</small>${d.up[0]}<br>${fin(d.up)}</span><span><small>下半</small>${d.lo[0]}<br>${fin(d.lo)}</span><span><small>Logo</small>${d.lg[0]}<br>${fin(d.lg)}</span></div>${d.diff?'<div class="l3">'+d.diff+'</div>':''}${d.special?'':chev}`},
+ C:{t:'兩欄表格',d:'每個區塊一行：左欄灰字標籤、右欄色點＋名字，最後一行表面處理。最好讀、長名字也不怕，代價是卡片比較高。',
+    card:d=>`${thumb(d)}${head(d)}<table><tr><td>上半</td><td>${dot(d.up[1],d.up[2])}${d.up[0]}</td><td>${fin(d.up)}</td></tr><tr><td>下半</td><td>${dot(d.lo[1],d.lo[2])}${d.lo[0]}</td><td>${fin(d.lo)}</td></tr><tr><td>Logo</td><td>${dot(d.lg[1],d.lg[2])}${d.lg[0]}</td><td>${fin(d.lg)}</td></tr></table>${d.diff?'<div class="l3">'+d.diff+'</div>':''}${d.special?'':chev}`},
+ D:{t:'色票塊',d:'三個色票塊並排，名字直接寫在色塊裡（淺色塊用深字）。最像「配色」本身，文字空間最小。',
+    card:d=>{const chip=(p,v)=>`<span class="chip ${v[2]}${light(v[1])?' light':''}" style="background:${v[1]}"><span><small>${p}</small>${v[0]}</span></span><span class="cf">${FIN[v[2]]}</span>`;return `${thumb(d)}${head(d)}<div class="chips"><span class="cw">${chip('上半',d.up)}</span><span class="cw">${chip('下半',d.lo)}</span><span class="cw">${chip('Logo',d.lg)}</span></div>${d.diff?'<div class="l3">'+d.diff+'</div>':''}${d.special?'':chev}`}},
+};
+document.getElementById('row').innerHTML=Object.entries(V).map(([k,v],i)=>`<section class="prop ${k}"><h2><i>${k}</i>${v.t}</h2><p class="d">${v.d}</p><div class="panel">${DATA.map(d=>`<div class="card${d.on?' on':''}">${v.card(d)}</div>`).join('')}</div></section>`).join('');
+</script></body></html>

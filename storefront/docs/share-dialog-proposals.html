@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>分享你的設計 提案示意</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--paper:#F3F5F7}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:40px;-webkit-font-smoothing:antialiased}
+h1{font-size:24px;font-weight:800}.lead{margin-top:6px;font-size:13.5px;color:var(--ink-70);max-width:900px;line-height:1.7}
+.prop{margin-top:34px;max-width:1120px}.prop h2{font-size:16px;font-weight:800;margin-bottom:4px}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:8px;vertical-align:1px}
+.prop p.d{font-size:13px;color:var(--ink-70);line-height:1.6;margin-bottom:14px}
+.frame{position:relative;height:560px;border-radius:16px;overflow:hidden;background:rgba(20,26,34,.45);display:grid;place-items:center}
+.dlg{position:relative;width:1040px;height:500px;border-radius:20px;background:#fff;overflow:hidden;display:grid;grid-template-columns:1fr 360px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.x{position:absolute;right:22px;top:20px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-70);z-index:3}
+svg{display:block}
+.vis{position:relative;overflow:hidden;background:var(--paper)}
+.vis img{position:absolute;left:50%;top:50%;width:86%;translate:-50% -50%;z-index:2;filter:drop-shadow(0 24px 30px rgba(20,26,34,.18))}
+.ghost{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:1;font-weight:900;letter-spacing:-.04em;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:2px rgba(20,26,34,.16)}
+.ghost.fill{color:rgba(20,26,34,.06);-webkit-text-stroke:0}
+.side{padding:40px 36px 32px;display:flex;flex-direction:column}
+.side .k{font-size:11.5px;letter-spacing:.16em;font-weight:700;color:var(--ink-50)}
+.side h3{margin-top:8px;font-size:26px;font-weight:800;line-height:1.2}
+.side .m{margin-top:4px;font-size:14px;color:var(--ink-70)}
+.rows{margin-top:26px;border-top:1px solid var(--line)}
+.rows div{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.rows span{color:var(--ink-50)}.rows b{font-weight:600}
+.rows .sw{display:inline-flex;align-items:center;gap:8px}.rows .sw i{width:14px;height:14px;border-radius:50%;background:#849cb0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.rows .total b{font-size:17px;font-weight:800}
+.acts{margin-top:auto;display:grid;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;border-radius:999px;font-size:14.5px;font-weight:700;border:1px solid var(--line);background:#fff}
+.btn.dark{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.soc{display:flex;gap:10px;justify-content:center;margin-top:4px}.soc a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-70);font-size:11px;font-weight:700}
+.chip{position:absolute;left:28px;bottom:24px;z-index:3;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);font-size:12px;color:var(--ink-70)}
+.chip i{width:10px;height:10px;border-radius:50%;background:#849cb0}
+/* 3 dark */
+.dark .vis{background:radial-gradient(80% 70% at 50% 45%,#2A3140 0,#0E1726 70%)}
+.dark .ghost{-webkit-text-stroke:2px rgba(255,255,255,.14)}
+.dark .side{background:#fff}
+.dark .vis img{filter:drop-shadow(0 30px 34px rgba(0,0,0,.5))}
+.strip{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;gap:28px;padding:16px 32px;background:linear-gradient(180deg,rgba(14,23,38,0),rgba(14,23,38,.9));color:#fff;font-size:12.5px}
+.strip span{color:rgba(255,255,255,.6);margin-right:6px}
+/* 2 card */
+.card .vis{display:grid;place-items:center;padding:30px}
+.card .shot{position:relative;width:100%;height:100%;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 20px 50px rgba(20,26,34,.18)}
+.card .shot img{width:82%;top:44%}
+.card .shot .ghost{font-size:150px;top:44%}
+.card .foot{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;padding:18px 22px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 40%)}
+.card .foot b{font-size:15px;font-weight:800}.card .foot small{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-70)}
+.card .foot .lg{font-size:12px;font-weight:900;letter-spacing:.12em;color:var(--ink-50)}
+.cmp{margin-top:30px;background:#fff;border-radius:14px;padding:18px 22px;max-width:1120px;font-size:13px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:7px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.5}.cmp th{border-top:0;font-size:11.5px;color:var(--ink-50);letter-spacing:.08em}
+
+.poster .ghost.fill{color:rgba(20,26,34,.07)}
+.shot.tint{background:linear-gradient(160deg,#F2F5F8 0%,#E3EAF1 100%)}
+.shot.tint .ghost.fill{color:rgba(132,156,176,.22)}
+.ticket{position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:flex;align-items:center;gap:16px;padding:12px 16px;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(20,26,34,.1)}
+.ticket b{font-size:14px;font-weight:800}.ticket small{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:11.5px;color:var(--ink-70)}.ticket small i{width:10px;height:10px;border-radius:50%;background:#849cb0}
+.ticket .pr{margin-left:auto;font-size:14px;font-weight:800}.ticket .lg{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--ink-50);padding-left:14px;border-left:1px solid var(--line)}
+</style></head><body>
+<h1>「分享你的設計」對話框：三個提案</h1>
+<p class="lead">左下角的車名拿掉，車名放回右欄標題。右欄改成「標題＋規格表＋兩顆按鈕」，複製連結當主按鈕、儲存圖像當次按鈕，底下加 LINE／IG／Facebook 直接分享。三個提案差在左邊的畫面怎麼呈現。</p>
+
+<section class="prop"><h2><i>1A</i>空心大字，置中</h2><p class="d">PROPEL 空心字置中在車後，字只比車寬一點；左下角小 pill 寫配色和尺寸。乾淨、對稱，最保守。</p>
+<div class="frame"><div class="dlg">
+  <div class="vis"><div class="ghost" style="font-size:150px">PROPEL</div><img src="../img/ride/propel-sl1.webp" alt=""><div class="chip"><i></i>I-Ti Star · M</div></div>
+  <div class="side"><span class="x">✕</span><span class="k">分享你的設計</span><h3>Propel Advanced SL 1</h3><div class="m">2026 年式 · 客製塗裝</div>
+    <div class="rows"><div><span>塗裝</span><b class="sw"><i></i>I-Ti Star</b></div><div><span>尺寸</span><b>M</b></div><div class="total"><span>總價</span><b>NT$ 242,160</b></div></div>
+    <div class="acts"><a class="btn dark"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></svg>複製連結</a><a class="btn"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>儲存圖像</a><div class="soc"><a>LINE</a><a>IG</a><a>FB</a></div></div>
+  </div>
+</div></div></section>
+
+<section class="prop"><h2><i>2A</i>分享卡，白底</h2><p class="d">左邊就是「儲存圖像」會下載的那張卡：白底、淡色實心大字、底部車名與配色、GIANT 字樣。拿到的和看到的一樣。</p>
+<div class="frame"><div class="dlg card">
+  <div class="vis"><div class="shot"><div class="ghost fill">PROPEL</div><img src="../img/ride/propel-sl1.webp" alt=""><div class="foot"><div><b>Propel Advanced SL 1</b><small>I-Ti Star · M · NT$ 242,160</small></div><span class="lg">GIANT</span></div></div></div>
+  <div class="side"><span class="x">✕</span><span class="k">分享你的設計</span><h3>Propel Advanced SL 1</h3><div class="m">這張卡會跟著連結一起分享</div>
+    <div class="rows"><div><span>塗裝</span><b class="sw"><i></i>I-Ti Star</b></div><div><span>尺寸</span><b>M</b></div><div class="total"><span>總價</span><b>NT$ 242,160</b></div></div>
+    <div class="acts"><a class="btn dark"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></svg>複製連結</a><a class="btn"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>儲存這張卡</a><div class="soc"><a>LINE</a><a>IG</a><a>FB</a></div></div>
+  </div>
+</div></div></section>
+
+
+<section class="prop"><h2><i>2B</i>分享卡，帶塗裝色</h2><p class="d">卡片底色取自你選的塗裝（這裡是 I-Ti Star 的鈦藍）淡化 90% 當底，大字用同色系再深一點，底部資訊改成一條白色小票。每個人的卡顏色都不一樣，分享出去比較認得出是誰的。</p>
+<div class="frame"><div class="dlg card">
+  <div class="vis"><div class="shot tint"><div class="ghost fill" style="font-size:160px;top:40%">SL 1</div><img src="../img/ride/propel-sl1.webp" alt=""><div class="ticket"><div><b>Propel Advanced SL 1</b><small><i></i>I-Ti Star · M · 全亮面</small></div><div class="pr">NT$ 242,160</div><span class="lg">GIANT</span></div></div></div>
+  <div class="side"><span class="x">✕</span><span class="k">分享你的設計</span><h3>Propel Advanced SL 1</h3><div class="m">卡片顏色跟著你的塗裝</div>
+    <div class="rows"><div><span>塗裝</span><b class="sw"><i></i>I-Ti Star</b></div><div><span>尺寸</span><b>M</b></div><div class="total"><span>總價</span><b>NT$ 242,160</b></div></div>
+    <div class="acts"><a class="btn dark"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></svg>複製連結</a><a class="btn"><svg viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg>儲存這張卡</a><div class="soc"><a>LINE</a><a>IG</a><a>FB</a></div></div>
+  </div>
+</div></div></section>
+<div class="cmp"><table><tr><th></th><th>1A 空心字置中</th><th>2A 分享卡白底</th><th>2B 分享卡帶色</th></tr>
+<tr><td>第一眼</td><td>乾淨、對稱</td><td>像一張成品</td><td>像一張有個性的成品</td></tr>
+<tr><td>儲存圖像拿到什麼</td><td>要另外合成</td><td>就是這張卡</td><td>就是這張卡</td></tr>
+<tr><td>不同車款／顏色的變化</td><td>只有字不同</td><td>只有車不同</td><td>底色跟塗裝走，每台不一樣</td></tr>
+<tr><td>車名很長時（Revolt Advanced SL 0）</td><td>字縮小即可</td><td>底部兩行</td><td>小票兩行</td></tr>
+<tr><td>建議</td><td>不做下載合成時</td><td></td><td>★ 要讓分享出去的圖有辨識度</td></tr></table></div>
+</body></html>

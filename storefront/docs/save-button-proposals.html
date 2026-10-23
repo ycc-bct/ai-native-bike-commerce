@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>儲存設計按鈕 提案示意</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--paper:#F3F5F7}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:40px;-webkit-font-smoothing:antialiased}
+h1{font-size:24px;font-weight:800}.lead{margin-top:6px;font-size:13.5px;color:var(--ink-70);max-width:860px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:30px;max-width:1100px}
+.prop{background:#fff;border-radius:14px;padding:20px 22px}
+.prop h2{font-size:15px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:11px;margin-right:8px;vertical-align:1px}
+.prop p{font-size:12.5px;color:var(--ink-70);line-height:1.6;margin-top:6px;min-height:40px}
+.stage{margin-top:14px;background:var(--paper);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.bar{display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.lab{margin-right:auto;font-size:11px;color:var(--ink-50);letter-spacing:.06em}
+svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:44px;height:44px;border-radius:50%;border:1px solid #C9D0D8;background:#fff;display:grid;place-items:center;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;border:1px solid #C9D0D8;background:#fff;font-size:14px;font-weight:600;color:var(--ink)}
+.btn.dark{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.on{border-color:var(--ai);background:#EEF2FF;color:var(--ai)}
+.ic.on{border-color:#F3C9CF;color:#E2465B}.ic.on svg{fill:currentColor}
+.badge{position:relative}.badge b{position:absolute;right:-4px;top:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--ai);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;font-style:normal}
+.toast{align-self:flex-end;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:var(--navy);color:#fff;font-size:13px}
+.toast a{color:#BFD3FF;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.tip{position:relative}.tip::after{content:attr(data-t);position:absolute;top:calc(100% + 8px);left:50%;translate:-50% 0;white-space:nowrap;background:var(--navy);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:6px}
+.menu{align-self:flex-end;width:220px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 30px rgba(20,26,34,.12);padding:6px;font-size:13.5px}
+.menu div{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px}.menu div:hover{background:var(--paper)}.menu small{margin-left:auto;color:var(--ink-50);font-size:11px}
+.cmp{margin-top:30px;background:#fff;border-radius:14px;padding:18px 22px;max-width:1100px;font-size:13px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:7px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.5}.cmp th{border-top:0;font-size:11.5px;color:var(--ink-50);letter-spacing:.08em}
+</style></head><body>
+<h1>「儲存設計」按鈕：四個提案</h1>
+<p class="lead">磁片圖示現在很多人沒看過，而且不知道存去哪。重點是三件事：看得懂是「把這台設計留下來」、按完有回饋、知道去哪找回來。每個提案都附按下後的狀態。</p>
+<div class="grid">
+<section class="prop"><h2><i>1</i>文字按鈕「儲存設計」＋書籤圖示</h2><p>把動作寫出來，最不會誤會；按下變成「已儲存 ✓」藍色狀態，再按一次可取消。分享維持圓形圖示。</p>
+<div class="stage">
+ <div class="bar"><span class="lab">按下前</span><button class="btn"><svg viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></svg>儲存設計</button><button class="ic" aria-label="分享"><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg></button></div>
+ <div class="bar"><span class="lab">按下後</span><button class="btn on"><svg viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z" fill="currentColor"/></svg>已儲存</button><button class="ic" aria-label="分享"><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg></button></div>
+ <div class="toast">已存到我的設計 <a>查看</a></div>
+</div></section>
+<section class="prop"><h2><i>2</i>愛心，跟全站「我的最愛」同一套</h2><p>車款頁、清單頁都用愛心收藏，這裡沿用，存進同一個清單；右上角 header 的愛心數字會 +1，使用者立刻知道去哪找。</p>
+<div class="stage">
+ <div class="bar"><span class="lab">按下前</span><button class="ic tip" data-t="收藏這個設計"><svg viewBox="0 0 24 24"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button><button class="ic"><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg></button></div>
+ <div class="bar" style="margin-top:14px"><span class="lab">按下後</span><button class="ic on"><svg viewBox="0 0 24 24"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button><button class="ic"><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg></button></div>
+ <div class="toast">已加入我的最愛（3） <a>查看</a></div>
+</div></section>
+<section class="prop"><h2><i>3</i>主按鈕「儲存並命名」，存檔變成一個小流程</h2><p>按下後跳一個命名欄（預設「Propel SL 1 · 鈦銀霧」），存完顯示名字和時間。適合使用者會存好幾版來比較的情境。</p>
+<div class="stage">
+ <div class="bar"><span class="lab">按下前</span><button class="btn dark"><svg viewBox="0 0 24 24" style="stroke:#fff"><path d="M6 4h12v17l-6-4-6 4z"/></svg>儲存這個設計</button><button class="ic"><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg></button></div>
+ <div class="menu"><div style="font-weight:700;padding-bottom:4px">命名這個設計</div><div style="border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink-70)">Propel SL 1 · 鈦銀霧</div><div style="justify-content:flex-end;gap:8px;padding-top:8px"><span style="font-size:12.5px;color:var(--ink-50)">取消</span><span class="btn dark" style="height:32px;padding:0 12px;font-size:12.5px">儲存</span></div></div>
+ <div class="bar"><span class="lab">存完</span><span style="font-size:12.5px;color:var(--ink-70)">已儲存「Propel SL 1 · 鈦銀霧」· 剛剛</span></div>
+</div></section>
+<section class="prop"><h2><i>4</i>合併成一顆「⋯」選單</h2><p>儲存、分享、複製連結、重設收進同一個選單，工具列只剩一顆。畫面最乾淨，但儲存變成兩步，比較不適合當主要動作。</p>
+<div class="stage">
+ <div class="bar"><span class="lab">工具列</span><button class="ic"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="19" cy="12" r="1.4" fill="currentColor"/></svg></button></div>
+ <div class="menu"><div><svg viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4z"/></svg>儲存設計</div><div><svg viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 14v5h14v-5"/></svg>分享</div><div><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>複製連結</div><div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"/></svg>回到原廠配色</div></div>
+</div></section>
+</div>
+<div class="cmp"><table><tr><th></th><th>1 文字按鈕</th><th>2 愛心</th><th>3 儲存並命名</th><th>4 選單</th></tr>
+<tr><td>看得懂是什麼</td><td>最清楚</td><td>清楚（全站一致）</td><td>清楚</td><td>要點開才知道</td></tr>
+<tr><td>存去哪找得到</td><td>toast 給連結</td><td>header 愛心數字 +1，最直覺</td><td>toast 給連結</td><td>弱</td></tr>
+<tr><td>存多版比較</td><td>一版</td><td>多版（清單）</td><td>多版且有名字</td><td>一版</td></tr>
+<tr><td>工具列寬度</td><td>變寬</td><td>不變</td><td>變寬</td><td>最窄</td></tr>
+<tr><td>建議</td><td></td><td>★ 跟全站我的最愛接起來，順便能在清單裡比較不同設計</td><td>★ 若要示範「存兩版比一比」</td><td></td></tr></table></div>
+</body></html>

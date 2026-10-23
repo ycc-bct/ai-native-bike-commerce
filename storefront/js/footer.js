@@ -9,7 +9,7 @@
   if (!host) return;
   var R = function (p) { return /^(https?:)?\/\//.test(p) ? p : ROOT + p; };
   var COLS = [
-    {t: '車款',     items: ['公路自行車', '登山車', ['越野 & 礫石公路', 'gravel.html'], 'E-Bike 電動輔助自行車', '童車 & 青少年車', ['客製化自行車', '../customized.html#series']]},
+    {t: '車款',     items: ['公路自行車', '登山車', ['越野 & 礫石公路', 'gravel.html'], 'E-Bike 電動輔助自行車', '童車 & 青少年車', ['客製化自行車', 'custom-studio/index.html']]},
     {t: '精品配件', items: ['人身商品', '車身商品', '維修商品', '自行車零件']},
     {t: '探索',     items: [['情境式問卷', 'ride.html'], '最新消息', '活動賽事', '贊助車隊與選手', '關於 Giant']},
     {t: '支援',     items: ['門市專區', '客服中心', '保固聲明', '常見問題', '產品使用說明書']}

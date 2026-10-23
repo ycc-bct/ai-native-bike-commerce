@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>六大零件 hover 與標籤提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:781px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:976px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>「六大零件規格」hover 與標籤：三個提案</h1>
+<p class="lead">三個都可以直接用滑鼠操作：滑到零件圖片或標籤文字都會有反應，點一下會鎖定（再點一次或點空白處解除），沒在操作時每 2.2 秒自動輪播。共同改掉的地方：拿掉藍色描邊光、投影和 116% 放大；標籤不再用藍字；文字也能 hover 與點擊。</p>
+<div class="nav"><a href="#p1">1 聚焦＋墨色</a><a href="#p2">2 白底片＋膠囊</a><a href="#p3">3 鉛筆描線＋規格</a></div>
+<section class="prop" id="p1"><div class="hd"><h2><i>1</i>聚焦＋墨色標籤</h2></div><p>滑到零件（圖片或文字）時，其他零件變淡、轉成灰階，被選到的零件放大一點點；不加描邊光、不加投影。標籤改成深色文字，選到的那個加底線、引線變深，其他標籤變淡。</p><div class="box" data-v="p1"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="p2"><div class="hd"><h2><i>2</i>白底片＋膠囊標籤</h2></div><p>選到的零件後面浮出一塊白色圓角底片（細灰框，無投影），把它從線稿裡「拿出來」。標籤是白色膠囊，選到時變成深藍底白字。</p><div class="box" data-v="p2"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="p3"><div class="hd"><h2><i>3</i>鉛筆描線＋規格標籤</h2></div><p>選到的零件疊上一層鉛筆灰的描線，像在藍圖上被標註；其他零件微淡。標籤前面多一個編號，引線平常是虛線，選到時編號與引線變成藍色（藍色只當重點色）。</p><div class="box" data-v="p3"><div class="ld">載入中…</div></div></section>
+<script>
+const HV=new URL('parts-fx/hv.js',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../custom-studio/index.html?hv='+v; box.appendChild(f);
+  f.addEventListener('load',()=>{const w=f.contentWindow, go=()=>{
+    if(!(w.gsap&&w.__timelines&&w.__timelines.parts))return setTimeout(go,100);
+    const sec=w.document.getElementById('parts'); w.scrollTo({top:sec.getBoundingClientRect().top+w.scrollY-76,behavior:'instant'});
+    w.document.querySelectorAll('video').forEach(x=>x.pause());
+    const s=w.document.createElement('script'); s.src=HV; s.onload=()=>box.querySelector('.ld')?.remove(); w.document.body.appendChild(s);
+    w.document.documentElement.style.overflow='hidden';
+  }; go();});
+});
+</script>
+</body></html>

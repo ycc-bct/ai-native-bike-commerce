@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>編輯塗裝入口 提案 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:740px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:925px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>底部列：不用「選這個配色」的四種做法</h1>
+<p class="lead">整個客製頁的規則是「點卡片就是選取」，所以底部列平常放資訊或留白，只有選到的卡片才變成編輯入口。都是實際頁面，可以點其他 Type 試。</p>
+<div class="nav"><a href="#v2e">甲 色票列移到底部列</a><a href="#v2e2">甲-2 色票列移到底部列（選到時寫「編輯配色」）</a><a href="#v2f">乙 價格移到底部列</a><a href="#v2g">丙 底部列留空，只有分隔線</a></div>
+<section class="prop" id="v2e"><div class="hd"><h2><i>甲</i>色票列移到底部列</h2></div><p>每張卡底部都是「上／下／Logo」色票列，上方一條細線。選到的卡片，底部列變淡灰底、右邊一支鉛筆，整列都能點。沒選的卡片也有內容，不會空一塊。</p><div class="box" data-v="v2e"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2e2"><div class="hd"><h2><i>甲-2</i>色票列移到底部列（選到時寫「編輯配色」）</h2></div><p>同甲，但選到的卡片色票只留三個色點，騰出空間寫「✎ 編輯配色 →」。比甲好懂，代價是選到的那張看不到霧面／亮面的字（色點停留會顯示）。</p><div class="box" data-v="v2e2"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2f"><div class="hd"><h2><i>乙</i>價格移到底部列</h2></div><p>標題列只留 Type 名稱，下面是色票，價格移到底部列左邊。選到的卡片底部列變淡灰底，右邊藍色「編輯配色 →」。空間最足，像商品卡；但和特仕塗裝「名稱和價格同一行」不一樣，卡片也高一點。</p><div class="box" data-v="v2f"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2g"><div class="hd"><h2><i>丙</i>底部列留空，只有分隔線</h2></div><p>結構同 2B，拿掉「選這個配色」，沒選的卡片底部只有一條細線。選到的仍是深色「調整這個配色 →」。最簡單，但沒選的卡片下方看起來還是空的。</p><div class="box" data-v="v2g"><div class="ld">載入中…</div></div></section>
+<script>
+const ED=new URL('parts-fx/ed.js?v=7',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../../customized.html?ed='+v+'#config'; box.appendChild(f);
+  f.addEventListener('load',()=>{const w=f.contentWindow,s=w.document.createElement('script');s.src=ED;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),900);w.document.body.appendChild(s);});
+});
+</script>
+</body></html>
