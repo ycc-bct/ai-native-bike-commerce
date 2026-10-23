@@ -33,7 +33,39 @@
 .tpl9 .tray9{background:rgba(255,255,255,.62);backdrop-filter:blur(12px)}
 .tpl9 .th9{cursor:pointer}
 .tpl9 .th9:focus-visible,.tpl9 .tab9:focus-visible{outline:3px solid #1f4fe0;outline-offset:4px}
-.parts10 .la{clip-path:none!important;object-fit:contain}
+.parts10 .la{clip-path:none!important;object-fit:contain;content:url('../img/parts-bg/frame-only-2880.jpg')}
+.parts10{--parts-stage-offset-y:48px}
+@media(min-width:901px){
+ .parts10 .la,.parts10 .pp10,.parts10 .rear-wheel{translate:none;margin-top:var(--parts-stage-offset-y)}
+}
+
+/* Keep every text-bearing UI element at a readable 14px minimum. */
+.site-nav .links,
+.site-nav .top,
+.site-nav .fav-n,
+.site-nav .dd-feat small,
+.site-nav small,
+.site-nav .dd-col h4,
+.model-showcase .model-cta,
+.tpl9 .tab9,
+.tpl9 .th9 b,
+.parts10 .pp10 .dc b i,
+.parts10 .pp10 .dc .chip,
+.stores .chip,
+.stores .cnt,
+#stores .chip,
+#stores .cnt,
+#stores li span,
+.cta .kicker,
+.foot .foot-brand p,
+.foot b,
+.foot .foot-col b,
+.foot .foot-col a,
+.foot .foot-bar,
+.foot .foot-bar span,
+.foot .foot-bar a{
+  font-size:14px!important;
+}
 .pp10 img{object-fit:contain}
 #stores{overflow:hidden}
 #stores .mapc,#stores .slist{will-change:transform}
@@ -62,7 +94,7 @@
   .tpl9 .tabs9{left:50%;top:570px;transform:translateX(-50%);display:flex;gap:6px;width:max-content}.tpl9 .tab9{position:static!important;padding:10px 14px;font-size:12px}
   .tpl9 .tray9{left:50%;top:650px;transform:translateX(-50%);width:calc(100% - 32px);overflow:auto}.tpl9 .trayin{justify-content:flex-start}
   .col6 .in{display:block;padding:64px 16px}.col6 .stg{height:500px}.col6 .cp{margin-top:0;height:auto;max-height:none}
-  .parts10{height:auto;min-height:760px}.parts10 .la{position:absolute;width:100%;height:620px;object-fit:contain;top:100px}.parts10 .phd9{left:16px!important;top:24px!important}
+  .parts10{--parts-stage-offset-y:24px;height:auto;min-height:760px}.parts10 .la{position:absolute;width:100%;height:620px;object-fit:contain;top:100px;translate:0 var(--parts-stage-offset-y)}.parts10 .phd9{left:16px!important;top:24px!important}
   .parts10 .pp10,.parts10 .rear-wheel{display:none}
   #stores{padding-left:16px;padding-right:16px}.smap{display:block}.mapc{min-height:420px}.slist{margin-top:18px}
   .foot-in{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:28px}.foot-bar{width:calc(100% - 32px);flex-wrap:wrap}
@@ -97,8 +129,9 @@
 .tpl9 .th9{overflow:hidden;background:#f8f7f5}
 .tpl9 .th9 img{object-fit:contain;object-position:center;width:100%;height:100%;padding:4px}
 /* Official GIANT road image: scenery and bike behind the final invitation. */
-#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(6,11,20,.82),rgba(6,11,20,.36) 52%,rgba(6,11,20,.05)),url('../img/cta/giant-scenic.jpg') center 45%/cover no-repeat}
+#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(6,11,20,.9) 0%,rgba(6,11,20,.72) 30%,rgba(6,11,20,.28) 58%,rgba(6,11,20,.04) 78%),url('../img/cta/giant-carbon-custom-ride.jpg') center center/cover no-repeat}
 #cta .cta .tx{position:relative;z-index:1;max-width:590px}
+#cta .cta .kicker{display:none}
 #cta .cta h2,#cta .cta .kicker{color:#fff}
 #cta .cta p{color:#e9edf3}
 #cta .cta .btn-dark{background:#fff;color:#0e1726}
@@ -183,6 +216,11 @@
 .parts10 .pp10.l .dc::before{left:calc(100% + 7px)}
 .parts10 .pp10.b .dc::before,.parts10 .pp10.t .dc::before{display:none}
 .parts10 .pp10.p-crank-ring img{object-fit:contain}
+@media(min-width:901px){
+ .parts10 .pp10.p-crank-ring .dc{left:50%!important;right:auto!important;top:calc(100% + 30px)!important;bottom:auto!important;margin:0!important;transform:translateX(-50%)!important;text-align:center}
+ .parts10 .pp10.p-crank-ring .dc b{justify-content:center}
+ .parts10 .pp10.p-crank-ring .dc .chips{justify-content:center}
+}
 @media(max-width:900px){.parts10 .pp10 .dc,.parts10 .pp10:hover .dc,.parts10 .pp10:focus-visible .dc{left:50%!important;right:auto!important;top:auto!important;bottom:calc(100% + 7px)!important;width:max-content;max-width:160px;transform:translateX(-50%)!important;white-space:normal;text-align:center}.parts10 .pp10 .dc b{font-size:14px;justify-content:center}.parts10 .pp10 .dc .chips{display:none}.parts10 .pp10 .dc::before{display:none}.parts10 .pp10.p-crank-ring img{width:100%;height:100%}}
 
 @media(min-width:901px){.parts10 .pp10.p-cassette .dc{right:calc(100% + 180px)!important;top:10px!important}.parts10 .pp10.p-cassette .dc::before{width:150px}}
@@ -193,6 +231,13 @@
  .parts10 .pp10 .dc,.parts10 .pp10:hover .dc,.parts10 .pp10:focus-visible .dc{position:static!important;width:auto;max-width:100%;transform:none!important}
  .parts10 .pp10 .dc b{font-size:14px}
 }
+
+/* Reveal specifications only after every animated part has reached its final position. */
+.parts10:not(.parts-ready) .pp10 .dc,
+.parts10:not(.parts-ready) .pp10:hover .dc,
+.parts10:not(.parts-ready) .pp10:focus-visible .dc,
+.parts10:not(.parts-ready) .pp10.hov .dc{opacity:0!important;visibility:hidden!important;translate:0 8px!important}
+.parts10.parts-ready .pp10 .dc{opacity:1!important;visibility:visible!important;translate:0 0!important;transition:opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)}
 
 /* Showroom: scale the platform and bicycle together, and align every family tab. */
 @media (min-width:901px){
@@ -215,3 +260,39 @@
 }
 .tpl9::before{inset:auto;width:88%;aspect-ratio:16/9;left:50%;top:50%;transform:translate(-50%,-50%);background-size:cover;mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 90%,transparent);mask-composite:intersect}
 @media (max-width:900px){.tpl9::before{width:100%}}
+
+/* Frame drawing and mounted parts share the same 1440 × 900 coordinate plane. */
+@media(min-width:901px){
+ .parts10 .in{width:1440px;height:900px;max-width:none;margin:0;left:50%;transform:translateX(-50%)}
+ .parts10 .la{width:1440px;height:900px;object-fit:fill}
+ .parts10 .pp10,.parts10 .rear-wheel{margin-left:0}
+ .parts10 .phd9{left:calc((1440px - var(--shell))/2)}
+ .parts10 .p-saddle{left:507px!important;top:201px!important}
+ .parts10 .rear-wheel{left:304px;top:359px}
+ .parts10 .p-wheel{left:796px!important;top:360px!important}
+ .parts10 .p-crank-ring{left:619px!important;top:517px!important}
+ .parts10 .p-stem{left:866px!important;top:260px!important}
+ .parts10 .p-bar-drop{left:840px!important;top:250px!important}
+}
+
+/* Page-wide minimum type size for content, navigation and overlays. */
+.site-nav .links,
+.site-nav .top,
+.site-nav .fav-n,
+.site-nav .dd-feat small,
+.site-nav .dd-col h4,
+.model-showcase .model-cta,
+.tpl9 .tab9,
+.tpl9 .th9 b,
+.parts10 .pp10 .dc b i,
+.parts10 .pp10 .dc .chip,
+.stores .chip,
+.stores .cnt,
+.foot .foot-brand p,
+.foot .foot-col b,
+.foot .foot-col a,
+.foot .foot-bar,
+.foot .foot-bar span,
+.foot .foot-bar a{
+ font-size:14px!important;
+}

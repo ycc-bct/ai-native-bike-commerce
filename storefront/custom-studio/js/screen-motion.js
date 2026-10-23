@@ -45,3 +45,11 @@
   });
  });
 })();
+
+/* Parts labels become visible on the same timeline, after every part settles. */
+(() => {
+ const section=document.querySelector('#parts');
+ const timeline=window.__timelines?.parts;
+ if(!section||!timeline)return;
+ timeline.call(()=>section.classList.add('parts-ready'));
+})();
