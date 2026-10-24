@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>選色與按鈕間距 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:740px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:925px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>「車款客製化塗裝」選色與黑色按鈕的間距：四個做法</h1>
+<p class="lead">下面都是實際頁面（1440 寬，縮放 80% 顯示），可以切換車款與樣板。</p>
+<div class="nav"><a href="#v0">現況 現況</a><a href="#v1">1 圓弧放大、整組往上</a><a href="#v2">2 按鈕移到左側三重點下方</a><a href="#v3">3 縮圖收進弧線裡</a><a href="#v4">4 按鈕改成文字連結</a></div>
+<section class="prop" id="v0"><div class="hd"><h2><i>現況</i>現況</h2></div><p>縮圖下緣與按鈕只差約 12px，看起來黏在一起。</p><div class="box" data-v="0"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v1"><div class="hd"><h2><i>1</i>圓弧放大、整組往上</h2></div><p>弧線放大約 14%，車款名稱與縮圖往上移，按鈕留在原位，縮圖和按鈕之間多約 34px。弧線比較靠近車子輪胎。</p><div class="box" data-v="1"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2"><div class="hd"><h2><i>2</i>按鈕移到左側三重點下方</h2></div><p>「用 TCR 開始客製 →」放到「03 出廠前逐台檢驗」下方、和清單左對齊；下方只剩弧線與縮圖。看完工藝重點接著開始客製，動線自然。（寬度小於 1200px 時按鈕回到縮圖下方）</p><div class="box" data-v="2"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v3"><div class="hd"><h2><i>3</i>縮圖收進弧線裡</h2></div><p>縮圖往上移到弧線上、車款名稱之間，按鈕留在原位。不用改大小，但弧線區域比較擠。</p><div class="box" data-v="3"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v4"><div class="hd"><h2><i>4</i>按鈕改成文字連結</h2></div><p>黑色膠囊改成底線文字連結，位置不變，視覺重量變輕、自然拉開距離；主要行動會比較不顯眼。</p><div class="box" data-v="4"><div class="ld">載入中…</div></div></section>
+<script>
+const AB=new URL('parts-fx/ab.js?v=2',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../custom-studio/index.html?ab='+v+'#templates'; box.appendChild(f);
+  f.addEventListener('load',()=>{if(v==='0'){setTimeout(()=>{f.contentDocument.getElementById('templates').scrollIntoView({block:'start'});box.querySelector('.ld')?.remove()},600);return}const w=f.contentWindow,s=w.document.createElement('script');s.src=AB;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),400);w.document.body.appendChild(s);});
+});
+</script>
+</body></html>

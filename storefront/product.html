@@ -105,9 +105,11 @@ body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
   --w:calc((var(--D) + var(--slant) * 2) / 3)}
 .info{position:absolute;z-index:8;left:calc(var(--u)*45);top:calc(var(--u)*92);bottom:var(--base);width:calc(var(--u)*420);display:flex;flex-direction:column;align-items:flex-start}
 /* 麵包屑：與 gravel.html 同一套 */
-.crumb{display:flex;align-items:center;gap:calc(var(--u)*8);font-size:calc(var(--u)*12.5);color:var(--ink-50)}
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:14px;font-weight:500;color:var(--ink-70)}
+.crumb>*{white-space:nowrap}
 .crumb a:hover{color:var(--ink)}
-.crumb b{font-weight:600;color:var(--ink-70)}
+.crumb b{font-weight:600;color:var(--ink)}
+.crumb span{color:#9AA4B0}
 .info h1{margin-top:calc(var(--u)*30);font-size:calc(var(--u)*44);line-height:1.08;font-weight:700;letter-spacing:-.02em}
 .info .tag{margin-top:calc(var(--u)*14);font-size:calc(var(--u)*18);font-weight:500;letter-spacing:.04em}
 .info .intro{margin-top:calc(var(--u)*20);font-size:calc(var(--u)*15.5);line-height:1.62;color:var(--ink-70);letter-spacing:.02em}
@@ -228,8 +230,8 @@ body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
 /* ================= 以下：官網原本的詳細內容 ================= */
 .sec{width:var(--shell);margin:0 auto;padding:96px 0 20px;scroll-margin-top:60px}
 .eyebrow{font-size:13px;font-weight:700;letter-spacing:.2em;color:var(--ink-50)}
-.sec h2{margin-top:10px;font-size:34px;font-weight:700;letter-spacing:.02em}
-.sec .lede{margin-top:16px;max-width:760px;font-size:16px;line-height:1.9;color:var(--ink-70)}
+.sec h2{margin-top:10px;font-size:30px;font-weight:800;letter-spacing:.01em}
+.sec .lede{margin-top:10px;max-width:760px;font-size:15px;line-height:1.75;color:var(--ink-70)}
 .sec h3{margin:56px 0 20px;font-size:21px;font-weight:700;letter-spacing:.04em}
 
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}

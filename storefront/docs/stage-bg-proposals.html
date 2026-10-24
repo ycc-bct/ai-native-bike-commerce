@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>客製頁預覽背景 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:740px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:925px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>客製頁預覽背景：淺色加強／深色攝影棚／側拍實景／道路延伸</h1>
+<p class="lead">三個背景都讓車「站在地上」（接地陰影＋地面線對齊輪胎）。按左右箭頭切到特寫角度時，背景會跟著放大並模糊（提案 A），像鏡頭靠近。每個框都可以點左上角的背景按鈕互相切換。</p>
+<div class="nav"><a href="#vlight">淺色（加強）</a><a href="#vdark">深色攝影棚</a><a href="#voutdoor">側拍實景</a><a href="#vroad">道路延伸</a><a href="#tbA">工具列 A</a><a href="#tbB">工具列 B</a></div>
+<section class="prop" id="vlight"><div class="hd"><h2><i>淺</i>淺色（加強）</h2></div><p>保留現在的淺灰，加上車子後方一團很淡的亮光、輪軸高度以下稍微暗一點的地面，以及兩個輪胎的接地陰影。</p><div class="box" data-v="light"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="vdark"><div class="hd"><h2><i>深</i>深色攝影棚</h2></div><p>取代深藍純色：深炭灰、上方聚光、四周暗角、地面淡淡反光；地面線對齊輪胎著地點，車身加深色落影。</p><div class="box" data-v="dark"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="voutdoor"><div class="hd"><h2><i>景</i>側拍實景</h2></div><p>取代山路照片：正側面、低機位的山區公路，路緣對齊輪胎著地點，背景輕微模糊；車子站在柏油路上。</p><div class="box" data-v="outdoor"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="vroad"><div class="hd"><h2><i>路</i>道路延伸（新增比較）</h2></div><p>參考你給的照片：車子停在前景柏油上，道路往遠方彎進松林與山區，有路緣白線與路標；背景輕微模糊。和「側拍實景」比較：這張比較有「出發去騎」的方向感，但畫面元素較多。</p><div class="box" data-v="road"><div class="ld">載入中…</div></div></section>
+
+<h1 style="margin-top:72px">車子下方工具列：角度＋背景</h1>
+<p class="lead">背景選擇從左上角移到車子下方，和角度切換放在同一條工具列。點第一個（全車）就能直接回到全車圖；在畫面上雙擊、或按鍵盤 Home 也會回全車。左右箭頭照常可用。</p>
+<section class="prop" id="tbA"><div class="hd"><h2><i>A</i>角度點點＋背景</h2></div><p>第一個是腳踏車圖示＝全車，其餘 5 個點是特寫角度（滑過顯示名稱，目前角度變成長條）；細線右邊是 4 個背景色票。最精簡，不擋畫面。</p><div class="box" data-v="light&tb=A"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="tbB"><div class="hd"><h2><i>B</i>角度縮圖＋背景</h2></div><p>6 張小縮圖直接顯示每個角度的畫面（跟著配色即時更新），第一張是全車；右邊是背景色票。最直覺，但工具列較寬。</p><div class="box" data-v="outdoor&tb=B"><div class="ld">載入中…</div></div></section>
+<script>
+const BGJ=new URL('parts-fx/bg.js?v=5',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../../customized.html?bg='+v+'#config'; box.appendChild(f);
+  f.addEventListener('load',()=>{const w=f.contentWindow,s=w.document.createElement('script');s.src=BGJ;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),900);w.document.body.appendChild(s);});
+});
+</script>
+</body></html>

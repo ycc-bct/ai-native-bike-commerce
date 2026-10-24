@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>六大零件 構圖 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:720px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>「六大零件規格」構圖：三個做法</h1>
+<p class="lead">車架線條與方格紙都維持現狀，只調整旁邊的小元素。尺寸線只標名稱、不標數字（這張線稿沒有對應的官方幾何數據）。下面都是實際頁面，滑到零件、點選照常運作。</p>
+<div class="nav"><a href="#v1">1 左右對稱速寫</a><a href="#v2">2 右側視圖欄</a><a href="#v3">3 對稱速寫＋標註＋標題欄</a></div>
+<section class="prop" id="v1"><div class="hd"><h2><i>1</i>左右對稱速寫</h2></div><p>坐墊與車把俯視放在同一高度、左右對稱，下面各一行小字視圖名稱。改動最少、最乾淨。</p><div class="box" data-v="1"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2"><div class="hd"><h2><i>2</i>右側視圖欄</h2></div><p>像參考圖：右側直排三格鉛筆框（坐墊 3/4、車把俯視、輪框斷面），每格有視圖名稱；車子整組往左一點讓出空間。最像一張完整的設計圖，資訊感最強。</p><div class="box" data-v="2"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v3"><div class="hd"><h2><i>3</i>對稱速寫＋標註＋標題欄</h2></div><p>在 1 的基礎上，尺寸線旁加上小字（軸距、車高、前後軸），右下角加一個製圖標題欄（專案、車系、視圖、單位）。最有「工程圖」的味道，但小字較多。</p><div class="box" data-v="3"><div class="ld">載入中…</div></div></section>
+<script>
+const LY=new URL('parts-fx/ly.js?v=2',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../custom-studio/index.html?ly='+v+'#parts'; box.appendChild(f);
+  f.addEventListener('load',()=>{const w=f.contentWindow,s=w.document.createElement('script');s.src=LY;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),300);w.document.body.appendChild(s);});
+});
+</script>
+</body></html>

@@ -45,7 +45,7 @@ svg{display:block}
 .sec.explore{padding-top:36px}
 .sec-head{display:flex;align-items:flex-end;gap:40px;margin-bottom:24px}
 .sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
-.sec-head .sub{margin-top:6px;font-size:15px;color:var(--ink-70)}
+.sec-head .sub{margin-top:10px;font-size:15px;line-height:1.75;color:var(--ink-70)}
 .sec-head .note{margin-left:auto;max-width:300px;font-size:12.5px;line-height:1.75;color:var(--ink-50)}
 .sec-head .more{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink-70);white-space:nowrap;padding-bottom:4px;transition:color .2s}
 .sec-head .more:not(:first-child):not(.note + .more){margin-left:auto}
@@ -140,12 +140,13 @@ a:not([href]){cursor:default}
 .list-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .list-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,14,20,.7) 0%,rgba(10,14,20,.45) 36%,rgba(10,14,20,.05) 64%),linear-gradient(0deg,rgba(10,14,20,.35) 0%,rgba(10,14,20,0) 40%)}
 .list-hero-in{position:relative;z-index:1;width:var(--shell);height:100%;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(34px,3.4vw,48px)}
-.crumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,.7);margin-bottom:auto;padding-top:96px}
+.crumb{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:rgba(255,255,255,.72);margin-bottom:auto;padding-top:96px}
 .crumb a:hover{color:#fff}
 .crumb b{font-weight:600;color:#fff}
+.crumb span{color:rgba(255,255,255,.45)}
 .list-hero .kicker{color:#fff}
 .list-hero h1{margin-top:8px;font-size:clamp(34px,3vw,44px);font-weight:800;letter-spacing:-.01em;text-shadow:0 2px 14px rgba(0,0,0,.35)}
-.list-hero .sub{margin-top:10px;max-width:600px;font-size:15px;line-height:1.75;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.list-hero .sub{margin-top:10px;max-width:600px;font-size:16px;line-height:1.75;color:rgba(255,255,255,.88);text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .list-page{padding-top:26px;padding-bottom:64px;min-height:60vh}
 /* 篩選列：按鈕在左，點了在左側展開一欄（參考 rapha.cc） */
 .fbar{padding:0 0 4px;display:flex;align-items:center;gap:14px}

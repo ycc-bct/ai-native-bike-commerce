@@ -31,9 +31,13 @@
  const ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
  const setStart=f=>{const name=f.toUpperCase();choosePaint.href=`../../customized.html#levels/${f}`;choosePaint.innerHTML=`用 ${name} 開始客製${ARROW}`;choosePaint.setAttribute('aria-label',`用 ${name} 開始客製`);};
  section.classList.add('arc-showroom');
+ /* 標題下方：三個工藝重點（桌機）。<em> 包住的片語不拆開，放不下時整段換到下一行 */
+ const craft=document.createElement('ul');craft.className='paint-craft';
+ craft.innerHTML=[['手工遮罩分色','上半、下半與 Logo 分層遮罩，<em>邊界俐落不暈染</em>'],['霧面／亮面可選','每個部位都能各自選擇漆面質感'],['出廠前逐台檢驗','膜厚與色差逐台量測，與色票一致']].map(([b,t],i)=>`<li><i>0${i+1}</i><div><b>${b}</b><span>${t}</span></div></li>`).join('');
+ section.querySelector('.in').append(craft);
  const display=document.createElement('div');display.className='paint-display';bike.before(display);display.append(bike);
  const entrance=document.createElement('div');entrance.className='showroom-motion';section.querySelector('.in').append(entrance);entrance.append(display,section.querySelector('.tabs9'),section.querySelector('.tray9'),caption,choosePaint);
- let family='tcr',selected=0,request=0,timer,visible=false,holdUntil=0;
+ let family='tcr',selected=0,request=0,timer,visible=false,holdUntil=0,dir=1;
  let layout={},motion=null;
  const layoutReady=fetch('img/templates-cut/layout.json').then(r=>r.json()).then(data=>{layout=data;positionBike(bike.getAttribute('src'));});
 
@@ -55,14 +59,18 @@
    const changed=bike.dataset.family&&bike.dataset.family!==targetFamily;
    motion?.cancel();
    if(changed&&!reducedMotion.matches){
-    motion=display.animate([{translate:'0 0'},{translate:`${innerWidth}px 0`}],{duration:380,easing:'cubic-bezier(.55,0,1,.45)',fill:'forwards'});
+    /* 換車款：小幅位移＋淡化（方向跟著弧形：往右邊的車款就從右邊進來） */
+    dir=families.indexOf(targetFamily)>families.indexOf(bike.dataset.family)?1:-1;
+    motion=display.animate([{translate:'0 0',opacity:1},{translate:`${-20*dir}px 0`,opacity:0}],{duration:220,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
     try{await motion.finished;}catch{return;}
     if(token!==request)return;
    }
    bike.src=paint.src;bike.alt=`${targetFamily.toUpperCase()} ${paint.label}`;bike.dataset.family=targetFamily;positionBike(paint.src);caption.textContent=paint.label;
    motion?.cancel();
+   if(!changed&&bike.dataset.swapFade&&!reducedMotion.matches){motion=display.animate([{opacity:.25},{opacity:1}],{duration:250,easing:'ease-out'});}
+   bike.dataset.swapFade='1';
    if(changed&&!reducedMotion.matches){
-    motion=display.animate([{translate:`${-innerWidth}px 0`},{translate:'0 0'}],{duration:620,easing:'cubic-bezier(.16,1,.3,1)'});
+    motion=display.animate([{translate:`${20*dir}px 0`,opacity:0},{translate:'0 0',opacity:1}],{duration:340,easing:'cubic-bezier(.16,1,.3,1)'});
    }
    restart();
   };asset.onerror=()=>{if(token===request)restart();};asset.src=paint.src;

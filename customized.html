@@ -389,7 +389,7 @@ input.switch:focus-visible{outline:3px solid #64748b;outline-offset:3px}
 .pick-shell{width:var(--shell);margin:0 auto}
 .pick-head{text-align:center;margin:8px 0 24px}
 .pick-head h1{font-size:var(--fs-2xl)}
-.pick-head p{font-size:var(--fs-sm);color:var(--ink-70);margin-top:8px}
+.pick-head p{font-size:15px;line-height:1.75;color:var(--ink-70);margin-top:10px}
 .pick-tabs{display:flex;justify-content:center;gap:24px;width:max-content;max-width:100%;margin:0 auto 28px;border-bottom:1px solid var(--line)}
 .pick-tabs button{padding:0 2px 10px;font-size:var(--fs-sm);color:var(--ink-70);border-bottom:2px solid transparent;margin-bottom:-1px}
 .pick-tabs button[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
@@ -752,9 +752,9 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 
 /* Portrait landscape: crop without distortion; keep the near road below the wheels. */
 #stage[data-stage-background="outdoor"]{background-image:var(--outdoor-image);background-size:cover;background-position:50% 58%}
-#stage[data-stage-background="outdoor"] .flat-slide{margin:76px 92px 20px}
+
 .background-choice.outdoor{background-position:50% 58%}
-@media(max-width:800px){#stage[data-stage-background="outdoor"]{background-position:50% 60%}#stage[data-stage-background="outdoor"] .flat-slide{margin:28px 48px 8px}}
+@media(max-width:800px){#stage[data-stage-background="outdoor"]{background-position:50% 60%}}
 
 
 /* Detail views use the entire preview area in every background and breakpoint. */
@@ -829,6 +829,46 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 .panel-header{position:relative}
 .panel-header .head-tools-fixed{position:absolute;top:24px;right:24px;z-index:2}
 .panel-header:has(.head-tools-fixed)>.part-back{min-height:44px;display:inline-flex;align-items:center}
+/* 返回連結全站統一（見 storefront/docs/design.md）：14px／500／#4A5563，滑過變深 */
+.part-back,.intro-back,.series-back{font-size:14px!important;font-weight:500!important;color:#4A5563!important;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
+.part-back:hover,.intro-back:hover,.series-back:hover{color:#141A22!important}
+.series-back{margin-bottom:6px}
+/* 三個頁面（選車系、選車款、設定）的返回連結位置一致：和選車頁同一個上方留白公式 */
+#configPage{padding-top:calc(var(--header-height) + 24px)!important}
+@media(max-width:800px){#configPage{padding-top:84px!important}#backToLevels{margin-left:5px}}
+/* ===== 平面預覽的背景與角度工具列（assets/stage-preview.js）===== */
+#stage.sp-flat[data-stage-background]{background:transparent!important;background-image:none!important}
+#stage .sp-bg{position:absolute;inset:0;z-index:0;overflow:hidden;border-radius:inherit;pointer-events:none;display:none}
+#stage.sp-flat .sp-bg{display:block}
+#stage .sp-bg-i{position:absolute;inset:0;transition:transform .65s cubic-bezier(.16,1,.3,1),filter .65s cubic-bezier(.16,1,.3,1),opacity .35s ease;will-change:transform,filter}
+#stage .sp-bg-i img{position:absolute;left:0;top:0}
+#stage .sp-bg[data-mode=light] .sp-bg-i{background:radial-gradient(ellipse 46% 42% at 50% 44%,rgba(255,255,255,.95),rgba(255,255,255,0) 72%),linear-gradient(180deg,#F3F5F7 0,#F3F5F7 var(--hz,70%),#EBEEF1 calc(var(--hz,70%) + 7%),#E6E9ED 100%)}
+#stage.sp-flat #flatPreview{position:relative;z-index:1}
+#stage .sp-sh{position:absolute;inset:0;pointer-events:none;display:none}
+#stage.sp-flat .sp-sh{display:block}
+#stage .sp-sh i,#stage .sp-sh b{position:absolute;border-radius:50%;filter:blur(3px)}
+#stage .sp-sh b{filter:blur(10px)}
+#stage.sp-flat .preview-toolbar,#stage.sp-flat .flat-nav{display:none!important}
+#stage .sp-bar{display:none;position:absolute;left:50%;bottom:14px;z-index:6;translate:-50% 0;align-items:center;gap:12px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.12)}
+#stage.sp-flat .sp-bar{display:flex;opacity:0;translate:-50% 8px;pointer-events:none;transition:opacity .3s ease,translate .3s ease}
+#stage.sp-flat .sp-bar.show{opacity:1;translate:-50% 0;pointer-events:auto}
+#stage.sp-flat.sp-can-lens .flat-viewer:not([data-detail=true]) .flat-slide{cursor:zoom-in}
+#stage.sp-flat.sp-lens .flat-slide{cursor:zoom-out!important;overflow:visible}
+#stage.sp-flat.sp-lens .flat-viewer{overflow:visible}
+#stage .sp-views{display:flex;align-items:center}
+#stage .sp-views button{position:relative;width:22px;height:24px;display:grid;place-items:center;border:0;padding:0;background:none;cursor:pointer}
+#stage .sp-views button i{display:block;width:8px;height:8px;border-radius:999px;background:#C3CAD3;transition:background .2s,width .25s}
+#stage .sp-views button:hover i{background:#7A8492}
+#stage .sp-views button[aria-current] i{width:20px;background:#141A22}
+#stage .sp-views button[aria-current]{width:30px}
+#stage .sp-views button::after{content:attr(data-name);position:absolute;left:50%;bottom:calc(100% + 10px);translate:-50% 4px;padding:5px 9px;border-radius:8px;background:#141A22;color:#fff;font-size:12px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s,translate .15s}
+#stage .sp-views button:hover::after,#stage .sp-views button:focus-visible::after{opacity:1;translate:-50% 0}
+#stage .sp-views button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px;border-radius:6px}
+#stage .sp-sep{width:1px;height:20px;background:#DCE1E7}
+#stage .sp-bgs{display:flex;align-items:center;gap:8px}
+#stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
+#stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
+#stage .sp-bgs button:focus-visible{outline:2px solid #1F4FE0;outline-offset:3px}
 </style>
 <script>
 // Local customizer folder and published repository root share the storefront source.
@@ -854,7 +894,7 @@ const wrap=document.createElement('span');wrap.className='profile-wrap';member.b
 member.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();member.click()}});
 })();
 </script>
-<main class="page" id="configPage"><button type="button" class="part-back intro-back" id="backToLevels"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>返回車款選擇</button><div class="workspace"><section class="preview-column" aria-label="客製車預覽"><div class="intro"><div><h1 id="configTitle">打造你的專屬 DEFY</h1></div><ol class="steps" aria-label="客製步驟"><li><button class="step" data-step="paint"><span>1</span>塗裝配色</button></li><li><button class="step" data-step="parts"><span>2</span>尺寸與配備</button></li><li><button class="step" data-step="review"><span>3</span>確認配置</button></li></ol></div><div id="editingBanner" class="return-banner" hidden><span>正在編輯購物車中的客製車，完成後將更新原品項。</span><button id="cancelEdit" class="text-button">取消編輯</button></div><div class="stage" id="stage" data-stage-background="light"><div class="bike-wrap" id="bikePreview"></div><div class="bike-wrap" id="flatPreview" hidden></div><p class="product-code" id="configCode">DEFY ADVANCED SL · DURA-ACE</p><div class="preview-toolbar"><div class="background-switch" role="group" aria-label="背景"><span>背景</span><button type="button" data-stage-background="light" class="background-choice light" aria-label="淺色背景" aria-pressed="true"></button><button type="button" data-stage-background="dark" class="background-choice dark" aria-label="深色背景" aria-pressed="false"></button><button type="button" data-stage-background="outdoor" class="background-choice outdoor" aria-label="戶外背景" aria-pressed="false"></button></div></div><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"/><path d="M18.5 3v4.4h-4.4M5.5 21v-4.4h4.4"/></svg>拖曳旋轉</span></div></section><div class="panel-column"><div class="panel panel-header" id="panelHeader"></div><section class="panel panel-content" id="panel" tabindex="-1" aria-label="客製設定"></section><footer class="purchase-bar panel-footer"><div class="purchase-inner"><div class="price-cluster"><div><small>目前總價</small><div class="price-number" id="totalPrice" aria-hidden="true"></div><span class="price-delta" id="priceDelta" aria-hidden="true"></span><span class="sr-only" id="totalPriceLive" aria-live="polite" aria-atomic="true"></span></div></div><div class="actions"><button class="btn" id="next"></button></div></div></footer></div></div></main>
+<main class="page" id="configPage"><button type="button" class="part-back intro-back" id="backToLevels"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>返回車款選擇</button><div class="workspace"><section class="preview-column" aria-label="客製車預覽"><div class="intro"><div><h1 id="configTitle">打造你的專屬 DEFY</h1></div><ol class="steps" aria-label="客製步驟"><li><button class="step" data-step="paint"><span>1</span>塗裝配色</button></li><li><button class="step" data-step="parts"><span>2</span>尺寸與配備</button></li><li><button class="step" data-step="review"><span>3</span>確認配置</button></li></ol></div><div id="editingBanner" class="return-banner" hidden><span>正在編輯購物車中的客製車，完成後將更新原品項。</span><button id="cancelEdit" class="text-button">取消編輯</button></div><div class="stage" id="stage" data-stage-background="light"><div class="bike-wrap" id="bikePreview"></div><div class="bike-wrap" id="flatPreview" hidden></div><p class="product-code" id="configCode">DEFY ADVANCED SL · DURA-ACE</p><div class="preview-toolbar"><div class="background-switch" role="group" aria-label="背景"><span>背景</span><button type="button" data-stage-background="light" class="background-choice light" aria-label="淺色背景" aria-pressed="true"></button><button type="button" data-stage-background="dark" class="background-choice dark" aria-label="深色背景" aria-pressed="false"></button><button type="button" data-stage-background="outdoor" class="background-choice outdoor" aria-label="山路背景" aria-pressed="false"></button></div></div><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"/><path d="M18.5 3v4.4h-4.4M5.5 21v-4.4h4.4"/></svg>拖曳旋轉</span></div></section><div class="panel-column"><div class="panel panel-header" id="panelHeader"></div><section class="panel panel-content" id="panel" tabindex="-1" aria-label="客製設定"></section><footer class="purchase-bar panel-footer"><div class="purchase-inner"><div class="price-cluster"><div><small>目前總價</small><div class="price-number" id="totalPrice" aria-hidden="true"></div><span class="price-delta" id="priceDelta" aria-hidden="true"></span><span class="sr-only" id="totalPriceLive" aria-live="polite" aria-atomic="true"></span></div></div><div class="actions"><button class="btn" id="next"></button></div></div></footer></div></div></main>
 <main class="pick-page" id="seriesPage" aria-labelledby="seriesTitle" hidden></main>
 <main class="pick-page" id="levelsPage" aria-labelledby="levelsTitle" hidden></main>
 <main class="fav-page" id="favPage" aria-labelledby="favTitle" hidden><div class="fav-shell"><div class="fav-heading"><h1 id="favTitle">已儲存的客製車</h1><span id="favTotal"></span></div><div id="favBody"></div></div></main>
@@ -1157,7 +1197,7 @@ $('#flatPreview').addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.prev
 let flatSwipe=null;$('#flatPreview').addEventListener('pointerdown',e=>{if(!e.target.closest('button'))flatSwipe=e.clientX});$('#flatPreview').addEventListener('pointerup',e=>{if(flatSwipe===null)return;const dx=e.clientX-flatSwipe;flatSwipe=null;if(Math.abs(dx)>40)flatGo(flatIdx+(dx<0?1:-1))});
 
 const backgroundStage=document.getElementById('stage');
-backgroundStage.style.setProperty('--outdoor-image','url("assets/backgrounds/mountain-road.png")');
+backgroundStage.style.setProperty('--outdoor-image','url("assets/backgrounds/mountain-pass-road.jpg")');
 function syncBackgroundOptions(three){const outdoor=backgroundStage.querySelector('button[data-stage-background="outdoor"]');outdoor.hidden=three;if(three&&backgroundStage.dataset.stageBackground==='outdoor'){backgroundStage.dataset.stageBackground='light';backgroundStage.querySelectorAll('button[data-stage-background]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.stageBackground==='light')));}}
 backgroundStage.addEventListener('click',e=>{const b=e.target.closest('button[data-stage-background]');if(!b)return;const mode=b.dataset.stageBackground;backgroundStage.dataset.stageBackground=mode;backgroundStage.querySelectorAll('button[data-stage-background]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
 
@@ -1175,7 +1215,7 @@ const pickTabs=(label,key,items,current)=>`<div class="pick-tabs" role="group" a
 // (left, top, width as fractions), so the cut-out can lift off exactly over it before riding out to the right.
 const SERIES_STAGE={propel:{slogan:'破風高速，節奏不停。',bike:[.10,.10,.80]},tcr:{slogan:'輕量爬坡，俐落加速。',bike:[.098,.11,.79]},defy:{slogan:'舒適耐力，騎向更遠。',bike:[.105,.14,.785]},trinity:{slogan:'專注計時，突破極限。',bike:[.105,.11,.86]}};
 function renderSeriesPage(){
-  $('#seriesPage').innerHTML=`<div class="pick-shell"><div class="pick-head"><h1 id="seriesTitle">打造你的客製車</h1><p>設計你的整車與配件，或從範本開始，打造獨一無二的騎乘體驗。</p></div><div class="brand-tabs" role="group" aria-label="品牌">${BRANDS.map(b=>`<button type="button" class="brand-tab" data-brand="${b.id}" aria-pressed="${pickBrand===b.id}" aria-label="${b.name}${b.id==='giant'?'':'（即將開放）'}" ${b.id==='giant'?'':'disabled'}>${BRAND_LOGO[b.id]}</button>`).join('')}</div><div class="series-row">${SERIES.map(x=>{const ms=MODELS.filter(m=>m.series===x.id&&!m.soon),from=ms.length?Math.min(...ms.map(m=>m.base)):0;return `<article class="series-item" data-series-item="${x.id}"><div class="series-media"><img class="series-scene" src="${BIKE_IMG['scene-'+x.id]}" alt="" decoding="async"></div><div class="series-text"><h2>${x.name}</h2><p>${SERIES_STAGE[x.id].slogan}</p><p class="series-price">${from?'起價 '+money(from):'即將開放'}</p></div><button type="button" class="pick-hit" data-series="${x.id}" aria-label="選擇 ${x.name} 車系"></button></article>`}).join('')}</div></div>`}
+  $('#seriesPage').innerHTML=`<div class="pick-shell"><a class="part-back series-back" href="storefront/custom-studio/index.html">${CHEV_L}返回客製化介紹</a><div class="pick-head"><h1 id="seriesTitle">打造你的客製車</h1><p>設計你的整車與配件，或從範本開始，打造獨一無二的騎乘體驗。</p></div><div class="brand-tabs" role="group" aria-label="品牌">${BRANDS.map(b=>`<button type="button" class="brand-tab" data-brand="${b.id}" aria-pressed="${pickBrand===b.id}" aria-label="${b.name}${b.id==='giant'?'':'（即將開放）'}" ${b.id==='giant'?'':'disabled'}>${BRAND_LOGO[b.id]}</button>`).join('')}</div><div class="series-row">${SERIES.map(x=>{const ms=MODELS.filter(m=>m.series===x.id&&!m.soon),from=ms.length?Math.min(...ms.map(m=>m.base)):0;return `<article class="series-item" data-series-item="${x.id}"><div class="series-media"><img class="series-scene" src="${BIKE_IMG['scene-'+x.id]}" alt="" decoding="async"></div><div class="series-text"><h2>${x.name}</h2><p>${SERIES_STAGE[x.id].slogan}</p><p class="series-price">${from?'起價 '+money(from):'即將開放'}</p></div><button type="button" class="pick-hit" data-series="${x.id}" aria-label="選擇 ${x.name} 車系"></button></article>`}).join('')}</div></div>`}
 // Choosing a series: the bike lifts out of its photo and rides off to the right; the models page then rolls in from the left.
 // Where each product photo's tyres meet the ground (left, right, bottom as fractions of the 660×440 photo), measured from
 // the photos. Only some official photos carry a ground shadow, so the model cards draw one consistent shadow from these.
@@ -1440,5 +1480,6 @@ markSaved();
 render();
 applyRoute(location.hash);
 </script>
+<script src="assets/stage-preview.js?v=5"></script>
 </body>
 </html>
