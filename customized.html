@@ -1248,21 +1248,26 @@ function renderLevelsPage(){const x=SERIES.find(v=>v.id===currentSeries)||SERIES
 function startModel(id){flatIdx=0;flatContext='';config=initialConfig();config.model=id;savedId=null;markSaved();page='paint';paintTab='designer';partsTab='size';partDetail=null;paintDetail=false;paintZone='upper';returnToReview=false;editingId=null;routeTo('#config')}
 /* 選車款頁：可以客製的車款，卡片直接顯示編輯頁一進去的預設塗裝（例如 Propel SL 1 → Sand Storm）。
    在背景畫好編輯頁的圖，再依車身位置對齊原本的照片構圖，地面陰影位置不變；點下去飛到編輯頁就是同一張圖 */
-const cardPaint=new Map();
+const cardPaint=new Map(),cardSide=new Map();
+// 預設塗裝的側面圖：另外畫在一張新的畫布上（等它畫完），不碰編輯頁正在顯示的圖，所以跟你編輯過的塗裝無關
+async function defaultSide(id){
+  if(cardSide.has(id))return cardSide.get(id);
+  const c=initialConfig();c.model=id;if(uses3d(c))return null;
+  const ref=document.querySelector('[data-flat-img="paint-side"]');if(!ref||!ref.width)return null;
+  const off=document.createElement('canvas');off.width=ref.width;off.height=ref.height;
+  try{await composeStack(off.getContext('2d'),psdStack(c))}catch(e){return null}
+  cardSide.set(id,off);return off}
 async function paintLevelCards(page){
   for(const img of page.querySelectorAll('.level-card:has([data-model]) .pick-photo')){
     const id=img.closest('.level-card').querySelector('[data-model]').dataset.model;
     if(cardPaint.has(id)){img.src=cardPaint.get(id);continue}
     img.style.opacity='0';
     try{await img.decode()}catch(e){}
-    const keep=config;let url=null;
-    try{config=initialConfig();config.model=id;paintPreview();const c0=$('#flatPreview .flat-photo.is-on');
-      if(c0&&!$('#flatPreview').hidden&&c0.width&&img.naturalWidth){
-        const nw=img.naturalWidth,nh=img.naturalHeight,cw=c0.width,ch=c0.height,a=inkBox(img,nw,nh),b=inkBox(c0,cw,ch);
-        const k=((a[2]-a[0])*nw)/((b[2]-b[0])*cw),out=document.createElement('canvas');out.width=nw;out.height=nh;
-        out.getContext('2d').drawImage(c0,a[0]*nw-b[0]*cw*k,a[1]*nh-b[1]*ch*k,cw*k,ch*k);url=out.toDataURL('image/webp',.92)}
-    }catch(e){url=null}
-    config=keep;
+    let url=null;const c0=await defaultSide(id);
+    if(c0&&img.naturalWidth){try{
+      const nw=img.naturalWidth,nh=img.naturalHeight,cw=c0.width,ch=c0.height,a=inkBox(img,nw,nh),b=inkBox(c0,cw,ch);
+      const k=((a[2]-a[0])*nw)/((b[2]-b[0])*cw),out=document.createElement('canvas');out.width=nw;out.height=nh;
+      out.getContext('2d').drawImage(c0,a[0]*nw-b[0]*cw*k,a[1]*nh-b[1]*ch*k,cw*k,ch*k);url=out.toDataURL('image/webp',.92)}catch(e){url=null}}
     if(url){cardPaint.set(id,url);img.src=url;try{await img.decode()}catch(e){}}
     img.animate([{opacity:0},{opacity:1}],{duration:200,easing:'ease'});img.style.opacity='';
   }
@@ -1278,10 +1283,9 @@ function pickOut(btn){
   const id=btn.dataset.model,card=btn.closest('.level-card'),img=card&&card.querySelector('.pick-photo');
   if(picking)return;
   if(!img||!img.naturalWidth||!document.body.animate||matchMedia('(prefers-reduced-motion: reduce)').matches){startModel(id);return}
-  // 先在背景畫好編輯頁的預設塗裝（Sand Storm 等），拿它的快照
-  const keep=config;let snap=null,cw=0,ch=0,b=null;
-  try{config=initialConfig();config.model=id;paintPreview();const c0=$('#flatPreview .flat-photo.is-on');if(c0&&!$('#flatPreview').hidden&&c0.width){snap=c0.toDataURL('image/png');cw=c0.width;ch=c0.height;b=inkBox(c0,cw,ch)}}catch(e){snap=null}
-  config=keep;
+  // 用卡片那張「預設塗裝的側面圖」（paintLevelCards 已經畫好）
+  let snap=null,cw=0,ch=0,b=null;const c0=cardSide.get(id);
+  if(c0){try{snap=c0.toDataURL('image/png');cw=c0.width;ch=c0.height;b=inkBox(c0,cw,ch)}catch(e){snap=null}}
   if(!snap){startModel(id);return}
   picking=true;const ease='cubic-bezier(.16,1,.3,1)',page=$('#levelsPage');
   const A=fitBox(img,img.naturalWidth,img.naturalHeight),a=inkBox(img,img.naturalWidth,img.naturalHeight);
