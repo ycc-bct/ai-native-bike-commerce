@@ -76,3 +76,7 @@
 /* 下拉打開時：主動跳出的顧問氣泡先讓開；深色主視覺頁（產品頁）的白色圖示要變回深色 */
 .site-nav.open .orb-callout{visibility:hidden}
 header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{color:#141A22;filter:none}
+
+/* 會員：已登入的頭像（David Robinson 的 D），全站與客製化頁一致 */
+.site-nav .member-initial{width:28px;height:28px;border-radius:50%;background:#0E1726;color:#fff;font:700 13px/1 "Inter","Noto Sans TC",sans-serif;display:grid;place-items:center}
+.site-nav .member-initial{box-shadow:0 0 0 1.5px color-mix(in srgb,currentColor 70%,transparent)}   /* 深色 header 上自動變成淺色外框，淺色 header 上幾乎看不出來 */

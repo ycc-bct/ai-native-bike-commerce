@@ -271,6 +271,7 @@
     }).join('') + '<button type="button" data-c="v" aria-pressed="' + (cur === 'v') + '"><span class="v">' + V + '</span>原本</button>';
     box.addEventListener('click', function (ev) { var t = ev.target.closest('button'); if (t) use(t.dataset.c); });
     var host = b.previousElementSibling; (host || b.parentNode).appendChild(box);
+    b.style.display = 'none';   // 這則直接點角色切換，不需要 Try it
   });
 
   /* 回到頁面時重新讀取選擇：瀏覽器上一頁／下一頁會直接還原舊畫面（bfcache），

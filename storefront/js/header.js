@@ -74,7 +74,7 @@
       '<button type="button" class="icon-btn" aria-label="搜尋" title="搜尋">' + "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/></svg>" + '</button>' +
       "<button type=\"button\" class=\"icon-btn\" id=\"openFav\" aria-label=\"我的最愛\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z\"/></svg><span class=\"fav-n\" hidden>0</span></button>" +
       "<a href=\"#\" aria-label=\"購物車\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6\"/><circle cx=\"9.5\" cy=\"20\" r=\"1.2\"/><circle cx=\"18\" cy=\"20\" r=\"1.2\"/></svg></a>".replace('href="#"', 'href="' + esc(cartHref) + '"') +
-      "<a href=\"#\" aria-label=\"會員\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6\"/></svg></a>" +
+      "<a href=\"#\" aria-label=\"會員\" title=\"David Robinson\"><span class=\"member-initial\">D</span></a>" +
       (host.dataset.ai === 'off' ? '' : "<span class=\"orb-wrap\">\n        <button class=\"orb-btn vbtn\" id=\"aiOrb\" type=\"button\" aria-label=\"GIANT 選車顧問\" title=\"GIANT 選車顧問｜依你的騎乘情境給建議\"><span class=\"beam-glow\"></span><span class=\"beam-ring\"></span><svg class=\"vmark\" viewBox=\"0 0 22 28\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z\"/></svg></button>\n        <div class=\"orb-callout\" id=\"orbCallout\" role=\"status\" hidden><i class=\"tip\"></i>\n          <p><b id=\"calloutTitle\"></b><span id=\"calloutText\"></span></p>\n          <div class=\"acts\"><button class=\"yes\" id=\"calloutYes\" type=\"button\">好，聊聊看</button><button class=\"no\" id=\"calloutNo\" type=\"button\">先自己逛</button></div>\n        </div>\n      </span>") +
     '</div>' +
     '<div class="dd-wrap">' + BIKES.map(bikePanel).join('') + gearPanel() + '</div>';
@@ -135,6 +135,6 @@
   }
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
-    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=8'; document.head.appendChild(bs);
+    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=9'; document.head.appendChild(bs);
   }
 })();

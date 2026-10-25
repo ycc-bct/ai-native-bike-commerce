@@ -188,6 +188,7 @@ h1{font-size:clamp(24px,2.1vw,32px)}.product-code{margin-top:7px;font-size:11px}
 .option-card[aria-checked=true] .option-toggle{background:var(--navy);color:#fff;font-size:15px}
 .option-copy{font-size:13px;line-height:1.6;color:var(--ink-70)}.option-copy strong{color:var(--ink);font-weight:700}
 .option-price{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.step-swap .option-cards,.step-swap .option-cards-wrap,.step-swap .zone-body{animation:none!important}
 @keyframes part-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 
 /* Purchase bar sits at the bottom of the settings panel instead of the viewport. */
@@ -869,20 +870,26 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
 #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
 #stage .sp-bgs button:focus-visible{outline:2px solid #1F4FE0;outline-offset:3px}
+
+/* 分享、儲存：整頁只建一次、固定在面板右上角（不跟著標題重畫，切換時不會閃） */
+.panel-column{position:relative}
+#panelTools{position:absolute;top:24px;right:24px;z-index:3}
+#panelHeader .panel-head.head-save{padding-right:150px;min-height:44px;display:flex;align-items:center}
+#panelHeader>.part-back{min-height:44px;display:inline-flex;align-items:center}
 </style>
 <script>
 // Local customizer folder and published repository root share the storefront source.
 window.customStorefrontRoot=location.pathname.includes('/customized/')?'../ai-native-bike-commerce/storefront/':'storefront/';
-document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hdr1023">');
+document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hdr1025b">');
 </script>
 </head>
 <body>
 <noscript><p class="noscript">請啟用 JavaScript 以操作客製車。</p></noscript>
-<header class="nav site-nav" id="siteHeader" data-page="custom" data-ai="off"></header>
+<header class="nav site-nav" id="siteHeader" data-page="custom" data-ai="tip" data-ai-title="一起打造你的專屬車" data-ai-text="先選塗裝或自由配色，再加上簽名、設定尺寸與配備，確認總價後就能加入購物車。"></header>
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=bd9"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=bd11"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
@@ -1121,8 +1128,8 @@ function render(focus=false){const focused=document.activeElement;const focusKey
 $('#panel').dataset.screen=page;
 // Entrance animations play only when the view changes; picking a colour or part re-renders the same view, so it updates in place.
 const viewKey=[page,paintTab,paintDetail,partsTab,partDetail].join('|');$('.panel-column').classList.toggle('is-update',viewKey===lastViewKey);$('.panel-column').classList.toggle('zone-same',viewKey===lastViewKey&&paintZone===lastZone);lastViewKey=viewKey;lastZone=paintZone;const screen=document.createElement('div');screen.innerHTML=page==='paint'?renderPaint():page==='parts'?renderParts():renderReview();const head=screen.querySelector(':scope>.panel-top');$('#panelHeader').replaceChildren(...(head?head.childNodes:[]));head?.remove();
-  // Share and save stay in the same top-right spot on every screen: detail screens (a part's options, paint settings) don't render them in their own head, so add a fixed copy.
-  if(!$('#panelHeader #saveToggle'))$('#panelHeader').insertAdjacentHTML('beforeend',headTools().replace('class="head-tools"','class="head-tools head-tools-fixed"'));$('#panel').replaceChildren(...screen.childNodes);
+  // Share and save stay in the same top-right spot on every screen: detail screens (a part's options, paint settings) don't render them in their own head, so they live in one fixed element (#panelTools) beside the header that is created once and never re-rendered — switching screens doesn't flash them, same as the total price.
+  $('#panelHeader').querySelectorAll('.head-tools').forEach(x=>x.remove());if(!$('#panelTools')){$('#panelHeader').insertAdjacentHTML('afterend',headTools().replace('class="head-tools"','class="head-tools head-tools-fixed" id="panelTools"'));const T=$('#panelTools');T.addEventListener('pointerover',showTip);T.addEventListener('focusin',showTip);T.addEventListener('pointerout',e=>{if(e.target.closest?.('[data-tip]'))hideTip()});T.addEventListener('focusout',hideTip)}$('#panel').replaceChildren(...screen.childNodes);
 paintPreview();countTo($('#totalPrice'),total(config),true);$('#totalPriceLive').textContent=money(total(config));const tp=$('#templatePrice');if(tp)countTo(tp,Number(tp.dataset.count));$('#editingBanner').hidden=editingId===null;
 markSteps(page);fillThumbs();syncFavorite();$('#configTitle').textContent=modelOf(config).name;$('#configCode').textContent=modelTitle(config);
 
@@ -1163,7 +1170,7 @@ function closePartDetail(){const id=partDetail;partDetail=null;render();const ro
 $$('.step').forEach(b=>b.addEventListener('click',()=>{if(adding)return;returnToReview=false;navigate(b.dataset.step)}));
 $('#next').addEventListener('click',()=>{if(returnToReview){if(!config.size){navigate('review');return}returnToReview=false;navigate('review')}else if(page==='paint')navigate('parts');else if(page==='parts'&&partsTab==='size'){if(requireSize('請先選擇車架尺寸，再挑選配備。')){partsTab='parts';partDetail=null;render(true)}}else if(page==='parts'&&partsTab==='parts'){partsTab='extras';partDetail=null;render(true)}else if(page==='parts')navigate('review');else addToCart()});
 $$('[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close).close()));
-$('#aiOrb')?.addEventListener('click',()=>showInfo('客製車選擇說明','<p class="dialog-description">從配色到配備，打造你的專屬自行車：</p><ol class="help-list"><li>選擇特仕塗裝，或自由搭配車架顏色。</li><li>選填專屬簽名，再設定尺寸與配備。</li><li>確認總價、返回編輯並加入購物車。</li></ol>'));
+/* 右上角頭像的說明改用 header 的提示卡（data-ai="tip"） */
 $('#viewCart').addEventListener('click',()=>{$('#successDialog').close();openCart()});$('#continueDesign').addEventListener('click',()=>{$('#successDialog').close();navigate('paint')});
 $('#sizeRange').addEventListener('input',e=>{config.height=Number(e.target.value);config.size=recommendSize(config.height);config.sizeAuto=true;renderSizeGuide();render()});
 $('#cartBody').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.cartDelete){const id=Number(b.dataset.cartDelete);cart=cart.filter(i=>i.id!==id);if(editingId===id){editingId=null;render()}syncCart();renderCart();$('#cartDialog [data-close]').focus();notify('商品已移除')}else if(b.dataset.cartEdit){const item=cart.find(i=>i.id===Number(b.dataset.cartEdit));config=clone(item.config);savedId=null;markSaved();editingId=item.id;returnToReview=false;$('#cartDialog').close();navigate('review')}});
@@ -1201,7 +1208,7 @@ backgroundStage.style.setProperty('--outdoor-image','url("assets/backgrounds/mou
 function syncBackgroundOptions(three){const outdoor=backgroundStage.querySelector('button[data-stage-background="outdoor"]');outdoor.hidden=three;if(three&&backgroundStage.dataset.stageBackground==='outdoor'){backgroundStage.dataset.stageBackground='light';backgroundStage.querySelectorAll('button[data-stage-background]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.stageBackground==='light')));}}
 backgroundStage.addEventListener('click',e=>{const b=e.target.closest('button[data-stage-background]');if(!b)return;const mode=b.dataset.stageBackground;backgroundStage.dataset.stageBackground=mode;backgroundStage.querySelectorAll('button[data-stage-background]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
 
-$('#backToLevels').addEventListener('click',()=>routeTo('#levels/'+modelOf(config).series));
+$('#backToLevels').addEventListener('click',()=>{levelsEnter=true;routeTo('#levels/'+modelOf(config).series)});
 // Discard keeps the last saved copy as it was; either way the pending destination opens afterwards.
 const finishLeave=()=>{const h=pendingRoute;pendingRoute=null;$('#leaveDialog').close();if(h)routeTo(h)};
 $('#leaveDiscard').addEventListener('click',()=>{markSaved();finishLeave()});
@@ -1237,10 +1244,75 @@ function rideOut(id){const item=$(`[data-series-item="${id}"]`),media=item&&item
   .then(()=>{bike.remove();levelsEnter=true;routeTo('#levels/'+id);const p=$('#seriesPage');p.classList.remove('is-leaving');p.querySelector('.pick-shell')?.getAnimations().forEach(a=>a.cancel());riding=false})}
 function renderLevelsPage(){const x=SERIES.find(v=>v.id===currentSeries)||SERIES[0],ms=MODELS.filter(m=>m.series===x.id),page=$('#levelsPage');
   page.innerHTML=`<div class="pick-shell levels-shell"><span class="levels-mark" aria-hidden="true">${x.name}</span><button type="button" class="part-back" data-pick-back>${CHEV_L}返回車系</button><div class="pick-head"><h1 id="levelsTitle">選擇你的 ${x.name} 車款</h1><p>挑選車款等級，接著開始打造你的專屬配置。</p></div><div class="levels-grid">${ms.map((m,i)=>`<article class="level-card" style="--i:${i}"><div class="level-picture"><div class="level-frame">${BIKE_FOOT[m.img]?`<span class="level-shadow" style="left:${BIKE_FOOT[m.img][0]*100}%;right:${100-BIKE_FOOT[m.img][1]*100}%;top:${BIKE_FOOT[m.img][2]*100}%"></span>`:''}${bikePhoto(m.img,m.name)}</div></div><div class="level-text"><h2>${m.name}</h2><p class="level-year">${m.soon?'台灣尚未上市':[m.year?m.year+' 年式':'',m.spec].filter(Boolean).join(' · ')}</p><p class="level-price">${m.soon?'價格未公布':money(m.base)}</p></div><button type="button" class="pick-hit" ${DEMO_MODELS.includes(m.id)?`data-model="${m.id}"`:'disabled'} aria-label="選擇 ${escapeHTML(m.name)}"></button></article>`).join('')}</div></div>`;
-  page.classList.toggle('is-entering',levelsEnter);if(levelsEnter){levelsEnter=false;page.scrollTop=0;setTimeout(()=>page.classList.remove('is-entering'),1800)}}
+  paintLevelCards(page);page.classList.toggle('is-entering',levelsEnter);if(levelsEnter){levelsEnter=false;page.scrollTop=0;setTimeout(()=>page.classList.remove('is-entering'),1800)}}
 function startModel(id){flatIdx=0;flatContext='';config=initialConfig();config.model=id;savedId=null;markSaved();page='paint';paintTab='designer';partsTab='size';partDetail=null;paintDetail=false;paintZone='upper';returnToReview=false;editingId=null;routeTo('#config')}
+/* 選車款頁：可以客製的車款，卡片直接顯示編輯頁一進去的預設塗裝（例如 Propel SL 1 → Sand Storm）。
+   在背景畫好編輯頁的圖，再依車身位置對齊原本的照片構圖，地面陰影位置不變；點下去飛到編輯頁就是同一張圖 */
+const cardPaint=new Map();
+async function paintLevelCards(page){
+  for(const img of page.querySelectorAll('.level-card:has([data-model]) .pick-photo')){
+    const id=img.closest('.level-card').querySelector('[data-model]').dataset.model;
+    if(cardPaint.has(id)){img.src=cardPaint.get(id);continue}
+    img.style.opacity='0';
+    try{await img.decode()}catch(e){}
+    const keep=config;let url=null;
+    try{config=initialConfig();config.model=id;paintPreview();const c0=$('#flatPreview .flat-photo.is-on');
+      if(c0&&!$('#flatPreview').hidden&&c0.width&&img.naturalWidth){
+        const nw=img.naturalWidth,nh=img.naturalHeight,cw=c0.width,ch=c0.height,a=inkBox(img,nw,nh),b=inkBox(c0,cw,ch);
+        const k=((a[2]-a[0])*nw)/((b[2]-b[0])*cw),out=document.createElement('canvas');out.width=nw;out.height=nh;
+        out.getContext('2d').drawImage(c0,a[0]*nw-b[0]*cw*k,a[1]*nh-b[1]*ch*k,cw*k,ch*k);url=out.toDataURL('image/webp',.92)}
+    }catch(e){url=null}
+    config=keep;
+    if(url){cardPaint.set(id,url);img.src=url;try{await img.decode()}catch(e){}}
+    img.animate([{opacity:0},{opacity:1}],{duration:200,easing:'ease'});img.style.opacity='';
+  }
+}
+/* 選車款 → 編輯頁：被點的小車先在卡片上原地換成編輯頁的預設塗裝，再飛到左邊大圖直接接手；右側面板與標題接著長出來 */
+let picking=false;
+const fitBox=(el,w,h)=>{const r=el.getBoundingClientRect(),k=Math.min(r.width/w,r.height/h);return {x:r.left+(r.width-w*k)/2,y:r.top+(r.height-h*k)/2,w:w*k,h:h*k}};
+function inkBox(src,w,h){const c=document.createElement('canvas'),W=200,H=Math.max(1,Math.round(W*h/w));c.width=W;c.height=H;const x=c.getContext('2d');
+  try{x.drawImage(src,0,0,W,H);var d=x.getImageData(0,0,W,H).data}catch(e){return [0,0,1,1]}
+  let x0=W,y0=H,x1=-1,y1=-1;for(let y=0;y<H;y++)for(let i=0;i<W;i++){const o=(y*W+i)*4;if(d[o+3]>40&&Math.min(d[o],d[o+1],d[o+2])<235){if(i<x0)x0=i;if(i>x1)x1=i;if(y<y0)y0=y;if(y>y1)y1=y}}
+  return x1>x0?[x0/W,y0/H,(x1+1)/W,(y1+1)/H]:[0,0,1,1]}
+function pickOut(btn){
+  const id=btn.dataset.model,card=btn.closest('.level-card'),img=card&&card.querySelector('.pick-photo');
+  if(picking)return;
+  if(!img||!img.naturalWidth||!document.body.animate||matchMedia('(prefers-reduced-motion: reduce)').matches){startModel(id);return}
+  // 先在背景畫好編輯頁的預設塗裝（Sand Storm 等），拿它的快照
+  const keep=config;let snap=null,cw=0,ch=0,b=null;
+  try{config=initialConfig();config.model=id;paintPreview();const c0=$('#flatPreview .flat-photo.is-on');if(c0&&!$('#flatPreview').hidden&&c0.width){snap=c0.toDataURL('image/png');cw=c0.width;ch=c0.height;b=inkBox(c0,cw,ch)}}catch(e){snap=null}
+  config=keep;
+  if(!snap){startModel(id);return}
+  picking=true;const ease='cubic-bezier(.16,1,.3,1)',page=$('#levelsPage');
+  const A=fitBox(img,img.naturalWidth,img.naturalHeight),a=inkBox(img,img.naturalWidth,img.naturalHeight);
+  const mk=(src,x,y,w,h)=>{const e=new Image();e.src=src;e.alt='';Object.assign(e.style,{position:'fixed',left:x+'px',top:y+'px',width:w+'px',height:h+'px',zIndex:90,pointerEvents:'none',transformOrigin:'0 0',mixBlendMode:'multiply'});document.body.append(e);return e};
+  // 卡片上的原廠色小車，和疊在同一位置、車身對齊的新塗裝小車
+  const from=mk(img.src,A.x,A.y,A.w,A.h);
+  const Wt=((a[2]-a[0])*A.w)/(b[2]-b[0]),Ht=Wt*ch/cw,L=A.x+a[0]*A.w-b[0]*Wt,T=A.y+a[1]*A.h-b[1]*Ht;
+  const to=mk(snap,L,T,Wt,Ht);to.style.opacity='0';
+  img.style.visibility='hidden';
+  // 1. 原地換色（小車變成編輯頁的那張），其他車款、標題同時淡出
+  from.animate([{opacity:1},{opacity:0}],{duration:300,easing:'ease',fill:'forwards'});
+  to.animate([{opacity:0},{opacity:1}],{duration:300,easing:'ease',fill:'forwards'});
+  page.querySelectorAll('.level-card').forEach(c=>{if(c!==card)c.animate([{opacity:0,transform:'translateY(14px)'}],{duration:260,easing:'ease',fill:'forwards'})});
+  page.querySelectorAll('.pick-head,.part-back,.levels-mark,.level-card .level-text').forEach(e=>e.animate([{opacity:0}],{duration:220,easing:'ease',fill:'forwards'}));   // 只給終點：從各自目前的淡度淡出（大字 PROPEL 本來就只有 5%）
+  setTimeout(()=>{
+    startModel(id);from.remove();
+    const done=()=>{to.remove();picking=false;page.querySelectorAll('*').forEach(e=>e.getAnimations().forEach(x=>x.cancel()))};
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const cv=$('#flatPreview .flat-photo.is-on'),wrap=$('#flatPreview');
+      [['#backToLevels',0],['#configTitle',120],['#configPage .steps',200]].forEach(([q,d])=>{const e=$(q);e&&e.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:480,delay:d,easing:ease,fill:'backwards'})});
+      const pc=$('#configPage .panel-column');pc&&pc.animate([{opacity:0,transform:'translateX(48px)'},{opacity:1,transform:'none'}],{duration:620,delay:260,easing:ease,fill:'backwards'});
+      if(!cv||wrap.hidden){to.animate([{opacity:1},{opacity:0}],{duration:300,fill:'forwards'}).finished.then(done);return}
+      // 2. 換好色的小車飛到左邊大圖的位置；跟編輯頁的圖是同一張，落地直接接手
+      const B=fitBox(cv,cv.width,cv.height),k=B.w/Wt;
+      wrap.style.visibility='hidden';
+      to.animate([{transform:'none'},{transform:`translate(${B.x-L}px,${B.y-T}px) scale(${k})`}],{duration:700,easing:ease,fill:'forwards'}).finished.then(()=>{wrap.style.visibility='';requestAnimationFrame(done)});
+    }));
+  },300);
+}
 ['#seriesPage','#levelsPage'].forEach(sel=>$(sel).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.brand){pickBrand=b.dataset.brand;renderSeriesPage()}else if(b.dataset.series)rideOut(b.dataset.series);else if(b.hasAttribute('data-pick-back'))routeTo('#series');else if(b.dataset.model)startModel(b.dataset.model)}));
+  if(b.dataset.brand){pickBrand=b.dataset.brand;renderSeriesPage()}else if(b.dataset.series)rideOut(b.dataset.series);else if(b.hasAttribute('data-pick-back'))routeTo('#series');else if(b.dataset.model)pickOut(b)}));
 $('#favBody').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=Number(b.dataset.favRemove||b.dataset.favEdit),f=favorites.find(x=>x.id===id);if(!f)return;if(b.dataset.favRemove){favorites=favorites.filter(x=>x!==f);renderFavorites();syncFavorite();notify('已刪除這台客製車')}else loadFavorite(f,'review')});
 
 // 3D preview (three.js). A procedural stand-in road bike: frame tubes are grouped into the same paint zones as the
@@ -1478,6 +1550,52 @@ $('#shareInstagram').addEventListener('click',async()=>{await downloadDesignCard
 loadSharedDesign();
 markSaved();
 render();
+/* ---------- 編輯頁的小動畫：面板依方向淡入、分頁底線滑動、確認頁逐列出現、直接進來時的進場 ---------- */
+(()=>{
+  if(!document.body.animate)return;
+  const RM=matchMedia('(prefers-reduced-motion: reduce)'),E='cubic-bezier(.16,1,.3,1)',ORDER=['paint','parts','review'];
+  const curStep=()=>document.querySelector('.step[aria-current=step]');
+  const tabState=()=>[...document.querySelectorAll('#panel .segmented,#panelHeader .segmented')].map(g=>{const b=g.querySelector('button[aria-pressed=true]');return b&&{g:g.getAttribute('aria-label'),k:[...b.attributes].find(a=>/^data-.*-tab$/.test(a.name))?.value,r:b.getBoundingClientRect()}}).filter(Boolean);
+  const base=render;
+  render=function(...args){
+    if(RM.matches||currentView!=='config'||$('#configPage').hidden)return base.apply(this,args);
+    const s0=curStep(),k0=s0&&s0.dataset.step,t0=tabState();
+    const out=base.apply(this,args);
+    const s1=curStep(),k1=s1&&s1.dataset.step;
+    if(s0&&s1&&k0!==k1){
+      // 2. 面板內容依方向淡入：往下一步從右邊、回上一步從左邊；標題跟著淡換
+      const dir=ORDER.indexOf(k1)>=ORDER.indexOf(k0)?1:-1,pn=$('#panel');
+      pn.classList.add('step-swap');setTimeout(()=>pn.classList.remove('step-swap'),320);
+      pn.animate([{opacity:0,transform:`translateX(${20*dir}px)`},{opacity:1,transform:'none'}],{duration:300,easing:E});
+      $('#panelHeader').animate([{opacity:0},{opacity:1}],{duration:260,easing:'ease'});
+      // 4. 確認配置：一列一列出現
+      if(k1==='review')pn.querySelectorAll('.review-group>h3,.review-sub,.costs').forEach((g,i)=>g.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:400,delay:60+Math.min(i,10)*60,easing:E,fill:'backwards'}));
+    }else{
+      // 3. 同一組分頁換了：底線滑過去、內容淡換
+      const t1=tabState();
+      t1.forEach(n=>{const o=t0.find(x=>x.g===n.g);if(!o||o.k===n.k)return;
+        const btn=[...document.querySelectorAll('#panel .segmented button[aria-pressed=true],#panelHeader .segmented button[aria-pressed=true]')].find(b=>b.closest('.segmented').getAttribute('aria-label')===n.g);if(!btn)return;
+        const bar=document.createElement('span');Object.assign(bar.style,{position:'fixed',left:o.r.left+'px',top:(o.r.bottom-2)+'px',width:o.r.width+'px',height:'2px',background:'var(--ink)',zIndex:20,pointerEvents:'none',transformOrigin:'0 0'});
+        document.body.append(bar);btn.style.borderBottomColor='transparent';
+        bar.animate([{transform:'none'},{transform:`translateX(${n.r.left-o.r.left}px) scaleX(${n.r.width/o.r.width})`}],{duration:340,easing:E,fill:'forwards'}).finished.then(()=>{btn.style.borderBottomColor='';bar.remove()});
+        // 只淡入分頁下方的內容；分頁在面板頂部（例如塗裝部位）時就是 #panel，不碰儲存、分享按鈕
+        const g=btn.closest('.segmented');
+        if(g.closest('#panelHeader'))$('#panel').animate([{opacity:0},{opacity:1}],{duration:240,easing:'ease'});
+        else{let el=g.nextElementSibling;while(el){if(!el.matches('.head-tools,.head-tools-fixed'))el.animate([{opacity:0},{opacity:1}],{duration:240,easing:'ease'});el=el.nextElementSibling}}
+      });
+    }
+    return out;
+  };
+  // 5. 直接進編輯頁（分享連結、重新整理）：車子由下往上淡入，右邊面板從右側滑進來
+  if(!RM.matches&&(location.hash==='#config'||location.hash.startsWith('#design='))){
+    requestAnimationFrame(()=>{
+      const st=$('#configPage .preview-column .stage')||$('#configPage .preview-column');
+      st&&st.animate([{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'none'}],{duration:700,delay:80,easing:E,fill:'backwards'});
+      [['#backToLevels',0],['#configTitle',80],['#configPage .steps',160]].forEach(([q,d])=>{const e=$(q);e&&e.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:480,delay:d,easing:E,fill:'backwards'})});
+      const pc=$('#configPage .panel-column');pc&&pc.animate([{opacity:0,transform:'translateX(48px)'},{opacity:1,transform:'none'}],{duration:620,delay:220,easing:E,fill:'backwards'});
+    });
+  }
+})();
 applyRoute(location.hash);
 </script>
 <script src="assets/stage-preview.js?v=5"></script>
