@@ -206,7 +206,7 @@ body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
 .gthumb img{width:100%;height:100%;object-fit:contain}
 .gthumb:hover{border-color:var(--ink);background:#fff;transform:translateY(-2px)}
 /* 主視覺只放前 6 格，第 6 格疊「+N」；點開燈箱可看全部 */
-.gthumb:nth-child(n+7){display:none}
+.gthumb:nth-of-type(n+7){display:none}
 .gthumb.has-more{position:relative;overflow:hidden}
 .gthumb.has-more::after{content:attr(data-more);position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,23,38,.62);color:#fff;font-size:calc(var(--u)*15);font-weight:700;border-radius:inherit}
 .lightbox{position:fixed;inset:0;z-index:70;height:100vh;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) auto;align-items:center;gap:16px 16px;padding:64px 28px 20px;background:rgba(12,17,26,.92);backdrop-filter:blur(6px)}
@@ -378,6 +378,61 @@ a:not([href]){cursor:default}
 @keyframes rvIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes rvFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}}
+
+/* ---------- 相簿模式：點縮圖（或中間那台車）後，右邊情境區原地變成全白相簿 ----------
+   白色蓋住情境照與配件卡，照片從縮圖位置放大到中間；縮圖列原地展開成 12 格、分「整車／細節」兩組 */
+.gal .pg-grp{display:none}
+.pg{position:absolute;inset:0;pointer-events:none}
+.pg>*{z-index:7}
+.pg-wash{position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .38s ease}
+.pg-view{position:absolute;left:calc(var(--u)*490);right:calc(var(--u)*48);top:calc(var(--u)*164);bottom:calc(var(--base) + var(--u)*80);overflow:hidden;visibility:hidden;cursor:zoom-in;mix-blend-mode:multiply}
+/* multiply：照片的白底在轉場中跟底下的情境照融在一起，不會出現白色方塊；白底上完全不影響 */
+.pg-view img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s ease;transform-origin:0 0}
+.pg-view img.cur{opacity:1}
+.pg-view.zoom{cursor:zoom-out}
+.pg-view.zoom img.cur{transform-origin:var(--ox,50%) var(--oy,50%);scale:2.2;transition:opacity .4s ease,scale .45s var(--ease)}
+.pg-view img.cur{transition:opacity .4s ease,scale .45s var(--ease)}
+.pg-nav{position:absolute;top:0;bottom:0;width:18%;display:flex;align-items:center;padding:0 calc(var(--u)*14);opacity:0;transition:opacity .25s;cursor:pointer}
+.pg-nav.prev{left:0}.pg-nav.next{right:0;justify-content:flex-end}
+.pg-view:hover .pg-nav{opacity:.55}.pg-view .pg-nav:hover{opacity:1}
+.pg-view.zoom .pg-nav{display:none}
+.pg-nav span{width:calc(var(--u)*46);height:calc(var(--u)*46);border-radius:50%;display:grid;place-items:center;background:rgba(20,26,34,.07);color:var(--ink)}
+.pg-nav svg{width:calc(var(--u)*20);height:calc(var(--u)*20)}
+.pg-top{position:absolute;left:calc(var(--u)*490);right:calc(var(--u)*48);top:calc(var(--u)*92);display:flex;align-items:flex-start;gap:calc(var(--u)*16);opacity:0;translate:0 8px;transition:opacity .35s ease,translate .45s var(--ease)}
+.pg-cap{flex:1;min-width:0}
+.pg-cap b{display:block;font-size:calc(var(--u)*20);font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+.pg-cap span{display:block;margin-top:calc(var(--u)*4);font-size:15px;color:var(--ink-70);line-height:1.6}
+.pg-cap.swap{opacity:0;translate:0 6px}
+.pg-cap{transition:opacity .25s,translate .35s var(--ease)}
+.pg-count{margin-top:calc(var(--u)*12);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--ink-50);font-variant-numeric:tabular-nums}
+.pg-x{flex:none;width:calc(var(--u)*44);height:calc(var(--u)*44);border-radius:50%;display:grid;place-items:center;background:#F1F3F5;color:var(--ink);transition:background .2s}
+.pg-x:hover{background:#E4E8EC}.pg-x svg{width:calc(var(--u)*20);height:calc(var(--u)*20)}
+.bike img{cursor:zoom-in}
+
+.pg.show .pg-view{visibility:visible;pointer-events:auto}
+.stage.pg-on .pg-wash{opacity:1}
+.stage.pg-on .pg-top{opacity:1;translate:0 0;pointer-events:auto;transition-delay:.22s}
+.stage.pg-on .panels,.stage.pg-on .label{filter:blur(6px);transition:filter .5s ease}
+.stage .panels,.stage .label{transition:filter .5s ease}
+.stage.pg-on .acc{opacity:0;transform:translateY(16px);pointer-events:none}
+.acc{transition:opacity .35s ease,transform .45s var(--ease)}
+.stage.pg-on .bike{opacity:0;transition:opacity .35s ease}
+.stage .bike{transition:opacity .35s ease}
+.stage.pg-on.pg-from-bike .bike{transition:none}
+.stage.pg-on .nav .icons.on-dark a svg,.stage.pg-on .nav .icons.on-dark .icon-btn svg{color:var(--ink);filter:none}
+/* 縮圖列：原地展開 */
+.stage.pg-on .gal{z-index:8;left:calc(var(--u)*490);width:calc(100% - var(--u)*538);align-items:flex-end;gap:calc(var(--u)*6)}
+.stage.pg-on .gal .pg-grp{display:block;align-self:center;margin:0 calc(var(--u)*6) 0 calc(var(--u)*18);font-style:normal;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ink-50);white-space:nowrap}
+.stage.pg-on .gal .pg-grp:first-child{margin-left:0}
+.stage.pg-on .gthumb:nth-of-type(n){display:flex;position:relative;width:calc(var(--u)*58);height:calc(var(--u)*44);padding:0;border:0;border-radius:calc(var(--u)*4);background:none;opacity:.4;transform:none;transition:opacity .2s}
+.stage.pg-on .gthumb img{object-fit:cover;border-radius:inherit}
+.stage.pg-on .gthumb:hover{opacity:.8}
+.stage.pg-on .gthumb.on{opacity:1}
+.stage.pg-on .gthumb::before{content:'';position:absolute;left:18%;right:18%;bottom:calc(var(--u)*-9);height:2px;border-radius:2px;background:var(--ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.stage.pg-on .gthumb.on::before{transform:none}
+.stage.pg-on .gthumb.has-more::after{display:none}
+@media (prefers-reduced-motion:reduce){.pg *,.stage.pg-on *{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -402,7 +457,7 @@ a:not([href]){cursor:default}
 
 <section class="stage" id="stage">
   <header class="nav site-nav" id="siteHeader" data-page="product"></header>
-<script src="js/header.js?v=bd6"></script>
+<script src="js/header.js?v=bd9"></script>
 
   <div class="panels rv now fade">
   <div class="panel p1" data-i="0"><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/city.webp" alt=""></div><span class="pmask"></span></div></div>
@@ -453,8 +508,14 @@ a:not([href]){cursor:default}
     <button class="add" id="accAdd" type="button">加入此情境的完整配件</button>
   </aside>
 
-  <div class="gal rv now" style="--d:.35s" id="galRow" aria-label="車款照片"><button class="gthumb" type="button" data-i="0" aria-label="看第 1 張：主圖"><img src="img/pdp/gal-01.webp" alt="主圖" loading="lazy"></button><button class="gthumb" type="button" data-i="1" aria-label="看第 2 張：正面"><img src="img/pdp/gal-02.webp" alt="正面" loading="lazy"></button><button class="gthumb" type="button" data-i="2" aria-label="看第 3 張：背面"><img src="img/pdp/gal-03.webp" alt="背面" loading="lazy"></button><button class="gthumb" type="button" data-i="3" aria-label="看第 4 張：車架細節"><img src="img/pdp/gal-04.webp" alt="車架細節" loading="lazy"></button><button class="gthumb" type="button" data-i="4" aria-label="看第 5 張：傳動"><img src="img/pdp/gal-05.webp" alt="傳動" loading="lazy"></button><button class="gthumb" type="button" data-i="5" aria-label="看第 6 張：後變速"><img src="img/pdp/gal-06.webp" alt="後變速" loading="lazy"></button><button class="gthumb" type="button" data-i="6" aria-label="看第 7 張：大齒盤"><img src="img/pdp/gal-07.webp" alt="大齒盤" loading="lazy"></button><button class="gthumb" type="button" data-i="7" aria-label="看第 8 張：前叉"><img src="img/pdp/gal-08.webp" alt="前叉" loading="lazy"></button><button class="gthumb" type="button" data-i="8" aria-label="看第 9 張：輪組"><img src="img/pdp/gal-09.webp" alt="輪組" loading="lazy"></button><button class="gthumb" type="button" data-i="9" aria-label="看第 10 張：座艙"><img src="img/pdp/gal-10.webp" alt="座艙" loading="lazy"></button><button class="gthumb" type="button" data-i="10" aria-label="看第 11 張：把手"><img src="img/pdp/gal-11.webp" alt="把手" loading="lazy"></button><button class="gthumb" type="button" data-i="11" aria-label="看第 12 張：正視"><img src="img/pdp/gal-12.webp" alt="正視" loading="lazy"></button></div>
+  <div class="gal rv now" style="--d:.35s" id="galRow" aria-label="車款照片"><em class="pg-grp">整車</em><button class="gthumb" type="button" data-i="0" aria-label="看第 1 張：主圖"><img src="img/pdp/gal-01.webp" alt="主圖" loading="lazy"></button><button class="gthumb" type="button" data-i="1" aria-label="看第 2 張：正面"><img src="img/pdp/gal-02.webp" alt="正面" loading="lazy"></button><button class="gthumb" type="button" data-i="2" aria-label="看第 3 張：背面"><img src="img/pdp/gal-03.webp" alt="背面" loading="lazy"></button><em class="pg-grp">細節</em><button class="gthumb" type="button" data-i="3" aria-label="看第 4 張：車架細節"><img src="img/pdp/gal-04.webp" alt="車架細節" loading="lazy"></button><button class="gthumb" type="button" data-i="4" aria-label="看第 5 張：傳動"><img src="img/pdp/gal-05.webp" alt="傳動" loading="lazy"></button><button class="gthumb" type="button" data-i="5" aria-label="看第 6 張：後變速"><img src="img/pdp/gal-06.webp" alt="後變速" loading="lazy"></button><button class="gthumb" type="button" data-i="6" aria-label="看第 7 張：大齒盤"><img src="img/pdp/gal-07.webp" alt="大齒盤" loading="lazy"></button><button class="gthumb" type="button" data-i="7" aria-label="看第 8 張：前叉"><img src="img/pdp/gal-08.webp" alt="前叉" loading="lazy"></button><button class="gthumb" type="button" data-i="8" aria-label="看第 9 張：輪組"><img src="img/pdp/gal-09.webp" alt="輪組" loading="lazy"></button><button class="gthumb" type="button" data-i="9" aria-label="看第 10 張：座艙"><img src="img/pdp/gal-10.webp" alt="座艙" loading="lazy"></button><button class="gthumb" type="button" data-i="10" aria-label="看第 11 張：把手"><img src="img/pdp/gal-11.webp" alt="把手" loading="lazy"></button><button class="gthumb" type="button" data-i="11" aria-label="看第 12 張：正視"><img src="img/pdp/gal-12.webp" alt="正視" loading="lazy"></button></div>
 
+
+  <div class="pg" id="pg" aria-hidden="true">
+    <div class="pg-wash"></div>
+    <div class="pg-view" id="pgView"><img class="cur" alt=""><img alt=""><button class="pg-nav prev" type="button" aria-label="上一張"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></span></button><button class="pg-nav next" type="button" aria-label="下一張"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></button></div>
+    <div class="pg-top"><div class="pg-cap" id="pgCap"><b></b><span></span></div><span class="pg-count" id="pgCount"></span><button class="pg-x" id="pgX" type="button" aria-label="關閉相簿"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  </div>
   <nav class="tabs" aria-label="頁面分區">
     <button class="tab on" data-go="stage">騎乘情境</button>
     <button class="tab" data-go="spec">規格亮點</button>
@@ -595,7 +656,7 @@ a:not([href]){cursor:default}
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd2"></script>
+<script src="js/tips.js?v=bd3"></script>
 <script>
 const $ = id => document.getElementById(id);
 /* ---------- 進場動態：.rv.now 載入即進場；其他捲進畫面才進場 ---------- */
@@ -803,6 +864,9 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && !$('advisor').hidde
 function hideCallout(){ const c = $('orbCallout'); c.classList.remove('on'); setTimeout(() => { c.hidden = true; }, 350); adv.dismissed = true; }
 setTimeout(() => {
   if (adv.started || adv.dismissed || scrollY > 200) return;
+  /* 共用 header 的提示卡是空的，這頁自己填文案 */
+  $('calloutTitle').textContent = '在看 Revolt Advanced SL 0 嗎？';
+  $('calloutText').textContent = '想知道哪個尺寸適合你，或這台適不適合你平常騎的路，我可以幫你看看。';
   $('orbCallout').hidden = false; requestAnimationFrame(() => $('orbCallout').classList.add('on'));
 }, 8000);
 $('calloutYes').onclick = openAdvisor;
@@ -1191,7 +1255,97 @@ function showGal(i){
 }
 function openGal(i){ showGal(i); $('lightbox').hidden = false; document.body.style.overflow = 'hidden'; }
 function closeGal(){ $('lightbox').hidden = true; document.body.style.overflow = ''; }
-document.querySelectorAll('#galRow .gthumb').forEach(b => b.onclick = () => openGal(+b.dataset.i));
+/* ---------- 相簿模式（取代原本的全螢幕燈箱） ---------- */
+const PG_CAP = [
+  ['側面全車', '碎石公路幾何，穩定又不失靈活。'], ['前方 45°', '俐落的車架線條與白色塗裝分區。'], ['後方 45°', '從後方看車架與無線電子變速傳動。'],
+  ['前叉與輪組', '碳纖維前叉搭配 CADEX 碳纖維輪組。'], ['上管與座艙', '龍頭與上管一體成形，走線全部內藏。'], ['座艙正視', '從正面看把手、頭管與座墊的對齊。'],
+  ['頭管與 Logo', '碳纖維紋理與立體的 GIANT 字樣。'], ['把手與上管', '外擴下把，碎石路段更好控制。'], ['把手正視', '把寬與外擴角度一目了然。'],
+  ['傳動系統', 'SRAM RED 傳動，換檔俐落安靜。'], ['後變速與飛輪', '大範圍飛輪，陡坡也有輕齒比可用。'], ['大齒盤', '一體成形的單片大齒盤與曲柄。']
+];
+const pg = { on: false, busy: false, i: 0 };
+const pgEl = $('pg'), pgView = $('pgView'), stageEl = $('stage');
+const pgThumbs = [...document.querySelectorAll('#galRow .gthumb')];
+const EASE = 'cubic-bezier(.16,1,.3,1)', REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* 照片（4:3）在框裡實際顯示的位置 */
+const fitRect = (box, ar) => { let w = box.width, h = w / ar; if (h > box.height) { h = box.height; w = h * ar; } return {x: box.left + (box.width - w) / 2, y: box.top + (box.height - h) / 2, w, h}; };
+/* 讓 img（填滿 pg-view、左上角為原點）看起來剛好落在 r 這個框 */
+function flyFrom(img, r) {
+  const V = pgView.getBoundingClientRect(), F = fitRect(V, 4 / 3), k = r.w / F.w;
+  return `translate(${r.x - V.left - (F.x - V.left) * k}px,${r.y - V.top - (F.y - V.top) * k}px) scale(${k})`;
+}
+const thumbRect = t => fitRect(t.querySelector('img').getBoundingClientRect(), 4 / 3);
+/* 從中間那台車放大：車的位置對到照片裡車的位置（去背圖與照片各自的車身範圍） */
+function bikeRect() {
+  const b = fitRect(document.querySelector('.bike img').getBoundingClientRect(), 1140 / 855);
+  const cut = [29 / 1140, 101 / 855, 1112 / 1140, 745 / 855], ph = [34 / 1400, 125 / 1050, 1364 / 1400, 920 / 1050];
+  const bw = (cut[2] - cut[0]) * b.w, w = bw / (ph[2] - ph[0]), h = w * .75;
+  return {x: b.x + cut[0] * b.w - ph[0] * w, y: b.y + cut[1] * b.h - ph[1] * h, w, h};
+}
+function pgFill(i, swap) {
+  pg.i = (i + GAL.length) % GAL.length;
+  const imgs = pgView.querySelectorAll('img'), cur = pgView.querySelector('img.cur'), nxt = [...imgs].find(x => x !== cur);
+  pgView.classList.remove('zoom');
+  if (swap) { nxt.src = GAL[pg.i].src; nxt.classList.add('cur'); cur.classList.remove('cur'); }
+  else { cur.src = GAL[pg.i].src; }
+  $('pgCount').textContent = String(pg.i + 1).padStart(2, '0') + ' / ' + GAL.length;
+  pgThumbs.forEach((t, j) => t.classList.toggle('on', j === pg.i));
+  const cap = $('pgCap'), put = () => { cap.querySelector('b').textContent = PG_CAP[pg.i][0]; cap.querySelector('span').textContent = PG_CAP[pg.i][1]; };
+  if (swap && !REDUCED) { cap.classList.add('swap'); setTimeout(() => { put(); cap.classList.remove('swap'); }, 200); } else put();
+}
+/* 縮圖列 FLIP：先記位置、換版面、再從舊位置滑到新位置；原本藏起來的淡入 */
+function flipThumbs(change) {
+  const before = new Map(pgThumbs.map(t => [t, t.getBoundingClientRect()]));
+  change();
+  if (REDUCED) return;
+  pgThumbs.forEach((t, j) => {
+    const a = before.get(t), b = t.getBoundingClientRect();
+    if (!b.width) return;
+    if (!a.width) { t.animate([{opacity: 0, transform: 'translateY(8px)'}, {}], {duration: 380, delay: 120 + j * 22, easing: EASE, fill: 'backwards'}); return; }
+    t.animate([{transform: `translate(${a.left - b.left}px,${a.top - b.top}px) scale(${a.width / b.width},${a.height / b.height})`, transformOrigin: '0 0'}, {transformOrigin: '0 0'}], {duration: 520, easing: EASE});
+  });
+  document.querySelectorAll('#galRow .pg-grp').forEach(g => g.getBoundingClientRect().width && g.animate([{opacity: 0}, {opacity: 1}], {duration: 400, delay: 200, fill: 'backwards'}));
+}
+function openPG(i, fromBike) {
+  if (pg.on || pg.busy) { if (pg.on) pgFill(i, true); return; }
+  if (!$('advisor').hidden) closeAdvisor();
+  const src = fromBike ? bikeRect() : thumbRect(pgThumbs[i]);
+  pg.on = true; pg.busy = true; pg.fromBike = !!fromBike; clearInterval(sceneT);
+  pgFill(i, false);
+  pgEl.classList.add('show'); pgEl.setAttribute('aria-hidden', 'false');
+  stageEl.classList.toggle('pg-from-bike', !!fromBike);   /* 從車子打開：照片直接接手那台車，原本的車立刻藏起來 */
+  flipThumbs(() => stageEl.classList.add('pg-on'));
+  const img = pgView.querySelector('img.cur');
+  if (!REDUCED) { img.animate([{transform: flyFrom(img, src)}, {transform: 'none'}], {duration: 640, easing: EASE}); if (!fromBike) img.animate([{opacity: .4}, {opacity: 1}], {duration: 260, easing: 'linear'}); }
+  setTimeout(() => { pg.busy = false; }, 620);
+}
+function closePG() {
+  if (!pg.on || pg.busy) return;
+  pg.busy = true; pgView.classList.remove('zoom');
+  flipThumbs(() => stageEl.classList.remove('pg-on'));
+  const img = pgView.querySelector('img.cur'), t = pgThumbs[Math.min(pg.i, 5)];
+  const done = () => { pgEl.classList.remove('show'); pgEl.setAttribute('aria-hidden', 'true'); pg.on = false; pg.busy = false;
+    if (!document.body.classList.contains('adv-open')) sceneT = setInterval(() => setScene(cur + 1), 4500); };
+  if (REDUCED) return done();
+  img.animate([{transform: 'none', opacity: 1}, {opacity: 1, offset: .75}, {transform: flyFrom(img, pg.i === 0 && pg.fromBike ? bikeRect() : thumbRect(t)), opacity: 0}], {duration: 540, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards'})
+    .finished.then(a => { done(); a.cancel(); });
+}
+pgThumbs.forEach(b => b.onclick = () => openPG(+b.dataset.i));
+document.querySelector('.bike img').addEventListener('click', () => openPG(0, true));
+$('pgX').onclick = closePG;
+pgView.querySelector('.prev').onclick = e => { e.stopPropagation(); pgFill(pg.i - 1, true); };
+pgView.querySelector('.next').onclick = e => { e.stopPropagation(); pgFill(pg.i + 1, true); };
+/* 放大鏡：點一下放大 2.2 倍、跟著游標看細節，再點一下回去 */
+const pgAim = e => { const r = pgView.getBoundingClientRect(), im = pgView.querySelector('img.cur'); im.style.setProperty('--ox', ((e.clientX - r.left) / r.width * 100) + '%'); im.style.setProperty('--oy', ((e.clientY - r.top) / r.height * 100) + '%'); };
+pgView.addEventListener('click', e => { if (e.target.closest('.pg-nav')) return; pgAim(e); pgView.classList.toggle('zoom'); });
+pgView.addEventListener('pointermove', e => { if (pgView.classList.contains('zoom')) pgAim(e); });
+addEventListener('keydown', e => {
+  if (!pg.on) return;
+  if (e.key === 'Escape') { e.stopImmediatePropagation(); closePG(); }
+  if (e.key === 'ArrowLeft') pgFill(pg.i - 1, true);
+  if (e.key === 'ArrowRight') pgFill(pg.i + 1, true);
+}, true);
+/* 打開顧問時收起相簿 */
+new MutationObserver(() => { if (pg.on && document.body.classList.contains('adv-open')) closePG(); }).observe(document.body, {attributes: true, attributeFilter: ['class']});
 $('lbClose').onclick = closeGal;
 $('lbPrev').onclick = () => showGal(galI - 1);
 $('lbNext').onclick = () => showGal(galI + 1);

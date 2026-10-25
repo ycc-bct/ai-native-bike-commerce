@@ -115,8 +115,26 @@
   });
 
   window.GiantHeader = {open: open, close: close, nav: {bikes: BIKES, gear: GEAR, more: MORE}};
+  /* data-ai="tip"：這頁沒有對話框，但右上角一樣放顧問頭像；點了跳出說明卡（文案用 data-ai-title／data-ai-text） */
+  if (host.dataset.ai === 'tip') {
+    if (!document.querySelector('link[href*="advisor.css"]')) {
+      var tcs = document.createElement('style'); tcs.textContent = "/* orb \u4e0b\u65b9\u7684\u4e3b\u52d5\u63d0\u793a\u5361 */\n.orb-callout{position:absolute;isolation:isolate;z-index:60;top:calc(100% + 14px);right:-12px;width:300px;padding:16px 18px 14px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:0 0 0 1px rgba(79,141,255,.18),0 0 18px rgba(79,141,255,.34),0 0 40px rgba(79,141,255,.22),0 18px 44px rgba(20,26,34,.18);text-align:left;opacity:0;transform:translateY(-6px);transition:opacity .35s var(--ease),transform .35s var(--ease)}\n.orb-callout.on{opacity:1;transform:none}\n.orb-callout[hidden]{display:none}\n.orb-callout .tip{position:absolute;z-index:3;right:22px;top:-6px;width:11px;height:11px;transform:rotate(45deg);background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line)}\n.orb-callout p{font-size:13.5px;line-height:1.75;color:var(--ink-70)}\n.orb-callout b{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}\n/* \u63d0\u793a\u6846\u5916\u6846\u8dd1\u4e00\u689d\u85cd\u5149\uff08\u8207 header \u9867\u554f\u6309\u9215\u540c\u4e00\u5957 beam\uff09 */\n.orb-callout::after{content:\"\";position:absolute;z-index:1;inset:-1px;padding:1px;border-radius:inherit;pointer-events:none;\n  background:conic-gradient(from var(--beam-angle),transparent 0% 30%,rgba(79,141,255,.08) 45%,rgba(79,141,255,.35) 60%,rgba(120,180,255,.85) 70%,#BFE0FF 73%,rgba(120,180,255,.85) 76%,rgba(79,141,255,.35) 86%,rgba(79,141,255,.08) 100%);\n  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;\n  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;\n  animation:beam-spin 4s linear infinite}\n.orb-callout p,.orb-callout .acts{position:relative;z-index:2}\n@media (prefers-reduced-motion:reduce){.orb-callout::after{animation:none}}\n/* \u300c\u597d\uff0c\u804a\u804a\u770b\u300d\u653e\u53f3\u908a */\n.orb-callout .acts{display:flex;gap:8px;margin-top:12px}\n.orb-callout .yes{order:2}\n.orb-callout .no{order:1;margin-right:auto}\n.orb-callout button{height:34px;padding:0 14px;border-radius:6px;font-size:13px;font-weight:700}\n.orb-callout .yes{background:var(--navy);color:#fff}\n.orb-callout .no{border:1px solid #C5CCD5;color:var(--ink-70)}\n"; document.head.appendChild(tcs);
+    }
+    var torb = document.getElementById('aiOrb'), tco = document.getElementById('orbCallout');
+    var tshow = function () {
+      document.getElementById('calloutTitle').textContent = host.dataset.aiTitle || 'GIANT 選車顧問';
+      document.getElementById('calloutText').textContent = host.dataset.aiText || '';
+      document.getElementById('calloutYes').textContent = '知道了';
+      tco.hidden = false; requestAnimationFrame(function () { tco.classList.add('on'); });
+    };
+    var thide = function () { tco.classList.remove('on'); setTimeout(function () { tco.hidden = true; }, 350); };
+    document.getElementById('calloutNo').style.display = 'none'; document.getElementById('calloutYes').style.marginLeft = 'auto';
+    document.getElementById('calloutYes').onclick = thide;
+    torb.onclick = function () { tco.hidden ? tshow() : thide(); };
+    document.addEventListener('click', function (e) { if (!tco.hidden && !e.target.closest('.orb-wrap')) thide(); });
+  }
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
-    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=6'; document.head.appendChild(bs);
+    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=8'; document.head.appendChild(bs);
   }
 })();

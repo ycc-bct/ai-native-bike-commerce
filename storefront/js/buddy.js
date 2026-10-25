@@ -156,7 +156,7 @@
       if (cur === 'v') return;
       var e = document.createElement('span');
       e.className = 'bd'; e.dataset.c = cur; e.dataset.mood = mo;
-      e.innerHTML = '<img src="' + ROOT + 'img/buddy/' + cur + '.webp" alt="">' + face(cur);
+      e.innerHTML = '<img src="' + ROOT + 'img/buddy/' + cur + '.webp?v=2" alt="">' + face(cur);
       h.appendChild(e); els.push(e);
     });
   }
@@ -267,11 +267,24 @@
     if (!b || b.parentNode.querySelector('.bd-pick')) return;
     var box = document.createElement('div'); box.className = 'bd-pick'; box.setAttribute('role', 'group'); box.setAttribute('aria-label', '顧問角色');
     box.innerHTML = ['a', 'g', 'd'].map(function (c) {
-      return '<button type="button" data-c="' + c + '" aria-pressed="' + (cur === c) + '"><span class="bdp"><img src="' + ROOT + 'img/buddy/' + c + '.webp" alt="">' + face(c) + '</span>' + CHARS[c].name + '</button>';
+      return '<button type="button" data-c="' + c + '" aria-pressed="' + (cur === c) + '"><span class="bdp"><img src="' + ROOT + 'img/buddy/' + c + '.webp?v=2" alt="">' + face(c) + '</span>' + CHARS[c].name + '</button>';
     }).join('') + '<button type="button" data-c="v" aria-pressed="' + (cur === 'v') + '"><span class="v">' + V + '</span>原本</button>';
     box.addEventListener('click', function (ev) { var t = ev.target.closest('button'); if (t) use(t.dataset.c); });
     var host = b.previousElementSibling; (host || b.parentNode).appendChild(box);
   });
+
+  /* 回到頁面時重新讀取選擇：瀏覽器上一頁／下一頁會直接還原舊畫面（bfcache），
+     別的分頁換了角色也要跟著換（storage 事件），不然頭像會停在舊的 */
+  function sync() {
+    var c = cur; try { c = localStorage.getItem(KEY) || 'g'; } catch (e) {}
+    if (c !== cur && (CHARS[c] || c === 'v')) {
+      cur = c; render(); bindAdvisorAvatar(); blink(); quirk();
+      document.querySelectorAll('.bd-pick button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.c === c)); });
+    }
+  }
+  addEventListener('pageshow', function (e) { if (e.persisted) sync(); });
+  addEventListener('storage', function (e) { if (e.key === KEY) sync(); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) sync(); });
 
   (function reg(n) { if (window.Tips && Tips.register) Tips.register('avatar', function () { mood('greet', 1700); setTimeout(function () { mood('happy', 1200); }, 1800); }); else if (n < 30) setTimeout(function () { reg(n + 1); }, 200); })(0);
   window.Buddy = {use: use, mood: mood, chars: CHARS};

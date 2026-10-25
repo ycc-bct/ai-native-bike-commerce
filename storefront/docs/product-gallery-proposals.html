@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>商品相簿提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ---------- 說明區 ---------- */
+.doc{max-width:1180px;margin:0 auto;padding:36px 28px 60px}
+h1{font-size:26px;font-weight:800}.lead{margin-top:8px;font-size:15px;color:var(--ink-70);line-height:1.75;max-width:880px}
+.switch{margin-top:22px;display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:#fff;box-shadow:0 1px 3px rgba(14,23,38,.08)}
+.switch button{padding:9px 18px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-70)}
+.switch button.on{background:var(--navy);color:#fff}
+/* 模擬商品頁的縮圖列：點了從這裡展開 */
+.mock{margin-top:22px;background:#fff;border-radius:18px;padding:22px}
+.mock small{display:block;font-size:13px;color:var(--ink-50);margin-bottom:12px}
+.gal{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.gal button{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#F3F5F7}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.gal button:hover img{transform:scale(1.04)}
+.gal button[data-more]::after{content:attr(data-more);position:absolute;inset:0;display:grid;place-items:center;background:rgba(14,23,38,.55);color:#fff;font-weight:700;font-size:18px}
+.cards{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border-radius:16px;padding:20px 22px;border:2px solid transparent;cursor:pointer;transition:border-color .2s}
+.card.on{border-color:var(--navy)}
+.card h3{font-size:16px;font-weight:800}.card h3 i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:8px;vertical-align:1px}
+.card p{margin-top:8px;font-size:13.5px;line-height:1.7;color:var(--ink-70)}
+.card p b{color:var(--ink)}
+.common{margin-top:16px;background:#fff;border-radius:16px;padding:20px 22px;font-size:13.5px;line-height:1.8;color:var(--ink-70)}
+.common b{color:var(--ink)}
+
+/* ---------- 共用：燈箱 ---------- */
+.lb{position:fixed;inset:0;z-index:50;display:none}
+.lb.open{display:block}
+.lb .stage{position:absolute;overflow:hidden}
+.lb .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .45s ease,transform .5s var(--ease);will-change:transform}
+.lb .stage img.out{opacity:0}
+.lb .stage{cursor:zoom-in}
+.lb .stage.zoom{cursor:zoom-out}
+.lb .stage.zoom img.cur{transition:opacity .45s ease}
+.x{position:absolute;top:20px;right:24px;z-index:3;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;transition:background .2s}
+.x svg,.nav svg{width:20px;height:20px}
+.count{font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;letter-spacing:.06em}
+.nav{position:absolute;top:0;bottom:0;width:16%;z-index:2;display:flex;align-items:center;padding:0 26px;opacity:0;transition:opacity .25s}
+.nav:hover{opacity:1}.nav.prev{left:0}.nav.next{right:0;justify-content:flex-end}
+.nav span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center}
+.stage.zoom~.nav{pointer-events:none}
+.tg{display:flex;align-items:center;gap:6px}
+.tg+.tg{margin-left:14px;padding-left:14px}
+.tg em{white-space:nowrap;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.12em;margin-right:6px}
+
+/* A 全白沉浸 */
+.lb-a{background:#fff}
+.lb-a .stage{left:0;right:0;top:72px;bottom:118px}
+.lb-a .top{position:absolute;left:32px;top:26px;display:flex;align-items:baseline;gap:14px;font-size:14px;font-weight:700;z-index:3}
+.lb-a .top .count{color:var(--ink-50)}
+.lb-a .x{background:#F1F3F5}.lb-a .x:hover{background:#E4E8EC}
+.lb-a .nav span{background:rgba(20,26,34,.06)}
+.lb-a .cap{position:absolute;left:32px;bottom:40px;max-width:360px;z-index:3}
+.lb-a .cap b{display:block;font-size:15px;font-weight:700}
+.lb-a .cap span{display:block;margin-top:4px;font-size:13px;color:var(--ink-50);line-height:1.6}
+.lb-a .thumbs{position:absolute;left:50%;bottom:34px;translate:-50% 0;display:flex;z-index:3}
+.lb-a .tg+.tg{border-left:1px solid var(--line)}
+.lb-a .tg em{color:var(--ink-50)}
+.lb-a .thumbs button{position:relative;width:52px;height:39px;opacity:.38;transition:opacity .2s}
+.lb-a .thumbs button img{width:100%;height:100%;object-fit:cover;border-radius:4px}
+.lb-a .thumbs button::after{content:'';position:absolute;left:8px;right:8px;bottom:-9px;height:2px;border-radius:2px;background:var(--ink);transform:scaleX(0);transition:transform .3s var(--ease)}
+.lb-a .thumbs button:hover{opacity:.75}.lb-a .thumbs button.on{opacity:1}.lb-a .thumbs button.on::after{transform:none}
+
+/* B 編輯雜誌 */
+.lb-b{background:#F4F5F7;display:none}
+.lb-b.open{display:grid;grid-template-columns:minmax(0,1fr) 400px}
+.lb-b .stage{position:relative;margin:24px 0 24px 24px;background:#fff;border-radius:18px}
+.lb-b .stage img{inset:3%;width:94%;height:94%}
+.lb-b .nav span{background:rgba(20,26,34,.06)}
+.lb-b aside{position:relative;padding:92px 40px 32px;display:flex;flex-direction:column}
+.lb-b .x{background:#fff}.lb-b .x:hover{background:#E9ECEF}
+.lb-b .count{color:var(--ink-50)}
+.lb-b .eyebrow{display:flex;justify-content:space-between;align-items:center}
+.lb-b .eyebrow em{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--ai)}
+.lb-b h2{margin-top:14px;font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+.lb-b .txt{margin-top:12px;font-size:15px;line-height:1.8;color:var(--ink-70);min-height:82px}
+.lb-b .chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.lb-b .chips span{padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:600}
+.lb-b .copy{transition:opacity .3s,translate .4s var(--ease)}
+.lb-b .copy.out{opacity:0;translate:0 8px}
+.lb-b .thumbs{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.lb-b .thumbs em{grid-column:1/-1;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--ink-50);margin-top:6px}
+.lb-b .thumbs button{aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#fff;outline:2px solid transparent;outline-offset:-2px;opacity:.6;transition:opacity .2s,outline-color .2s}
+.lb-b .thumbs button:hover{opacity:.9}.lb-b .thumbs button.on{opacity:1;outline-color:var(--ink)}
+.lb-b .thumbs img{width:100%;height:100%;object-fit:cover}
+.lb-b .arrows{display:flex;gap:8px;margin-top:18px}
+.lb-b .arrows button{width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.lb-b .arrows button:hover{background:#E9ECEF}.lb-b .arrows svg{width:18px;height:18px}
+
+/* C 深色展間 */
+.lb-c{background:radial-gradient(120% 80% at 50% 38%,#1A1F27 0%,#0B0D11 62%,#050608 100%)}
+.lb-c::before{content:'';position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(#0000,rgba(255,255,255,.025));pointer-events:none}
+.lb-c .stage{inset:0}
+.lb-c .stage img{transition:opacity .6s ease,transform .7s var(--ease)}
+.lb-c .stage .cut{inset:auto;left:50%;top:50%;width:min(76vw,calc((100vh - 260px) * 1.45));height:auto;max-height:calc(100vh - 240px);object-fit:contain;translate:-50% -54%}
+.lb-c .stage .full{object-fit:cover}
+.lb-c .vig{position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(120% 90% at 50% 45%,#0000 55%,rgba(0,0,0,.55)),linear-gradient(#0000 60%,rgba(0,0,0,.7));opacity:0;transition:opacity .6s}
+.lb-c.detail .vig{opacity:1}
+.lb-c .floor{position:absolute;left:50%;top:50%;width:min(64vw,calc((100vh - 260px) * 1.2));height:46px;translate:-50% calc(min(25vw,(100vh - 260px) * .48) - 8px);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),#0000);filter:blur(6px);transition:opacity .5s;z-index:0}
+.lb-c.detail .floor{opacity:0}
+.lb-c .x{background:rgba(10,12,16,.45);backdrop-filter:blur(8px);color:#fff}.lb-c .x:hover{background:rgba(10,12,16,.65)}
+.lb-c .nav{color:#fff}.lb-c .nav span{background:rgba(255,255,255,.1)}
+.lb-c .cap{position:absolute;left:44px;bottom:92px;z-index:3;color:#fff;max-width:420px}
+.lb-c .cap em{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.55)}
+.lb-c .cap b{display:block;margin-top:8px;font-size:24px;font-weight:800;letter-spacing:-.01em}
+.lb-c .cap span{display:block;margin-top:6px;font-size:14px;color:rgba(255,255,255,.7);line-height:1.6}
+.lb-c .cap,.lb-a .cap{transition:opacity .3s,translate .4s var(--ease)}
+.lb-c .cap.out,.lb-a .cap.out{opacity:0;translate:0 8px}
+.lb-c .bar{position:absolute;left:44px;right:44px;bottom:40px;z-index:3;display:flex;align-items:center;gap:20px;color:#fff}
+.lb-c .segs{flex:1;display:flex;gap:6px}
+.lb-c .segs button{flex:1;height:22px;position:relative}
+.lb-c .segs button::before{content:'';position:absolute;left:0;right:0;top:10px;height:2px;border-radius:2px;background:rgba(255,255,255,.18);transition:background .25s}
+.lb-c .segs button:hover::before{background:rgba(255,255,255,.45)}
+.lb-c .segs button.on::before{background:#fff}
+.lb-c .segs button i{position:absolute;left:50%;bottom:26px;translate:-50% 6px;width:120px;aspect-ratio:4/3;border-radius:6px;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .2s,translate .25s var(--ease);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.lb-c .segs button:hover i{opacity:1;translate:-50% 0}
+.lb-c .segs i img{width:100%;height:100%;object-fit:cover;display:block}
+.lb-c .segs .gap{flex:0 0 14px}
+
+/* 放大鏡：hover 出現，點一下放大並跟著游標，再點一下回去 */
+.stage.zoom img.cur{transform:scale(2.2);transform-origin:var(--ox,50%) var(--oy,50%)}
+.lb-c .stage.zoom .cut.cur{transform:scale(1.8)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body>
+<div class="doc">
+  <h1>商品相簿：放大檢視提案</h1>
+  <p class="lead">商品頁點縮圖後的放大畫面，三個方向可以切換比較。點下面「商品頁縮圖」就會用目前選的方案打開，照片會從縮圖的位置展開。三個方案都可以用左右鍵切換，hover 照片會出現放大鏡，點一下放大、移動滑鼠看細節，再點一下回去，跟客製化頁一樣。</p>
+  <div class="switch" id="sw"><button data-v="a" class="on">A 全白沉浸</button><button data-v="b">B 編輯雜誌</button><button data-v="c">C 深色展間</button></div>
+  <div class="mock"><small>商品頁縮圖（點一張打開）</small><div class="gal" id="gal"></div></div>
+  <div class="cards" id="cards">
+    <div class="card on" data-v="a"><h3><i>A</i>全白沉浸</h3><p>背景跟照片一樣是白色，照片沒有框，像車子直接放在攝影棚裡。左上是車名與頁碼，左下一行說明，下方縮圖分「整車／細節」兩組，選中的底下一條細線。<br><b>優點：</b>最乾淨、最高級，現有照片直接用。<br><b>注意：</b>3 張非白底的特寫會看得出邊界。</p></div>
+    <div class="card" data-v="b"><h3><i>B</i>編輯雜誌</h3><p>左邊大圖，右邊一欄講這張照片在看什麼：部位名稱、一段說明、兩個重點。縮圖在右下，分組排列。<br><b>優點：</b>每張照片都在「說故事」，可以接到六大零件規格。<br><b>注意：</b>12 張都要寫說明，圖片區比 A 小。</p></div>
+    <div class="card" data-v="c"><h3><i>C</i>深色展間</h3><p>整車照片去背放在深色空間，底下一圈柔和地面陰影；細節特寫改成滿版，四周暗角。下方是一條分段進度線，hover 每一段會預覽縮圖。<br><b>優點：</b>最有戲劇感，跟「從碳纖維車架開始」的黑色調一致。<br><b>注意：</b>整車要去背（這頁的去背是自動做的示意），質感依賴去背品質。</p></div>
+  </div>
+  <p class="common"><b>三個方案共通：</b>從縮圖位置放大展開；換照片時淡入淡出（不左右滑）；說明文字跟著淡入；放大鏡操作跟客製化頁一致；Esc 或點 × 關閉。說明文字是示意，實際要再對照官網規格。</p>
+</div>
+
+<div class="lb lb-a" id="lb-a"></div>
+<div class="lb lb-b" id="lb-b"></div>
+<div class="lb lb-c" id="lb-c"></div>
+
+<script>
+const P='../img/pdp/gal-', X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+ R='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+/* [圖, 群組, 標題, 一句說明, 重點] */
+const G=[
+ [1,'整車','側面全車','碎石公路幾何，穩定又不失靈活。',['礫石公路車','Advanced SL 碳纖維']],
+ [2,'整車','前方 45°','俐落的車架線條與白色塗裝分區。',['整合式座艙','寬胎間隙']],
+ [3,'整車','後方 45°','從後方看車架的不對稱設計與傳動。',['無線電子變速','碟煞']],
+ [4,'細節','前叉與輪組','碳纖維前叉搭配 CADEX 碳纖維輪組。',['CADEX 輪組','無內胎']],
+ [5,'細節','上管與座艙','龍頭與上管一體成形，走線全部內藏。',['全內走線','空力整合']],
+ [6,'細節','座艙正視','從正面看把手、頭管與座墊的對齊。',['寬版下把','窄頭管']],
+ [7,'細節','頭管與 Logo','碳纖維紋理與立體的 GIANT 字樣。',['碳纖維紋理','GIANT Logo']],
+ [8,'細節','把手與上管','外擴下把，碎石路段更好控制。',['外擴下把','上管 REVOLT 字樣']],
+ [9,'細節','把手正視','把寬與外擴角度一目了然。',['外擴設計','人體工學握把']],
+ [10,'細節','傳動系統','SRAM RED 傳動，換檔俐落安靜。',['SRAM RED','單盤']],
+ [11,'細節','後變速與飛輪','大範圍飛輪，陡坡也有輕齒比可用。',['大範圍飛輪','無線後變']],
+ [12,'細節','大齒盤','一體成形的單片大齒盤與曲柄。',['單片齒盤','功率計']],
+];
+const src=i=>P+String(i).padStart(2,'0')+'.webp', cut=i=>'gallery/cut-0'+i+'.webp', isCut=i=>i<=3;
+let V='a', I=0;
+const $=s=>document.querySelector(s);
+
+/* 商品頁縮圖 */
+$('#gal').innerHTML=G.slice(0,6).map((g,i)=>`<button data-i="${i}"${i===5?' data-more="+7"':''}><img src="${src(g[0])}" alt=""></button>`).join('');
+document.querySelectorAll('#gal button').forEach(b=>b.onclick=()=>open(+b.dataset.i,b));
+const pick=v=>{V=v;document.querySelectorAll('#sw button,#cards .card').forEach(b=>b.classList.toggle('on',b.dataset.v===v))};
+document.querySelectorAll('#sw button,#cards .card').forEach(b=>b.onclick=()=>pick(b.dataset.v));
+
+/* 縮圖分組 */
+const groups=(fn)=>['整車','細節'].map(n=>`<div class="tg"><em>${n}</em>${G.map((g,i)=>g[1]===n?fn(g,i):'').join('')}</div>`).join('');
+
+/* 各方案的骨架 */
+$('#lb-a').innerHTML=`<div class="top">Revolt Advanced SL 0<span class="count"></span></div><button class="x" aria-label="關閉">${X}</button>
+ <div class="stage"><img class="cur" alt=""><img class="out" alt=""></div>
+ <button class="nav prev" aria-label="上一張"><span>${L}</span></button><button class="nav next" aria-label="下一張"><span>${R}</span></button>
+ <div class="cap"><b></b><span></span></div><div class="thumbs">${groups((g,i)=>`<button data-i="${i}"><img src="${src(g[0])}" alt=""></button>`)}</div>`;
+$('#lb-b').innerHTML=`<div class="stage"><img class="cur" alt=""><img class="out" alt="">
+ <button class="nav prev" aria-label="上一張"><span>${L}</span></button><button class="nav next" aria-label="下一張"><span>${R}</span></button></div>
+ <aside><button class="x" aria-label="關閉">${X}</button><div class="copy"><div class="eyebrow"><em></em><span class="count"></span></div><h2></h2><p class="txt"></p><div class="chips"></div></div>
+ <div class="arrows"><button class="pv" aria-label="上一張">${L}</button><button class="nx" aria-label="下一張">${R}</button></div>
+ <div class="thumbs" style="margin-top:28px">${['整車','細節'].map(n=>`<em>${n}</em>`+G.map((g,i)=>g[1]===n?`<button data-i="${i}"><img src="${src(g[0])}" alt=""></button>`:'').join('')).join('')}</div></aside>`;
+$('#lb-c').innerHTML=`<div class="floor"></div><div class="stage"><img class="cur" alt=""><img class="out" alt=""></div><div class="vig"></div>
+ <button class="x" aria-label="關閉">${X}</button>
+ <button class="nav prev" aria-label="上一張"><span>${L}</span></button><button class="nav next" aria-label="下一張"><span>${R}</span></button>
+ <div class="cap"><em></em><b></b><span></span></div>
+ <div class="bar"><span class="count"></span><div class="segs">${G.map((g,i)=>(i===3?'<span class="gap"></span>':'')+`<button data-i="${i}" aria-label="${g[2]}"><i><img src="${src(g[0])}" alt=""></i></button>`).join('')}</div></div>`;
+
+const box=()=>$('#lb-'+V);
+function show(i,first){
+  I=(i+G.length)%G.length; const g=G[I], b=box(), st=b.querySelector('.stage'), imgs=st.querySelectorAll('img');
+  st.classList.remove('zoom');
+  const cur=st.querySelector('img.cur'), nxt=[...imgs].find(x=>x!==cur);
+  const c=V==='c'&&isCut(g[0]);
+  nxt.className=(c?'cut':'full')+(V==='c'?'':''); nxt.src=c?cut(g[0]):src(g[0]);
+  if(first){cur.className='out';nxt.classList.add('cur')}
+  else{nxt.classList.add('out');requestAnimationFrame(()=>{nxt.classList.remove('out');nxt.classList.add('cur');cur.classList.remove('cur');cur.classList.add('out')})}
+  if(V==='c')b.classList.toggle('detail',!c);
+  const cnt=String(I+1).padStart(2,'0')+' / '+G.length;
+  b.querySelectorAll('.count').forEach(e=>e.textContent=cnt);
+  b.querySelectorAll('.thumbs button,.segs button').forEach(t=>t.classList.toggle('on',+t.dataset.i===I));
+  const fill=()=>{
+    if(V==='a'){b.querySelector('.cap b').textContent=g[2];b.querySelector('.cap span').textContent=g[3]}
+    if(V==='b'){b.querySelector('.eyebrow em').textContent=g[1]==='整車'?'整車外觀':'細節特寫';b.querySelector('h2').textContent=g[2];b.querySelector('.txt').textContent=g[3];b.querySelector('.chips').innerHTML=g[4].map(x=>`<span>${x}</span>`).join('')}
+    if(V==='c'){b.querySelector('.cap em').textContent=g[1]==='整車'?'整車外觀':'細節特寫';b.querySelector('.cap b').textContent=g[2];b.querySelector('.cap span').textContent=g[3]}
+  };
+  const cp=b.querySelector('.cap,.copy');
+  if(first){fill()}else{cp.classList.add('out');setTimeout(()=>{fill();cp.classList.remove('out')},220)}
+}
+function open(i,from){
+  const b=box(); b.classList.add('open'); document.body.style.overflow='hidden'; show(i,true);
+  /* 從縮圖位置展開 */
+  const st=b.querySelector('.stage'), img=st.querySelector('img.cur');
+  if(from&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const r=from.getBoundingClientRect(), s=st.getBoundingClientRect();
+    const sc=Math.max(r.width/s.width,r.height/s.height);
+    b.animate([{background:'transparent'},{}],{duration:420,easing:'ease'});
+    [...b.children].forEach(ch=>{if(ch!==st&&!ch.contains(st))ch.animate([{opacity:0},{opacity:0,offset:.4},{opacity:1}],{duration:600,easing:'ease'})});
+    st.animate([{transform:`translate(${r.left+r.width/2-(s.left+s.width/2)}px,${r.top+r.height/2-(s.top+s.height/2)}px) scale(${sc})`,opacity:.6},{transform:'none',opacity:1}],{duration:560,easing:'cubic-bezier(.16,1,.3,1)'});
+  }
+}
+function close(){box().classList.remove('open');document.body.style.overflow=''}
+document.querySelectorAll('.lb').forEach(b=>{
+  b.querySelector('.x').onclick=close;
+  b.querySelectorAll('.prev,.pv').forEach(x=>x.onclick=e=>{e.stopPropagation();show(I-1)});
+  b.querySelectorAll('.next,.nx').forEach(x=>x.onclick=e=>{e.stopPropagation();show(I+1)});
+  b.querySelectorAll('.thumbs button,.segs button').forEach(t=>t.onclick=()=>show(+t.dataset.i));
+  const st=b.querySelector('.stage');
+  const aim=e=>{const r=st.getBoundingClientRect(),im=st.querySelector('img.cur');im.style.setProperty('--ox',((e.clientX-r.left)/r.width*100)+'%');im.style.setProperty('--oy',((e.clientY-r.top)/r.height*100)+'%')};
+  st.addEventListener('click',e=>{if(e.target.closest('.nav'))return;aim(e);st.classList.toggle('zoom')});
+  st.addEventListener('pointermove',e=>{if(st.classList.contains('zoom'))aim(e)});
+});
+addEventListener('keydown',e=>{if(!box().classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(I-1);if(e.key==='ArrowRight')show(I+1)});
+/* ?v=a|b|c&i=n 直接打開（截圖用） */
+const q=new URLSearchParams(location.search);if(q.get('v')){pick(q.get('v'));open(+(q.get('i')||0))}
+</script>
+</body></html>
