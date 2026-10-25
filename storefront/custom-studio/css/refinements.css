@@ -813,3 +813,38 @@
 @media(max-width:600px){.tpl9.arc-showroom .showroom-motion .paint-start{bottom:12px}}
 /* 塗裝區車子再大一點（510 → 550px） */
 .tpl9.arc-showroom .paint-display{width:min(550px,calc((100svh - 450px)*1.4),78vw)}
+/* 塗裝區弧線進場：外圈先畫、內圈晚一點跟上（由 screen-motion.js 的 --sweep 控制） */
+.tpl9.arc-showroom .tabs9.arc-draw::before{-webkit-mask:conic-gradient(from 270deg at 50% 50%,#000 var(--sweep),transparent 0);mask:conic-gradient(from 270deg at 50% 50%,#000 var(--sweep),transparent 0)}
+.tpl9.arc-showroom .tabs9.arc-draw::after{-webkit-mask:conic-gradient(from 270deg at 50% 50%,#000 calc(var(--sweep) - 14deg),transparent 0);mask:conic-gradient(from 270deg at 50% 50%,#000 calc(var(--sweep) - 14deg),transparent 0)}
+
+/* 「從碳纖維車架開始」：車架照片慢慢推近＋輕微平移，一道淡光從車架上掃過（純 CSS，桌機） */
+@media(min-width:901px){
+ #cta .cta{isolation:isolate;background:#060709}
+ #cta .cta::before,#cta .cta::after{content:"";position:absolute;pointer-events:none}
+ /* 照片層：位置、大小跟原本背景圖一樣；第一層是掃光、第二層是照片 */
+ #cta .cta::before{z-index:0;top:0;left:var(--ix);width:var(--iw);height:100%;transform-origin:62% 52%;
+  background:linear-gradient(105deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.11) 50%,rgba(255,255,255,0) 58%) -70% 0/220% 100% no-repeat,
+   url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;
+  animation:cta-drift 11s ease-in-out infinite alternate,cta-sweep 9s cubic-bezier(.45,0,.25,1) 1.2s infinite}
+ /* 原本的兩道漸層（左側壓暗給文字、照片右緣淡出）改放在上面這層 */
+ #cta .cta::after{z-index:0;inset:0;
+  background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
+   linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px))}
+}
+@keyframes cta-drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.4%,-.6%)}}
+@keyframes cta-sweep{0%{background-position:-70% 0,0 0}55%,100%{background-position:170% 0,0 0}}
+@media(prefers-reduced-motion:reduce){#cta .cta::before{animation:none}}
+/* 車架往右移 80px（右緣淡出跟著 --ix 一起移）；拿掉掃光，只留慢慢推近 */
+@media(min-width:901px){
+ #cta .cta{--ix:calc(var(--sl) + 620px - var(--iw) * .4983)}
+ #cta .cta::before{background:url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;animation:cta-drift 11s ease-in-out infinite alternate}
+}
+
+/* 「從碳纖維車架開始」：車架從黑暗中被打亮（只播一次）。--rv 是光照到的範圍，由上往下擴散；同時亮度、對比從暗慢慢恢復 */
+@property --rv{syntax:'<percentage>';inherits:false;initial-value:200%}
+@media(min-width:901px){
+ #cta .cta.pre::before{--rv:0%;filter:brightness(.15) contrast(.75);opacity:.2;
+  -webkit-mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv));mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv));
+}
+ #cta .cta.pre.lit::before{--rv:200%;filter:none;opacity:1;transition:--rv 1.1s cubic-bezier(.3,.6,.3,1) .05s,filter 1.3s cubic-bezier(.3,.6,.3,1) .05s,opacity .6s ease .05s}
+}

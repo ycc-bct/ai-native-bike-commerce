@@ -115,4 +115,8 @@
   });
 
   window.GiantHeader = {open: open, close: close, nav: {bikes: BIKES, gear: GEAR, more: MORE}};
+  /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
+  if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
+    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=6'; document.head.appendChild(bs);
+  }
 })();

@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GIANT Buddy 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:8px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.75}
+.prop{margin-top:36px;background:#fff;border-radius:20px;padding:28px 32px;max-width:1180px}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;margin-right:10px;vertical-align:1px}
+.prop>p{margin-top:8px;font-size:14px;color:var(--ink-70);line-height:1.7;max-width:900px}
+.row{display:flex;flex-wrap:wrap;gap:24px 32px;align-items:center;margin-top:22px}.row .cols{flex:1 1 520px;min-width:0}
+.big{display:flex;gap:16px}.big img{width:180px;height:180px;border-radius:24px;background:#F3F5F7}
+.sizes{display:flex;align-items:end;gap:18px}.sizes figure{text-align:center;font-size:11px;color:var(--ink-50)}.sizes img{display:block;margin:0 auto 6px;border-radius:50%}
+.hdr{display:flex;align-items:center;gap:22px;height:64px;padding:0 22px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:600}
+.hdr .logo{font-weight:900;font-style:italic;font-size:20px;letter-spacing:.02em}
+.hdr nav{display:flex;gap:18px;color:var(--ink)}
+.hdr .icons{margin-left:auto;display:flex;align-items:center;gap:18px;color:var(--ink-70)}
+.hdr .icons svg{width:20px;height:20px}
+.hdr .av{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 2px #fff,0 2px 8px rgba(14,23,38,.18)}
+.hdr.dark{background:#0E1726;border-color:#0E1726;color:#fff}.hdr.dark nav{color:#fff}.hdr.dark .icons{color:#C3CAD3}
+.cols{display:grid;grid-template-columns:1fr;gap:10px}
+.pros{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;font-size:13.5px;line-height:1.65;color:var(--ink-70)}
+.pros b{color:var(--ink)}
+</style></head><body>
+<h1>GIANT 版 Buddy：靜態提案</h1>
+<p class="lead">右上角 AI 頭像改成有表情的角色，讓「選車顧問」更有人味。以下 3 個方向各有兩張變化，都用 Higgsfield 生成；每個都放在實際 header 的大小（約 34px）以及深淺兩種 header 上檢查。確定方向後再做動態（眨眼、看向游標、思考中）。</p>
+<div id="list"></div>
+<script>
+const P=[
+ ['A','深藍光澤球＋發光眼','最接近 Gina 的 Buddy，但換成店面的深藍到強調藍。只有兩個發光的眼睛、沒有嘴，冷靜專注；之後的動態（眨眼、看向游標、思考時眼睛變點點）最好做。','小尺寸辨識度最高，深色 header 上也很亮眼','沒有嘴，表情較少，比較「酷」不是「暖」'],
+ ['G','霜白玻璃球＋發光淡藍 logo 波浪','霜白玻璃球，下半部是 logo 雙波浪；波浪改成淡天藍到鈷藍的發光漸層，邊緣明亮、輕微柔焦，非常通透輕盈。','最空靈、最柔和，和霧面玻璃融合得最好','藍色最淡，白色 header 上辨識度最低，可能要加深外圈或底色'],
+ ['D','安全帽角色','戴藍色安全帽的白色小臉。最像「一個人」，人性化程度最高。','最有人味、最好親近','最卡通，跟高階碳纖維車的調性落差最大；細節多，小尺寸較擠'],
+];
+document.getElementById('list').innerHTML=P.map(([k,t,d,pro,con])=>`<section class="prop"><h2><i>${k}</i>${t}</h2><p>${d}</p>
+<div class="row"><div class="big"><img src="buddy/${k}1.webp" alt=""><img src="buddy/${k}2.webp" alt=""></div>
+<div class="sizes"><figure><img src="buddy/${k}1-crop.webp" width="64" height="64" alt="">64px</figure><figure><img src="buddy/${k}1-crop.webp" width="34" height="34" alt="">34px</figure><figure><img src="buddy/${k}1-crop.webp" width="24" height="24" alt="">24px</figure></div>
+<div class="cols">${['','dark'].map(c=>`<div class="hdr ${c}"><span class="logo">GIANT</span><nav><span>公路</span><span>登山</span><span>客製化</span></nav><span class="icons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg><img class="av" src="buddy/${k}1-crop.webp" alt=""></span></div>`).join('')}</div></div>
+<div class="pros"><div><b>優點：</b>${pro}</div><div><b>要注意：</b>${con}</div></div></section>`).join('');
+</script>
+</body></html>

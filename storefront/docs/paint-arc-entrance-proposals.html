@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><title>塗裝區 弧線選單進場 提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Inter","Noto Sans TC",sans-serif;background:#E8EBEF;color:var(--ink);padding:36px;-webkit-font-smoothing:antialiased}
+h1{font-size:26px;font-weight:800}.lead{margin-top:6px;font-size:14px;color:var(--ink-70);max-width:980px;line-height:1.7}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;margin:18px -36px 0;padding:12px 36px;background:rgba(232,235,239,.92);backdrop-filter:blur(8px)}
+.nav a{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none}
+.prop{margin-top:40px}.prop .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.prop h2{font-size:18px;font-weight:800}.prop h2 i{font-style:normal;display:inline-grid;place-items:center;min-width:26px;padding:0 6px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;margin-right:10px;vertical-align:1px}
+.prop p{margin-top:6px;font-size:13.5px;color:var(--ink-70);line-height:1.65;max-width:1100px}
+.replay{margin-left:auto;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.box{margin-top:14px;width:1152px;height:740px;border-radius:16px;overflow:hidden;background:#F3F5F7;box-shadow:0 14px 34px rgba(20,26,34,.12);position:relative}
+.box iframe{position:absolute;left:0;top:0;width:1440px;height:925px;border:0;transform:scale(.8);transform-origin:0 0}
+.box .ld{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--ink-50)}
+.cmp{margin-top:44px;max-width:1152px;background:#fff;border-radius:16px;padding:20px 24px;font-size:13.5px}
+.cmp table{border-collapse:collapse;width:100%}.cmp td,.cmp th{padding:8px 10px;border-top:1px solid var(--line);text-align:left;line-height:1.55;vertical-align:top}.cmp th{border-top:0;font-size:12px;letter-spacing:.08em;color:var(--ink-50)}
+</style></head><body>
+<h1>「車款客製化塗裝」弧線選單：兩種進場動態</h1>
+<p class="lead">目前是車子、弧線、色票整塊一起淡入上升。下面兩個都是實際頁面，按「重播」可以再看一次；播完一樣可以操作。</p>
+<div class="nav"><a href="#v1">1 弧線描繪＋依序出現</a><a href="#v2">2 轉盤轉入</a></div>
+<section class="prop" id="v1"><div class="hd"><h2><i>1</i>弧線描繪＋依序出現</h2><button class="replay" type="button" data-for="1">↻ 重播</button></div><p>車子先淡入上升；弧線從 TCR 那端往右「畫」出來（跟六大零件的手繪製圖呼應），弧線經過時 TCR、PROPEL、DEFY、TRINITY 依序出現；接著四個色票由小變大跳出，最後才是「用 TCR 開始客製」。約 1.8 秒。</p><div class="box" data-v="1"><div class="ld">載入中…</div></div></section>
+<section class="prop" id="v2"><div class="hd"><h2><i>2</i>轉盤轉入</h2><button class="replay" type="button" data-for="2">↻ 重播</button></div><p>車子先淡入；弧線與四個車款名稱當成一個轉盤，從右邊轉約 28 度回到定位（略帶一點減速回彈）；色票與連結接著淡入。約 1.8 秒。</p><div class="box" data-v="2"><div class="ld">載入中…</div></div></section>
+<script>
+const AX=new URL('parts-fx/ax.js?v=2',location.href).href;
+document.querySelectorAll('.box').forEach(box=>{
+  const v=box.dataset.v, f=document.createElement('iframe'); f.src='../custom-studio/index.html?ax='+v+'#templates'; box.appendChild(f);
+  f.addEventListener('load',()=>{const w=f.contentWindow,s=w.document.createElement('script');s.src=AX;s.onload=()=>setTimeout(()=>box.querySelector('.ld')?.remove(),300);w.document.body.appendChild(s);});
+});
+document.querySelectorAll('.replay').forEach(b=>b.addEventListener('click',()=>{const f=document.querySelector(`.box[data-v="${b.dataset.for}"] iframe`);f?.contentWindow.__play?.()}));
+</script>
+</body></html>

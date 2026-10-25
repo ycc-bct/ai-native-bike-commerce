@@ -10,6 +10,7 @@
   var ROOT = script ? script.src.replace(/js\/tips\.js.*$/, '') : '';          /* storefront/ 的絕對網址 */
   var TABS = [
     {id: 'home',    t: '首頁',         page: 'index.html', items: [
+      {key: 'avatar',  h: '切換 AI 顧問頭像', d: '選一個顧問角色，右上角、對話框和首頁卡片的頭像會一起換；它會眨眼、看著你的游標，有提示或在思考時表情也會跟著變。'},
       {key: 'callout', h: 'AI 主動出現 → 需要幫忙挑車嗎？', d: '逛一陣子後，右上角的顧問會主動問「需要幫忙挑車嗎？」，按「好，聊聊看」直接開始對話，不想理它就「先自己逛」。'},
       {key: 'jump',    h: '說出車款 → AI 直接帶路', d: '不用翻選單，跟顧問打「Revolt Advanced SL 0」，它就直接帶你到那台車的詳細頁。'}
     ]},
@@ -78,6 +79,7 @@
         if (FN[key]) FN[key]();
       };
     });
+    document.dispatchEvent(new CustomEvent('tips:render', {detail: body}));   /* 讓其他腳本（例如 buddy.js）在 Tips 內容裡加東西 */
   }
   function open() { box.hidden = false; pill.hidden = true; show(cur.id); }
   function close() { box.hidden = true; pill.hidden = false; }
