@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>你的結果 · 預約試騎與配件 · GIANT</title>
+<title>GIANT · More Than a Bike</title>
 <link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1025b"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
 <link rel="stylesheet" href="css/tips.css?v=hdr1023">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -342,7 +342,7 @@ const picked = i => Q.labels.filter((l, k) => (Q.axs ? Q.axs[k] : (LABEL_AX[l] |
       '<div class="lg"><span><i></i>' + esc(rode.n) + '</span><span><i class="b"></i>' + esc(rec.n) + '</span></div>' +
       '<p>差最多的是<b>' + AXES[weak] + '</b>（' + rode.ax[weak] + ' → ' + rec.ax[weak] + '），正好是你最常選的那種路。' + (Q.swaps && Q.swaps.length ? '第 ' + Q.swaps[Q.swaps.length - 1].step + ' 段換成 ' + esc(BIKES[Q.swaps[Q.swaps.length - 1].to].n) + ' 方向是對的，' + esc(rec.n) + ' 再往前一步。' : '') + '</p>';
   }
-  document.title = (Q.ok ? rode.n + ' 適合你' : '推薦 ' + rec.n) + ' · GIANT';
+  /* 分頁標題全站統一為「GIANT · More Than a Bike」，不再依結果改寫 */
 })();
 const go = id => $(id).scrollIntoView({behavior:'smooth', block:'start'});
 document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
