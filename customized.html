@@ -889,7 +889,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=bd11"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=bd17"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
@@ -1600,8 +1600,45 @@ render();
     });
   }
 })();
+/* ---------- 右上角顧問說明卡：依目前在哪一步換內容（header.js 的 data-ai="tip" 讀 window.GiantTipContent） ---------- */
+(()=>{
+  const LINE={propel:'平路與衝刺最快',tcr:'輕量全能，爬坡衝刺都強',defy:'長距離最舒適',trinity:'長時間維持低風阻'};
+  const TIERS=[['Advanced SL','最輕的頂級碳纖車架'],['Advanced Pro','高剛性碳纖，比賽與訓練兼顧'],['Advanced','入門碳纖，最划算']];
+  const tierOf=n=>n.includes('Advanced SL')?'Advanced SL':n.includes('Advanced Pro')?'Advanced Pro':n.includes('Advanced')?'Advanced':null;
+  const range=a=>{const v=a.filter(Boolean);if(!v.length)return '';const lo=Math.min(...v),hi=Math.max(...v),k=x=>(x/10000).toFixed(x%10000?1:0).replace(/\.0$/,'');return lo===hi?money(lo):`NT$ ${k(lo)}–${k(hi)} 萬`};
+  const demoNames=DEMO_MODELS.map(id=>MODELS.find(m=>m.id===id)?.name).filter(Boolean).join('、');
+  const P={
+    designer:['特仕塗裝怎麼選？','特仕塗裝是 GIANT 設計好的整組配色，選一個就完成；想自己決定每個部位的顏色，切到「自由配色」。'],
+    custom:['自由配色','先選一個版型，再分別設定上半車架、下半車架和 GIANT Logo 的顏色與漆面，部分顏色會加價。'],
+    signature:['專屬簽名','在上管加上你的名字或一句話，可以選字體、顏色和位置。']};
+  const S={size:['車架尺寸怎麼選？','依你的身高建議尺寸；介於兩個尺寸之間時，可以看「尺寸指南」，或到門市由技師量測。'],
+    parts:['騎乘配備','車把、把手帶、龍頭、飛輪等都可以換成升級款，價差會即時加到總價。'],
+    extras:['升級加購','保養與小配件可以一起加購，勾選需要的就好。']};
+  window.GiantCfg=()=>({view:currentView,series:currentSeries,page,paintTab,partsTab});   // 給顧問對話（custom-advisor.js）讀目前狀態
+  window.GiantTipContent=()=>{
+    if(currentView==='series')return {title:'四個車系怎麼選？',text:'先依你最常騎的方式挑車系，點一下就能看這個車系的車款。',
+      html:'<ul>'+SERIES.map(x=>`<li><a class="tip-row" href="#levels/${x.id}"><b>${x.name}</b><span>看車款 →</span><small>${x.tag}・${LINE[x.id]||''}</small></a></li>`).join('')+'</ul>'};
+    if(currentView==='levels'){
+      const x=SERIES.find(v=>v.id===currentSeries)||SERIES[0],ms=MODELS.filter(m=>m.series===x.id);
+      const rows=TIERS.map(([t,d])=>{const g=ms.filter(m=>tierOf(m.name)===t&&!m.soon);return g.length?`<li><b>${t}</b><span>${range(g.map(m=>m.base))}</span><small>${d}</small></li>`:''}).join('');
+      const note=ms.some(m=>DEMO_MODELS.includes(m.id))?'':`<p class="tip-note">示範版目前開放編輯：${demoNames}</p>`;
+      return {title:`${x.name}｜${x.tag}`,text:x.desc,html:'<ul>'+rows+'</ul>'+note};
+    }
+    if(currentView==='config'){
+      const t=page==='paint'?P[paintTab]||P.designer:page==='parts'?S[partsTab]||S.size:['最後確認','確認塗裝、尺寸與配備後加入購物車；之後到門市，由技師確認尺寸與搭配，再完成訂購。'];
+      return {title:t[0],text:t[1]};
+    }
+    return null;
+  };
+  // 換到新的一步時，頭像亮小藍點（說明卡開著就直接更新內容）
+  let key='';
+  const ping=()=>{const k=[currentView,currentSeries,page,paintTab,partsTab].join('|');if(k!==key){const first=!key;key=k;if(!first&&window.GiantTip)GiantTip.ping()}};
+  const r0=render;render=function(...a){const o=r0.apply(this,a);ping();return o};
+  const s0=showView;showView=function(...a){const o=s0.apply(this,a);ping();return o};
+})();
 applyRoute(location.hash);
 </script>
 <script src="assets/stage-preview.js?v=5"></script>
+<script src="storefront/js/custom-advisor.js?v=4"></script>
 </body>
 </html>
