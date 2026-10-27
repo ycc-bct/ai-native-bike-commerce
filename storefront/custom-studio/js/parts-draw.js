@@ -81,6 +81,16 @@
     const rearSk = document.createElement('img'); rearSk.className = 'rear-wheel pd-sk pd-rear'; rearSk.alt = ''; rearSk.src = IMG + 'rear.webp'; rear.after(rearSk);
     const by = c => parts.find(p => p.el.classList.contains(c));
     const ORDER = [{el: rear, sk: rearSk, ph: rear}, by('p-wheel'), by('p-crank-ring'), by('p-cassette'), by('p-saddle'), by('p-stem'), by('p-bar-drop')];
+    /* 速寫圖先載入；失敗（例如伺服器剛好重開）就重試，真的載不到就不顯示，避免出現破圖圖示 */
+    const guard = (el, attr) => {
+      const u = el.getAttribute(attr); if (!u) return;
+      let n = 0; const t = new Image();
+      t.onload = () => { if (n) el.setAttribute(attr, t.src); el.classList.add('pd-ok'); };
+      t.onerror = () => { if (++n < 4) setTimeout(() => { t.src = u + (u.includes('?') ? '&' : '?') + 'r=' + n; }, 1200 * n); else el.remove(); };
+      t.src = u;
+    };
+    sec.querySelectorAll('image.pd-hv').forEach(el => guard(el, 'href'));
+    sec.querySelectorAll('img.pd-sk').forEach(el => guard(el, 'src'));
     const ptip = document.createElement('i'); ptip.className = 'pd-ptip'; stage.appendChild(ptip);
     const frame = [...svg.querySelectorAll('.pd-m')], dims = [...svg.querySelectorAll('.pd-d')], retrace = [...svg.querySelectorAll('.pd-dr')], guides = [...svg.querySelectorAll('.pd-c')], tip = svg.querySelector('.pd-tip');
 
