@@ -701,6 +701,7 @@ body.solo-scene #accIdx{display:none}
 <div class="toast" id="toast"></div>
 
 <script src="js/favorites.js?v=hdr1023"></script>
+<script src="js/compare.js?v=2"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
@@ -821,11 +822,19 @@ acts('cart').forEach(b => b.onclick = () => {
   setCartBadge(cart);
   toast('已將 Revolt Advanced SL 0 加入購物車');
 });
-acts('compare').forEach(b => b.onclick = () => {
-  inCompare = !inCompare;
+/* 加入比較：存到全站共用的比較清單（js/compare.js），留在這頁；底部出現比較列，可以移除、清除或前往比較 */
+const ME = {k:'revolt-sl-0', n:'Revolt Advanced SL 0', img:'img/list/revolt-sl-0.webp', pr:308000};
+function syncCompareBtn(){
+  inCompare = GiantCompare.has(ME.k);
   acts('compare').forEach(x => { x.classList.toggle('on', inCompare); x.querySelector('span').textContent = inCompare ? '已加入比較' : '加入比較'; });
-  toast(inCompare ? '已加入比較清單' : '已從比較清單移除');
+}
+acts('compare').forEach(b => b.onclick = () => {
+  if (inCompare) { GiantCompare.remove(ME.k); toast('已從比較清單移除'); return; }
+  if (!GiantCompare.add(ME)) { toast('比較清單最多三台，先在下方移除一台'); return; }
+  toast('已加入比較，下方可以看比較清單');
 });
+document.addEventListener('compare:change', syncCompareBtn);
+GiantCompare.bar(); syncCompareBtn();
 /* 愛心接上全站的我的最愛（js/favorites.js，localStorage giant-v2-saved）。
    這一頁就是 Revolt Advanced SL 0，所以固定收藏 sl0。 */
 const FAV_ID = 'sl0';

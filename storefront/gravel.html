@@ -416,6 +416,7 @@ body.cmp-mode .tips-pill{bottom:100px}
 </aside>
 
 <script src="js/favorites.js?v=hdr1023"></script>
+<script src="js/compare.js?v=2"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
@@ -1123,6 +1124,9 @@ Tips.register('curate', () => {
 
 /* ---------- 車款比較：按「比較車款」就直接出現比較表（含空位），點卡片加入、表格裡可移除 ---------- */
 const CMPS = [];
+/* 跟全站共用的比較清單同步（js/compare.js）：詳細頁加入的車，到這裡已經勾好 */
+GiantCompare.list().forEach(x => { if (BY_K[x.k] && CMPS.length < 3) CMPS.push(x.k); });
+const saveCmps = () => GiantCompare.setList(CMPS.map(k => ({k, n:BY_K[k].n, img:BY_K[k].img, pr:BY_K[k].pr})));
 const CMP_MAX = 3;
 const CMP_ROWS = [
   ['價格',     b => 'NT$ ' + fmt(b.pr)],
@@ -1134,6 +1138,7 @@ const CMP_ROWS = [
   ['細節頁',   b => b.href ? '可看完整規格' : '示範站未提供'],
 ];
 function syncCmpBar(){
+  saveCmps();
   const bar = $('cmpBar');
   bar.hidden = !document.body.classList.contains('cmp-mode');
   $('cmpCount').textContent = CMPS.length;
@@ -1235,9 +1240,11 @@ Tips.register('compare', () => {
 
 /* 全部定義好之後才第一次繪製 */
 render();
+/* 比較清單裡已經有車（例如在詳細頁加入的）：直接進比較模式、顯示比較列，不捲動、不說話 */
+if (CMPS.length && !new URLSearchParams(location.search).get('cmp')) { document.body.classList.add('cmp-mode'); $('cmpMode').setAttribute('aria-pressed', true); syncCmpBar(); }
 /* 從其他頁的「商品比較」過來：直接進入比較模式 */
 if (new URLSearchParams(location.search).get('cmp')) addEventListener('load', () => {
-  setTimeout(() => { setCmpMode(true); history.replaceState(null, '', location.pathname); }, 400);
+  setTimeout(() => { setCmpMode(true); if (CMPS.length >= 2) renderCmp(); history.replaceState(null, '', location.pathname); }, 400);
 });
 
 /* header 下拉的「問顧問」：打開對話框，先接著那個車種聊 */
