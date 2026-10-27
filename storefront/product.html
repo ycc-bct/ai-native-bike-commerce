@@ -74,6 +74,9 @@ body.solo-scene .panel.p3 .bg{object-fit:cover;object-position:50% 45%;left:0!im
 body.solo-scene .panel.p3 .bg-ext{display:none}
 body.solo-scene .panel.p3 .pclip{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 9%,rgba(0,0,0,.8) 20%,#000 30%)}
 body.solo-scene .label.l3{left:calc(var(--S) + var(--u) * 58)}
+body.solo-scene .label.l3{display:none}   /* 只有一個情境，不需要情境標籤 */
+body.solo-scene .label{cursor:default}
+body.solo-scene .panel{cursor:default}
 .pmask{position:absolute;z-index:2;inset:0;background:rgba(8,13,22,.52);transition:opacity .6s var(--ease);pointer-events:none}
 .panel.on .pmask{opacity:0}
 /* 左側接到頁面底色 */
@@ -379,6 +382,48 @@ a:not([href]){cursor:default}
 @keyframes rvFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}}
 
+/* 配件卡：完整名稱的列表、每項可以勾選、可以換一組 */
+.acc-hd{align-items:center}
+.acc-more{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--u)*5);font-size:calc(var(--u)*13);font-weight:600;color:var(--ink-70);padding:calc(var(--u)*4) 0}
+.acc-more:hover{color:var(--ink)}
+.acc-more svg{width:calc(var(--u)*14);height:calc(var(--u)*14);transition:transform .45s var(--ease)}
+.acc-more:hover svg{transform:rotate(-120deg)}
+.acc-more span{color:var(--ink-50);font-weight:500;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.acc-sub{margin-top:calc(var(--u)*2);font-size:calc(var(--u)*13);color:var(--ink-50)}
+body:not(.solo-scene) .acc-more,body:not(.solo-scene) .acc-sub{display:none}
+body.solo-scene #accIdx{display:none}
+.acc-list{margin-top:calc(var(--u)*12);display:grid;gap:calc(var(--u)*8);transition:opacity .25s}
+.acc-list.swap{opacity:0}
+.acc-row{display:grid;grid-template-columns:auto calc(var(--u)*52) 1fr;align-items:center;gap:calc(var(--u)*12);padding:calc(var(--u)*8) calc(var(--u)*10);border:1px solid #E6EAEE;border-radius:calc(var(--u)*8);background:#fff;cursor:pointer;transition:border-color .2s}
+.acc-row:hover{border-color:#B8C0CA}
+.acc-row input{appearance:none;-webkit-appearance:none;margin:0;width:calc(var(--u)*18);height:calc(var(--u)*18);border:1.5px solid #B8C0CA;border-radius:calc(var(--u)*5);background:#fff center/72% no-repeat;cursor:pointer;transition:background-color .15s,border-color .15s}
+.acc-row input:checked{background-color:var(--navy);border-color:var(--navy);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E")}
+.acc-row input:focus-visible{outline:2px solid #64748b;outline-offset:2px}
+.acc-row .ph{width:calc(var(--u)*52);height:calc(var(--u)*52);border-radius:calc(var(--u)*6);border:1px solid #EEF1F4;overflow:hidden;background:#fff}
+.acc-row .ph img{width:100%;height:100%;object-fit:contain;padding:8%}
+.acc-row .tx{min-width:0}
+.acc-row b{display:block;font-size:calc(var(--u)*13);line-height:1.4;font-weight:700}
+.acc-row .tx>span{display:block;margin-top:calc(var(--u)*2);font-size:calc(var(--u)*13);color:var(--ink-70)}
+.acc-row em{font-style:normal;margin-left:calc(var(--u)*8);color:#1F7A44;font-weight:700}
+.acc-row:has(input:not(:checked)) .ph,.acc-row:has(input:not(:checked)) .tx{opacity:.45}
+.acc-row.bought{cursor:default}
+.acc-row.bought input{opacity:.35}
+.acc .add:disabled{color:var(--ink-50);border-color:#DCE1E7;cursor:default}
+.acc .add.done:disabled{color:#fff;border-color:var(--navy)}
+/* 顧問對話裡的配件訊息用同一套列表 */
+.adv-acc-hd{display:flex;align-items:center;gap:8px}
+.adv-acc-hd .acc-more{font-size:12.5px;gap:4px}
+.adv-acc-hd .acc-more svg{width:13px;height:13px}
+.adv-acc-list{margin-top:8px;display:grid;gap:6px}
+.adv-acc-list .acc-row{grid-template-columns:auto 44px 1fr;gap:10px;padding:6px 8px;border-radius:8px}
+.adv-acc-list .acc-row input{width:16px;height:16px;border-radius:4px}
+.adv-acc-list .acc-row .ph{width:44px;height:44px;border-radius:6px}
+.adv-acc-list .acc-row b{font-size:12.5px}
+.adv-acc-list .acc-row .tx>span{font-size:12px}
+.adv-acc-add:disabled{color:var(--ink-50);border-color:#DCE1E7;cursor:default}
+.adv-acc-add.done:disabled{color:#fff;border-color:var(--navy)}
+
+
 /* ---------- 相簿模式：點縮圖（或中間那台車）後，右邊情境區原地變成全白相簿 ----------
    白色蓋住情境照與配件卡，照片從縮圖位置放大到中間；縮圖列原地展開成 12 格、分「整車／細節」兩組 */
 .gal .pg-grp{display:none}
@@ -435,7 +480,8 @@ a:not([href]){cursor:default}
 
 </style>
 </head>
-<body>
+<!-- 一台車一個定位：Revolt Advanced SL 0 只用「探索未知」一個情境，照片鋪滿（solo-scene） -->
+<body class="solo-scene">
 
 <div class="subnav" id="subnav">
   <div class="subnav-in">
@@ -462,7 +508,7 @@ a:not([href]){cursor:default}
   <div class="panels rv now fade">
   <div class="panel p1" data-i="0"><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/city.webp" alt=""></div><span class="pmask"></span></div></div>
   <div class="panel p2" data-i="1"><span class="seam"></span><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/long.webp" alt=""></div><span class="pmask"></span></div></div>
-  <div class="panel p3" data-i="2"><span class="seam"></span><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/explore-wide.webp" alt=""><img class="bg-ext" src="img/pdp/explore-wide.webp" alt="" aria-hidden="true"></div><span class="pmask"></span></div></div>
+  <div class="panel p3" data-i="2"><span class="seam"></span><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/explore-wide.webp?v=3" alt=""><img class="bg-ext" src="img/pdp/explore-wide.webp?v=3" alt="" aria-hidden="true"></div><span class="pmask"></span></div></div>
   </div>
 
   <button class="label l1" data-i="0" type="button">
@@ -493,9 +539,10 @@ a:not([href]){cursor:default}
       <button class="btn-line" id="addCompare" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
       <button class="btn-fav" id="fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
     </div>
-    <a class="vride" href="ride.html?bike=sl0">
+    <!-- 已經選好車：跳過選路線、選車，直接用這台騎它的主場（探索未知） -->
+    <a class="vride" href="quiz.html?bike=sl0&amp;scene=mountain&amp;from=product">
       <span class="vr-ph"><img src="scenario-2/img/entry.webp" alt=""></span>
-      <span class="vr-copy"><b>這段路，你想怎麼騎？</b><span class="vr-desc">不用填表，你選的路會替你選出那台車。</span></span>
+      <span class="vr-copy"><b>騎一段礫石路試試？</b><span class="vr-desc">直接用這台騎五段路，<span style="white-space:nowrap">騎完告訴你它適不適合你。</span></span></span>
     </a>
     <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，長途也能維持高速。</p>
   </div>
@@ -503,9 +550,10 @@ a:not([href]){cursor:default}
   <div class="bike"><img src="img/bikes/revolt-lg.webp" alt="Revolt Advanced SL 0"></div>
 
   <aside class="acc" aria-live="polite">
-    <div class="acc-hd"><b id="accTitle">這個情境的建議配件</b><small id="accIdx">1 / 3</small></div>
-    <div class="acc-grid" id="accGrid"></div>
-    <button class="add" id="accAdd" type="button">加入此情境的完整配件</button>
+    <div class="acc-hd"><b id="accTitle">這個情境的建議配件</b><small id="accIdx">1 / 3</small><button class="acc-more" id="accMore" type="button" data-acc-more><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>換一組 <span id="accGi">1 / 3</span></button></div>
+    <p class="acc-sub" id="accSub"></p>
+    <div class="acc-list" id="accGrid"></div>
+    <button class="add" id="accAdd" type="button">加入全部建議配件</button>
   </aside>
 
   <div class="gal rv now" style="--d:.35s" id="galRow" aria-label="車款照片"><em class="pg-grp">整車</em><button class="gthumb" type="button" data-i="0" aria-label="看第 1 張：主圖"><img src="img/pdp/gal-01.webp" alt="主圖" loading="lazy"></button><button class="gthumb" type="button" data-i="1" aria-label="看第 2 張：正面"><img src="img/pdp/gal-02.webp" alt="正面" loading="lazy"></button><button class="gthumb" type="button" data-i="2" aria-label="看第 3 張：背面"><img src="img/pdp/gal-03.webp" alt="背面" loading="lazy"></button><em class="pg-grp">細節</em><button class="gthumb" type="button" data-i="3" aria-label="看第 4 張：車架細節"><img src="img/pdp/gal-04.webp" alt="車架細節" loading="lazy"></button><button class="gthumb" type="button" data-i="4" aria-label="看第 5 張：傳動"><img src="img/pdp/gal-05.webp" alt="傳動" loading="lazy"></button><button class="gthumb" type="button" data-i="5" aria-label="看第 6 張：後變速"><img src="img/pdp/gal-06.webp" alt="後變速" loading="lazy"></button><button class="gthumb" type="button" data-i="6" aria-label="看第 7 張：大齒盤"><img src="img/pdp/gal-07.webp" alt="大齒盤" loading="lazy"></button><button class="gthumb" type="button" data-i="7" aria-label="看第 8 張：前叉"><img src="img/pdp/gal-08.webp" alt="前叉" loading="lazy"></button><button class="gthumb" type="button" data-i="8" aria-label="看第 9 張：輪組"><img src="img/pdp/gal-09.webp" alt="輪組" loading="lazy"></button><button class="gthumb" type="button" data-i="9" aria-label="看第 10 張：座艙"><img src="img/pdp/gal-10.webp" alt="座艙" loading="lazy"></button><button class="gthumb" type="button" data-i="10" aria-label="看第 11 張：把手"><img src="img/pdp/gal-11.webp" alt="把手" loading="lazy"></button><button class="gthumb" type="button" data-i="11" aria-label="看第 12 張：正視"><img src="img/pdp/gal-12.webp" alt="正視" loading="lazy"></button></div>
@@ -671,30 +719,21 @@ const SCENES = [
   {name:'探索未知', acc:[["pump", "CONTROL MINI COMBO 迷你打氣筒", 600, "/tw/giant-control-mini-combo"], ["ratchet", "迷你棘輪工具 MULTI-TOOL WITH RATCHET SYSTEM", 600, "/tw/giant-ratchet-multi-tool"], ["sealant", "GIANT TIRE SEALANT 補胎液16OZ (473ml)", 1100, "/tw/tubeless-tyre-sealant"]]},
 ];
 let cur = -1, cart = 0;
-const added = new Set();
 function setScene(i){
   i = (i + 3) % 3;
   if (document.body.classList.contains('solo-scene')) i = 2;     /* 只剩一張時固定在探索未知 */
   if (i === cur) return;
   cur = i;
   document.querySelectorAll('.panel,.label').forEach(el => el.classList.toggle('on', +el.dataset.i === i));
-  const g = $('accGrid');
-  g.classList.add('swap');
-  setTimeout(() => {
-    g.innerHTML = SCENES[i].acc.map(([k, n, p, href]) => '<div class="it" title="' + n + '"><div class="ph"><img src="img/pdp/acc-' + k + '.webp" alt=""></div><b>' + n + '</b><span>NT$ ' + fmt(p) + '</span></div>').join('');
-    g.classList.remove('swap');
-  }, cur === i && g.children.length ? 220 : 0);
-  $('accIdx').textContent = (i + 1) + ' / 3';
   if (typeof updateHeaderTone === 'function') updateHeaderTone();
-  $('accTitle').textContent = '「' + SCENES[i].name + '」的建議配件';
-  syncAdd();
+  renderAcc(true);
 }
 /* ==== 試做：配件改由顧問呈現 ==== */
 function accMsgHtml(){
-  const sc = SCENES[cur], done = added.has(cur);
-  return '<div class="adv-acc-hd">「' + sc.name + '」的建議配件<small>點左邊的情境照可以切換</small></div>' +
-    miniHtml(sc.acc.map(([k, n, p]) => ({img:'img/pdp/acc-' + k + '.webp', n:n, t:'NT$ ' + fmt(p)}))) +
-    '<button class="adv-acc-add' + (done ? ' done' : '') + '" type="button">' + (done ? '已加入購物車 ✓' : '加入此情境的完整配件') + '</button>';
+  const b = accBtn(), sc = SCENES[cur];
+  return '<div class="adv-acc-hd">' + (soloAcc() ? 'Revolt 的建議配件' : '「' + sc.name + '」的建議配件') + (soloAcc() ? '<button class="acc-more" type="button" data-acc-more>' + $('accMore').innerHTML + '</button>' : '') + '</div>' +
+    '<div class="adv-acc-list">' + accRows() + '</div>' +
+    '<button class="adv-acc-add' + (b.done ? ' done' : '') + '" type="button"' + (b.dis ? ' disabled' : '') + '>' + b.t + '</button>';
 }
 function syncAccMsg(){
   if (!document.body.classList.contains('adv-open') || adv.holdAcc) return;
@@ -702,15 +741,50 @@ function syncAccMsg(){
   if (!m) { m = advAdd('', 'ai acc-msg'); m.id = 'advAccMsg'; fresh = true; }
   m.innerHTML = accMsgHtml();
   if (fresh) $('advLog').scrollTop = $('advLog').scrollHeight;
-  m.querySelector('.adv-acc-add').onclick = () => { if (!added.has(cur)) $('accAdd').click(); syncAccMsg(); };
+  m.querySelector('.adv-acc-add').onclick = () => { if (accPicked().length) $('accAdd').click(); };
 }
 /* ==== 試做結束 ==== */
+/* 配件卡：一次一組三項，完整名稱、每項可以勾選；只有一個情境時可以「換一組」（修車補給／長途補水收納／夜騎與安全） */
+const ACC_GROUPS = [{name:'修車補給', acc:SCENES[2].acc}, {name:'長途補水收納', acc:SCENES[1].acc}, {name:'夜騎與安全', acc:SCENES[0].acc}];
+const accState = {g:0, off:new Set(), bought:new Set()};      /* off：取消勾選的；bought：已經加入購物車的 */
+const soloAcc = () => document.body.classList.contains('solo-scene');
+const accItems = () => soloAcc() ? ACC_GROUPS[accState.g].acc : SCENES[cur].acc;
+const accPicked = () => accItems().filter(([k]) => !accState.off.has(k) && !accState.bought.has(k));
+function accRows(){
+  return accItems().map(([k, n, p]) => { const b = accState.bought.has(k), on = b || !accState.off.has(k);
+    return '<label class="acc-row' + (b ? ' bought' : '') + '"><input type="checkbox" data-acc="' + k + '"' + (on ? ' checked' : '') + (b ? ' disabled' : '') + ' aria-label="' + n + '">' +
+      '<span class="ph"><img src="img/pdp/acc-' + k + '.webp" alt=""></span><span class="tx"><b>' + n + '</b><span>NT$ ' + fmt(p) + (b ? '<em>已加入 ✓</em>' : '') + '</span></span></label>'; }).join('');
+}
+function accBtn(){
+  if (accItems().every(([k]) => accState.bought.has(k))) return {t:'已加入購物車 ✓', done:true, dis:true};
+  const pk = accPicked();
+  return pk.length ? {t:'加入 ' + pk.length + ' 項配件・NT$ ' + fmt(pk.reduce((s, x) => s + x[2], 0))} : {t:'勾選要加入的配件', dis:true};
+}
 function syncAdd(){
-  const done = added.has(cur);
-  $('accAdd').classList.toggle('done', done);
-  $('accAdd').textContent = done ? '已加入購物車 ✓' : '加入此情境的完整配件';
+  const b = accBtn(), el = $('accAdd');
+  el.textContent = b.t; el.classList.toggle('done', !!b.done); el.disabled = !!b.dis;
   syncAccMsg();
 }
+function renderAcc(swap){
+  const g = $('accGrid'), put = () => { g.innerHTML = accRows(); g.classList.remove('swap'); };
+  if (swap && g.children.length) { g.classList.add('swap'); setTimeout(put, 200); } else put();
+  $('accTitle').textContent = soloAcc() ? 'Revolt 的建議配件' : '「' + SCENES[cur].name + '」的建議配件';
+  $('accIdx').textContent = (cur + 1) + ' / 3';
+  $('accSub').textContent = ACC_GROUPS[accState.g].name;
+  $('accGi').textContent = (accState.g + 1) + ' / ' + ACC_GROUPS.length;
+  syncAdd();
+}
+/* 勾選、換一組：卡片和顧問對話裡的配件訊息共用（事件委派） */
+document.addEventListener('change', e => {
+  const c = e.target.closest && e.target.closest('input[data-acc]'); if (!c) return;
+  c.checked ? accState.off.delete(c.dataset.acc) : accState.off.add(c.dataset.acc);
+  document.querySelectorAll('input[data-acc="' + c.dataset.acc + '"]').forEach(x => x.checked = c.checked);
+  syncAdd();
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest || !e.target.closest('[data-acc-more]')) return;
+  accState.g = (accState.g + 1) % ACC_GROUPS.length; renderAcc(true);
+});
 setScene(0);
 /* 自動輪播；點照片或標題就選它，並重新計時 */
 let sceneT = setInterval(() => setScene(cur + 1), 4500);
@@ -721,14 +795,21 @@ function pickScene(i){
 }
 document.querySelectorAll('.panel,.label').forEach(el => el.onclick = () => pickScene(+el.dataset.i));
 
+/* 購物車數字：共用 header 的購物車圖示上沒有數字，第一次加入時補一個 */
+function setCartBadge(n){
+  let el = document.getElementById('cartN');
+  if (!el) { const a = document.querySelector('#siteHeader [aria-label="購物車"]'); if (!a) return;
+    a.style.position = 'relative'; a.insertAdjacentHTML('beforeend', '<span class="cart-n" id="cartN">0</span>'); el = document.getElementById('cartN'); }
+  el.textContent = n; requestAnimationFrame(() => el.classList.add('on'));
+}
 $('accAdd').onclick = () => {
-  if (added.has(cur)) return;
-  added.add(cur);
-  const items = SCENES[cur].acc, total = items.reduce((s, x) => s + x[2], 0);
+  const items = accPicked(); if (!items.length) return;
+  items.forEach(([k]) => accState.bought.add(k));
+  const total = items.reduce((s, x) => s + x[2], 0);
   cart += items.length;
-  $('cartN').textContent = cart; $('cartN').classList.add('on');
-  syncAdd();
-  toast('已加入「' + SCENES[cur].name + '」' + items.length + ' 件配件，共 NT$ ' + fmt(total));
+  setCartBadge(cart);
+  renderAcc(false);
+  toast('已加入 ' + items.length + ' 件配件，共 NT$ ' + fmt(total));
 };
 
 /* 加入購物車／加入比較：都是示範，只更新畫面狀態 */
@@ -737,7 +818,7 @@ let inCompare = false, faved = false;
 const acts = sel => document.querySelectorAll('[data-act="' + sel + '"]');
 acts('cart').forEach(b => b.onclick = () => {
   cart += 1;
-  $('cartN').textContent = cart; $('cartN').classList.add('on');
+  setCartBadge(cart);
   toast('已將 Revolt Advanced SL 0 加入購物車');
 });
 acts('compare').forEach(b => b.onclick = () => {
@@ -994,16 +1075,17 @@ function advRoute(v){
       return advSay('好，已經幫你加進比較清單了。之後想對照其他車款，隨時跟我說。' + chipsHtml([['acc','看看配件'],['size','幫我看尺寸']]));
     case 'acc': {
       adv.holdAcc = false; syncAccMsg();
-      const sc = SCENES[cur];
       goTo('stage');
-      return advSay('你現在看的是「' + sc.name + '」這個情境，我建議帶這三樣：' +
-        miniHtml(sc.acc.map(([k, n, p]) => ({img:'img/pdp/acc-' + k + '.webp', n:n, t:'NT$ ' + fmt(p)}))) +
-        chipsHtml([['accAdd','三樣都加入購物車'],['size','先看尺寸']]));
+      return advSay((soloAcc() ? '騎 Revolt 跑礫石路，我建議先帶這三樣（' + ACC_GROUPS[accState.g].name + '）：' : '你現在看的是「' + SCENES[cur].name + '」這個情境，我建議帶這三樣：') +
+        miniHtml(accItems().map(([k, n, p]) => ({img:'img/pdp/acc-' + k + '.webp', n:n, t:'NT$ ' + fmt(p)}))) +
+        chipsHtml([['accAdd','加入勾選的配件'],['size','先看尺寸']]));
     }
-    case 'accAdd':
-      if (!added.has(cur)) $('accAdd').click();
-      addYou('acc', '已加入「' + SCENES[cur].name + '」情境配件');
-      return advSay('加好了！購物車右上角可以看到。還有其他想了解的嗎？' + chipsHtml(MAIN.filter(x => x[0] !== 'acc')));
+    case 'accAdd': {
+      const n = accPicked().length;
+      if (n) $('accAdd').click();
+      addYou('acc', n ? '加入勾選的 ' + n + ' 件配件' : '加入配件');
+      return advSay((n ? '加好了！購物車右上角可以看到。' : '目前沒有勾選要加入的配件，可以在右邊的配件卡勾選。') + '還有其他想了解的嗎？' + chipsHtml(MAIN.filter(x => x[0] !== 'acc')));
+    }
     case 'geo':
       goTo('geo');
       return advSay('幫你捲到車架幾何表了，選好的尺寸那一欄已經標起來。');

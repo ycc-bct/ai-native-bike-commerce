@@ -214,6 +214,8 @@ const S = {
 };
 S.start = S.bike;
 const STEPS = TRACKS[S.scene];
+/* 從詳細頁直接進來的（?from=product），結束體驗回到那台車的詳細頁 */
+if (new URLSearchParams(location.search).get('from') === 'product') document.getElementById('quit').href = 'product.html';
 
 function pinAt(el, o){
   if (!o || !o.pin) { el.classList.remove('on'); return; }

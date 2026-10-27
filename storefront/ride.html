@@ -115,9 +115,9 @@ svg{display:block}
       <h1>這段路，你想怎麼騎？</h1>
       <div class="ask-row">
         <div class="chips" id="chips">
-          <button class="chip" type="button" data-scene="city">市區續繞</button>
-          <button class="chip" type="button" data-scene="river">河濱吹風</button>
-          <button class="chip" type="button" data-scene="mountain">往山裡走</button>
+          <button class="chip" type="button" data-scene="city">城市日常</button>
+          <button class="chip" type="button" data-scene="river">長距離挑戰</button>
+          <button class="chip" type="button" data-scene="mountain">探索未知</button>
           <button class="chip" type="button" data-scene="any">還沒決定</button>
         </div>
         <div class="ask-sub">
@@ -150,11 +150,11 @@ const AXES = RIDE.AXES, BIKES = RIDE.BIKES;
 /* 場景：對應地景上的標籤、車款池（前四台先秀）、預設選的車與提示語 */
 const SCENES = {
   city:     {pin:'city',     label:'城市日常', pool:['fast','escape','explore','advanced2','propelpro','tcr'],   pick:'fast',      say:'市區走走停停，這台最輕鬆。', also:{k:'explore', t:'紅綠燈多、坡也多？電輔更省力。'}},
-  river:    {pin:'river',    label:'河濱時光', pool:['propelpro','fast','tcr','propelsl','advanced2','explore'],  pick:'fast',      say:'先從這台看看，喜歡再慢慢挑。', also:{k:'tcr', t:'想多騎一段？這台也一起看看。'}},
-  mountain: {pin:'mountain', label:'山路挑戰', pool:['ebike','trance','sl0','pro1','talon','advanced2'],           pick:'ebike',     say:'上山省力，先從這台開始。', also:{k:'trance', t:'下坡想更穩？全避震更有信心。'}},
-  any:      {pin:null,       label:'隨意逛逛', pool:['fast','advanced2','ebike','propelpro','trance','escape'],   pick:'advanced2', say:'什麼路都能騎的一台，先看看再說。', also:{k:'fast', t:'想先從輕鬆的開始也可以。'}},
+  river:    {pin:'river',    label:'長距離挑戰', pool:['propelpro','fast','tcr','propelsl','advanced2','explore'],  pick:'fast',      say:'先從這台看看，喜歡再慢慢挑。', also:{k:'tcr', t:'想多騎一段？這台也一起看看。'}},
+  mountain: {pin:'mountain', label:'探索未知', pool:['ebike','trance','sl0','pro1','talon','advanced2'],           pick:'ebike',     say:'上山省力，先從這台開始。', also:{k:'trance', t:'下坡想更穩？全避震更有信心。'}},
+  any:      {pin:null,       label:'還沒決定', pool:['fast','advanced2','ebike','propelpro','trance','escape'],   pick:'advanced2', say:'什麼路都能騎的一台，先看看再說。', also:{k:'fast', t:'想先從輕鬆的開始也可以。'}},
 };
-const CHIP_LABEL = {city:'市區續繞', river:'河濱吹風', mountain:'往山裡走', any:'還沒決定'};
+const CHIP_LABEL = {city:'城市日常', river:'長距離挑戰', mountain:'探索未知', any:'還沒決定'};   // 跟詳細頁的三個情境同一套名稱
 const S = {scene:'river', off:0, sel:null};
 
 /* 我的最愛：每台車名旁一顆愛心，跟底部橫條的愛心、全站清單同步（gid 沒有的車用這頁的 key 當 id） */
