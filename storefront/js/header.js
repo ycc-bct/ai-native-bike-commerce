@@ -41,7 +41,7 @@
   var MORE = [
     {k: 'gear',   t: '精品配件', dd: true},
     {k: 'custom', t: '客製化',   href: 'custom-studio/index.html'},
-    {k: 'stores', t: '門市專區', href: '#'}
+    {k: 'stores', t: '門市專區'}
   ];
   var CURRENT = {home: '', gravel: 'gravel', product: 'gravel', custom: 'custom'}[page] || '';
 
