@@ -156,7 +156,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=8'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=10'; document.head.appendChild(cs);
   }
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {

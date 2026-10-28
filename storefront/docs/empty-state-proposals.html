@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>購物車／我的最愛 空狀態提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink70:#4A5563;--ink50:#7A8492;--line:#DCE1E7;--paper:#F3F5F7;--navy:#0E1726;--ai:#1F4FE0}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1420px;margin:0 auto;padding:48px 36px 80px}
+h1{margin:0;font-size:30px;font-weight:800}.intro{margin:10px 0 0;font-size:15px;line-height:1.75;color:var(--ink70)}
+.opt{margin-top:56px}.opt-hd{display:flex;align-items:baseline;gap:14px}.opt-hd b{font-size:22px;font-weight:800}.opt-hd span{font-size:14px;color:var(--ink70)}
+.rec{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--navy);color:#fff;font-size:12px;font-weight:700}
+.opt p.why{margin:8px 0 0;font-size:14px;line-height:1.75;color:var(--ink70);max-width:900px}
+.pair{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
+.col small.cap{display:block;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--ink50);letter-spacing:.04em}
+/* 抽屜（跟購物車同一個樣式） */
+.dr{width:420px;height:640px;display:flex;flex-direction:column;background:#fff;border-radius:16px 0 0 16px;box-shadow:-24px 0 60px rgba(20,26,34,.12)}
+.dr-hd{display:flex;align-items:center;gap:12px;padding:22px 24px 18px;border-bottom:1px solid var(--line)}.dr-hd h2{margin:0;font-size:20px;font-weight:800}
+.dr-hd .x{margin-left:auto;width:36px;height:36px;display:grid;place-items:center;color:var(--ink70)}.dr-hd .x svg{width:20px;height:20px}
+.dr-bd{flex:1;padding:44px 24px 24px;overflow:hidden}
+.empty{text-align:center}.empty b{display:block;font-size:16px;font-weight:700}.empty p{margin:6px 0 0;font-size:14px;line-height:1.75;color:var(--ink70)}
+.nb{display:inline-block}
+/* A：兩列入口 */
+.rows{display:grid;gap:10px;margin-top:26px}
+.row{display:grid;grid-template-columns:52px minmax(0,1fr) 16px;gap:14px;align-items:center;padding:14px 14px 14px 12px;border:1px solid var(--line);border-radius:12px;text-align:left;background:#fff}
+.row:hover{border-color:var(--ink50)}
+.row .ic{width:52px;height:52px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:#EEF3FF}
+.row .ic img{width:100%;height:100%;object-fit:cover}.row .ic.av img{width:40px;height:40px}
+.row b{display:block;font-size:15px;font-weight:700}.row span{display:block;margin-top:3px;font-size:13px;line-height:1.55;color:var(--ink70)}
+.row svg{width:16px;height:16px;color:var(--ink50)}
+/* B：兩張圖片卡 */
+.tiles{display:grid;gap:12px;margin-top:26px}
+.tile{position:relative;height:150px;border-radius:14px;overflow:hidden;text-align:left;color:#fff}
+.tile img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,23,38,.72),rgba(14,23,38,.1) 75%)}
+.tile.adv{background:radial-gradient(120% 140% at 85% 30%,#DCE8FF,#9FB8EE 55%,#5F7FD0)}.tile.adv::after{background:linear-gradient(90deg,rgba(14,23,38,.55),rgba(14,23,38,0) 70%)}
+.tile .av{position:absolute;right:18px;top:50%;width:92px;height:92px;transform:translateY(-50%);z-index:1}
+.tile .t{position:absolute;left:18px;bottom:16px;right:120px;z-index:2}.tile b{display:block;font-size:17px;font-weight:800}.tile span{display:block;margin-top:4px;font-size:13px;line-height:1.5;opacity:.92}
+/* C：顧問開場 */
+.chat{margin-top:28px;display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:start;text-align:left}
+.chat img{width:40px;height:40px}
+.bub{padding:12px 14px;border-radius:4px 14px 14px 14px;background:var(--paper);font-size:14px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips span{display:inline-flex;align-items:center;height:36px;padding:0 14px;border:1px solid #C9D0D8;border-radius:999px;background:#fff;font-size:13.5px;font-weight:700}
+.chips span.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.note{margin-top:56px;padding:20px 24px;border-radius:14px;background:#fff;font-size:14px;line-height:1.85;color:var(--ink70)}.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>購物車／我的最愛：空狀態提案</h1>
+  <p class="intro">兩個面板統一成購物車的樣式（右側整條抽屜、標題＋✕、一條分隔線）。空的時候拿掉單顆按鈕，改放兩個入口：<b>GIANT 選車顧問</b>、<b>情境式問卷</b>。頭像跟著使用者選的顧問角色走（這裡用「波浪」示意）。</p>
+
+  <!-- A -->
+  <section class="opt">
+    <div class="opt-hd"><b>A　兩列入口</b><span class="rec">建議</span><span>文字說明＋兩列可點的入口</span></div>
+    <p class="why">最安靜、最好掃：一列一個入口，左邊圖示一眼分得出「聊天」和「騎一段路」，右邊 › 表示會帶你過去。兩個面板只有上方那兩行字不同，入口完全一樣。</p>
+    <div class="pair">
+      <div class="col"><small class="cap">購物車</small>
+        <div class="dr"><div class="dr-hd"><h2>購物車</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>購物車是空的</b><p>還沒決定要哪一台？<span class="nb">從這裡開始找。</span></p></div>
+            <div class="rows">
+              <div class="row"><span class="ic av"><img src="../img/buddy/g.webp" alt=""></span><div><b>問 GIANT 選車顧問</b><span>說說你想怎麼騎，<span class="nb">幫你挑一台。</span></span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></div>
+              <div class="row"><span class="ic"><img src="../img/quiz/river-straight.webp" alt=""></span><div><b>情境式問卷</b><span>騎一段路，3 分鐘<span class="nb">找到適合你的車。</span></span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></div>
+            </div></div></div></div>
+      <div class="col"><small class="cap">我的最愛</small>
+        <div class="dr"><div class="dr-hd"><h2>我的最愛</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>還沒有收藏任何車款</b><p>看到喜歡的車按一下愛心，<span class="nb">就會留在這裡。</span></p></div>
+            <div class="rows">
+              <div class="row"><span class="ic av"><img src="../img/buddy/g.webp" alt=""></span><div><b>問 GIANT 選車顧問</b><span>說說你想怎麼騎，<span class="nb">幫你挑一台。</span></span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></div>
+              <div class="row"><span class="ic"><img src="../img/quiz/river-straight.webp" alt=""></span><div><b>情境式問卷</b><span>騎一段路，3 分鐘<span class="nb">找到適合你的車。</span></span></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></div>
+            </div></div></div></div>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section class="opt">
+    <div class="opt-hd"><b>B　兩張圖片卡</b><span>入口做成有畫面的大卡</span></div>
+    <p class="why">比較有吸引力，問卷那張直接用騎乘情境照片、顧問那張放大頭像。缺點是佔掉大半個抽屜，空狀態看起來像廣告版位。</p>
+    <div class="pair">
+      <div class="col"><small class="cap">購物車</small>
+        <div class="dr"><div class="dr-hd"><h2>購物車</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>購物車是空的</b><p>還沒決定要哪一台？<span class="nb">從這裡開始找。</span></p></div>
+            <div class="tiles">
+              <div class="tile adv"><img class="av" src="../img/buddy/g.webp" alt=""><div class="t"><b>問 GIANT 選車顧問</b><span>說說你想怎麼騎，幫你挑一台</span></div></div>
+              <div class="tile"><img class="bg" src="../img/quiz/river-straight.webp" alt=""><div class="t"><b>情境式問卷</b><span>騎一段路，3 分鐘找到適合你的車</span></div></div>
+            </div></div></div></div>
+      <div class="col"><small class="cap">我的最愛</small>
+        <div class="dr"><div class="dr-hd"><h2>我的最愛</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>還沒有收藏任何車款</b><p>看到喜歡的車按一下愛心，<span class="nb">就會留在這裡。</span></p></div>
+            <div class="tiles">
+              <div class="tile adv"><img class="av" src="../img/buddy/g.webp" alt=""><div class="t"><b>問 GIANT 選車顧問</b><span>說說你想怎麼騎，幫你挑一台</span></div></div>
+              <div class="tile"><img class="bg" src="../img/quiz/river-straight.webp" alt=""><div class="t"><b>情境式問卷</b><span>騎一段路，3 分鐘找到適合你的車</span></div></div>
+            </div></div></div></div>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section class="opt">
+    <div class="opt-hd"><b>C　顧問開場</b><span>由顧問開口，兩個入口變成回覆按鈕</span></div>
+    <p class="why">最有「AI 陪你逛」的感覺，跟網站其他地方的說明卡一致。缺點是問卷入口變成次要按鈕，不熟悉顧問的人可能不會點。</p>
+    <div class="pair">
+      <div class="col"><small class="cap">購物車</small>
+        <div class="dr"><div class="dr-hd"><h2>購物車</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>購物車是空的</b></div>
+            <div class="chat"><img src="../img/buddy/g.webp" alt=""><div><div class="bub">還沒決定要哪一台嗎？跟我說說你想怎麼騎，或騎一段情境問卷，<span class="nb">我幫你挑。</span></div><div class="chips"><span class="pri">好，聊聊看</span><span>做情境式問卷</span></div></div></div></div></div></div>
+      <div class="col"><small class="cap">我的最愛</small>
+        <div class="dr"><div class="dr-hd"><h2>我的最愛</h2><span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span></div>
+          <div class="dr-bd"><div class="empty"><b>還沒有收藏任何車款</b></div>
+            <div class="chat"><img src="../img/buddy/g.webp" alt=""><div><div class="bub">看到喜歡的車按一下愛心就會留在這裡。還沒有頭緒的話，<span class="nb">我可以先幫你挑幾台。</span></div><div class="chips"><span class="pri">好，聊聊看</span><span>做情境式問卷</span></div></div></div></div></div></div>
+    </div>
+  </section>
+
+  <div class="note"><b>兩個面板一起統一的地方：</b>我的最愛改成跟購物車一樣從右邊整條滑出（不再是浮在右上角的卡片）、標題 20px／800、右上 ✕、標題下一條分隔線、同樣的遮罩與滑入動態。入口點了之後：「問 GIANT 選車顧問」關掉抽屜並打開顧問對話；「情境式問卷」前往 ride.html。</div>
+</div>
+</body>
+</html>

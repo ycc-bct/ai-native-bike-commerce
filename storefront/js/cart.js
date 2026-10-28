@@ -33,7 +33,31 @@
     return !os.length || (acc && acc < os.length) ? '車款與配件' : acc ? '配件' : '車款';
   }
 
-  var recent = [];   /* 最近加入的商品：一次加好幾件（例如建議配件）時，小卡片合在一起顯示 */
+  var recent = [];
+
+  /* 空狀態的兩個入口（購物車、我的最愛共用）：GIANT 選車顧問、情境式問卷 */
+  var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+  function avatarHtml() {
+    var orb = document.getElementById('aiOrb'), img = orb && orb.querySelector('img');
+    if (img) { var box = img.parentNode.cloneNode(true); box.querySelectorAll('.tip-new,.orb-dot').forEach(function (x) { x.remove(); }); return box.tagName === 'BUTTON' ? box.innerHTML : box.outerHTML; }
+    var c = 'g'; try { c = localStorage.getItem('giant-buddy') || 'g'; } catch (e) {}
+    return '<img src="' + ROOT + 'img/buddy/' + (/^[adg]$/.test(c) ? c : 'g') + '.webp?v=2" alt="">';
+  }
+  function entries() {
+    return '<div class="ge-rows">' +
+      '<button type="button" class="ge-row" data-entry="advisor"><span class="ge-ic ge-av" aria-hidden="true">' + avatarHtml() + '</span><span><b>問 GIANT 選車顧問</b><small>說說你想怎麼騎，<span class="nb">幫你挑一台。</span></small></span>' + CHEV + '</button>' +
+      '<button type="button" class="ge-row" data-entry="quiz"><span class="ge-ic" aria-hidden="true"><img src="' + ROOT + 'img/quiz/river-straight.webp" alt=""></span><span><b>情境式問卷</b><small>騎一段路，3 分鐘<span class="nb">找到適合你的車。</span></small></span>' + CHEV + '</button></div>';
+  }
+  /* 問顧問：這頁有顧問對話就直接打開，沒有就到首頁打開 */
+  function goEntry(kind, done) {
+    if (done) done();
+    if (kind === 'quiz') { location.href = ROOT + 'ride.html'; return; }
+    setTimeout(function () {
+      if (window.GiantChat && GiantChat.open) GiantChat.open();
+      else if (typeof window.openAdvisor === 'function' && document.getElementById('advisor')) { if (document.getElementById('advisor').hidden) window.openAdvisor(false); }
+      else location.href = ROOT + 'index.html?ai=1';
+    }, 260);
+  }   /* 最近加入的商品：一次加好幾件（例如建議配件）時，小卡片合在一起顯示 */
 
   var api = {
     list: read,
@@ -42,6 +66,8 @@
     hasCustom: function () { return read().some(isC); },
     mode: mode,
     groupName: function (list) { return groupName(list || read()); },
+    emptyEntries: function () { return entries(); },
+    goEntry: goEntry,
     selected: selected,
     selTotal: function () { return selected().reduce(function (s, x) { return s + x.price * (x.qty || 1); }, 0); },
     /* 勾選：'custom' 整區；'other' 其他商品全選／全不選；商品 id 單件切換。勾了其他區就取消另一區 */
@@ -104,7 +130,15 @@
     '.gc-qty{display:inline-flex;align-items:center;border:1px solid #DCE1E7;border-radius:999px;height:30px}.gc-qty button{width:30px;height:28px;font-size:16px;color:#4A5563}.gc-qty button:disabled{opacity:.3;cursor:default}.gc-qty b{min-width:22px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums}' +
     '.gc-link{font-size:12.5px;font-weight:600;color:#4A5563;text-decoration:underline;text-underline-offset:3px}.gc-link:hover{color:#141A22}' +
     '.gc-price{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}.gc-price.ask{font-size:12.5px;font-weight:600;color:#4A5563}' +
-    '.gc-empty{padding:56px 8px;text-align:center;color:#4A5563;font-size:14px;line-height:1.8}.gc-empty b{display:block;font-size:16px;color:#141A22;margin-bottom:4px}' +
+    '.gc-empty{padding:44px 0 0;text-align:center;color:#4A5563;font-size:14px;line-height:1.75}.gc-empty b{display:block;font-size:16px;color:#141A22;margin-bottom:6px}.gc-empty .nb{display:inline-block}' +
+    '.ge-rows{display:grid;gap:10px;margin-top:26px;text-align:left}' +
+    '.ge-row{display:grid!important;grid-template-columns:52px minmax(0,1fr) 16px;gap:14px;align-items:center;width:100%;padding:14px 14px 14px 12px!important;border:1px solid #DCE1E7!important;border-radius:12px;background:#fff!important;text-align:left;cursor:pointer;font-family:inherit;color:#141A22;transition:border-color .2s}' +
+    '.ge-row:hover{border-color:#7A8492!important}.ge-row:focus-visible{outline:3px solid #64748b;outline-offset:3px}' +
+    '.ge-ic{position:relative;width:52px;height:52px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:#EEF3FF}' +
+    '.ge-ic>img{width:100%;height:100%;object-fit:cover}.ge-av>*{width:40px!important;height:40px!important;position:relative!important;inset:auto!important;margin:0!important;display:block}' +
+    '.ge-av .bd img,.ge-av .bd svg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.ge-av .bd .happy{display:none}' +
+    '.ge-row b{display:block;font-size:15px;font-weight:700}.ge-row small{display:block;margin-top:3px;font-size:13px;line-height:1.55;color:#4A5563}.ge-row small .nb{display:inline-block}' +
+    '.ge-row>svg{width:16px;height:16px;color:#7A8492}' +
     '.gc-ft{padding:18px 24px 22px;border-top:1px solid #DCE1E7;background:#fff}' +
     '.gc-sum{display:flex;justify-content:space-between;align-items:baseline;font-size:14px}.gc-sum strong{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}' +
     '.gc-note{margin:6px 0 0;font-size:12.5px;color:#7A8492;line-height:1.6}.gc-drawer .nb{display:inline-block}' +
@@ -142,13 +176,14 @@
     var l = read(), body = dr.querySelector('#gcBody'), ft = dr.querySelector('#gcFt');
     dr.querySelector('#gcN').textContent = l.length ? api.count() + ' 件' : '';
     if (!l.length) {
-      body.innerHTML = '<div class="gc-empty"><b>購物車是空的</b>看看喜歡的車款，或從客製化開始打造一台自己的車。</div>';
-      ft.innerHTML = '<a class="gc-go" href="' + ROOT + 'gravel.html">去逛逛車款</a>';
+      body.innerHTML = '<div class="gc-empty"><b>購物車是空的</b>還沒決定要哪一台？<span class="nb">從這裡開始找。</span></div>' + entries();
+      ft.innerHTML = ''; ft.hidden = true;
       return;
     }
     var m = mode(), cs = l.filter(isC), os = l.filter(function (x) { return !isC(x); });
     var osOn = os.filter(function (x) { return m === 'other' && !x.off; });
     function block(kind, list, head) { return list.length ? '<section class="gc-block' + (m === kind ? '' : ' dim') + '">' + head + list.map(row).join('') + '</section>' : ''; }
+    ft.hidden = false;
     body.innerHTML =
       block('custom', cs, '<label class="gc-sec"><input type="checkbox" data-check="custom"' + (m === 'custom' ? ' checked' : '') + '><b>客製車</b><small>到店確認後付款</small></label>') +
       block('other', os, '<label class="gc-sec"><input type="checkbox" data-check="other"' + (osOn.length ? ' checked' : '') + ' data-mixed="' + (osOn.length && osOn.length < os.length ? 1 : '') + '"><b>' + groupName(l) + '</b><small>' + (osOn.length ? '已選 ' + osOn.length + ' 件' : '') + '</small></label>');
@@ -192,6 +227,8 @@
   dr.addEventListener('click', function (e) {
     var it = e.target.closest('.gc-item'), id = it && it.dataset.id;
     if (e.target.closest('.gc-x') || e.target.closest('[data-close]')) return api.close();
+    var en = e.target.closest('[data-entry]');
+    if (en) { goEntry(en.dataset.entry, api.close); return; }
     var ck = e.target.closest('[data-check]');
     if (ck) { api.check(ck.dataset.check); return; }
     var q = e.target.closest('[data-q]');

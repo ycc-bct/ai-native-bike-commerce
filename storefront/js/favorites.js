@@ -77,14 +77,16 @@
     panel.className = 'fav-panel';
     panel.id = 'favPanel';
     panel.hidden = true;
-    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('role', 'dialog'); panel.tabIndex = -1;
     panel.setAttribute('aria-label', '我的最愛');
     panel.innerHTML =
       '<header class="fav-hd"><h2>我的最愛</h2>' +
-      '<button type="button" class="fav-close" aria-label="關閉">&times;</button></header>' +
+      '<button type="button" class="fav-close" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>' +
       '<div class="fav-body"></div>';
     panel.querySelector('.fav-close').addEventListener('click', () => setOpen(false));
     panel.addEventListener('click', e => {
+      const en = e.target.closest('[data-entry]');
+      if (en && window.GiantCart) { GiantCart.goEntry(en.dataset.entry, () => setOpen(false)); return; }
       const rm = e.target.closest('[data-fav-remove]');
       if (rm) Fav.remove(rm.dataset.favRemove);
     });
@@ -96,10 +98,9 @@
     const ids = Fav.list();
     const body = panel.querySelector('.fav-body');
     if (!ids.length) {
-      body.innerHTML =
-        '<div class="fav-empty"><p>還沒有收藏任何車款。</p>' +
-        '<p>在選車現場看到想再比較的車，按一下愛心就會留在這裡。</p>' +
-        '<a class="fav-cta" href="' + base() + 'ride.html">去情境式問卷挑一台</a></div>';
+      /* 空的時候：跟購物車一樣放兩個入口（GIANT 選車顧問、情境式問卷），由 js/cart.js 提供 */
+      body.innerHTML = '<div class="fav-empty"><b>還沒有收藏任何車款</b>看到喜歡的車按一下愛心，<span class="nb">就會留在這裡。</span></div>' +
+        (window.GiantCart && GiantCart.emptyEntries ? GiantCart.emptyEntries() : '<div class="fav-empty"><a class="fav-cta" href="' + base() + 'ride.html">去情境式問卷挑一台</a></div>');
       return;
     }
     body.innerHTML = '<ul class="fav-list">' + ids.map(id => {
@@ -129,7 +130,7 @@
       renderList();
       scrim.hidden = false; panel.hidden = false;
       requestAnimationFrame(() => { scrim.classList.add('on'); panel.classList.add('on'); });
-      panel.querySelector('.fav-close').focus({ preventScroll: true });
+      panel.focus({ preventScroll: true });   /* 用滑鼠打開時不在 ✕ 上畫焦點框；Tab 一下就到 ✕ */
     } else {
       scrim.classList.remove('on'); panel.classList.remove('on');
       setTimeout(() => { if (!panel.classList.contains('on')) { scrim.hidden = true; panel.hidden = true; } }, 280);
