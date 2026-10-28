@@ -41,7 +41,7 @@
     var orb = document.getElementById('aiOrb'), img = orb && orb.querySelector('img');
     if (img) { var box = img.parentNode.cloneNode(true); box.querySelectorAll('.tip-new,.orb-dot').forEach(function (x) { x.remove(); }); return box.tagName === 'BUTTON' ? box.innerHTML : box.outerHTML; }
     var c = 'g'; try { c = localStorage.getItem('giant-buddy') || 'g'; } catch (e) {}
-    return '<img src="' + ROOT + 'img/buddy/' + (/^[ad]$/.test(c) ? c + '.webp?v=3' : 'g-sm.svg?v=2') + '" alt="">';
+    return '<img src="' + ROOT + 'img/buddy/' + (/^[adg]$/.test(c) ? c : 'g') + '.webp?v=4' + '" alt="">';
   }
   function entries() {
     return '<div class="ge-rows">' +

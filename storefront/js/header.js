@@ -156,7 +156,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=13'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=14'; document.head.appendChild(cs);
   }
   /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
   (function () {
@@ -201,6 +201,6 @@
   })();
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
-    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=15'; document.head.appendChild(bs);
+    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=16'; document.head.appendChild(bs);
   }
 })();
