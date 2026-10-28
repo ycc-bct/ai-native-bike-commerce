@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GIANT · More Than a Bike</title>
+<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1028"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
+<link rel="stylesheet" href="css/tips.css?v=hdr1023">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* 結帳：確認車款與配件 → 取貨門市與時段 → 聯絡與付款 → 完成。顏色、字級、間距依「GIANT 客製車設計系統」 */
+:root{--paper:#F3F5F7;--surface:#fff;--ink:#141A22;--ink-70:#4A5563;--ink-50:#7A8492;--line:#DCE1E7;--line-soft:#E3E7EC;--navy:#0E1726;--navy-hover:#1C2A40;--ai:#1F4FE0;--error:#B23932;--step-idle:#E7EAED;
+  --sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--shell:min(1280px,calc(100vw - 72px))}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid #64748b;outline-offset:4px}
+.site-nav{position:fixed;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+.co{width:var(--shell);margin:0 auto;padding:calc(max(100vw, 1200px) / 1672 * 76 + 28px) 0 96px}
+.co-back{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:var(--ink-70);text-decoration:none}
+.co-back:hover{color:var(--ink)}.co-back[hidden]{display:none}.co-back svg{width:16px;height:16px}
+.co-head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:14px;flex-wrap:wrap}
+.co-head h1{font-size:28px;font-weight:800;letter-spacing:-.01em}
+.steps{display:flex;align-items:center;gap:16px;list-style:none}
+.steps li{display:flex;align-items:center;gap:16px}
+.steps li:not(:last-child)::after{content:"";width:22px;height:1px;background:var(--line)}
+.step{display:flex;align-items:center;gap:9px;font-size:13px;color:#707b87;white-space:nowrap}
+.step span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--step-idle);font-weight:600;color:var(--ink);font-size:12px}
+.step.cur{font-weight:700;color:var(--ink)}.step.cur span{background:var(--navy);color:#fff}
+.step.done span{background:#dfe7e0;color:#465748}
+.grid.solo{grid-template-columns:minmax(0,860px);justify-content:center}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start;margin-top:26px}
+.card{background:var(--surface);border-radius:18px;padding:28px}
+.card h2{font-size:22px;font-weight:800}
+.card .sub{margin-top:6px;font-size:15px;line-height:1.75;color:var(--ink-70)}
+.pane{animation:paneIn .35s var(--ease)}
+@keyframes paneIn{from{opacity:0;transform:translateX(16px)}}
+.pane.back{animation-name:paneBack}@keyframes paneBack{from{opacity:0;transform:translateX(-16px)}}
+/* 商品列 */
+.items{margin-top:18px}
+.it{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:18px;align-items:center;padding:18px 0;border-top:1px solid var(--line-soft)}
+.it:first-child{border-top:0}
+.ph{width:120px;height:86px;border-radius:10px;background:var(--paper);display:grid;place-items:center;overflow:hidden}
+.ph img{width:92%;height:92%;object-fit:contain;mix-blend-mode:multiply}
+.it h3{font-size:15px;font-weight:700;line-height:1.4}
+.it .meta{margin-top:3px;font-size:13px;color:var(--ink-70);line-height:1.6}
+.tag{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:999px;background:#EEF3FF;color:var(--ai);font-size:12px;font-weight:700}
+.it .ctl{display:flex;align-items:center;gap:12px;margin-top:10px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;height:32px}
+.qty button{width:32px;height:30px;font-size:16px;color:var(--ink-70)}.qty button:disabled{opacity:.3;cursor:default}
+.qty b{min-width:24px;text-align:center;font-size:13.5px;font-variant-numeric:tabular-nums}
+.lnk{font-size:13px;font-weight:600;color:var(--ink-70);text-decoration:underline;text-underline-offset:3px}.lnk:hover{color:var(--ink)}
+.it .pr{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{margin-top:18px;padding:14px 16px;border-radius:10px;background:#EEF3FF;color:#1B3E9E;font-size:14px;line-height:1.7}
+.note b{color:var(--ink)}
+/* 取貨方式 */
+.ways{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.way{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:10px;cursor:pointer;text-align:left}
+.way:has(input:checked){border-color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
+.way input{margin-top:3px;accent-color:var(--navy)}
+.way b{display:block;font-size:14.5px}.way small{display:block;margin-top:2px;font-size:13px;color:var(--ink-70);line-height:1.6}
+.way.off{opacity:.45;cursor:not-allowed}
+/* 門市 */
+.sec{margin-top:26px}
+.sec h3{font-size:16px;font-weight:800}
+.sec h3 small{margin-left:8px;font-size:13px;font-weight:500;color:var(--ink-50)}
+.sec>.sp{margin-top:12px}
+.find{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.find input{flex:1 1 240px;height:42px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:14px}
+.find input:focus{outline:none;border-color:var(--ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--ink-70)}
+.chip:hover{border-color:var(--ink-50)}
+.chip[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.stores{margin-top:12px;max-height:360px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;list-style:none}
+.store{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line-soft);cursor:pointer}
+.store:first-child{border-top:0}
+.store:hover{background:#F8FAFC}
+.store.on{background:#EEF3FF}
+.store input{accent-color:var(--navy)}
+.store b{font-size:14.5px}.store small{display:block;margin-top:2px;font-size:13px;color:var(--ink-70);line-height:1.55}
+.store .rg{font-size:12px;font-weight:600;color:var(--ink-50);white-space:nowrap}
+.empty{padding:28px;text-align:center;color:var(--ink-70);font-size:14px}
+.dates{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.date{flex:none;width:68px;padding:9px 0;border:1px solid var(--line);border-radius:10px;background:#fff;text-align:center}
+.date small{display:block;font-size:12px;color:var(--ink-50)}.date b{display:block;margin-top:2px;font-size:16px;font-variant-numeric:tabular-nums}
+.date[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}.date[aria-pressed=true] small{color:rgba(255,255,255,.75)}
+.date:disabled{opacity:.4;cursor:not-allowed}
+.slots{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.slot{height:40px;padding:0 18px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.slot[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.hint{margin-top:10px;font-size:13px;color:var(--ink-70);line-height:1.6}
+/* 表單 */
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;margin-top:18px}
+.form label{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--ink-70)}
+.form .wide{grid-column:1/-1}
+.form input,.form textarea{height:44px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:15px;color:var(--ink);font-weight:400}
+.form textarea{height:84px;padding:10px 14px;resize:vertical;line-height:1.6}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--ink)}
+.form .err{font-size:12.5px;color:var(--error);font-weight:500}
+.pays{display:grid;gap:10px;margin-top:12px}
+/* 按鈕列 */
+.acts{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:8px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s}
+.btn:hover{background:var(--navy-hover)}.btn:disabled{opacity:.4;cursor:default}
+.btn svg{width:16px;height:16px}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.need{font-size:13px;color:var(--ink-50)}
+/* 摘要 */
+.sum{position:sticky;top:calc(max(100vw, 1200px) / 1672 * 76 + 20px)}
+.sum h2{font-size:17px}
+.sum ul{list-style:none;margin-top:14px;display:grid;gap:12px}
+.sum li{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center}
+.sum .ph{width:56px;height:42px;border-radius:8px}
+.sum li b{display:block;font-size:13.5px;line-height:1.4}.sum li small{display:block;font-size:12px;color:var(--ink-70)}
+.sum li span{font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rows{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:grid;gap:8px;font-size:14px;color:var(--ink-70)}
+.rows div{display:flex;justify-content:space-between;gap:12px}
+.rows .tot{margin-top:6px;padding-top:12px;border-top:1px solid var(--line);color:var(--ink);font-size:15px;font-weight:700}
+.rows .tot strong{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.pick{margin-top:16px;padding:14px;border-radius:10px;background:var(--paper);font-size:13.5px;line-height:1.7;color:var(--ink-70)}
+.pick b{color:var(--ink)}
+/* 完成 */
+.done{text-align:left}
+.mark{width:52px;height:52px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center}
+.mark svg{width:26px;height:26px}
+.done h2{margin-top:16px;font-size:26px}
+.ono{margin-top:6px;font-size:14px;color:var(--ink-70)}.ono b{color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.track{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin-top:26px;position:relative}
+.track li{position:relative;padding-top:30px;font-size:13.5px;font-weight:600;color:var(--ink-50)}
+.track li::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--step-idle);border:2px solid #fff;box-shadow:0 0 0 1px var(--line);z-index:1}
+.track li::after{content:"";position:absolute;left:14px;right:0;top:12px;height:2px;background:var(--line)}
+.track li:last-child::after{display:none}
+.track li small{display:block;margin-top:3px;font-size:12px;font-weight:500;color:var(--ink-50)}
+.track li.ok{color:var(--ink)}.track li.ok::before{background:var(--navy);box-shadow:0 0 0 1px var(--navy)}.track li.ok::after{background:var(--navy)}
+.track li.now{color:var(--ai)}.track li.now::before{background:var(--ai);box-shadow:0 0 0 4px rgba(31,79,224,.18);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(31,79,224,.08)}}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.info div{padding:16px;border-radius:12px;background:var(--paper);font-size:14px;line-height:1.7;color:var(--ink-70)}
+.info h4{font-size:13px;font-weight:700;color:var(--ink-50);letter-spacing:.04em;margin-bottom:4px}
+.info b{color:var(--ink);font-size:15px}
+.toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,12px);padding:12px 22px;border-radius:8px;background:var(--ink);color:#fff;font-size:14px;opacity:0;transition:opacity .2s,transform .2s;z-index:80;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:980px){.grid{grid-template-columns:1fr}.sum{position:static}.track{grid-template-columns:1fr 1fr;row-gap:18px}}
+@media (max-width:640px){.co{width:calc(100vw - 32px)}.card{padding:20px}.it{grid-template-columns:84px minmax(0,1fr)}.it .pr{grid-column:2}.ph{width:84px;height:62px}.ways,.form,.info{grid-template-columns:1fr}.steps .step{font-size:0;gap:0}.steps li{gap:8px}.steps li:not(:last-child)::after{width:12px}}
+@media (prefers-reduced-motion:reduce){.pane{animation:none}.track li.now::before{animation:none}}
+</style>
+</head>
+<body>
+<script src="js/cart.js?v=8"></script><script src="js/store-picker.js?v=5"></script>
+<header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市與到店時間後，門市會在 1 個工作天內打電話跟你確認。客製車不需付訂金，到門市確認工單後再付款。"></header>
+<script src="js/header.js?v=bd26"></script>
+
+<main class="co">
+  <a class="co-back" href="javascript:history.back()" id="coBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>繼續逛逛</a>
+  <div class="co-head"><h1 id="coTitle">結帳</h1><ol class="steps" id="steps" aria-label="結帳步驟"></ol></div>
+  <div class="grid">
+    <section class="card" id="pane" aria-live="polite"></section>
+    <aside class="card sum" id="sum" aria-label="訂單摘要"></aside>
+  </div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<footer class="foot" id="siteFooter"></footer>
+<script src="js/footer.js?v=hdr1023b"></script>
+<script src="js/favorites.js?v=hdr1023"></script>
+<script>
+/* ---------- 結帳流程：資料都在這頁，送出後存一筆訂單在 localStorage（giant-orders）並清空購物車 ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money = n => 'NT$ ' + Math.round(n).toLocaleString('en-US');
+const priceOf = x => x.price ? money(x.price * (x.qty || 1)) : '價格請洽門市';   /* 價格 0 的商品不算進總計 */
+const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const STEPS_ALL = {shop: ['確認商品',  '取貨門市', '聯絡與付款', '完成'], custom: ['確認客製車', '服務門市', '聯絡資料', '完成']};
+const REGIONS = ['全部', '北部', '中部', '南部', '東部', '離島'];
+const SLOTS = ['11:00', '14:00', '16:30', '19:00'];
+const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+/* 會員資料（示範帳號） */
+const MEMBER = {name: 'David Robinson', phone: '0912-345-678', email: 'david.robinson@example.com'};
+const S = {step: 0, way: 'store', store: null, region: '全部', q: '', date: null, slot: null, pay: 'store',
+  name: MEMBER.name, phone: MEMBER.phone, email: MEMBER.email, addr: '', note: '', order: null};
+let STORES = [];
+fetch('custom-studio/stores.json').then(r => r.json()).then(d => { STORES = d; if (S.step === 1) render(); }).catch(() => {});
+
+const items = () => GiantCart.selected();   /* 這次結帳的那一區（客製車，或勾選的車款與配件） */
+const hasCustom = () => items().some(x => x.kind === 'custom');
+const hasBike = () => items().some(x => x.kind !== 'acc');
+const total = () => GiantCart.selTotal();
+const storeById = id => STORES.find(s => s.id === id);
+function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2400); }
+/* 接下來 10 天；週一公休（示範規則，實際以門市為準） */
+function days(){ const out = [], d0 = new Date(); d0.setHours(0, 0, 0, 0);
+  for (let i = 1; out.length < 10; i++){ const d = new Date(d0); d.setDate(d0.getDate() + i); out.push(d); } return out; }
+const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const dLabel = s => { const d = new Date(s + 'T00:00:00'); return (d.getMonth() + 1) + '/' + d.getDate() + '（' + WEEK[d.getDay()] + '）'; };
+
+function stepsHtml(){
+  const custom = S.order ? S.order.custom : hasCustom(), names = STEPS_ALL[custom ? 'custom' : 'shop'].slice();
+  if (!custom) names[0] = '確認' + GiantCart.groupName(S.order ? S.order.items : items());   /* 確認車款／確認配件／確認車款與配件 */
+  return names.map((t, i) => '<li><span class="step' + (i === S.step ? ' cur' : i < S.step ? ' done' : '') + '"' + (i === S.step ? ' aria-current="step"' : '') + '><span>' + (i < S.step ? '✓' : i + 1) + '</span>' + t + '</span></li>').join('');
+}
+function itemsHtml(editable){
+  return items().map(x => {
+    const q = x.qty || 1, meta = [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', x.meta && x.meta.note].filter(Boolean).map(esc).join('・');
+    return '<div class="it" data-id="' + esc(x.id) + '"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><h3>' + esc(x.name) + '</h3>' +
+      (meta ? '<p class="meta">' + meta + '</p>' : '') + (editable ? '<div class="ctl">' + (x.kind === 'custom' ? '' : '<span class="qty"><button type="button" data-q="-1" aria-label="減少"' + (q <= 1 ? ' disabled' : '') + '>−</button><b>' + q + '</b><button type="button" data-q="1" aria-label="增加">+</button></span>') +
+        (x.edit ? '<a class="lnk" href="' + esc(GiantCart.url(x.edit)) + '">回到編輯</a>' : '') + '<button class="lnk" type="button" data-rm>移除</button></div>' : x.kind === 'custom' ? '' : '<p class="meta">數量 ' + q + '</p>') +
+      '</div><div class="pr">' + priceOf(x) + '</div></div>';
+  }).join('');
+}
+function summary(){
+  if (S.step === 3) { $('sum').innerHTML = ''; $('sum').hidden = true; return; }
+  $('sum').hidden = false;
+  const st = S.store && storeById(S.store);
+  $('sum').innerHTML = '<h2>訂單摘要</h2><ul>' + items().map(x => '<li><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><b>' + esc(x.name) + '</b><small>' + (x.kind === 'custom' ? esc(x.meta && x.meta.paint || '客製車') : '數量 ' + (x.qty || 1)) + (x.meta && x.meta.size ? '・尺寸 ' + esc(x.meta.size) : '') + '</small></div><span>' + priceOf(x) + '</span></li>').join('') + '</ul>' +
+    '<div class="rows"><div><span>' + (hasCustom() ? '預估金額' : '商品小計') + '</span><span>' + money(total()) + '</span></div>' + (hasCustom() ? '' : '<div><span>' + (S.way === 'home' ? '宅配運費' : '門市取貨') + '</span><span>免運</span></div>') +
+    (hasCustom() ? '<div><span>客製車訂金</span><span>不需訂金</span></div>' : '') +
+    (items().some(x => !x.price) ? '<div><span>價格請洽門市</span><span>' + items().filter(x => !x.price).length + ' 件，門市確認後報價</span></div>' : '') +
+    '<div class="tot"><span>' + (hasCustom() ? '預估總計' : '總計') + '</span><strong>' + money(total()) + '</strong></div></div>' +
+    ((st || S.date) && S.way === 'store' ? '<div class="pick">' + (st ? '<b>' + esc(st.name) + '</b><br>' + esc(st.addr) : '') + (S.date && S.slot ? '<br>' + dLabel(S.date) + ' ' + S.slot : '') + '</div>' : '');
+}
+
+/* ---------- 各步驟 ---------- */
+function paneCart(){
+  if (!items().length) return '<h2>購物車是空的</h2><p class="sub">看看喜歡的車款，或從客製化開始打造一台自己的車。</p><div class="acts"><span></span><a class="btn" href="gravel.html">去逛逛車款 ' + ARROW + '</a></div>';
+  const custom = hasCustom();
+  return '<h2>' + (custom ? '確認客製車' : '確認' + GiantCart.groupName(items())) + '</h2><p class="sub">' + (custom ? '確認配置內容，下一步選擇客製化自行車服務門市。' : '數量與內容確認好，下一步選擇取貨方式。') + '</p><div class="items">' + itemsHtml(true) + '</div>' +
+    (hasCustom() ? '<p class="note"><b>客製車不需付訂金。</b>選好客製化自行車服務門市與到店時間後，由技師確認尺寸與零件搭配、簽訂工單，再付款。</p>' : '') +
+    '<div class="acts"><a class="lnk" href="javascript:history.back()">繼續逛逛</a><button class="btn" type="button" data-go="1">' + (custom ? '下一步：選擇服務門市 ' : hasBike() ? '下一步：選擇取貨門市 ' : '下一步：選擇取貨方式 ') + ARROW + '</button></div>';
+}
+function paneStore(){
+  const custom = hasCustom(), onlyAcc = !hasBike();
+  if (!onlyAcc) S.way = 'store';
+  /* 只有配件時才有「宅配到府」可選；整車、客製車一律到門市，不顯示取貨方式 */
+  const way = !onlyAcc ? '' : '<div class="ways"><label class="way"><input type="radio" name="way" value="store"' + (S.way === 'store' ? ' checked' : '') + '><span><b>門市取貨</b><small>到門市取貨，免運費</small></span></label>' +
+    '<label class="way' + (onlyAcc ? '' : ' off') + '"><input type="radio" name="way" value="home"' + (S.way === 'home' ? ' checked' : '') + (onlyAcc ? '' : ' disabled') + '><span><b>宅配到府</b><small>' + (onlyAcc ? '只有配件時可以宅配，3–5 個工作天送達' : '整車與客製車需到門市取車') + '</small></span></label></div>';
+  if (S.way === 'home') return '<h2>取貨方式</h2><p class="sub">這次只有配件，可以選擇宅配到府。</p>' + way + '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><button class="btn" type="button" data-go="2">下一步：聯絡與付款 ' + ARROW + '</button></div>';
+  const ds = days(), ready = S.store && S.date && S.slot;
+  return '<h2>' + (custom ? '選擇客製化自行車服務門市' : '選擇取貨門市') + '</h2>' +
+    '<p class="sub">' + (custom ? '客製車要到服務門市，由技師確認尺寸與工單。以下是全台 130 間客製化自行車服務門市。' : '選一間離你近的門市，並預約到店時間。') + '</p>' + way +
+    '<div class="sec"><h3>' + (custom ? '服務門市' : '門市') + '</h3><div id="storePick"></div></div>' +   /* 共用門市選擇器（js/store-picker.js），換步驟重畫時搬回同一個元件，地圖不用重建 */
+    '<div class="sec"><h3>' + (custom ? '預約量身與確認工單' : '預約到店取貨') + '<small>' + (custom ? '約 60 分鐘' : '約 20 分鐘') + '</small></h3>' +
+    '<div class="dates">' + ds.map(d => { const v = ymd(d), off = d.getDay() === 1; return '<button class="date" type="button" data-date="' + v + '" aria-pressed="' + (S.date === v) + '"' + (off ? ' disabled title="週一公休"' : '') + '><small>週' + WEEK[d.getDay()] + '</small><b>' + (d.getMonth() + 1) + '/' + d.getDate() + '</b></button>'; }).join('') + '</div>' +
+    '<div class="slots">' + SLOTS.map(t => '<button class="slot" type="button" data-slot="' + t + '" aria-pressed="' + (S.slot === t) + '">' + t + '</button>').join('') + '</div>' +
+    '<p class="hint">實際可預約的時段由門市確認；週一公休。</p></div>' +
+    '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><span style="display:flex;align-items:center;gap:14px">' + (ready ? '' : '<span class="need">' + (!S.store ? '請選擇門市' : '請選擇到店日期與時段') + '</span>') + '<button class="btn" type="button" data-go="2"' + (ready ? '' : ' disabled') + '>' + (custom ? '下一步：聯絡資料 ' : '下一步：聯絡與付款 ') + ARROW + '</button></span></div>';
+}
+function panePay(){
+  const custom = hasCustom(), home = S.way === 'home';
+  if (custom) S.pay = 'store';
+  const pays = custom ? '<label class="way"><input type="radio" name="pay" value="store" checked><span><b>到門市付款</b><small>技師確認尺寸與工單後付款，可刷卡、分期或現金。客製車不需付訂金。</small></span></label>' :
+    (home ? '' : '<label class="way"><input type="radio" name="pay" value="store"' + (S.pay === 'store' ? ' checked' : '') + '><span><b>到門市付款</b><small>取貨時付款，可刷卡、分期或現金。</small></span></label>') +
+    '<label class="way"><input type="radio" name="pay" value="card"' + (S.pay === 'card' || home ? ' checked' : '') + '><span><b>信用卡線上付款</b><small>示範用，不會真的扣款。</small></span></label>';
+  if (home) S.pay = 'card';
+  return '<h2>' + (custom ? '聯絡資料' : '聯絡與付款') + '</h2><p class="sub">門市會用這支電話跟你確認' + (home ? '出貨' : '到店時間') + '。已帶入會員資料，可以直接修改。</p>' +
+    '<div class="form"><label>姓名<input id="fName" value="' + esc(S.name) + '" autocomplete="name"></label><label>手機<input id="fPhone" value="' + esc(S.phone) + '" inputmode="tel" autocomplete="tel"></label>' +
+    '<label class="wide">Email<input id="fEmail" type="email" value="' + esc(S.email) + '" autocomplete="email"></label>' +
+    (home ? '<label class="wide">收件地址<input id="fAddr" value="' + esc(S.addr) + '" placeholder="例如：台北市信義區市府路 1 號" autocomplete="street-address"></label>' : '') +
+    '<label class="wide">給門市的備註（選填）<textarea id="fNote" placeholder="例如：想順便試坐 S 號，或希望下班後到店">' + esc(S.note) + '</textarea></label></div>' +
+    (custom ? '' : '<div class="sec"><h3>付款方式</h3><div class="pays">' + pays + '</div></div>') +   /* 客製車到店確認後才付款，這一步不選付款方式 */
+    '<div class="acts"><button class="lnk" type="button" data-go="1">上一步</button><button class="btn" type="button" id="submit">' + (custom ? '送出預約 ' : '送出訂單 ') + ARROW + '</button></div>';
+}
+function paneDone(){
+  const o = S.order, st = o.store && storeById(o.store);
+  return '<div class="done"><div class="mark">' + CHECK + '</div><h2>' + (o.custom ? '預約已送出' : '訂單已送出') + '</h2><p class="ono">' + (o.custom ? '預約編號' : '訂單編號') + ' <b>' + o.no + '</b>，確認信已寄到 ' + esc(o.email) + '。</p>' +
+    '<ol class="track"><li class="ok">已送出<small>' + o.time + '</small></li><li class="now">' + (o.way === 'home' ? '備貨中' : '門市確認中') + '<small>' + (o.way === 'home' ? '1–2 個工作天' : '1 個工作天內來電') + '</small></li><li>' + (o.way === 'home' ? '已出貨' : '門市已確認') + '</li><li>' + (o.way === 'home' ? '送達' : (o.custom ? '到店量身' : '可到店取貨')) + '</li></ol>' +
+    '<div class="info">' + (o.way === 'home' ? '<div><h4>宅配地址</h4><b>' + esc(o.addr) + '</b><br>3–5 個工作天送達</div>' :
+      '<div><h4>' + (o.custom ? '客製化服務門市' : '取貨門市') + '</h4><b>' + esc(st ? st.name : '') + '</b><br>' + esc(st ? st.addr : '') + '<br>' + esc(st ? st.tel : '') + '</div>' +
+      '<div><h4>' + (o.custom ? '量身與確認工單' : '到店時間') + '</h4><b>' + dLabel(o.date) + ' ' + o.slot + '</b><br>' + (o.custom ? '約 60 分鐘，技師會確認尺寸、零件搭配並簽訂工單' : '約 20 分鐘') + '</div>') +
+    '<div><h4>聯絡人</h4><b>' + esc(o.name) + '</b><br>' + esc(o.phone) + '</div><div><h4>付款</h4><b>' + (o.pay === 'card' ? '信用卡線上付款' : '到門市付款') + '</b><br>總計 ' + money(o.total) + (o.custom ? '・客製車不需訂金' : '') + '</div></div>' +
+    '<div class="items" style="margin-top:22px">' + o.items.map(x => '<div class="it"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><h3>' + esc(x.name) + '</h3><p class="meta">' + [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', '數量 ' + (x.qty || 1)].filter(Boolean).map(esc).join('・') + '</p></div><div class="pr">' + priceOf(x) + '</div></div>').join('') + '</div>' +
+    '<div class="acts">' + (o.way === 'home' ? '<span></span>' : '<button class="btn ghost" type="button" id="ics">加入行事曆</button>') + '<a class="btn" href="index.html">回到首頁</a></div></div>';
+}
+
+let dir = 1;
+function render(){
+  $('steps').innerHTML = stepsHtml();
+  $('coTitle').textContent = S.step === 3 ? ((S.order && S.order.custom) ? '預約完成' : '訂單完成') : hasCustom() ? '預約門市確認' : '結帳';
+  $('coBack').hidden = S.step === 3;
+  document.querySelector('.grid').classList.toggle('solo', S.step === 3);
+  const pane = $('pane');
+  pane.innerHTML = '<div class="pane' + (dir < 0 ? ' back' : '') + '">' + [paneCart, paneStore, panePay, paneDone][S.step]() + '</div>';
+  summary();
+  const slot = $('storePick');
+  if (slot && window.GiantStorePicker) {
+    if (!picker) picker = GiantStorePicker.mount(document.createElement('div'), {mode: 'select', layout: 'auto', selected: S.store, onSelect: st => { S.store = st.id; render(); }});
+    slot.replaceWith(picker.el); requestAnimationFrame(() => picker.resize());
+  }
+}
+let picker = null;
+function go(n){
+  if (n === 2 && S.way === 'store' && !(S.store && S.date && S.slot)) return;
+  dir = n >= S.step ? 1 : -1; S.step = n; render(); scrollTo({top: 0, behavior: 'smooth'});
+}
+function submit(){
+  S.name = $('fName').value.trim(); S.phone = $('fPhone').value.trim(); S.email = $('fEmail').value.trim(); S.note = $('fNote').value.trim();
+  if ($('fAddr')) S.addr = $('fAddr').value.trim();
+  const bad = [['fName', !S.name, '請填寫姓名'], ['fPhone', !/^[0-9+\- ]{8,}$/.test(S.phone), '請填寫可以聯絡的手機號碼'], ['fEmail', !/^\S+@\S+\.\S+$/.test(S.email), '請填寫 Email']].concat($('fAddr') ? [['fAddr', !S.addr, '請填寫收件地址']] : []);
+  document.querySelectorAll('.form .err').forEach(e => e.remove());
+  const first = bad.find(b => b[1]);
+  bad.filter(b => b[1]).forEach(([id, , msg]) => $(id).insertAdjacentHTML('afterend', '<span class="err">' + msg + '</span>'));
+  if (first) { $(first[0]).focus(); return; }
+  const now = new Date(), no = 'GT' + String(now.getFullYear()).slice(2) + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + String(Math.floor(1000 + Math.random() * 9000));
+  S.order = {no, time: (now.getMonth() + 1) + '/' + now.getDate() + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'),
+    items: items(), total: total(), way: S.way, store: S.store, date: S.date, slot: S.slot, pay: S.pay, name: S.name, phone: S.phone, email: S.email, addr: S.addr, note: S.note, custom: hasCustom()};
+  try { const all = JSON.parse(localStorage.getItem('giant-orders') || '[]'); all.unshift(S.order); localStorage.setItem('giant-orders', JSON.stringify(all.slice(0, 20))); } catch (e) {}
+  GiantCart.clearSelected();   /* 只移除這次結帳的商品，另一區留在購物車 */
+  go(3);
+}
+/* 加入行事曆：產生 .ics 檔 */
+function ics(){
+  const o = S.order, st = storeById(o.store), [h, m] = o.slot.split(':'), d = o.date.replace(/-/g, '');
+  const end = String(+h + (o.custom ? 1 : 0)).padStart(2, '0') + (o.custom ? m : String(+m + 20).padStart(2, '0'));
+  const txt = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//GIANT//Checkout//ZH', 'BEGIN:VEVENT', 'UID:' + o.no + '@giant', 'DTSTART:' + d + 'T' + h + m + '00', 'DTEND:' + d + 'T' + end + '00',
+    'SUMMARY:' + (o.custom ? 'GIANT 客製車量身與確認工單' : 'GIANT 到店取貨') + '（' + o.no + '）', 'LOCATION:' + (st ? st.name + ' ' + st.addr : ''), 'DESCRIPTION:' + (o.custom ? '預約編號 ' : '訂單編號 ') + o.no, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], {type: 'text/calendar'})); a.download = o.no + '.ics'; a.click();
+  toast('已下載行事曆檔，打開就能加入');
+}
+
+/* ---------- 事件 ---------- */
+$('pane').addEventListener('click', e => {
+  const t = e.target;
+  const g = t.closest('[data-go]'); if (g && !g.disabled) return go(+g.dataset.go);
+  const it = t.closest('.it'), id = it && it.dataset.id;
+  const q = t.closest('[data-q]'); if (q && id) { const x = items().find(v => v.id === id); GiantCart.setQty(id, (x.qty || 1) + (+q.dataset.q)); return; }
+  if (t.closest('[data-rm]') && id) { GiantCart.remove(id); return; }
+  const d = t.closest('[data-date]'); if (d && !d.disabled) { S.date = d.dataset.date; render(); return; }
+  const sl = t.closest('[data-slot]'); if (sl) { S.slot = sl.dataset.slot; render(); return; }
+  if (t.closest('#submit')) return submit();
+  if (t.closest('#ics')) return ics();
+});
+$('pane').addEventListener('change', e => {
+  if (e.target.name === 'way') { S.way = e.target.value; render(); }
+  if (e.target.name === 'pay') { S.pay = e.target.value; }
+});
+document.addEventListener('cart:change', () => { if (S.step < 3) render(); });
+render();
+</script>
+</body>
+</html>

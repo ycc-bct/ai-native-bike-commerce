@@ -151,6 +151,13 @@
     window.GiantTip = {ping: function () { if (window.GiantChat && window.GiantChat.contextChanged && window.GiantChat.contextChanged()) return; if (!tco.hidden) tshow(); else torb.classList.add('tip-new'); }, show: tshow, hide: thide};
     document.addEventListener('click', function (e) { if (!tco.hidden && !e.target.closest('.orb-wrap')) thide(); });
   }
+  /* 全站 header 行為跟首頁一樣：固定在最上方，往下捲 40px 後加上霧面底色與底線（.scrolled，樣式在 header.css） */
+  var navTone = function () { host.classList.toggle('scrolled', scrollY > 40); };
+  addEventListener('scroll', navTone, {passive: true}); navTone();
+  /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
+  if (!document.querySelector('script[src*="js/cart.js"]')) {
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=8'; document.head.appendChild(cs);
+  }
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
     var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=9'; document.head.appendChild(bs);

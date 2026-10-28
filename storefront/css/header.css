@@ -80,3 +80,10 @@ header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{colo
 /* 會員：已登入的頭像（David Robinson 的 D），全站與客製化頁一致 */
 .site-nav .member-initial{width:28px;height:28px;border-radius:50%;background:#0E1726;color:#fff;font:700 13px/1 "Inter","Noto Sans TC",sans-serif;display:grid;place-items:center}
 .site-nav .member-initial{box-shadow:0 0 0 1.5px color-mix(in srgb,currentColor 70%,transparent)}   /* 深色 header 上自動變成淺色外框，淺色 header 上幾乎看不出來 */
+
+/* 全站 header 固定在最上方（跟首頁一樣）；往下捲時加霧面底色，header.js 負責切換 .scrolled */
+#siteHeader.site-nav{position:fixed}
+#siteHeader.site-nav.scrolled{background:rgba(243,245,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 #DCE1E7;transition:background .3s,box-shadow .3s}
+/* 捲動後底色是淺的：原本在深色照片上改成白色的文字與圖示，一律換回深色 */
+#siteHeader.site-nav.scrolled{--nav-ink:#141A22;color:#141A22}
+#siteHeader.site-nav.scrolled .icons.on-dark a svg,#siteHeader.site-nav.scrolled .icons.on-dark .icon-btn svg{color:#141A22;filter:none}

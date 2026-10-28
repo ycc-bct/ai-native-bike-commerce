@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1025b"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
+<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1028"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
 <link rel="stylesheet" href="css/advisor.css?v=hdr1023">
 <link rel="stylesheet" href="css/tips.css?v=hdr1023">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -189,8 +189,13 @@ body.solo-scene .panel{cursor:default}
 .tab:hover{color:var(--ink)}
 
 /* 捲過主視覺後出現的黏著分頁 */
-.subnav{position:fixed;z-index:50;left:0;right:0;top:0;height:60px;background:rgba(243,245,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transform:translateY(-100%);transition:transform .4s var(--ease)}
+.subnav .sub-orb{display:none}
+body.adv-open .subnav-in{width:min(1320px,calc(100vw - 96px - 424px));margin-left:48px;margin-right:auto}   /* 顧問對話打開時，分頁列跟內容一起往左讓位 */
+body.adv-open .subnav-in{gap:22px}body.adv-open .subnav .nm small{display:none}body.adv-open .subnav .tab,body.adv-open .subnav .nm,body.adv-open .subnav-acts button{white-space:nowrap}body.adv-open .subnav .tab{font-size:13px}
+body.adv-open .subnav [data-act="compare"] span{display:none}body.adv-open .subnav [data-act="compare"]{padding:0 12px}   /* header 固定在上方後，分頁列不再放第二顆顧問頭像 */
+.subnav{position:fixed;z-index:29;left:0;right:0;top:calc(max(100vw, 1200px) / 1672 * 76);height:60px;background:rgba(243,245,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transform:translateY(-100%);transition:transform .4s var(--ease)}
 .subnav.on{transform:none}
+.subnav:not(.on){visibility:hidden;pointer-events:none;transition:transform .4s var(--ease),visibility 0s .4s}   /* 收起時藏起來：不然會躲在透明的 header 後面露出來、擋住 header 圖示 */
 .subnav-in{width:var(--shell);margin:0 auto;height:100%;display:flex;align-items:center;gap:36px}
 .subnav .nm{font-weight:700;font-size:15px;margin-right:auto}
 .subnav .nm small{font-weight:500;color:var(--ink-50);margin-left:10px}
@@ -503,7 +508,7 @@ body.solo-scene #accIdx{display:none}
 
 <section class="stage" id="stage">
   <header class="nav site-nav" id="siteHeader" data-page="product"></header>
-<script src="js/header.js?v=bd17"></script>
+<script src="js/header.js?v=bd26"></script>
 
   <div class="panels rv now fade">
   <div class="panel p1" data-i="0"><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/city.webp" alt=""></div><span class="pmask"></span></div></div>
@@ -806,21 +811,18 @@ function setCartBadge(n){
 $('accAdd').onclick = () => {
   const items = accPicked(); if (!items.length) return;
   items.forEach(([k]) => accState.bought.add(k));
-  const total = items.reduce((s, x) => s + x[2], 0);
-  cart += items.length;
-  setCartBadge(cart);
+  items.forEach(([k, n, p], i) => GiantCart.add({id:'acc-' + k, kind:'acc', name:n, price:p, img:'img/pdp/acc-' + k + '.webp'}, {open: i === items.length - 1}));
   renderAcc(false);
-  toast('已加入 ' + items.length + ' 件配件，共 NT$ ' + fmt(total));
 };
 
 /* 加入購物車／加入比較：都是示範，只更新畫面狀態 */
 /* 主視覺與上方黏著列各有一組，狀態共用 */
 let inCompare = false, faved = false;
 const acts = sel => document.querySelectorAll('[data-act="' + sel + '"]');
+/* 加入購物車：存到全站購物車（js/cart.js），右側滑出購物車；尺寸用左欄選的那個 */
 acts('cart').forEach(b => b.onclick = () => {
-  cart += 1;
-  setCartBadge(cart);
-  toast('已將 Revolt Advanced SL 0 加入購物車');
+  const size = document.querySelector('#sizeBtns button.on')?.dataset.size || 'M';
+  GiantCart.add({id:'revolt-sl-0-' + size, kind:'bike', name:'Revolt Advanced SL 0', price:308000, img:'img/list/revolt-sl-0.webp', meta:{paint:'Raw Carbon / Prism Mist', size}});
 });
 /* 加入比較：存到全站共用的比較清單（js/compare.js），留在這頁；底部出現比較列，可以移除、清除或前往比較 */
 const ME = {k:'revolt-sl-0', n:'Revolt Advanced SL 0', img:'img/list/revolt-sl-0.webp', pr:308000};
@@ -907,7 +909,7 @@ const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','
 const adv = {started:false, queue:Promise.resolve(), dismissed:false};
 /* ---------- 開關：仿 macOS Genie，縮進 header 的 orb，對話紀錄保留 ---------- */
 const setOrbs = st => { if (window.Orb) { Orb.set('#aiOrb', st); Orb.set('#aiOrb2', st); } };
-const currentOrb = () => $('subnav').classList.contains('on') ? $('aiOrb2') : $('aiOrb');
+const currentOrb = () => $('aiOrb');   /* header 一直固定在上方，顧問頭像只用 header 那顆 */
 function setOrbDot(on){ ['aiOrb','aiOrb2'].forEach(id => $(id).classList.toggle('has-chat', on)); }
 
 function genie(dir, done){ advisorGenie($('advisor'), $('advLog'), currentOrb(), dir, done); }

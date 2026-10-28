@@ -20,9 +20,12 @@ function renderGear(){const focus=document.activeElement?.dataset.focus;
 $('equipmentGrid').addEventListener('change',e=>{const id=e.target.dataset.select;if(id){e.target.checked?selected.add(id):selected.delete(id);renderGear();}});
 $('equipmentGrid').addEventListener('click',e=>{const b=e.target.closest('[data-qty]');if(b){quantities[b.dataset.qty]=Math.max(1,Math.min(9,quantities[b.dataset.qty]+Number(b.dataset.delta)));renderGear();}});
 $('selectAll').onclick=()=>{if(gear.filter(g=>!g.reserve).every(g=>selected.has(g.id)))selected.clear();else gear.filter(g=>!g.reserve).forEach(g=>selected.add(g.id));renderGear();};
-function addCart(){selected.forEach(id=>cart[id]=quantities[id]);save();}
-$('addToCart').onclick=()=>{addCart();toast('已加入購物車，商品清單已保留。');};
-$('checkoutSelected').onclick=()=>{addCart();location.hash='checkout';};$('openCart').onclick=()=>location.hash='checkout';$('printReport').onclick=()=>window.print();
+function addCart(open=true){selected.forEach(id=>cart[id]=quantities[id]);save();
+ /* 存到全站購物車（js/cart.js）；結帳統一到 checkout.html */
+ const ids=[...selected];ids.forEach((id,i)=>{const g=gear.find(x=>x.id===id);if(!g||!window.GiantCart)return;
+  GiantCart.add(id==='revolt'?{id:'revolt-sl-0',kind:'bike',name:g.name,price:g.price,img:'img/list/revolt-sl-0.webp',qty:quantities[id],meta:{paint:'Raw Carbon / Prism Mist',note:'尺寸到門市確認'}}:{id:'acc-'+id,kind:'acc',name:g.name,price:g.price,img:g.image||`img/pdp/acc-${id}.webp`,qty:quantities[id]},{open:open&&i===ids.length-1});});}
+$('addToCart').onclick=()=>{addCart();};
+$('checkoutSelected').onclick=()=>{addCart(false);location.href='checkout.html';};$('openCart').onclick=e=>{e.preventDefault();window.GiantCart&&GiantCart.open();};$('printReport').onclick=()=>window.print();
 function cartRows(removable){return gear.filter(g=>cart[g.id]).map(g=>`<div class="cart-row"><img src="${g.image||`img/pdp/acc-${g.id}.webp`}" alt="${g.name}"><div><h3>${g.name}</h3><p>${money(g.price)} × ${cart[g.id]}</p>${removable?`<button class="text-button" data-remove="${g.id}">移除</button>`:''}</div><strong>${money(g.price*cart[g.id])}</strong></div>`).join('');}
 function renderCheckout(){refreshAccessorySuggestions();const count=Object.values(cart).reduce((a,b)=>a+b,0),total=gear.reduce((sum,g)=>sum+g.price*(cart[g.id]||0),0);$('orderCount').textContent=count+' 件商品';$('orderTotal').textContent=money(total);$('checkoutSteps').innerHTML=['確認清單','取貨與付款','清單備妥'].map((s,i)=>`<li class="${step===i?'current':''}" ${step===i?'aria-current="step"':''}><b>${i+1}</b>${s}</li>`).join('');$('checkoutTitle').textContent=['確認你的商品清單','選擇取貨與付款方式','下一次出發，準備好了。'][step];$('checkoutBack').hidden=step!==1;$('checkoutNext').disabled=!count;$('checkoutNext').textContent=['前往取貨與付款','確認結帳','返回騎乘報告'][step];
  $('checkoutBody').classList.toggle('is-empty',!count);
@@ -33,7 +36,7 @@ function renderCheckout(){refreshAccessorySuggestions();const count=Object.value
 $('checkoutBody').onclick=e=>{const button=e.target.closest('[data-remove]');if(button){delete cart[button.dataset.remove];save();renderCheckout();}};
 $('checkoutBody').onchange=e=>{if(e.target.name==='pickup'){pickup=e.target.value;if(pickup==='宅配到府')payment='信用卡';renderCheckout();}else if(e.target.name==='payment')payment=e.target.value;};
 $('checkoutNext').onclick=()=>{if(step===2){location.hash='equipment';return;}step++;renderCheckout();if(step===2){cart={};selected.clear();for(const g of gear)quantities[g.id]=1;save();renderGear();}$('checkoutTitle').setAttribute('tabindex','-1');$('checkoutTitle').focus();};$('checkoutBack').onclick=()=>{step=0;renderCheckout();};
-function route(){const checkout=location.hash==='#checkout';$('report').hidden=checkout;$('checkout').hidden=!checkout;$('purchaseBar').hidden=checkout;if(checkout){step=0;renderCheckout();window.scrollTo(0,0);}else if(location.hash==='#equipment')requestAnimationFrame(()=>$('equipment').scrollIntoView());}
+function route(){if(location.hash==='#checkout'){location.replace('checkout.html');return;}const checkout=false;$('report').hidden=checkout;$('checkout').hidden=!checkout;$('purchaseBar').hidden=checkout;if(checkout){step=0;renderCheckout();window.scrollTo(0,0);}else if(location.hash==='#equipment')requestAnimationFrame(()=>$('equipment').scrollIntoView());}
 window.addEventListener('hashchange',route);save();renderGear();route();
 
 

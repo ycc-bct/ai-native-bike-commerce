@@ -184,5 +184,5 @@
   });
 
   /* 跟首頁一樣：進頁一下子後，主動跳出這一步的說明卡（「先自己逛」之後這次就不再主動跳） */
-  setTimeout(function () { if (!quietUntil && box.hidden && window.GiantTip && GiantTip.show) GiantTip.show(); }, 1800);
+  /* 客製車的頁面（介紹頁、編輯頁）顧問都不主動跳出來：使用者點頭像才打開對話 */
 })();

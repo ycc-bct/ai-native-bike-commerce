@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1025b"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
+<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=hdr1028"><link rel="stylesheet" href="css/favorites.css?v=hdr1023">
 <link rel="stylesheet" href="css/tips.css?v=hdr1023">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@ img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 svg{display:block}
-.site-nav{position:absolute}
+
 .wrap{width:var(--shell);margin:0 auto;transition:width .45s var(--ease),margin .45s var(--ease)}
 body.adv-open .wrap{width:calc(100vw - 72px - 424px);margin-left:36px}
 body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100vw - 72px - 424px);margin-left:36px}
@@ -164,7 +164,8 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
 .g.owned .tag{background:#E8A33D}
 .g b{font-size:15px;font-weight:800;line-height:1.4}
 .g p{margin-top:6px;font-size:13px;line-height:1.65;color:var(--ink-70);flex:1}
-.g .foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px}
+/* 卡片底部：價格＋加入購物車（不用 .foot，那是頁尾的 class） */
+.g .g-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 .g .pr{font-size:14px;font-weight:800}
 .g .add{height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--navy);font-size:13px;font-weight:700;transition:background .2s,color .2s}
 .g .add:hover{background:#EEF1F5}
@@ -195,7 +196,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-page="result"></header>
-<script src="js/header.js?v=bd17"></script>
+<script src="js/store-picker.js?v=5"></script><script src="js/header.js?v=bd26"></script>
 
 <main>
 <section class="verdict" id="top">
@@ -227,8 +228,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
     <div class="book">
       <div class="card">
         <h3>選門市</h3>
-        <div class="stores" id="stores"></div>
-        <div class="map"><i></i><span id="mapName"></span></div>
+        <div id="storePick"></div>
       </div>
       <div class="card">
         <h3>選時間<small id="bookBike"></small></h3>
@@ -318,7 +318,10 @@ const picked = i => Q.labels.filter((l, k) => (Q.axs ? Q.axs[k] : (LABEL_AX[l] |
   const syncHF = () => hf.classList.toggle('on', !!(window.GiantFav && GiantFav.has(fid)));
   syncHF(); addEventListener('giant-fav-change', syncHF);
   hf.onclick = () => { if (!window.GiantFav) return; GiantFav.toggle(fid); syncHF(); toast(GiantFav.has(fid) ? '已加入我的最愛' : '已從我的最愛移除'); };
-  $('heroCart').onclick = () => { const b = $('heroCart'), on = !b.classList.contains('on'); b.classList.toggle('on', on); b.textContent = on ? '已加入購物車 ✓' : '加入購物車'; toast(on ? rode.n + ' 已加入購物車' : '已從購物車移除'); };
+  /* 整車加入全站購物車（js/cart.js） */
+  const bikeId = 'bike-' + Q.rode, syncHC = () => { const on = !!(window.GiantCart && GiantCart.list().some(x => x.id === bikeId)), b = $('heroCart'); b.classList.toggle('on', on); b.textContent = on ? '已加入購物車 ✓' : '加入購物車'; };
+  syncHC(); document.addEventListener('cart:change', syncHC);
+  $('heroCart').onclick = () => { if (!window.GiantCart) return; GiantCart.list().some(x => x.id === bikeId) ? GiantCart.remove(bikeId) : GiantCart.add({id:bikeId, kind:'bike', name:rode.n, price:rode.pr || 0, img:rode.img, meta:{note:'尺寸到門市確認'}}); };
   const why = [];
   why.push('你選了' + picked(t1) + '，這些路最吃<b>' + AXES[t1] + '</b>，' + rec.n + ' 的' + AXES[t1] + '有 ' + rec.ax[t1] + ' 分。');
   why.push(picked(t2) ? '再加上' + picked(t2) + '，需要<b>' + AXES[t2] + '</b>，它也有 ' + rec.ax[t2] + ' 分，不會顧此失彼。' : rec.t);
@@ -348,21 +351,17 @@ const go = id => $(id).scrollIntoView({behavior:'smooth', block:'start'});
 document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
 
 /* ---------- 預約門市 ---------- */
-const STORES = [
-  {n:'GIANT 台北旗艦店', a:'台北市信義區 · 11:00–21:00', d:'捷運市政府站步行 6 分鐘'},
-  {n:'GIANT 新店直營店', a:'新北市新店區 · 10:30–20:30', d:'離河濱車道最近，試騎可直接上路'},
-  {n:'GIANT 台中直營店', a:'台中市西屯區 · 11:00–21:00', d:'週末有團騎'},
-];
+/* 試騎門市：全站共用的門市選擇器（js/store-picker.js），資料是全台 130 間服務門市 */
+const STORE_TAGS = {};
+let storePicker = null;
 window.ADV_SIZES = [['XS',155,166],['S',159,171],['M',169,181],['ML',174,186],['L',180,192]];
-const B = {store:0, date:0, slot:0, size:null, note:''};
+const B = {store:null, date:0, slot:0, size:null, note:''};
 const WD = ['日','一','二','三','四','五','六'];
 function dates(){ const out = []; for (let i = 1; i <= 7; i++) { const d = new Date(); d.setDate(d.getDate() + i); out.push({t: (d.getMonth() + 1) + '/' + d.getDate(), w: '週' + WD[d.getDay()], wk: d.getDay() === 0 || d.getDay() === 6}); } return out; }
 const DATES = dates(), SLOTS = ['10:00','13:30','16:00'];
 (function sizeDefault(){ let h = 0; try { h = +localStorage.getItem(ADV_H_KEY) || 0; } catch (e) {} const s = h ? advSizeFor(ADV_SIZES, h) : null; B.size = s ? s[0] : 'M'; B.sizeFrom = s ? '依你記住的身高 ' + h + ' cm' : ''; })();
 function renderBook(){
-  $('stores').innerHTML = STORES.map((s, i) => '<button class="store' + (i === B.store ? ' on' : '') + (s.prev ? ' prev' : '') + '" type="button" data-i="' + i + '"><span class="dot"></span><span><b>' + s.n + '</b><span>' + s.a + ' · ' + s.d + '</span></span><span class="tag">上次來過</span></button>').join('');
-  $('stores').querySelectorAll('.store').forEach(b => b.onclick = () => { B.store = +b.dataset.i; renderBook(); });
-  $('mapName').textContent = STORES[B.store].n;
+  if (!storePicker && window.GiantStorePicker) storePicker = GiantStorePicker.mount($('storePick'), {mode: 'select', layout: 'stack', selected: B.store, tags: STORE_TAGS, onSelect: st => { B.store = st.id; }});
   $('bookBike').textContent = rec.n;
   $('dates').innerHTML = DATES.map((d, i) => '<button class="pill' + (i === B.date ? ' on' : '') + (d.wk && i === DATES.findIndex(x => x.wk) ? ' sug' : '')   /* 不用 rec：advisor.css 的 .rec 是聊天卡片，會帶 margin */ + '" type="button" data-i="' + i + '">' + d.t + '<small>' + d.w + '</small>' + (d.wk && i === DATES.findIndex(x => x.wk) ? '<i class="tg">建議</i>' : '') + '</button>').join('');
   $('dates').querySelectorAll('.pill').forEach(b => b.onclick = () => { B.date = +b.dataset.i; renderBook(); });
@@ -375,11 +374,12 @@ function renderBook(){
 }
 renderBook();
 $('bkGo').onclick = () => {
-  const d = DATES[B.date], s = STORES[B.store];
-  $('bkDone').innerHTML = '<b>預約完成 ✅</b><br>' + s.n + ' · ' + d.t + '（' + d.w + '）' + SLOTS[B.slot] + '<br>試騎 ' + rec.n + ' · 尺寸 ' + B.size + ($('bkName').value ? ' · ' + esc($('bkName').value) : '') + (B.note ? '<br>備註：' + esc(B.note) : '') +
+  const d = DATES[B.date], s = storePicker && storePicker.selected();
+  if (!s) { toast('請先選擇試騎門市'); $('storePick').scrollIntoView({behavior: 'smooth', block: 'center'}); return; }
+  $('bkDone').innerHTML = '<b>預約完成 ✅</b><br>' + s.name + ' · ' + d.t + '（' + d.w + '）' + SLOTS[B.slot] + '<br>試騎 ' + rec.n + ' · 尺寸 ' + B.size + ($('bkName').value ? ' · ' + esc($('bkName').value) : '') + (B.note ? '<br>備註：' + esc(B.note) : '') +
     '<div class="row"><button type="button" onclick="toast(\'示範：已加入行事曆\')">加入行事曆</button><a href="ride.html">再騎一次</a></div>';
   $('bkDone').classList.add('on'); $('bkGo').textContent = '已預約，可再改時間';
-  say('預約好了 🙌 ' + d.t + ' ' + SLOTS[B.slot] + ' 到 ' + s.n + '，我會先請門市把 ' + rec.n + '（' + B.size + '）調好等你。', 700);
+  say('預約好了 🙌 ' + d.t + ' ' + SLOTS[B.slot] + ' 到 ' + s.name + '，我會先請門市把 ' + rec.n + '（' + B.size + '）調好等你。', 700);
 };
 
 /* ---------- 配件 ---------- */
@@ -395,7 +395,10 @@ const GEAR = [
   {id:'lock',   n:'折疊鎖',                            pr:0,     img:'img/pdp/acc-lock.webp',    cats:['city','ebike'],            why:{_:'巷弄慢慢逛會下車，鎖一下再走。'}},
   {id:'pump',   n:'攜帶式打氣筒',                      pr:0,     img:'img/pdp/acc-pump.webp',    cats:['road','gravel','city','mtb','ebike'], why:{_:'碎石與陡坡胎壓要對，出發前調一下。'}},
 ];
-const cart = new Set(); const owned = new Set();
+const owned = new Set();
+/* 配件放在全站購物車（js/cart.js）裡，id 用 'acc-' + 配件 id；這裡的 cart 是目前在購物車裡的配件 id */
+const inCart = id => !!(window.GiantCart && GiantCart.list().some(x => x.id === 'acc-' + id));
+const cart = {has: inCart, get size(){ return GEAR.filter(g => inCart(g.id)).length; }, [Symbol.iterator]: function* (){ for (const g of GEAR) if (inCart(g.id)) yield g.id; }};
 function gearFor(){ return GEAR.filter(g => g.cats.includes(rec.cat)).slice(0, 6); }
 function renderGear(){
   const list = gearFor();
@@ -404,15 +407,17 @@ function renderGear(){
     const own = owned.has(g.id), on = cart.has(g.id);
     return '<div class="g' + (own ? ' owned' : '') + '" data-id="' + g.id + '">' + (own ? '<span class="tag">你已經有了</span>' : i === 0 ? '<span class="tag">先備這件</span>' : '') +
       '<div class="ph"><img src="' + g.img + '" alt=""></div><b>' + g.n + '</b><p>' + (own ? '去年買過，這次先跳過。' : (g.why[rec.cat] || g.why._)) + '</p>' +
-      '<div class="foot"><span class="pr">' + (g.pr ? 'NT$ ' + fmt(g.pr) : '價格請洽門市') + '</span><button class="add' + (on ? ' on' : '') + '" type="button"' + (own ? ' disabled' : '') + '>' + (own ? '已擁有' : on ? '已加入 ✓' : '加入購物車') + '</button></div></div>';
+      '<div class="g-foot"><span class="pr">' + (g.pr ? 'NT$ ' + fmt(g.pr) : '價格請洽門市') + '</span><button class="add' + (on ? ' on' : '') + '" type="button"' + (own ? ' disabled' : '') + '>' + (own ? '已擁有' : on ? '已加入 ✓' : '加入購物車') + '</button></div></div>';
   }).join('');
-  $('gearList').querySelectorAll('.g:not(.owned) .add').forEach(b => b.onclick = () => { const id = b.closest('.g').dataset.id; cart.has(id) ? cart.delete(id) : cart.add(id); renderGear(); });
+  $('gearList').querySelectorAll('.g:not(.owned) .add').forEach(b => b.onclick = () => { const id = b.closest('.g').dataset.id, g = GEAR.find(x => x.id === id); if (!window.GiantCart) return;
+    inCart(id) ? GiantCart.remove('acc-' + id) : GiantCart.add({id:'acc-' + id, kind:'acc', name:g.n, price:g.pr || 0, img:g.img}); });
   const items = [...cart].map(id => GEAR.find(g => g.id === id)), sum = items.reduce((s, g) => s + (g.pr || 0), 0), ask = items.filter(g => !g.pr).length;
   $('cartN').textContent = items.length ? '已加入 ' + items.length + ' 件' : '還沒加入配件';
   $('cartS').textContent = items.length ? '小計 NT$ ' + fmt(sum) + (ask ? '（另 ' + ask + ' 件價格請洽門市）' : '') : '';
 }
 renderGear();
-$('checkout').onclick = () => toast(cart.size ? '示範：結帳流程之後接' : '先加入幾件配件');
+document.addEventListener('cart:change', renderGear);
+$('checkout').onclick = () => { if (window.GiantCart && GiantCart.count()) location.href = 'checkout.html'; else toast('先加入幾件配件'); };
 function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 1800); }
 
 /* ---------- 顧問：進頁就講結論 ---------- */
@@ -490,8 +495,8 @@ $('advQuick').querySelector('[data-q="size"]').onclick = () => {
 $('advQuick').querySelector('[data-q="compare"]').onclick = () => { lockOpen(); addMsg('比較車款', 'me'); say('比較功能在車款清單裡，我帶你過去。', 600, () => setTimeout(() => { location.href = 'gravel.html?cmp=1'; }, 900)); };
 
 /* ---------- 案例：AI 記得這位會員買過什麼 ---------- */
-const MEMBER = {name:'林怡君', store:0, size:'M', bought:[
-  {img:'img/bikes/talon.webp', n:'Talon 0', d:'2024/05/18 · 台北旗艦店 · 尺寸 M · NT$ 26,800'},
+const MEMBER = {name:'林怡君', store:'18998', size:'M', bought:[
+  {img:'img/bikes/talon.webp', n:'Talon 0', d:'2024/05/18 · 台北南京店 · 尺寸 M · NT$ 26,800'},
   {img:'img/home/gear-sendero.webp', n:'Jayco AlUla Team SENDERO 太陽眼鏡', d:'2024/05/18 · NT$ 7,200'},
 ]};
 let memberOn = false;
@@ -503,16 +508,16 @@ function memberCase(typed){
   try { localStorage.setItem('giant-demo-member', '1'); } catch (e) {}
   if ($('advisor').hidden) openAdvisor(false);
   /* 頁面跟著變：門市、尺寸、姓名、配件 */
-  STORES[MEMBER.store].prev = true; B.store = MEMBER.store; B.size = MEMBER.size; B.sizeFrom = '照你上次買 Talon 0 的尺寸'; $('bkName').value = MEMBER.name;
+  STORE_TAGS[MEMBER.store] = '上次來過'; B.store = MEMBER.store; if (storePicker) storePicker.select(MEMBER.store); B.size = MEMBER.size; B.sizeFrom = '照你上次買 Talon 0 的尺寸'; $('bkName').value = MEMBER.name;
   owned.add('glass'); renderBook(); renderGear();
   say('找到了，這是你的購買紀錄 👇<div class="adv-hist"><small>會員 ' + MEMBER.name + ' · 購買紀錄</small>' +
       MEMBER.bought.map(b => '<div class="row"><img src="' + b.img + '" alt=""><div><b>' + b.n + '</b><span>' + b.d + '</span></div></div>').join('') +
-      '<div class="row svc"><div><b>2025/03 定期保養</b><span>台北旗艦店</span></div></div></div>', 800);
+      '<div class="row svc"><div><b>2025/03 定期保養</b><span>台北南京店</span></div></div></div>', 800);
   const upgrade = rec.cat === 'mtb' || rec.cat === 'ebike';
   let msg = upgrade
     ? '你 2024 年買的 <b>Talon 0</b> 騎了一年多，這次選的 <b>' + rec.n + '</b> 是同一條路線的升級：' + (rec.cat === 'ebike' ? '電輔把你第 4 段想省力的那一下補起來，' : '前後避震對碎石和下坡穩很多，') + '門市有舊換新，Talon 0 可以估價折抵。'
     : '你手上已經有一台登山車 <b>Talon 0</b>，這次的 <b>' + rec.n + '</b> 剛好補上' + CAT[rec.cat] + '這一塊：山路交給 Talon，' + (Q.scene === 'city' ? '通勤' : '河濱和平路') + '交給它，兩台分工不重疊。';
-  msg += '<br><br>我也順手調整了：預約門市帶回你常去的台北旗艦店、尺寸照上次的 M；配件裡 SENDERO 太陽眼鏡你去年買過，先跳過。';
+  msg += '<br><br>我也順手調整了：預約門市帶回你常去的台北南京店、尺寸照上次的 M；配件裡 SENDERO 太陽眼鏡你去年買過，先跳過。';
   say(msg + chips(upgrade ? [['trade','預約時帶舊車估價'],['book','直接預約試騎']] : [['book','預約試騎'],['gear','看調整後的配件']]), 1400, m => bindChips(m, handleChip));
 }
 Tips.register('member', () => memberCase());
