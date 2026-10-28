@@ -74,7 +74,7 @@
       '<button type="button" class="icon-btn" aria-label="搜尋" title="搜尋">' + "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/></svg>" + '</button>' +
       "<button type=\"button\" class=\"icon-btn\" id=\"openFav\" aria-label=\"我的最愛\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z\"/></svg><span class=\"fav-n\" hidden>0</span></button>" +
       "<a href=\"#\" aria-label=\"購物車\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6\"/><circle cx=\"9.5\" cy=\"20\" r=\"1.2\"/><circle cx=\"18\" cy=\"20\" r=\"1.2\"/></svg></a>".replace('href="#"', 'href="' + esc(cartHref) + '"') +
-      "<a href=\"#\" aria-label=\"會員\" title=\"David Robinson\"><span class=\"member-initial\">D</span></a>" +
+      "<a href=\"#\" aria-label=\"會員\" title=\"David Robinson\" aria-haspopup=\"menu\" aria-expanded=\"false\"><span class=\"member-initial\">D</span></a>" +
       (host.dataset.ai === 'off' ? '' : "<span class=\"orb-wrap\">\n        <button class=\"orb-btn vbtn\" id=\"aiOrb\" type=\"button\" aria-label=\"GIANT 選車顧問\" title=\"GIANT 選車顧問｜依你的騎乘情境給建議\"><span class=\"beam-glow\"></span><span class=\"beam-ring\"></span><svg class=\"vmark\" viewBox=\"0 0 22 28\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z\"/></svg></button>\n        <div class=\"orb-callout\" id=\"orbCallout\" role=\"status\" hidden><i class=\"tip\"></i>\n          <p><b id=\"calloutTitle\"></b><span id=\"calloutText\"></span></p>\n          <div class=\"acts\"><button class=\"yes\" id=\"calloutYes\" type=\"button\">好，聊聊看</button><button class=\"no\" id=\"calloutNo\" type=\"button\">先自己逛</button></div>\n        </div>\n      </span>") +
     '</div>' +
     '<div class="dd-wrap">' + BIKES.map(bikePanel).join('') + gearPanel() + '</div>';
@@ -156,10 +156,51 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=10'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=13'; document.head.appendChild(cs);
   }
+  /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
+  (function () {
+    var css = document.createElement('style');
+    css.textContent = '.gm-menu{position:fixed;z-index:70;width:290px;padding:6px;border-radius:12px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 18px 40px rgba(20,26,34,.14);font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;color:#141A22;text-align:left;opacity:0;transform:translateY(-6px);transition:opacity .2s,transform .2s}' +
+      '.gm-menu.on{opacity:1;transform:none}.gm-menu[hidden]{display:none}' +
+      '.gm-head{display:flex;align-items:center;gap:12px;padding:12px 12px 14px;border-bottom:1px solid #DCE1E7;margin-bottom:4px}.gm-head .member-initial{flex:none;width:44px;height:44px;border-radius:50%;background:#0E1726;color:#fff;display:grid;place-items:center;font-size:17px;font-weight:700;box-shadow:none}.gm-head strong{display:block;font-size:15px}.gm-head small{display:block;margin-top:2px;font-size:12.5px;color:#7A8492}' +
+      '.gm-menu button,.gm-menu a.gm-row{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:0;border-radius:8px;background:none;font:inherit;font-size:14px;color:#141A22;text-align:left;text-decoration:none;cursor:pointer}' +
+      '.gm-menu button:hover,.gm-menu a.gm-row:hover,.gm-menu button:focus-visible,.gm-menu a.gm-row:focus-visible{background:#F3F5F7;outline:none}' +
+      '.gm-menu svg{width:20px;height:20px;flex:none;color:#4A5563}' +
+      '.gm-sec{padding:10px 12px 8px;border-top:1px solid #DCE1E7;margin-top:4px}.gm-sec b{display:block;font-size:12.5px;color:#7A8492;font-weight:600;margin-bottom:6px}' +
+      '.gm-sec{padding:10px 6px 4px}.gm-sec b{padding:0 6px}.gm-order{display:flex;align-items:center;gap:8px;margin:0;padding:8px 6px;border-radius:8px;font-size:13px;line-height:1.5;color:#4A5563;text-decoration:none}.gm-order:hover,.gm-order:focus-visible{background:#F3F5F7;outline:none}.gm-order span{flex:1;min-width:0}.gm-menu .gm-chev{width:16px;height:16px;color:#7A8492}.gm-empty{padding:0 6px 6px}.gm-order strong{display:block;font-size:13.5px;color:#141A22;font-variant-numeric:tabular-nums}.gm-empty{font-size:13px;color:#7A8492}' +
+      '@media (prefers-reduced-motion:reduce){.gm-menu{transition:none}}';
+    document.head.appendChild(css);
+    var I = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+    var IC = {bike: I('<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l2.5 8H6M14 6h3"/>')};
+    var CHEV = '<svg class="gm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+    var menu = null;
+    var read = function (k) { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } };
+    var esc = function (v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]; }); };
+    function render() {
+      var orders = read('giant-orders').slice(0, 3);
+      menu.innerHTML = '<div class="gm-head"><span class="member-initial">D</span><div><strong>David Robinson</strong><small>GIANT 會員</small></div></div>' +
+        '<a class="gm-row" role="menuitem" href="' + ROOT + '../customized.html#favorites">' + IC.bike + '<span>已儲存的客製車</span></a>' +
+        '<div class="gm-sec"><b>最近的訂單與預約</b>' + (orders.length ? orders.map(function (o) {
+          return '<a class="gm-order" role="menuitem" href="' + ROOT + 'checkout.html?order=' + encodeURIComponent(o.no) + '"><span><strong>' + esc(o.no) + (o.custom ? '・客製車預約' : '') + '</strong>' + esc([o.date ? o.date.slice(5).replace('-', '/') + ' ' + (o.slot || '') : o.way === 'home' ? '宅配' : '', o.total ? 'NT$ ' + Math.round(o.total).toLocaleString('en-US') : ''].filter(Boolean).join('・')) + '</span>' + CHEV + '</a>'; }).join('') : '<div class="gm-empty">還沒有訂單或預約。</div>') + '</div>';
+    }
+    function place(a) { var r = a.getBoundingClientRect(); menu.style.top = Math.round(r.bottom + 12) + 'px'; menu.style.right = Math.max(12, Math.round(innerWidth - r.right - 60)) + 'px'; }
+    function open(a) {
+      if (!menu) { menu = document.createElement('div'); menu.className = 'gm-menu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', '會員選單'); menu.hidden = true; document.body.appendChild(menu); }
+      render(); place(a); menu.hidden = false; a.setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(function () { menu.classList.add('on'); });
+    }
+    function close() { if (!menu || menu.hidden) return; menu.classList.remove('on'); var a = document.querySelector('#siteHeader a[aria-label="會員"]'); if (a) a.setAttribute('aria-expanded', 'false'); setTimeout(function () { if (!menu.classList.contains('on')) menu.hidden = true; }, 200); }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('#siteHeader a[aria-label="會員"]');
+      if (a) { e.preventDefault(); menu && !menu.hidden ? close() : open(a); return; }
+      if (menu && !menu.hidden && !e.target.closest('.gm-menu')) close();
+    });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    addEventListener('scroll', function () { var a = document.querySelector('#siteHeader a[aria-label="會員"]'); if (menu && !menu.hidden && a) place(a); }, {passive: true});
+  })();
   /* 顧問角色頭像（眨眼、看游標、換表情）；ai 關掉的頁面不載入 */
   if (host.dataset.ai !== 'off' && !document.querySelector('script[src*="buddy.js"]')) {
-    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=9'; document.head.appendChild(bs);
+    var bs = document.createElement('script'); bs.src = ROOT + 'js/buddy.js?v=15'; document.head.appendChild(bs);
   }
 })();

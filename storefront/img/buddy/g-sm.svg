@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><!-- 玻璃波浪球・小尺寸簡化版（48px 以下）：淡藍球體、清楚外緣、左上亮點。波浪、眼睛由 js/buddy.js 用 SVG 疊上（波浪會動） -->
+<defs><radialGradient id="g" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#F7FAFF"/><stop offset=".55" stop-color="#DCE7FD"/><stop offset="1" stop-color="#B9CDF6"/></radialGradient></defs>
+<circle cx="128" cy="128" r="122" fill="url(#g)" stroke="#7E9EE6" stroke-width="8"/>
+<ellipse cx="86" cy="62" rx="30" ry="16" fill="#fff" opacity=".85" transform="rotate(-28 86 62)"/>
+</svg>

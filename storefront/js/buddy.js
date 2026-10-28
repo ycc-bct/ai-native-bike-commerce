@@ -67,8 +67,7 @@
     '.bd[data-c=g].glance .eyes{transform:translate(3px,0)!important}',
     '.bd .ripple{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;border:1.5px solid rgba(120,170,255,.9);animation:bd-ripple .7s ease-out forwards}',
     /* G：玻璃裡的波浪慢慢流（光帶掃過），思考時變快 */
-    '.bd[data-c=g]::after{content:"";position:absolute;left:14%;right:14%;top:52%;bottom:16%;border-radius:50%;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%) -120% 0/60% 100% no-repeat;mix-blend-mode:screen;animation:bd-flow 5.5s ease-in-out infinite}',
-    '.bd[data-c=g][data-mood=think]::after{animation-duration:1.4s}',
+
 
     /* ---------- D 活潑騎友：大笑、跳、眨單眼 ---------- */
     '.bd[data-c=d][data-mood=greet] .mo-base{opacity:0}.bd[data-c=d][data-mood=greet] .mo-hey{opacity:1}.bd[data-c=d][data-mood=greet] .eye{transform:scale(1.25)}',
@@ -117,7 +116,33 @@
   var arcs = function (L, R, y, w, h, stroke, sw, extra) {   // 開心的彎月眼
     return '<path d="M' + (L - w) + ' ' + (y + h * .3) + ' Q' + L + ' ' + (y - h) + ' ' + (L + w) + ' ' + (y + h * .3) + ' M' + (R - w) + ' ' + (y + h * .3) + ' Q' + R + ' ' + (y - h) + ' ' + (R + w) + ' ' + (y + h * .3) + '" stroke="' + stroke + '" stroke-width="' + sw + '" stroke-linecap="round" fill="none"' + (extra || '') + '/>';
   };
-  function face(c) {
+  /* 玻璃波浪球在 48px 以下用簡化版向量圖（g-sm.svg：實色波浪、清楚外緣），大尺寸用完整版 */
+  function small(c, host) { var w = host && host.getBoundingClientRect().width; return c === 'g' && (!w || w <= 48); }
+  function src(c, host) { return ROOT + 'img/buddy/' + (small(c, host) ? 'g-sm.svg?v=2' : c + '.webp?v=3'); }
+  /* 簡化版的波浪畫在五官的 SVG 裡（才能動）：座標沿用 256 的設計稿，縮到 100 */
+  /* 簡化版的波浪：保留跟 GIANT 標誌一致的雙層波浪造型（256 設計稿座標，縮到 100、往下放），
+     動態參考 Smooth Water Waves：水面沿著波浪方向「滾」過去（連續往同一個方向，不來回擺），浪頭動得多、底部不動，整道浪再很慢地上下浮 */
+  var WUP = ['M', [50, 177], 'C', [78, 163], [104, 140], [138, 133], 'C', [165, 128], [188, 137], [198, 155], 'C', [182, 146], [160, 147], [142, 156], 'C', [131, 162], [124, 171], [120, 180], 'C', [96, 184], [72, 183], [50, 177], 'Z'];
+  var WLO = ['M', [120, 180], 'C', [132, 168], [160, 160], [184, 162], 'C', [194, 163], [200, 167], [201, 177], 'L', [197, 188], 'C', [186, 182], [170, 180], [154, 184], 'C', [136, 189], [116, 200], [96, 204], 'C', [76, 206], [58, 194], [50, 177], 'C', [72, 183], [98, 185], [120, 180], 'Z'];
+  function wavePath(P, t, k, bob) {
+    var d = '';
+    for (var i = 0; i < P.length; i++) {
+      var p = P[i];
+      if (typeof p === 'string') { d += p; continue; }
+      var x = p[0], y = p[1], w = Math.max(0, Math.min(1, (206 - y) / 70));      /* 越高（浪頭）動得越多 */
+      var ph = x / 150 * Math.PI * 2 - t;                                        /* 往右滾 */
+      var dy = k * w * (5.5 * Math.sin(ph) + 1.8 * Math.sin(ph * 2.1 + 1.3));
+      var dx = k * w * 3.2 * Math.cos(ph);                                       /* 浪頭跟著往前推一點，看起來是滾不是上下抖 */
+      d += (x + dx).toFixed(1) + ' ' + (y + dy + bob).toFixed(1) + ' ';
+    }
+    return d;
+  }
+  var wuid = 0;
+  /* 每個頭像用自己的裁切 id：同一個 id 重複時，若第一個在隱藏的元素裡（例如收起來的選角色面板），Chrome 會整個不裁切 */
+  function waveSvg() { var id = 'bdwc' + (++wuid);
+    return '<clipPath id="' + id + '"><circle cx="50" cy="50" r="46.6"/></clipPath><g clip-path="url(#' + id + ')"><g transform="scale(.390625) translate(128 188) scale(1.18) translate(-125 -168)">' +
+      '<path class="wt wt0" fill="#5C88F5" d="' + wavePath(WLO, .9, 1, 0) + '"/><path class="wt wt1" fill="#1F4FE0" d="' + wavePath(WUP, 0, 1, 0) + '"/></g></g>'; }
+  function face(c, withWave) {
     var C = CHARS[c], L = C.ex, R = C.ex + C.gap, y = C.ey, mx = L + C.gap / 2, glow = ' filter="url(#bdg' + c + ')"', s = '';
     if (c === 'a') {
       s = '<g class="eyes"><g class="open-eyes"><ellipse class="eye" cx="' + L + '" cy="' + y + '" rx="4.4" ry="7" fill="#fff"' + glow + '/><ellipse class="eye eye-r" cx="' + R + '" cy="' + y + '" rx="4.4" ry="7" fill="#fff"' + glow + '/></g>' +
@@ -143,7 +168,7 @@
           '<ellipse class="mo mo-talk" cx="' + mx + '" cy="' + (m + 2) + '" rx="4.2" ry="3.4" fill="' + NAVY + '"/>';
       }
     }
-    return '<svg viewBox="0 0 100 100" aria-hidden="true"><defs><filter id="bdg' + c + '" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' + s + '</svg>';
+    return '<svg viewBox="0 0 100 100" aria-hidden="true"><defs><filter id="bdg' + c + '" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>' + (withWave ? waveSvg() : '') + s + '</svg>';
   }
 
   /* 頭像出現的地方：header 右上角、商品頁第二顆、首頁「不知道從哪台開始？」卡片、各頁對話框標題 */
@@ -156,7 +181,7 @@
       if (cur === 'v') return;
       var e = document.createElement('span');
       e.className = 'bd'; e.dataset.c = cur; e.dataset.mood = mo;
-      e.innerHTML = '<img src="' + ROOT + 'img/buddy/' + cur + '.webp?v=2" alt="">' + face(cur);
+      e.innerHTML = '<img src="' + src(cur, h) + '" alt="">' + face(cur, small(cur, h));
       h.appendChild(e); els.push(e);
     });
   }
@@ -267,7 +292,7 @@
     if (!b || b.parentNode.querySelector('.bd-pick')) return;
     var box = document.createElement('div'); box.className = 'bd-pick'; box.setAttribute('role', 'group'); box.setAttribute('aria-label', '顧問角色');
     box.innerHTML = ['a', 'g', 'd'].map(function (c) {
-      return '<button type="button" data-c="' + c + '" aria-pressed="' + (cur === c) + '"><span class="bdp"><img src="' + ROOT + 'img/buddy/' + c + '.webp?v=2" alt="">' + face(c) + '</span>' + CHARS[c].name + '</button>';
+      return '<button type="button" data-c="' + c + '" aria-pressed="' + (cur === c) + '"><span class="bdp"><img src="' + src(c) + '" alt="">' + face(c, small(c)) + '</span>' + CHARS[c].name + '</button>';
     }).join('') + '<button type="button" data-c="v" aria-pressed="' + (cur === 'v') + '"><span class="v">' + V + '</span>原本</button>';
     box.addEventListener('click', function (ev) { var t = ev.target.closest('button'); if (t) use(t.dataset.c); });
     var host = b.previousElementSibling; (host || b.parentNode).appendChild(box);
@@ -288,6 +313,32 @@
   document.addEventListener('visibilitychange', function () { if (!document.hidden) sync(); });
 
   (function reg(n) { if (window.Tips && Tips.register) Tips.register('avatar', function () { mood('greet', 1700); setTimeout(function () { mood('happy', 1200); }, 1800); }); else if (n < 30) setTimeout(function () { reg(n + 1); }, 200); })(0);
+  /* 波浪的動畫迴圈：平常慢慢滾；思考、回覆時滾快一點；打招呼、開心、被點時浪變大再慢慢平靜。
+     只在有簡化版頭像、分頁看得到、沒有開「減少動態」時跑，約 30fps */
+  (function () {
+    if (REDUCE) return;
+    var BOOST = {greet: .9, happy: .7, hover: .45, ack: .9, spam: 1.2};
+    var prev = 0, t = 0, extra = 0, lastMood = '';
+    function frame(now) {
+      requestAnimationFrame(frame);
+      if (document.hidden || now - prev < 33) return;
+      var dt = prev ? Math.min(.05, (now - prev) / 1000) : 0; prev = now;
+      var nodes = document.querySelectorAll('.bd .wt0'); if (!nodes.length) return;
+      var bd = nodes[0].closest('.bd'), md = bd ? bd.dataset.mood : '';
+      if (md !== lastMood) { if (BOOST[md]) extra = Math.max(extra, BOOST[md]); lastMood = md; }
+      var busy = md === 'think' || md === 'talk';
+      t += dt * (busy ? 2.2 : 1) * (1 + extra * .8);   /* 時間軸：忙的時候、剛打招呼時走快一點 */
+      extra *= Math.pow(.35, dt);                        /* 浪慢慢平靜下來 */
+      var k = 1 + extra * 1.1 + (busy ? .25 : 0);
+      nodes.forEach(function (n) {
+        var T = t * .62, bob = Math.sin(t * .23) * 2.2;                      /* 約 10 秒滾過一道浪；整道浪約 27 秒上下浮一次 */
+        n.setAttribute('d', wavePath(WLO, T + .9, k * .8, bob * .7));          /* 後面那道慢半拍、幅度小一點 */
+        var f = n.parentNode.querySelector('.wt1'); if (f) f.setAttribute('d', wavePath(WUP, T, k, bob));
+      });
+    }
+    requestAnimationFrame(frame);
+  })();
+
   window.Buddy = {use: use, mood: mood, chars: CHARS};
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hook); else hook();
 })();

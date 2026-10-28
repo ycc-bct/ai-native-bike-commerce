@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>尺寸指南攤開提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink70:#4A5563;--ink50:#7A8492;--line:#DCE1E7;--paper:#F3F5F7;--navy:#0E1726;--ai:#1F4FE0;--ai-soft:#EBEFF6}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter","Noto Sans TC",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.wrap{max-width:1600px;margin:0 auto;padding:44px 36px 70px}
+h1{margin:0;font-size:28px;font-weight:800}.intro{margin:10px 0 0;font-size:15px;line-height:1.75;color:var(--ink70);max-width:900px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:28px;align-items:start}
+.col>h2{margin:0 0 4px;font-size:17px;font-weight:800}.col>p{margin:0 0 14px;font-size:14px;line-height:1.7;color:var(--ink70);min-height:48px}
+.tag{display:inline-block;margin-left:6px;padding:2px 9px;border-radius:999px;background:var(--navy);color:#fff;font-size:12px;font-weight:700;vertical-align:2px}
+/* 側欄面板 */
+.panel{background:#fff;border-radius:20px;display:flex;flex-direction:column;height:760px;overflow:hidden;box-shadow:0 1px 0 var(--line)}
+.pbody{flex:1;overflow:auto;padding:28px 24px 20px}
+.ph{display:flex;align-items:center;justify-content:space-between}.ph h3{margin:0;font-size:24px;font-weight:800}
+.ph .tools{display:flex;gap:8px}.ph .tools span{height:40px;min-width:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;display:grid;place-items:center;font-size:14px;font-weight:700}
+.tabs{display:flex;gap:24px;margin-top:18px;border-bottom:1px solid var(--line)}.tabs span{padding:0 0 10px;font-size:15px;color:var(--ink70)}.tabs span.on{color:var(--ink);font-weight:700;box-shadow:inset 0 -2px var(--ink)}
+.fh{display:flex;justify-content:space-between;align-items:baseline;margin:22px 0 12px}.fh h4{margin:0;font-size:16px;font-weight:800}.fh .link{font-size:14px;font-weight:600;color:var(--ai)}.fh small{font-size:13px;color:var(--ink50)}
+.sizes{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.sizes span{height:48px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;font-size:15px}.sizes span.on{border:2px solid var(--ink)}
+.hint{margin:10px 0 0;font-size:13px;color:var(--ink70)}.hint b{color:var(--ink)}
+.foot{border-top:1px solid var(--line);padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+.foot small{display:block;font-size:12px;color:var(--ink70)}.foot b{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.foot .next{height:48px;padding:0 22px;border-radius:999px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:15px;font-weight:700}
+.empty{margin-top:18px;height:330px;border:1px dashed #C9D0D8;border-radius:12px;display:grid;place-items:center;font-size:13px;color:var(--ink50)}
+/* 身高 */
+.height{margin-top:22px}.height .lab{display:flex;justify-content:space-between;align-items:baseline}.height .lab span{font-size:14px;font-weight:700}
+.height .num{font-size:30px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}.height .num small{font-size:15px;font-weight:500;color:var(--ink50);margin-left:4px}
+input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--navy)}
+.ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--ink50);font-variant-numeric:tabular-nums}
+/* A：表格 */
+.note{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--ai-soft);font-size:14px;line-height:1.6}.note b{color:var(--ai)}
+.tbl{margin-top:8px}.tbl div{display:grid;grid-template-columns:72px 1fr;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}.tbl div:last-child{border:0}.tbl b{font-weight:700}
+.tbl div.on b,.tbl div.on span{color:var(--ai);font-weight:700}
+.disc{margin:14px 0 0;font-size:12px;line-height:1.6;color:var(--ink50)}
+/* B：清單 */
+.list{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:20px 44px 1fr auto;align-items:center;gap:10px;width:100%;min-height:52px;padding:0 16px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;transition:background .2s}
+.row:last-child{border:0}.row:hover{background:var(--paper)}
+.row i{width:18px;height:18px;border-radius:50%;border:1.5px solid #B8C0CA;position:relative}
+.row b{font-size:15px;font-weight:700}.row .r{color:var(--ink70);font-variant-numeric:tabular-nums}
+.row .rec{padding:3px 9px;border-radius:999px;background:var(--ai);color:#fff;font-size:12px;font-weight:700;visibility:hidden}
+.row.rec-on .rec{visibility:visible}
+.row[aria-pressed=true]{background:var(--ai-soft)}.row[aria-pressed=true] b,.row[aria-pressed=true] .r{color:var(--ai)}
+.row[aria-pressed=true] i{border-color:var(--ai)}.row[aria-pressed=true] i:after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--ai)}
+.status{margin:12px 0 0;font-size:13px;line-height:1.6;color:var(--ink70)}.status b{color:var(--ink)}
+.status.warn{padding:10px 12px;border-radius:10px;background:#FFF4E5;color:#8A4B08}
+.call{position:relative}.call:before{content:attr(data-n);position:absolute;left:-30px;top:2px;width:20px;height:20px;border-radius:50%;background:#E8590C;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.notes{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.notes div{padding:18px 20px;background:#fff;border-radius:12px;border:1px solid var(--line);font-size:14px;line-height:1.75;color:var(--ink70)}.notes b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+@media(max-width:1200px){.cols,.notes{grid-template-columns:1fr}.panel{height:auto}}
+@media(prefers-reduced-motion:reduce){.row{transition:none}}
+</style></head><body><div class="wrap">
+<h1>尺寸指南攤開提案</h1>
+<p class="intro">「車架尺寸」分頁下方有一大片空白，尺寸指南卻要另外開視窗。兩種把指南直接放進分頁的做法，跟現在並排比較。面板寬度、字級照實際側欄（1440 寬）。B 的身高滑桿和清單可以直接操作。</p>
+
+<div class="cols">
+  <section class="col"><h2>現在</h2><p>尺寸鈕＋一行建議，要看各尺寸的身高範圍得按「尺寸指南」開視窗。</p>
+    <div class="panel"><div class="pbody">
+      <div class="ph"><h3>變速與尺寸</h3><div class="tools"><span>⇪</span><span>儲存</span></div></div>
+      <div class="tabs"><span>變速套件</span><span class="on">車架尺寸</span></div>
+      <div class="fh"><h4>車架尺寸</h4><span class="link">尺寸指南</span></div>
+      <div class="sizes"><span>XS</span><span>S</span><span class="on">M</span><span>ML</span><span>L</span></div>
+      <p class="hint">依身高 172 cm 建議 <b>M</b>（建議身高 169–181 cm）</p>
+      <div class="empty">空白</div>
+    </div><div class="foot"><div><small>目前總價</small><b>NT$ 238,000</b></div><span class="next">下一步：塗裝與簽名 ›</span></div></div>
+  </section>
+
+  <section class="col"><h2>A. 視窗內容搬下來</h2><p>尺寸鈕不動，下方接身高滑桿、建議、對照表。XS～L 出現兩次。</p>
+    <div class="panel"><div class="pbody">
+      <div class="ph"><h3>變速與尺寸</h3><div class="tools"><span>⇪</span><span>儲存</span></div></div>
+      <div class="tabs"><span>變速套件</span><span class="on">車架尺寸</span></div>
+      <div class="fh"><h4>車架尺寸</h4></div>
+      <div class="sizes"><span>XS</span><span>S</span><span class="on">M</span><span>ML</span><span>L</span></div>
+      <div class="height"><div class="lab"><span>你的身高</span><span class="num">172<small>cm</small></span></div><input type="range" min="150" max="195" value="172" aria-label="身高（公分）" disabled><div class="ticks"><span>150</span><span>195 cm</span></div></div>
+      <p class="note">依身高 172 cm 建議 <b>M</b>（建議身高 169–181 cm）。</p>
+      <div class="tbl"><div><b>XS</b><span>155–166 cm</span></div><div><b>S</b><span>159–171 cm</span></div><div class="on"><b>M</b><span>169–181 cm</span></div><div><b>ML</b><span>174–186 cm</span></div><div><b>L</b><span>請洽門市確認</span></div></div>
+      <p class="disc">尺寸建議以身高為參考，實際合適尺寸可至門市量身與試騎確認。</p>
+    </div><div class="foot"><div><small>目前總價</small><b>NT$ 238,000</b></div><span class="next">下一步：塗裝與簽名 ›</span></div></div>
+  </section>
+
+  <section class="col"><h2>B. 尺寸清單合併<span class="tag">推薦</span></h2><p>先拉身高，再看清單：每個尺寸一列、範圍寫在旁邊，建議的那列有標籤。可以直接點列手動選。</p>
+    <div class="panel"><div class="pbody">
+      <div class="ph"><h3>變速與尺寸</h3><div class="tools"><span>⇪</span><span>儲存</span></div></div>
+      <div class="tabs"><span>變速套件</span><span class="on">車架尺寸</span></div>
+      <div class="height"><div class="lab"><span>你的身高</span><span class="num"><span id="bH">172</span><small>cm</small></span></div><input type="range" id="bR" min="150" max="195" value="172" aria-label="身高（公分）"><div class="ticks"><span>150</span><span>195 cm</span></div></div>
+      <div class="fh"><h4>車架尺寸</h4><small>依身高建議，也可以自己選</small></div>
+      <div class="list" id="bList" role="radiogroup" aria-label="車架尺寸"></div>
+      <p class="status" id="bS"></p>
+      <p class="disc">尺寸建議以身高為參考，實際合適尺寸可至門市量身與試騎確認。</p>
+    </div><div class="foot"><div><small>目前總價</small><b>NT$ 238,000</b></div><span class="next">下一步：塗裝與簽名 ›</span></div></div>
+  </section>
+</div>
+
+<div class="notes">
+  <div><b>拿掉的東西</b>「尺寸指南」按鈕和視窗都不需要了；建議文字從一行灰字變成清單上的「建議」標籤＋下方一句狀態。</div>
+  <div><b>B 的互動</b>拉身高：建議標籤和選取一起移動。手動點別的尺寸：選取改變，建議標籤留在原位，狀態寫「已選 ML，依身高建議 M」。再拉身高就回到自動。</div>
+  <div><b>超出範圍</b>身高低於 155 或高於 186 cm 時，狀態列變淡橘底：「超出建議範圍，先選最接近的尺寸，建議到門市量身確認。」DEFY 在「騎乘配備」的尺寸分頁也用同一套。</div>
+</div>
+</div>
+<script>
+var G=[{s:'XS',min:155,max:166},{s:'S',min:159,max:171},{s:'M',min:169,max:181},{s:'ML',min:174,max:186},{s:'L'}];
+var rng=function(g){return g.min?g.min+'–'+g.max+' cm':'請洽門市確認'};
+var rec=function(h){var f=G.filter(function(g){return g.min&&h>=g.min&&h<=g.max});if(f.length)return f.sort(function(a,b){return Math.abs((a.min+a.max)/2-h)-Math.abs((b.min+b.max)/2-h)})[0].s;return h<155?'XS':'ML'};
+var st={h:172,sel:'M',auto:true},L=document.getElementById('bList');
+function draw(){var r=rec(st.h);if(st.auto)st.sel=r;document.getElementById('bH').textContent=st.h;
+  L.innerHTML=G.map(function(g){return '<button type="button" class="row'+(g.s===r?' rec-on':'')+'" role="radio" aria-pressed="'+(g.s===st.sel)+'" aria-checked="'+(g.s===st.sel)+'" data-s="'+g.s+'"><i></i><b>'+g.s+'</b><span class="r">'+rng(g)+'</span><span class="rec">建議</span></button>'}).join('');
+  var out=st.h<155||st.h>186,S=document.getElementById('bS');S.className='status'+(out?' warn':'');
+  S.innerHTML=out?'身高 '+st.h+' cm 超出建議範圍，先選最接近的 <b>'+r+'</b>，建議到門市量身確認。':st.auto?'依身高 '+st.h+' cm 建議 <b>'+r+'</b>。':'已選 <b>'+st.sel+'</b>，依身高建議 <b>'+r+'</b>。';}
+document.getElementById('bR').addEventListener('input',function(e){st.h=+e.target.value;st.auto=true;draw()});
+L.addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;st.sel=b.dataset.s;st.auto=st.sel===rec(st.h);draw()});
+draw();
+</script>
+</body></html>

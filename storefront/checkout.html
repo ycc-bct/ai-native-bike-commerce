@@ -152,9 +152,9 @@ a{color:inherit}
 </style>
 </head>
 <body>
-<script src="js/cart.js?v=10"></script><script src="js/store-picker.js?v=5"></script>
+<script src="js/cart.js?v=13"></script><script src="js/store-picker.js?v=5"></script>
 <header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市與到店時間後，門市會在 1 個工作天內打電話跟你確認。客製車不需付訂金，到門市確認工單後再付款。"></header>
-<script src="js/header.js?v=bd28"></script>
+<script src="js/header.js?v=bd41"></script>
 
 <main class="co">
   <a class="co-back" href="javascript:history.back()" id="coBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>繼續逛逛</a>
@@ -183,10 +183,14 @@ const SLOTS = ['11:00', '14:00', '16:30', '19:00'];
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 /* 會員資料（示範帳號） */
 const MEMBER = {name: 'David Robinson', phone: '0912-345-678', email: 'david.robinson@example.com'};
-const S = {step: 0, way: 'store', store: null, region: '全部', q: '', date: null, slot: null, pay: 'store',
+const S = {viewing: false, step: 0, way: 'store', store: null, region: '全部', q: '', date: null, slot: null, pay: 'store',
   name: MEMBER.name, phone: MEMBER.phone, email: MEMBER.email, addr: '', note: '', order: null};
 let STORES = [];
-fetch('custom-studio/stores.json').then(r => r.json()).then(d => { STORES = d; if (S.step === 1) render(); }).catch(() => {});
+fetch('custom-studio/stores.json').then(r => r.json()).then(d => { STORES = d; if (S.step === 1 || S.viewing) render(); }).catch(() => {});
+/* checkout.html?order=GT…：從會員選單點進來，看已送出的訂單或預約 */
+(function () { const no = new URLSearchParams(location.search).get('order'); if (!no) return;
+  let all = []; try { all = JSON.parse(localStorage.getItem('giant-orders') || '[]'); } catch (e) {}
+  const o = all.find(x => x.no === no); if (o) { S.order = o; S.step = 3; S.viewing = true; } })();
 
 const items = () => GiantCart.selected();   /* 這次結帳的那一區（客製車，或勾選的車款與配件） */
 const hasCustom = () => items().some(x => x.kind === 'custom');
@@ -268,7 +272,7 @@ function panePay(){
 }
 function paneDone(){
   const o = S.order, st = o.store && storeById(o.store);
-  return '<div class="done"><div class="mark">' + CHECK + '</div><h2>' + (o.custom ? '預約已送出' : '訂單已送出') + '</h2><p class="ono">' + (o.custom ? '預約編號' : '訂單編號') + ' <b>' + o.no + '</b>，確認信已寄到 ' + esc(o.email) + '。</p>' +
+  return '<div class="done"><div class="mark">' + CHECK + '</div><h2>' + (S.viewing ? (o.custom ? '預約詳情' : '訂單詳情') : (o.custom ? '預約已送出' : '訂單已送出')) + '</h2><p class="ono">' + (o.custom ? '預約編號' : '訂單編號') + ' <b>' + o.no + '</b>' + (S.viewing ? '，' + esc(o.time) + ' 送出。' : '，確認信已寄到 ' + esc(o.email) + '。') + '</p>' +
     '<ol class="track"><li class="ok">已送出<small>' + o.time + '</small></li><li class="now">' + (o.way === 'home' ? '備貨中' : '門市確認中') + '<small>' + (o.way === 'home' ? '1–2 個工作天' : '1 個工作天內來電') + '</small></li><li>' + (o.way === 'home' ? '已出貨' : '門市已確認') + '</li><li>' + (o.way === 'home' ? '送達' : (o.custom ? '到店量身' : '可到店取貨')) + '</li></ol>' +
     '<div class="info">' + (o.way === 'home' ? '<div><h4>宅配地址</h4><b>' + esc(o.addr) + '</b><br>3–5 個工作天送達</div>' :
       '<div><h4>' + (o.custom ? '客製化服務門市' : '取貨門市') + '</h4><b>' + esc(st ? st.name : '') + '</b><br>' + esc(st ? st.addr : '') + '<br>' + esc(st ? st.tel : '') + '</div>' +
@@ -281,8 +285,9 @@ function paneDone(){
 let dir = 1;
 function render(){
   $('steps').innerHTML = stepsHtml();
-  $('coTitle').textContent = S.step === 3 ? ((S.order && S.order.custom) ? '預約完成' : '訂單完成') : hasCustom() ? '預約門市確認' : '結帳';
-  $('coBack').hidden = S.step === 3;
+  $('coTitle').textContent = S.step === 3 ? ((S.order && S.order.custom) ? (S.viewing ? '我的預約' : '預約完成') : (S.viewing ? '我的訂單' : '訂單完成')) : hasCustom() ? '預約門市確認' : '結帳';
+  $('coBack').hidden = S.step === 3 && !S.viewing;
+  $('steps').style.display = S.viewing ? 'none' : '';   /* 看舊訂單時不需要步驟列 */
   document.querySelector('.grid').classList.toggle('solo', S.step === 3);
   const pane = $('pane');
   pane.innerHTML = '<div class="pane' + (dir < 0 ? ' back' : '') + '">' + [paneCart, paneStore, panePay, paneDone][S.step]() + '</div>';

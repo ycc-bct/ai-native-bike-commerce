@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>波浪頭像細修提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141A22;--ink70:#4A5563;--ink50:#7A8492;--line:#DCE1E7;--paper:#F3F5F7}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter","Noto Sans TC",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1360px;margin:0 auto;padding:44px 36px 70px}
+h1{margin:0;font-size:28px;font-weight:800}.intro{margin:10px 0 0;font-size:15px;line-height:1.75;color:var(--ink70);max-width:900px}
+table{border-collapse:separate;border-spacing:0;margin-top:28px;width:100%;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+th{font-size:13px;font-weight:700;text-align:left;padding:14px 18px;border-bottom:1px solid var(--line);background:#fff}
+th small{display:block;font-weight:500;color:var(--ink50);margin-top:2px}
+td{padding:18px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.lab{width:110px;font-size:13px;font-weight:600;color:var(--ink70)}
+tr.white td.cell{background:#fff}tr.paper td.cell{background:#F3F5F7}tr.photo td.cell{background:linear-gradient(120deg,#3a4b5a,#6b7f8c)}tr.photo td.lab{background:#fff}
+.sizes{display:flex;align-items:center;gap:18px}
+.av{position:relative;flex:none}.av img,.av svg{position:absolute;inset:0;width:100%;height:100%}
+.note{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.note div{padding:18px 20px;background:#fff;border-radius:12px;border:1px solid var(--line);font-size:14px;line-height:1.75;color:var(--ink70)}.note b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+.hd{display:flex;align-items:center;gap:16px;height:56px;padding:0 20px;border-radius:10px;font-size:13px;font-weight:600}
+.hd.photo{background:linear-gradient(120deg,#3a4b5a,#6b7f8c);color:#fff}.hd.frost{background:rgba(243,245,247,.95);border:1px solid var(--line);color:var(--ink)}
+.hd .sp{margin-left:auto;display:flex;align-items:center;gap:16px}.hd .d{width:30px;height:30px;border-radius:50%;background:#0E1726;color:#fff;display:grid;place-items:center;font-size:12px;box-shadow:0 0 0 2px currentColor}
+.ctx{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}.ctx>div{display:grid;gap:10px}.ctx small{font-size:12.5px;font-weight:700;color:var(--ink50)}
+</style></head><body><div class="wrap">
+<h1>波浪頭像細修提案</h1>
+<p class="intro">左邊是現在的版本。A、B 兩案都分成兩種圖：<b>完整版</b>（56px 以上，保留玻璃質感，只把波浪加深）和 <b>簡化版</b>（40px 以下，向量圖：拿掉玻璃內反光、波浪放大三成並用實色、外緣加深、眼睛放大）。A 用網站強調藍，B 用 GIANT 品牌藍。</p>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="wA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D6FF2"/><stop offset="1" stop-color="#1F4FE0"/></linearGradient>
+  <linearGradient id="wA2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E97FA"/><stop offset="1" stop-color="#3D6FF2"/></linearGradient>
+  <linearGradient id="wB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B23A8"/><stop offset="1" stop-color="#06038D"/></linearGradient>
+  <linearGradient id="wB2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4F67D8"/><stop offset="1" stop-color="#2A3BB8"/></linearGradient>
+  <radialGradient id="glass" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#F7FAFF"/><stop offset=".55" stop-color="#DCE7FD"/><stop offset="1" stop-color="#B9CDF6"/></radialGradient>
+  <symbol id="waveUp" viewBox="0 0 256 256"><path d="M50 177 C 78 163, 104 140, 138 133 C 165 128, 188 137, 198 155 C 182 146, 160 147, 142 156 C 131 162, 124 171, 120 180 C 96 184, 72 183, 50 177 Z"/></symbol>
+  <symbol id="waveLo" viewBox="0 0 256 256"><path d="M120 180 C 132 168, 160 160, 184 162 C 194 163, 200 167, 201 177 L 197 188 C 186 182, 170 180, 154 184 C 136 189, 116 200, 96 204 C 76 206, 58 194, 50 177 C 72 183, 98 185, 120 180 Z"/></symbol>
+</defs></svg>
+
+<table id="tbl"><thead><tr><th></th><th>現在<small>96・40・34・24px</small></th><th>A　強調藍 #1F4FE0<small>完整版 96px｜簡化版 40・34・24px</small></th><th>B　品牌藍 #06038D<small>完整版 96px｜簡化版 40・34・24px</small></th></tr></thead><tbody></tbody></table>
+
+<div class="ctx" id="ctx"></div>
+
+<div class="note">
+  <div><b>完整版（56px 以上）</b>原本的玻璃球不動，只把波浪換成深一階的藍、上緣留細亮邊，球的外緣加深一點，在白底也看得到輪廓。</div>
+  <div><b>簡化版（40px 以下）</b>只留：淡藍球體、一圈清楚外緣、左上亮點、一道放大的實色波浪、兩顆放大的眼睛。向量圖，24px 也銳利。</div>
+  <div><b>自動切換</b>header、選角色、購物車入口（34–40px）用簡化版；說明卡、顧問對話開場等大尺寸用完整版。最後一列是不放眼睛的簡化版，給你比較角色感。</div>
+</div>
+</div>
+<script>
+const IMG='../img/buddy/g.webp';
+const eyes=(big)=>big?'<circle cx="101" cy="90" r="11" fill="#14234A"/><circle cx="155" cy="90" r="11" fill="#14234A"/><circle cx="105" cy="86" r="3.4" fill="#fff"/><circle cx="159" cy="86" r="3.4" fill="#fff"/>'
+  :'<circle cx="102" cy="95" r="9.2" fill="#14234A"/><circle cx="154" cy="95" r="9.2" fill="#14234A"/><circle cx="105.3" cy="91.4" r="2.6" fill="#fff"/><circle cx="157.3" cy="91.4" r="2.6" fill="#fff"/>';
+function current(s){return `<span class="av" style="width:${s}px;height:${s}px"><img src="${IMG}" alt=""><svg viewBox="0 0 256 256">${eyes(false)}</svg></span>`}
+function full(s,k){const up=k==='A'?'wA':'wB',lo=k==='A'?'wA2':'wB2';
+  return `<span class="av" style="width:${s}px;height:${s}px"><img src="${IMG}" alt=""><svg viewBox="0 0 256 256">
+  <circle cx="128" cy="128" r="124" fill="none" stroke="${k==='A'?'#8FAEEA':'#8C9CD8'}" stroke-width="3" opacity=".7"/>
+  <g style="filter:drop-shadow(0 0 3px rgba(255,255,255,.9))"><use href="#waveLo" fill="url(#${lo})"/><use href="#waveUp" fill="url(#${up})"/></g>
+  <use href="#waveUp" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2" style="clip-path:inset(0 0 55% 0)"/>${eyes(false)}</svg></span>`}
+function simple(s,k,noEyes){const up=k==='A'?'#1F4FE0':'#06038D',lo=k==='A'?'#5C88F5':'#3F55C8',rim=k==='A'?'#7E9EE6':'#7D8CCB';
+  return `<span class="av" style="width:${s}px;height:${s}px"><svg viewBox="0 0 256 256">
+  <circle cx="128" cy="128" r="122" fill="url(#glass)" stroke="${rim}" stroke-width="8"/>
+  <ellipse cx="86" cy="62" rx="30" ry="16" fill="#fff" opacity=".85" transform="rotate(-28 86 62)"/>
+  <g transform="translate(128 176) scale(1.18) translate(-125 -168)"><use href="#waveLo" fill="${lo}"/><use href="#waveUp" fill="${up}"/></g>
+  ${noEyes?'':eyes(true)}</svg></span>`}
+const rows=[['white','白底'],['paper','淺灰底'],['photo','深色照片']];
+const tb=document.querySelector('#tbl tbody');
+rows.forEach(([c,l])=>{tb.insertAdjacentHTML('beforeend',`<tr class="${c}"><td class="lab">${l}</td>
+<td class="cell"><div class="sizes">${[96,40,34,24].map(current).join('')}</div></td>
+<td class="cell"><div class="sizes">${full(96,'A')}${[40,34,24].map(s=>simple(s,'A')).join('')}</div></td>
+<td class="cell"><div class="sizes">${full(96,'B')}${[40,34,24].map(s=>simple(s,'B')).join('')}</div></td></tr>`)});
+tb.insertAdjacentHTML('beforeend',`<tr class="paper"><td class="lab">簡化版<br>不放眼睛</td><td class="cell"></td>
+<td class="cell"><div class="sizes">${[40,34,24].map(s=>simple(s,'A',true)).join('')}</div></td>
+<td class="cell"><div class="sizes">${[40,34,24].map(s=>simple(s,'B',true)).join('')}</div></td></tr>`);
+const hdr=(cls,av)=>`<div class="hd ${cls}">GIANT<span class="sp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><span class="d">D</span>${av}</span></div>`;
+document.getElementById('ctx').innerHTML=[['現在',current(34)],['A　強調藍',simple(34,'A')],['B　品牌藍',simple(34,'B')]].map(([t,a])=>`<div><small>${t}・header 34px</small>${hdr('photo',a)}${hdr('frost',a)}</div>`).join('');
+</script></body></html>
