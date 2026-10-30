@@ -874,14 +874,14 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-sh i,#stage .sp-sh b{position:absolute;border-radius:50%;filter:blur(3px)}
 #stage .sp-sh b{filter:blur(10px)}
 #stage.sp-flat .preview-toolbar,#stage.sp-flat .flat-nav{display:none!important}
-#stage .sp-bar{display:none;position:absolute;left:50%;bottom:14px;z-index:6;translate:-50% 0;align-items:center;gap:12px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.12)}
+#stage .sp-bar{display:none;position:absolute;left:50%;bottom:14px;z-index:6;translate:-50% 0;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.12)}
 #stage.sp-flat .sp-bar{display:flex;opacity:0;translate:-50% 8px;pointer-events:none;transition:opacity .3s ease,translate .3s ease}
 #stage.sp-flat .sp-bar.show{opacity:1;translate:-50% 0;pointer-events:auto}
 #stage.sp-flat.sp-can-lens .flat-viewer:not([data-detail=true]) .flat-slide{cursor:zoom-in}
 #stage.sp-flat.sp-lens .flat-slide{cursor:zoom-out!important;overflow:visible}
 #stage.sp-flat.sp-lens .flat-viewer{overflow:visible}
 #stage .sp-views{display:flex;align-items:center}
-#stage .sp-views button{position:relative;width:22px;height:24px;display:grid;place-items:center;border:0;padding:0;background:none;cursor:pointer}
+#stage .sp-views button{position:relative;width:22px;height:44px;display:grid;place-items:center;border:0;padding:0;background:none;cursor:pointer}
 #stage .sp-views button i{display:block;width:8px;height:8px;border-radius:999px;background:#C3CAD3;transition:background .2s,width .25s}
 #stage .sp-views button:hover i{background:#7A8492}
 #stage .sp-views button[aria-current] i{width:20px;background:#141A22}
@@ -890,7 +890,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-views button:hover::after,#stage .sp-views button:focus-visible::after{opacity:1;translate:-50% 0}
 #stage .sp-views button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px;border-radius:6px}
 #stage .sp-sep{width:1px;height:20px;background:#DCE1E7}
-#stage .sp-bgs{display:flex;align-items:center;gap:8px}
+#stage .sp-bgs{display:flex;align-items:center;gap:10px;flex:none}
 #stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
 #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
 #stage .sp-bgs button:focus-visible{outline:2px solid #1F4FE0;outline-offset:3px}
@@ -937,6 +937,110 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 window.customStorefrontRoot=location.pathname.includes('/customized/')?'../ai-native-bike-commerce/storefront/':'storefront/';
 document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hdr1028">');
 </script>
+<style id="responsive-layout">
+/* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
+   Desktop retains its panel scroll; compact screens use the document scroll. */
+.mobile-nav-toggle{display:none}
+@media(max-width:1023px){
+ :root{--header-height:64px;--shell:calc(100% - 32px);--mobile-purchase-height:92px}
+ html{height:auto;overflow:auto;scroll-padding-top:80px}
+ body{height:auto;min-height:100dvh;overflow:visible}
+ #siteHeader.site-nav{height:64px}
+ #siteHeader .logo{left:64px}#siteHeader .logo svg{height:18px;width:110px}
+ #siteHeader .icons{right:12px;gap:0}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:36px;min-height:44px;display:grid;place-items:center}
+ #siteHeader .icons svg{width:22px;height:22px}
+ .mobile-nav-toggle{display:grid;place-items:center;position:absolute;left:12px;top:10px;width:44px;height:44px;border-radius:8px}
+ #siteHeader .links{display:none;left:0;right:0;top:64px;bottom:auto;max-height:calc(100dvh - 64px);overflow:auto;background:var(--surface);padding:16px;gap:0;font-size:14px;border-bottom:1px solid var(--line)}
+ #siteHeader.mobile-menu-open .links{display:grid;grid-template-columns:1fr 1fr}
+ #siteHeader .links .top{min-height:48px;padding:12px}#siteHeader .links .top:after{display:none}
+ #siteHeader .dd{position:fixed;top:64px;bottom:0;max-height:calc(100dvh - 64px);overflow:auto}
+ #siteHeader .dd-in{padding:24px 16px;flex-direction:column;gap:24px}
+ #siteHeader .dd-kv{min-width:0}#siteHeader .dd-list{grid-template-columns:1fr;gap:8px}#siteHeader .dd-feat{margin-left:0;max-width:100%}
+ #configPage{width:100%;max-width:none;height:auto;min-height:100dvh;padding:80px 0 calc(var(--mobile-purchase-height) + 24px)!important}
+ #configPage>.intro-back{margin:0 16px 12px}
+ #configPage .workspace{display:block}
+ #configPage .preview-column{position:static;height:auto;display:block;margin:0}
+ #configPage .intro{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:'title' 'steps';gap:12px;margin:0 16px 16px;container-type:inline-size}
+ #configPage .intro h1{font-size:clamp(20px,5.5cqi,28px);line-height:1.3}
+ #configPage .intro .steps{justify-content:flex-start;gap:8px;margin:0;flex-wrap:nowrap}
+ #configPage .steps li{gap:8px;min-width:0}#configPage .steps li:not(:last-child):after{content:'';display:block;width:12px;height:1px;flex:none;background:var(--line)}
+ #configPage .step{font-size:0;gap:0;min-height:44px;padding:4px 0}
+ #configPage .step span{width:28px;height:28px;font-size:12px;flex:none}
+ #configPage .step[aria-current=step]{font-size:14px;gap:8px}
+ #configPage .preview-column .stage{height:clamp(240px,34svh,320px);min-height:0;max-height:none;aspect-ratio:auto;border-radius:0}
+ #configPage .stage .product-code{font-size:12px}
+ #configPage .preview-footer{display:none}
+ #configPage .flat-slide{margin:20px 28px 64px}
+ #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:44px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
+ #configPage #stage .sp-views{flex:1;min-width:0;justify-content:space-between}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:44px}
+ #configPage #stage .sp-sep{flex:none}
+ #configPage #stage .sp-bgs{gap:10px}#configPage #stage .sp-bgs button{width:24px;height:24px;flex:none;background-clip:padding-box;border:1px solid var(--line)}
+ #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:18px 18px 0 0;margin:0;overflow:visible}
+ #configPage .panel-column .panel{height:auto;min-height:0;overflow:visible}
+ #configPage .panel-column .panel.panel-header{padding:24px 16px 0;border-radius:18px 18px 0 0}
+ #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0 0 18px 18px;scroll-margin-top:80px}
+ #configPage #panelTools{top:16px;right:16px;gap:8px}
+ #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:44px}
+ #configPage .panel-head h2{font-size:24px}
+ #configPage .panel-head p,#configPage .signature-entry p,#configPage .size-help,#configPage .option-copy,#configPage .style-desc{font-size:14px;line-height:1.75}
+ #configPage .panel-column .purchase-bar{position:fixed;left:0;right:0;bottom:0;height:auto;z-index:25;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-purchase-bar,0 -6px 30px rgba(23,33,38,.012))}
+ #configPage .purchase-inner{gap:12px}#configPage .panel-column .price-number{font-size:22px;white-space:nowrap}
+ #configPage .panel-column #next{min-height:48px;height:auto;padding:12px 16px;border-radius:8px;font-size:14px;letter-spacing:0;white-space:normal}
+ #configPage .next-prefix{display:none}#configPage #next svg{display:none}
+ #configPage .price-delta{left:0;bottom:100%}
+ #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:44px;font-size:14px}
+ #configPage .gs-tier{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:12px}
+ #configPage .gs-img{width:64px;height:64px}
+ #configPage .gs-top{flex-direction:column;align-items:flex-start;gap:6px}
+ #configPage .gs-desc,#configPage .gs-note{font-size:14px;line-height:1.75;color:var(--ink-70)}
+ #configPage #panelHeader{scroll-margin-top:80px}
+ #configPage .style-cards{gap:8px}#configPage .style-card{padding:12px 8px}
+ #configPage .panel .paint-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #configPage .panel .paint-card strong{overflow-wrap:anywhere}
+ #configPage .part-row-text small{white-space:normal}
+ #configPage .color-set{gap:12px}#configPage .color-swatch{width:32px;height:32px;margin:6px}
+ .pick-page,.fav-page{height:auto;min-height:100dvh;overflow:visible;padding:88px 0 48px}
+ .pick-shell,.fav-shell{width:calc(100% - 32px)}
+ .series-row{display:grid;grid-template-columns:1fr;height:auto;gap:32px}
+ .series-media{flex:none;height:260px}.series-text{min-height:0}
+ .family-grid{grid-template-columns:minmax(0,1fr);max-width:520px;gap:48px;margin-inline:auto}
+ /* Custom cart rows: image, description and estimated price stack on compact screens. */
+ .gc-drawer .gc-item:has(>span:first-child){grid-template-columns:minmax(0,1fr);gap:16px}
+ .gc-drawer .gc-item:has(>span:first-child)>span:first-child{display:none}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph{width:100%;height:auto;aspect-ratio:3/2;max-height:200px;border-radius:10px}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph img{max-height:184px}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph+div{min-width:0}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-top{grid-template-columns:minmax(0,1fr);gap:12px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left;font-size:18px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-name{font-size:16px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-meta{font-size:14px;line-height:1.75}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-row{margin-top:16px;gap:24px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-link{font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+ .profile-menu{position:fixed;top:72px;right:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100dvh - 88px);overflow:auto}
+ .dialog{padding:28px;width:calc(100vw - 32px);max-height:calc(100dvh - 32px);border-radius:18px}
+ .dialog input:not([type=checkbox]):not([type=radio]),.dialog select,#configPage input[type=text],#configPage select{font-size:16px}
+ .share-dialog{padding:0}.share-layout{grid-template-columns:1fr}.share-figure{padding:48px 16px 16px}.share-info{padding:24px}
+ .toast{bottom:calc(var(--mobile-purchase-height) + 16px);font-size:14px}
+}
+@media(min-width:768px) and (max-width:1023px){
+ :root{--shell:calc(100% - 48px)}
+ #configPage>.intro-back{margin-left:24px}#configPage .intro{margin-left:24px;margin-right:24px}
+ #configPage .preview-column .stage{height:clamp(300px,36svh,400px)}
+ #configPage .step{font-size:14px;gap:8px}#configPage .intro .steps{gap:12px}
+ #configPage .panel-column .panel.panel-header{padding:24px 28px 0}#configPage .panel-column .panel.panel-content{padding:16px 28px 28px}
+ #configPage #panelTools{top:24px;right:28px}
+ .series-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .family-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:48px 32px}
+ .pick-shell,.fav-shell{width:calc(100% - 48px)}
+}
+@media(max-width:374px){
+ #siteHeader .logo{left:56px}#siteHeader .logo svg{height:15px;width:86px}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:32px}
+ #configPage .panel-head h2{font-size:22px}#configPage .panel-column .price-number{font-size:20px}
+ #configPage .panel .paint-grid{grid-template-columns:1fr}
+ #configPage .style-cards{grid-template-columns:1fr}.style-card{grid-template-columns:auto 1fr;column-gap:12px}.style-dot{grid-row:1/4}
+}
+</style>
 </head>
 <body>
 <noscript><p class="noscript">請啟用 JavaScript 以操作客製車。</p></noscript>
@@ -1177,7 +1281,7 @@ let currentView='';
 function showView(name){currentView=name;Object.entries(VIEWS).forEach(([k,sel])=>$(sel).hidden=k!==name);const fav=name==='favorites';
   if(name==='series')renderSeriesPage();if(name==='levels')renderLevelsPage();if(name==='config')render();
   if(fav){renderFavorites();$('#favPage').scrollTop=0;$('#openFav').setAttribute('aria-current','page');$('#navCustomized').removeAttribute('aria-current');$('#favTitle').setAttribute('tabindex','-1');$('#favTitle').focus({preventScroll:true})}else{$('#openFav').removeAttribute('aria-current');$('#navCustomized').setAttribute('aria-current','page')}
-  const page=$(VIEWS[name]);if(page&&name!=='config')page.scrollTop=0}
+  const page=$(VIEWS[name]);if(page&&name!=='config')page.scrollTop=0;if(matchMedia('(max-width:1023px)').matches)window.scrollTo(0,0)}
 // The favorites view gets its own history entry so the browser back button returns to the configurator.
 // Routes: '' / #series → series, #levels/<series>, #config, #favorites, #design=… (shared link → config)
 function applyRoute(h){if(h==='#favorites')showView('favorites');else if(h.startsWith('#levels/')){currentSeries=h.slice(8);showView('levels')}else if(h==='#config'||h.startsWith('#design='))showView('config');else showView('series')}
@@ -1233,7 +1337,7 @@ paintPreview();countTo($('#totalPrice'),total(config),true);$('#totalPriceLive')
 markSteps(page);fillThumbs();syncFavorite();$('#configTitle').textContent=hasGroupset(config)?familyName(modelOf(config)):modelOf(config).name;$('#configCode').textContent=modelTitle(config);
 
 $('#next').textContent=adding?'加入中…':returnToReview?'儲存並返回確認 →':page==='groupset'?(gsTab==='drive'?'下一步：車架尺寸 →':'下一步：塗裝與簽名 →'):page==='paint'?(hasGroupset(config)?'下一步：騎乘配備 →':'下一步：尺寸與配備 →'):page==='parts'?(partsTab==='size'?'下一步：騎乘配備 →':partsTab==='parts'?'下一步：升級加購 →':'下一步：確認配置 →'):editingId!==null?'更新購物車':'加入購物車';if($('#next').textContent.endsWith(' →')){$('#next').innerHTML='<span>'+$('#next').textContent.slice(0,-2).replace(/^下一步：/,'<span class="next-prefix">下一步：</span>')+'</span>'+CHEV_R+'';}$('#next').disabled=adding;renderPartPager();
-if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
+if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;if(matchMedia('(max-width:1023px)').matches)$('#panelHeader').scrollIntoView({block:'start'});}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
 const STEPS=['groupset','paint','parts','review'];
 function markSteps(current){const gs=hasGroupset(config);{const b=document.querySelector('.step[data-step="parts"]');if(b)b.lastChild.textContent=gs?'騎乘配備':'尺寸與配備';}$$('.step-gs').forEach(li=>li.hidden=!gs);let n=0;$$('.step').forEach(b=>{if(b.dataset.step!=='groupset'||gs)b.querySelector('span').textContent=++n;});$$('.step').forEach(b=>{b.removeAttribute('aria-current');if(b.dataset.step===current)b.setAttribute('aria-current','step');b.classList.toggle('done',STEPS.indexOf(b.dataset.step)<STEPS.indexOf(current));});}
 function requireSize(message){if(config.size)return true;if(hasGroupset(config)){page='groupset';gsTab='size';gsView='side';partDetail=null;render(true);$('.size-opt').focus({preventScroll:true});return false}page='parts';partsTab='size';partDetail=null;render(true);$('.size-opt').focus({preventScroll:true});return false}
@@ -1758,5 +1862,19 @@ applyRoute(location.hash);
 </script>
 <script src="assets/stage-preview.js?v=5"></script>
 <script src="storefront/js/custom-advisor.js?v=6"></script>
+<script>
+// Compact navigation reuses the shared header links without changing shared files.
+(()=>{const header=document.getElementById('siteHeader'),links=header.querySelector('.links');
+links.id='compactNavLinks';const toggle=document.createElement('button');toggle.type='button';toggle.className='mobile-nav-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-controls',links.id);toggle.setAttribute('aria-expanded','false');toggle.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';header.prepend(toggle);
+function close(){header.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單');window.GiantHeader?.close()}
+toggle.addEventListener('click',()=>{if(header.classList.contains('mobile-menu-open'))close();else{header.classList.add('mobile-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','關閉主選單')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('mobile-menu-open')){close();toggle.focus()}});
+document.addEventListener('click',e=>{if(!header.contains(e.target))close()});
+links.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')&&!['#',''].includes(a.getAttribute('href')))close()});
+const compact=matchMedia('(max-width:1023px)');compact.addEventListener('change',close);
+// Reserve the actual footer height, including safe area and wrapped button labels.
+const bar=document.querySelector('#configPage .purchase-bar');new ResizeObserver(entries=>{const h=entries[0].target.getBoundingClientRect().height;if(h)document.documentElement.style.setProperty('--mobile-purchase-height',Math.ceil(h)+'px')}).observe(bar);
+})();
+</script>
 </body>
 </html>

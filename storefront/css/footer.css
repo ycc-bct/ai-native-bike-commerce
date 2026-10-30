@@ -20,3 +20,24 @@
 .foot-bar .legal{margin-left:auto;display:flex;gap:18px}
 .foot-bar a:hover{color:var(--ink)}
 .foot-bar .region{padding-left:18px;border-left:1px solid var(--line)}
+
+/* Compact footer: preserve readable columns instead of shrinking desktop tracks. */
+@media(max-width:1023px){
+ .foot .foot-in{width:calc(100% - 48px);grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 24px;padding:40px 0}
+ .foot .foot-brand,.foot .foot-sub{grid-column:1/-1;min-width:0}
+ .foot .foot-col{min-width:0}
+ .foot .foot-brand svg{max-width:100%;height:24px}
+ .foot .foot-brand p{font-size:12px;line-height:1.6}
+ .foot .foot-col b,.foot .foot-sub b{font-size:14px;line-height:1.5}
+ .foot .foot-col a{font-size:14px;line-height:1.75;margin-top:8px}
+ .foot .foot-bar{width:calc(100% - 48px);display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding:24px 0 32px;font-size:12px;line-height:1.75}
+ .foot .foot-bar>span{min-width:0;max-width:100%}
+ .foot .foot-bar .legal{margin-left:0;display:flex;flex-wrap:wrap;gap:12px 24px}
+ .foot .foot-bar .legal a{white-space:nowrap}
+ .foot .foot-bar .region{padding-left:0;border-left:0}
+ .foot .foot-sub .sub-form{max-width:400px}
+}
+@media(max-width:767px){
+ .foot .foot-in{width:calc(100% - 32px);grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px;padding:32px 0}
+ .foot .foot-bar{width:calc(100% - 32px)}
+}
