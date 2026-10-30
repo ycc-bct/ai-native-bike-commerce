@@ -28,6 +28,10 @@
     q.innerHTML = q.querySelector('svg').outerHTML + '<input type="search" placeholder="搜尋門市名稱、縣市或地址" aria-label="搜尋門市" autocomplete="off">';
     const input = q.querySelector('input');
     chipsBox.innerHTML = REGIONS.map(r => `<button type="button" class="chip" data-r="${r}" aria-pressed="false">${r} ${count(r)}</button>`).join('');
+    /* 手機版：同一組地區改用下拉選單（文字與按鈕相同；CSS 在 ≤600px 顯示它、隱藏按鈕列），兩者都走 setRegion */
+    const regionSel = document.createElement('select'); regionSel.className = 'st-region'; regionSel.setAttribute('aria-label', '地區');
+    regionSel.innerHTML = REGIONS.map(r => `<option value="${r}">${r} ${count(r)}</option>`).join('');
+    chipsBox.after(regionSel);
     sec.classList.add('st-live');
     /* 右側清單卡寬度＝地區按鈕一整列的寬度，讓「離島」右緣和搜尋框右緣切齊（桌機） */
     const fitList = () => { const c = chipsBox.children; if (!c.length) return; const w = c[c.length - 1].getBoundingClientRect().right - c[0].getBoundingClientRect().left; if (w > 0) sec.style.setProperty('--chips-w', Math.ceil(w * 10) / 10 + 'px'); };
@@ -257,6 +261,7 @@
       cnt.textContent = query ? `搜尋「${query}」${region === '全部' ? '' : `（${region}）`}，共 ${rows.length} 筆` : '';
       cnt.classList.toggle('on', !!query);
       chipsBox.querySelectorAll('.chip').forEach(c => { const on = c.dataset.r === region; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on); });
+      if (regionSel.value !== region) regionSel.value = region;
       map.filter(); map.fitTo(rows.map(s => s.i));
       highlight(null);
     }
@@ -286,6 +291,7 @@
 
     let typing;
     input.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => { query = input.value.trim(); render(); }, 120); });
+    regionSel.addEventListener('change', () => setRegion(regionSel.value));
     chipsBox.addEventListener('click', e => { const c = e.target.closest('.chip'); if (c) setRegion(c.dataset.r); });
     ul.addEventListener('pointerover', e => { const li = e.target.closest('li[data-i]'); if (li) highlight(+li.dataset.i); });
     ul.addEventListener('pointerleave', () => highlight(null));

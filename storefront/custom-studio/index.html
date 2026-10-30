@@ -446,7 +446,8 @@ main{overflow-x:clip}
 .pp10 .dc .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.pp10 .dc .chip{height:26px;padding:0 10px;font-size:12px}
 .pp10 .dc small{display:block;margin-top:8px;font-size:12px;line-height:1.45;color:#4A5260}
 </style><link rel="stylesheet" href="css/screen-motion.css">
-<link rel="stylesheet" href="css/refinements.css?v=parts-paint-80"><link rel="stylesheet" href="css/hero-lux.css">
+<link rel="stylesheet" href="css/refinements.css?v=parts-paint-80-rwd2"><link rel="stylesheet" href="css/hero-lux.css">
+<link rel="stylesheet" href="css/mobile-rwd.css?v=rwd3">
 </head><body><a class="skip-link" href="#main-content">跳到主要內容</a>
 <script>
 /* 右上角顧問說明卡的入口：四個車系，點了直接到客製化頁「選擇你的 ○○ 車款」（header.js 的 data-ai="tip" 會讀這個） */
@@ -473,19 +474,19 @@ window.GiantTipExtra = () => ({
  const tl=gsap.timeline({paused:true});
  gsap.set(la,{clipPath:"none"});
  /* 桌機：線稿、後輪、六個零件包進同一層 .pd-stage，整組等比縮放置中，讓「標題＋腳踏車＋底部說明列」剛好一個螢幕高、不用捲動 */
- if(desktop.matches){
+ {
   const wrap=document.createElement('div');wrap.className='pd-stage';stage.insertBefore(wrap,la);
   wrap.append(la,sec.querySelector('.rear-wheel'),...items);
   const C0=215,C1=795,head=sec.querySelector('.phd9');   /* 1440×900 座標裡，標籤＋車＋尺寸線實際佔的上下範圍 */
   const fit=()=>{
-   if(!desktop.matches){wrap.style.transform='';return;}
+   if(!desktop.matches){if(window.PartsPin)PartsPin.fit(wrap);else wrap.style.transform='';return;}
    const H=sec.clientHeight,top=head.offsetTop+head.offsetHeight+28,bottom=H-84,avail=Math.max(200,bottom-top),k=Math.min(1,avail/(C1-C0));
    wrap.style.transformOrigin=`720px ${C0}px`;
    wrap.style.transform=`translateY(${top+(avail-(C1-C0)*k)/2-C0}px) scale(${k})`;
   };
   fit();addEventListener('resize',fit);
  }
- if(desktop.matches&&window.PartsDraw)PartsDraw.build(sec,tl);
+ if(window.PartsDraw)PartsDraw.build(sec,tl);
  else items.forEach((e,i)=>tl.fromTo(e,{y:24,opacity:0},{y:0,opacity:1,duration:.6,ease:'power3.out'},.08+i*.08));
  window.__timelines=window.__timelines||{};window.__timelines.parts=tl;
  let entered=false,idx=0,pinned=null,overview=true,interval,resume;   /* 進場後不自動聚焦、不輪播：預設全部呈現 */
@@ -495,7 +496,7 @@ window.GiantTipExtra = () => ({
  function startCycle(){if(reduced.matches||pinned||overview)return;stopCycle();showPart(idx);interval=setInterval(()=>showPart((idx+1)%items.length),3500)}
  function later(){clearTimeout(resume);if(!entered||pinned)return;if(overview)showAll();else resume=setTimeout(startCycle,1600)}
  const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){if(!entered){entered=true;if(reduced.matches){tl.progress(1)}else{tl.eventCallback('onComplete',startCycle);tl.play()}}else if(tl.progress()===1)startCycle()}else stopCycle()}},{threshold:.4});
- observer.observe(sec);
+ observer.observe(stage);
  items.forEach((item,i)=>{
   item.addEventListener('pointerenter',()=>{stopCycle();if(!pinned)showPart(i)});
   item.addEventListener('pointerleave',later);
@@ -515,8 +516,9 @@ window.GiantTipExtra = () => ({
 })();
 </script>
 <script>const nav=document.querySelector('.site-nav');const on=()=>nav.classList.toggle('scrolled',scrollY>8);addEventListener('scroll',on,{passive:true});on();</script>
-<script src="js/screen-motion.js?v=arc-4"></script><script src="js/refinements.js?v=parts-paint-25"></script><script src="js/stores.js?v=11"></script>
+<script src="js/screen-motion.js?v=arc-4"></script><script src="js/refinements.js?v=parts-paint-25"></script><script src="js/stores.js?v=11-rwd3"></script>
 
 <script src="js/hero-lux.js"></script>
+<script src="js/parts-pin.js?v=2"></script>
 <script src="../js/custom-advisor.js?v=6"></script>
 </body></html>
