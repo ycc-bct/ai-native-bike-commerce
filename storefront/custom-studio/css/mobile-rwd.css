@@ -57,7 +57,8 @@
   #models .model-showcase + .model-showcase{border-left:0;border-top:1px solid rgba(255,255,255,.22)}
   #models .model-showcase .model-link{display:grid;grid-template-columns:44% minmax(0,1fr);align-items:center}
   #models .model-showcase .model-art{position:relative!important;inset:auto!important;grid-column:1;grid-row:1;width:100%!important;height:100%!important;min-width:0}
-  #models .model-showcase .model-shade{left:0;right:56%;background:linear-gradient(90deg,transparent 60%,rgba(4,9,17,.55))}
+  #models .model-showcase .model-art{-webkit-mask-image:linear-gradient(90deg,#000 42%,rgba(0,0,0,.85) 62%,rgba(0,0,0,.4) 82%,transparent 100%);mask-image:linear-gradient(90deg,#000 42%,rgba(0,0,0,.85) 62%,rgba(0,0,0,.4) 82%,transparent 100%)}
+  #models .model-showcase .model-shade{left:24%;right:56%;background:linear-gradient(90deg,transparent,#09121d);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);-webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000)}
   #models .model-showcase .model-info{position:relative;grid-column:2;grid-row:1;left:auto;right:auto;bottom:auto;padding:0 14px 0 16px;gap:6px}
   #models .model-showcase .model-name{font-size:20px}
   #models .model-showcase .model-intro{white-space:normal!important;overflow:visible;text-overflow:clip;font-size:12px!important;line-height:1.45;max-width:none}
@@ -150,9 +151,9 @@
   /* -- CTA: the desktop drift + "lit from the dark" reveal, re-anchored to the mobile crop. */
   #cta .cta{isolation:isolate;background:#060709!important}
   #cta .cta::before,#cta .cta::after{content:"";position:absolute;pointer-events:none;inset:0}
-  #cta .cta::before{z-index:0;transform-origin:62% 40%;background:url('../img/cta/carbon-frame-studio.jpg') 76% 30%/cover no-repeat;
-    animation:cta-drift 11s ease-in-out infinite alternate}
-  #cta .cta::after{z-index:0;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%)}
+  #cta .cta::before{z-index:0;transform-origin:75% 22%;background:url('../img/cta/carbon-frame-studio.jpg') right 18px/180% auto no-repeat;
+    animation:none}
+  #cta .cta::after{z-index:0;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 35%,rgba(4,6,10,.08) 65%,rgba(4,6,10,0) 100%)}
   #cta .cta.pre::before{--rv:0%;filter:brightness(.15) contrast(.75);opacity:.2;
     -webkit-mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv));mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv))}
   #cta .cta.pre.lit::before{--rv:200%;filter:none;opacity:1;transition:--rv 1.1s cubic-bezier(.3,.6,.3,1) .05s,filter 1.3s cubic-bezier(.3,.6,.3,1) .05s,opacity .6s ease .05s}
