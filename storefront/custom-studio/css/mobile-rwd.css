@@ -313,3 +313,13 @@
  #parts .part-arrow{font-size:24px;line-height:1}
  #parts .pd-strip{border-radius:0 0 16px 16px!important;box-shadow:0 12px 24px #1421320c}
 }
+
+/* Balanced mobile copy and navigation beneath the part description. */
+@media(max-width:900px){
+ #models .model-showcase .model-intro{font-size:13px!important;line-height:1.55!important;text-wrap:balance}
+ main p,#templates .paint-craft span,#parts .pd-strip-ds,#parts .pd-strip-sp,#stores .slist li span{ text-wrap:pretty }
+ main h1,main h2,#templates .paint-craft span,#parts .pd-strip-ds,#models .sh p,#templates .sh9 p,#parts .phd9 p,#stores .sh p,#cta .tx p{ text-wrap:balance }
+ #templates .sh9 p .nb,#parts .phd9 p .nb{display:inline}
+ #parts .parts-selector{bottom:16px;padding:8px 16px 12px;border-radius:0 0 16px 16px}
+ #parts .pd-strip{bottom:84px!important;border-radius:16px 16px 0 0!important;box-shadow:none}
+}

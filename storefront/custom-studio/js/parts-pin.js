@@ -18,7 +18,7 @@
  function fit(w){
   wrap=w||wrap||sec.querySelector('.pd-stage');if(!wrap||!mq.matches)return;
   const head=sec.querySelector('.phd9'),top=head.offsetTop+head.offsetHeight+16;
-  const bottom=controls.offsetTop-16,W=stage.clientWidth;
+  const bottom=sec.querySelector('.pd-strip').offsetTop-16,W=stage.clientWidth;
   const X0=300,X1=1135,Y0=118,Y1=712;
   const k=Math.min(1,(W-32)/(X1-X0),Math.max(80,bottom-top)/(Y1-Y0));
   const tx=W/2-k*(X0+X1)/2,ty=top+((bottom-top)-k*(Y1-Y0))/2-k*Y0;
