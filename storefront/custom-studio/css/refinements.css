@@ -35,9 +35,8 @@
 .tpl9 .th9:focus-visible,.tpl9 .tab9:focus-visible{outline:3px solid #1f4fe0;outline-offset:4px}
 .parts10 .la{clip-path:none!important;object-fit:contain;content:url('../img/parts-bg/frame-only-2880.jpg')}
 .parts10{--parts-stage-offset-y:48px}
-@media(min-width:901px){
+
  .parts10 .la,.parts10 .pp10,.parts10 .rear-wheel{translate:none;margin-top:var(--parts-stage-offset-y)}
-}
 
 /* Keep every text-bearing UI element at a readable 14px minimum. */
 .site-nav .links,
@@ -78,7 +77,7 @@
 .pp10.p-bar-drop{left:865px!important;top:241px!important;width:145px!important;height:112px!important}
 .skip-link{position:fixed;left:16px;top:12px;z-index:300;padding:10px 14px;border-radius:999px;background:#fff;color:#0E1726;box-shadow:0 6px 20px rgba(14,23,38,.18);transform:translateY(-160%);transition:transform .2s var(--ease-out-expo,#16,1,.3,1)}
 .skip-link:focus{transform:translateY(0);outline:3px solid #1F4FE0;outline-offset:3px}
-@media (max-width: 900px){
+@media(max-width:900px){
   :root{--shell:calc(100vw - 32px)}
   html,body{min-width:0;overflow-x:hidden}main{width:100%;min-width:0}img,video{max-width:100%}
   .site-nav{min-width:0;height:64px}
@@ -89,17 +88,14 @@
   .sec{padding-top:64px}.models5{padding:64px 16px 0}.models5 .stair{width:100%;height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding-bottom:64px}
   .models5 .stair article{position:relative!important;left:auto!important;top:auto!important;transform:none!important;min-height:250px}
   .sc7 .bg7{height:calc(100% - 58px)}.sc7 .hd6{top:calc(100% - 50px)}.sc7 .no,.sc7 .nm,.sc7.acc .no{font-size:22px}
-  .tpl9{margin-top:0;border-radius:22px 22px 0 0}.tpl9 .in,.col6 .in,.parts10 .in{width:100%;height:auto;min-height:760px}
+  .tpl9{margin-top:0;border-radius:22px 22px 0 0}.tpl9 .in,.col6 .in{width:100%;height:auto;min-height:760px}
   .tpl9 .sh9{left:24px;top:64px}.tpl9 .bk9{left:50%!important;top:180px!important;width:min(88vw,640px)!important;transform:translateX(-50%)}
   .tpl9 .tabs9{left:50%;top:570px;transform:translateX(-50%);display:flex;gap:6px;width:max-content}.tpl9 .tab9{position:static!important;padding:10px 14px;font-size:12px}
   .tpl9 .tray9{left:50%;top:650px;transform:translateX(-50%);width:calc(100% - 32px);overflow:auto}.tpl9 .trayin{justify-content:flex-start}
   .col6 .in{display:block;padding:64px 16px}.col6 .stg{height:500px}.col6 .cp{margin-top:0;height:auto;max-height:none}
-  .parts10{--parts-stage-offset-y:24px;height:auto;min-height:760px}.parts10 .la{position:absolute;width:100%;height:620px;object-fit:contain;top:100px;translate:0 var(--parts-stage-offset-y)}.parts10 .phd9{left:16px!important;top:24px!important}
-  .parts10 .pp10,.parts10 .rear-wheel{display:none}
   #stores{padding-left:16px;padding-right:16px}.smap{display:block}.mapc{min-height:420px}.slist{margin-top:18px}
-  .foot-in{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:28px}.foot-bar{width:calc(100% - 32px);flex-wrap:wrap}
-}
-@media (max-width: 520px){.models5 .stair{grid-template-columns:1fr}.hero11 p{font-size:15px}.hero11 .acts{gap:8px}.hero11 .btn{height:46px;padding:0 18px}.scroll-cue{bottom:20px}.tpl9 .bk9{top:170px!important}.tpl9 .tabs9{top:540px}.tpl9 .tray9{top:620px}}
+  .foot-in{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:28px}.foot-bar{width:calc(100% - 32px);flex-wrap:wrap}}
+@media(max-width:520px){.models5 .stair{grid-template-columns:1fr}.hero11 p{font-size:15px}.hero11 .acts{gap:8px}.hero11 .btn{height:46px;padding:0 18px}.scroll-cue{bottom:20px}.tpl9 .bk9{top:170px!important}.tpl9 .tabs9{top:540px}.tpl9 .tray9{top:620px}}
 
 /* Official bike-only product portraits for the four model cards. */
 .sc7,.sc7.acc{background:#fff;overflow:hidden;border:1px solid var(--line);box-shadow:0 18px 40px rgba(20,26,34,.12)}
@@ -108,8 +104,8 @@
 .sc7 .hd6{position:absolute;top:auto;right:0;bottom:0;left:0;height:92px;margin:0;padding:16px 24px;display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#fff,#f7f9fc);border-top:1px solid var(--line)}
 .sc7 .no,.sc7 .nm,.sc7.acc .no{color:var(--navy);text-shadow:none;font-size:30px;line-height:1.1}
 .sc7.acc .no{color:var(--ai)}
-@media (max-width:900px){.models5 .stair article{width:100%;height:320px}.sc7 .bg7{height:calc(100% - 72px)}.sc7 .hd6{height:72px;padding:12px 18px}.sc7 .no,.sc7 .nm,.sc7.acc .no{font-size:24px}}
-@media (max-width:520px){.models5 .stair article{height:310px}}
+@media(max-width:900px){.models5 .stair article{width:100%;height:320px}.sc7 .bg7{height:calc(100% - 72px)}.sc7 .hd6{height:72px;padding:12px 18px}.sc7 .no,.sc7 .nm,.sc7.acc .no{font-size:24px}}
+@media(max-width:520px){.models5 .stair article{height:310px}}
 
 /* Match the storefront's 72px outer gutter and keep full-bleed stages centered. */
 :root{--shell:min(1840px,calc(100vw - 72px))}
@@ -139,25 +135,14 @@
  :root{--shell:calc(100vw - 32px)}
  .hero11 .hx{left:16px}
  .models5{width:var(--shell);padding-left:0;padding-right:0}
- .tpl9 .sh9,.parts10 .phd9{left:16px!important}
+ .tpl9 .sh9{left:16px!important}
  .tpl9 .bk9,.tpl9 .bk9[data-family]{top:205px!important;width:min(116vw,780px)!important;height:auto!important;aspect-ratio:4/3;left:50%!important;transform:translateX(-50%)}
  .tpl9 .tab9{margin-left:0}
  #cta .cta h2{font-size:clamp(28px,8.4vw,36px)}
- #cta .cta{min-height:500px;padding:40px 24px;align-items:flex-end;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%),#05070b url('../img/cta/carbon-frame-studio.jpg') 76% 30%/cover no-repeat}
-}
+ #cta .cta{min-height:500px;padding:40px 24px;align-items:flex-end;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%),#05070b url('../img/cta/carbon-frame-studio.jpg') 76% 30%/cover no-repeat}}
 @media(prefers-reduced-motion:reduce){.tpl9 .bk9{transition:none!important}.parts10 .pp10{transition:none!important}}
 /* Keep all six part choices visible on narrow screens, below the frame drawing. */
-@media(max-width:900px){
- .parts10,.parts10 .in{min-height:820px}
- .parts10 .la{height:520px;top:80px}
- .parts10 .rear-wheel{display:none}
- .parts10 .in{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:end;gap:10px;padding:0 16px 32px}
- .parts10 .phd9{top:24px!important}
- .parts10 .pp10{position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:76px!important;display:grid;place-items:center;margin:0!important;padding:10px;background:#fff;border:1px solid var(--line);box-shadow:0 8px 18px rgba(20,26,34,.08)}
- .parts10 .pp10 img{width:100%;height:100%;object-fit:contain}
- .parts10 .pp10 .dc{z-index:30;left:50%!important;right:auto!important;top:auto!important;bottom:calc(100% + 8px)!important;width:min(220px,80vw);margin:0!important;transform:translateX(-50%) scale(.96)}
- .parts10 .pp10:hover .dc,.parts10 .pp10:focus-visible .dc,.parts10 .pp10.hov .dc{transform:translateX(-50%) scale(1)}
-}
+
 
 
 /* Four edge-to-edge model portraits, using the supplied visual reference. */
@@ -186,8 +171,7 @@
  .models5 .model-showcase .model-art{width:calc(var(--shell) / 4);min-width:0;max-width:none;background-size:450% auto;background-position:5.36% 83%}
  .models5 .model-showcase[data-family="propel"] .model-art{background-position:35.1% 83%}
  .models5 .model-showcase[data-family="defy"] .model-art{background-position:64.9% 83%}
- .models5 .model-showcase[data-family="trinity"] .model-art{background-position:94.64% 83%}
-}
+ .models5 .model-showcase[data-family="trinity"] .model-art{background-position:94.64% 83%}}
 
 /* Keep the complete portrait and its hover description visible. */
 .models5 + .tpl9{margin-top:0!important}
@@ -217,21 +201,14 @@
 .parts10 .pp10.l .dc::before{left:calc(100% + 7px)}
 .parts10 .pp10.b .dc::before,.parts10 .pp10.t .dc::before{display:none}
 .parts10 .pp10.p-crank-ring img{object-fit:contain}
-@media(min-width:901px){
+
  .parts10 .pp10.p-crank-ring .dc{left:50%!important;right:auto!important;top:calc(100% + 30px)!important;bottom:auto!important;margin:0!important;transform:translateX(-50%)!important;text-align:center}
  .parts10 .pp10.p-crank-ring .dc b{justify-content:center}
  .parts10 .pp10.p-crank-ring .dc .chips{justify-content:center}
-}
-@media(max-width:900px){.parts10 .pp10 .dc,.parts10 .pp10:hover .dc,.parts10 .pp10:focus-visible .dc{left:50%!important;right:auto!important;top:auto!important;bottom:calc(100% + 7px)!important;width:max-content;max-width:160px;transform:translateX(-50%)!important;white-space:normal;text-align:center}.parts10 .pp10 .dc b{font-size:14px;justify-content:center}.parts10 .pp10 .dc .chips{display:none}.parts10 .pp10 .dc::before{display:none}.parts10 .pp10.p-crank-ring img{width:100%;height:100%}}
 
-@media(min-width:901px){.parts10 .pp10.p-cassette .dc{right:calc(100% + 180px)!important;top:10px!important}.parts10 .pp10.p-cassette .dc::before{width:150px}}
-@media(max-width:900px){
- .parts10 .in{min-height:880px}
- .parts10 .pp10{height:116px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:5px}
- .parts10 .pp10 img{height:64px!important;max-height:64px;object-fit:contain}
- .parts10 .pp10 .dc,.parts10 .pp10:hover .dc,.parts10 .pp10:focus-visible .dc{position:static!important;width:auto;max-width:100%;transform:none!important}
- .parts10 .pp10 .dc b{font-size:14px}
-}
+
+.parts10 .pp10.p-cassette .dc{right:calc(100% + 180px)!important;top:10px!important}.parts10 .pp10.p-cassette .dc::before{width:150px}
+
 
 /* Reveal specifications only after every animated part has reached its final position. */
 .parts10:not(.parts-ready) .pp10 .dc,
@@ -241,7 +218,7 @@
 .parts10.parts-ready .pp10 .dc{opacity:1!important;visibility:visible!important;translate:0 0!important;transition:opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)}
 
 /* Showroom: scale the platform and bicycle together, and align every family tab. */
-@media (min-width:901px){
+@media(min-width:901px){
  .tpl9{background:radial-gradient(ellipse 80% 85% at 50% 42%,#faf9f7 0%,#e5dfd9 75%,#d5d0cb 100%)}
  .tpl9::before{content:"";position:absolute;inset:0;background:url('../img/showroom/user-stage.png') center/88% auto no-repeat;mask-image:radial-gradient(ellipse 49% 50% at 50% 50%,#000 65%,transparent 100%);pointer-events:none}
  .tpl9 .bk9{top:30px!important;width:800px!important;height:600px!important}
@@ -250,20 +227,18 @@
  .tpl9 .bk9[data-family="trinity"]{top:66px!important;width:754px!important;height:566px!important}
  .tpl9 .tabs9{inset:auto!important;left:50%!important;top:690px!important;transform:translateX(-50%);display:flex;gap:8px;width:max-content;height:42px}
  .tpl9 .tab9{position:relative!important;left:auto!important;top:auto!important;width:124px;height:42px;margin-left:0!important;transform:none!important;border-radius:999px}
- .tpl9 .tray9{top:760px}
-}
-@media (max-width:900px){
+ .tpl9 .tray9{top:760px}}
+@media(max-width:900px){
  .tpl9{background:radial-gradient(ellipse 90% 70% at 50% 43%,#faf9f7,#e5dfd9 82%,#d5d0cb)}
  .tpl9::before{content:"";position:absolute;inset:0;background:url('../img/showroom/user-stage.png') center/100% auto no-repeat;mask-image:radial-gradient(ellipse 55% 38% at 50% 48%,#000 55%,transparent 100%);pointer-events:none}
  .tpl9 .bk9,.tpl9 .bk9[data-family]{top:205px!important;width:min(82vw,560px)!important;height:auto!important;aspect-ratio:4/3}
  .tpl9 .tabs9{height:40px}
- .tpl9 .tab9{width:clamp(74px,20vw,124px);height:40px;padding:0 6px;white-space:nowrap}
-}
+ .tpl9 .tab9{width:clamp(74px,20vw,124px);height:40px;padding:0 6px;white-space:nowrap}}
 .tpl9::before{inset:auto;width:88%;aspect-ratio:16/9;left:50%;top:50%;transform:translate(-50%,-50%);background-size:cover;mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent),linear-gradient(to bottom,transparent,#000 14%,#000 90%,transparent);mask-composite:intersect}
-@media (max-width:900px){.tpl9::before{width:100%}}
+@media(max-width:900px){.tpl9::before{width:100%}}
 
 /* Frame drawing and mounted parts share the same 1440 × 900 coordinate plane. */
-@media(min-width:901px){
+
  .parts10 .in{width:1440px;height:900px;max-width:none;margin:0;left:50%;transform:translateX(-50%)}
  .parts10 .la{width:1440px;height:900px;object-fit:fill}
  .parts10 .pp10,.parts10 .rear-wheel{margin-left:0}
@@ -274,7 +249,6 @@
  .parts10 .p-crank-ring{left:619px!important;top:517px!important}
  .parts10 .p-stem{left:866px!important;top:260px!important}
  .parts10 .p-bar-drop{left:840px!important;top:250px!important}
-}
 
 /* Page-wide minimum type size for content, navigation and overlays. */
 .site-nav .links,
@@ -302,8 +276,7 @@
 .tpl9 .bk9,.tpl9 .bk9[data-family]{top:54px!important;width:800px!important;height:600px!important;object-fit:contain;object-position:center;left:50%!important;transform:translateX(-50%)}
 .models5 .model-intro{white-space:normal;max-width:100%;line-height:1.6}
 @media(max-width:900px){
- .tpl9 .bk9,.tpl9 .bk9[data-family]{top:225px!important;width:min(82vw,560px)!important;height:auto!important;aspect-ratio:4/3}
-}
+ .tpl9 .bk9,.tpl9 .bk9[data-family]{top:225px!important;width:min(82vw,560px)!important;height:auto!important;aspect-ratio:4/3}}
 /* Align the actual bicycle silhouettes, including transparent image margins. */
 .tpl9 .paint-display{position:absolute;width:660px;height:462px;left:50%;top:110px;transform:translateX(-50%);pointer-events:none}
 .tpl9 .paint-display .bk9[data-family]{position:absolute;top:auto!important;bottom:var(--paint-bottom,0%);left:var(--paint-left,0%)!important;width:var(--paint-width,100%)!important;height:auto!important;aspect-ratio:auto;transform:none;max-width:none;object-fit:contain}
@@ -320,8 +293,7 @@
  .tpl9 .in{min-height:850px}
  .tpl9 .tray9{overflow-x:auto;padding:4px 4px 12px}
  .tpl9 .trayin{justify-content:flex-start;width:max-content;margin:auto}
- .tpl9 button.th9{width:130px;flex-basis:130px}
-}
+ .tpl9 button.th9{width:130px;flex-basis:130px}}
 .tpl9 .paint-display{top:88px}
 .tpl9 button.th9 b,.tpl9 button.th9.on b{display:block!important;top:auto!important;bottom:5px!important;height:auto!important;line-height:20px!important;transform:none!important;background:none!important;padding:0!important;color:#17202b!important}
 @media(max-width:900px){.tpl9 .paint-display{top:180px}}
@@ -359,8 +331,7 @@
  .tpl9.arc-showroom .tray9{top:calc(270px + 57.4vw);width:auto}
  .tpl9.arc-showroom .paint-caption{top:calc(345px + 57.4vw)}
  .tpl9.arc-showroom button.th9{width:46px;height:46px;flex-basis:46px}
- .tpl9.arc-showroom .trayin{gap:14px}
-}
+ .tpl9.arc-showroom .trayin{gap:14px}}
 @media(prefers-reduced-motion:reduce){.tpl9.arc-showroom .tab9,.tpl9.arc-showroom button.th9{transition:none}}
 .tpl9.arc-showroom button.th9 img{position:absolute;width:400px;height:300px;left:-225px;top:-100px;transform:none;object-fit:fill}
 .tpl9.arc-showroom .tray9::before,.tpl9.arc-showroom .tray9::after{display:none!important}
@@ -396,8 +367,7 @@
  .tpl9.arc-showroom .tab9:nth-child(4){--label-x:95%;--label-y:42px}
  .tpl9.arc-showroom .tray9{bottom:58px}
  .tpl9.arc-showroom button.th9{width:40px;height:40px;flex-basis:40px}
- .tpl9.arc-showroom .trayin{gap:12px}
-}
+ .tpl9.arc-showroom .trayin{gap:12px}}
 .tpl9.arc-showroom .tabs9{bottom:8px!important}
 @media(max-width:600px){.tpl9.arc-showroom .tabs9{bottom:12px!important}}
 
@@ -421,8 +391,7 @@
  .tpl9.arc-showroom .tab9:nth-child(1){--label-y:48px}
  .tpl9.arc-showroom .tab9:nth-child(4){--label-y:48px}
  .tpl9.arc-showroom .tray9{bottom:44px}
- .tpl9.arc-showroom .paint-caption{bottom:14px}
-}
+ .tpl9.arc-showroom .paint-caption{bottom:14px}}
 
 /* Larger circular dial and lower bicycle placement. */
 .tpl9.arc-showroom .paint-display{top:150px}
@@ -443,8 +412,7 @@
  .tpl9.arc-showroom .paint-display{top:165px}
  .tpl9.arc-showroom .tabs9{bottom:-35px!important}
  .tpl9.arc-showroom .tray9{bottom:50px}
- .hero11 .hx{bottom:7%}
-}
+ .hero11 .hx{bottom:7%}}
 
 /* Readable model names around an enlarged circular dial. */
 .tpl9.arc-showroom .sh9 p{margin:10px 0 0;color:var(--muted,#526071);font-size:15px;line-height:1.85;max-width:720px}
@@ -458,14 +426,13 @@
 .tpl9.arc-showroom .tab9:nth-child(4){--label-x:89%;--label-y:90px;--label-angle:46deg}
 .tpl9.arc-showroom .tab9::after{left:calc(50% - 5px);bottom:-12px}
 .parts10 .la{filter:grayscale(1);opacity:.3}
-@media(min-width:901px){.parts10 .pp10.p-wheel .dc{left:calc(100% + 26px)!important;right:auto!important;top:24px!important}}
+.parts10 .pp10.p-wheel .dc{left:calc(100% + 26px)!important;right:auto!important;top:24px!important}
 @media(max-width:600px){
  .tpl9.arc-showroom .sh9 p{font-size:15px;line-height:1.75;max-width:calc(100vw - 32px)}
  .tpl9.arc-showroom .paint-display{top:215px;width:76vw}
  .tpl9.arc-showroom .tab9{font-size:14px!important;padding:0 5px}
  .tpl9.arc-showroom .tab9:nth-child(1),.tpl9.arc-showroom .tab9:nth-child(4){--label-y:40px}
- .tpl9.arc-showroom .tabs9{bottom:0!important}
-}
+ .tpl9.arc-showroom .tabs9{bottom:0!important}}
 
 /* Paint confirmation sits beneath the circular swatches as a lightweight text action. */
 .tpl9.arc-showroom .showroom-motion .paint-choose-action{pointer-events:auto;position:absolute;left:50%;bottom:28px;translate:-50% 0;z-index:6;padding:5px 2px;border-bottom:1px solid currentColor;color:#17202b;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:.02em;white-space:nowrap;transition:color .2s,border-color .2s}
@@ -482,7 +449,7 @@
 .parts10 .parts-live-detail.is-visible{opacity:1;translate:0 0}
 .parts10 .parts-live-detail strong{display:block;color:#1d46d0;font-size:17px;line-height:1.3}
 .parts10 .parts-live-detail p{margin:6px 0 0;color:#314568;font-size:14px;line-height:1.65}
-@media(max-width:900px){.parts10 .parts-live-detail{display:none}.parts10.parts-ready .pp10.hov,.parts10.parts-ready .pp10:hover,.parts10.parts-ready .pp10:focus-visible{scale:1.04}}
+
 
 /* 客製化自行車服務門市（方案 A）：地圖約 58%、清單約 42%，兩張卡同高 480px；清單固定顯示約 4 筆，其餘在卡片內捲動 */
 @media(min-width:901px){
@@ -494,8 +461,7 @@
  #stores .slist .chips{flex:none;flex-wrap:wrap;row-gap:8px}
  #stores .slist .cnt{flex:none;margin-top:14px}
  #stores .slist ul{flex:1;min-height:0;overflow-y:auto;margin-top:6px;padding-right:6px;scrollbar-width:thin;scrollbar-color:#C9D0D8 transparent}
- #stores .slist li{padding:12px 0}
-}
+ #stores .slist li{padding:12px 0}}
 
 /* ---------- 六大零件規格：鉛筆藍圖進場（js/parts-draw.js） ---------- */
 .parts10 .pd-ov{position:absolute;display:block;pointer-events:none}
@@ -508,7 +474,7 @@
 /* ---------- 六大零件規格：聚焦與標籤（桌機） ----------
    拿掉藍色描邊光、投影與 116% 放大；選到的零件浮起，其他只淡到約 60%；
    說明直接展開在零件旁的標籤裡；圖片與文字都能 hover／點擊。 */
-@media(min-width:901px){
+
  .parts10 .pp10 img{filter:none!important}
  .parts10.parts-ready .pp10{opacity:1!important;scale:1!important;filter:none!important}
  .parts10 .pp10>img:not(.pd-sk){transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)!important}
@@ -534,27 +500,24 @@
  .parts10 .pp10.hov .dc::before{border-top-color:#141A22!important}
  .parts10 .pd-desc{display:block;width:250px;max-height:0;margin-top:0;overflow:hidden;opacity:0;white-space:normal;text-align:left;font-size:13px;line-height:1.6;color:#4A5563;transition:max-height .35s ease,opacity .3s ease,margin .3s ease}
  .parts10 .pp10.hov .pd-desc{max-height:84px;margin-top:6px;opacity:1}
-}
-@media(max-width:900px){.parts10 .pd-desc{display:none}}
+
 @media(prefers-reduced-motion:reduce){.parts10 .pp10>img,.parts10 .rear-wheel,.parts10 .pp10 .dc,.parts10 .pd-desc{transition:none!important}}
 /* 左側的標籤（飛輪）：靠右對齊、離零件近一點，小卡收窄，避免超出畫面 */
-@media(min-width:901px){
+
  .parts10 .pp10.l .dc{text-align:right}
  .parts10 .pp10.l .dc b,.parts10 .pp10.l .dc .chips{justify-content:flex-end}
  .parts10 .pp10.l .pd-desc{width:200px;margin-left:auto}
  .parts10 .pp10.p-cassette .dc{right:calc(100% + 104px)!important;top:6px!important}
  .parts10 .pp10.p-cassette .dc::before{width:94px!important}
-}
-@media(min-width:901px){
+
  .parts10 .pd-desc{width:0}
  .parts10 .pp10.hov .pd-desc{width:250px}
  .parts10 .pp10.l.hov .pd-desc{width:200px}
  .parts10 .pp10.l.hov .dc{text-align:left}
  .parts10 .pp10.l.hov .dc b,.parts10 .pp10.l.hov .dc .chips{justify-content:flex-start}
-}
 
 /* 零件標籤改成白色膠囊＋柔和陰影：平常只有名稱；選到時同一顆膠囊展開成小卡（規格、說明）。不再畫引線。 */
-@media(min-width:901px){
+
  .parts10 .pp10 .dc{padding:9px 17px!important;border:0!important;border-radius:20px!important;background:#fff!important;box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.08)!important;transition:box-shadow .3s ease,border-radius .3s ease,padding .3s ease,opacity .34s ease,translate .42s cubic-bezier(.16,1,.3,1)!important}
  .parts10 .pp10 .dc::before{display:none!important}
  .parts10 .pp10 .dc b{opacity:1!important;font-size:15px!important;letter-spacing:.02em}
@@ -566,7 +529,6 @@
  .parts10 .pp10.l.hov .pd-desc{width:180px!important}
  .parts10 .pp10:not(.hov) .dc .chips,.parts10 .pp10:not(.hov) .pd-desc{display:none!important}
  .parts10 .pp10 .dc b{line-height:1.4!important;margin:0!important}
-}
 
 /* 窄一點的桌機：飛輪的小卡收窄、必要時貼近車輪，避免超出畫面左緣 */
 @media(min-width:901px) and (max-width:1300px){.parts10 .pp10.l.hov .pd-desc{width:150px!important}}
@@ -649,7 +611,7 @@
 @media(prefers-reduced-motion:reduce){#stores .st-mk::before{animation:none}#stores .st-mk-tag{animation:none;opacity:1}}
 
 /* 零件標籤位置（依 10/23 參考圖微調）：標籤貼在零件旁邊、部分可壓在零件上；前後輪組只標在前輪右下 */
-@media(min-width:901px){
+
  .parts10 .pp10.p-saddle .dc{left:130px!important;right:auto!important;top:-26px!important;bottom:auto!important;transform:none!important}
  .parts10 .pp10.p-stem .dc{left:auto!important;right:42px!important;top:-30px!important;bottom:auto!important;transform:none!important}
  .parts10 .pp10.p-bar-drop .dc{left:132px!important;right:auto!important;top:-20px!important;bottom:auto!important;transform:none!important}
@@ -660,7 +622,6 @@
  .parts10 .pp10.p-cassette .dc,.parts10 .pp10.p-cassette.hov .dc{text-align:left}
  .parts10 .pp10.p-cassette .dc b,.parts10 .pp10.p-cassette .dc .chips{justify-content:flex-start}
  .parts10 .pp10.p-cassette .pd-desc{margin-left:0}
-}
 @media(min-width:901px) and (max-width:1180px){.parts10 .pp10.p-wheel .dc{right:8px!important}.parts10 .pp10.p-bar-drop .dc{left:auto!important;right:-20px!important}}
 
 /* 車款客製化塗裝：拿掉往上的陰影（那條陰影就是卡片左右兩側的分界線），背景照片頂端用漸層接上「可選客製車款」的淺灰底 */
@@ -679,7 +640,7 @@
    標籤維持膠囊、選到時變深色；名稱／規格／說明放在底部說明列，不再壓在車子上 */
 .parts10 .pd-stage{display:contents}
 .parts10 .pd-strip{display:none}
-@media(min-width:901px){
+
  .parts10{height:100vh;height:100svh;min-height:640px}
  .parts10 .pd-stage{display:block;position:absolute;left:0;top:0;width:1440px;height:900px;will-change:transform}
  .parts10 .pp10 .dc .chips,.parts10 .pp10 .pd-desc{display:none!important}
@@ -695,7 +656,6 @@
  .parts10 .pd-strip-nm{transition:opacity .14s ease}
  .parts10 .pd-strip-sp{font-size:13px;font-weight:600;color:#4A5563}
  .parts10 .pd-strip-ds{font-size:13px;line-height:1.5;color:#4A5563}
-}
 
 /* 門市清單：拿掉「全台 · 共 130 家」這行（地區按鈕已有數量）；清單列左右留內距，選到／滑過時的底色不貼著文字 */
 #stores .slist .cnt{display:none!important}
@@ -713,46 +673,41 @@
 #stores .slist .tel{font-weight:400!important}
 #stores .slist .chips .chip{flex:none;white-space:nowrap}
 /* 說明列：寬度由 JS 對齊左右輪胎；沒有選零件時隱藏，滑到或點選零件才出現 */
-@media(min-width:901px){
+
  .parts10 .pd-strip{translate:0 0;transition:opacity .3s ease,translate .35s cubic-bezier(.16,1,.3,1)}
  .parts10:not(.has-focus) .pd-strip{opacity:0;translate:0 10px;pointer-events:none}
-}
 /* 搜尋時才顯示「搜尋「士林」，共 3 筆」 */
 #stores .slist .cnt.on{display:block!important;margin:12px 0 0;padding-left:14px;font-size:13px;font-weight:500;color:#4A5563}
 /* 說明列精簡版：一行排開（名稱｜規格 說明），寬度依內容，置中在兩輪之間、尺寸線下方 */
-@media(min-width:901px){
+
  .parts10 .pd-strip{display:flex;align-items:center;gap:16px;width:max-content;min-height:0;padding:11px 22px;translate:-50% 0;border-radius:999px}
  .parts10:not(.has-focus) .pd-strip{translate:-50% 8px}
  .parts10 .pd-strip-nm{font-size:15px}
  .parts10 .pd-strip-txt{flex-direction:row;align-items:baseline;flex-wrap:wrap;column-gap:10px;row-gap:0;padding-left:16px}
  .parts10 .pd-strip-sp{color:#141A22;white-space:nowrap}
-}
 
 /* 「從碳纖維車架開始」：改成滿版（同首頁「台灣登山車越野基地」），文字對齊內容欄 */
 #cta{width:100%;padding-bottom:0}
 #cta .cta{border:0;border-radius:0;box-shadow:none}
 @media(min-width:901px){
- #cta .cta{min-height:0;height:clamp(420px,34vw,520px);padding:0 calc((100vw - var(--shell))/2)}
-}
+ #cta .cta{min-height:0;height:clamp(420px,34vw,520px);padding:0 calc((100vw - var(--shell))/2)}}
 @media(max-width:900px){#cta{padding-left:0!important;padding-right:0!important}#cta .cta{padding-left:16px;padding-right:16px}}
 /* 說明列：固定寬度、兩行（第一行規格、第二行說明） */
-@media(min-width:901px){
+
  .parts10 .pd-strip{width:640px;padding:13px 28px 14px 26px;border-radius:999px}
  .parts10 .pd-strip-nm{flex:none;width:auto;font-size:16px}
  .parts10 .pd-strip-txt{flex:1;min-width:0;flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:3px;padding-left:20px}
  .parts10 .pd-strip-sp{font-size:13.5px;font-weight:700;color:#141A22}
  .parts10 .pd-strip-ds{font-size:13.5px;line-height:1.5;color:#4A5563}
-}
 /* 後輪可以滑過／點擊（等同前後輪組），點擊範圍只限輪子圓形 */
-@media(min-width:901px){.parts10 .rear-wheel.rear-hit{pointer-events:auto;cursor:pointer;clip-path:circle(50%)}}
+.parts10 .rear-wheel.rear-hit{pointer-events:auto;cursor:pointer;clip-path:circle(50%)}
 
 /* 「從碳纖維車架開始」（提案 3）：照片高度＝區塊高度、車架左端固定在文字欄右側約 100px、右緣淡出到底色；按鈕下方三個重點數字 */
 @media(min-width:901px){
  #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 2.3346);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
   background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
    linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px)),
-   #060709 url('../img/cta/carbon-frame-studio.jpg') var(--ix) center/auto 100% no-repeat}
-}
+   #060709 url('../img/cta/carbon-frame-studio.jpg') var(--ix) center/auto 100% no-repeat}}
 #cta .cta-stats{display:flex;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div{padding-right:32px;margin-right:32px;border-right:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div:last-child{border-right:0;margin-right:0;padding-right:0}
@@ -762,7 +717,7 @@
 @media(max-width:900px){#cta .cta-stats{margin-top:28px;padding-top:18px}#cta .cta-stats div{padding-right:18px;margin-right:18px}#cta .cta-stats b{font-size:24px}#cta .cta-stats span{font-size:12px}}
 @media(max-width:900px){#cta .cta{min-height:620px}}
 /* 飛輪中心對準後輪花鼓（輻條交會點）：整個零件往左 5px、往下 1px（速寫在同一個元素裡一起移動） */
-@media(min-width:901px){.parts10 .pp10.p-cassette{translate:-5px 1px!important}}
+.parts10 .pp10.p-cassette{translate:-5px 1px!important}
 /* 六大零件：聚焦時才出現的零件速寫 */
 .parts10 .pd-hv{opacity:0;transform:translateY(8px);transform-box:fill-box;transition:opacity .25s ease,transform .25s ease}
 .parts10 .pd-hv.on{opacity:1;transform:none;transition:opacity .5s ease .15s,transform .6s cubic-bezier(.16,1,.3,1) .15s}
@@ -829,16 +784,14 @@
  /* 原本的兩道漸層（左側壓暗給文字、照片右緣淡出）改放在上面這層 */
  #cta .cta::after{z-index:0;inset:0;
   background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
-   linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px))}
-}
+   linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px))}}
 @keyframes cta-drift{from{transform:scale(1) translate(0,0)}to{transform:scale(1.06) translate(-1.4%,-.6%)}}
 @keyframes cta-sweep{0%{background-position:-70% 0,0 0}55%,100%{background-position:170% 0,0 0}}
 @media(prefers-reduced-motion:reduce){#cta .cta::before{animation:none}}
 /* 車架往右移 80px（右緣淡出跟著 --ix 一起移）；拿掉掃光，只留慢慢推近 */
 @media(min-width:901px){
  #cta .cta{--ix:calc(var(--sl) + 620px - var(--iw) * .4983)}
- #cta .cta::before{background:url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;animation:cta-drift 11s ease-in-out infinite alternate}
-}
+ #cta .cta::before{background:url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;animation:cta-drift 11s ease-in-out infinite alternate}}
 
 /* 「從碳纖維車架開始」：車架從黑暗中被打亮（只播一次）。--rv 是光照到的範圍，由上往下擴散；同時亮度、對比從暗慢慢恢復 */
 @property --rv{syntax:'<percentage>';inherits:false;initial-value:200%}
@@ -846,8 +799,7 @@
  #cta .cta.pre::before{--rv:0%;filter:brightness(.15) contrast(.75);opacity:.2;
   -webkit-mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv));mask-image:radial-gradient(140% 120% at 58% -12%,#000 calc(var(--rv) - 45%),transparent var(--rv));
 }
- #cta .cta.pre.lit::before{--rv:200%;filter:none;opacity:1;transition:--rv 1.1s cubic-bezier(.3,.6,.3,1) .05s,filter 1.3s cubic-bezier(.3,.6,.3,1) .05s,opacity .6s ease .05s}
-}
+ #cta .cta.pre.lit::before{--rv:200%;filter:none;opacity:1;transition:--rv 1.1s cubic-bezier(.3,.6,.3,1) .05s,filter 1.3s cubic-bezier(.3,.6,.3,1) .05s,opacity .6s ease .05s}}
 
 /* 六大零件：速寫圖確定載入成功才顯示（載不到時不會出現破圖圖示） */
 .parts10 image.pd-hv:not(.pd-ok),.parts10 img.pd-sk:not(.pd-ok){visibility:hidden}
