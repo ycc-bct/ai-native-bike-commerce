@@ -35,10 +35,10 @@
   wrap=w||wrap||sec.querySelector('.pd-stage');if(!wrap)return;
   if(!mq.matches){return;}
   const W=stage.clientWidth,head=sec.querySelector('.phd9'),strip=sec.querySelector('.pd-strip');
-  const top=head.offsetTop+head.offsetHeight+12,bottom=(strip&&strip.parentNode===stage?strip.offsetTop:stage.clientHeight-180)-12;
+  // Reserve a constant caption area so different text lengths never resize the bicycle.
+  const top=head.offsetTop+head.offsetHeight+12,bottom=stage.clientHeight-224;
   const pad=16,k=Math.min(1,(W-2*pad)/(X1-X0),Math.max(80,bottom-top)/(Y1-Y0));
   let tx=W/2-k*(X0+X1)/2;
-  if(cur>=0){const [a,b]=region(cur),L=tx+k*a,R=tx+k*b;if(R>W-pad)tx-=R-(W-pad);else if(L<pad)tx+=pad-L;}
   const ty=top+((bottom-top)-k*(Y1-Y0))/2-k*Y0;
   wrap.style.transformOrigin='0 0';
   wrap.style.transform=`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${k.toFixed(4)})`;

@@ -151,7 +151,7 @@
   /* -- CTA: the desktop drift + "lit from the dark" reveal, re-anchored to the mobile crop. */
   #cta .cta{isolation:isolate;background:#060709!important}
   #cta .cta::before,#cta .cta::after{content:"";position:absolute;pointer-events:none;inset:0}
-  #cta .cta::before{z-index:0;transform-origin:75% 22%;background:url('../img/cta/carbon-frame-studio.jpg') right 18px/180% auto no-repeat;
+  #cta .cta::before{z-index:0;transform-origin:75% 22%;background:url('../img/cta/carbon-frame-studio.jpg') right 18px/150% auto no-repeat;
     animation:none}
   #cta .cta::after{z-index:0;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 35%,rgba(4,6,10,.08) 65%,rgba(4,6,10,0) 100%)}
   #cta .cta.pre::before{--rv:0%;filter:brightness(.15) contrast(.75);opacity:.2;
@@ -252,3 +252,13 @@
  #templates.tpl9 .paint-craft span{display:block;margin-top:6px;font-size:14px;line-height:1.7;color:#3f4855}
  #templates.tpl9 .paint-craft em{font-style:normal}
 }
+
+/* Stable mobile details and balanced header artwork. */
+@media(max-width:900px){
+ #siteHeader #aiOrb{width:28px!important;height:28px!important;min-width:28px}
+ #siteHeader #aiOrb::before{content:"";position:absolute;inset:-8px;border-radius:50%}
+ #parts .pd-strip{height:176px!important;min-height:176px!important;max-height:176px!important;overflow-y:auto;overscroll-behavior:contain}
+ #parts .pd-stage{transition:none!important}
+ #parts:not(.has-focus) .pd-strip{translate:none!important}
+}
+.tpl9.arc-showroom .tab9:first-child,.tpl9.arc-showroom .tab9:last-child{height:52px!important;padding-bottom:24px!important}
