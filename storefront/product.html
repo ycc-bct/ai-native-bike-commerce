@@ -181,7 +181,7 @@ body.solo-scene .panel{cursor:default}
 /* 主視覺底部分頁 */
 .tabs{position:absolute;z-index:9;left:calc(var(--u)*45);right:calc(var(--u)*40);bottom:calc(var(--u)*24);display:grid;grid-template-columns:repeat(5,calc(var(--u)*240)) 1fr}
 .tabs::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--line)}
-.tab{position:relative;padding-top:calc(var(--u)*14);text-align:left;font-size:calc(var(--u)*13.5);color:var(--ink-50);letter-spacing:.04em}
+.tab{position:relative;justify-self:start;padding-top:calc(var(--u)*14);text-align:left;font-size:max(15px, calc(var(--u)*15.5));color:var(--ink-50);letter-spacing:.04em}
 
 .tab::before{content:"";position:absolute;left:0;top:-1px;height:2px;width:0;background:var(--ink);transition:width .5s var(--ease)}
 .tab.on{color:var(--ink);font-weight:700}
