@@ -1,9 +1,9 @@
 /* Hero: a cut of studio close-ups (video/custom-hero*.mp4) with sparse type, in the manner of a luxury-car launch page. */
 .hero-lux .hx{left:calc((100vw - var(--shell))/2);right:auto;top:50%;bottom:auto;transform:translateY(-50%);width:auto;max-width:620px;text-align:left}
 .hero-lux h1{margin-top:0;font-size:clamp(32px,3.4vw,44px);font-weight:600;line-height:1.05;letter-spacing:.02em;white-space:normal}
-.hero-lux .hx>p{margin-top:20px;max-width:440px;font-size:16px;line-height:1.8;color:rgba(255,255,255,.74)}
+.hero-lux .hx>p{margin-top:20px;max-width:440px;font-size:16px;font-weight:400;line-height:1.85;color:rgba(255,255,255,.88)}
 .hero-lux .acts{margin-top:36px;justify-content:flex-start}
-@media (max-width:700px){.hero-lux .hx{left:16px;right:16px}.hero-lux h1{font-size:min(9vw,44px)}}
+@media (max-width:700px){.hero-lux .hx{left:16px;right:16px}.hero-lux h1{font-size:clamp(34px,9vw,44px)}}
 /* Header over the hero: transparent with white type until the visitor hovers it, opens a menu or scrolls (.scrolled is set
    by the page script); then it returns to the usual light bar. The AI orb keeps its own colours either way. */
 .site-nav{transition:background .3s,box-shadow .3s,color .3s,backdrop-filter .3s}

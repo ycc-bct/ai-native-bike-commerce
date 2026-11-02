@@ -90,13 +90,18 @@
     bar.querySelector('.sp-views').addEventListener('click', e => { const b = e.target.closest('button'); if (b) flatGo(+b.dataset.i, false); });
     st.addEventListener('dblclick', e => { if (st.classList.contains('sp-flat') && flatIdx !== 0 && !e.target.closest('button')) flatGo(0, false); });
 
-    /* 工具列自動隱藏：滑鼠在預覽區移動時出現，停 2 秒或移出就淡出；鍵盤操作工具列時一直顯示。觸控裝置一直顯示 */
+    /* 工具列自動隱藏：滑鼠在預覽區移動時出現，停 2 秒或移出就淡出；鍵盤操作工具列時一直顯示。觸控裝置點一下才出現 */
     const touch = matchMedia('(pointer: coarse)').matches;
     let idle;
     /* 只有「鍵盤」焦點在工具列上才保持顯示；滑鼠點過的按鈕雖然也有焦點，不算 */
     const kbdFocus = () => !!bar.querySelector(':focus-visible');
     const showBar = (ms = 2000) => { bar.classList.add('show'); clearTimeout(idle); if (!kbdFocus() && !bar.matches(':hover')) idle = setTimeout(() => bar.classList.remove('show'), ms); };
-    if (touch) bar.classList.add('show', 'stay');
+    // 觸控：點預覽區切換顯示／隱藏，沒動作 3 秒後自動淡出；點工具列上的按鈕只重新計時，不會把它關掉
+    if (touch) st.addEventListener('click', e => {
+      clearTimeout(idle);
+      if (!bar.contains(e.target) && bar.classList.contains('show')) { bar.classList.remove('show'); return; }
+      bar.classList.add('show'); idle = setTimeout(() => bar.classList.remove('show'), 3000);
+    });
     else {
       st.addEventListener('pointermove', () => showBar());
       st.addEventListener('pointerleave', () => { clearTimeout(idle); if (!kbdFocus()) bar.classList.remove('show'); });
