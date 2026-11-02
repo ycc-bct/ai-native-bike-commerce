@@ -29,7 +29,6 @@
 @property --beam-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
 @keyframes beam-spin{to{--beam-angle:360deg}}
 @media (prefers-reduced-motion:reduce){}
-.mobile-nav-toggle{display:none}
 .cfg-title{display:none}
 .page{width:var(--shell);max-width:none;padding:calc(max(100vw,1200px) / 1672 * 76 + 36px) 0 126px}
 .intro{margin-bottom:28px}h1{font-weight:800;letter-spacing:-.01em}h2{font-weight:800;letter-spacing:-.01em}
@@ -49,7 +48,6 @@
 .disclaimer,.preview-footer small{color:var(--ink-50)}.dialog{border-radius:16px;border:1px solid var(--line)}
 @media(max-width:1150px){.page{width:calc(100% - 48px)}.purchase-bar{padding-left:24px;padding-right:24px}.btn{font-size:13px}.stage{min-height:490px}}
 @media(max-width:800px){
- .mobile-nav-toggle{display:grid;place-items:center;position:absolute;right:15px;top:12px;width:40px;height:40px}.mobile-nav-toggle svg{width:22px;height:22px}
  .page{padding-top:86px;width:calc(100% - 40px);padding-bottom:146px}.preview-column{position:static}.stage{min-height:260px}
  .purchase-bar{padding-left:20px;padding-right:20px}.btn{font-size:13px}.dialog-actions .btn{padding:0 16px}#next{font-size:var(--fs-xs)}
 }
@@ -955,22 +953,12 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <style id="responsive-layout">
 /* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
    Desktop retains its panel scroll; compact screens use the document scroll. */
-.mobile-nav-toggle{display:none}
+.studio-menu-toggle,#studio-mobile-menu{display:none}
 @media(max-width:1023px){
  :root{--header-height:64px;--shell:calc(100% - 32px);--mobile-purchase-height:92px}
  html{height:auto;overflow:auto;scroll-padding-top:80px}
  body{height:auto;min-height:100dvh;overflow:visible}
  #siteHeader.site-nav{height:64px}
- #siteHeader .logo{left:64px}#siteHeader .logo svg{height:18px;width:110px}
- #siteHeader .icons{right:12px;gap:0}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:36px;min-height:44px;display:grid;place-items:center}
- #siteHeader .icons svg{width:22px;height:22px}
- .mobile-nav-toggle{display:grid;place-items:center;position:absolute;left:12px;top:10px;width:44px;height:44px;border-radius:8px}
- #siteHeader .links{display:none;left:0;right:0;top:64px;bottom:auto;max-height:calc(100dvh - 64px);overflow:auto;background:var(--surface);padding:16px;gap:0;font-size:14px;border-bottom:1px solid var(--line)}
- #siteHeader.mobile-menu-open .links{display:grid;grid-template-columns:1fr 1fr}
- #siteHeader .links .top{min-height:48px;padding:12px}#siteHeader .links .top:after{display:none}
- #siteHeader .dd{position:fixed;top:64px;bottom:0;max-height:calc(100dvh - 64px);overflow:auto}
- #siteHeader .dd-in{padding:24px 16px;flex-direction:column;gap:24px}
- #siteHeader .dd-kv{min-width:0}#siteHeader .dd-list{grid-template-columns:1fr;gap:8px}#siteHeader .dd-feat{margin-left:0;max-width:100%}
  #configPage{width:100%;max-width:none;height:auto;min-height:100dvh;padding:80px 0 calc(var(--mobile-purchase-height) + 24px)!important}
  #configPage>.intro-back{margin:0 16px 12px}
  #configPage .workspace{display:block}
@@ -1049,6 +1037,37 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  .family-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:48px 32px}
  .pick-shell,.fav-shell{width:calc(100% - 48px)}
 }
+/* Mobile header + footer — storefront/custom-studio/Design.md (2026-11-02), same rules as the custom landing page:
+   <=900px hamburger + logo + 44px icon buttons, a one-column menu with expandable categories; <=370px search and member move into the menu;
+   footer one column, one link per row. */
+@media(max-width:900px){
+ #siteHeader .studio-menu-toggle{display:grid;place-items:center;position:absolute;left:8px;top:10px;width:44px;height:44px;color:inherit;background:none;border:0;cursor:pointer}
+ #siteHeader .studio-menu-toggle svg{width:24px;height:24px}
+ #siteHeader .logo{left:56px}#siteHeader .logo svg{width:80px;height:auto}
+ #siteHeader .links{display:none!important}
+ #siteHeader .icons{right:8px;gap:4px}
+ #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .icons>.profile-wrap,#siteHeader .orb-wrap{display:grid;place-items:center;width:44px;height:44px;min-width:44px;box-sizing:border-box}
+ #siteHeader .icons>a svg,#siteHeader .icons>button svg{width:22px;height:22px}
+ #siteHeader #studio-mobile-menu:not([hidden]){display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;padding:16px 24px;background:#F3F5F7;color:#141A22;box-shadow:0 12px 20px #0002;max-height:calc(100svh - 64px);overflow:auto}
+ #studio-mobile-menu a{display:flex;align-items:center;min-height:48px;border-bottom:1px solid #DCE1E7;font-size:16px;text-decoration:none;color:inherit}
+ #studio-mobile-menu summary,#studio-mobile-menu>button{min-height:48px;display:flex;padding:0;align-items:center;border-bottom:1px solid #DCE1E7;font:inherit;font-size:16px;color:inherit;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;text-align:left}
+ #studio-mobile-menu details a{padding-left:16px}
+ #siteHeader button:focus-visible,#studio-mobile-menu a:focus-visible,#studio-mobile-menu summary:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px}
+ #siteFooter .foot-in{width:calc(100% - 32px);grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0}
+ #siteFooter .foot-col b,#siteFooter .foot-sub b{font-size:16px;margin-bottom:8px}
+ #siteFooter .foot-col a{display:flex;align-items:center;min-height:44px;margin-top:0;font-size:14px}
+ #siteFooter .sub-form{height:48px}
+ #siteFooter .sub-form button{width:48px;flex-shrink:0}
+ #siteFooter .social{flex-direction:column;gap:8px}
+ #siteFooter .social a{display:flex;justify-content:flex-start;gap:12px;width:100%;min-height:44px;height:auto;border:0;border-radius:0;font-size:14px}
+ #siteFooter .social a::after{content:attr(aria-label)}
+ #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
+ #siteFooter .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
+ #siteFooter .legal a{display:flex;align-items:center;min-height:44px;font-size:14px}
+ #siteFooter .foot-bar .region{padding-left:0;border-left:0}
+}
+/* the member entry here is the avatar: hide its trigger but keep the wrapper, so the 會員 row in the menu can still open the member menu */
+@media(max-width:370px){#siteHeader .icons>[aria-label="搜尋"],#siteHeader .icons>[aria-label="會員"],#siteHeader #openMember{display:none!important}#siteHeader .icons>.profile-wrap{width:0;min-width:0;margin-left:-4px}}
 /* Phone config page: one bar pinned under the header — back link, bike name beneath it, share / save on the right, then the steps
    (script moves .intro out of the preview column on phones). Scrolling down tucks the whole bar behind the header; scrolling up brings it back.
    On paint, parts and review (where every pick changes the bike) the stage stays pinned under the bar and the panel title under the stage;
@@ -1131,7 +1150,6 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .zone-section:has(>.finish-list)>.size-help{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-50)}
 }
 @media(max-width:374px){
- #siteHeader .logo{left:56px}#siteHeader .logo svg{height:15px;width:86px}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:32px}
  #configPage .panel-column .price-number{font-size:20px}
 }
 </style>
@@ -1985,15 +2003,19 @@ applyRoute(location.hash);
 <script src="assets/stage-preview.js?v=7"></script>
 <script src="storefront/js/custom-advisor.js?v=6"></script>
 <script>
-// Compact navigation reuses the shared header links without changing shared files.
-(()=>{const header=document.getElementById('siteHeader'),links=header.querySelector('.links');
-links.id='compactNavLinks';const toggle=document.createElement('button');toggle.type='button';toggle.className='mobile-nav-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-controls',links.id);toggle.setAttribute('aria-expanded','false');toggle.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';header.prepend(toggle);
-function close(){header.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單');window.GiantHeader?.close()}
-toggle.addEventListener('click',()=>{if(header.classList.contains('mobile-menu-open'))close();else{header.classList.add('mobile-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','關閉主選單')}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('mobile-menu-open')){close();toggle.focus()}});
+// Mobile menu — same markup and behaviour as storefront/custom-studio (Design.md): built from the shared header links, categories become <details>.
+(()=>{const header=document.getElementById('siteHeader'),toggle=document.createElement('button'),menu=document.createElement('nav');
+toggle.type='button';toggle.className='studio-menu-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','studio-mobile-menu');toggle.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+menu.id='studio-mobile-menu';menu.setAttribute('aria-label','手機主選單');menu.hidden=true;
+header.querySelectorAll('.links .top').forEach(link=>{const dd=header.querySelector('.dd[data-dd="'+link.dataset.top+'"]');if(dd){const d=document.createElement('details'),sum=document.createElement('summary');sum.textContent=link.textContent;d.append(sum);dd.querySelectorAll('.dd-list a').forEach(i=>d.append(i.cloneNode(true)));menu.append(d)}else{const c=link.cloneNode(true);c.removeAttribute('style');c.removeAttribute('data-top');c.removeAttribute('id');c.className='';menu.append(c)}});
+[['搜尋','[aria-label="搜尋"]'],['會員','[aria-label="會員"],#openMember']].forEach(([label,sel])=>{const orig=header.querySelector('.icons '+sel.split(',').join(',.icons '));if(!orig)return;const proxy=document.createElement('button');proxy.type='button';proxy.textContent=label;proxy.addEventListener('click',e=>{e.stopPropagation();close();orig.click()});menu.append(proxy)});
+header.prepend(toggle);header.append(menu);
+function close(){menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單')}
+toggle.addEventListener('click',()=>{const open=menu.hidden;menu.hidden=!open;toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'關閉主選單':'開啟主選單')});
+menu.addEventListener('click',e=>{if(e.target.closest('a'))close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){close();toggle.focus()}});
 document.addEventListener('click',e=>{if(!header.contains(e.target))close()});
-links.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')&&!['#',''].includes(a.getAttribute('href')))close()});
-const compact=matchMedia('(max-width:1023px)');compact.addEventListener('change',close);
+matchMedia('(max-width:900px)').addEventListener('change',close);
 // Reserve the actual footer height, including safe area and wrapped button labels.
 const bar=document.querySelector('#configPage .purchase-bar');new ResizeObserver(entries=>{const h=entries[0].target.getBoundingClientRect().height;if(h)document.documentElement.style.setProperty('--mobile-purchase-height',Math.ceil(h)+'px')}).observe(bar);
 // Phone: the steps join the pinned top bar (moved out of the preview column), the pinned panel title on paint/review needs the preview's height, and the bar hides while scrolling down.
