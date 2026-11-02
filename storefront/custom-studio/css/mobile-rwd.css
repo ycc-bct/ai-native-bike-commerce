@@ -323,3 +323,13 @@
  #parts .parts-selector{bottom:16px;padding:8px 16px 12px;border-radius:0 0 16px 16px}
  #parts .pd-strip{bottom:84px!important;border-radius:16px 16px 0 0!important;box-shadow:none}
 }
+
+/* Compact inline part navigation; slightly larger account and assistant artwork. */
+@media(max-width:900px){
+ #parts .parts-selector button{flex-direction:row;align-items:center;gap:8px}
+ #parts .parts-selector button:first-child .part-arrow{order:-1}
+ #parts .parts-selector button:last-child{align-items:center;justify-content:flex-end}
+ #siteHeader .member-initial{width:28px;height:28px;font-size:13px}
+ #siteHeader #aiOrb{width:28px!important;height:28px!important;min-width:28px}
+ #siteHeader #aiOrb::before{inset:-8px}
+}

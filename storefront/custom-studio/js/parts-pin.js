@@ -12,7 +12,7 @@
   cur=Math.max(0,Math.min(items.length-1,i));if(!mq.matches)return;
   items.forEach((item,k)=>item.classList.toggle('hov',k===cur));
   sec.classList.add('has-focus');sec.classList.toggle('wheel-on',items[cur].classList.contains('p-wheel'));
-  [...controls.children].forEach(b=>{const d=Number(b.dataset.direction),name=names[(cur+d+items.length)%items.length],label=d<0?'上一個':'下一個';b.setAttribute('aria-label',`${label}零件：${name}`);b.innerHTML=`<span class="part-neighbor">${label}・${name}</span><span class="part-arrow" aria-hidden="true">${d<0?'←':'→'}</span>`;});
+  [...controls.children].forEach(b=>{const d=Number(b.dataset.direction),name=names[(cur+d+items.length)%items.length],label=d<0?'上一個':'下一個';b.setAttribute('aria-label',`${label}零件：${name}`);b.innerHTML=`<span class="part-neighbor">${name}</span><span class="part-arrow" aria-hidden="true">${d<0?'←':'→'}</span>`;});
   sec.dispatchEvent(new CustomEvent('partchange',{detail:cur}));
  }
  function fit(w){
