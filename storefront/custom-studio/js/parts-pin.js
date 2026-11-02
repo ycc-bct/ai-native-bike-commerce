@@ -28,7 +28,7 @@
   const it=items[i];if(!it)return [X0,X1];
   let a=it.offsetLeft,b=it.offsetLeft+it.offsetWidth;
   const key=[...it.classList].find(c=>c.startsWith('p-')),sk=key&&sec.querySelector(`image.pd-hv[data-part="${key}"]`),la=sec.querySelector('.la');
-  if(sk&&la){const s=la.offsetWidth/2000,x=+sk.getAttribute('x')*s,w=+sk.getAttribute('width')*s;a=Math.min(a,x);b=Math.max(b,x+w);}
+  if(sk&&la&&getComputedStyle(sk).display!=='none'){const s=la.offsetWidth/2000,x=+sk.getAttribute('x')*s,w=+sk.getAttribute('width')*s;a=Math.min(a,x);b=Math.max(b,x+w);}
   return [a,b];
  }
  function fit(w){

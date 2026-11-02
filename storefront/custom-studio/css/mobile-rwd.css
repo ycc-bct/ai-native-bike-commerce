@@ -186,3 +186,69 @@
   #stores .slist ul{max-height:440px;overflow-y:auto;overscroll-behavior:contain}
 }
 @media (max-width:900px) and (max-height:520px){#parts .pd-strip{min-height:0}}
+
+/* Navigation targets and a mobile menu that stays reachable on narrow screens. */
+.studio-menu-toggle,#studio-mobile-menu{display:none}
+@media(max-width:900px){
+ #siteHeader .studio-menu-toggle{display:grid;place-items:center;position:absolute;left:8px;top:10px;width:44px;height:44px;color:inherit;background:none;border:0;cursor:pointer}
+ #siteHeader .studio-menu-toggle svg{width:24px;height:24px}
+ #siteHeader .logo{left:56px!important}
+ #siteHeader .logo svg{width:80px!important;height:auto!important}
+ #siteHeader .links{display:none!important}
+ #siteHeader .icons{right:8px!important;gap:4px!important}
+ #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .orb-wrap,#siteHeader #aiOrb{width:44px!important;height:44px!important;min-width:44px;box-sizing:border-box}
+
+ #siteHeader #studio-mobile-menu:not([hidden]){display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;padding:16px 24px;background:#f3f5f7;color:#141a22;box-shadow:0 12px 20px #0002;max-height:calc(100svh - 64px);overflow:auto}
+ #studio-mobile-menu a{display:flex;align-items:center;min-height:48px;border-bottom:1px solid #dce1e7;font-size:16px;text-decoration:none;color:inherit}
+ #siteHeader button:focus-visible,#studio-mobile-menu a:focus-visible{outline:2px solid #1f4fe0;outline-offset:2px}
+}
+/* Dot centers share the exact radius used by the circular outline. */
+.tpl9.arc-showroom .tab9{left:var(--dial-x)!important;top:var(--dial-y)!important;translate:-50% -100%!important;transform:none!important;height:44px!important;min-width:52px;padding:0 6px 16px!important;overflow:visible}
+.tpl9.arc-showroom .tab9::after{left:50%!important;top:100%!important;bottom:auto!important;transform:translate(-50%,-50%)!important;margin:0!important;width:10px;height:10px;box-sizing:border-box}
+.tpl9.arc-showroom .sh9 p{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;height:auto!important}
+/* Keep the frame and mounted parts on one coordinate plane, with no floating duplicate sketches. */
+#parts{--parts-stage-offset-y:0px}
+#parts .pd-hv{display:none!important}
+#parts .pp10.hov>img:not(.pd-sk),#parts.wheel-on .rear-wheel:not(.pd-sk){transform:none!important}
+
+@media(max-width:370px){#siteHeader .icons>button[aria-label="搜尋"],#siteHeader .icons>a[aria-label="會員"]{display:none!important}}
+#studio-mobile-menu summary,#studio-mobile-menu>button{min-height:48px;display:flex;align-items:center;font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+#studio-mobile-menu details a{padding-left:16px}
+
+/* Mobile footer: one category and one link per row. */
+@media(max-width:900px){
+  #siteFooter .foot-in{width:calc(100% - 32px);grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0}
+  #siteFooter .foot-col b,#siteFooter .foot-sub b{font-size:16px;margin-bottom:8px}
+  #siteFooter .foot-col a{display:flex;align-items:center;min-height:44px;margin-top:0;font-size:14px}
+  #siteFooter .sub-form{height:48px}
+  #siteFooter .sub-form button{width:48px;flex-shrink:0}
+  #siteFooter .social{flex-direction:column;gap:8px}
+  #siteFooter .social a{display:flex;justify-content:flex-start;gap:12px;width:100%;min-height:44px;height:auto;border:0;border-radius:0;font-size:14px}
+  #siteFooter .social a::after{content:attr(aria-label)}
+  #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
+  #siteFooter .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
+  #siteFooter .legal a{display:flex;align-items:center;min-height:44px;font-size:14px}
+  #siteFooter .foot-bar .region{padding-left:0;border-left:0}
+}
+
+/* Let paint selection and craft details grow beyond one mobile viewport. */
+@media(max-width:1199px){
+ #templates.tpl9.arc-showroom{height:auto!important;min-height:0;padding-top:64px;overflow:hidden}
+ #templates.tpl9.arc-showroom .in{display:flex;flex-direction:column;height:auto!important;min-height:0;overflow:visible;padding:24px 0 40px}
+ #templates.tpl9.arc-showroom .sh9{position:relative;inset:auto!important;margin:0 16px;width:auto;transform:none}
+ #templates.tpl9.arc-showroom .showroom-motion{position:relative;inset:auto;width:100%;height:auto;display:flex;flex-direction:column;align-items:center;order:1;margin-top:28px;overflow:hidden;padding-bottom:12px}
+ #templates.tpl9.arc-showroom .paint-display{position:relative;inset:auto!important;left:auto!important;width:min(620px,88vw);height:auto;aspect-ratio:1.4;transform:none!important;translate:none;margin:0 auto}
+ #templates.tpl9.arc-showroom .tabs9{position:relative;inset:auto!important;left:auto!important;transform:none;width:min(660px,94vw);height:calc(min(660px,94vw) * .24 + 48px);flex-shrink:0;margin:24px auto 0;overflow:hidden}
+ #templates.tpl9.arc-showroom .tabs9::before{top:44px}
+ #templates.tpl9.arc-showroom .tabs9::after{top:64px}
+ #templates.tpl9.arc-showroom .tab9{top:calc(var(--dial-y) + 44px)!important}
+ #templates.tpl9.arc-showroom .tray9{position:relative;inset:auto!important;transform:none;translate:none;margin:24px auto 0;padding:8px;width:auto;overflow:visible}
+ #templates.tpl9.arc-showroom .trayin{justify-content:center;gap:12px!important;flex-wrap:wrap;max-width:calc(100vw - 32px)}
+ #templates.tpl9.arc-showroom .showroom-motion .paint-start{position:relative;inset:auto!important;transform:none;translate:none;min-height:44px;display:flex;align-items:center;margin:18px auto 0;white-space:normal;text-align:center}
+ #templates.tpl9 .paint-craft{display:block;position:relative;inset:auto;order:2;width:auto;margin:28px 24px 0;padding:0;opacity:1;visibility:visible}
+ #templates.tpl9 .paint-craft li{list-style:none;display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;padding:20px 0;border-top:1px solid rgba(20,26,34,.14)}
+ #templates.tpl9 .paint-craft i{font:700 14px/26px Inter,sans-serif;color:#9aa4b0}
+ #templates.tpl9 .paint-craft b{display:block;font-size:16px;color:#141a22}
+ #templates.tpl9 .paint-craft span{display:block;margin-top:6px;font-size:14px;line-height:1.7;color:#3f4855}
+ #templates.tpl9 .paint-craft em{font-style:normal}
+}
