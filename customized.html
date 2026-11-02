@@ -544,8 +544,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 .brand-tab:hover:not(:disabled){color:var(--ink-70)}
 .brand-tab:disabled{opacity:.35;cursor:not-allowed}
 .brand-tab[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--ink)}
-.brand-logo{display:block;height:12px;width:auto;max-width:100%}
+.brand-logo{display:block;flex:none;height:12px;width:auto}
+/* Liv's artwork box includes the tall L and the i dot, so it needs a taller box to read at the same size as the other wordmarks */
+.brand-tab[data-brand=liv] .brand-logo{height:16px}
 @media(max-width:800px){.brand-tabs{gap:var(--gap-lg)}}
+/* phones: four wordmarks only fit in one row with tighter spacing — never squeeze the logos themselves */
+@media(max-width:767px){.brand-tabs{gap:10px}.brand-tab{padding:0 4px}.brand-logo{height:10px}.brand-tab[data-brand=liv] .brand-logo{height:13px}}
 
 /* Back link gets its own row; preview and panel columns start together below it. */
 #configPage>.intro-back{flex:none;align-self:flex-start;margin-bottom:8px}
@@ -777,9 +781,11 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 
 /* Series: a row of scene panels (echoes the custom-studio home). Hovered panel widens and pushes its neighbours. */
 #seriesPage{background:#fff}
-.series-row{display:flex;gap:16px;height:clamp(400px,calc(100dvh - var(--header-height) - 290px),720px)}
+.series-row{display:flex;gap:16px}
+/* desktop: photos follow the screen height but never exceed 360px */
+.series-media{height:clamp(240px,calc(100dvh - var(--header-height) - 400px),360px)}
 .series-item{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:20px;transition:flex-grow .7s var(--ease),opacity .4s var(--ease)}
-.series-media{position:relative;flex:1;min-height:0;border-radius:12px;overflow:hidden;background:var(--paper)}
+.series-media{position:relative;flex:none;min-height:0;border-radius:12px;overflow:hidden;background:var(--paper)}
 .series-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter .4s var(--ease)}
 .series-text{display:flex;flex-direction:column;gap:6px;min-height:84px;font-weight:900}
 .series-text h2{font-size:var(--fs-xl);font-weight:900;letter-spacing:.01em}
