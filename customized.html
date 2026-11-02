@@ -30,6 +30,7 @@
 @keyframes beam-spin{to{--beam-angle:360deg}}
 @media (prefers-reduced-motion:reduce){}
 .mobile-nav-toggle{display:none}
+.cfg-title{display:none}
 .page{width:var(--shell);max-width:none;padding:calc(max(100vw,1200px) / 1672 * 76 + 36px) 0 126px}
 .intro{margin-bottom:28px}h1{font-weight:800;letter-spacing:-.01em}h2{font-weight:800;letter-spacing:-.01em}
 .crumb{color:var(--ink-50)}.product-code{color:var(--ink-70)}
@@ -798,12 +799,19 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 .levels-shell .part-back{position:sticky;top:-12px;z-index:3;background:#fff;padding:6px 12px 6px 0;font-size:var(--fs-md);font-weight:700;color:var(--ink)}
 .levels-mark{position:fixed;left:50%;top:calc(50% + var(--header-height) / 2);transform:translate(-50%,-50%);font-size:clamp(120px,15.6vw,300px);font-weight:700;line-height:1;color:#000;opacity:.05;white-space:nowrap;pointer-events:none}
 .levels-shell .pick-head{position:relative}
+/* The shared footer sits inside the scrolling page (positioned so it covers the fixed watermark). It resets this page's
+   base type and link underline so it matches the storefront home footer, and takes the page's bottom spacing as a 96px gap
+   above it (the design system's section spacing) instead of leaving it below. */
+.pick-page>.foot,.fav-page>.foot{position:relative;margin-top:96px;font-size:16px;line-height:normal}
+.foot a{text-decoration:none}
+.pick-page:has(>.foot:not([hidden])),.fav-page:has(>.foot:not([hidden])){padding-bottom:0}
 .levels-grid{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:64px 32px;padding-inline:clamp(0px,calc(6.6vw - 36px),91px)}
 .level-card{position:relative;display:flex;flex-direction:column;gap:24px}
 .level-picture{position:relative;aspect-ratio:1133/850;display:grid;align-items:center}
 .level-frame{position:relative;width:100%;aspect-ratio:3/2;transition:transform .5s var(--ease)}
-.level-picture .pick-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
-.level-shadow{position:absolute;height:5%;transform:translateY(-50%);background:radial-gradient(closest-side,rgba(20,26,34,.28),rgba(20,26,34,.1) 60%,transparent);filter:blur(2px)}
+.level-picture .pick-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;filter:drop-shadow(0 18px 24px rgba(20,26,34,.16))}
+.level-shadow{position:absolute;width:24%;height:5%;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(20,26,34,.32),rgba(20,26,34,.1) 60%,transparent);filter:blur(1.5px);opacity:0;transition:opacity .3s var(--ease)}
+.level-frame.is-ready .level-shadow{opacity:1}
 .level-text{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .level-text h2{font-size:var(--fs-md);font-weight:700}
 .level-year{font-size:var(--fs-xs);font-weight:500;color:rgba(0,0,0,.5)}
@@ -874,14 +882,14 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-sh i,#stage .sp-sh b{position:absolute;border-radius:50%;filter:blur(3px)}
 #stage .sp-sh b{filter:blur(10px)}
 #stage.sp-flat .preview-toolbar,#stage.sp-flat .flat-nav{display:none!important}
-#stage .sp-bar{display:none;position:absolute;left:50%;bottom:14px;z-index:6;translate:-50% 0;align-items:center;gap:12px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.12)}
+#stage .sp-bar{display:none;position:absolute;left:50%;bottom:14px;z-index:6;translate:-50% 0;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.12)}
 #stage.sp-flat .sp-bar{display:flex;opacity:0;translate:-50% 8px;pointer-events:none;transition:opacity .3s ease,translate .3s ease}
 #stage.sp-flat .sp-bar.show{opacity:1;translate:-50% 0;pointer-events:auto}
 #stage.sp-flat.sp-can-lens .flat-viewer:not([data-detail=true]) .flat-slide{cursor:zoom-in}
 #stage.sp-flat.sp-lens .flat-slide{cursor:zoom-out!important;overflow:visible}
 #stage.sp-flat.sp-lens .flat-viewer{overflow:visible}
 #stage .sp-views{display:flex;align-items:center}
-#stage .sp-views button{position:relative;width:22px;height:24px;display:grid;place-items:center;border:0;padding:0;background:none;cursor:pointer}
+#stage .sp-views button{position:relative;width:22px;height:44px;display:grid;place-items:center;border:0;padding:0;background:none;cursor:pointer}
 #stage .sp-views button i{display:block;width:8px;height:8px;border-radius:999px;background:#C3CAD3;transition:background .2s,width .25s}
 #stage .sp-views button:hover i{background:#7A8492}
 #stage .sp-views button[aria-current] i{width:20px;background:#141A22}
@@ -890,7 +898,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-views button:hover::after,#stage .sp-views button:focus-visible::after{opacity:1;translate:-50% 0}
 #stage .sp-views button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px;border-radius:6px}
 #stage .sp-sep{width:1px;height:20px;background:#DCE1E7}
-#stage .sp-bgs{display:flex;align-items:center;gap:8px}
+#stage .sp-bgs{display:flex;align-items:center;gap:10px;flex:none}
 #stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
 #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
 #stage .sp-bgs button:focus-visible{outline:2px solid #1F4FE0;outline-offset:3px}
@@ -936,8 +944,191 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 <script>
 // Local customizer folder and published repository root share the storefront source.
 window.customStorefrontRoot=location.pathname.includes('/customized/')?'../ai-native-bike-commerce/storefront/':'storefront/';
-document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hdr1028">');
+document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hdr1028">');document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/footer.css?v=hdr1023b">');
 </script>
+<style id="responsive-layout">
+/* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
+   Desktop retains its panel scroll; compact screens use the document scroll. */
+.mobile-nav-toggle{display:none}
+@media(max-width:1023px){
+ :root{--header-height:64px;--shell:calc(100% - 32px);--mobile-purchase-height:92px}
+ html{height:auto;overflow:auto;scroll-padding-top:80px}
+ body{height:auto;min-height:100dvh;overflow:visible}
+ #siteHeader.site-nav{height:64px}
+ #siteHeader .logo{left:64px}#siteHeader .logo svg{height:18px;width:110px}
+ #siteHeader .icons{right:12px;gap:0}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:36px;min-height:44px;display:grid;place-items:center}
+ #siteHeader .icons svg{width:22px;height:22px}
+ .mobile-nav-toggle{display:grid;place-items:center;position:absolute;left:12px;top:10px;width:44px;height:44px;border-radius:8px}
+ #siteHeader .links{display:none;left:0;right:0;top:64px;bottom:auto;max-height:calc(100dvh - 64px);overflow:auto;background:var(--surface);padding:16px;gap:0;font-size:14px;border-bottom:1px solid var(--line)}
+ #siteHeader.mobile-menu-open .links{display:grid;grid-template-columns:1fr 1fr}
+ #siteHeader .links .top{min-height:48px;padding:12px}#siteHeader .links .top:after{display:none}
+ #siteHeader .dd{position:fixed;top:64px;bottom:0;max-height:calc(100dvh - 64px);overflow:auto}
+ #siteHeader .dd-in{padding:24px 16px;flex-direction:column;gap:24px}
+ #siteHeader .dd-kv{min-width:0}#siteHeader .dd-list{grid-template-columns:1fr;gap:8px}#siteHeader .dd-feat{margin-left:0;max-width:100%}
+ #configPage{width:100%;max-width:none;height:auto;min-height:100dvh;padding:80px 0 calc(var(--mobile-purchase-height) + 24px)!important}
+ #configPage>.intro-back{margin:0 16px 12px}
+ #configPage .workspace{display:block}
+ #configPage .preview-column{position:static;height:auto;display:block;margin:0}
+ #configPage .intro{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:'title' 'steps';gap:12px;margin:0 16px 16px;container-type:inline-size}
+ #configPage .intro h1{font-size:clamp(20px,5.5cqi,28px);line-height:1.3}
+ #configPage .intro .steps{justify-content:flex-start;gap:8px;margin:0;flex-wrap:nowrap}
+ #configPage .steps li{gap:8px;min-width:0}#configPage .steps li:not(:last-child):after{content:'';display:block;width:12px;height:1px;flex:none;background:var(--line)}
+ #configPage .step{font-size:0;gap:0;min-height:44px;padding:4px 0}
+ #configPage .step span{width:28px;height:28px;font-size:12px;flex:none}
+ #configPage .step[aria-current=step]{font-size:14px;gap:8px}
+ #configPage .preview-column .stage{height:clamp(240px,34svh,320px);min-height:0;max-height:none;aspect-ratio:auto;border-radius:0}
+ #configPage .stage .product-code{font-size:12px}
+ #configPage .preview-footer{display:none}
+ #configPage .flat-slide{margin:20px 28px 64px}
+ #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:44px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
+ #configPage #stage .sp-views{flex:1;min-width:0;justify-content:space-between}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:44px}
+ #configPage #stage .sp-sep{flex:none}
+ #configPage #stage .sp-bgs{gap:10px}#configPage #stage .sp-bgs button{width:24px;height:24px;flex:none;background-clip:padding-box;border:1px solid var(--line)}
+ #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:18px 18px 0 0;margin:0;overflow:visible}
+ #configPage .panel-column .panel{height:auto;min-height:0;overflow:visible}
+ #configPage .panel-column .panel.panel-header{padding:24px 16px 0;border-radius:18px 18px 0 0}
+ #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0 0 18px 18px;scroll-margin-top:80px}
+ #configPage #panelTools{top:16px;right:16px;gap:8px}
+ #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:44px}
+ #configPage .panel-head h2{font-size:24px}
+ #configPage .panel-head p,#configPage .signature-entry p,#configPage .size-help,#configPage .option-copy,#configPage .style-desc{font-size:14px;line-height:1.75}
+ #configPage .panel-column .purchase-bar{position:fixed;left:0;right:0;bottom:0;height:auto;z-index:25;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-purchase-bar,0 -6px 30px rgba(23,33,38,.012))}
+ #configPage .purchase-inner{gap:12px}#configPage .panel-column .price-number{font-size:22px;white-space:nowrap}
+ #configPage .panel-column #next{min-height:48px;height:auto;padding:12px 16px;border-radius:8px;font-size:14px;letter-spacing:0;white-space:normal}
+ #configPage .next-prefix{display:none}#configPage #next svg{display:none}
+ #configPage .price-delta{left:0;bottom:100%}
+ #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:44px;font-size:14px}
+ #configPage .gs-tier{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:12px}
+ #configPage .gs-img{width:64px;height:64px}
+ #configPage .gs-top{flex-direction:column;align-items:flex-start;gap:6px}
+ #configPage .gs-desc,#configPage .gs-note{font-size:14px;line-height:1.75;color:var(--ink-70)}
+ #configPage #panelHeader{scroll-margin-top:80px}
+ #configPage .style-cards{gap:8px}#configPage .style-card{padding:12px 8px}
+ #configPage .panel .paint-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #configPage .panel .paint-card strong{overflow-wrap:anywhere}
+ #configPage .part-row-text small{white-space:normal}
+ #configPage .color-set{gap:12px}#configPage .color-swatch{width:32px;height:32px;margin:6px}
+ .pick-page,.fav-page{height:auto;min-height:100dvh;overflow:visible;padding:88px 0 48px}
+ .pick-shell,.fav-shell{width:calc(100% - 32px)}
+ .series-row{display:grid;grid-template-columns:1fr;height:auto;gap:32px}
+ .series-media{flex:none;height:260px}.series-text{min-height:0}
+ .family-grid{grid-template-columns:minmax(0,1fr);max-width:520px;gap:48px;margin-inline:auto}
+ /* Custom cart rows: image, description and estimated price stack on compact screens. */
+ .gc-drawer .gc-item:has(>span:first-child){grid-template-columns:minmax(0,1fr);gap:16px}
+ .gc-drawer .gc-item:has(>span:first-child)>span:first-child{display:none}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph{width:100%;height:auto;aspect-ratio:3/2;max-height:200px;border-radius:10px}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph img{max-height:184px}
+ .gc-drawer .gc-item:has(>span:first-child)>.gc-ph+div{min-width:0}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-top{grid-template-columns:minmax(0,1fr);gap:12px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left;font-size:18px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-name{font-size:16px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-meta{font-size:14px;line-height:1.75}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-row{margin-top:16px;gap:24px}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-link{font-size:14px;min-height:44px;display:inline-flex;align-items:center}
+ .profile-menu{position:fixed;top:72px;right:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100dvh - 88px);overflow:auto}
+ .dialog{padding:28px;width:calc(100vw - 32px);max-height:calc(100dvh - 32px);border-radius:18px}
+ .dialog input:not([type=checkbox]):not([type=radio]),.dialog select,#configPage input[type=text],#configPage select{font-size:16px}
+ .share-dialog{padding:0}.share-layout{grid-template-columns:1fr}.share-figure{padding:48px 16px 16px}.share-info{padding:24px}
+ .toast{bottom:calc(var(--mobile-purchase-height) + 16px);font-size:14px}
+}
+@media(min-width:768px) and (max-width:1023px){
+ :root{--shell:calc(100% - 48px)}
+ #configPage>.intro-back{margin-left:24px}#configPage .intro{margin-left:24px;margin-right:24px}
+ #configPage .preview-column .stage{height:clamp(300px,36svh,400px)}
+ #configPage .step{font-size:14px;gap:8px}#configPage .intro .steps{gap:12px}
+ #configPage .panel-column .panel.panel-header{padding:24px 28px 0}#configPage .panel-column .panel.panel-content{padding:16px 28px 28px}
+ #configPage #panelTools{top:24px;right:28px}
+ .series-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .family-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:48px 32px}
+ .pick-shell,.fav-shell{width:calc(100% - 48px)}
+}
+/* Phone config page: one bar pinned under the header — back link, bike name beneath it, share / save on the right, then the steps
+   (script moves .intro out of the preview column on phones). Scrolling down tucks the whole bar behind the header; scrolling up brings it back.
+   On paint, parts and review (where every pick changes the bike) the stage stays pinned under the bar and the panel title under the stage;
+   on gear + size the panel title pins under the bar. --cfg-nav, --cfg-title and --cfg-steps must match the heights below. */
+@media(max-width:767px){
+ #configPage{--cfg-nav:30px;--cfg-title:34px;--cfg-steps:52px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
+ #configPage.bar-hidden{--cfg-pin:64px}
+ #configPage>.intro-back,#configPage>.cfg-title,#configPage>.intro,#configPage #panelTools{transition:translate .3s var(--ease)}
+ #configPage.bar-hidden>.intro-back,#configPage.bar-hidden>.cfg-title,#configPage.bar-hidden>.intro,#configPage.bar-hidden #panelTools{translate:0 calc(-1 * var(--cfg-bar) - 12px)}
+ #configPage .preview-column,#configPage #panelHeader{transition:top .3s var(--ease)}
+ html:has(#configPage:not([hidden])) #siteHeader.site-nav{background:var(--paper,#F3F5F7);box-shadow:none}
+ #configPage{padding:64px 0 0!important}
+ /* the white panel runs to the bottom of the screen (and under the price bar) even when its content is short */
+ #configPage .panel-column{min-height:calc(100svh - 64px - var(--cfg-nav) - var(--cfg-title) - var(--cfg-steps) - var(--cfg-preview,30svh));padding-bottom:var(--mobile-purchase-height,75px);background:#fff}
+ #configPage>.intro-back{position:sticky;top:64px;z-index:22;height:var(--cfg-nav);margin:0 16px;padding:0;align-items:flex-end;background:var(--paper,#F3F5F7);box-shadow:0 0 0 100vmax var(--paper,#F3F5F7);clip-path:inset(0 -100vmax)}
+ #configPage>.cfg-title{display:block;position:sticky;top:calc(64px + var(--cfg-nav));z-index:22;height:var(--cfg-title);margin:0;padding:2px 148px 8px 16px;background:var(--paper,#F3F5F7);font-size:18px;font-weight:700;line-height:24px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #configPage #panelTools{position:fixed;top:calc(64px + (var(--cfg-nav) + var(--cfg-title) - 44px) / 2);right:16px;z-index:23}
+ #configPage #panelTools .fav-toggle,#configPage #panelTools .save-btn{background:#fff}
+ #configPage #panelHeader .panel-head.head-save{padding-right:0;min-height:0}
+ #configPage .preview-column{background:var(--paper,#F3F5F7)}
+ /* the bike name now lives in the bar; the h1 stays for screen readers */
+ #configPage>.intro{position:sticky;top:calc(64px + var(--cfg-nav) + var(--cfg-title));z-index:22;height:var(--cfg-steps);margin:0;padding:0 16px 8px;gap:0;align-content:start;background:var(--paper,#F3F5F7)}
+ #configPage .intro h1{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ /* heading steps under the 18px bike name: h2 16 → h3 14 bold → h4 14 grey (the type scale has nothing between 14 and 16) */
+ #configPage .panel-head h2,#configPage .panel h2,.dialog h2,.share-info h2{font-size:16px;line-height:1.4}
+ #configPage .panel h3,#configPage .panel .style-head h3,#configPage .panel .review-group h3,.dialog h3{font-size:14px}
+ /* series + models: the page title is 24px here, so the card names step down to 20 */
+ .series-text h2,.family-card .level-text h2{font-size:var(--fs-lg)}
+ /* 3D keeps a fixed stage; the photo version is as tall as the photo */
+ #configPage .preview-column .stage{height:calc((50svh - 92px) * .8);padding-bottom:0}
+ #configPage .preview-column #stage.sp-flat{height:auto;padding-bottom:8px}
+ #configPage #stage.sp-flat .flat-slide{flex:none;aspect-ratio:1.94;margin:4px 28px 0}
+ #configPage #stage.sp-flat .flat-viewer[data-detail=true] .flat-slide{margin:4px 0 0}
+ #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) .preview-column{position:sticky;top:var(--cfg-pin);z-index:21}
+ #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) #panelHeader{position:sticky;top:calc(var(--cfg-pin) + var(--cfg-preview,30svh));z-index:20;scroll-margin-top:calc(var(--cfg-pin) + var(--cfg-preview,30svh))}
+ #configPage:has(#panel[data-screen=groupset]) #panelHeader{position:sticky;top:var(--cfg-pin);z-index:20;scroll-margin-top:var(--cfg-pin)}
+ /* angle dots + backgrounds: hidden until the stage is tapped (stage-preview.js), then a small pill over the bottom of the photo */
+ #configPage #stage .sp-bar{bottom:6px;height:28px;width:auto;padding:0 10px;gap:8px}
+ #configPage #stage.sp-flat .sp-bar:not(.show){opacity:0;translate:-50% 8px;pointer-events:none}
+ #configPage #stage .sp-views{flex:none}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:16px;height:28px}
+ #configPage #stage .sp-views button[aria-current]{width:24px}
+ #configPage #stage .sp-views button i{width:6px;height:6px}#configPage #stage .sp-views button[aria-current] i{width:16px}
+ #configPage #stage .sp-sep{height:14px}
+ #configPage #stage .sp-bgs{gap:8px}#configPage #stage .sp-bgs button{width:18px;height:18px}
+ #configPage #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 1.5px #fff,0 0 0 3px #141A22}
+ #configPage .stage .preview-toolbar .background-switch{height:28px;min-height:28px;padding:0 10px;gap:8px;font-size:12px}
+ #configPage .stage .preview-toolbar .background-choice{width:18px;height:18px}
+ #configPage .panel-column #next{min-height:44px;height:44px;padding:0 16px}
+ #configPage .panel-column .purchase-bar{padding:8px 16px calc(8px + env(safe-area-inset-bottom))}
+ /* a pinned panel title without a tab row (review) keeps some white under it so the list doesn't butt against the heading */
+ #configPage #panelHeader:not(:has(.segmented)){padding-bottom:16px}
+ /* the price-change tag sits on the 目前總價 line, right of the label, instead of floating above the bar */
+ #configPage .price-cluster>div{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px}
+ #configPage .price-cluster .price-number{grid-column:1/-1}
+ #configPage .price-cluster .price-delta{position:static;justify-self:start;grid-row:1;grid-column:2;padding:0 8px;line-height:18px}
+ #configPage .panel .paint-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ /* 自由配色 — keep the bike and the controls in one view:
+    1. the zone tabs (車架 / 上下車架 / Logo) pin under the panel title, so switching zone never needs a scroll back up;
+       same line width and 10px top space as the first tab row (the side shadows only cover the gutters while pinned) */
+ #configPage .panel .zone-tabs{position:sticky;top:calc(var(--cfg-pin) + var(--cfg-preview,30svh) + var(--cfg-ph,96px));z-index:19;margin-top:0;padding-top:10px;background:#fff;box-shadow:-16px 0 #fff,16px 0 #fff;transition:top .3s var(--ease)}
+ /* 2. each colour series is one row that swipes sideways (the picked colour is scrolled into view on render) */
+ #configPage .panel .color-set{display:flex;flex-wrap:nowrap;gap:12px;position:relative;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-inline:16px;scrollbar-width:none;margin:0 -16px;padding:6px 16px 8px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 32px),transparent)}
+ #configPage .panel .color-set::-webkit-scrollbar{display:none}
+ #configPage .panel .color-set .color-swatch{flex:none;margin:0;scroll-snap-align:start}
+ #configPage .panel .swatch-group+.swatch-group{margin-top:12px}
+ /* 3. paint-style cards: name + price only, three across */
+ #configPage .style-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ #configPage .style-card{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:6px;row-gap:2px;padding:10px}
+ #configPage .style-card .style-dot{width:18px;height:18px;margin:0}
+ #configPage .style-card .style-add{grid-column:1/-1}
+ #configPage .style-card .style-name small,#configPage .style-card .style-desc{display:none}
+ #configPage .style-card .style-name b{font-size:14px}
+ #configPage .style-card .style-add{margin:0;white-space:nowrap}
+ /* 4. finish: a small two-option toggle on the 漆面 heading's line */
+ #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:auto auto;justify-content:space-between;align-items:center;row-gap:6px}
+ #configPage .zone-section:has(>.finish-list)>h3{margin:0}
+ #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,auto);gap:6px}
+ #configPage .zone-section>.finish-list .finish-row{min-height:36px;padding:0 14px;border-radius:999px;gap:6px}
+ #configPage .zone-section:has(>.finish-list)>.size-help{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-50)}
+}
+@media(max-width:374px){
+ #siteHeader .logo{left:56px}#siteHeader .logo svg{height:15px;width:86px}#siteHeader .icons>a,#siteHeader .icons>.orb-wrap,#siteHeader .icons>.profile-wrap{width:32px}
+ #configPage .panel-column .price-number{font-size:20px}
+}
+</style>
 </head>
 <body>
 <noscript><p class="noscript">請啟用 JavaScript 以操作客製車。</p></noscript>
@@ -957,10 +1148,12 @@ const wrap=document.createElement('span');wrap.className='profile-wrap';member.b
 member.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();member.click()}});
 })();
 </script>
-<main class="page" id="configPage"><button type="button" class="part-back intro-back" id="backToLevels"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>返回車款選擇</button><div class="workspace"><section class="preview-column" aria-label="客製車預覽"><div class="intro"><div><h1 id="configTitle">打造你的專屬 DEFY</h1></div><ol class="steps" aria-label="客製步驟"><li class="step-gs"><button class="step" data-step="groupset"><span>1</span>變速與尺寸</button></li><li><button class="step" data-step="paint"><span>1</span>塗裝與簽名</button></li><li><button class="step" data-step="parts"><span>2</span>尺寸與配備</button></li><li><button class="step" data-step="review"><span>3</span>確認配置</button></li></ol></div><div id="editingBanner" class="return-banner" hidden><span>正在編輯購物車中的客製車，完成後將更新原品項。</span><button id="cancelEdit" class="text-button">取消編輯</button></div><div class="stage" id="stage" data-stage-background="light"><div class="bike-wrap" id="bikePreview"></div><div class="bike-wrap" id="flatPreview" hidden></div><p class="product-code" id="configCode">DEFY ADVANCED SL · DURA-ACE</p><div class="preview-toolbar"><div class="background-switch" role="group" aria-label="背景"><span>背景</span><button type="button" data-stage-background="light" class="background-choice light" aria-label="淺色背景" aria-pressed="true"></button><button type="button" data-stage-background="dark" class="background-choice dark" aria-label="深色背景" aria-pressed="false"></button><button type="button" data-stage-background="outdoor" class="background-choice outdoor" aria-label="山路背景" aria-pressed="false"></button></div></div><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"/><path d="M18.5 3v4.4h-4.4M5.5 21v-4.4h4.4"/></svg>拖曳旋轉</span></div></section><div class="panel-column"><div class="panel panel-header" id="panelHeader"></div><section class="panel panel-content" id="panel" tabindex="-1" aria-label="客製設定"></section><footer class="purchase-bar panel-footer"><div class="purchase-inner"><div class="price-cluster"><div><small>目前總價</small><div class="price-number" id="totalPrice" aria-hidden="true"></div><span class="price-delta" id="priceDelta" aria-hidden="true"></span><span class="sr-only" id="totalPriceLive" aria-live="polite" aria-atomic="true"></span></div></div><div class="actions"><button class="btn" id="next"></button></div></div></footer></div></div></main>
+<main class="page" id="configPage"><button type="button" class="part-back intro-back" id="backToLevels"><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>返回車款選擇</button><p class="cfg-title" id="cfgTitle" aria-hidden="true"></p><div class="workspace"><section class="preview-column" aria-label="客製車預覽"><div class="intro"><div><h1 id="configTitle">打造你的專屬 DEFY</h1></div><ol class="steps" aria-label="客製步驟"><li class="step-gs"><button class="step" data-step="groupset"><span>1</span>變速與尺寸</button></li><li><button class="step" data-step="paint"><span>1</span>塗裝與簽名</button></li><li><button class="step" data-step="parts"><span>2</span>尺寸與配備</button></li><li><button class="step" data-step="review"><span>3</span>確認配置</button></li></ol></div><div id="editingBanner" class="return-banner" hidden><span>正在編輯購物車中的客製車，完成後將更新原品項。</span><button id="cancelEdit" class="text-button">取消編輯</button></div><div class="stage" id="stage" data-stage-background="light"><div class="bike-wrap" id="bikePreview"></div><div class="bike-wrap" id="flatPreview" hidden></div><p class="product-code" id="configCode">DEFY ADVANCED SL · DURA-ACE</p><div class="preview-toolbar"><div class="background-switch" role="group" aria-label="背景"><span>背景</span><button type="button" data-stage-background="light" class="background-choice light" aria-label="淺色背景" aria-pressed="true"></button><button type="button" data-stage-background="dark" class="background-choice dark" aria-label="深色背景" aria-pressed="false"></button><button type="button" data-stage-background="outdoor" class="background-choice outdoor" aria-label="山路背景" aria-pressed="false"></button></div></div><span class="drag-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14.5-4.6M20 12a8 8 0 0 1-14.5 4.6"/><path d="M18.5 3v4.4h-4.4M5.5 21v-4.4h4.4"/></svg>拖曳旋轉</span></div></section><div class="panel-column"><div class="panel panel-header" id="panelHeader"></div><section class="panel panel-content" id="panel" tabindex="-1" aria-label="客製設定"></section><footer class="purchase-bar panel-footer"><div class="purchase-inner"><div class="price-cluster"><div><small>目前總價</small><div class="price-number" id="totalPrice" aria-hidden="true"></div><span class="price-delta" id="priceDelta" aria-hidden="true"></span><span class="sr-only" id="totalPriceLive" aria-live="polite" aria-atomic="true"></span></div></div><div class="actions"><button class="btn" id="next"></button></div></div></footer></div></div></main>
 <main class="pick-page" id="seriesPage" aria-labelledby="seriesTitle" hidden></main>
 <main class="pick-page" id="levelsPage" aria-labelledby="levelsTitle" hidden></main>
 <main class="fav-page" id="favPage" aria-labelledby="favTitle" hidden><div class="fav-shell"><div class="fav-heading"><h1 id="favTitle">已儲存的客製車</h1><span id="favTotal"></span></div><div id="favBody"></div></div></main>
+<footer class="foot" id="siteFooter" hidden></footer>
+<script>document.write('<script src="'+customStorefrontRoot+'js/footer.js?v=hdr1023b"><\/script>');</script>
 
 <dialog class="dialog share-dialog" id="shareDialog" aria-labelledby="shareTitle"><button class="icon-button share-close" data-close="shareDialog" aria-label="關閉分享">✕</button><div class="share-layout"><figure class="share-figure"><img id="shareImg" width="1200" height="900" alt="你的客製設計"></figure><div class="share-info"><p class="share-kicker">分享你的設計</p><h2 id="shareTitle"></h2><p class="share-sub" id="shareSub">2026 年式客製塗裝</p><dl class="share-summary" id="shareSummary"></dl><ul class="share-actions"><li><button type="button" class="btn" id="shareCopy"><span>複製連結</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg></button></li><li><button type="button" class="btn secondary" id="shareImage"><span>下載設計卡</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4.5 19.5h15"/></svg></button></li></ul><div class="share-social" aria-label="社群分享"><button type="button" id="shareLine" aria-label="分享到 LINE" title="分享到 LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 10.5C22 5.8 17.5 2 12 2S2 5.8 2 10.5c0 4.2 3.5 7.7 8.2 8.4.4.1.5.3.4.7l-.3 2c-.1.5.2.6.6.4C16.7 18.6 22 14.7 22 10.5Z"/><text x="12" y="13" text-anchor="middle" font-size="7" font-weight="800" font-family="Arial" fill="white">LINE</text></svg></button><button type="button" id="shareInstagram" aria-label="下載設計卡以分享至 Instagram" title="下載設計卡以分享至 Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></button><button type="button" id="shareFacebook" aria-label="分享到 Facebook" title="分享到 Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 22v-9h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.5c-.4-.1-1.6-.2-3-.2-3 0-5 1.8-5 5.2V9H7v4h3v9Z"/></svg></button></div></div></div></dialog>
 <dialog class="dialog" id="leaveDialog" aria-labelledby="leaveTitle"><div class="dialog-header"><h2 id="leaveTitle">要儲存變更嗎？</h2><button class="icon-button" data-close="leaveDialog" aria-label="留在此頁">✕</button></div><p class="dialog-description">你有尚未儲存的變更，離開後這些變更會遺失。儲存後可從右上角會員選單再回來編輯。</p><div class="dialog-actions"><button class="btn secondary" id="leaveDiscard">不儲存</button><button class="btn" id="leaveSave">儲存並離開</button></div></dialog><dialog class="dialog" id="infoDialog" aria-labelledby="infoTitle"><div class="dialog-header"><h2 id="infoTitle"></h2><button class="icon-button" data-close="infoDialog" aria-label="關閉說明">✕</button></div><div id="infoBody"></div><div class="dialog-actions"><button class="btn" data-close="infoDialog">知道了</button></div></dialog>
@@ -1190,10 +1383,14 @@ body.innerHTML=`<div class="pick-grid">${favorites.map(f=>{const m=modelOf(f.con
 const VIEWS={series:'#seriesPage',levels:'#levelsPage',config:'#configPage',favorites:'#favPage'};
 let pickBrand='giant',currentSeries='tcr';
 let currentView='';
+// One shared site footer: it sits at the end of whichever scrolling page is showing (series, models, saved designs).
+// The configurator is a full-screen tool with its own price bar, so it has no footer.
+const FOOTER_HOSTS={series:'#seriesPage',levels:'#levelsPage',favorites:'#favPage'};
+function placeFooter(){const f=$('#siteFooter')||placeFooter.el,host=FOOTER_HOSTS[currentView];if(!f)return;placeFooter.el=f;f.hidden=!host;if(host)$(host).append(f)}
 function showView(name){currentView=name;Object.entries(VIEWS).forEach(([k,sel])=>$(sel).hidden=k!==name);const fav=name==='favorites';
   if(name==='series')renderSeriesPage();if(name==='levels')renderLevelsPage();if(name==='config')render();
   if(fav){renderFavorites();$('#favPage').scrollTop=0;$('#openFav').setAttribute('aria-current','page');$('#navCustomized').removeAttribute('aria-current');$('#favTitle').setAttribute('tabindex','-1');$('#favTitle').focus({preventScroll:true})}else{$('#openFav').removeAttribute('aria-current');$('#navCustomized').setAttribute('aria-current','page')}
-  const page=$(VIEWS[name]);if(page&&name!=='config')page.scrollTop=0}
+  placeFooter();const page=$(VIEWS[name]);if(page&&name!=='config')page.scrollTop=0;if(matchMedia('(max-width:1023px)').matches)window.scrollTo(0,0)}
 // The favorites view gets its own history entry so the browser back button returns to the configurator.
 // Routes: '' / #series → series, #levels/<series>, #config, #favorites, #design=… (shared link → config)
 function applyRoute(h){if(h==='#favorites')showView('favorites');else if(h.startsWith('#levels/')){currentSeries=h.slice(8);showView('levels')}else if(h==='#config'||h.startsWith('#design='))showView('config');else showView('series')}
@@ -1244,15 +1441,17 @@ function renderPartPager(){const el=$('#partPager'),i=PARTS.findIndex(p=>p.id===
 $('#panelHeader').addEventListener('click',e=>{const b=e.target.closest('[data-part-jump]');if(!b)return;const dir=b.classList.contains('prev')?'prev':'next';partDetail=b.dataset.partJump;render();$('#panel').scrollTop=0;($(`#partPager .pager-link.${dir}[data-part-jump]`)||$('#partPager [data-part-jump]'))?.focus({preventScroll:true})});
 function render(focus=false){config.custom.template=styleId(config.custom.template);const focused=document.activeElement;const focusKey=focused?.matches('button,input')?['data-edit-template','data-style','data-paint','data-paint-tab','data-sig-color','data-template','data-extra','data-open-zone','data-zone-tab','data-zone-finish','data-sig-font','data-sig-position','data-size','data-finish','data-color','data-parts-tab','data-option'].find(a=>focused.hasAttribute(a)):null;const focusValue=focusKey?focused.getAttribute(focusKey):null;const colorKey=focused?.dataset.colorKey;const inputValue=focused?.value;
 $('#panel').dataset.screen=page;
+// Sideways colour rows start at the left; re-rendering the same screen (picking a colour) keeps where each row was swiped to.
+const swipeX=$$('#panel .color-set').map(set=>set.scrollLeft);
 // Entrance animations play only when the view changes; picking a colour or part re-renders the same view, so it updates in place.
 const viewKey=[page,gsTab,paintTab,paintDetail,partsTab,partDetail].join('|');$('.panel-column').classList.toggle('is-update',viewKey===lastViewKey);$('.panel-column').classList.toggle('zone-same',viewKey===lastViewKey&&paintZone===lastZone);lastViewKey=viewKey;lastZone=paintZone;const screen=document.createElement('div');screen.innerHTML=page==='groupset'?renderGroupset():page==='paint'?renderPaint():page==='parts'?renderParts():renderReview();const head=screen.querySelector(':scope>.panel-top');$('#panelHeader').replaceChildren(...(head?head.childNodes:[]));head?.remove();
   // Share and save stay in the same top-right spot on every screen: detail screens (a part's options, paint settings) don't render them in their own head, so they live in one fixed element (#panelTools) beside the header that is created once and never re-rendered — switching screens doesn't flash them, same as the total price.
   $('#panelHeader').querySelectorAll('.head-tools').forEach(x=>x.remove());if(!$('#panelTools')){$('#panelHeader').insertAdjacentHTML('afterend',headTools().replace('class="head-tools"','class="head-tools head-tools-fixed" id="panelTools"'));const T=$('#panelTools');T.addEventListener('pointerover',showTip);T.addEventListener('focusin',showTip);T.addEventListener('pointerout',e=>{if(e.target.closest?.('[data-tip]'))hideTip()});T.addEventListener('focusout',hideTip)}$('#panel').replaceChildren(...screen.childNodes);
 paintPreview();countTo($('#totalPrice'),total(config),true);$('#totalPriceLive').textContent=money(total(config));const tp=$('#templatePrice');if(tp)countTo(tp,Number(tp.dataset.count));$('#editingBanner').hidden=editingId===null;
-markSteps(page);fillThumbs();syncFavorite();$('#configTitle').textContent=hasGroupset(config)?familyName(modelOf(config)):modelOf(config).name;$('#configCode').textContent=modelTitle(config);
+markSteps(page);fillThumbs();if($('.panel-column').classList.contains('is-update'))$$('#panel .color-set').forEach((set,i)=>set.scrollLeft=swipeX[i]||0);syncFavorite();$('#configTitle').textContent=$('#cfgTitle').textContent=hasGroupset(config)?familyName(modelOf(config)):modelOf(config).name;$('#configCode').textContent=modelTitle(config);
 
 $('#next').textContent=adding?'加入中…':returnToReview?'儲存並返回確認 →':page==='groupset'?(gsTab==='drive'?'下一步：車架尺寸 →':'下一步：塗裝與簽名 →'):page==='paint'?(hasGroupset(config)?'下一步：騎乘配備 →':'下一步：尺寸與配備 →'):page==='parts'?(partsTab==='size'?'下一步：騎乘配備 →':partsTab==='parts'?'下一步：升級加購 →':'下一步：確認配置 →'):editingId!==null?'更新購物車':'加入購物車';if($('#next').textContent.endsWith(' →')){$('#next').innerHTML='<span>'+$('#next').textContent.slice(0,-2).replace(/^下一步：/,'<span class="next-prefix">下一步：</span>')+'</span>'+CHEV_R+'';}$('#next').disabled=adding;renderPartPager();
-if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
+if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;if(matchMedia('(max-width:1023px)').matches)$('#panelHeader').scrollIntoView({block:'start'});}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
 const STEPS=['groupset','paint','parts','review'];
 function markSteps(current){const gs=hasGroupset(config);{const b=document.querySelector('.step[data-step="parts"]');if(b)b.lastChild.textContent=gs?'騎乘配備':'尺寸與配備';}$$('.step-gs').forEach(li=>li.hidden=!gs);let n=0;$$('.step').forEach(b=>{if(b.dataset.step!=='groupset'||gs)b.querySelector('span').textContent=++n;});$$('.step').forEach(b=>{b.removeAttribute('aria-current');if(b.dataset.step===current)b.setAttribute('aria-current','step');b.classList.toggle('done',STEPS.indexOf(b.dataset.step)<STEPS.indexOf(current));});}
 function requireSize(message){if(config.size)return true;if(hasGroupset(config)){page='groupset';gsTab='size';gsView='side';partDetail=null;render(true);$('.size-opt').focus({preventScroll:true});return false}page='parts';partsTab='size';partDetail=null;render(true);$('.size-opt').focus({preventScroll:true});return false}
@@ -1359,11 +1558,11 @@ const pickTabs=(label,key,items,current)=>`<div class="pick-tabs" role="group" a
 // (left, top, width as fractions), so the cut-out can lift off exactly over it before riding out to the right.
 const SERIES_STAGE={propel:{slogan:'破風高速，節奏不停。',bike:[.10,.10,.80]},tcr:{slogan:'輕量爬坡，俐落加速。',bike:[.098,.11,.79]},defy:{slogan:'舒適耐力，騎向更遠。',bike:[.105,.14,.785]},trinity:{slogan:'專注計時，突破極限。',bike:[.105,.11,.86]}};
 function renderSeriesPage(){
-  $('#seriesPage').innerHTML=`<div class="pick-shell"><a class="part-back series-back" href="storefront/custom-studio/index.html">${CHEV_L}返回客製化介紹</a><div class="pick-head"><h1 id="seriesTitle">打造你的客製車</h1><p>設計你的整車與配件，或從範本開始，打造獨一無二的騎乘體驗。</p></div><div class="brand-tabs" role="group" aria-label="品牌">${BRANDS.map(b=>`<button type="button" class="brand-tab" data-brand="${b.id}" aria-pressed="${pickBrand===b.id}" aria-label="${b.name}${b.id==='giant'?'':'（即將開放）'}" ${b.id==='giant'?'':'disabled'}>${BRAND_LOGO[b.id]}</button>`).join('')}</div><div class="series-row">${SERIES.map(x=>{const ms=MODELS.filter(m=>m.series===x.id&&!m.soon),from=ms.length?Math.min(...ms.map(m=>m.base)):0;return `<article class="series-item" data-series-item="${x.id}"><div class="series-media"><img class="series-scene" src="${BIKE_IMG['scene-'+x.id]}" alt="" decoding="async"></div><div class="series-text"><h2>${x.name}</h2><p>${SERIES_STAGE[x.id].slogan}</p><p class="series-price">${from?'起價 '+money(from):'即將開放'}</p></div><button type="button" class="pick-hit" data-series="${x.id}" aria-label="選擇 ${x.name} 車系"></button></article>`}).join('')}</div></div>`}
+  $('#seriesPage').innerHTML=`<div class="pick-shell"><a class="part-back series-back" href="storefront/custom-studio/index.html">${CHEV_L}返回客製化介紹</a><div class="pick-head"><h1 id="seriesTitle">打造你的客製車</h1><p>設計你的整車與配件，或從範本開始，打造獨一無二的騎乘體驗。</p></div><div class="brand-tabs" role="group" aria-label="品牌">${BRANDS.map(b=>`<button type="button" class="brand-tab" data-brand="${b.id}" aria-pressed="${pickBrand===b.id}" aria-label="${b.name}${b.id==='giant'?'':'（即將開放）'}" ${b.id==='giant'?'':'disabled'}>${BRAND_LOGO[b.id]}</button>`).join('')}</div><div class="series-row">${SERIES.map(x=>{const ms=MODELS.filter(m=>m.series===x.id&&!m.soon),from=ms.length?Math.min(...ms.map(m=>m.base)):0;return `<article class="series-item" data-series-item="${x.id}"><div class="series-media"><img class="series-scene" src="${BIKE_IMG['scene-'+x.id]}" alt="" decoding="async"></div><div class="series-text"><h2>${x.name}</h2><p>${SERIES_STAGE[x.id].slogan}</p><p class="series-price">${from?'起價 '+money(from):'即將開放'}</p></div><button type="button" class="pick-hit" data-series="${x.id}" aria-label="選擇 ${x.name} 車系"></button></article>`}).join('')}</div></div>`;placeFooter()}
 // Choosing a series: the bike lifts out of its photo and rides off to the right; the models page then rolls in from the left.
-// Where each product photo's tyres meet the ground (left, right, bottom as fractions of the 660×440 photo), measured from
-// the photos. Only some official photos carry a ground shadow, so the model cards draw one consistent shadow from these.
-const BIKE_FOOT={"defy-adv1":[0.077,0.921,0.875],"defy-adv2-26":[0.077,0.921,0.884],"defy-adv2-27":[0.077,0.921,0.886],"defy-pro0-axs":[0.077,0.921,0.88],"defy-pro0":[0.077,0.921,0.882],"defy-pro1":[0.077,0.921,0.875],"defy-sl0":[0.077,0.92,0.882],"defy-sl1":[0.077,0.921,0.882],"propel-pro0-axs":[0.077,0.921,0.9],"propel-pro0-da":[0.098,0.9,0.875],"propel-pro1-axs":[0.077,0.921,0.898],"propel-sl0-campy":[0.079,0.92,0.898],"propel-sl0-red":[0.077,0.921,0.9],"propel-sl1-force":[0.098,0.9,0.88],"propel-sl1":[0.077,0.921,0.898],"tcr-adv0-axs":[0.077,0.921,0.886],"tcr-adv2-kom":[0.077,0.921,0.886],"tcr-pro0-axs":[0.077,0.921,0.882],"tcr-pro0-kom":[0.077,0.921,0.884],"tcr-sl0-red":[0.077,0.921,0.898],"tcr-sl0-team":[0.079,0.918,0.895],"tcr-sl1-gts":[0.098,0.9,0.873],"tcr-sl1-kom":[0.077,0.921,0.902],"trinity-sl0-25":[0.077,0.921,0.889],"trinity-sl0-27":[0.077,0.921,0.916],"trinity-sl1-25":[0.077,0.921,0.92],"trinity-sl1-27":[0.077,0.921,0.918],"trinity-sl2-25":[0.077,0.921,0.92],"trinity-sl2-27":[0.077,0.921,0.918],"propel-pro0-di2":[0.098,0.9,0.877]};
+// Where each product photo's two tyres touch the ground (rear x, front x, ground y — fractions of the 660×440 photo),
+// measured from the photos. Model cards draw one contact shadow under each tyre, per the design system.
+const BIKE_FOOT={"defy-adv1":[0.254,0.746,0.877],"defy-adv2-26":[0.248,0.749,0.886],"defy-adv2-27":[0.248,0.748,0.889],"defy-pro0-axs":[0.253,0.751,0.884],"defy-pro0":[0.256,0.746,0.884],"defy-pro1":[0.259,0.739,0.877],"defy-sl0":[0.248,0.751,0.884],"defy-sl1":[0.247,0.749,0.884],"propel-pro0-axs":[0.258,0.749,0.902],"propel-pro0-da":[0.262,0.736,0.877],"propel-pro1-axs":[0.251,0.752,0.9],"propel-sl0-campy":[0.25,0.748,0.9],"propel-sl0-red":[0.249,0.75,0.902],"propel-sl1-force":[0.262,0.736,0.882],"propel-sl1":[0.25,0.75,0.9],"tcr-adv0-axs":[0.254,0.749,0.889],"tcr-adv2-kom":[0.255,0.747,0.889],"tcr-pro0-axs":[0.255,0.749,0.884],"tcr-pro0-kom":[0.246,0.758,0.886],"tcr-sl0-red":[0.256,0.749,0.9],"tcr-sl0-team":[0.244,0.742,0.898],"tcr-sl1-gts":[0.263,0.735,0.875],"tcr-sl1-kom":[0.249,0.748,0.905],"trinity-sl0-25":[0.243,0.757,0.891],"trinity-sl0-27":[0.249,0.758,0.918],"trinity-sl1-25":[0.252,0.75,0.923],"trinity-sl1-27":[0.252,0.757,0.92],"trinity-sl2-25":[0.255,0.748,0.923],"trinity-sl2-27":[0.248,0.755,0.92],"propel-pro0-di2":[0.263,0.736,0.88]};
 let riding=false,levelsEnter=false;
 // 選車系 → 選車款：其他卡片淡出、整頁淡出，換頁後標題和大卡一起淡入（約 0.8 秒）
 function rideOut(id){const item=$(`[data-series-item="${id}"]`);if(riding)return;
@@ -1379,8 +1578,10 @@ function renderLevelsPage(){const x=SERIES.find(v=>v.id===currentSeries)||SERIES
   fams.forEach(f=>{const live=f.models.filter(m=>!m.soon);f.demo=f.models.find(m=>DEMO_MODELS.includes(m.id));f.cover=f.demo||live.sort((a,b)=>b.base-a.base)[0]||f.models[0];f.from=live.length?Math.min(...live.map(m=>m.base)):0;
     f.presets=f.demo&&GROUPSETS[f.demo.id]?GS_TIERS.map(t=>t.name):[...new Set(f.models.map(m=>m.name.replace(f.name,'').trim()||m.name))]});   // 不同年式同名只算一次
   const rank=n=>/ SL$/.test(n)?0:/ Pro$/.test(n)?1:2;fams.sort((a,b)=>rank(a.name)-rank(b.name));
-  page.innerHTML=`<div class="pick-shell levels-shell"><span class="levels-mark" aria-hidden="true">${x.name}</span><button type="button" class="part-back" data-pick-back>${CHEV_L}返回車系</button><div class="pick-head"><h1 id="levelsTitle">選擇你的 ${x.name} 車款</h1><p>先選車架系列，下一步再選變速套件與尺寸。</p></div><div class="levels-grid family-grid" style="--n:${fams.length}">${fams.map((f,i)=>{const m=f.cover;return `<article class="level-card family-card${f.demo?'':' is-soon'}" style="--i:${i}"><div class="level-picture"><div class="level-frame">${BIKE_FOOT[m.img]?`<span class="level-shadow" style="left:${BIKE_FOOT[m.img][0]*100}%;right:${100-BIKE_FOOT[m.img][1]*100}%;top:${BIKE_FOOT[m.img][2]*100}%"></span>`:''}${bikePhoto(m.img,f.name)}</div></div><div class="level-text"><h2>${f.name}</h2><p class="family-note">${familyNote(f.name).split('・').map(t=>`<span class="nb">${t}</span>`).join('・')}</p><p class="family-presets">${f.presets.length} 種變速套件</p><p class="level-price">${f.from?money(f.from)+' 起':'價格未公布'}</p>${f.demo?'':'<p class="family-soon">即將開放客製</p>'}</div><button type="button" class="pick-hit" ${f.demo?`data-model="${f.demo.id}"`:'disabled'} aria-label="選擇 ${escapeHTML(f.name)}"></button></article>`}).join('')}</div></div>`;
-  paintLevelCards(page);page.classList.toggle('is-entering',levelsEnter);if(levelsEnter){levelsEnter=false;page.scrollTop=0;setTimeout(()=>page.classList.remove('is-entering'),900)}}
+  page.innerHTML=`<div class="pick-shell levels-shell"><span class="levels-mark" aria-hidden="true">${x.name}</span><button type="button" class="part-back" data-pick-back>${CHEV_L}返回車系</button><div class="pick-head"><h1 id="levelsTitle">選擇你的 ${x.name} 車款</h1><p>先選車架系列，下一步再選變速套件與尺寸。</p></div><div class="levels-grid family-grid" style="--n:${fams.length}">${fams.map((f,i)=>{const m=f.cover;return `<article class="level-card family-card${f.demo?'':' is-soon'}" style="--i:${i}"><div class="level-picture"><div class="level-frame">${BIKE_FOOT[m.img]?[0,1].map(t=>`<span class="level-shadow" style="left:${BIKE_FOOT[m.img][t]*100}%;top:${BIKE_FOOT[m.img][2]*100}%"></span>`).join(''):''}${bikePhoto(m.img,f.name)}</div></div><div class="level-text"><h2>${f.name}</h2><p class="family-note">${familyNote(f.name).split('・').map(t=>`<span class="nb">${t}</span>`).join('・')}</p><p class="family-presets">${f.presets.length} 種變速套件</p><p class="level-price">${f.from?money(f.from)+' 起':'價格未公布'}</p>${f.demo?'':'<p class="family-soon">即將開放客製</p>'}</div><button type="button" class="pick-hit" ${f.demo?`data-model="${f.demo.id}"`:'disabled'} aria-label="選擇 ${escapeHTML(f.name)}"></button></article>`}).join('')}</div></div>`;
+  paintLevelCards(page);// shadows wait for their photo, which decodes a beat later than the card appears
+  page.querySelectorAll('.level-frame .pick-photo').forEach(img=>{const ok=()=>img.parentNode.classList.add('is-ready');img.decode().then(ok,ok)});
+  page.classList.toggle('is-entering',levelsEnter);if(levelsEnter){levelsEnter=false;page.scrollTop=0;setTimeout(()=>page.classList.remove('is-entering'),900)};placeFooter()}
 function startModel(id){flatIdx=0;flatContext='';config=initialConfig();config.model=id;savedId=null;markSaved();page=GROUPSETS[id]?'groupset':'paint';gsTab='drive';gsView='side';gsBrand=null;paintTab='designer';partsTab='size';partDetail=null;paintDetail=false;paintZone='upper';returnToReview=false;editingId=null;routeTo('#config')}
 /* 選車款頁：可以客製的車款，卡片直接顯示編輯頁一進去的預設塗裝（例如 Propel SL 1 → Sand Storm）。
    在背景畫好編輯頁的圖，再依車身位置對齊原本的照片構圖，地面陰影位置不變；點下去飛到編輯頁就是同一張圖 */
@@ -1775,7 +1976,26 @@ render();
 })();
 applyRoute(location.hash);
 </script>
-<script src="assets/stage-preview.js?v=5"></script>
+<script src="assets/stage-preview.js?v=7"></script>
 <script src="storefront/js/custom-advisor.js?v=6"></script>
+<script>
+// Compact navigation reuses the shared header links without changing shared files.
+(()=>{const header=document.getElementById('siteHeader'),links=header.querySelector('.links');
+links.id='compactNavLinks';const toggle=document.createElement('button');toggle.type='button';toggle.className='mobile-nav-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-controls',links.id);toggle.setAttribute('aria-expanded','false');toggle.innerHTML='<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';header.prepend(toggle);
+function close(){header.classList.remove('mobile-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單');window.GiantHeader?.close()}
+toggle.addEventListener('click',()=>{if(header.classList.contains('mobile-menu-open'))close();else{header.classList.add('mobile-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','關閉主選單')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('mobile-menu-open')){close();toggle.focus()}});
+document.addEventListener('click',e=>{if(!header.contains(e.target))close()});
+links.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')&&!['#',''].includes(a.getAttribute('href')))close()});
+const compact=matchMedia('(max-width:1023px)');compact.addEventListener('change',close);
+// Reserve the actual footer height, including safe area and wrapped button labels.
+const bar=document.querySelector('#configPage .purchase-bar');new ResizeObserver(entries=>{const h=entries[0].target.getBoundingClientRect().height;if(h)document.documentElement.style.setProperty('--mobile-purchase-height',Math.ceil(h)+'px')}).observe(bar);
+// Phone: the steps join the pinned top bar (moved out of the preview column), the pinned panel title on paint/review needs the preview's height, and the bar hides while scrolling down.
+{const cp=$('#configPage'),pc=cp.querySelector('.preview-column'),intro=cp.querySelector('.intro'),phone=matchMedia('(max-width:767px)');const placeIntro=()=>{if(phone.matches)cp.querySelector('.cfg-title').after(intro);else pc.prepend(intro)};phone.addEventListener('change',placeIntro);placeIntro();new ResizeObserver(()=>cp.style.setProperty('--cfg-preview',pc.offsetHeight+'px')).observe(pc);new ResizeObserver(()=>cp.style.setProperty('--cfg-ph',$('#panelHeader').offsetHeight+'px')).observe($('#panelHeader'));
+// The bar leaves once the panel title reaches its pinned spot and only returns when scrolling back has put the panel title in its own place again.
+const back=$('#backToLevels'),title=cp.querySelector('.cfg-title'),pcol=cp.querySelector('.panel-column');
+addEventListener('scroll',()=>{if(!phone.matches||cp.hidden)return;const bar=back.offsetHeight+title.offsetHeight+intro.offsetHeight,pinned=['paint','parts','review'].includes($('#panel').dataset.screen)?pc.offsetHeight:0;cp.classList.toggle('bar-hidden',scrollY>Math.max(8,pcol.getBoundingClientRect().top+scrollY-(64+bar+pinned)))},{passive:true});}
+})();
+</script>
 </body>
 </html>
