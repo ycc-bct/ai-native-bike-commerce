@@ -297,6 +297,7 @@ const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const STEPS_ALL = {shop: ['確認商品',  '取貨門市', '聯絡與付款', '完成'], custom: ['確認客製車', '服務門市', '聯絡資料', '完成']};
 const REGIONS = ['全部', '北部', '中部', '南部', '東部', '離島'];
 const SLOTS = ['11:00', '14:00', '16:30', '19:00'];
+const DEFAULT_STORE = '17544';   /* 跨越單車精品店，清單的第一間 */
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 /* 會員資料（示範帳號） */
 const MEMBER = {name: 'David Robinson', phone: '0912-345-678', email: 'david.robinson@example.com'};
@@ -358,6 +359,11 @@ function paneCart(){
 function paneStore(){
   const custom = hasCustom(), onlyAcc = !hasBike();
   if (!onlyAcc) S.way = 'store';
+  if (custom) {   /* 客製車先帶入預設門市與最近可預約的時間，使用者可以再改 */
+    S.store = S.store || (STORES.find(s => s.id === DEFAULT_STORE) || STORES[0] || {}).id || null;
+    S.date = S.date || ymd(days().find(d => d.getDay() !== 1));
+    S.slot = S.slot || SLOTS[0];
+  }
   /* 只有配件時才有「宅配到府」可選；整車、客製車一律到門市，不顯示取貨方式 */
   const way = !onlyAcc ? '' : '<div class="ways"><label class="way"><input type="radio" name="way" value="store"' + (S.way === 'store' ? ' checked' : '') + '><span><b>門市取貨</b><small>到門市取貨，免運費</small></span></label>' +
     '<label class="way' + (onlyAcc ? '' : ' off') + '"><input type="radio" name="way" value="home"' + (S.way === 'home' ? ' checked' : '') + (onlyAcc ? '' : ' disabled') + '><span><b>宅配到府</b><small>' + (onlyAcc ? '只有配件時可以宅配，3–5 個工作天送達' : '整車與客製車需到門市取車') + '</small></span></label></div>';
@@ -422,7 +428,7 @@ function render(){
   watchActs(acts);
   summary();
   const slot = $('storePick');
-  if (slot && window.GiantStorePicker) {
+  if (slot && window.GiantStorePicker && STORES.length) {   /* 等門市資料好再掛，預設門市才選得到 */
     if (!picker) picker = GiantStorePicker.mount(document.createElement('div'), {mode: 'select', layout: 'auto', selected: S.store, onSelect: st => { S.store = st.id; render(); }});
     slot.replaceWith(picker.el); requestAnimationFrame(() => picker.resize());
   }
