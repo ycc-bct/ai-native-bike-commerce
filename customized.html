@@ -865,7 +865,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 /* 細節頁（零件選項、塗裝設定）也有分享／儲存，固定在跟主頁一樣的右上角；返回列加高到跟按鈕一樣，標題列不會撞到 */
 .panel-header{position:relative}
 .panel-header .head-tools-fixed{position:absolute;top:24px;right:24px;z-index:2}
-.panel-header:has(.head-tools-fixed)>.part-back{min-height:44px;display:inline-flex;align-items:center}
+.panel-header:has(.head-tools-fixed)>.part-back{min-height:40px;display:inline-flex;align-items:center}
 /* 返回連結全站統一（見 storefront/docs/design.md）：14px／500／#4A5563，滑過變深 */
 .part-back,.intro-back,.series-back{font-size:14px!important;font-weight:500!important;color:#4A5563!important;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
 .part-back:hover,.intro-back:hover,.series-back:hover{color:#141A22!important}
@@ -911,7 +911,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 .panel-column{position:relative}
 #panelTools{position:absolute;top:24px;right:24px;z-index:3}
 #panelHeader .panel-head.head-save{padding-right:150px;min-height:44px;display:flex;align-items:center}
-#panelHeader>.part-back{min-height:44px;display:inline-flex;align-items:center}
+#panelHeader>.part-back{min-height:40px;display:inline-flex;align-items:center;margin:0;padding-bottom:0}
 .nb{display:inline-block}
 /* 第一步：變速套件 */
 .steps li[hidden]{display:none}
@@ -967,16 +967,16 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .intro h1{font-size:clamp(20px,5.5cqi,28px);line-height:1.3}
  #configPage .intro .steps{justify-content:flex-start;gap:8px;margin:0;flex-wrap:nowrap}
  #configPage .steps li{gap:8px;min-width:0}#configPage .steps li:not(:last-child):after{content:'';display:block;width:12px;height:1px;flex:none;background:var(--line)}
- #configPage .step{font-size:0;gap:0;min-height:44px;padding:4px 0}
+ #configPage .step{font-size:0;gap:0;min-height:40px;padding:4px 0}
  #configPage .step span{width:28px;height:28px;font-size:12px;flex:none}
  #configPage .step[aria-current=step]{font-size:14px;gap:8px}
  #configPage .preview-column .stage{height:clamp(240px,34svh,320px);min-height:0;max-height:none;aspect-ratio:auto;border-radius:0}
  #configPage .stage .product-code{font-size:12px}
  #configPage .preview-footer{display:none}
  #configPage .flat-slide{margin:20px 28px 64px}
- #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:44px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
+ #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:40px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
  #configPage #stage .sp-views{flex:1;min-width:0;justify-content:space-between}
- #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:44px}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:40px}
  #configPage #stage .sp-sep{flex:none}
  #configPage #stage .sp-bgs{gap:10px}#configPage #stage .sp-bgs button{width:24px;height:24px;flex:none;background-clip:padding-box;border:1px solid var(--line)}
  #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:14px 14px 0 0;margin:0;overflow:visible}
@@ -984,7 +984,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .panel-column .panel.panel-header{padding:16px 16px 0;border-radius:14px 14px 0 0}
  #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0;scroll-margin-top:80px}
  #configPage #panelTools{top:16px;right:16px;gap:8px}
- #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:44px}
+ #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:40px}
  #configPage .panel-head h2{font-size:24px}
  #configPage .panel-head p,#configPage .signature-entry p,#configPage .size-help,#configPage .option-copy,#configPage .style-desc{font-size:14px;line-height:1.75}
  #configPage .panel-column .purchase-bar{position:fixed;left:0;right:0;bottom:0;height:auto;z-index:25;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-purchase-bar,0 -6px 30px rgba(23,33,38,.012))}
@@ -992,7 +992,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .panel-column #next{min-height:48px;height:auto;padding:12px 16px;font-size:14px;letter-spacing:0;white-space:normal}
  #configPage .next-prefix{display:none}#configPage #next svg{display:none}
  #configPage .price-delta{left:0;bottom:100%}
- #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:44px;font-size:14px}
+ #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:40px;font-size:14px}
  #configPage .gs-tier{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:12px}
  #configPage .gs-img{width:64px;height:64px}
  #configPage .gs-top{flex-direction:column;align-items:flex-start;gap:6px}
@@ -1047,12 +1047,12 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #siteHeader .logo{left:56px}#siteHeader .logo svg{width:80px;height:auto}
  #siteHeader .links{display:none!important}
  #siteHeader .icons{right:8px;gap:4px}
- #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .icons>.profile-wrap,#siteHeader .orb-wrap{display:grid;place-items:center;width:44px;height:44px;min-width:44px;box-sizing:border-box}
+ #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .icons>.profile-wrap,#siteHeader .orb-wrap{display:grid;place-items:center;width:40px;height:40px;min-width:40px;box-sizing:border-box}
  #siteHeader .icons>a svg,#siteHeader .icons>button svg{width:22px;height:22px}
  #siteHeader button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px}
  #siteFooter .foot-in{width:calc(100% - 32px);grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0}
  #siteFooter .foot-col b,#siteFooter .foot-sub b{font-size:16px;margin-bottom:8px}
- #siteFooter .foot-col a{display:flex;align-items:center;min-height:44px;margin-top:0;font-size:14px}
+ #siteFooter .foot-col a{display:flex;align-items:center;min-height:40px;margin-top:0;font-size:14px}
  #siteFooter .sub-form{height:48px}
  #siteFooter .sub-form button{width:48px;flex-shrink:0}
  /* footer wordmark the same size as the header's */
@@ -1061,7 +1061,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #siteFooter .social a::after{content:'';position:absolute;inset:-5px}
  #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
  #siteFooter .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
- #siteFooter .legal a{display:flex;align-items:center;min-height:44px;font-size:14px}
+ #siteFooter .legal a{display:flex;align-items:center;min-height:40px;font-size:14px}
  #siteFooter .foot-bar .region{padding-left:0;border-left:0}
 }
 /* <=370px: the heart lives in the member menu, so search and member stay; tighter icons keep them clear of the logo */
@@ -1072,7 +1072,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
    On paint, parts and review (where every pick changes the bike) the stage stays pinned under the bar and the panel title under the stage;
    on gear + size the panel title pins under the bar. --cfg-nav, --cfg-title and --cfg-steps must match the heights below. */
 @media(max-width:767px){
- #configPage{--cfg-nav:44px;--cfg-title:28px;--cfg-steps:0px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
+ #configPage{--cfg-nav:40px;--cfg-title:28px;--cfg-steps:0px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
  #configPage.bar-hidden{--cfg-pin:64px}
  #configPage>.intro-back,#configPage>.cfg-title,#configPage>.intro,#configPage #panelTools{transition:translate .3s var(--ease)}
  #configPage.bar-hidden>.intro-back,#configPage.bar-hidden>.cfg-title,#configPage.bar-hidden>.intro,#configPage.bar-hidden #panelTools{translate:0 calc(-1 * var(--cfg-bar) - 12px)}
@@ -1089,7 +1089,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .preview-column{background:var(--paper,#F3F5F7)}
  /* the bike name now lives in the bar; the h1 stays for screen readers */
  /* the steps join the panel title (script moves .intro into #panelHeader) */
- #configPage #panelHeader>.intro{display:block;position:static;height:auto;margin:0 0 12px;padding:0;background:none}
+ #configPage #panelHeader>.intro{display:block;position:static;height:auto;margin:0 0 8px;padding:0;background:none}
  #configPage #panelHeader .segmented{margin-top:0}
  #configPage #panelHeader .panel-head h2.step-dup{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  #configPage #panelHeader .panel-head:has(>h2.step-dup:only-child),#configPage #panelHeader .panel-head:has(>div:only-child>h2.step-dup:only-child){margin:0}
@@ -1124,7 +1124,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 1.5px #fff,0 0 0 3px #141A22}
  #configPage .stage .preview-toolbar .background-switch{height:28px;min-height:28px;padding:0 10px;gap:8px;font-size:12px}
  #configPage .stage .preview-toolbar .background-choice{width:18px;height:18px}
- #configPage .panel-column #next{min-height:44px;height:44px;padding:0 16px}
+ #configPage .panel-column #next{min-height:40px;height:40px;padding:0 16px}
  #configPage .panel-column .purchase-bar{padding:8px 16px calc(8px + env(safe-area-inset-bottom))}
  /* a pinned panel title without a tab row (review) keeps some white under it so the list doesn't butt against the heading */
  #configPage #panelHeader:not(:has(.segmented)){padding-bottom:16px}
@@ -1154,25 +1154,25 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr);justify-items:start;row-gap:8px}
  #configPage .zone-section:has(>.finish-list)>h3{margin:0}
  #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;justify-self:stretch}
- #configPage .zone-section>.finish-list .finish-row{min-height:44px;padding:0 14px;gap:6px}
+ #configPage .zone-section>.finish-list .finish-row{min-height:40px;padding:0 14px;gap:6px}
  #configPage .zone-section:has(>.finish-list)>.size-help{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-50)}
 }
 @media(max-width:374px){
  #configPage .panel-column .price-number{font-size:20px}
 }
-/* Phones: everything you tap is at least 44px tall. Controls that keep a smaller look get an invisible
-   44px hit area (::before, centred); the rest simply grow. */
+/* Phones: everything you tap is at least 40px tall. Controls that keep a smaller look get an invisible
+   40px hit area (::before, centred); the rest simply grow. */
 @media(max-width:900px){
- #siteHeader .profile-wrap>#openMember{width:44px;height:44px;display:grid;place-items:center}
- #siteHeader #aiOrb::before{content:"";position:absolute;inset:-9px;border-radius:50%}
+ #siteHeader .profile-wrap>#openMember{width:40px;height:40px;display:grid;place-items:center}
+ #siteHeader #aiOrb::before{content:"";position:absolute;inset:-8px;border-radius:50%}
 }
 @media(max-width:767px){
  #configPage .text-button,#configPage #stage .sp-views button,#configPage #stage .sp-bgs button,#configPage .panel .color-swatch{position:relative}
- #configPage .text-button::before,#configPage #stage .sp-views button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:44px;translate:0 -50%}
- /* the back rows are pinned and clipped full-bleed, so they grow to 44 instead (text stays on the bottom edge) */
- .pick-page .pick-shell>.part-back{min-height:44px;align-items:flex-end}
- #configPage .gs-brands button,#configPage .pager-link{min-height:44px}
- #configPage .size-range{height:44px;margin:0}
+ #configPage .text-button::before,#configPage #stage .sp-views button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:40px;translate:0 -50%}
+ /* the back rows are pinned and clipped full-bleed, so they grow to 40 instead (text stays on the bottom edge) */
+ .pick-page .pick-shell>.part-back{min-height:40px;align-items:flex-end}
+ #configPage .gs-brands button,#configPage .pager-link{min-height:40px}
+ #configPage .size-range{height:40px;margin:0}
 }
 </style>
 </head>
@@ -1182,7 +1182,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=tap1103b"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=tap40"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
