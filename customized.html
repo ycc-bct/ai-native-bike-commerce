@@ -1092,8 +1092,9 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .panel h3,#configPage .panel .style-head h3,#configPage .panel .review-group h3,.dialog h3{font-size:14px}
  /* series + models: the back link pins under the header, same as the config page's */
  .pick-page{padding-top:64px}
+ .pick-page .pick-head{margin:16px 0 24px}
  html:has(.pick-page:not([hidden])) #siteHeader.site-nav{background:var(--pick-bg,#fff);box-shadow:none}
- .pick-page .pick-shell>.part-back{position:sticky;top:64px;z-index:22;display:flex;width:fit-content;margin-bottom:0;padding:12px 0;background:var(--pick-bg,#fff);box-shadow:0 0 0 100vmax var(--pick-bg,#fff);clip-path:inset(0 -100vmax)}
+ .pick-page .pick-shell>.part-back{position:sticky;top:64px;z-index:22;display:flex;width:fit-content;margin-bottom:0;padding:0 0 12px;background:var(--pick-bg,#fff);box-shadow:0 0 0 100vmax var(--pick-bg,#fff);clip-path:inset(0 -100vmax)}
  /* series + models: the page title is 24px here, so the card names step down to 20 */
  .series-text h2,.family-card .level-text h2{font-size:var(--fs-lg)}
  /* 3D keeps a fixed stage; the photo version is as tall as the photo */
