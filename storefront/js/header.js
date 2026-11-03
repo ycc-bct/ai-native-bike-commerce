@@ -115,6 +115,96 @@
   });
 
   window.GiantHeader = {open: open, close: close, nav: {bikes: BIKES, gear: GEAR, more: MORE}};
+
+  /* ---------- 手機主選單（≤ 900px，header 加 data-mobile-nav 的頁面才有）：漢堡在最左、滿版展開。
+     車系與精品配件都換到自己的一頁（車系頁上方放分類主視覺）；客製化、門市專區直接連。搜尋與會員留在 header，我的最愛收進會員選單。 ---------- */
+  if (host.hasAttribute('data-mobile-nav')) (function () {
+    var css = document.createElement('style');
+    css.textContent =
+      '.gn-toggle,.gn-panel,.gm-menu .gm-fav{display:none}' +
+      '@media (max-width:900px){' +
+        '#siteHeader .gn-toggle{display:grid;place-items:center;position:absolute;left:10px;top:12px;width:40px;height:40px;padding:0;border:0;background:none;color:inherit;cursor:pointer}' +
+        '#siteHeader .gn-toggle svg{width:24px;height:24px}' +
+        '#siteHeader .gn-toggle .x,#siteHeader.gn-open .gn-toggle .bars{display:none}#siteHeader.gn-open .gn-toggle .x{display:block}' +
+        '#siteHeader #openFav{display:none!important}' +
+        '#siteHeader.gn-open{background:#fff!important;color:#141A22!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;transform:none!important;box-shadow:inset 0 -1px 0 #DCE1E7}' +
+        '.gn-panel:not([hidden]){display:block;position:fixed;left:0;right:0;top:64px;bottom:0;overflow:hidden;background:#fff;color:#141A22;font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;text-align:left}' +
+        '.gn-page{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 0 calc(32px + env(safe-area-inset-bottom));background:#fff;will-change:transform;backface-visibility:hidden;' +
+          'transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s cubic-bezier(.16,1,.3,1),visibility 0s linear .5s}' +
+        '.gn-page:not([data-p=main]){transform:translate3d(100%,0,0);visibility:hidden}' +
+        '.gn-panel.sub .gn-page[data-p=main]{transform:translate3d(-24%,0,0);opacity:0;visibility:hidden}' +
+        '.gn-page.on,.gn-panel:not(.sub) .gn-page[data-p=main]{transform:none;opacity:1;visibility:visible;transition-delay:0s}' +
+        '.gn-panel *{box-sizing:border-box}' +
+        '.gn-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 16px;border:0;background:none;font:inherit;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-align:left;text-decoration:none;cursor:pointer;list-style:none}' +
+        '.gn-row svg{flex:none;width:20px;height:20px;color:#4A5563}' +
+        '.gn-back{justify-content:flex-start}.gn-back svg{order:-1}' +
+        '.gn-kv{position:relative;display:block;margin:4px 16px 8px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#F3F5F7;color:#fff;text-decoration:none}' +
+        '.gn-kv img{display:block;width:100%;height:100%;object-fit:cover}' +
+        '.gn-kv span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(rgba(14,23,38,0),rgba(14,23,38,.62))}' +
+        '.gn-kv b{display:block;font-size:16px;font-weight:700;line-height:1.4}.gn-kv small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:14px;line-height:1.5}.gn-kv small svg{width:16px;height:16px;color:inherit}' +
+        '.gn-sub{padding:0 0 8px}' +
+        '.gn-sub a{display:flex;align-items:center;min-height:48px;padding:0 16px;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-decoration:none}' +
+        '.gn-group{padding:16px 0 0}.gn-group h3{margin:0;padding:0 16px 4px;font-size:14px;font-weight:400;line-height:1.5;color:#4A5563}' +   /* 精品配件：灰色小標＋同字級的項目 */
+        '.gn-row:focus-visible,.gn-sub a:focus-visible,.gn-kv:focus-visible,#siteHeader .gn-toggle:focus-visible{outline:3px solid #64748b;outline-offset:-3px}' +
+        '.gm-menu .gm-fav{display:flex}' +
+      '}' +
+      'html.gn-lock,html.gn-lock body{overflow:hidden}' +
+      '@media (prefers-reduced-motion:reduce){.gn-page{transition:none!important}}';
+    document.head.appendChild(css);
+    var I = function (d, c) { return '<svg' + (c ? ' class="' + c + '"' : '') + ' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
+    var ARR = I('M5 12h14M13 6l6 6-6 6'), RIGHT = I('m9 6 6 6-6 6'), LEFT = I('m15 6-6 6 6 6');
+    var href = function (h) { return h ? R(h) : '#'; };
+    var sub = function (item) { var t = Array.isArray(item) ? item[0] : item, h = Array.isArray(item) ? R(item[1]) : '#'; return '<a href="' + h + '"' + (h === '#' ? ' data-soft' : '') + '>' + esc(t) + '</a>'; };
+    var stores = document.getElementById('stores') ? '#stores' : '#';
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'gn-toggle'; btn.setAttribute('aria-label', '開啟主選單'); btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'gnPanel');
+    btn.innerHTML = I('M4 6h16M4 12h16M4 18h16', 'bars') + I('M6 6l12 12M18 6 6 18', 'x');
+    var panel = document.createElement('nav');
+    panel.className = 'gn-panel'; panel.id = 'gnPanel'; panel.setAttribute('aria-label', '主選單'); panel.hidden = true;
+    panel.innerHTML =
+      '<div class="gn-page" data-p="main">' +
+        BIKES.map(function (c) { return '<button type="button" class="gn-row" data-go="' + c.k + '">' + esc(c.t) + RIGHT + '</button>'; }).join('') +
+        '<button type="button" class="gn-row" data-go="gear">精品配件' + RIGHT + '</button>' +
+        '<a class="gn-row" href="' + R('custom-studio/index.html') + '"' + (CURRENT === 'custom' ? ' aria-current="page"' : '') + '>客製化</a>' +
+        '<a class="gn-row" href="' + stores + '"' + (stores === '#' ? ' data-soft' : '') + '>門市專區</a>' +
+      '</div>' +
+      BIKES.map(function (c) {   /* 車系頁：分類主視覺（同桌機下拉的大圖）＋子分類；圖片第一次打開選單才載入 */
+        return '<div class="gn-page" data-p="' + c.k + '" aria-label="' + esc(c.t) + '">' +
+          '<button type="button" class="gn-row gn-back" data-go="main">' + esc(c.t) + LEFT + '</button>' +
+          '<a class="gn-kv" href="' + href(c.href) + '"' + (c.href ? '' : ' data-soft') + '><img data-src="' + R(c.img) + '" alt=""><span><b>' + esc(c.full) + '</b><small>看全部 ' + esc(c.en) + ARR + '</small></span></a>' +
+          '<div class="gn-sub">' + c.sub.map(sub).join('') + '</div></div>';
+      }).join('') +
+      '<div class="gn-page" data-p="gear" aria-label="精品配件">' +
+        '<button type="button" class="gn-row gn-back" data-go="main">精品配件' + LEFT + '</button>' +
+        GEAR.map(function (g) { return '<div class="gn-group gn-sub"><h3>' + esc(g.t) + '</h3>' + g.sub.map(sub).join('') + '</div>'; }).join('') +
+      '</div>';
+    host.prepend(btn); host.append(panel);
+    var mq = matchMedia('(max-width:900px)');
+    /* 換頁只動 transform／opacity；焦點等滑完才移，避免動畫途中重排 */
+    function page(p, kb) {
+      var to = panel.querySelector('.gn-page[data-p="' + p + '"]');
+      panel.querySelectorAll('.gn-page.on').forEach(function (x) { if (x !== to) x.classList.remove('on'); });
+      if (p !== 'main') { to.scrollTop = 0; to.classList.add('on'); }
+      panel.classList.toggle('sub', p !== 'main');
+      if (kb) setTimeout(function () { var f = to.querySelector('.gn-row'); if (f && !panel.hidden) f.focus({preventScroll: true}); }, 500);   /* 鍵盤操作才移焦點 */
+    }
+    function set(on) {
+      panel.hidden = !on; host.classList.toggle('gn-open', on); document.documentElement.classList.toggle('gn-lock', on);
+      btn.setAttribute('aria-expanded', String(on)); btn.setAttribute('aria-label', on ? '關閉主選單' : '開啟主選單');
+      if (on) {
+        close(); panel.classList.remove('sub'); panel.querySelectorAll('.gn-page.on').forEach(function (x) { x.classList.remove('on'); });
+        panel.querySelectorAll('img[data-src]').forEach(function (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+      }
+    }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); set(panel.hidden); });
+    panel.addEventListener('click', function (e) {
+      var g = e.target.closest('[data-go]'); if (g) { page(g.dataset.go, e.detail === 0); return; }
+      var a = e.target.closest('a'); if (a && !a.hasAttribute('data-soft')) set(false);
+    });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
+    var off = function () { if (!mq.matches && !panel.hidden) set(false); };
+    mq.addEventListener ? mq.addEventListener('change', off) : mq.addListener(off);
+  })();
   /* data-ai="tip"：這頁沒有對話框，但右上角一樣放顧問頭像；點了跳出說明卡（文案用 data-ai-title／data-ai-text） */
   if (host.dataset.ai === 'tip') {
     if (!document.querySelector('link[href*="advisor.css"]')) {
@@ -156,7 +246,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=ink1103'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=tap40'; document.head.appendChild(cs);
   }
   /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
   (function () {
@@ -172,7 +262,7 @@
       '@media (prefers-reduced-motion:reduce){.gm-menu{transition:none}}';
     document.head.appendChild(css);
     var I = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
-    var IC = {bike: I('<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l2.5 8H6M14 6h3"/>')};
+    var IC = {bike: I('<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8l2.5 8H6M14 6h3"/>'), heart: I('<path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/>')};
     var CHEV = '<svg class="gm-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
     var menu = null;
     var read = function (k) { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } };
@@ -180,6 +270,7 @@
     function render() {
       var orders = read('giant-orders').slice(0, 3);
       menu.innerHTML = '<div class="gm-head"><span class="member-initial">D</span><div><strong>David Robinson</strong><small>GIANT 會員</small></div></div>' +
+        (document.getElementById('openFav') ? '<button type="button" class="gm-fav" role="menuitem" data-fav>' + IC.heart + '<span>我的最愛</span></button>' : '') +   /* 手機上 header 的愛心收進這裡 */
         '<a class="gm-row" role="menuitem" href="' + ROOT + '../customized.html#favorites">' + IC.bike + '<span>已儲存的客製車</span></a>' +
         '<div class="gm-sec"><b>最近的訂單與預約</b>' + (orders.length ? orders.map(function (o) {
           return '<a class="gm-order" role="menuitem" href="' + ROOT + 'checkout.html?order=' + encodeURIComponent(o.no) + '"><span><strong>' + esc(o.no) + (o.custom ? '・客製車預約' : '') + '</strong>' + esc([o.date ? o.date.slice(5).replace('-', '/') + ' ' + (o.slot || '') : o.way === 'home' ? '宅配' : '', o.total ? 'NT$ ' + Math.round(o.total).toLocaleString('en-US') : ''].filter(Boolean).join('・')) + '</span>' + CHEV + '</a>'; }).join('') : '<div class="gm-empty">還沒有訂單或預約。</div>') + '</div>';
@@ -194,6 +285,7 @@
     document.addEventListener('click', function (e) {
       var a = e.target.closest('#siteHeader a[aria-label="會員"]');
       if (a) { e.preventDefault(); menu && !menu.hidden ? close() : open(a); return; }
+      if (e.target.closest('.gm-menu [data-fav]')) { close(); document.getElementById('openFav').click(); return; }
       if (menu && !menu.hidden && !e.target.closest('.gm-menu')) close();
     });
     addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });

@@ -187,6 +187,7 @@ h1{font-size:clamp(24px,2.1vw,32px)}.product-code{margin-top:7px;font-size:11px}
 .option-card[aria-checked=true] .option-toggle{background:var(--navy);color:#fff;font-size:15px}
 .option-copy{font-size:13px;line-height:1.6;color:var(--ink-70)}.option-copy strong{color:var(--ink);font-weight:700}
 .option-price{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.option-visual .option-price{position:absolute;top:8px;right:8px;padding:2px 8px;border-radius:999px;background:#fff;box-shadow:0 1px 4px rgba(20,26,34,.12);color:var(--ink);font-size:12px!important;line-height:1.5;white-space:nowrap}
 .step-swap .option-cards,.step-swap .option-cards-wrap,.step-swap .zone-body{animation:none!important}
 @keyframes part-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 
@@ -202,7 +203,7 @@ h1{font-size:clamp(24px,2.1vw,32px)}.product-code{margin-top:7px;font-size:11px}
 .panel-column #back{display:flex;padding:12px 0;white-space:nowrap;font-size:15px}
 .panel-column #next{white-space:nowrap}
 @media(max-width:1150px){.panel-column .purchase-bar{padding-left:20px;padding-right:20px}.panel-column .purchase-inner,.panel-column .actions{gap:12px}.panel-column #next{padding:0 18px;font-size:var(--fs-sm)}.panel-column #back{font-size:var(--fs-sm)}}
-@media(max-width:800px){:root{--footer-height:0px}.panel-column{flex:1;height:auto}.panel-column .purchase-bar{padding:10px 18px calc(10px + env(safe-area-inset-bottom))}.panel-column .purchase-inner{gap:8px}.panel-column .actions{gap:8px}.panel-column .next-prefix{display:none}.panel-column #next{padding:0 14px}.panel-column #next svg{display:none}.panel-column .purchase-bar{padding-left:16px;padding-right:16px}.panel-column #back{font-size:var(--fs-sm)}.panel-column #next{flex:none}}
+@media(max-width:800px){:root{--footer-height:0px}.panel-column{flex:1;height:auto}.panel-column .purchase-bar{padding:10px 18px calc(10px + env(safe-area-inset-bottom))}.panel-column .purchase-inner{gap:8px}.panel-column .actions{gap:8px}.panel-column .next-name{display:none}.panel-column #next{padding:0 14px}.panel-column #next svg{display:none}.panel-column .purchase-bar{padding-left:16px;padding-right:16px}.panel-column #back{font-size:var(--fs-sm)}.panel-column #next{flex:none}}
 /* Signature lives inline in the paint panel. */
 .signature-pane .size-help{margin:0}
 .signature-pane .signature-switch{padding:12px 0 16px}
@@ -341,10 +342,9 @@ input.switch:focus-visible{outline:3px solid #64748b;outline-offset:3px}
 .share-kicker{font-size:13px;font-weight:600;letter-spacing:.1em;color:var(--ink-70);margin:0 0 12px}
 .share-info h2{font-size:26px;line-height:1.25;margin:0;font-weight:700}
 .share-sub{font-size:14px;color:var(--ink-70);margin:10px 0 0}
-.share-summary{margin:28px 0 0;display:grid;border-top:1px solid var(--line)}
-.share-summary div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px}
+.share-summary{margin:20px 0 0;padding-top:12px;display:grid;gap:4px;border-top:1px solid var(--line)}
+.share-summary div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:4px 0;font-size:14px;line-height:1.5}
 .share-summary dt{color:var(--ink-70);flex-shrink:0}.share-summary dd{margin:0;text-align:right;font-weight:600;overflow-wrap:anywhere}
-.share-summary div:last-child dd{font-size:20px}
 .share-actions{list-style:none;margin:0;padding:24px 0 0;display:grid;gap:10px}
 .share-actions .btn{width:100%;justify-content:center}.share-actions .btn svg{width:20px;height:20px;order:-1}
 .share-social{display:flex;justify-content:center;gap:12px;margin-top:20px}
@@ -579,9 +579,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 
 /* Steps read as clickable: inactive steps are black text on a white number; the current step keeps its dark fill. */
 .step,.step.done{color:var(--ink)}
-.step span,.step.done span{background:#fff;color:var(--ink);box-shadow:none}
+.step span,.step.done span{background:#fff;color:var(--ink);box-shadow:none;border:1px solid var(--line);box-sizing:border-box}
 .step:hover span{box-shadow:none}
-.step[aria-current=step] span{background:var(--navy);color:#fff;box-shadow:none}
+.step[aria-current=step] span{background:var(--navy);color:#fff;box-shadow:none;border-color:var(--navy)}
 
 /* Series scene photos fill the picture box edge to edge. */
 .pick-picture.is-scene{padding:0}.pick-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -865,10 +865,12 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 /* 細節頁（零件選項、塗裝設定）也有分享／儲存，固定在跟主頁一樣的右上角；返回列加高到跟按鈕一樣，標題列不會撞到 */
 .panel-header{position:relative}
 .panel-header .head-tools-fixed{position:absolute;top:24px;right:24px;z-index:2}
-.panel-header:has(.head-tools-fixed)>.part-back{min-height:44px;display:inline-flex;align-items:center}
+.panel-header:has(.head-tools-fixed)>.part-back{min-height:40px;display:inline-flex;align-items:center}
 /* 返回連結全站統一（見 storefront/docs/design.md）：14px／500／#4A5563，滑過變深 */
 .part-back,.intro-back,.series-back{font-size:14px!important;font-weight:500!important;color:#4A5563!important;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
 .part-back:hover,.intro-back:hover,.series-back:hover{color:#141A22!important}
+/* 箭頭圖形在 16px 框內左側留了約 5px 空白：拉回去，讓 < 的尖端跟下方標題左緣對齊 */
+.part-back .chev,.intro-back .chev,.series-back .chev{margin-left:-5px}
 .series-back{margin-bottom:6px}
 /* 三個頁面（選車系、選車款、設定）的返回連結位置一致：和選車頁同一個上方留白公式 */
 #configPage{padding-top:calc(var(--header-height) + 24px)!important}
@@ -902,6 +904,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-views button:hover::after,#stage .sp-views button:focus-visible::after{opacity:1;translate:-50% 0}
 #stage .sp-views button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px;border-radius:6px}
 #stage .sp-sep{width:1px;height:20px;background:#DCE1E7}
+#stage.sp-locked .sp-views,#stage.sp-locked .sp-sep,#stage.sp-locked .flat-nav{display:none!important}
 #stage .sp-bgs{display:flex;align-items:center;gap:10px;flex:none}
 #stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
 #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
@@ -911,7 +914,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 .panel-column{position:relative}
 #panelTools{position:absolute;top:24px;right:24px;z-index:3}
 #panelHeader .panel-head.head-save{padding-right:150px;min-height:44px;display:flex;align-items:center}
-#panelHeader>.part-back{min-height:44px;display:inline-flex;align-items:center}
+#panelHeader>.part-back{min-height:40px;display:inline-flex;align-items:center;margin:0;padding:0}
 .nb{display:inline-block}
 /* 第一步：變速套件 */
 .steps li[hidden]{display:none}
@@ -953,7 +956,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <style id="responsive-layout">
 /* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
    Desktop retains its panel scroll; compact screens use the document scroll. */
-.studio-menu-toggle,#studio-mobile-menu{display:none}
+.profile-menu .profile-fav{display:none}
 @media(max-width:1023px){
  :root{--header-height:64px;--shell:calc(100% - 32px);--mobile-purchase-height:92px}
  html{height:auto;overflow:auto;scroll-padding-top:80px}
@@ -967,36 +970,42 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .intro h1{font-size:clamp(20px,5.5cqi,28px);line-height:1.3}
  #configPage .intro .steps{justify-content:flex-start;gap:8px;margin:0;flex-wrap:nowrap}
  #configPage .steps li{gap:8px;min-width:0}#configPage .steps li:not(:last-child):after{content:'';display:block;width:12px;height:1px;flex:none;background:var(--line)}
- #configPage .step{font-size:0;gap:0;min-height:44px;padding:4px 0}
+ #configPage .step{font-size:0;gap:0;min-height:40px;padding:4px 0}
  #configPage .step span{width:28px;height:28px;font-size:12px;flex:none}
  #configPage .step[aria-current=step]{font-size:14px;gap:8px}
  #configPage .preview-column .stage{height:clamp(240px,34svh,320px);min-height:0;max-height:none;aspect-ratio:auto;border-radius:0}
  #configPage .stage .product-code{font-size:12px}
  #configPage .preview-footer{display:none}
  #configPage .flat-slide{margin:20px 28px 64px}
- #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:44px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
+ #configPage #stage .sp-bar{opacity:1;visibility:visible;pointer-events:auto;translate:-50% 0;bottom:16px;height:40px;width:min(340px,calc(100% - 32px));padding:0 12px;gap:12px;max-width:calc(100% - 32px)}
  #configPage #stage .sp-views{flex:1;min-width:0;justify-content:space-between}
- #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:44px}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{width:26px;min-width:0;flex:1 1 0;height:40px}
  #configPage #stage .sp-sep{flex:none}
  #configPage #stage .sp-bgs{gap:10px}#configPage #stage .sp-bgs button{width:24px;height:24px;flex:none;background-clip:padding-box;border:1px solid var(--line)}
- #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:18px 18px 0 0;margin:0;overflow:visible}
+ #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:14px 14px 0 0;margin:0;overflow:visible}
  #configPage .panel-column .panel{height:auto;min-height:0;overflow:visible}
- #configPage .panel-column .panel.panel-header{padding:24px 16px 0;border-radius:18px 18px 0 0}
- #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0 0 18px 18px;scroll-margin-top:80px}
+ #configPage .panel-column .panel.panel-header{padding:16px 16px 0;border-radius:14px 14px 0 0}
+ #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0;scroll-margin-top:80px}
  #configPage #panelTools{top:16px;right:16px;gap:8px}
- #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:44px}
+ #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:40px}
  #configPage .panel-head h2{font-size:24px}
  #configPage .panel-head p,#configPage .signature-entry p,#configPage .size-help,#configPage .option-copy,#configPage .style-desc{font-size:14px;line-height:1.75}
  #configPage .panel-column .purchase-bar{position:fixed;left:0;right:0;bottom:0;height:auto;z-index:25;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:var(--shadow-purchase-bar,0 -6px 30px rgba(23,33,38,.012))}
  #configPage .purchase-inner{gap:12px}#configPage .panel-column .price-number{font-size:22px;white-space:nowrap}
- #configPage .panel-column #next{min-height:48px;height:auto;padding:12px 16px;border-radius:8px;font-size:14px;letter-spacing:0;white-space:normal}
- #configPage .next-prefix{display:none}#configPage #next svg{display:none}
+ #configPage .panel-column #next{min-height:48px;height:auto;padding:12px 16px;font-size:14px;letter-spacing:0;white-space:normal}
+ #configPage .next-name{display:none}#configPage #next svg{display:none}
  #configPage .price-delta{left:0;bottom:100%}
- #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:44px;font-size:14px}
+ #configPage .panel .segmented{gap:24px;flex-wrap:wrap}#configPage .panel .segmented button{min-height:40px;font-size:14px}
  #configPage .gs-tier{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:12px}
  #configPage .gs-img{width:64px;height:64px}
  #configPage .gs-top{flex-direction:column;align-items:flex-start;gap:6px}
  #configPage .gs-desc,#configPage .gs-note{font-size:14px;line-height:1.75;color:var(--ink-70)}
+ #configPage .gs-desc{line-height:1.4}
+ #configPage .gs-full{font-size:14px}
+ #configPage .gs-body{gap:6px}
+ /* groupset cards: the description wraps naturally (no forced break) and every card in the list is as tall as the tallest */
+ #configPage .gs-desc .nb{display:inline}
+ #configPage .gs-tiers{display:grid;grid-auto-rows:1fr}
  #configPage #panelHeader{scroll-margin-top:80px}
  #configPage .style-cards{gap:8px}#configPage .style-card{padding:12px 8px}
  #configPage .panel .paint-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1008,18 +1017,15 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  .series-row{display:grid;grid-template-columns:1fr;height:auto;gap:32px}
  .series-media{flex:none;height:260px}.series-text{min-height:0}
  .family-grid{grid-template-columns:minmax(0,1fr);max-width:520px;gap:48px;margin-inline:auto}
- /* Custom cart rows: image, description and estimated price stack on compact screens. */
+ /* Custom cart rows: image, description and estimated price stack on compact screens; type sizes come from cart.js. */
  .gc-drawer .gc-item:has(>span:first-child){grid-template-columns:minmax(0,1fr);gap:16px}
  .gc-drawer .gc-item:has(>span:first-child)>span:first-child{display:none}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph{width:100%;height:auto;aspect-ratio:3/2;max-height:200px;border-radius:10px}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph img{max-height:184px}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph+div{min-width:0}
  .gc-drawer .gc-item:has(>span:first-child) .gc-top{grid-template-columns:minmax(0,1fr);gap:12px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left;font-size:18px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-name{font-size:16px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-meta{font-size:14px;line-height:1.75}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left}
  .gc-drawer .gc-item:has(>span:first-child) .gc-row{margin-top:16px;gap:24px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-link{font-size:14px;min-height:44px;display:inline-flex;align-items:center}
  .profile-menu{position:fixed;top:72px;right:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100dvh - 88px);overflow:auto}
  .dialog{padding:28px;width:calc(100vw - 32px);max-height:calc(100dvh - 32px);border-radius:18px}
  .dialog input:not([type=checkbox]):not([type=radio]),.dialog select,#configPage input[type=text],#configPage select{font-size:16px}
@@ -1037,43 +1043,39 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  .family-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:48px 32px}
  .pick-shell,.fav-shell{width:calc(100% - 48px)}
 }
-/* Mobile header + footer — storefront/custom-studio/Design.md (2026-11-02), same rules as the custom landing page:
-   <=900px hamburger + logo + 44px icon buttons, a one-column menu with expandable categories; <=370px search and member move into the menu;
+/* Mobile header + footer — storefront/docs/rwd.md, same rules as the custom landing page:
+   <=900px hamburger + logo + 44px icon buttons; the full-screen menu itself comes from storefront/js/header.js (data-mobile-nav);
    footer one column, one link per row. */
 @media(max-width:900px){
- #siteHeader .studio-menu-toggle{display:grid;place-items:center;position:absolute;left:8px;top:10px;width:44px;height:44px;color:inherit;background:none;border:0;cursor:pointer}
- #siteHeader .studio-menu-toggle svg{width:24px;height:24px}
  #siteHeader .logo{left:56px}#siteHeader .logo svg{width:80px;height:auto}
  #siteHeader .links{display:none!important}
  #siteHeader .icons{right:8px;gap:4px}
- #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .icons>.profile-wrap,#siteHeader .orb-wrap{display:grid;place-items:center;width:44px;height:44px;min-width:44px;box-sizing:border-box}
+ #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .icons>.profile-wrap,#siteHeader .orb-wrap{display:grid;place-items:center;width:40px;height:40px;min-width:40px;box-sizing:border-box}
  #siteHeader .icons>a svg,#siteHeader .icons>button svg{width:22px;height:22px}
- #siteHeader #studio-mobile-menu:not([hidden]){display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;padding:16px 24px;background:#F3F5F7;color:#141A22;box-shadow:0 12px 20px #0002;max-height:calc(100svh - 64px);overflow:auto}
- #studio-mobile-menu a{display:flex;align-items:center;min-height:48px;border-bottom:1px solid #DCE1E7;font-size:16px;text-decoration:none;color:inherit}
- #studio-mobile-menu summary,#studio-mobile-menu>button{min-height:48px;display:flex;padding:0;align-items:center;border-bottom:1px solid #DCE1E7;font:inherit;font-size:16px;color:inherit;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;text-align:left}
- #studio-mobile-menu details a{padding-left:16px}
- #siteHeader button:focus-visible,#studio-mobile-menu a:focus-visible,#studio-mobile-menu summary:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px}
+ #siteHeader button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px}
  #siteFooter .foot-in{width:calc(100% - 32px);grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0}
  #siteFooter .foot-col b,#siteFooter .foot-sub b{font-size:16px;margin-bottom:8px}
- #siteFooter .foot-col a{display:flex;align-items:center;min-height:44px;margin-top:0;font-size:14px}
+ #siteFooter .foot-col a{display:flex;align-items:center;min-height:40px;margin-top:0;font-size:14px}
  #siteFooter .sub-form{height:48px}
  #siteFooter .sub-form button{width:48px;flex-shrink:0}
- #siteFooter .social{flex-direction:column;gap:8px}
- #siteFooter .social a{display:flex;justify-content:flex-start;gap:12px;width:100%;min-height:44px;height:auto;border:0;border-radius:0;font-size:14px}
- #siteFooter .social a::after{content:attr(aria-label)}
+ /* footer wordmark the same size as the header's */
+ #siteFooter .foot-brand svg{width:80px;height:auto}
+ #siteFooter .social a{position:relative}
+ #siteFooter .social a::after{content:'';position:absolute;inset:-5px}
  #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
  #siteFooter .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
- #siteFooter .legal a{display:flex;align-items:center;min-height:44px;font-size:14px}
+ #siteFooter .legal a{display:flex;align-items:center;min-height:40px;font-size:14px}
  #siteFooter .foot-bar .region{padding-left:0;border-left:0}
 }
-/* the member entry here is the avatar: hide its trigger but keep the wrapper, so the 會員 row in the menu can still open the member menu */
-@media(max-width:370px){#siteHeader .icons>[aria-label="搜尋"],#siteHeader .icons>[aria-label="會員"],#siteHeader #openMember{display:none!important}#siteHeader .icons>.profile-wrap{width:0;min-width:0;margin-left:-4px}}
-/* Phone config page: one bar pinned under the header — back link, bike name beneath it, share / save on the right, then the steps
-   (script moves .intro out of the preview column on phones). Scrolling down tucks the whole bar behind the header; scrolling up brings it back.
+/* <=370px: the heart lives in the member menu, so search and member stay; tighter icons keep them clear of the logo */
+@media(max-width:900px){.profile-menu .profile-fav{display:flex}}
+@media(max-width:370px){#siteHeader .icons{gap:0}#siteHeader .logo svg,#siteFooter .foot-brand svg{width:72px}}
+/* Phone config page: one bar pinned under the header — back link, bike name beneath it, share / save on the right;
+   the steps sit in the pinned panel header (script moves .intro there on phones). Scrolling down tucks the whole bar behind the header; scrolling up brings it back.
    On paint, parts and review (where every pick changes the bike) the stage stays pinned under the bar and the panel title under the stage;
    on gear + size the panel title pins under the bar. --cfg-nav, --cfg-title and --cfg-steps must match the heights below. */
 @media(max-width:767px){
- #configPage{--cfg-nav:30px;--cfg-title:34px;--cfg-steps:52px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
+ #configPage{--cfg-nav:40px;--cfg-title:28px;--cfg-steps:0px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
  #configPage.bar-hidden{--cfg-pin:64px}
  #configPage>.intro-back,#configPage>.cfg-title,#configPage>.intro,#configPage #panelTools{transition:translate .3s var(--ease)}
  #configPage.bar-hidden>.intro-back,#configPage.bar-hidden>.cfg-title,#configPage.bar-hidden>.intro,#configPage.bar-hidden #panelTools{translate:0 calc(-1 * var(--cfg-bar) - 12px)}
@@ -1083,17 +1085,26 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  /* the white panel runs to the bottom of the screen (and under the price bar) even when its content is short */
  #configPage .panel-column{min-height:calc(100svh - 64px - var(--cfg-nav) - var(--cfg-title) - var(--cfg-steps) - var(--cfg-preview,30svh));padding-bottom:var(--mobile-purchase-height,75px);background:#fff}
  #configPage>.intro-back{position:sticky;top:64px;z-index:22;height:var(--cfg-nav);margin:0 16px;padding:0;align-items:flex-end;background:var(--paper,#F3F5F7);box-shadow:0 0 0 100vmax var(--paper,#F3F5F7);clip-path:inset(0 -100vmax)}
- #configPage>.cfg-title{display:block;position:sticky;top:calc(64px + var(--cfg-nav));z-index:22;height:var(--cfg-title);margin:0;padding:2px 148px 8px 16px;background:var(--paper,#F3F5F7);font-size:18px;font-weight:700;line-height:24px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #configPage>.cfg-title{display:block;position:sticky;top:calc(64px + var(--cfg-nav));z-index:22;height:var(--cfg-title);margin:0;padding:0 148px 4px 16px;background:var(--paper,#F3F5F7);font-size:18px;font-weight:700;line-height:24px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  #configPage #panelTools{position:fixed;top:calc(64px + (var(--cfg-nav) + var(--cfg-title) - 44px) / 2);right:16px;z-index:23}
  #configPage #panelTools .fav-toggle,#configPage #panelTools .save-btn{background:#fff}
  #configPage #panelHeader .panel-head.head-save{padding-right:0;min-height:0}
  #configPage .preview-column{background:var(--paper,#F3F5F7)}
  /* the bike name now lives in the bar; the h1 stays for screen readers */
- #configPage>.intro{position:sticky;top:calc(64px + var(--cfg-nav) + var(--cfg-title));z-index:22;height:var(--cfg-steps);margin:0;padding:0 16px 8px;gap:0;align-content:start;background:var(--paper,#F3F5F7)}
+ /* the steps join the panel title (script moves .intro into #panelHeader) */
+ #configPage #panelHeader>.intro{display:block;position:static;height:auto;margin:0 0 8px;padding:0;background:none}
+ #configPage #panelHeader .segmented{margin-top:0}
+ #configPage #panelHeader .panel-head h2.step-dup{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ #configPage #panelHeader .panel-head:has(>h2.step-dup:only-child),#configPage #panelHeader .panel-head:has(>div:only-child>h2.step-dup:only-child){margin:0}
  #configPage .intro h1{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  /* heading steps under the 18px bike name: h2 16 → h3 14 bold → h4 14 grey (the type scale has nothing between 14 and 16) */
  #configPage .panel-head h2,#configPage .panel h2,.dialog h2,.share-info h2{font-size:16px;line-height:1.4}
  #configPage .panel h3,#configPage .panel .style-head h3,#configPage .panel .review-group h3,.dialog h3{font-size:14px}
+ /* series + models: the back link pins under the header, same as the config page's */
+ .pick-page{padding-top:64px}
+ .pick-page .pick-head{margin:16px 0 24px}
+ html:has(.pick-page:not([hidden])) #siteHeader.site-nav{background:var(--pick-bg,#fff);box-shadow:none}
+ .pick-page .pick-shell>.part-back{position:sticky;top:64px;z-index:22;display:flex;width:fit-content;margin-bottom:0;padding:0 0 12px;background:var(--pick-bg,#fff);box-shadow:0 0 0 100vmax var(--pick-bg,#fff);clip-path:inset(0 -100vmax)}
  /* series + models: the page title is 24px here, so the card names step down to 20 */
  .series-text h2,.family-card .level-text h2{font-size:var(--fs-lg)}
  /* 3D keeps a fixed stage; the photo version is as tall as the photo */
@@ -1104,19 +1115,27 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) .preview-column{position:sticky;top:var(--cfg-pin);z-index:21}
  #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) #panelHeader{position:sticky;top:calc(var(--cfg-pin) + var(--cfg-preview,30svh));z-index:20;scroll-margin-top:calc(var(--cfg-pin) + var(--cfg-preview,30svh))}
  #configPage:has(#panel[data-screen=groupset]) #panelHeader{position:sticky;top:var(--cfg-pin);z-index:20;scroll-margin-top:var(--cfg-pin)}
- /* angle dots + backgrounds: hidden until the stage is tapped (stage-preview.js), then a small pill over the bottom of the photo */
- #configPage #stage .sp-bar{bottom:6px;height:28px;width:auto;padding:0 10px;gap:8px}
- #configPage #stage.sp-flat .sp-bar:not(.show){opacity:0;translate:-50% 8px;pointer-events:none}
- #configPage #stage .sp-views{flex:none}
- #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:16px;height:28px}
- #configPage #stage .sp-views button[aria-current]{width:24px}
- #configPage #stage .sp-views button i{width:6px;height:6px}#configPage #stage .sp-views button[aria-current] i{width:16px}
- #configPage #stage .sp-sep{height:14px}
- #configPage #stage .sp-bgs{gap:8px}#configPage #stage .sp-bgs button{width:18px;height:18px}
- #configPage #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 1.5px #fff,0 0 0 3px #141A22}
+ /* angle dots: an indicator only, swipe the photo to change angle. Background: one swatch in the photo's
+    bottom-right corner; tapping it opens the other choices upward (stage-preview.js toggles .open). */
+ #configPage .flat-viewer{touch-action:pan-y}
+ /* pinned back rows sit the text on the bottom edge (align-items:flex-end), which leaves the chevron 2.5px low */
+ #configPage>.intro-back .chev,.pick-page .pick-shell>.part-back .chev{translate:0 -2.5px}
+ #configPage #stage .sp-bar,#configPage #stage.sp-flat .sp-bar,#configPage #stage.sp-flat .sp-bar:not(.show){left:16px;right:16px;bottom:18px;width:auto;max-width:none;height:32px;padding:0;gap:0;justify-content:center;translate:none;opacity:1;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0;pointer-events:none}
+ #configPage #stage .sp-views{flex:none;height:20px;padding:0 6px;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 1px 2px rgba(20,26,34,.06),0 4px 12px rgba(20,26,34,.1);pointer-events:none;position:absolute;left:50%;bottom:-10px;translate:-50% 0;opacity:0;transition:opacity .3s var(--ease)}
+ /* the dots sit 8px above the options sheet and only show for a moment after a swipe (stage-preview.js adds .show) */
+ #configPage #stage .sp-views.show{opacity:1}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:12px;height:20px;cursor:default}
+ #configPage #stage .sp-views button[aria-current]{width:20px}
+ #configPage #stage .sp-views button i{width:6px;height:6px}#configPage #stage .sp-views button[aria-current] i{width:14px}
+ #configPage #stage .sp-sep{display:none}
+ #configPage #stage .sp-bgs{position:absolute;right:0;bottom:-10px;display:flex;flex-direction:column-reverse;align-items:center;gap:10px;pointer-events:auto}
+ #configPage #stage .sp-bgs button{width:32px;height:32px;border:2px solid #fff;box-shadow:0 1px 2px rgba(20,26,34,.08),0 4px 12px rgba(20,26,34,.18);transition:opacity .25s var(--ease),translate .3s var(--ease),visibility 0s}
+ #configPage #stage .sp-bgs button[aria-pressed=true]{order:-1}
+ #configPage #stage .sp-bgs.open button[aria-pressed=true]{box-shadow:0 0 0 2px #141A22,0 4px 12px rgba(20,26,34,.18)}
+ #configPage #stage .sp-bgs:not(.open) button:not([aria-pressed=true]){opacity:0;translate:0 12px;visibility:hidden;pointer-events:none;transition:opacity .2s var(--ease),translate .2s var(--ease),visibility 0s .2s}
  #configPage .stage .preview-toolbar .background-switch{height:28px;min-height:28px;padding:0 10px;gap:8px;font-size:12px}
  #configPage .stage .preview-toolbar .background-choice{width:18px;height:18px}
- #configPage .panel-column #next{min-height:44px;height:44px;padding:0 16px}
+ #configPage .panel-column #next{min-height:40px;height:40px;padding:0 16px}
  #configPage .panel-column .purchase-bar{padding:8px 16px calc(8px + env(safe-area-inset-bottom))}
  /* a pinned panel title without a tab row (review) keeps some white under it so the list doesn't butt against the heading */
  #configPage #panelHeader:not(:has(.segmented)){padding-bottom:16px}
@@ -1142,25 +1161,40 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .style-card .style-name small,#configPage .style-card .style-desc{display:none}
  #configPage .style-card .style-name b{font-size:14px}
  #configPage .style-card .style-add{margin:0;white-space:nowrap}
- /* 4. finish: a small two-option toggle on the 漆面 heading's line */
- #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:auto auto;justify-content:space-between;align-items:center;row-gap:6px}
+ /* 4. finish: a small two-option toggle on its own line under the 漆面 heading */
+ #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr);justify-items:start;row-gap:8px}
  #configPage .zone-section:has(>.finish-list)>h3{margin:0}
- #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,auto);gap:6px}
- #configPage .zone-section>.finish-list .finish-row{min-height:36px;padding:0 14px;border-radius:999px;gap:6px}
+ #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;justify-self:stretch}
+ #configPage .zone-section>.finish-list .finish-row{min-height:40px;padding:0 14px;gap:6px}
  #configPage .zone-section:has(>.finish-list)>.size-help{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-50)}
 }
 @media(max-width:374px){
  #configPage .panel-column .price-number{font-size:20px}
 }
+/* Phones: everything you tap is at least 40px tall. Controls that keep a smaller look get an invisible
+   40px hit area (::before, centred); the rest simply grow. */
+@media(max-width:900px){
+ #siteHeader .profile-wrap>#openMember{width:40px;height:40px;display:grid;place-items:center}
+ #siteHeader #aiOrb::before{content:"";position:absolute;inset:-8px;border-radius:50%}
+}
+@media(max-width:767px){
+ #configPage .text-button,#configPage #stage .sp-bgs button,#configPage .panel .color-swatch{position:relative}
+ #configPage .text-button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:40px;translate:0 -50%}
+ #configPage #stage .sp-views button::after{display:none}
+ /* the back rows are pinned and clipped full-bleed, so they grow to 40 instead (text stays on the bottom edge) */
+ .pick-page .pick-shell>.part-back{min-height:40px;align-items:flex-end}
+ #configPage .gs-brands button,#configPage .pager-link{min-height:40px}
+ #configPage .size-range{height:40px;margin:0}
+}
 </style>
 </head>
 <body>
 <noscript><p class="noscript">請啟用 JavaScript 以操作客製車。</p></noscript>
-<header class="nav site-nav" id="siteHeader" data-page="custom" data-ai="tip" data-ai-title="一起打造你的專屬車" data-ai-text="先選塗裝或自由配色，再加上簽名、設定尺寸與配備，確認總價後就能加入購物車。"></header>
+<header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="custom" data-ai="tip" data-ai-title="一起打造你的專屬車" data-ai-text="先選塗裝或自由配色，再加上簽名、設定尺寸與配備，確認總價後就能加入購物車。"></header>
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=ink1103"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=tap40"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
@@ -1370,7 +1404,7 @@ function sizeStatus(c){const r=recommendSize(c.height);return sizeOut(c)?`身高
 function renderSize(){const c=config,r=recommendSize(c.height),out=sizeOut(c);return `<div class="size-height"><div class="size-height-head"><span>你的身高</span><span class="size-height-num"><b>${c.height}</b><small>cm</small></span></div><input type="range" class="size-range" min="150" max="195" step="1" value="${c.height}" aria-label="身高（公分）"><div class="size-ticks" aria-hidden="true"><span>150</span><span>195 cm</span></div></div><div class="field-head"><h3>車架尺寸</h3><small>依身高建議，也可以自己選</small></div><div class="size-list" role="radiogroup" aria-label="車架尺寸">${sizeGuide().map(g=>`<button type="button" class="size-opt${g.s===r?' is-rec':''}" role="radio" data-size="${g.s}" aria-checked="${c.size===g.s}" aria-pressed="${c.size===g.s}"><i aria-hidden="true"></i><b>${g.s}</b><span>${g.min}–${g.max} cm</span><em>建議</em><small class="size-geo"><span class="nb">上管 ${g.top} mm・</span><span class="nb">把手 ${g.bar} mm・</span><span class="nb">龍頭 ${g.stem} mm</span></small></button>`).join('')}</div><p class="size-status${out?' is-warn':''}" aria-live="polite">${sizeStatus(c)}</p><p class="size-disclaimer">尺寸建議以身高為參考，實際合適尺寸可至門市量身與試騎確認。</p>`;}
 function syncSize(){const c=config,r=recommendSize(c.height);$('.size-height-num b').textContent=c.height;document.querySelectorAll('.size-opt').forEach(b=>{const on=b.dataset.size===c.size;b.classList.toggle('is-rec',b.dataset.size===r);b.setAttribute('aria-checked',on);b.setAttribute('aria-pressed',on)});const st=$('.size-status');st.innerHTML=sizeStatus(c);st.classList.toggle('is-warn',sizeOut(c))}
 function renderPartList(){return `<div class="parts-total"><h3>升級合計</h3><strong>${sumTag(partsPrice(config))}</strong></div><ul class="parts-list">${PARTS.map(p=>{const o=opts(p)[config.parts[p.id]];return `<li><button class="part-row" data-open-part="${p.id}" aria-label="${p.name}：${o.name}，${priceTag(o.price)}。查看選項"><span class="part-icon">${partIcon(p.id)}</span><span class="part-row-text"><strong>${p.name}</strong><small>${o.name}</small></span><span class="part-row-price">${o.price?'+ '+money(o.price):''}</span><span class="chevron" aria-hidden="true">${CHEV_R}</span></button></li>`}).join('')}</ul>`;}
-function renderPartDetail(p){return `<div class="panel-top"><button class="part-back" data-close-part>${CHEV_L}返回騎乘配備</button><div class="panel-head"><div class="part-title-row"><h2>${p.name}</h2><nav class="part-pager" id="partPager" aria-label="切換配件"></nav></div>${p.options.length>1?'':`<p>此車款的${p.name}為原廠配置。</p>`}</div></div><div class="option-cards" role="radiogroup" aria-label="${p.name}">${opts(p).map((o,j)=>{const on=config.parts[p.id]===j;return `<button class="option-card" role="radio" aria-checked="${on}" data-part="${p.id}" data-option="${j}"><span class="option-visual">${partIcon(p.id)}</span><span class="option-copy"><strong>${o.name}</strong>${o.description}</span><span class="option-price">${priceTag(o.price)}</span></button>`}).join('')}</div>`;}
+function renderPartDetail(p){return `<div class="panel-top"><button class="part-back" data-close-part>${CHEV_L}返回騎乘配備</button><div class="panel-head"><div class="part-title-row"><h2>${p.name}</h2><nav class="part-pager" id="partPager" aria-label="切換配件"></nav></div>${p.options.length>1?'':`<p>此車款的${p.name}為原廠配置。</p>`}</div></div><div class="option-cards" role="radiogroup" aria-label="${p.name}">${opts(p).map((o,j)=>{const on=config.parts[p.id]===j;return `<button class="option-card" role="radio" aria-checked="${on}" data-part="${p.id}" data-option="${j}"><span class="option-visual">${partIcon(p.id)}${o.price?`<span class="option-price">${priceTag(o.price)}</span>`:''}</span><span class="option-copy"><strong>${o.name}</strong>${o.description}</span></button>`}).join('')}</div>`;}
 const SIGNATURE_POSITIONS=[['right','上管右側'],['left','上管左側'],['both','上管兩側都要']];
 const signaturePosition=v=>SIGNATURE_POSITIONS.find(([k])=>k===v)?.[1]||'';
 const SIGNATURE_COLORS=[{name:'金色',hex:'#b59b48'},{name:'黑色',hex:'#333333'},{name:'白色',hex:'#ffffff'}];
@@ -1468,13 +1502,13 @@ $('#panel').dataset.screen=page;
 // Sideways colour rows start at the left; re-rendering the same screen (picking a colour) keeps where each row was swiped to.
 const swipeX=$$('#panel .color-set').map(set=>set.scrollLeft);
 // Entrance animations play only when the view changes; picking a colour or part re-renders the same view, so it updates in place.
-const viewKey=[page,gsTab,paintTab,paintDetail,partsTab,partDetail].join('|');$('.panel-column').classList.toggle('is-update',viewKey===lastViewKey);$('.panel-column').classList.toggle('zone-same',viewKey===lastViewKey&&paintZone===lastZone);lastViewKey=viewKey;lastZone=paintZone;const screen=document.createElement('div');screen.innerHTML=page==='groupset'?renderGroupset():page==='paint'?renderPaint():page==='parts'?renderParts():renderReview();const head=screen.querySelector(':scope>.panel-top');$('#panelHeader').replaceChildren(...(head?head.childNodes:[]));head?.remove();
+const viewKey=[page,gsTab,paintTab,paintDetail,partsTab,partDetail].join('|');$('.panel-column').classList.toggle('is-update',viewKey===lastViewKey);$('.panel-column').classList.toggle('zone-same',viewKey===lastViewKey&&paintZone===lastZone);lastViewKey=viewKey;lastZone=paintZone;const screen=document.createElement('div');screen.innerHTML=page==='groupset'?renderGroupset():page==='paint'?renderPaint():page==='parts'?renderParts():renderReview();const head=screen.querySelector(':scope>.panel-top');$('#panelHeader').replaceChildren(...(head?head.childNodes:[]));head?.remove();window.cfgPlaceIntro?.();
   // Share and save stay in the same top-right spot on every screen: detail screens (a part's options, paint settings) don't render them in their own head, so they live in one fixed element (#panelTools) beside the header that is created once and never re-rendered — switching screens doesn't flash them, same as the total price.
   $('#panelHeader').querySelectorAll('.head-tools').forEach(x=>x.remove());if(!$('#panelTools')){$('#panelHeader').insertAdjacentHTML('afterend',headTools().replace('class="head-tools"','class="head-tools head-tools-fixed" id="panelTools"'));const T=$('#panelTools');T.addEventListener('pointerover',showTip);T.addEventListener('focusin',showTip);T.addEventListener('pointerout',e=>{if(e.target.closest?.('[data-tip]'))hideTip()});T.addEventListener('focusout',hideTip)}$('#panel').replaceChildren(...screen.childNodes);
 paintPreview();countTo($('#totalPrice'),total(config),true);$('#totalPriceLive').textContent=money(total(config));const tp=$('#templatePrice');if(tp)countTo(tp,Number(tp.dataset.count));$('#editingBanner').hidden=editingId===null;
-markSteps(page);fillThumbs();if($('.panel-column').classList.contains('is-update'))$$('#panel .color-set').forEach((set,i)=>set.scrollLeft=swipeX[i]||0);syncFavorite();$('#configTitle').textContent=$('#cfgTitle').textContent=hasGroupset(config)?familyName(modelOf(config)):modelOf(config).name;$('#configCode').textContent=modelTitle(config);
+markSteps(page);window.cfgPlaceIntro?.();fillThumbs();if($('.panel-column').classList.contains('is-update'))$$('#panel .color-set').forEach((set,i)=>set.scrollLeft=swipeX[i]||0);syncFavorite();$('#configTitle').textContent=$('#cfgTitle').textContent=hasGroupset(config)?familyName(modelOf(config)):modelOf(config).name;$('#configCode').textContent=modelTitle(config);
 
-$('#next').textContent=adding?'加入中…':returnToReview?'儲存並返回確認 →':page==='groupset'?(gsTab==='drive'?'下一步：車架尺寸 →':'下一步：塗裝與簽名 →'):page==='paint'?(hasGroupset(config)?'下一步：騎乘配備 →':'下一步：尺寸與配備 →'):page==='parts'?(partsTab==='size'?'下一步：騎乘配備 →':partsTab==='parts'?'下一步：升級加購 →':'下一步：確認配置 →'):editingId!==null?'更新購物車':'加入購物車';if($('#next').textContent.endsWith(' →')){$('#next').innerHTML='<span>'+$('#next').textContent.slice(0,-2).replace(/^下一步：/,'<span class="next-prefix">下一步：</span>')+'</span>'+CHEV_R+'';}$('#next').disabled=adding;renderPartPager();
+$('#next').textContent=adding?'加入中…':returnToReview?'儲存並返回確認 →':page==='groupset'?(gsTab==='drive'?'下一步：車架尺寸 →':'下一步：塗裝與簽名 →'):page==='paint'?(hasGroupset(config)?'下一步：騎乘配備 →':'下一步：尺寸與配備 →'):page==='parts'?(partsTab==='size'?'下一步：騎乘配備 →':partsTab==='parts'?'下一步：升級加購 →':'下一步：確認配置 →'):editingId!==null?'更新購物車':'加入購物車';if($('#next').textContent.endsWith(' →')){$('#next').innerHTML='<span>'+$('#next').textContent.slice(0,-2).replace(/^下一步：(.*)$/,'<span class="next-prefix">下一步</span><span class="next-name">：$1</span>')+'</span>'+CHEV_R+'';}$('#next').disabled=adding;renderPartPager();
 if(focus){$('#panel').focus({preventScroll:true});$('#panel').scrollTop=0;if(matchMedia('(max-width:1023px)').matches)$('#panelHeader').scrollIntoView({block:'start'});}else if(focusKey){const candidates=$$(`[${focusKey}]`);const target=candidates.find(e=>e.getAttribute(focusKey)===focusValue&&(!colorKey||e.dataset.colorKey===colorKey)&&(!(e instanceof HTMLInputElement)||e.value===inputValue));target?.focus({preventScroll:true});}}
 const STEPS=['groupset','paint','parts','review'];
 function markSteps(current){const gs=hasGroupset(config);{const b=document.querySelector('.step[data-step="parts"]');if(b)b.lastChild.textContent=gs?'騎乘配備':'尺寸與配備';}$$('.step-gs').forEach(li=>li.hidden=!gs);let n=0;$$('.step').forEach(b=>{if(b.dataset.step!=='groupset'||gs)b.querySelector('span').textContent=++n;});$$('.step').forEach(b=>{b.removeAttribute('aria-current');if(b.dataset.step===current)b.setAttribute('aria-current','step');b.classList.toggle('done',STEPS.indexOf(b.dataset.step)<STEPS.indexOf(current));});}
@@ -1530,7 +1564,7 @@ $('#cancelEdit').addEventListener('click',()=>{editingId=null;returnToReview=fal
 const siteNav=document.querySelector('.site-nav');
 // Profile menu (avatar, top right). The preview starts signed in with a placeholder member.
 let member={name:'David Robinson',initial:'D'};
-const MENU_ICONS={orders:'<path d="M6 3.5h12v17l-2.5-1.6-2 1.6-1.5-1.2-1.5 1.2-2-1.6L6 20.5z"/><path d="M9 8.5h6M9 12h6"/>',saved:'<circle cx="5.5" cy="14.5" r="4"/><circle cx="18.5" cy="14.5" r="4"/><path d="M5.5 14.5 9 7.5h6.5l3 7M9 7.5l2.5 7h-6M15.5 7.5l-4 7M7.5 5.5h3.2M15.5 7.5l-.7-2.8h2.2"/>',region:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.8 2.6 14.2 0 17M12 3.5c-2.6 2.8-2.6 14.2 0 17"/>',language:'<path d="M4 6h9M8.5 4v2c0 4-2 7-4.5 8.5M6.5 10c1 2 3 3.5 5 4"/><path d="M13 20l4-9 4 9M14.5 17h5"/>',logout:'<path d="M10 4.5H6a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h4"/><path d="M14.5 8l4 4-4 4M18.5 12H9.5"/>'};
+const MENU_ICONS={fav:'<path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/>',orders:'<path d="M6 3.5h12v17l-2.5-1.6-2 1.6-1.5-1.2-1.5 1.2-2-1.6L6 20.5z"/><path d="M9 8.5h6M9 12h6"/>',saved:'<circle cx="5.5" cy="14.5" r="4"/><circle cx="18.5" cy="14.5" r="4"/><path d="M5.5 14.5 9 7.5h6.5l3 7M9 7.5l2.5 7h-6M15.5 7.5l-4 7M7.5 5.5h3.2M15.5 7.5l-.7-2.8h2.2"/>',region:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.8 2.6 14.2 0 17M12 3.5c-2.6 2.8-2.6 14.2 0 17"/>',language:'<path d="M4 6h9M8.5 4v2c0 4-2 7-4.5 8.5M6.5 10c1 2 3 3.5 5 4"/><path d="M13 20l4-9 4 9M14.5 17h5"/>',logout:'<path d="M10 4.5H6a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h4"/><path d="M14.5 8l4 4-4 4M18.5 12H9.5"/>'};
 const menuIcon=k=>`<svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${MENU_ICONS[k]}</svg>`;
 const PERSON_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.3-4 4.4-6 8-6s6.7 2 8 6"/></svg>';
 // 會員選單：還沒做的頁面（個人資料、地區、語言）不給點；訂單連到結帳頁的訂單詳情
@@ -1540,16 +1574,17 @@ function profileOrders(){let orders=[];try{orders=(JSON.parse(localStorage.getIt
 function renderProfile(){$('#memberFace').innerHTML=member?`<span class="member-initial">${member.initial}</span>`:PERSON_ICON;$('#openMember').setAttribute('aria-label',member?`會員選單：${member.name}`:'會員選單');
   const row=(k,label,extra='')=>`<button type="button" role="menuitem" data-profile="${k}">${menuIcon(k)}<span>${label}</span>${extra}${CHEV_R}</button>`;
   $('#profileMenu').innerHTML=(member?`<div class="profile-head"><span class="member-initial large">${member.initial}</span><div><strong>${member.name}</strong><small class="profile-tier">GIANT 會員</small></div></div>`:`<button type="button" role="menuitem" class="profile-login" data-profile="login"><span class="profile-avatar">${PERSON_ICON}</span><span>登入 / 註冊</span></button>`)
+    +`<button type="button" role="menuitem" class="profile-fav" data-profile="fav" aria-pressed="${!!navFavorite}">${menuIcon('fav')}<span>${navFavorite?'已加入我的最愛':'加入我的最愛'}</span>${CHEV_R}</button>`
     +row('saved','已儲存的客製車',`<span class="profile-count" id="profileSavedCount">${favorites.length}</span>`)+(member?profileOrders():'')+staticRow('region','地區：台灣')+staticRow('language','語言：繁體中文')
     +(member?`<button type="button" role="menuitem" class="profile-logout" data-profile="logout">${menuIcon('logout')}<span>登出</span></button>`:'')}
 function toggleProfile(open){const m=$('#profileMenu'),on=open??m.hidden;m.hidden=!on;$('#openMember').setAttribute('aria-expanded',String(on));if(on){renderProfile();m.querySelector('[data-profile]')?.focus({preventScroll:true})}}
 $('#openMember').addEventListener('click',e=>{e.stopPropagation();toggleProfile()});
 document.addEventListener('click',e=>{if(!e.target.closest('.profile-wrap'))toggleProfile(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#profileMenu').hidden){toggleProfile(false);$('#openMember').focus()}});
-$('#profileMenu').addEventListener('click',e=>{const b=e.target.closest('[data-profile]');if(!b)return;toggleProfile(false);const k=b.dataset.profile;if(k==='saved')openFavorites();else if(k==='logout'){member=null;renderProfile();notify('已登出')}else if(k==='login'){member={name:'David Robinson',initial:'D'};renderProfile();notify('已登入')}});
+$('#profileMenu').addEventListener('click',e=>{const b=e.target.closest('[data-profile]');if(!b)return;toggleProfile(false);const k=b.dataset.profile;if(k==='fav')$('#openFav').click();else if(k==='saved')openFavorites();else if(k==='logout'){member=null;renderProfile();notify('已登出')}else if(k==='login'){member={name:'David Robinson',initial:'D'};renderProfile();notify('已登入')}});
 renderProfile();
 // Header heart keeps its original behaviour (favourite the current setup); the saved-setups list has no entry point for now.
-let navFavorite=null;
+var navFavorite=null; // var: the member menu renders before this line runs
 $('#openFav').addEventListener('click',()=>{navFavorite=navFavorite?null:clone(config);$('#openFav').setAttribute('aria-pressed',String(!!navFavorite));$('#favCount').hidden=!navFavorite;$('#favCount').textContent=navFavorite?'1':'0';notify(navFavorite?'已將目前配置加入我的最愛（本次操作有效）':'已從我的最愛移除配置')});
 // Header 客製化 now goes to the custom-studio landing page (storefront/custom-studio/), the shared header's own link; no interception here.
 // Clicking a part or add-on points the flat preview at it; hovering leaves the preview where it is.
@@ -1833,7 +1868,9 @@ const FLAT_VIEWS=[{id:'side',name:'全車側面',img:'paint-side'},{id:'front',n
 const PART_VIEW={bar:'cockpit',tape:'cockpit',stem:'cockpit',headset:'cockpit',cassette:'rear',chain:'drive',chainring:'drive',bb:'drive',decals:'front'};
 const viewIndex=id=>Math.max(0,FLAT_VIEWS.findIndex(v=>v.id===id));
 let gsView='side',gsTab='drive',gsBrand=null;   // 一進來先看整台車側面，點了變速套件才拉近看傳動
-function contextView(){if(page==='groupset')return gsView;if(page==='paint')return paintTab==='signature'?'frame':'side';if(page==='parts')return partDetail?PART_VIEW[partDetail]:partsTab==='size'?'side':null;return 'side'}
+function contextView(){if(page==='groupset')return gsView;return 'side'}
+// 專屬簽名與騎乘配備只看全車側面：其他角度藏起來，滑動、鍵盤、點配件都不會換角度
+const viewLocked=()=>page==='parts'||(page==='paint'&&paintTab==='signature');
 let flatIdx=0,flatContext='';
 // Built once, then only classes and transforms change so the fade and zoom transitions can run.
 function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat-viewer');
@@ -1842,8 +1879,8 @@ function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat
   root.dataset.detail=String(!!v.zoom);root.setAttribute('aria-label',`車款預覽：${v.name}，第 ${flatIdx+1} 張，共 ${FLAT_VIEWS.length} 張`);
   root.querySelectorAll('.flat-photo').forEach(im=>{const on=im.dataset.flatImg===v.img,was=im.classList.contains('is-on');const label=on?`${bikeName(config)}・${v.name}`:'';if(im.tagName==='CANVAS')im.setAttribute('aria-label',label);else im.alt=label;if(on){if(!was)im.style.transition='opacity .45s var(--ease)';im.style.transformOrigin=v.origin||'50% 50%';im.style.transform=v.zoom||'';if(!was){im.offsetWidth;im.style.transition=''}}im.classList.toggle('is-on',on)});
   root.querySelectorAll('[data-flat-go]').forEach((b,i)=>i===flatIdx?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current'));}
-function flatGo(i,focus=true){flatIdx=(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
-function focusFlat(id){if(!id)return;const i=viewIndex(id);if(i!==flatIdx)flatGo(i,false)}
+function flatGo(i,focus=true){flatIdx=viewLocked()?0:(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
+function focusFlat(id){if(!id)return;const i=viewLocked()?0:viewIndex(id);if(i!==flatIdx)flatGo(i,false)}
 // Live paint on the flat preview: GIANT's own MY23 PROPEL paint PSD (assets/propel), exported layer by layer. Every colour
 // is a finished render of the frame, so recolouring is just stacking the right layers — base frame (lower zone + fork),
 // the template's upper-zone overlay, the down-tube logo, then the components. Colours without a PSD layer use the nearest one.
@@ -1883,7 +1920,7 @@ function psdThumb(c){const stack=psdStack(c),key=stack.map(e=>e&&e.f).join('|');
 function fillThumbs(){document.querySelectorAll('canvas[data-thumb-key]').forEach(el=>{const t=thumbCache[el.dataset.thumbKey];if(!t||!t.ready||el.dataset.filled)return;
   const x=el.getContext('2d');x.clearRect(0,0,el.width,el.height);x.drawImage(t.cv,0,0);el.dataset.filled='1';el.classList.remove('is-loading')})}
 const paintThumb=c=>psdThumb(c);
-function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);if(three){viewer.update(config);const v3=page==='paint'&&paintTab==='signature'?'detail':'full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
+function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);$('#stage').classList.toggle('sp-locked',viewLocked());if(three){viewer.update(config);const v3='full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
 // Sharing: the link carries the whole configuration in its hash, so opening it restores the design.
 const encodeDesign=c=>btoa(unescape(encodeURIComponent(JSON.stringify(c))));
 function shareLink(){return location.href.split('#')[0]+'#design='+encodeDesign(config)}
@@ -1898,10 +1935,10 @@ async function designImage(){
   const bx=bike.getContext('2d');await composeStack(bx,psdStack(c));
   const sig=c.signature;if(sig.enabled&&sig.text){bx.save();bx.translate(785,286);bx.rotate(Math.atan2(-14,270));bx.textAlign='center';bx.textBaseline='middle';bx.font=sig.font==='script'?'italic 600 19px cursive':'700 14px Arial, sans-serif';bx.fillStyle=sig.color;bx.fillText(sig.text,0,0,220);bx.restore()}
   const k=Math.min((W-140)/bike.width,620/bike.height);x.drawImage(bike,(W-bike.width*k)/2,80+(620-bike.height*k)/2,bike.width*k,bike.height*k);
-  x.fillStyle='#141b25';x.font='600 28px Inter, sans-serif';x.fillText(modelTitle(c),44,802,W-88);
-  x.fillStyle='#738091';x.font='22px Inter, sans-serif';x.fillText(paintName(c)+' · '+c.size+' · '+money(total(c)),44,842,W-250);
-  const svg=BRAND_LOGO.giant.replace('<svg ','<svg width="146" height="19" xmlns="http://www.w3.org/2000/svg" ').replace('aria-hidden="true"','fill="#738091"');
-  const logo=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});if(logo)x.drawImage(logo,W-190,824,146,19);
+  x.fillStyle='#141b25';x.font='600 48px Inter, sans-serif';x.fillText(modelTitle(c),44,794,W-88);
+  x.fillStyle='#738091';x.font='34px Inter, sans-serif';x.fillText(paintName(c)+' · '+c.size+' · '+money(total(c)),44,848,W-330);
+  const svg=BRAND_LOGO.giant.replace('<svg ','<svg width="219" height="28.5" xmlns="http://www.w3.org/2000/svg" ').replace('aria-hidden="true"','fill="#738091"');
+  const logo=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});if(logo)x.drawImage(logo,W-263,821,219,28.5);
   return cv.toDataURL('image/png')
 }
 let shareImageReady=null;
@@ -2000,29 +2037,18 @@ render();
 })();
 applyRoute(location.hash);
 </script>
-<script src="assets/stage-preview.js?v=7"></script>
+<script src="assets/stage-preview.js?v=9"></script>
 <script src="storefront/js/custom-advisor.js?v=ink1103"></script>
 <script>
-// Mobile menu — same markup and behaviour as storefront/custom-studio (Design.md): built from the shared header links, categories become <details>.
-(()=>{const header=document.getElementById('siteHeader'),toggle=document.createElement('button'),menu=document.createElement('nav');
-toggle.type='button';toggle.className='studio-menu-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','studio-mobile-menu');toggle.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
-menu.id='studio-mobile-menu';menu.setAttribute('aria-label','手機主選單');menu.hidden=true;
-header.querySelectorAll('.links .top').forEach(link=>{const dd=header.querySelector('.dd[data-dd="'+link.dataset.top+'"]');if(dd){const d=document.createElement('details'),sum=document.createElement('summary');sum.textContent=link.textContent;d.append(sum);dd.querySelectorAll('.dd-list a').forEach(i=>d.append(i.cloneNode(true)));menu.append(d)}else{const c=link.cloneNode(true);c.removeAttribute('style');c.removeAttribute('data-top');c.removeAttribute('id');c.className='';menu.append(c)}});
-[['搜尋','[aria-label="搜尋"]'],['會員','[aria-label="會員"],#openMember']].forEach(([label,sel])=>{const orig=header.querySelector('.icons '+sel.split(',').join(',.icons '));if(!orig)return;const proxy=document.createElement('button');proxy.type='button';proxy.textContent=label;proxy.addEventListener('click',e=>{e.stopPropagation();close();orig.click()});menu.append(proxy)});
-header.prepend(toggle);header.append(menu);
-function close(){menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單')}
-toggle.addEventListener('click',()=>{const open=menu.hidden;menu.hidden=!open;toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'關閉主選單':'開啟主選單')});
-menu.addEventListener('click',e=>{if(e.target.closest('a'))close()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){close();toggle.focus()}});
-document.addEventListener('click',e=>{if(!header.contains(e.target))close()});
-matchMedia('(max-width:900px)').addEventListener('change',close);
+(()=>{
 // Reserve the actual footer height, including safe area and wrapped button labels.
 const bar=document.querySelector('#configPage .purchase-bar');new ResizeObserver(entries=>{const h=entries[0].target.getBoundingClientRect().height;if(h)document.documentElement.style.setProperty('--mobile-purchase-height',Math.ceil(h)+'px')}).observe(bar);
 // Phone: the steps join the pinned top bar (moved out of the preview column), the pinned panel title on paint/review needs the preview's height, and the bar hides while scrolling down.
-{const cp=$('#configPage'),pc=cp.querySelector('.preview-column'),intro=cp.querySelector('.intro'),phone=matchMedia('(max-width:767px)');const placeIntro=()=>{if(phone.matches)cp.querySelector('.cfg-title').after(intro);else pc.prepend(intro)};phone.addEventListener('change',placeIntro);placeIntro();new ResizeObserver(()=>cp.style.setProperty('--cfg-preview',pc.offsetHeight+'px')).observe(pc);new ResizeObserver(()=>cp.style.setProperty('--cfg-ph',$('#panelHeader').offsetHeight+'px')).observe($('#panelHeader'));
+{const cp=$('#configPage'),pc=cp.querySelector('.preview-column'),intro=cp.querySelector('.intro'),phone=matchMedia('(max-width:767px)');// Phone: the steps sit at the top of the pinned panel header; the panel title is hidden when it only repeats the current step's name.
+const placeIntro=()=>{const ph=$('#panelHeader');if(!phone.matches){pc.prepend(intro);return}ph.prepend(intro);const h=ph.querySelector('.panel-head h2'),cur=intro.querySelector('.step[aria-current=step]');if(h)h.classList.toggle('step-dup',!!cur&&h.textContent.trim()===[...cur.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())};window.cfgPlaceIntro=placeIntro;phone.addEventListener('change',placeIntro);placeIntro();new ResizeObserver(()=>cp.style.setProperty('--cfg-preview',pc.offsetHeight+'px')).observe(pc);new ResizeObserver(()=>cp.style.setProperty('--cfg-ph',$('#panelHeader').offsetHeight+'px')).observe($('#panelHeader'));
 // The bar leaves once the panel title reaches its pinned spot and only returns when scrolling back has put the panel title in its own place again.
 const back=$('#backToLevels'),title=cp.querySelector('.cfg-title'),pcol=cp.querySelector('.panel-column');
-addEventListener('scroll',()=>{if(!phone.matches||cp.hidden)return;const bar=back.offsetHeight+title.offsetHeight+intro.offsetHeight,pinned=['paint','parts','review'].includes($('#panel').dataset.screen)?pc.offsetHeight:0;cp.classList.toggle('bar-hidden',scrollY>Math.max(8,pcol.getBoundingClientRect().top+scrollY-(64+bar+pinned)))},{passive:true});}
+addEventListener('scroll',()=>{if(!phone.matches||cp.hidden)return;const bar=back.offsetHeight+title.offsetHeight,pinned=['paint','parts','review'].includes($('#panel').dataset.screen)?pc.offsetHeight:0;cp.classList.toggle('bar-hidden',scrollY>Math.max(8,pcol.getBoundingClientRect().top+scrollY-(64+bar+pinned)))},{passive:true});}
 })();
 </script>
 </body>
