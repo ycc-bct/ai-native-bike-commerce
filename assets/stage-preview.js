@@ -92,6 +92,13 @@
       if (narrow.matches && !bgs.classList.contains('open')) { bgs.classList.add('open'); return; }
       bgs.classList.remove('open'); D.querySelector(`.background-choice[data-stage-background="${b.dataset.bg}"]`)?.click(); });
     D.addEventListener('click', e => { if (!bgs.contains(e.target)) bgs.classList.remove('open'); });
+    /* 手機：角度點平常不顯示，左右滑圖換角度時才出現 1.5 秒 */
+    const views = bar.querySelector('.sp-views'); let sx = null, vt;
+    slide.parentElement.addEventListener('pointerdown', e => { sx = e.clientX; });
+    slide.parentElement.addEventListener('pointerup', e => {
+      if (sx === null || !narrow.matches) return; const dx = e.clientX - sx; sx = null;
+      if (Math.abs(dx) > 40) { views.classList.add('show'); clearTimeout(vt); vt = setTimeout(() => views.classList.remove('show'), 1500); }
+    });
     bar.querySelector('.sp-views').addEventListener('click', e => { const b = e.target.closest('button'); if (b) flatGo(+b.dataset.i, false); });
     st.addEventListener('dblclick', e => { if (st.classList.contains('sp-flat') && flatIdx !== 0 && !e.target.closest('button')) flatGo(0, false); });
 
