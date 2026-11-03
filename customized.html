@@ -1055,9 +1055,8 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #siteFooter .foot-col a{display:flex;align-items:center;min-height:44px;margin-top:0;font-size:14px}
  #siteFooter .sub-form{height:48px}
  #siteFooter .sub-form button{width:48px;flex-shrink:0}
- #siteFooter .social{flex-direction:column;gap:8px}
- #siteFooter .social a{display:flex;justify-content:flex-start;gap:12px;width:100%;min-height:44px;height:auto;border:0;border-radius:0;font-size:14px}
- #siteFooter .social a::after{content:attr(aria-label)}
+ #siteFooter .social a{position:relative}
+ #siteFooter .social a::after{content:'';position:absolute;inset:-5px}
  #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
  #siteFooter .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
  #siteFooter .legal a{display:flex;align-items:center;min-height:44px;font-size:14px}
