@@ -55,14 +55,7 @@
 #stores .chip,
 #stores .cnt,
 #stores li span,
-.cta .kicker,
-.foot .foot-brand p,
-.foot b,
-.foot .foot-col b,
-.foot .foot-col a,
-.foot .foot-bar,
-.foot .foot-bar span,
-.foot .foot-bar a{
+.cta .kicker{
   font-size:14px!important;
 }
 .pp10 img{object-fit:contain}
@@ -262,13 +255,7 @@
 .parts10 .pp10 .dc b i,
 .parts10 .pp10 .dc .chip,
 .stores .chip,
-.stores .cnt,
-.foot .foot-brand p,
-.foot .foot-col b,
-.foot .foot-col a,
-.foot .foot-bar,
-.foot .foot-bar span,
-.foot .foot-bar a{
+.stores .cnt{
  font-size:14px!important;
 }
 
