@@ -1008,18 +1008,15 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  .series-row{display:grid;grid-template-columns:1fr;height:auto;gap:32px}
  .series-media{flex:none;height:260px}.series-text{min-height:0}
  .family-grid{grid-template-columns:minmax(0,1fr);max-width:520px;gap:48px;margin-inline:auto}
- /* Custom cart rows: image, description and estimated price stack on compact screens. */
+ /* Custom cart rows: image, description and estimated price stack on compact screens; type sizes come from cart.js. */
  .gc-drawer .gc-item:has(>span:first-child){grid-template-columns:minmax(0,1fr);gap:16px}
  .gc-drawer .gc-item:has(>span:first-child)>span:first-child{display:none}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph{width:100%;height:auto;aspect-ratio:3/2;max-height:200px;border-radius:10px}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph img{max-height:184px}
  .gc-drawer .gc-item:has(>span:first-child)>.gc-ph+div{min-width:0}
  .gc-drawer .gc-item:has(>span:first-child) .gc-top{grid-template-columns:minmax(0,1fr);gap:12px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left;font-size:18px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-name{font-size:16px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-meta{font-size:14px;line-height:1.75}
+ .gc-drawer .gc-item:has(>span:first-child) .gc-price{grid-column:1;grid-row:auto;text-align:left}
  .gc-drawer .gc-item:has(>span:first-child) .gc-row{margin-top:16px;gap:24px}
- .gc-drawer .gc-item:has(>span:first-child) .gc-link{font-size:14px;min-height:44px;display:inline-flex;align-items:center}
  .profile-menu{position:fixed;top:72px;right:16px;width:min(340px,calc(100vw - 32px));max-height:calc(100dvh - 88px);overflow:auto}
  .dialog{padding:28px;width:calc(100vw - 32px);max-height:calc(100dvh - 32px);border-radius:18px}
  .dialog input:not([type=checkbox]):not([type=radio]),.dialog select,#configPage input[type=text],#configPage select{font-size:16px}
