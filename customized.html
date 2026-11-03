@@ -1144,8 +1144,8 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .style-card .style-name small,#configPage .style-card .style-desc{display:none}
  #configPage .style-card .style-name b{font-size:14px}
  #configPage .style-card .style-add{margin:0;white-space:nowrap}
- /* 4. finish: a small two-option toggle on the 漆面 heading's line */
- #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:auto auto;justify-content:space-between;align-items:center;row-gap:6px}
+ /* 4. finish: a small two-option toggle on its own line under the 漆面 heading */
+ #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr);justify-items:start;row-gap:8px}
  #configPage .zone-section:has(>.finish-list)>h3{margin:0}
  #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,auto);gap:6px}
  #configPage .zone-section>.finish-list .finish-row{min-height:36px;padding:0 14px;gap:6px}
