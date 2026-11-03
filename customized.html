@@ -870,6 +870,8 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 /* 返回連結全站統一（見 storefront/docs/design.md）：14px／500／#4A5563，滑過變深 */
 .part-back,.intro-back,.series-back{font-size:14px!important;font-weight:500!important;color:#4A5563!important;display:inline-flex;align-items:center;gap:4px;text-decoration:none}
 .part-back:hover,.intro-back:hover,.series-back:hover{color:#141A22!important}
+/* 箭頭圖形在 16px 框內左側留了約 5px 空白：拉回去，讓 < 的尖端跟下方標題左緣對齊 */
+.part-back .chev,.intro-back .chev,.series-back .chev{margin-left:-5px}
 .series-back{margin-bottom:6px}
 /* 三個頁面（選車系、選車款、設定）的返回連結位置一致：和選車頁同一個上方留白公式 */
 #configPage{padding-top:calc(var(--header-height) + 24px)!important}
@@ -903,6 +905,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 #stage .sp-views button:hover::after,#stage .sp-views button:focus-visible::after{opacity:1;translate:-50% 0}
 #stage .sp-views button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px;border-radius:6px}
 #stage .sp-sep{width:1px;height:20px;background:#DCE1E7}
+#stage.sp-locked .sp-views,#stage.sp-locked .sp-sep,#stage.sp-locked .flat-nav{display:none!important}
 #stage .sp-bgs{display:flex;align-items:center;gap:10px;flex:none}
 #stage .sp-bgs button{width:22px;height:22px;border-radius:50%;border:1px solid #C3CAD3;padding:0;cursor:pointer}
 #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px #141A22;border-color:transparent}
@@ -1113,16 +1116,22 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) .preview-column{position:sticky;top:var(--cfg-pin);z-index:21}
  #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) #panelHeader{position:sticky;top:calc(var(--cfg-pin) + var(--cfg-preview,30svh));z-index:20;scroll-margin-top:calc(var(--cfg-pin) + var(--cfg-preview,30svh))}
  #configPage:has(#panel[data-screen=groupset]) #panelHeader{position:sticky;top:var(--cfg-pin);z-index:20;scroll-margin-top:var(--cfg-pin)}
- /* angle dots + backgrounds: hidden until the stage is tapped (stage-preview.js), then a small pill over the bottom of the photo */
- #configPage #stage .sp-bar{bottom:18px;height:28px;width:auto;padding:0 10px;gap:8px}
- #configPage #stage.sp-flat .sp-bar:not(.show){opacity:0;translate:-50% 8px;pointer-events:none}
- #configPage #stage .sp-views{flex:none}
- #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:16px;height:28px}
- #configPage #stage .sp-views button[aria-current]{width:24px}
- #configPage #stage .sp-views button i{width:6px;height:6px}#configPage #stage .sp-views button[aria-current] i{width:16px}
- #configPage #stage .sp-sep{height:14px}
- #configPage #stage .sp-bgs{gap:8px}#configPage #stage .sp-bgs button{width:18px;height:18px}
- #configPage #stage .sp-bgs button[aria-pressed=true]{box-shadow:0 0 0 1.5px #fff,0 0 0 3px #141A22}
+ /* angle dots: an indicator only, swipe the photo to change angle. Background: one swatch in the photo's
+    bottom-right corner; tapping it opens the other choices upward (stage-preview.js toggles .open). */
+ #configPage .flat-viewer{touch-action:pan-y}
+ /* pinned back rows sit the text on the bottom edge (align-items:flex-end), which leaves the chevron 2.5px low */
+ #configPage>.intro-back .chev,.pick-page .pick-shell>.part-back .chev{translate:0 -2.5px}
+ #configPage #stage .sp-bar,#configPage #stage.sp-flat .sp-bar,#configPage #stage.sp-flat .sp-bar:not(.show){left:16px;right:16px;bottom:18px;width:auto;max-width:none;height:32px;padding:0;gap:0;justify-content:center;translate:none;opacity:1;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:0;pointer-events:none}
+ #configPage #stage .sp-views{flex:none;height:20px;padding:0 6px;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 1px 2px rgba(20,26,34,.06),0 4px 12px rgba(20,26,34,.1);pointer-events:none}
+ #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:12px;height:20px;cursor:default}
+ #configPage #stage .sp-views button[aria-current]{width:20px}
+ #configPage #stage .sp-views button i{width:6px;height:6px}#configPage #stage .sp-views button[aria-current] i{width:14px}
+ #configPage #stage .sp-sep{display:none}
+ #configPage #stage .sp-bgs{position:absolute;right:0;bottom:0;display:flex;flex-direction:column-reverse;align-items:center;gap:10px;pointer-events:auto}
+ #configPage #stage .sp-bgs button{width:32px;height:32px;border:2px solid #fff;box-shadow:0 1px 2px rgba(20,26,34,.08),0 4px 12px rgba(20,26,34,.18);transition:opacity .25s var(--ease),translate .3s var(--ease),visibility 0s}
+ #configPage #stage .sp-bgs button[aria-pressed=true]{order:-1}
+ #configPage #stage .sp-bgs.open button[aria-pressed=true]{box-shadow:0 0 0 2px #141A22,0 4px 12px rgba(20,26,34,.18)}
+ #configPage #stage .sp-bgs:not(.open) button:not([aria-pressed=true]){opacity:0;translate:0 12px;visibility:hidden;pointer-events:none;transition:opacity .2s var(--ease),translate .2s var(--ease),visibility 0s .2s}
  #configPage .stage .preview-toolbar .background-switch{height:28px;min-height:28px;padding:0 10px;gap:8px;font-size:12px}
  #configPage .stage .preview-toolbar .background-choice{width:18px;height:18px}
  #configPage .panel-column #next{min-height:40px;height:40px;padding:0 16px}
@@ -1168,8 +1177,9 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #siteHeader #aiOrb::before{content:"";position:absolute;inset:-8px;border-radius:50%}
 }
 @media(max-width:767px){
- #configPage .text-button,#configPage #stage .sp-views button,#configPage #stage .sp-bgs button,#configPage .panel .color-swatch{position:relative}
- #configPage .text-button::before,#configPage #stage .sp-views button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:40px;translate:0 -50%}
+ #configPage .text-button,#configPage #stage .sp-bgs button,#configPage .panel .color-swatch{position:relative}
+ #configPage .text-button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:40px;translate:0 -50%}
+ #configPage #stage .sp-views button::after{display:none}
  /* the back rows are pinned and clipped full-bleed, so they grow to 40 instead (text stays on the bottom edge) */
  .pick-page .pick-shell>.part-back{min-height:40px;align-items:flex-end}
  #configPage .gs-brands button,#configPage .pager-link{min-height:40px}
@@ -1857,7 +1867,9 @@ const FLAT_VIEWS=[{id:'side',name:'全車側面',img:'paint-side'},{id:'front',n
 const PART_VIEW={bar:'cockpit',tape:'cockpit',stem:'cockpit',headset:'cockpit',cassette:'rear',chain:'drive',chainring:'drive',bb:'drive',decals:'front'};
 const viewIndex=id=>Math.max(0,FLAT_VIEWS.findIndex(v=>v.id===id));
 let gsView='side',gsTab='drive',gsBrand=null;   // 一進來先看整台車側面，點了變速套件才拉近看傳動
-function contextView(){if(page==='groupset')return gsView;if(page==='paint')return paintTab==='signature'?'frame':'side';if(page==='parts')return partDetail?PART_VIEW[partDetail]:partsTab==='size'?'side':null;return 'side'}
+function contextView(){if(page==='groupset')return gsView;return 'side'}
+// 專屬簽名與騎乘配備只看全車側面：其他角度藏起來，滑動、鍵盤、點配件都不會換角度
+const viewLocked=()=>page==='parts'||(page==='paint'&&paintTab==='signature');
 let flatIdx=0,flatContext='';
 // Built once, then only classes and transforms change so the fade and zoom transitions can run.
 function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat-viewer');
@@ -1866,8 +1878,8 @@ function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat
   root.dataset.detail=String(!!v.zoom);root.setAttribute('aria-label',`車款預覽：${v.name}，第 ${flatIdx+1} 張，共 ${FLAT_VIEWS.length} 張`);
   root.querySelectorAll('.flat-photo').forEach(im=>{const on=im.dataset.flatImg===v.img,was=im.classList.contains('is-on');const label=on?`${bikeName(config)}・${v.name}`:'';if(im.tagName==='CANVAS')im.setAttribute('aria-label',label);else im.alt=label;if(on){if(!was)im.style.transition='opacity .45s var(--ease)';im.style.transformOrigin=v.origin||'50% 50%';im.style.transform=v.zoom||'';if(!was){im.offsetWidth;im.style.transition=''}}im.classList.toggle('is-on',on)});
   root.querySelectorAll('[data-flat-go]').forEach((b,i)=>i===flatIdx?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current'));}
-function flatGo(i,focus=true){flatIdx=(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
-function focusFlat(id){if(!id)return;const i=viewIndex(id);if(i!==flatIdx)flatGo(i,false)}
+function flatGo(i,focus=true){flatIdx=viewLocked()?0:(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
+function focusFlat(id){if(!id)return;const i=viewLocked()?0:viewIndex(id);if(i!==flatIdx)flatGo(i,false)}
 // Live paint on the flat preview: GIANT's own MY23 PROPEL paint PSD (assets/propel), exported layer by layer. Every colour
 // is a finished render of the frame, so recolouring is just stacking the right layers — base frame (lower zone + fork),
 // the template's upper-zone overlay, the down-tube logo, then the components. Colours without a PSD layer use the nearest one.
@@ -1907,7 +1919,7 @@ function psdThumb(c){const stack=psdStack(c),key=stack.map(e=>e&&e.f).join('|');
 function fillThumbs(){document.querySelectorAll('canvas[data-thumb-key]').forEach(el=>{const t=thumbCache[el.dataset.thumbKey];if(!t||!t.ready||el.dataset.filled)return;
   const x=el.getContext('2d');x.clearRect(0,0,el.width,el.height);x.drawImage(t.cv,0,0);el.dataset.filled='1';el.classList.remove('is-loading')})}
 const paintThumb=c=>psdThumb(c);
-function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);if(three){viewer.update(config);const v3=page==='paint'&&paintTab==='signature'?'detail':'full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
+function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);$('#stage').classList.toggle('sp-locked',viewLocked());if(three){viewer.update(config);const v3='full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
 // Sharing: the link carries the whole configuration in its hash, so opening it restores the design.
 const encodeDesign=c=>btoa(unescape(encodeURIComponent(JSON.stringify(c))));
 function shareLink(){return location.href.split('#')[0]+'#design='+encodeDesign(config)}
@@ -2024,7 +2036,7 @@ render();
 })();
 applyRoute(location.hash);
 </script>
-<script src="assets/stage-preview.js?v=7"></script>
+<script src="assets/stage-preview.js?v=8"></script>
 <script src="storefront/js/custom-advisor.js?v=ink1103"></script>
 <script>
 (()=>{

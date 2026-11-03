@@ -86,7 +86,12 @@
       if (bgs.childElementCount !== src.length) bgs.innerHTML = src.map(b => `<button type="button" data-bg="${b.dataset.stageBackground}" aria-label="${b.getAttribute('aria-label') || ''}"></button>`).join('');
       bgs.querySelectorAll('button').forEach(b => { b.style.background = SWATCH[b.dataset.bg] || '#ccc'; b.setAttribute('aria-pressed', String(st.dataset.stageBackground === b.dataset.bg)); });
     };
-    bgs.addEventListener('click', e => { const b = e.target.closest('button'); if (b) D.querySelector(`.background-choice[data-stage-background="${b.dataset.bg}"]`)?.click(); });
+    /* 手機：右下角只露出目前的背景，點一下往上展開其他選項，選好或點別處就收起 */
+    const narrow = matchMedia('(max-width:767px)');
+    bgs.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+      if (narrow.matches && !bgs.classList.contains('open')) { bgs.classList.add('open'); return; }
+      bgs.classList.remove('open'); D.querySelector(`.background-choice[data-stage-background="${b.dataset.bg}"]`)?.click(); });
+    D.addEventListener('click', e => { if (!bgs.contains(e.target)) bgs.classList.remove('open'); });
     bar.querySelector('.sp-views').addEventListener('click', e => { const b = e.target.closest('button'); if (b) flatGo(+b.dataset.i, false); });
     st.addEventListener('dblclick', e => { if (st.classList.contains('sp-flat') && flatIdx !== 0 && !e.target.closest('button')) flatGo(0, false); });
 
