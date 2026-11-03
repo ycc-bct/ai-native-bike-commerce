@@ -68,7 +68,7 @@
 .adv-in{flex:none;display:flex;align-items:center;gap:2px;margin:10px 12px 12px;padding:5px 5px 5px 14px;border:1px solid #C5CCD5;border-radius:999px;background:#fff;transition:border-color .2s}
 .adv-in:focus-within{border-color:var(--ink)}
 .adv-in input[type=text]{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink);padding:0 4px}
-.adv-in input::placeholder{color:#9AA4B0}
+.adv-in input::placeholder{color:#667080}
 .adv-ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-70);transition:background .2s,color .2s}
 .adv-ic:hover{background:#EEF1F4;color:var(--ink)}
 .adv-ic svg{width:19px;height:19px}

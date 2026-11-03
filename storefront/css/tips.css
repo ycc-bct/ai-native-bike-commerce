@@ -5,7 +5,7 @@
 .tips{position:fixed;left:24px;bottom:24px;z-index:63;width:min(460px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;padding:14px 16px 16px;border-radius:14px;background:#fff;border:1px solid #DCE1E7;box-shadow:0 20px 48px rgba(20,26,34,.2);font-family:"Inter","Noto Sans TC",sans-serif;color:#141A22}
 .tips-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .tips-head b{font-size:12px;font-weight:800;letter-spacing:.14em}
-.tips-close{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:#7A8492;cursor:pointer}
+.tips-close{width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:#667080;cursor:pointer}
 .tips-close:hover{background:#F1F4F8;color:#141A22}
 .tips-close svg{width:16px;height:16px}
 /* 分頁：依網站流程排列 */
@@ -21,5 +21,5 @@
 .tips-body li p{margin:3px 0 0;font-size:12px;line-height:1.6;color:#4A5563}
 .tips-body .try{flex:none;align-self:center;padding:4px 2px;border:0;background:none;color:#1F4FE0;font:700 12.5px/1 "Inter","Noto Sans TC",sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:transparent;transition:text-decoration-color .2s}
 .tips-body .try:hover{text-decoration-color:currentColor}
-.tips-empty{margin:4px 2px;padding:18px 14px;border-radius:10px;background:#F5F7FA;font-size:12.5px;line-height:1.7;color:#7A8492;text-align:center}
+.tips-empty{margin:4px 2px;padding:18px 14px;border-radius:10px;background:#F5F7FA;font-size:12.5px;line-height:1.7;color:#667080;text-align:center}
 .tips-empty a{color:#1F4FE0;font-weight:700}

@@ -247,7 +247,7 @@
  #templates.tpl9.arc-showroom .showroom-motion .paint-start{position:relative;inset:auto!important;transform:none;translate:none;min-height:44px;display:flex;align-items:center;margin:18px auto 0;white-space:normal;text-align:center}
  #templates.tpl9 .paint-craft{display:block;position:relative;inset:auto;order:0;width:auto;margin:24px 16px 0;padding:0;opacity:1;visibility:visible}
  #templates.tpl9 .paint-craft li{list-style:none;display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;padding:20px 0;border-top:1px solid rgba(20,26,34,.14)}
- #templates.tpl9 .paint-craft i{font:700 14px/26px Inter,sans-serif;color:#9aa4b0}
+ #templates.tpl9 .paint-craft i{font:700 14px/26px Inter,sans-serif;color:#4A5563}
  #templates.tpl9 .paint-craft b{display:block;font-size:16px;color:#141a22}
  #templates.tpl9 .paint-craft span{display:block;margin-top:6px;font-size:14px;line-height:1.7;color:#3f4855}
  #templates.tpl9 .paint-craft em{font-style:normal}
