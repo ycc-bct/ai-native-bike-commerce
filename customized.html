@@ -579,9 +579,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 
 /* Steps read as clickable: inactive steps are black text on a white number; the current step keeps its dark fill. */
 .step,.step.done{color:var(--ink)}
-.step span,.step.done span{background:#fff;color:var(--ink);box-shadow:none}
+.step span,.step.done span{background:#fff;color:var(--ink);box-shadow:none;border:1px solid var(--line);box-sizing:border-box}
 .step:hover span{box-shadow:none}
-.step[aria-current=step] span{background:var(--navy);color:#fff;box-shadow:none}
+.step[aria-current=step] span{background:var(--navy);color:#fff;box-shadow:none;border-color:var(--navy)}
 
 /* Series scene photos fill the picture box edge to edge. */
 .pick-picture.is-scene{padding:0}.pick-scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -981,7 +981,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage #stage .sp-bgs{gap:10px}#configPage #stage .sp-bgs button{width:24px;height:24px;flex:none;background-clip:padding-box;border:1px solid var(--line)}
  #configPage .panel-column{display:block;min-height:0;height:auto;border-radius:14px 14px 0 0;margin:0;overflow:visible}
  #configPage .panel-column .panel{height:auto;min-height:0;overflow:visible}
- #configPage .panel-column .panel.panel-header{padding:24px 16px 0;border-radius:14px 14px 0 0}
+ #configPage .panel-column .panel.panel-header{padding:16px 16px 0;border-radius:14px 14px 0 0}
  #configPage .panel-column .panel.panel-content{padding:16px 16px 24px;border-radius:0;scroll-margin-top:80px}
  #configPage #panelTools{top:16px;right:16px;gap:8px}
  #configPage #panelHeader .panel-head.head-save{padding-right:132px;min-height:44px}
@@ -1084,6 +1084,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  /* the bike name now lives in the bar; the h1 stays for screen readers */
  /* the steps join the panel title (script moves .intro into #panelHeader) */
  #configPage #panelHeader>.intro{display:block;position:static;height:auto;margin:0 0 12px;padding:0;background:none}
+ #configPage #panelHeader .segmented{margin-top:0}
  #configPage #panelHeader .panel-head h2.step-dup{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
  #configPage #panelHeader .panel-head:has(>h2.step-dup:only-child),#configPage #panelHeader .panel-head:has(>div:only-child>h2.step-dup:only-child){margin:0}
  #configPage .intro h1{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
