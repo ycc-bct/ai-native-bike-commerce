@@ -187,20 +187,15 @@
 }
 @media (max-width:900px) and (max-height:520px){#parts .pd-strip{min-height:0}}
 
-/* Navigation targets and a mobile menu that stays reachable on narrow screens. */
-.studio-menu-toggle,#studio-mobile-menu{display:none}
+/* Narrow-screen header: logo and 44px icon targets; the menu itself comes from storefront/js/header.js (data-mobile-nav). */
 @media(max-width:900px){
- #siteHeader .studio-menu-toggle{display:grid;place-items:center;position:absolute;left:8px;top:10px;width:44px;height:44px;color:inherit;background:none;border:0;cursor:pointer}
- #siteHeader .studio-menu-toggle svg{width:24px;height:24px}
  #siteHeader .logo{left:56px!important}
  #siteHeader .logo svg{width:80px!important;height:auto!important}
  #siteHeader .links{display:none!important}
  #siteHeader .icons{right:8px!important;gap:4px!important}
  #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .orb-wrap,#siteHeader #aiOrb{width:44px!important;height:44px!important;min-width:44px;box-sizing:border-box}
 
- #siteHeader #studio-mobile-menu:not([hidden]){display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;padding:16px 24px;background:#f3f5f7;color:#141a22;box-shadow:0 12px 20px #0002;max-height:calc(100svh - 64px);overflow:auto}
- #studio-mobile-menu a{display:flex;align-items:center;min-height:48px;border-bottom:1px solid #dce1e7;font-size:16px;text-decoration:none;color:inherit}
- #siteHeader button:focus-visible,#studio-mobile-menu a:focus-visible{outline:2px solid #1f4fe0;outline-offset:2px}
+ #siteHeader button:focus-visible{outline:2px solid #1f4fe0;outline-offset:2px}
 }
 /* Dot centers share the exact radius used by the circular outline. */
 .tpl9.arc-showroom .tab9{left:var(--dial-x)!important;top:var(--dial-y)!important;translate:-50% -100%!important;transform:none!important;height:44px!important;min-width:52px;padding:0 6px 16px!important;overflow:visible}
@@ -211,9 +206,8 @@
 #parts .pd-hv{display:none!important}
 #parts .pp10.hov>img:not(.pd-sk),#parts.wheel-on .rear-wheel:not(.pd-sk){transform:none!important}
 
-@media(max-width:370px){#siteHeader .icons>button[aria-label="搜尋"],#siteHeader .icons>a[aria-label="會員"]{display:none!important}}
-#studio-mobile-menu summary,#studio-mobile-menu>button{min-height:48px;display:flex;align-items:center;font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
-#studio-mobile-menu details a{padding-left:16px}
+/* <=370px: the heart lives in the member menu, so search and member stay; tighter icons keep them clear of the logo */
+@media(max-width:370px){#siteHeader .icons{gap:0!important}#siteHeader .logo svg{width:72px!important}}
 
 /* Mobile footer: one category and one link per row. */
 @media(max-width:900px){
@@ -282,7 +276,7 @@
  #parts .pd-strip-nm{font-size:16px!important;line-height:1.4!important}
  #parts{--parts-card-height:144px}
  #parts .pd-strip{height:var(--parts-card-height)!important;min-height:var(--parts-card-height)!important;max-height:var(--parts-card-height)!important}
- #siteHeader .studio-menu-toggle svg,#siteHeader .icons .icon-btn svg,#siteHeader .icons>a>svg{width:24px!important;height:24px!important}
+ #siteHeader .icons .icon-btn svg,#siteHeader .icons>a>svg{width:24px!important;height:24px!important}
  #siteHeader .member-initial{width:24px;height:24px;font-size:12px}
  #siteHeader #aiOrb{width:24px!important;height:24px!important;min-width:24px}
  #siteHeader #aiOrb::before{inset:-10px}
