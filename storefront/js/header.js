@@ -246,7 +246,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=ds1103b'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=tap1103b'; document.head.appendChild(cs);
   }
   /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
   (function () {

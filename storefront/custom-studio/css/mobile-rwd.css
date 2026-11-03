@@ -328,3 +328,11 @@
  #siteHeader #aiOrb{width:28px!important;height:28px!important;min-width:28px}
  #siteHeader #aiOrb::before{inset:-8px}
 }
+
+/* Phones: everything you tap is at least 44px tall — small part pins and the store phone links get an invisible 44px hit area. */
+@media(max-width:900px){
+ #parts .pp10::before{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:44px;translate:-50% -50%}
+ #stores .tel{position:relative;display:inline-block}
+ #stores .tel::before{content:"";position:absolute;left:0;right:0;top:50%;height:44px;translate:0 -50%}
+ #stores .slist .q{flex-basis:46px!important}
+}

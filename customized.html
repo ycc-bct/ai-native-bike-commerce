@@ -997,6 +997,9 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .gs-img{width:64px;height:64px}
  #configPage .gs-top{flex-direction:column;align-items:flex-start;gap:6px}
  #configPage .gs-desc,#configPage .gs-note{font-size:14px;line-height:1.75;color:var(--ink-70)}
+ /* groupset cards: the description wraps naturally (no forced break) and every card in the list is as tall as the tallest */
+ #configPage .gs-desc .nb{display:inline}
+ #configPage .gs-tiers{display:grid;grid-auto-rows:1fr}
  #configPage #panelHeader{scroll-margin-top:80px}
  #configPage .style-cards{gap:8px}#configPage .style-card{padding:12px 8px}
  #configPage .panel .paint-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1066,7 +1069,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
    On paint, parts and review (where every pick changes the bike) the stage stays pinned under the bar and the panel title under the stage;
    on gear + size the panel title pins under the bar. --cfg-nav, --cfg-title and --cfg-steps must match the heights below. */
 @media(max-width:767px){
- #configPage{--cfg-nav:30px;--cfg-title:34px;--cfg-steps:0px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
+ #configPage{--cfg-nav:44px;--cfg-title:28px;--cfg-steps:0px;--cfg-bar:calc(var(--cfg-nav) + var(--cfg-title) + var(--cfg-steps));--cfg-pin:calc(64px + var(--cfg-bar))}
  #configPage.bar-hidden{--cfg-pin:64px}
  #configPage>.intro-back,#configPage>.cfg-title,#configPage>.intro,#configPage #panelTools{transition:translate .3s var(--ease)}
  #configPage.bar-hidden>.intro-back,#configPage.bar-hidden>.cfg-title,#configPage.bar-hidden>.intro,#configPage.bar-hidden #panelTools{translate:0 calc(-1 * var(--cfg-bar) - 12px)}
@@ -1076,7 +1079,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  /* the white panel runs to the bottom of the screen (and under the price bar) even when its content is short */
  #configPage .panel-column{min-height:calc(100svh - 64px - var(--cfg-nav) - var(--cfg-title) - var(--cfg-steps) - var(--cfg-preview,30svh));padding-bottom:var(--mobile-purchase-height,75px);background:#fff}
  #configPage>.intro-back{position:sticky;top:64px;z-index:22;height:var(--cfg-nav);margin:0 16px;padding:0;align-items:flex-end;background:var(--paper,#F3F5F7);box-shadow:0 0 0 100vmax var(--paper,#F3F5F7);clip-path:inset(0 -100vmax)}
- #configPage>.cfg-title{display:block;position:sticky;top:calc(64px + var(--cfg-nav));z-index:22;height:var(--cfg-title);margin:0;padding:2px 148px 8px 16px;background:var(--paper,#F3F5F7);font-size:18px;font-weight:700;line-height:24px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #configPage>.cfg-title{display:block;position:sticky;top:calc(64px + var(--cfg-nav));z-index:22;height:var(--cfg-title);margin:0;padding:0 148px 4px 16px;background:var(--paper,#F3F5F7);font-size:18px;font-weight:700;line-height:24px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  #configPage #panelTools{position:fixed;top:calc(64px + (var(--cfg-nav) + var(--cfg-title) - 44px) / 2);right:16px;z-index:23}
  #configPage #panelTools .fav-toggle,#configPage #panelTools .save-btn{background:#fff}
  #configPage #panelHeader .panel-head.head-save{padding-right:0;min-height:0}
@@ -1107,7 +1110,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage:has(#panel[data-screen=paint],#panel[data-screen=parts],#panel[data-screen=review]) #panelHeader{position:sticky;top:calc(var(--cfg-pin) + var(--cfg-preview,30svh));z-index:20;scroll-margin-top:calc(var(--cfg-pin) + var(--cfg-preview,30svh))}
  #configPage:has(#panel[data-screen=groupset]) #panelHeader{position:sticky;top:var(--cfg-pin);z-index:20;scroll-margin-top:var(--cfg-pin)}
  /* angle dots + backgrounds: hidden until the stage is tapped (stage-preview.js), then a small pill over the bottom of the photo */
- #configPage #stage .sp-bar{bottom:6px;height:28px;width:auto;padding:0 10px;gap:8px}
+ #configPage #stage .sp-bar{bottom:18px;height:28px;width:auto;padding:0 10px;gap:8px}
  #configPage #stage.sp-flat .sp-bar:not(.show){opacity:0;translate:-50% 8px;pointer-events:none}
  #configPage #stage .sp-views{flex:none}
  #configPage #stage .sp-views button,#configPage #stage .sp-views button[aria-current]{flex:none;width:16px;height:28px}
@@ -1147,12 +1150,26 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  /* 4. finish: a small two-option toggle on its own line under the 漆面 heading */
  #configPage .zone-section:has(>.finish-list){margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr);justify-items:start;row-gap:8px}
  #configPage .zone-section:has(>.finish-list)>h3{margin:0}
- #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,auto);gap:6px}
- #configPage .zone-section>.finish-list .finish-row{min-height:36px;padding:0 14px;gap:6px}
+ #configPage .zone-section>.finish-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;justify-self:stretch}
+ #configPage .zone-section>.finish-list .finish-row{min-height:44px;padding:0 14px;gap:6px}
  #configPage .zone-section:has(>.finish-list)>.size-help{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--ink-50)}
 }
 @media(max-width:374px){
  #configPage .panel-column .price-number{font-size:20px}
+}
+/* Phones: everything you tap is at least 44px tall. Controls that keep a smaller look get an invisible
+   44px hit area (::before, centred); the rest simply grow. */
+@media(max-width:900px){
+ #siteHeader .profile-wrap>#openMember{width:44px;height:44px;display:grid;place-items:center}
+ #siteHeader #aiOrb::before{content:"";position:absolute;inset:-9px;border-radius:50%}
+}
+@media(max-width:767px){
+ #configPage .text-button,#configPage #stage .sp-views button,#configPage #stage .sp-bgs button,#configPage .panel .color-swatch{position:relative}
+ #configPage .text-button::before,#configPage #stage .sp-views button::before,#configPage #stage .sp-bgs button::before,#configPage .panel .color-swatch::before{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:44px;translate:0 -50%}
+ /* the back rows are pinned and clipped full-bleed, so they grow to 44 instead (text stays on the bottom edge) */
+ .pick-page .pick-shell>.part-back{min-height:44px;align-items:flex-end}
+ #configPage .gs-brands button,#configPage .pager-link{min-height:44px}
+ #configPage .size-range{height:44px;margin:0}
 }
 </style>
 </head>
@@ -1162,7 +1179,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=nav1103c"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=tap1103b"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
