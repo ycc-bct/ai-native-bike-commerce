@@ -3,7 +3,7 @@
 適用：`storefront/custom-studio/index.html`（客製介紹頁）、`customized.html`（選車系 → 選車款 → 設定 → 確認），以及兩頁共用的 header、footer、購物車抽屜。
 上層規範：[Storefront 設計規範](design.md)（字級、顏色、斷行）與「GIANT 客製車設計系統」artifact（CJnnaBhuW59YHNmU7muUYv）。這份只寫**螢幕變窄時的規則**；兩者衝突時以設計系統為準。
 
-最後更新：2026-11-03。`storefront/custom-studio/Design.md`（2026-11-02）記的是舊版手機選單（44px、搜尋／會員收進選單、有分隔線），已被這份取代。
+最後更新：2026-11-03。原本的 `storefront/custom-studio/Design.md`（舊版手機選單）已刪除，以這份為準。
 
 ---
 
