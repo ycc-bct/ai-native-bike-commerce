@@ -117,7 +117,7 @@
   window.GiantHeader = {open: open, close: close, nav: {bikes: BIKES, gear: GEAR, more: MORE}};
 
   /* ---------- 手機主選單（≤ 900px，header 加 data-mobile-nav 的頁面才有）：漢堡在最左、滿版展開。
-     車系是收合列表；精品配件換到第二頁；客製化、門市專區直接連。搜尋與會員留在 header，我的最愛收進會員選單。 ---------- */
+     車系與精品配件都換到自己的一頁（車系頁上方放分類主視覺）；客製化、門市專區直接連。搜尋與會員留在 header，我的最愛收進會員選單。 ---------- */
   if (host.hasAttribute('data-mobile-nav')) (function () {
     var css = document.createElement('style');
     css.textContent =
@@ -129,28 +129,31 @@
         '#siteHeader #openFav{display:none!important}' +
         '#siteHeader.gn-open{background:#fff!important;color:#141A22!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;transform:none!important;box-shadow:inset 0 -1px 0 #DCE1E7}' +
         '.gn-panel:not([hidden]){display:block;position:fixed;left:0;right:0;top:64px;bottom:0;overflow:hidden;background:#fff;color:#141A22;font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;text-align:left}' +
-        '.gn-page{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 0 calc(32px + env(safe-area-inset-bottom));transition:transform .45s cubic-bezier(.16,1,.3,1),visibility .45s}' +
-        '.gn-page[data-p=gear]{transform:translateX(100%);visibility:hidden}' +
-        '.gn-panel.sub .gn-page[data-p=main]{transform:translateX(-30%);visibility:hidden}.gn-panel.sub .gn-page[data-p=gear]{transform:none;visibility:visible}' +
+        '.gn-page{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 0 calc(32px + env(safe-area-inset-bottom));background:#fff;will-change:transform;backface-visibility:hidden;' +
+          'transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .5s cubic-bezier(.16,1,.3,1),visibility 0s linear .5s}' +
+        '.gn-page:not([data-p=main]){transform:translate3d(100%,0,0);visibility:hidden}' +
+        '.gn-panel.sub .gn-page[data-p=main]{transform:translate3d(-24%,0,0);opacity:0;visibility:hidden}' +
+        '.gn-page.on,.gn-panel:not(.sub) .gn-page[data-p=main]{transform:none;opacity:1;visibility:visible;transition-delay:0s}' +
         '.gn-panel *{box-sizing:border-box}' +
         '.gn-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 16px;border:0;background:none;font:inherit;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-align:left;text-decoration:none;cursor:pointer;list-style:none}' +
-        '.gn-row::-webkit-details-marker{display:none}.gn-row[aria-current=page]{color:#1F4FE0}' +
-        '.gn-row svg{flex:none;width:20px;height:20px;color:#4A5563;transition:transform .3s cubic-bezier(.16,1,.3,1)}' +
-        'details[open]>.gn-row svg{transform:rotate(180deg)}' +
-        '.gn-sub{padding:0 0 8px}' +
-        '.gn-sub a{display:flex;align-items:center;min-height:44px;padding:0 16px 0 32px;font-size:14px;line-height:1.5;color:#4A5563;text-decoration:none}' +
-        '.gn-sub a.all{font-weight:600;color:#141A22}' +
+        '.gn-row[aria-current=page]{color:#1F4FE0}' +
+        '.gn-row svg{flex:none;width:20px;height:20px;color:#4A5563}' +
         '.gn-back{justify-content:flex-start}.gn-back svg{order:-1}' +
+        '.gn-kv{position:relative;display:block;margin:4px 16px 8px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#F3F5F7;color:#fff;text-decoration:none}' +
+        '.gn-kv img{display:block;width:100%;height:100%;object-fit:cover}' +
+        '.gn-kv span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(rgba(14,23,38,0),rgba(14,23,38,.62))}' +
+        '.gn-kv b{display:block;font-size:16px;font-weight:700;line-height:1.4}.gn-kv small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:14px;line-height:1.5}.gn-kv small svg{width:16px;height:16px;color:inherit}' +
+        '.gn-sub{padding:0 0 8px}' +
+        '.gn-sub a{display:flex;align-items:center;min-height:44px;padding:0 16px;font-size:14px;line-height:1.5;color:#4A5563;text-decoration:none}' +
         '.gn-group{padding:8px 0 0}.gn-group h3{margin:0;padding:12px 16px 4px;font-size:14px;font-weight:700;color:#141A22}' +
-        '.gn-group a{padding-left:16px}' +
-        '.gn-row:focus-visible,.gn-sub a:focus-visible,#siteHeader .gn-toggle:focus-visible{outline:3px solid #64748b;outline-offset:-3px}' +
+        '.gn-row:focus-visible,.gn-sub a:focus-visible,.gn-kv:focus-visible,#siteHeader .gn-toggle:focus-visible{outline:3px solid #64748b;outline-offset:-3px}' +
         '.gm-menu .gm-fav{display:flex}' +
       '}' +
       'html.gn-lock,html.gn-lock body{overflow:hidden}' +
-      '@media (prefers-reduced-motion:reduce){.gn-page,.gn-row svg{transition:none}}';
+      '@media (prefers-reduced-motion:reduce){.gn-page{transition:none!important}}';
     document.head.appendChild(css);
     var I = function (d, c) { return '<svg' + (c ? ' class="' + c + '"' : '') + ' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
-    var DOWN = I('m6 9 6 6 6-6'), RIGHT = I('m9 6 6 6-6 6'), LEFT = I('m15 6-6 6 6 6');
+    var ARR = I('M5 12h14M13 6l6 6-6 6'), RIGHT = I('m9 6 6 6-6 6'), LEFT = I('m15 6-6 6 6 6');
     var href = function (h) { return h ? R(h) : '#'; };
     var sub = function (item) { var t = Array.isArray(item) ? item[0] : item, h = Array.isArray(item) ? R(item[1]) : '#'; return '<a href="' + h + '"' + (h === '#' ? ' data-soft' : '') + '>' + esc(t) + '</a>'; };
     var stores = document.getElementById('stores') ? '#stores' : '#';
@@ -161,33 +164,42 @@
     panel.className = 'gn-panel'; panel.id = 'gnPanel'; panel.setAttribute('aria-label', '主選單'); panel.hidden = true;
     panel.innerHTML =
       '<div class="gn-page" data-p="main">' +
-        BIKES.map(function (c) {
-          return '<details><summary class="gn-row">' + esc(c.t) + DOWN + '</summary><div class="gn-sub">' +
-            '<a class="all" href="' + href(c.href) + '"' + (c.href ? '' : ' data-soft') + '>看全部' + esc(c.full) + '</a>' + c.sub.map(sub).join('') + '</div></details>';
-        }).join('') +
+        BIKES.map(function (c) { return '<button type="button" class="gn-row" data-go="' + c.k + '">' + esc(c.t) + RIGHT + '</button>'; }).join('') +
         '<button type="button" class="gn-row" data-go="gear">精品配件' + RIGHT + '</button>' +
         '<a class="gn-row" href="' + R('custom-studio/index.html') + '"' + (CURRENT === 'custom' ? ' aria-current="page"' : '') + '>客製化</a>' +
         '<a class="gn-row" href="' + stores + '"' + (stores === '#' ? ' data-soft' : '') + '>門市專區</a>' +
       '</div>' +
+      BIKES.map(function (c) {   /* 車系頁：分類主視覺（同桌機下拉的大圖）＋子分類；圖片第一次打開選單才載入 */
+        return '<div class="gn-page" data-p="' + c.k + '" aria-label="' + esc(c.t) + '">' +
+          '<button type="button" class="gn-row gn-back" data-go="main">' + esc(c.t) + LEFT + '</button>' +
+          '<a class="gn-kv" href="' + href(c.href) + '"' + (c.href ? '' : ' data-soft') + '><img data-src="' + R(c.img) + '" alt=""><span><b>' + esc(c.full) + '</b><small>看全部 ' + esc(c.en) + ARR + '</small></span></a>' +
+          '<div class="gn-sub">' + c.sub.map(sub).join('') + '</div></div>';
+      }).join('') +
       '<div class="gn-page" data-p="gear" aria-label="精品配件">' +
         '<button type="button" class="gn-row gn-back" data-go="main">精品配件' + LEFT + '</button>' +
         GEAR.map(function (g) { return '<div class="gn-group gn-sub"><h3>' + esc(g.t) + '</h3>' + g.sub.map(sub).join('') + '</div>'; }).join('') +
       '</div>';
     host.prepend(btn); host.append(panel);
     var mq = matchMedia('(max-width:900px)');
-    function page(p) {
-      panel.classList.toggle('sub', p === 'gear');
-      var f = panel.querySelector('.gn-page[data-p="' + p + '"] .gn-row');
-      if (f) setTimeout(function () { f.focus({preventScroll: true}); }, 50);
+    /* 換頁只動 transform／opacity；焦點等滑完才移，避免動畫途中重排 */
+    function page(p, kb) {
+      var to = panel.querySelector('.gn-page[data-p="' + p + '"]');
+      panel.querySelectorAll('.gn-page.on').forEach(function (x) { if (x !== to) x.classList.remove('on'); });
+      if (p !== 'main') { to.scrollTop = 0; to.classList.add('on'); }
+      panel.classList.toggle('sub', p !== 'main');
+      if (kb) setTimeout(function () { var f = to.querySelector('.gn-row'); if (f && !panel.hidden) f.focus({preventScroll: true}); }, 500);   /* 鍵盤操作才移焦點 */
     }
     function set(on) {
       panel.hidden = !on; host.classList.toggle('gn-open', on); document.documentElement.classList.toggle('gn-lock', on);
       btn.setAttribute('aria-expanded', String(on)); btn.setAttribute('aria-label', on ? '關閉主選單' : '開啟主選單');
-      if (on) { close(); panel.classList.remove('sub'); panel.querySelectorAll('details[open]').forEach(function (d) { d.open = false; }); }
+      if (on) {
+        close(); panel.classList.remove('sub'); panel.querySelectorAll('.gn-page.on').forEach(function (x) { x.classList.remove('on'); });
+        panel.querySelectorAll('img[data-src]').forEach(function (im) { im.src = im.dataset.src; im.removeAttribute('data-src'); });
+      }
     }
     btn.addEventListener('click', function (e) { e.stopPropagation(); set(panel.hidden); });
     panel.addEventListener('click', function (e) {
-      var g = e.target.closest('[data-go]'); if (g) { page(g.dataset.go); return; }
+      var g = e.target.closest('[data-go]'); if (g) { page(g.dataset.go, e.detail === 0); return; }
       var a = e.target.closest('a'); if (a && !a.hasAttribute('data-soft')) set(false);
     });
     addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
