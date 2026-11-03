@@ -136,7 +136,6 @@
         '.gn-page.on,.gn-panel:not(.sub) .gn-page[data-p=main]{transform:none;opacity:1;visibility:visible;transition-delay:0s}' +
         '.gn-panel *{box-sizing:border-box}' +
         '.gn-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:0 16px;border:0;background:none;font:inherit;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-align:left;text-decoration:none;cursor:pointer;list-style:none}' +
-        '.gn-row[aria-current=page]{color:#1F4FE0}' +
         '.gn-row svg{flex:none;width:20px;height:20px;color:#4A5563}' +
         '.gn-back{justify-content:flex-start}.gn-back svg{order:-1}' +
         '.gn-kv{position:relative;display:block;margin:4px 16px 8px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#F3F5F7;color:#fff;text-decoration:none}' +
@@ -144,8 +143,8 @@
         '.gn-kv span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(rgba(14,23,38,0),rgba(14,23,38,.62))}' +
         '.gn-kv b{display:block;font-size:16px;font-weight:700;line-height:1.4}.gn-kv small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:14px;line-height:1.5}.gn-kv small svg{width:16px;height:16px;color:inherit}' +
         '.gn-sub{padding:0 0 8px}' +
-        '.gn-sub a{display:flex;align-items:center;min-height:44px;padding:0 16px;font-size:14px;line-height:1.5;color:#4A5563;text-decoration:none}' +
-        '.gn-group{padding:8px 0 0}.gn-group h3{margin:0;padding:12px 16px 4px;font-size:14px;font-weight:700;color:#141A22}' +
+        '.gn-sub a{display:flex;align-items:center;min-height:48px;padding:0 16px;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-decoration:none}' +
+        '.gn-group{padding:16px 0 0}.gn-group h3{margin:0;padding:0 16px 4px;font-size:14px;font-weight:400;line-height:1.5;color:#4A5563}' +   /* 精品配件：灰色小標＋同字級的項目 */
         '.gn-row:focus-visible,.gn-sub a:focus-visible,.gn-kv:focus-visible,#siteHeader .gn-toggle:focus-visible{outline:3px solid #64748b;outline-offset:-3px}' +
         '.gm-menu .gm-fav{display:flex}' +
       '}' +
