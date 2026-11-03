@@ -1091,7 +1091,9 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .panel-head h2,#configPage .panel h2,.dialog h2,.share-info h2{font-size:16px;line-height:1.4}
  #configPage .panel h3,#configPage .panel .style-head h3,#configPage .panel .review-group h3,.dialog h3{font-size:14px}
  /* series + models: the back link pins under the header, same as the config page's */
- .pick-page .pick-shell>.part-back{position:sticky;top:64px;z-index:22;display:flex;width:fit-content;margin-bottom:0;padding:4px 0 6px;background:var(--pick-bg,#fff);box-shadow:0 0 0 100vmax var(--pick-bg,#fff);clip-path:inset(0 -100vmax)}
+ .pick-page{padding-top:64px}
+ html:has(.pick-page:not([hidden])) #siteHeader.site-nav{background:var(--pick-bg,#fff);box-shadow:none}
+ .pick-page .pick-shell>.part-back{position:sticky;top:64px;z-index:22;display:flex;width:fit-content;margin-bottom:0;padding:12px 0;background:var(--pick-bg,#fff);box-shadow:0 0 0 100vmax var(--pick-bg,#fff);clip-path:inset(0 -100vmax)}
  /* series + models: the page title is 24px here, so the card names step down to 20 */
  .series-text h2,.family-card .level-text h2{font-size:var(--fs-lg)}
  /* 3D keeps a fixed stage; the photo version is as tall as the photo */
