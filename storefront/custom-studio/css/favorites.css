@@ -45,7 +45,7 @@
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fav-item small{display:block;margin-top:3px;font-size:13px;color:var(--ink-70,#4A5563)}
 .fav-rm{flex:none;border:0;background:none;padding:0;width:30px;height:30px;border-radius:6px;
-  font-size:19px;line-height:1;color:#9AA4B0;cursor:pointer}
+  font-size:19px;line-height:1;color:#667080;cursor:pointer}
 .fav-rm:hover{background:#F3F5F7;color:var(--ink,#141A22)}
 
 .fav-empty{padding:32px 12px;text-align:center}

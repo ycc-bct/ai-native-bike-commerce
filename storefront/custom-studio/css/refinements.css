@@ -536,13 +536,13 @@
 
 /* ---------- 客製化自行車服務門市：搜尋、地區篩選、地圖連動（js/stores.js） ---------- */
 #stores .slist .q input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:15px;font-weight:600;color:var(--ink)}
-#stores .slist .q input::placeholder{color:#9AA4B0;font-weight:500}
+#stores .slist .q input::placeholder{color:#667080;font-weight:500}
 #stores .slist .q:focus-within{border-color:#141A22}
 #stores .slist .chips button.chip{font:inherit;cursor:pointer;background:#fff;transition:background .2s,color .2s,border-color .2s}
 #stores .slist .chips button.chip:hover:not(.on){border-color:#141A22}
 #stores .slist li[data-i]{cursor:default;margin:0 -10px;padding-left:10px!important;padding-right:10px!important;border-radius:10px;transition:background .2s}
 #stores .slist li.hl{background:#F3F5F7}
-#stores .slist li.st-empty{display:block;padding:28px 0;text-align:center;color:#7A8492;font-size:14px;border-top:0}
+#stores .slist li.st-empty{display:block;padding:28px 0;text-align:center;color:#667080;font-size:14px;border-top:0}
 #stores .tw .pins circle{cursor:pointer;transition:opacity .25s ease,r .2s ease,stroke-width .2s ease}
 #stores .tw .pins circle.off{opacity:.14;pointer-events:none}
 #stores .tw .pins circle.hl{r:8px;stroke-width:3px;fill-opacity:1}
@@ -569,7 +569,7 @@
 #stores .st-tag{position:absolute;left:0;top:0;z-index:3;pointer-events:none;padding:8px 14px 9px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12);white-space:nowrap;opacity:0;transition:opacity .2s ease}
 #stores .mapc.has-sel .st-tag{opacity:1;transition-delay:.45s}
 #stores .st-tag b{display:block;font-size:14px;font-weight:700;color:#141A22}
-#stores .st-tag span{display:block;margin-top:2px;font-size:12px;color:#7A8492}
+#stores .st-tag span{display:block;margin-top:2px;font-size:12px;color:#667080}
 #stores .st-tag span:empty{display:none}
 #stores .st-reset{position:absolute;left:16px;top:16px;z-index:3;display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px 0 10px;border:0;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 6px 18px rgba(20,26,34,.1);font:inherit;font-size:13.5px;font-weight:700;color:#141A22;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease,box-shadow .2s ease}
 #stores .st-reset svg{width:16px;height:16px}
@@ -606,7 +606,7 @@
 #stores .st-mk::before{content:"";position:absolute;inset:0;border-radius:50%;background:#1F4FE0;opacity:0;animation:st-pulse 1.8s ease-out .6s infinite}
 #stores .st-mk-tag{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);padding:8px 14px 9px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12);white-space:nowrap;pointer-events:none;opacity:0;animation:st-tag-in .3s ease .7s forwards}
 #stores .st-mk-tag b{display:block;font-size:14px;font-weight:700;color:#141A22}
-#stores .st-mk-tag span{display:block;margin-top:2px;font-size:12px;color:#7A8492}
+#stores .st-mk-tag span{display:block;margin-top:2px;font-size:12px;color:#667080}
 @keyframes st-tag-in{from{opacity:0;transform:translate(-50%,4px)}to{opacity:1;transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){#stores .st-mk::before{animation:none}#stores .st-mk-tag{animation:none;opacity:1}}
 
@@ -731,7 +731,7 @@
  .tpl9 .paint-craft{display:block;position:absolute;left:calc((100vw - var(--shell)) / 2);top:236px;z-index:6;width:330px;margin:0;padding:0}
  .tpl9 .paint-craft li{list-style:none;display:grid;grid-template-columns:28px 1fr;column-gap:10px;padding:14px 0;border-top:1px solid rgba(20,26,34,.1)}
  .tpl9 .paint-craft li:first-child{border-top:0;padding-top:0}
- .tpl9 .paint-craft i{font:700 12px/22px "Inter",sans-serif;font-style:normal;color:#9AA4B0}
+ .tpl9 .paint-craft i{font:700 12px/22px "Inter",sans-serif;font-style:normal;color:#4A5563}
  .tpl9 .paint-craft b{display:block;font-size:15px;color:#141A22}
  .tpl9 .paint-craft span{display:block;margin-top:4px;font-size:14px;line-height:1.6;color:#3F4855}
  .tpl9 .paint-craft span em{font-style:normal;display:inline-block}
