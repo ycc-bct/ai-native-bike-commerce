@@ -1935,10 +1935,10 @@ async function designImage(){
   const bx=bike.getContext('2d');await composeStack(bx,psdStack(c));
   const sig=c.signature;if(sig.enabled&&sig.text){bx.save();bx.translate(785,286);bx.rotate(Math.atan2(-14,270));bx.textAlign='center';bx.textBaseline='middle';bx.font=sig.font==='script'?'italic 600 19px cursive':'700 14px Arial, sans-serif';bx.fillStyle=sig.color;bx.fillText(sig.text,0,0,220);bx.restore()}
   const k=Math.min((W-140)/bike.width,620/bike.height);x.drawImage(bike,(W-bike.width*k)/2,80+(620-bike.height*k)/2,bike.width*k,bike.height*k);
-  x.fillStyle='#141b25';x.font='600 28px Inter, sans-serif';x.fillText(modelTitle(c),44,802,W-88);
-  x.fillStyle='#738091';x.font='22px Inter, sans-serif';x.fillText(paintName(c)+' · '+c.size+' · '+money(total(c)),44,842,W-250);
-  const svg=BRAND_LOGO.giant.replace('<svg ','<svg width="146" height="19" xmlns="http://www.w3.org/2000/svg" ').replace('aria-hidden="true"','fill="#738091"');
-  const logo=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});if(logo)x.drawImage(logo,W-190,824,146,19);
+  x.fillStyle='#141b25';x.font='600 48px Inter, sans-serif';x.fillText(modelTitle(c),44,794,W-88);
+  x.fillStyle='#738091';x.font='34px Inter, sans-serif';x.fillText(paintName(c)+' · '+c.size+' · '+money(total(c)),44,848,W-330);
+  const svg=BRAND_LOGO.giant.replace('<svg ','<svg width="219" height="28.5" xmlns="http://www.w3.org/2000/svg" ').replace('aria-hidden="true"','fill="#738091"');
+  const logo=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=()=>ok(null);i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});if(logo)x.drawImage(logo,W-263,821,219,28.5);
   return cv.toDataURL('image/png')
 }
 let shareImageReady=null;
