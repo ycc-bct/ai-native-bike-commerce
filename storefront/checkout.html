@@ -34,12 +34,12 @@ a{color:inherit}
 .step.done span{background:#dfe7e0;color:#465748}
 .grid.solo{grid-template-columns:minmax(0,860px);justify-content:center}
 .grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start;margin-top:26px}
-.card{background:var(--surface);border-radius:18px;padding:28px}
+.card{--pad-x:28px;--pad-y:28px;--pad-b:var(--pad-y);background:var(--surface);border-radius:18px;padding:var(--pad-y) var(--pad-x)}
 .card h2{font-size:22px;font-weight:800}
 .card .sub{margin-top:6px;font-size:15px;line-height:1.75;color:var(--ink-70)}
-.pane{animation:paneIn .35s var(--ease)}
+.pane.in{animation:paneIn .35s var(--ease)}
 @keyframes paneIn{from{opacity:0;transform:translateX(16px)}}
-.pane.back{animation-name:paneBack}@keyframes paneBack{from{opacity:0;transform:translateX(-16px)}}
+.pane.in.back{animation-name:paneBack}@keyframes paneBack{from{opacity:0;transform:translateX(-16px)}}
 /* 商品列 */
 .items{margin-top:18px}
 .it{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:18px;align-items:center;padding:18px 0;border-top:1px solid var(--line-soft)}
@@ -65,7 +65,7 @@ a{color:inherit}
 .way b{display:block;font-size:14.5px}.way small{display:block;margin-top:2px;font-size:13px;color:var(--ink-70);line-height:1.6}
 .way.off{opacity:.45;cursor:not-allowed}
 /* 門市 */
-.sec{margin-top:26px}
+.sec{margin-top:26px;scroll-margin-top:calc(max(100vw, 1200px) / 1672 * 76 + 20px)}.sec[tabindex]:focus{outline:none}
 .sec h3{font-size:16px;font-weight:800}
 .sec h3 small{margin-left:8px;font-size:13px;font-weight:500;color:var(--ink-50)}
 .sec>.sp{margin-top:12px}
@@ -106,11 +106,18 @@ a{color:inherit}
 /* 按鈕列 */
 .acts{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:8px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s}
-.btn:hover{background:var(--navy-hover)}.btn:disabled{opacity:.4;cursor:default}
+.btn:hover{background:var(--navy-hover)}.btn:disabled,.btn:disabled:hover{background:var(--step-idle);color:var(--ink-70);cursor:default}
 .btn svg{width:16px;height:16px}
 .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--ink)}
-.need{font-size:13px;color:var(--ink-50)}
+/* 步驟按鈕列黏在卡片內的視窗底部，捲到卡片底就回到原位；完成頁的按鈕在 .done 裡，不黏 */
+html{scroll-padding-bottom:128px}
+.pane>.acts{--bar-gap:16px;position:sticky;bottom:var(--bar-gap);z-index:6;margin-bottom:calc(var(--pad-b) * -1);padding-bottom:var(--pad-b)}
+/* ::before 蓋住圓角外與下方空隙，::after 是白底，黏住時看起來也是卡片的收尾 */
+.pane>.acts::before{content:"";position:absolute;z-index:-1;left:calc(var(--pad-x) * -1 - 1px);right:calc(var(--pad-x) * -1 - 1px);top:calc(100% - 18px);height:calc(19px + var(--bar-gap));background:var(--paper)}
+.pane>.acts::after{content:"";position:absolute;z-index:-1;inset:0 calc(var(--pad-x) * -1);background:var(--surface);border-radius:0 0 18px 18px;transition:box-shadow .2s}
+.pane>.acts.stuck::after{box-shadow:0 -12px 16px -12px rgba(20,26,34,.14)}
+.need{font-size:13px;color:var(--ink-70);text-decoration:underline;text-underline-offset:3px}.need:hover{color:var(--ink)}
 /* 摘要 */
 .sum{position:sticky;top:calc(max(100vw, 1200px) / 1672 * 76 + 20px)}
 .sum h2{font-size:17px}
@@ -148,7 +155,7 @@ a{color:inherit}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (max-width:980px){.grid{grid-template-columns:1fr}.sum{position:static}.track{grid-template-columns:1fr 1fr;row-gap:18px}}
 @media (max-width:640px){.co{width:calc(100vw - 32px)}.card{padding:20px}.it{grid-template-columns:84px minmax(0,1fr)}.it .pr{grid-column:2}.ph{width:84px;height:62px}.ways,.form,.info{grid-template-columns:1fr}.steps .step{font-size:0;gap:0}.steps li{gap:8px}.steps li:not(:last-child)::after{width:12px}}
-@media (prefers-reduced-motion:reduce){.pane{animation:none}.track li.now::before{animation:none}}
+@media (prefers-reduced-motion:reduce){.pane.in,.pane.in.back{animation:none}.track li.now::before{animation:none}}
 </style>
 <style id="checkout-responsive">
 /* Responsive checkout — GIANT 客製車設計系統. Header colours are inherited. */
@@ -185,6 +192,7 @@ a{color:inherit}
  .co .slot,.co .chip,.co .sp-chip{min-height:44px}
  .co .acts{flex-wrap:wrap;gap:16px}
  .co .acts>span{min-width:0;flex-wrap:wrap}
+ .co .pane:has(input:not([type=radio],[type=checkbox]):focus,textarea:focus)>.acts{position:static}
  .co .sum li{grid-template-columns:56px minmax(0,1fr) auto}
  .co .rows div{flex-wrap:wrap}
  .co .ono,.co .info div{overflow-wrap:anywhere}
@@ -201,7 +209,10 @@ a{color:inherit}
  .co .steps .step{font-size:0;gap:0;min-height:44px}
  .co .steps .step.cur{font-size:14px;gap:8px}
  .co .step span{width:28px;height:28px;flex:none}
- .co .card{padding:24px 16px;border-radius:18px}
+ .co .card{--pad-x:16px;--pad-y:24px;padding:var(--pad-y) var(--pad-x);border-radius:18px}
+ html{scroll-padding-bottom:140px}
+ .co #pane{--pad-b:16px;padding-bottom:16px}.co .done{padding-bottom:8px}
+ .co .sec{scroll-margin-top:0}
  .co .card h2{font-size:24px;line-height:1.4}
  .co .card .sub{font-size:14px;line-height:1.75;margin-top:10px}
  .co .it{grid-template-columns:minmax(0,1fr);gap:12px;align-items:start;padding:20px 0}
@@ -232,6 +243,11 @@ a{color:inherit}
  .co .acts>span:empty{display:none!important}
  .co .acts>.lnk{align-self:flex-start}.co .acts .need{font-size:13px;line-height:1.6}
  .co .acts .btn{width:100%;font-size:14px}
+ .co .pane>.acts{--bar-gap:calc(12px + env(safe-area-inset-bottom));flex-direction:row;flex-wrap:wrap;align-items:center;gap:0 16px;padding-top:12px}
+ .co .pane>.acts>span{display:contents!important}
+ .co .pane>.acts>.lnk{align-self:center}
+ .co .pane>.acts .need{flex:0 0 100%;order:-1;min-height:44px;margin-top:-8px;text-align:left}
+ .co .pane>.acts .btn{flex:1;width:auto}
  .co .sum h2{font-size:20px}.co .sum li{grid-template-columns:56px minmax(0,1fr);gap:8px 12px}
  .co .sum li>span{grid-column:2;white-space:normal}
  .co .sum li b{font-size:14px}.co .sum li small{font-size:13px}
@@ -248,11 +264,12 @@ a{color:inherit}
  #siteHeader .icons>a,#siteHeader .icons>.orb-wrap{width:32px}
  .co .steps,.co .steps li{gap:6px}.co .steps li:not(:last-child):after{width:8px}
  .co .steps .step.cur{font-size:13px;gap:6px}
+ .co .pane>.acts{column-gap:12px}.co .pane>.acts .btn{padding-inline:12px;gap:6px}
 }
 </style>
 </head>
 <body>
-<script src="js/cart.js?v=tap40"></script><script src="js/store-picker.js?v=ink1103"></script>
+<script src="js/cart.js?v=tap40"></script><script src="js/store-picker.js?v=map1103b"></script>
 <header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市與到店時間後，門市會在 1 個工作天內打電話跟你確認。客製車不需付訂金，到門市確認工單後再付款。"></header>
 <script src="js/header.js?v=ink1103"></script>
 
@@ -280,6 +297,7 @@ const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const STEPS_ALL = {shop: ['確認商品',  '取貨門市', '聯絡與付款', '完成'], custom: ['確認客製車', '服務門市', '聯絡資料', '完成']};
 const REGIONS = ['全部', '北部', '中部', '南部', '東部', '離島'];
 const SLOTS = ['11:00', '14:00', '16:30', '19:00'];
+const DEFAULT_STORE = '17544';   /* 跨越單車精品店，清單的第一間 */
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 /* 會員資料（示範帳號） */
 const MEMBER = {name: 'David Robinson', phone: '0912-345-678', email: 'david.robinson@example.com'};
@@ -341,6 +359,11 @@ function paneCart(){
 function paneStore(){
   const custom = hasCustom(), onlyAcc = !hasBike();
   if (!onlyAcc) S.way = 'store';
+  if (custom) {   /* 客製車先帶入預設門市與最近可預約的時間，使用者可以再改 */
+    S.store = S.store || (STORES.find(s => s.id === DEFAULT_STORE) || STORES[0] || {}).id || null;
+    S.date = S.date || ymd(days().find(d => d.getDay() !== 1));
+    S.slot = S.slot || SLOTS[0];
+  }
   /* 只有配件時才有「宅配到府」可選；整車、客製車一律到門市，不顯示取貨方式 */
   const way = !onlyAcc ? '' : '<div class="ways"><label class="way"><input type="radio" name="way" value="store"' + (S.way === 'store' ? ' checked' : '') + '><span><b>門市取貨</b><small>到門市取貨，免運費</small></span></label>' +
     '<label class="way' + (onlyAcc ? '' : ' off') + '"><input type="radio" name="way" value="home"' + (S.way === 'home' ? ' checked' : '') + (onlyAcc ? '' : ' disabled') + '><span><b>宅配到府</b><small>' + (onlyAcc ? '只有配件時可以宅配，3–5 個工作天送達' : '整車與客製車需到門市取車') + '</small></span></label></div>';
@@ -348,12 +371,12 @@ function paneStore(){
   const ds = days(), ready = S.store && S.date && S.slot;
   return '<h2>' + (custom ? '選擇客製化自行車服務門市' : '選擇取貨門市') + '</h2>' +
     '<p class="sub">' + (custom ? '客製車要到服務門市，由技師確認尺寸與工單。以下是全台 130 間客製化自行車服務門市。' : '選一間離你近的門市，並預約到店時間。') + '</p>' + way +
-    '<div class="sec"><h3>' + (custom ? '服務門市' : '門市') + '</h3><div id="storePick"></div></div>' +   /* 共用門市選擇器（js/store-picker.js），換步驟重畫時搬回同一個元件，地圖不用重建 */
-    '<div class="sec"><h3>' + (custom ? '預約量身與確認工單' : '預約到店取貨') + '<small>' + (custom ? '約 60 分鐘' : '約 20 分鐘') + '</small></h3>' +
+    '<div class="sec" id="secStore" tabindex="-1"><h3>' + (custom ? '服務門市' : '門市') + '</h3><div id="storePick"></div></div>' +   /* 共用門市選擇器（js/store-picker.js），換步驟重畫時搬回同一個元件，地圖不用重建 */
+    '<div class="sec" id="secDate" tabindex="-1"><h3>' + (custom ? '預約量身與確認工單' : '預約到店取貨') + '<small>' + (custom ? '約 60 分鐘' : '約 20 分鐘') + '</small></h3>' +
     '<div class="dates">' + ds.map(d => { const v = ymd(d), off = d.getDay() === 1; return '<button class="date" type="button" data-date="' + v + '" aria-pressed="' + (S.date === v) + '"' + (off ? ' disabled title="週一公休"' : '') + '><small>週' + WEEK[d.getDay()] + '</small><b>' + (d.getMonth() + 1) + '/' + d.getDate() + '</b></button>'; }).join('') + '</div>' +
     '<div class="slots">' + SLOTS.map(t => '<button class="slot" type="button" data-slot="' + t + '" aria-pressed="' + (S.slot === t) + '">' + t + '</button>').join('') + '</div>' +
     '<p class="hint">實際可預約的時段由門市確認；週一公休。</p></div>' +
-    '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><span style="display:flex;align-items:center;gap:14px">' + (ready ? '' : '<span class="need">' + (!S.store ? '請選擇門市' : '請選擇到店日期與時段') + '</span>') + '<button class="btn" type="button" data-go="2"' + (ready ? '' : ' disabled') + '>' + (custom ? '下一步：聯絡資料 ' : '下一步：聯絡與付款 ') + ARROW + '</button></span></div>';
+    '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><span style="display:flex;align-items:center;gap:14px">' + (ready ? '' : '<button class="need" type="button" data-jump="' + (!S.store ? 'secStore">請選擇門市' : 'secDate">請選擇到店日期與時段') + '</button>') + '<button class="btn" type="button" data-go="2"' + (ready ? '' : ' disabled') + '>' + (custom ? '下一步：聯絡資料 ' : '下一步：聯絡與付款 ') + ARROW + '</button></span></div>';
 }
 function panePay(){
   const custom = hasCustom(), home = S.way === 'home';
@@ -382,18 +405,30 @@ function paneDone(){
     '<div class="acts">' + (o.way === 'home' ? '<span></span>' : '<button class="btn ghost" type="button" id="ics">加入行事曆</button>') + '<a class="btn" href="index.html">回到首頁</a></div></div>';
 }
 
-let dir = 1;
+let dir = 1, shownStep = -1;
+let actsIO = null;
+/* 視窗底部內縮到比按鈕列的 bottom 多 1px：黏住時會超出這條線，比例小於 1 就加陰影 */
+function watchActs(acts){
+  if (actsIO) actsIO.disconnect();
+  if (!acts) return;
+  actsIO = new IntersectionObserver(([e]) => e.target.classList.toggle('stuck', e.isIntersecting && e.intersectionRatio < 1), {threshold: [0, 1], rootMargin: '0px 0px -' + (parseFloat(getComputedStyle(acts).bottom) + 1) + 'px'});
+  actsIO.observe(acts);
+}
 function render(){
   $('steps').innerHTML = stepsHtml();
   $('coTitle').textContent = S.step === 3 ? ((S.order && S.order.custom) ? (S.viewing ? '我的預約' : '預約完成') : (S.viewing ? '我的訂單' : '訂單完成')) : hasCustom() ? '預約門市確認' : '結帳';
   $('coBack').hidden = S.step === 3 && !S.viewing;
   $('steps').style.display = S.viewing ? 'none' : '';   /* 看舊訂單時不需要步驟列 */
   document.querySelector('.grid').classList.toggle('solo', S.step === 3);
-  const pane = $('pane');
-  pane.innerHTML = '<div class="pane' + (dir < 0 ? ' back' : '') + '">' + [paneCart, paneStore, panePay, paneDone][S.step]() + '</div>';
+  const pane = $('pane'), wasStuck = pane.querySelector('.pane>.acts.stuck');
+  pane.innerHTML = '<div class="pane' + (S.step !== shownStep ? ' in' : '') + (dir < 0 ? ' back' : '') + '">' + [paneCart, paneStore, panePay, paneDone][S.step]() + '</div>';
+  shownStep = S.step;
+  const acts = pane.querySelector('.pane>.acts');
+  if (acts) acts.classList.toggle('stuck', !!wasStuck);
+  watchActs(acts);
   summary();
   const slot = $('storePick');
-  if (slot && window.GiantStorePicker) {
+  if (slot && window.GiantStorePicker && STORES.length) {   /* 等門市資料好再掛，預設門市才選得到 */
     if (!picker) picker = GiantStorePicker.mount(document.createElement('div'), {mode: 'select', layout: 'auto', selected: S.store, onSelect: st => { S.store = st.id; render(); }});
     slot.replaceWith(picker.el); requestAnimationFrame(() => picker.resize());
   }
@@ -432,6 +467,7 @@ function ics(){
 $('pane').addEventListener('click', e => {
   const t = e.target;
   const g = t.closest('[data-go]'); if (g && !g.disabled) return go(+g.dataset.go);
+  const j = t.closest('[data-jump]'); if (j) { const sec = $(j.dataset.jump); sec.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'}); sec.focus({preventScroll: true}); return; }
   const it = t.closest('.it'), id = it && it.dataset.id;
   const q = t.closest('[data-q]'); if (q && id) { const x = items().find(v => v.id === id); GiantCart.setQty(id, (x.qty || 1) + (+q.dataset.q)); return; }
   if (t.closest('[data-rm]') && id) { GiantCart.remove(id); return; }

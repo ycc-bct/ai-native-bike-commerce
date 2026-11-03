@@ -37,7 +37,7 @@
     '.sp-stack{grid-template-columns:1fr}',
     '.sp-map{position:relative;min-height:0;border-radius:16px;overflow:hidden;background:#EEF1F4}',
     '.sp-stack .sp-map{height:var(--sp-map-h,220px)}',
-    '.sp.sp-nomap{grid-template-columns:1fr;height:auto}.sp.sp-nomap .sp-map{display:none}',
+    '.sp.sp-nomap{grid-template-columns:1fr;height:auto}.sp.sp-nomap .sp-map{display:none}.sp-side.sp-nomap{height:var(--sp-h,480px)}',
     '.sp-map .sp-gl{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}.sp-map.on .sp-gl{opacity:1}',
     '.sp-wait{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:var(--sp-ink70)}.sp-map.on .sp-wait{display:none}',
     '.sp-gl .maplibregl-canvas{outline:none}.sp-gl .maplibregl-ctrl-attrib{font-size:10.5px;background:rgba(255,255,255,.8)}.sp-gl .maplibregl-ctrl-bottom-left{margin:0 0 6px 6px}',
@@ -73,7 +73,7 @@
     '.sp-empty{display:block!important;padding:28px 0!important;text-align:center;color:var(--sp-ink50);font-size:14px;border-top:0!important;cursor:default!important}',
     '.sp-picked{grid-column:1/-1;margin:0;padding:12px 16px;border-radius:12px;background:#F3F5F7;font-size:13.5px;line-height:1.6;color:var(--sp-ink70)}.sp-picked b{color:var(--sp-ink)}.sp-picked:empty{display:none}',
     '.sp-msg{flex:none;margin:8px 0 0;font-size:12.5px;color:#B23932}.sp-msg:empty{display:none}',
-    '@media(max-width:760px){.sp-side{grid-template-columns:1fr;height:auto}.sp-side .sp-map{height:240px}.sp-side .sp-list ul{max-height:320px}}',
+    '@media(max-width:760px){.sp-side,.sp-side.sp-nomap{grid-template-columns:1fr;height:auto}.sp-side .sp-map{height:240px}.sp-side .sp-list ul{max-height:320px}}',
     '@media(prefers-reduced-motion:reduce){.sp-mk::before{animation:none}.sp-mk-tag{animation:none;opacity:1}}'
   ].join('');
   document.head.appendChild(css);
@@ -110,7 +110,7 @@
   function loadGL() {
     if (glP) return glP;
     glP = new Promise(function (ok, no) {
-      if (!/^https?:$/.test(location.protocol) || !hasWebGL()) return no();
+      if (!hasWebGL()) return no();
       if (window.maplibregl) return ok(window.maplibregl);
       var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = GL_CSS; document.head.appendChild(l);
       var s = document.createElement('script'); s.src = GL_JS; s.async = true;
@@ -219,7 +219,7 @@
         m.addControl(new ml.AttributionControl({compact: true}), 'bottom-left');   /* 地圖來源標註依授權必須保留，預設收成 ⓘ */
         var collapse = function () { var a = c.querySelector('.maplibregl-ctrl-attrib.maplibregl-compact-show'); if (a) a.classList.remove('maplibregl-compact-show'); };
         m.once('load', collapse); m.once('idle', collapse);
-        var failT = setTimeout(function () { if (!ready) { m.remove(); c.remove(); el.classList.add('sp-nomap'); } }, 9000);
+        var failT = setTimeout(function () { var w = mapc.querySelector('.sp-wait'); if (!ready && w) w.textContent = '地圖載入較久，可以先從清單選門市'; }, 9000);   /* 網路慢或分頁在背景時只是還沒好，地圖留著繼續等 */
         var fs = function (i, st) { m.setFeatureState({source: 'sp', id: i}, st); };
         var zin = mapc.querySelector('[data-z="1"]'), zout = mapc.querySelector('[data-z="-1"]');
         var zs = function () { var z = m.getZoom(); zout.disabled = z <= fullZoom + .25; zin.disabled = z >= ZMAX - .01; };
