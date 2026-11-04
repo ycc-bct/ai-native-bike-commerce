@@ -1868,9 +1868,9 @@ const FLAT_VIEWS=[{id:'side',name:'全車側面',img:'paint-side'},{id:'front',n
 const PART_VIEW={bar:'cockpit',tape:'cockpit',stem:'cockpit',headset:'cockpit',cassette:'rear',chain:'drive',chainring:'drive',bb:'drive',decals:'front'};
 const viewIndex=id=>Math.max(0,FLAT_VIEWS.findIndex(v=>v.id===id));
 let gsView='side',gsTab='drive',gsBrand=null;   // 一進來先看整台車側面，點了變速套件才拉近看傳動
-function contextView(){if(page==='groupset')return gsView;return 'side'}
-// 專屬簽名與騎乘配備只看全車側面：其他角度藏起來，滑動、鍵盤、點配件都不會換角度
-const viewLocked=()=>page==='parts'||(page==='paint'&&paintTab==='signature');
+// 專屬簽名固定放大看上車架（簽名的位置），騎乘配備固定看全車側面：其他角度藏起來，滑動、鍵盤、點配件都不會換角度
+const lockedView=()=>page==='parts'?'side':page==='paint'&&paintTab==='signature'?'frame':null;
+function contextView(){if(page==='groupset')return gsView;return lockedView()||'side'}
 let flatIdx=0,flatContext='';
 // Built once, then only classes and transforms change so the fade and zoom transitions can run.
 function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat-viewer');
@@ -1879,8 +1879,8 @@ function renderFlat(){const v=FLAT_VIEWS[flatIdx];let root=$('#flatPreview .flat
   root.dataset.detail=String(!!v.zoom);root.setAttribute('aria-label',`車款預覽：${v.name}，第 ${flatIdx+1} 張，共 ${FLAT_VIEWS.length} 張`);
   root.querySelectorAll('.flat-photo').forEach(im=>{const on=im.dataset.flatImg===v.img,was=im.classList.contains('is-on');const label=on?`${bikeName(config)}・${v.name}`:'';if(im.tagName==='CANVAS')im.setAttribute('aria-label',label);else im.alt=label;if(on){if(!was)im.style.transition='opacity .45s var(--ease)';im.style.transformOrigin=v.origin||'50% 50%';im.style.transform=v.zoom||'';if(!was){im.offsetWidth;im.style.transition=''}}im.classList.toggle('is-on',on)});
   root.querySelectorAll('[data-flat-go]').forEach((b,i)=>i===flatIdx?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current'));}
-function flatGo(i,focus=true){flatIdx=viewLocked()?0:(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
-function focusFlat(id){if(!id)return;const i=viewLocked()?0:viewIndex(id);if(i!==flatIdx)flatGo(i,false)}
+function flatGo(i,focus=true){flatIdx=lockedView()?viewIndex(lockedView()):(i+FLAT_VIEWS.length)%FLAT_VIEWS.length;renderFlat();if(focus)$('.flat-viewer').focus({preventScroll:true})}
+function focusFlat(id){if(!id)return;const i=viewIndex(lockedView()||id);if(i!==flatIdx)flatGo(i,false)}
 // Live paint on the flat preview: GIANT's own MY23 PROPEL paint PSD (assets/propel), exported layer by layer. Every colour
 // is a finished render of the frame, so recolouring is just stacking the right layers — base frame (lower zone + fork),
 // the template's upper-zone overlay, the down-tube logo, then the components. Colours without a PSD layer use the nearest one.
@@ -1920,7 +1920,7 @@ function psdThumb(c){const stack=psdStack(c),key=stack.map(e=>e&&e.f).join('|');
 function fillThumbs(){document.querySelectorAll('canvas[data-thumb-key]').forEach(el=>{const t=thumbCache[el.dataset.thumbKey];if(!t||!t.ready||el.dataset.filled)return;
   const x=el.getContext('2d');x.clearRect(0,0,el.width,el.height);x.drawImage(t.cv,0,0);el.dataset.filled='1';el.classList.remove('is-loading')})}
 const paintThumb=c=>psdThumb(c);
-function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);$('#stage').classList.toggle('sp-locked',viewLocked());if(three){viewer.update(config);const v3='full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
+function paintPreview(){if(!uses3d(config))drawPaintSide();const three=uses3d(config);syncBackgroundOptions(three);$('#bikePreview').hidden=!three;$('#flatPreview').hidden=three;$('#stage').classList.toggle('is-3d',three);$('#stage').classList.toggle('is-flat',!three);$('#stage').classList.toggle('sp-locked',!!lockedView());if(three){viewer.update(config);const v3=lockedView()==='frame'?'detail':'full';if(v3!==paintPreview.view3d){paintPreview.view3d=v3;viewer.setView(v3)}return}const ctx=[page,paintTab,partsTab,partDetail].join('|');if(ctx!==flatContext){flatContext=ctx;const v=contextView();if(v&&FLAT_VIEWS[flatIdx].id!==v){focusFlat(v);return}}renderFlat()}
 // Sharing: the link carries the whole configuration in its hash, so opening it restores the design.
 const encodeDesign=c=>btoa(unescape(encodeURIComponent(JSON.stringify(c))));
 function shareLink(){return location.href.split('#')[0]+'#design='+encodeDesign(config)}
