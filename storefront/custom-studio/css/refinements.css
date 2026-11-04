@@ -691,10 +691,10 @@
 
 /* 「從碳纖維車架開始」（提案 3）：照片高度＝區塊高度、車架左端固定在文字欄右側約 100px、右緣淡出到底色；按鈕下方三個重點數字 */
 @media(min-width:901px){
- #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 3.0474);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
+ #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 2.8341);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
   background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
    linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px)),
-   #060709 url('../img/cta/carbon-frame-studio-extended.jpg') var(--ix) center/auto 100% no-repeat}}
+   #060709 url('../img/cta/carbon-frame-studio-extended.jpg') var(--ix) center/auto 93% no-repeat}}
 #cta .cta-stats{display:flex;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div{padding-right:32px;margin-right:32px;border-right:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div:last-child{border-right:0;margin-right:0;padding-right:0}
@@ -764,7 +764,7 @@
  #cta .cta{isolation:isolate;background:#060709}
  #cta .cta::before,#cta .cta::after{content:"";position:absolute;pointer-events:none}
  /* 照片層：位置、大小跟原本背景圖一樣；第一層是掃光、第二層是照片 */
- #cta .cta::before{z-index:0;top:0;left:var(--ix);width:var(--iw);height:100%;transform-origin:62% 52%;
+ #cta .cta::before{z-index:0;top:3.5%;left:var(--ix);width:var(--iw);height:93%;transform-origin:62% 52%;
   background:linear-gradient(105deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.11) 50%,rgba(255,255,255,0) 58%) -70% 0/220% 100% no-repeat,
    url('../img/cta/carbon-frame-studio-extended.jpg') 0 0/100% 100% no-repeat;
   animation:cta-drift 11s ease-in-out infinite alternate,cta-sweep 9s cubic-bezier(.45,0,.25,1) 1.2s infinite}

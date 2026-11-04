@@ -375,7 +375,7 @@
  /* Keep the carbon frame's visual centre aligned with the viewport.  The
     source photo has extra dark space on the left, so a proportional right
     inset is more stable than the previous fixed negative offset. */
- #cta .cta::before{background-position:62% 8px!important;background-size:auto 48%!important}
+ #cta .cta::before{background-position:62% 8px!important;background-size:auto 44%!important}
 
  /* Footer categories are native accordions; legal links share one quiet row. */
  #siteFooter .foot-in{gap:0;padding:30px 0}
