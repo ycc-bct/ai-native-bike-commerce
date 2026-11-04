@@ -30,6 +30,7 @@
 | 屬性 | 值 | 說明 |
 |---|---|---|
 | `data-page` | `home` / `gravel` / `product` / `ride` / `quiz` / `result` / `report` / `custom` | 對應的第一層會標成目前頁（底線＋粗體）。`gravel`、`product` 都會標在「越野 & 礫石」。 |
+| `data-mobile-nav` | （不用值） | 開啟手機版 header 與抽屜（≤ 900px）。新頁面都要加。 |
 | `data-ai` | `off` | 這頁沒有對話框時用，右上角就不放選車顧問按鈕（情境式問卷的 ride / quiz 就是這樣）。 |
 | `data-cart` | 連結 | 購物車圖示要連去哪，預設 `#`（報告頁可以設 `#checkout`）。 |
 
@@ -60,7 +61,7 @@ window.GiantHeaderAsk = function (cat, name) {   // cat: road / mtb / gravel / e
 
 - hover 第一層停 120ms 才展開、滑出 160ms 才收，掃過去不會閃；觸控裝置改點擊切換；Esc 或捲動會收起。
 - 下拉打開時整條 header 變白底黑字（深色主視覺頁也一樣），主動跳出的顧問氣泡會先讓開。
-- 手機版抽屜還沒做（目前全站 `min-width:1200px`），選單資料已經是一份，之後直接長出來。
+- 手機版抽屜（≤ 900px）由 `data-mobile-nav` 開啟，選單資料跟桌機同一份。規格見 [design.md](design.md) 第 10 節，各頁現況見第 1 節。
 
 ## 6. 接上後的檢查
 
@@ -81,6 +82,7 @@ window.GiantHeaderAsk = function (cat, name) {   // cat: road / mtb / gravel / e
 ```
 
 - 四欄（車款／精品配件／探索／支援）＋訂閱＋社群＋版權列，文字和連結集中在 `js/footer.js` 的 `COLS`。
+- 已做手機版的頁面在 `<footer>` 加 `data-mobile-footer`，≤ 900px 會變單欄。`body` 還鎖 `min-width:1200px` 的頁面不要加。
 - 寬度跟著你頁面 `:root` 的 `--shell`；沒有定義就用預設 `min(1368px, calc(100vw - 72px))`。
 - 跟 footer 的距離由你的頁面決定（例如 `.foot{margin-top:90px}`）。
 - 對話框打開時 footer 要跟著變窄的話，沿用你頁面原本的 `body.adv-open .foot-in, body.adv-open .foot-bar{…}` 規則即可。

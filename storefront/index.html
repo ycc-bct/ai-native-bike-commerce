@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=ink1103"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/advisor.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
+<link rel="stylesheet" href="css/advisor.css?v=mnav1104">
 <link rel="stylesheet" href="css/tips.css?v=ink1103">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,11 +26,12 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--paper);scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 svg{display:block}
+.nb{display:inline-block}
 
 /* ---------- header（版面見 css/header.css） ---------- */
 /* 首頁 header 固定在頂端；捲動後加淺色底 */
@@ -46,7 +47,7 @@ svg{display:block}
 .sec-head{display:flex;align-items:flex-end;gap:40px;margin-bottom:24px}
 .sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
 .sec-head .sub{margin-top:10px;font-size:15px;line-height:1.75;color:var(--ink-70)}
-.sec-head .note{margin-left:auto;max-width:300px;font-size:12.5px;line-height:1.75;color:var(--ink-50)}
+.sec-head .note{margin-left:auto;max-width:300px;font-size:13px;line-height:1.75;color:var(--ink-50)}
 .sec-head .more{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink-70);white-space:nowrap;padding-bottom:4px;transition:color .2s}
 .sec-head .more:not(:first-child):not(.note + .more){margin-left:auto}
 .sec-head .note + .more{margin-left:40px}
@@ -136,7 +137,7 @@ svg{display:block}
 .scene:first-child .txt{left:36px}
 .scene small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
 .scene b{display:block;margin-top:4px;font-size:clamp(15px,1.15vw,20px);font-weight:700;letter-spacing:.02em;line-height:1.3;white-space:nowrap}
-.scene em{display:block;margin-top:8px;font-style:normal;font-size:12.5px;line-height:1.6;opacity:.9}
+.scene em{display:block;margin-top:8px;font-style:normal;font-size:14px;line-height:1.6;opacity:.9}
 
 /* ---------- Featured ---------- */
 .feat-grid{display:grid;grid-template-columns:1.18fr 1fr;gap:18px}
@@ -154,14 +155,14 @@ svg{display:block}
 .card .ph{position:relative;aspect-ratio:1.3;border-radius:8px;overflow:hidden;background:#fff}
 .card .ph img{width:100%;height:100%;object-fit:contain;padding:6%;transition:transform .5s var(--ease)}
 .card:hover .ph img{transform:scale(1.04)}
-.card .badge{position:absolute;z-index:1;left:0;top:0;padding:3px 7px;border-radius:4px;background:var(--ai);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.card .badge{position:absolute;z-index:1;left:0;top:0;padding:3px 7px;border-radius:4px;background:var(--ai);color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .card .badge + .badge{left:auto;margin-left:4px}
 .card .badge.best{background:var(--navy)}
 .card .badges-row{position:absolute;z-index:1;left:0;top:0;display:flex;gap:4px}
 .card .badges-row .badge{position:static}
 .card .badge.hot{background:#F26B1D}
-.card b{display:block;margin-top:10px;font-size:12.5px;font-weight:700;line-height:1.4;min-height:2.8em}
-.card span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-70)}
+.card b{display:block;margin-top:10px;font-size:13.5px;font-weight:700;line-height:1.4;min-height:2.8em}
+.card span{display:block;margin-top:4px;font-size:13.5px;color:var(--ink-70)}
 
 /* ---------- What's Happening ---------- */
 .news-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:14px}
@@ -181,12 +182,12 @@ svg{display:block}
 .nc-copy .meta{display:flex;align-items:center;gap:10px}
 .nc-copy time{font-size:12px;color:var(--ink-50)}
 .nc-copy h3{margin-top:10px;font-size:16px;font-weight:700;line-height:1.45}
-.nc-copy .dist{margin-top:6px;font-size:12.5px;font-weight:700;color:var(--ink-70)}
-.nc-copy .blurb{margin-top:8px;font-size:12.5px;line-height:1.7;color:var(--ink-50)}
+.nc-copy .dist{margin-top:6px;font-size:13px;font-weight:700;color:var(--ink-70)}
+.nc-copy .blurb{margin-top:8px;font-size:14px;line-height:1.7;color:var(--ink-50)}
 .news-card .ph{position:relative}
 .news-card .date{position:absolute;left:10px;top:10px;padding:6px 9px 5px;border-radius:8px;background:rgba(255,255,255,.94);color:var(--ink);text-align:center;line-height:1}
 .news-card .date b{display:block;font-size:18px;font-weight:800}
-.news-card .date small{display:block;margin-top:2px;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50)}
+.news-card .date small{display:block;margin-top:2px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-50)}
 
 /* ---------- 登山車越野基地 ---------- */
 .mtb{position:relative;isolation:isolate;margin-top:78px;height:clamp(360px,34vw,480px);overflow:hidden;color:#fff;background:#201E12}
@@ -206,7 +207,7 @@ body.adv-open .sec,body.adv-open .mtb-copy,body.adv-open .foot-in,body.adv-open 
 body.adv-open .scenes{width:calc(100vw - 424px);margin-left:-36px}
 body.adv-open .scene b{font-size:14.5px;letter-spacing:0}
 body.adv-open .scene .txt{left:14px}
-body.adv-open .scene em{font-size:12px}
+body.adv-open .scene em{font-size:13px}
 body.adv-open .nm-copy h3{font-size:19px}
 body.adv-open .nm-copy h3 br{display:none}
 body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
@@ -216,7 +217,7 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .types{margin:10px 0;display:grid;gap:6px}
 .type-row{padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
 .type-row b{display:block;font-size:13px;font-weight:700}
-.type-row small{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-50)}
+.type-row small{display:block;margin-top:2px;font-size:12px;color:var(--ink-50)}
 .am h4{font-size:15px;font-weight:700;margin-bottom:3px}
 .cmp{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .cmp-card{position:relative;aspect-ratio:.78;border-radius:8px;overflow:hidden;text-align:left;border:2px solid transparent;transition:border-color .25s}
@@ -225,13 +226,13 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .cmp-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,16,24,.88) 0%,rgba(10,16,24,.5) 44%,rgba(10,16,24,0) 72%)}
 .cmp-card .t{position:absolute;z-index:1;left:8px;right:6px;bottom:8px;color:#fff}
 .cmp-card b{display:block;font-size:12px;font-weight:700;line-height:1.3}
-.cmp-card small{display:block;margin-top:4px;font-size:11px;line-height:1.45;opacity:.85}
+.cmp-card small{display:block;margin-top:4px;font-size:12px;line-height:1.45;opacity:.85}
 .cmp-card.pick{border-color:var(--ai)}
 .opts{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .opt{padding:10px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;gap:10px;text-align:left;transition:border-color .2s,background .2s,opacity .3s}
 .opt svg{flex:none;width:26px;height:26px;color:var(--ink)}
 .opt b{display:block;font-size:13px;font-weight:700}
-.opt small{display:block;margin-top:1px;font-size:11.5px;color:var(--ink-50)}
+.opt small{display:block;margin-top:1px;font-size:12px;color:var(--ink-50)}
 .opt:hover{border-color:var(--ink)}
 .opt.on{border-color:var(--navy);background:#EEF3FF}
 .opt:disabled{cursor:default}
@@ -239,7 +240,7 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .rec{margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff}
 .rec .ph{position:relative;aspect-ratio:2.2;background:#F7F9FB}
 .rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
-.rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em}
+.rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em}
 .rec .in{padding:12px 14px 14px}
 .rec h5{font-size:15px;font-weight:700}
 .rec .pr{margin-top:2px;font-size:13.5px;color:var(--ink-70)}
@@ -247,7 +248,7 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .rec li{position:relative;padding-left:14px;font-size:13px;line-height:1.55}
 .rec li::before{content:"";position:absolute;left:1px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--ai)}
 .rec .acts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.rec .acts button{height:38px;border-radius:6px;font-size:13px;font-weight:700;transition:background .2s,border-color .2s}
+.rec .acts button{height:40px;border-radius:6px;font-size:13px;font-weight:700;transition:background .2s,border-color .2s}
 .rec .acts .yes{background:var(--navy);color:#fff}
 .rec .acts .yes:hover{background:#1C2A40}
 .rec .acts .no{border:1px solid #B8C0CA}
@@ -261,19 +262,70 @@ a:not([href]){cursor:default}
 @keyframes rvIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes rvFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}}
+
+/* ---------- RWD：斷點與規則見 docs/design.md ---------- */
+.hero .lead .nb{display:inline-block;margin-top:0;color:inherit;font-size:inherit;letter-spacing:0}
+@media(max-width:1199px){.scene b{white-space:normal}}
+@media(max-width:1023px){
+ .feat-grid{grid-template-columns:minmax(0,1fr)}
+ .feat-main{aspect-ratio:16/9}
+ .news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .news-main{grid-column:1/-1;min-height:320px}
+ .rb-copy{padding:24px}
+ .sec-head .more{min-height:40px;padding-bottom:0}
+ /* 窄螢幕顧問面板蓋在內容上，內容不讓位 */
+ body.adv-open .sec,body.adv-open .mtb-copy{width:var(--shell);margin-left:auto;margin-right:auto}
+ body.adv-open .scenes{width:100vw;margin-left:calc(50% - 50vw)}
+ body.adv-open .foot-in{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100% - 48px);margin-left:auto;margin-right:auto}
+}
+@media(max-width:767px){
+ :root{--shell:calc(100vw - 32px)}
+ .sec{padding-top:56px}
+ .sec.explore{padding-top:48px}
+ .sec.ride-sec{padding-top:16px}
+ .sec-head{flex-direction:column;align-items:flex-start;gap:4px;margin-bottom:16px}
+ .sec-head h2{font-size:26px}
+ .sec-head .more{margin-left:0!important}
+ /* 主視覺：文字在上、車在下，遮罩改成上下方向 */
+ .hero{height:560px}
+ .hero-img{object-position:62% 100%}
+ .hero::before{background:linear-gradient(180deg,rgba(243,245,247,.96) 0%,rgba(243,245,247,.86) 38%,rgba(243,245,247,0) 62%),linear-gradient(0deg,var(--paper) 0%,rgba(243,245,247,0) 16%)}
+ .hero-copy{padding-top:96px}
+ .hero h1{font-size:clamp(40px,11vw,52px);line-height:1.1}
+ .ride-row{grid-template-columns:minmax(0,1fr);gap:12px}
+ .ride-banner,.adv-card{height:320px}
+ .rb-copy{padding:16px}
+ .adv-card .ac-h{flex-direction:column;gap:8px}
+ /* 情境帶：保留斜切，改成左右滑 */
+ .scenes{--sh:300px;--w:260px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}
+ .scenes::-webkit-scrollbar{display:none}
+ .scene{scroll-snap-align:start}
+ .scene:first-child .txt{left:16px}
+ .scene b{font-size:16px}
+ .feat-main{aspect-ratio:4/3}
+ .fm-copy{padding:20px;max-width:none}
+ .fm-copy h3{font-size:24px}
+ .feat-side{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .news-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+ .news-main{min-height:300px}
+ .nm-copy{left:16px;right:16px;bottom:20px}
+ .mtb{margin-top:56px;height:420px}
+ .mtb-copy{justify-content:flex-end;padding-bottom:32px}
+}
 </style>
 </head>
 <body>
 
-<header class="nav site-nav" id="siteHeader" data-page="home"></header>
-<script src="js/header.js?v=ink1103"></script>
+<header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="home"></header>
+<script src="js/header.js?v=pill44b"></script>
 
 <section class="hero">
   <img class="hero-img rv now" src="img/home-hero.webp?v=2" alt="">
   <div class="hero-copy">
     <h1 class="rv now">More<br>Than a Bike.</h1>
     <div class="lead-row rv now" style="--d:.18s">
-      <p class="lead">從城市到山林，從日常到挑戰。<br>自行車不只帶你前進，更帶你看見更大的世界。</p>
+      <p class="lead">從城市到山林，從日常到挑戰。<br>自行車不只帶你前進，<span class="nb">更帶你看見更大的世界。</span></p>
     </div>
 
   </div>
@@ -285,14 +337,14 @@ a:not([href]){cursor:default}
   <img src="img/ride/landscape.webp" alt="">
   <div class="rb-copy">
     <h2>這段路，你想怎麼騎？</h2>
-    <p class="rb-sub">你的日常，就是最好的答案。<br>不用填表，看照片就好。你選的路，會替你選出那台車。</p>
+    <p class="rb-sub">你的日常，就是最好的答案。<br>不用填表，看照片就好。<span class="nb">你選的路，會替你選出那台車。</span></p>
     <span class="btn btn-light">立即體驗<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
 </a>
 <button class="adv-card rv" id="advPromo" type="button" style="--d:.1s">
   <span class="rb-copy">
     <h2 class="ac-h"><span class="orb-btn vbtn ac-mark"><span class="beam-glow"></span><span class="beam-ring"></span><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>不知道從哪台開始？</h2>
-    <p class="rb-sub">跟 GIANT 選車顧問聊聊就好。<br>說你想騎去哪、身高多少，它幫你挑車、對尺寸、比車款。</p>
+    <p class="rb-sub">跟 GIANT 選車顧問聊聊就好。<br>說你想騎去哪、身高多少，<span class="nb">它幫你挑車、對尺寸、比車款。</span></p>
     <span class="btn btn-dark">聊聊看<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </span>
 </button>
@@ -321,7 +373,7 @@ a:not([href]){cursor:default}
   <div class="feat-grid">
     <a class="feat-main pc rv" href="product.html" data-k="revolt" data-cat="gravel">
       <img class="bgph" src="img/home/revolt-scene.webp" alt="">
-      <div class="fm-copy"><p class="lead">有史以來打造過最輕量、最狂暴的 Gravel 頂級礫石賽車</p><h3>Revolt Advanced SL 0</h3></div>
+      <div class="fm-copy"><p class="lead">有史以來打造過最輕量、最狂暴的 <span class="nb">Gravel 頂級礫石賽車</span></p><h3>Revolt Advanced SL 0</h3></div>
     </a>
     <div class="feat-side">
       <div class="card pc rv" data-cat="road"><div class="ph"><span class="badges-row"><span class="badge">New</span><span class="badge best">2027</span></span><img src="img/home/bike-propel-sl1.webp" alt=""></div><b>Propel Advanced SL 1 Force 特仕車</b><span>NT$ 258,000</span></div>
@@ -364,12 +416,12 @@ a:not([href]){cursor:default}
   <img src="img/home/mtb-trail.webp" alt="">
   <div class="mtb-copy rv">
     <h2>台灣登山車越野基地</h2>
-    <p>一手掌握全台最新登山車賽事、路線與技術課程</p>
+    <p>一手掌握全台最新登山車賽事、<span class="nb">路線與技術課程</span></p>
     <a class="btn btn-light">立即了解</a>
   </div>
 </section>
 
-<footer class="foot" id="siteFooter"></footer>
+<footer class="foot" id="siteFooter" data-mobile-footer></footer>
 <script src="js/footer.js?v=hdr1023b"></script>
 
 

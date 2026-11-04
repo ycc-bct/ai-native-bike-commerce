@@ -141,7 +141,7 @@
         '.gn-kv{position:relative;display:block;margin:4px 16px 8px;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#F3F5F7;color:#fff;text-decoration:none}' +
         '.gn-kv img{display:block;width:100%;height:100%;object-fit:cover}' +
         '.gn-kv span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(rgba(14,23,38,0),rgba(14,23,38,.62))}' +
-        '.gn-kv b{display:block;font-size:16px;font-weight:700;line-height:1.4}.gn-kv small{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:14px;line-height:1.5}.gn-kv small svg{width:16px;height:16px;color:inherit}' +
+        '.gn-kv b{display:block;font-size:16px;font-weight:700;line-height:1.4}.gn-kv .tag-btn{margin-top:8px}' +
         '.gn-sub{padding:0 0 8px}' +
         '.gn-sub a{display:flex;align-items:center;min-height:48px;padding:0 16px;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-decoration:none}' +
         '.gn-group{padding:16px 0 0}.gn-group h3{margin:0;padding:0 16px 4px;font-size:14px;font-weight:400;line-height:1.5;color:#4A5563}' +   /* 精品配件：灰色小標＋同字級的項目 */
@@ -171,7 +171,7 @@
       BIKES.map(function (c) {   /* 車系頁：分類主視覺（同桌機下拉的大圖）＋子分類；圖片第一次打開選單才載入 */
         return '<div class="gn-page" data-p="' + c.k + '" aria-label="' + esc(c.t) + '">' +
           '<button type="button" class="gn-row gn-back" data-go="main">' + esc(c.t) + LEFT + '</button>' +
-          '<a class="gn-kv" href="' + href(c.href) + '"' + (c.href ? '' : ' data-soft') + '><img data-src="' + R(c.img) + '" alt=""><span><b>' + esc(c.full) + '</b><small>看全部 ' + esc(c.en) + ARR + '</small></span></a>' +
+          '<a class="gn-kv" href="' + href(c.href) + '"' + (c.href ? '' : ' data-soft') + '><img data-src="' + R(c.img) + '" alt=""><span><b>' + esc(c.full) + '</b><small class="tag-btn">看全部 ' + esc(c.en) + ARR + '</small></span></a>' +
           '<div class="gn-sub">' + c.sub.map(sub).join('') + '</div></div>';
       }).join('') +
       '<div class="gn-page" data-p="gear" aria-label="精品配件">' +
@@ -246,7 +246,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=tap40'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=pill44b'; document.head.appendChild(cs);
   }
   /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
   (function () {

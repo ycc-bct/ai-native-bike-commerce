@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hdr1023b"><link rel="stylesheet" href="css/header.css?v=ink1103"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
 <link rel="stylesheet" href="css/tips.css?v=ink1103">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,7 +105,7 @@ a{color:inherit}
 .pays{display:grid;gap:10px;margin-top:12px}
 /* 按鈕列 */
 .acts{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:8px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s}
 .btn:hover{background:var(--navy-hover)}.btn:disabled,.btn:disabled:hover{background:var(--step-idle);color:var(--ink-70);cursor:default}
 .btn svg{width:16px;height:16px}
 .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
@@ -159,7 +159,6 @@ html{scroll-padding-bottom:128px}
 </style>
 <style id="checkout-responsive">
 /* Responsive checkout — GIANT 客製車設計系統. Header colours are inherited. */
-.co-menu-toggle{display:none}
 .co .grid>*,.co .pane,.co .sum li>div,.co .it>div{min-width:0}
 @media(max-width:1100px){
  .co .grid{grid-template-columns:minmax(0,1fr)}
@@ -169,19 +168,7 @@ html{scroll-padding-bottom:128px}
 @media(max-width:1023px){
  :root{--shell:calc(100% - 48px)}
  .co{padding-top:88px;padding-bottom:48px}
- #siteHeader.site-nav{height:64px}
- #siteHeader .logo{left:64px}#siteHeader .logo svg{height:18px;width:110px}
- #siteHeader .icons{right:12px;gap:0}
- #siteHeader .icons>a,#siteHeader .icons>.orb-wrap{width:36px;min-height:44px;display:grid;place-items:center}
- #siteHeader .icons svg{width:22px;height:22px}
- .co-menu-toggle{position:absolute;left:12px;top:10px;width:44px;height:44px;display:grid;place-items:center;border-radius:8px}
- .co-menu-toggle svg{width:22px;height:22px}
- #siteHeader .links{display:none;left:0;right:0;top:64px;bottom:auto;max-height:calc(100dvh - 64px);overflow:auto;padding:16px;gap:0;background:var(--surface);font-size:14px;border-bottom:1px solid var(--line)}
- #siteHeader.co-menu-open .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- #siteHeader .links .top{min-height:48px;padding:12px}#siteHeader .links .top:after{display:none}
- #siteHeader .dd{position:fixed;top:64px;bottom:0;max-height:calc(100dvh - 64px);overflow:auto}
- #siteHeader .dd-in{padding:24px;flex-direction:column;gap:24px}
- #siteHeader .dd-kv{min-width:0}#siteHeader .dd-list{grid-template-columns:1fr;gap:8px}#siteHeader .dd-feat{margin-left:0;max-width:100%}
+ .co-back{display:inline-flex;align-items:center;min-height:40px}
  .co .card{padding:28px}
  .co .steps{gap:12px;flex-wrap:wrap}.co .steps li{gap:12px}
  .co .step{font-size:14px}
@@ -211,7 +198,7 @@ html{scroll-padding-bottom:128px}
  .co .step span{width:28px;height:28px;flex:none}
  .co .card{--pad-x:16px;--pad-y:24px;padding:var(--pad-y) var(--pad-x);border-radius:18px}
  html{scroll-padding-bottom:140px}
- .co #pane{--pad-b:16px;padding-bottom:16px}.co .done{padding-bottom:8px}
+ .co #pane{--pad-b:16px;padding-bottom:16px}.co #pane .done{padding-bottom:8px}
  .co .sec{scroll-margin-top:0}
  .co .card h2{font-size:24px;line-height:1.4}
  .co .card .sub{font-size:14px;line-height:1.75;margin-top:10px}
@@ -242,6 +229,7 @@ html{scroll-padding-bottom:128px}
  .co .acts>span{display:flex!important;flex-direction:column;align-items:stretch!important;gap:12px!important}
  .co .acts>span:empty{display:none!important}
  .co .acts>.lnk{align-self:flex-start}.co .acts .need{font-size:13px;line-height:1.6}
+ .co .btn{min-height:44px;padding-block:8px}
  .co .acts .btn{width:100%;font-size:14px}
  .co .pane>.acts{--bar-gap:calc(12px + env(safe-area-inset-bottom));flex-direction:row;flex-wrap:wrap;align-items:center;gap:0 16px;padding-top:12px}
  .co .pane>.acts>span{display:contents!important}
@@ -260,8 +248,6 @@ html{scroll-padding-bottom:128px}
  .co .done h2{font-size:26px}.co .info{gap:12px}
 }
 @media(max-width:374px){
- #siteHeader .logo{left:56px}#siteHeader .logo svg{width:86px;height:15px}
- #siteHeader .icons>a,#siteHeader .icons>.orb-wrap{width:32px}
  .co .steps,.co .steps li{gap:6px}.co .steps li:not(:last-child):after{width:8px}
  .co .steps .step.cur{font-size:13px;gap:6px}
  .co .pane>.acts{column-gap:12px}.co .pane>.acts .btn{padding-inline:12px;gap:6px}
@@ -269,9 +255,9 @@ html{scroll-padding-bottom:128px}
 </style>
 </head>
 <body>
-<script src="js/cart.js?v=tap40"></script><script src="js/store-picker.js?v=row1104"></script>
-<header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市後，門市會在 1 個工作天內打電話跟你確認到店時間。客製車不需付訂金，到門市確認工單後再付款。"></header>
-<script src="js/header.js?v=ink1103"></script>
+<script src="js/cart.js?v=pill44b"></script><script src="js/store-picker.js?v=row1104"></script>
+<header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市後，門市會在 1 個工作天內打電話跟你確認到店時間。客製車不需付訂金，到門市確認工單後再付款。"></header>
+<script src="js/header.js?v=pill44b"></script>
 
 <main class="co">
   <a class="co-back" href="javascript:history.back()" id="coBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>繼續逛逛</a>
@@ -283,7 +269,7 @@ html{scroll-padding-bottom:128px}
 </main>
 <div class="toast" id="toast" role="status"></div>
 
-<footer class="foot" id="siteFooter"></footer>
+<footer class="foot" id="siteFooter" data-mobile-footer></footer>
 <script src="js/footer.js?v=hdr1023b"></script>
 <script src="js/favorites.js?v=fav1028"></script>
 <script>
@@ -480,16 +466,6 @@ $('pane').addEventListener('change', e => {
 });
 document.addEventListener('cart:change', () => { if (S.step < 3) render(); });
 render();
-</script>
-<script>
-// Compact navigation uses the existing shared links and dropdowns.
-(()=>{const header=document.getElementById('siteHeader'),links=header.querySelector('.links');links.id='checkoutNavLinks';
-const toggle=document.createElement('button');toggle.type='button';toggle.className='co-menu-toggle';toggle.setAttribute('aria-label','開啟主選單');toggle.setAttribute('aria-controls',links.id);toggle.setAttribute('aria-expanded','false');toggle.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';header.prepend(toggle);
-function close(){header.classList.remove('co-menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','開啟主選單');window.GiantHeader?.close()}
-toggle.addEventListener('click',()=>{if(header.classList.contains('co-menu-open'))close();else{header.classList.add('co-menu-open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','關閉主選單')}});
-document.addEventListener('click',e=>{if(!header.contains(e.target))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('co-menu-open')){close();toggle.focus()}});
-links.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')&&!['#',''].includes(a.getAttribute('href')))close()});matchMedia('(max-width:1023px)').addEventListener('change',close);
-})();
 </script>
 </body>
 </html>

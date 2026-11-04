@@ -4,7 +4,7 @@
 .site-nav{--hu:calc(max(100vw, 1200px) / 1672);position:absolute;z-index:30;left:0;right:0;top:0;height:calc(var(--hu) * 76);color:var(--nav-ink, #141A22)}
 .site-nav .logo{position:absolute;left:calc(var(--hu) * 42);top:0;bottom:0;display:flex;align-items:center;color:inherit}
 .site-nav .logo svg{display:block;height:calc(var(--hu) * 20);width:auto;color:inherit}
-.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:calc(var(--hu) * 16);line-height:1;font-weight:500}
+.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:max(12px,calc(var(--hu) * 16));line-height:1;font-weight:500}
 .site-nav .links a{color:inherit;text-decoration:none;opacity:.92;transition:opacity .2s}
 .site-nav .links a:hover{opacity:1}
 /* 右側順序：購物車、會員、AI 助理（固定在最右邊） */
@@ -87,3 +87,29 @@ header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{colo
 /* 捲動後底色是淺的：原本在深色照片上改成白色的文字與圖示，一律換回深色 */
 #siteHeader.site-nav.scrolled{--nav-ink:#141A22;color:#141A22}
 #siteHeader.site-nav.scrolled .icons.on-dark a svg,#siteHeader.site-nav.scrolled .icons.on-dark .icon-btn svg{color:#141A22;filter:none}
+
+/* 手機版 header（≤ 900）：只作用在開了 data-mobile-nav 的頁面。規則見 docs/design.md 第 10 節；選單本身在 js/header.js。 */
+@media(max-width:900px){
+ #siteHeader[data-mobile-nav]{height:64px}
+ #siteHeader[data-mobile-nav] .logo{left:56px}
+ #siteHeader[data-mobile-nav] .logo svg{width:100px;height:auto}
+ #siteHeader[data-mobile-nav] .links{display:none!important}
+ #siteHeader[data-mobile-nav] .icons{right:8px;gap:4px;overflow:visible}
+ #siteHeader[data-mobile-nav] .icons>button,#siteHeader[data-mobile-nav] .icons>a,#siteHeader[data-mobile-nav] .icons>.profile-wrap,#siteHeader[data-mobile-nav] .orb-wrap{display:grid;place-items:center;width:40px;height:40px;min-width:40px;box-sizing:border-box;overflow:visible}
+ #siteHeader[data-mobile-nav] .icons .icon-btn svg,#siteHeader[data-mobile-nav] .icons>a>svg{width:24px;height:24px}
+ #siteHeader[data-mobile-nav] .member-initial{width:28px;height:28px;font-size:13px}
+ #siteHeader[data-mobile-nav] #aiOrb{position:relative;width:28px;height:28px;min-width:28px;overflow:visible;clip-path:none}
+ #siteHeader[data-mobile-nav] #aiOrb::before{content:"";position:absolute;inset:-6px;border-radius:50%}
+ #siteHeader[data-mobile-nav] #aiOrb .bd{inset:0;overflow:visible;clip-path:none;animation:none}
+ #siteHeader[data-mobile-nav] #aiOrb .bd img{object-fit:contain;max-width:none;border-radius:0;clip-path:none}
+ #siteHeader[data-mobile-nav] button:focus-visible{outline:2px solid #1F4FE0;outline-offset:2px}
+ #siteHeader[data-mobile-nav] .orb-callout{right:8px;width:min(300px,calc(100vw - 32px))}
+ #siteHeader[data-mobile-nav] .orb-callout .tip{right:12px}
+}
+@media(max-width:370px){#siteHeader[data-mobile-nav] .icons{gap:0}}
+@media(max-width:340px){#siteHeader[data-mobile-nav] .logo svg{width:72px}}
+
+/* Tag 按鈕：疊在圖卡上的小按鈕，規格見 docs/design.md 第 10 節。視覺高 28px，另有 40px 的隱形點擊區。 */
+.tag-btn{position:relative;display:inline-flex;align-items:center;gap:4px;width:fit-content;height:28px;padding:0 10px;border-radius:8px;background:#fff;color:#141A22;font-size:14px;font-weight:600;line-height:1;white-space:nowrap}
+.tag-btn::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
+.tag-btn svg{flex:none;width:16px;height:16px;color:inherit}

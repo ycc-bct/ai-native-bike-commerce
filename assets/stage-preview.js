@@ -86,12 +86,21 @@
       if (bgs.childElementCount !== src.length) bgs.innerHTML = src.map(b => `<button type="button" data-bg="${b.dataset.stageBackground}" aria-label="${b.getAttribute('aria-label') || ''}"></button>`).join('');
       bgs.querySelectorAll('button').forEach(b => { b.style.background = SWATCH[b.dataset.bg] || '#ccc'; b.setAttribute('aria-pressed', String(st.dataset.stageBackground === b.dataset.bg)); });
     };
-    /* 手機：右下角只露出目前的背景，點一下往上展開其他選項，選好或點別處就收起 */
     const narrow = matchMedia('(max-width:767px)');
-    bgs.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
-      if (narrow.matches && !bgs.classList.contains('open')) { bgs.classList.add('open'); return; }
-      bgs.classList.remove('open'); D.querySelector(`.background-choice[data-stage-background="${b.dataset.bg}"]`)?.click(); });
-    D.addEventListener('click', e => { if (!bgs.contains(e.target)) bgs.classList.remove('open'); });
+    bgs.addEventListener('click', e => { const b = e.target.closest('button'); if (b) D.querySelector(`.background-choice[data-stage-background="${b.dataset.bg}"]`)?.click(); });
+    /* 手機：步驟列右側一顆色票，顯示目前的背景，點一下直接換下一個 */
+    const cycle = D.createElement('button'); cycle.type = 'button'; cycle.className = 'sp-bg-cycle';
+    D.querySelector('#configPage .intro')?.appendChild(cycle);
+    const choices = () => [...D.querySelectorAll('.background-choice')].filter(b => !b.hidden);
+    const syncCycle = () => {
+      const on = choices().find(b => b.dataset.stageBackground === st.dataset.stageBackground) || choices()[0];
+      cycle.hidden = !st.classList.contains('is-flat');
+      cycle.style.background = SWATCH[on?.dataset.stageBackground] || '#ccc';
+      cycle.setAttribute('aria-label', `切換背景，目前是${on?.getAttribute('aria-label') || ''}`);
+    };
+    cycle.addEventListener('click', () => { const list = choices(), i = list.findIndex(b => b.dataset.stageBackground === st.dataset.stageBackground); list[(i + 1) % list.length]?.click(); });
+    new MutationObserver(syncCycle).observe(st, {attributes: true, attributeFilter: ['data-stage-background', 'class']});
+    syncCycle();
     /* 手機：角度點平常不顯示，左右滑圖換角度時才出現 1.5 秒 */
     const views = bar.querySelector('.sp-views'); let sx = null, vt;
     slide.parentElement.addEventListener('pointerdown', e => { sx = e.clientX; });
