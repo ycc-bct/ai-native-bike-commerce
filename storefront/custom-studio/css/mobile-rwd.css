@@ -151,7 +151,7 @@
   /* -- CTA: the desktop drift + "lit from the dark" reveal, re-anchored to the mobile crop. */
   #cta .cta{isolation:isolate;background:#060709!important}
   #cta .cta::before,#cta .cta::after{content:"";position:absolute;pointer-events:none;inset:0}
-  #cta .cta::before{z-index:0;transform-origin:75% 22%;background:url('../img/cta/carbon-frame-studio.jpg') right 18px/150% auto no-repeat;
+  #cta .cta::before{z-index:0;transform-origin:75% 22%;background:url('../img/cta/carbon-frame-studio-extended.jpg') right 18px/150% auto no-repeat;
     animation:none}
   #cta .cta::after{z-index:0;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 35%,rgba(4,6,10,.08) 65%,rgba(4,6,10,0) 100%)}
   #cta .cta.pre::before{--rv:0%;filter:brightness(.15) contrast(.75);opacity:.2;
@@ -375,7 +375,7 @@
  /* Keep the carbon frame's visual centre aligned with the viewport.  The
     source photo has extra dark space on the left, so a proportional right
     inset is more stable than the previous fixed negative offset. */
- #cta .cta::before{background-position:right 12vw top 0!important;background-size:138% auto!important}
+ #cta .cta::before{background-position:62% 8px!important;background-size:auto 48%!important}
 
  /* Footer categories are native accordions; legal links share one quiet row. */
  #siteFooter .foot-in{gap:0;padding:30px 0}

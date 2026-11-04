@@ -118,7 +118,7 @@
 .tpl9 .th9{overflow:hidden;background:#f8f7f5}
 .tpl9 .th9 img{object-fit:contain;object-position:center;width:100%;height:100%;padding:4px}
 /* Official GIANT road image: scenery and bike behind the final invitation. */
-#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(4,6,10,.92) 0%,rgba(4,6,10,.78) 32%,rgba(4,6,10,.3) 56%,rgba(4,6,10,0) 72%),#05070b url('../img/cta/carbon-frame-studio.jpg') 70% center/cover no-repeat}
+#cta .cta{position:relative;min-height:480px;display:flex;align-items:center;padding:56px clamp(36px,5vw,84px);overflow:hidden;border-radius:28px;color:#fff;background:linear-gradient(90deg,rgba(4,6,10,.92) 0%,rgba(4,6,10,.78) 32%,rgba(4,6,10,.3) 56%,rgba(4,6,10,0) 72%),#05070b url('../img/cta/carbon-frame-studio-extended.jpg') 70% center/cover no-repeat}
 #cta .cta .tx{position:relative;z-index:1;max-width:590px}
 #cta .cta .kicker{display:none}
 #cta .cta h2,#cta .cta .kicker{color:#fff}
@@ -132,7 +132,7 @@
  .tpl9 .bk9,.tpl9 .bk9[data-family]{top:205px!important;width:min(116vw,780px)!important;height:auto!important;aspect-ratio:4/3;left:50%!important;transform:translateX(-50%)}
  .tpl9 .tab9{margin-left:0}
  #cta .cta h2{font-size:clamp(28px,8.4vw,36px)}
- #cta .cta{min-height:500px;padding:40px 24px;align-items:flex-end;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%),#05070b url('../img/cta/carbon-frame-studio.jpg') 76% 30%/cover no-repeat}}
+ #cta .cta{min-height:500px;padding:40px 24px;align-items:flex-end;background:linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 42%,rgba(4,6,10,.15) 72%,rgba(4,6,10,0) 100%),#05070b url('../img/cta/carbon-frame-studio-extended.jpg') 76% 30%/cover no-repeat}}
 @media(prefers-reduced-motion:reduce){.tpl9 .bk9{transition:none!important}.parts10 .pp10{transition:none!important}}
 /* Keep all six part choices visible on narrow screens, below the frame drawing. */
 
@@ -691,10 +691,10 @@
 
 /* 「從碳纖維車架開始」（提案 3）：照片高度＝區塊高度、車架左端固定在文字欄右側約 100px、右緣淡出到底色；按鈕下方三個重點數字 */
 @media(min-width:901px){
- #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 2.3346);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
+ #cta .cta{--h:clamp(420px,34vw,520px);--iw:calc(var(--h) * 3.0474);--sl:calc((100vw - var(--shell)) / 2);--ix:calc(var(--sl) + 540px - var(--iw) * .4983);
   background:linear-gradient(90deg,rgba(4,6,10,.94) 0,rgba(4,6,10,.72) calc(var(--sl) + 400px),rgba(4,6,10,0) calc(var(--sl) + 560px)),
    linear-gradient(90deg,rgba(6,7,9,0) calc(var(--ix) + var(--iw) - 200px),#060709 calc(var(--ix) + var(--iw) - 4px)),
-   #060709 url('../img/cta/carbon-frame-studio.jpg') var(--ix) center/auto 100% no-repeat}}
+   #060709 url('../img/cta/carbon-frame-studio-extended.jpg') var(--ix) center/auto 100% no-repeat}}
 #cta .cta-stats{display:flex;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div{padding-right:32px;margin-right:32px;border-right:1px solid rgba(255,255,255,.14)}
 #cta .cta-stats div:last-child{border-right:0;margin-right:0;padding-right:0}
@@ -766,7 +766,7 @@
  /* 照片層：位置、大小跟原本背景圖一樣；第一層是掃光、第二層是照片 */
  #cta .cta::before{z-index:0;top:0;left:var(--ix);width:var(--iw);height:100%;transform-origin:62% 52%;
   background:linear-gradient(105deg,rgba(255,255,255,0) 42%,rgba(255,255,255,.11) 50%,rgba(255,255,255,0) 58%) -70% 0/220% 100% no-repeat,
-   url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;
+   url('../img/cta/carbon-frame-studio-extended.jpg') 0 0/100% 100% no-repeat;
   animation:cta-drift 11s ease-in-out infinite alternate,cta-sweep 9s cubic-bezier(.45,0,.25,1) 1.2s infinite}
  /* 原本的兩道漸層（左側壓暗給文字、照片右緣淡出）改放在上面這層 */
  #cta .cta::after{z-index:0;inset:0;
@@ -778,7 +778,7 @@
 /* 車架往右移 80px（右緣淡出跟著 --ix 一起移）；拿掉掃光，只留慢慢推近 */
 @media(min-width:901px){
  #cta .cta{--ix:calc(var(--sl) + 620px - var(--iw) * .4983)}
- #cta .cta::before{background:url('../img/cta/carbon-frame-studio.jpg') 0 0/100% 100% no-repeat;animation:cta-drift 11s ease-in-out infinite alternate}}
+ #cta .cta::before{background:url('../img/cta/carbon-frame-studio-extended.jpg') 0 0/100% 100% no-repeat;animation:cta-drift 11s ease-in-out infinite alternate}}
 
 /* 「從碳纖維車架開始」：車架從黑暗中被打亮（只播一次）。--rv 是光照到的範圍，由上往下擴散；同時亮度、對比從暗慢慢恢復 */
 @property --rv{syntax:'<percentage>';inherits:false;initial-value:200%}
