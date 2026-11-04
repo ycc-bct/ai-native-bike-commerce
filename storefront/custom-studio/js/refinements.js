@@ -124,6 +124,22 @@
  const mobileParts=matchMedia('(max-width:900px)');
  let mobileIndex=0;
  const partNames=parts.map(part=>part.querySelector('.dc b')?.childNodes[0]?.textContent.trim()||'零件');
+ /* The bicycle artwork uses the desktop 1440 x 900 coordinate plane.  Keep
+    that plane intact, then fit the useful bicycle bounds between the mobile
+    heading and the fixed-height detail card.  This used to be an accidental
+    side effect of the retired scroll-pinning controller. */
+ const fitMobileStage=()=>{
+  if(!mobileParts.matches)return;
+  const stage=section.querySelector('.in'),art=section.querySelector('.pd-stage'),head=section.querySelector('.phd9');
+  if(!stage||!art||!head||!strip.offsetHeight)return;
+  const top=head.offsetTop+head.offsetHeight+16,bottom=strip.offsetTop-16,width=stage.clientWidth;
+  const x0=300,x1=1135,y0=118,y1=712;
+  const scale=Math.min(1,(width-32)/(x1-x0),Math.max(80,bottom-top)/(y1-y0));
+  const x=width/2-scale*(x0+x1)/2;
+  const y=top+((bottom-top)-scale*(y1-y0))/2-scale*y0;
+  art.style.transformOrigin='0 0';
+  art.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${scale.toFixed(4)})`;
+ };
  const updateMobile=i=>{
   mobileIndex=(i+parts.length)%parts.length;
   clearTimeout(strip._t);strip.classList.remove('swap');
@@ -143,5 +159,10 @@
   else if(part)updateMobile(parts.indexOf(part));
   else updateMobile(parts.findIndex(item=>item.classList.contains('p-wheel')));
  },true);
- if(mobileParts.matches)updateMobile(0);
+ const syncMobileLayout=()=>{if(mobileParts.matches){updateMobile(mobileIndex);fitMobileStage();}else{const art=section.querySelector('.pd-stage');if(art)art.style.transform='';alignStrip();}};
+ addEventListener('resize',fitMobileStage,{passive:true});
+ addEventListener('load',fitMobileStage,{once:true});
+ document.fonts?.ready.then(fitMobileStage);
+ mobileParts.addEventListener('change',syncMobileLayout);
+ if(mobileParts.matches){updateMobile(0);requestAnimationFrame(fitMobileStage);}
 })();
