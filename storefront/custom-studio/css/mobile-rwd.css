@@ -336,3 +336,65 @@
  #stores .tel::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
  #stores .slist .q{flex-basis:42px!important}
 }
+
+/* v15 — free scrolling, direct part selection, tabbed mobile menu and compact footer. */
+.parts-next{display:none}
+.foot-group>summary{list-style:none}
+.foot-group>summary::-webkit-details-marker{display:none}
+@media(min-width:901px){
+ .foot-group>summary{display:block;font-size:13.5px;font-weight:700;margin-bottom:12px;pointer-events:none}
+ .foot-group.foot-sub>summary{font-size:13.5px}
+ /* Keep every desktop mega-menu on the same frame; dense categories scroll
+    inside the panel instead of changing the header's overall height. */
+ #siteHeader .dd{height:320px}
+ #siteHeader .dd-in{height:100%;box-sizing:border-box;overflow-y:auto}
+}
+@media(max-width:900px){
+ html,html.pp-snapping{scroll-snap-type:none!important;scroll-padding-top:0!important}
+ main>section,#siteFooter,#parts .pp-snap{scroll-snap-align:none!important;scroll-snap-stop:normal!important}
+
+ /* Parts stay in normal document flow; no sticky or hidden scroll steps. */
+ #parts{height:max(700px,100svh)!important;min-height:700px!important;overflow:hidden!important}
+ #parts .in{position:relative!important;top:auto!important;height:100%!important;min-height:0!important;overflow:hidden!important}
+ #parts .pp-snap,#parts .pp-dots,#parts .parts-selector{display:none!important}
+ #parts .pp10,#parts .rear-wheel,#parts .rear-wheel.rear-hit{pointer-events:auto!important;cursor:pointer;touch-action:manipulation}
+ #parts .pd-strip{display:grid!important;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr);align-items:center;column-gap:12px;row-gap:4px;bottom:16px!important;padding:10px 12px 12px 16px!important;border-radius:16px!important;overflow:hidden!important}
+ #parts .pd-strip-nm{grid-column:1;grid-row:1;align-self:center}
+ #parts .pd-strip-txt{grid-column:1/-1;grid-row:2;min-width:0;overflow:auto}
+ #parts .parts-next{grid-column:2;grid-row:1;display:inline-flex;align-items:center;justify-content:flex-end;gap:8px;min-width:88px;min-height:44px;padding:0 4px 0 12px;border:0;background:none;color:#4a5563;font:600 14px/1.4 inherit;cursor:pointer;white-space:nowrap}
+ #parts .parts-next .part-arrow{font-size:22px;line-height:1}
+ #parts .parts-next:focus-visible{outline:2px solid #1f4fe0;outline-offset:1px;border-radius:6px}
+
+ /* Search focus no longer interacts with section snapping. */
+ #stores,#stores:focus-within{scroll-snap-align:none!important}
+ #stores .slist .q{scroll-margin:0!important}
+
+ /* The frame sits closer to the previous section and is slightly smaller. */
+ #cta{padding-top:32px!important}
+ #cta .cta{height:calc(100% - 32px)!important}
+ #cta .cta::before{background-position:right -8px top 0!important;background-size:138% auto!important}
+
+ /* Footer categories are native accordions; legal links share one quiet row. */
+ #siteFooter .foot-in{gap:0;padding:30px 0}
+ #siteFooter .foot-brand{margin-bottom:18px}
+ #siteFooter .foot-group{border-top:1px solid #dce1e7}
+ #siteFooter .foot-group>summary{position:relative;display:flex;align-items:center;min-height:52px;padding-right:32px;font-size:16px;font-weight:700;cursor:pointer}
+ #siteFooter .foot-group>summary::after{content:'+';position:absolute;right:4px;top:50%;translate:0 -50%;font-size:22px;font-weight:400;transition:rotate .25s ease}
+ #siteFooter .foot-group[open]>summary::after{rotate:45deg}
+ #siteFooter .foot-group-body{padding:0 0 16px;animation:foot-group-in .28s cubic-bezier(.16,1,.3,1)}
+ #siteFooter .foot-col a{padding:0 4px}
+ #siteFooter .foot-sub .sub-form{max-width:none}
+ #siteFooter .foot-sub .social{flex-direction:row}
+ #siteFooter .foot-sub .social a{justify-content:center;width:44px;height:44px;border:1px solid #dce1e7;border-radius:50%;font-size:0}
+ #siteFooter .foot-sub .social a::after{display:none}
+ #siteFooter .foot-bar{gap:10px;padding:18px 0 24px;font-size:11px!important}
+ #siteFooter .foot-bar .legal{display:flex;flex-direction:row;flex-wrap:nowrap;gap:14px;width:100%;overflow-x:auto;scrollbar-width:none}
+ #siteFooter .foot-bar .legal::-webkit-scrollbar{display:none}
+ #siteFooter .legal a{display:inline;min-height:0;font-size:11px;white-space:nowrap}
+ #siteFooter .foot-bar .region{font-size:11px}
+}
+@keyframes foot-group-in{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){
+ #siteFooter .foot-group-body{animation:none}
+ #siteFooter .foot-group>summary::after{transition:none}
+}

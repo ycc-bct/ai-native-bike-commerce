@@ -2,6 +2,7 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const hero=document.querySelector('#hero'), video=hero.querySelector('video'), copy=hero.querySelector('.hx');
  const models=document.querySelector('#models'), cards=[...models.querySelectorAll('article')];
+ cards.forEach(card=>{const copy=card.querySelector('.model-intro');if(copy)copy.textContent=copy.textContent.replace(/提供\s*\d+\s*款[^。]*。?/g,'').trim();});
  const clamp=v=>Math.max(0,Math.min(1,v));
  let scheduled=false;
  function update(){
@@ -105,16 +106,42 @@
  const section=document.querySelector('#parts'),parts=[...section.querySelectorAll('.pp10')];
  parts.forEach(part=>{const key=[...part.classList].find(name=>details[name]),dc=part.querySelector('.dc');if(key&&dc&&!dc.querySelector('.pd-desc'))dc.insertAdjacentHTML('beforeend','<small class="pd-desc">'+details[key]+'</small>');});
  /* 桌機：說明不再展開在標籤上（會擋住零件），改放在車子下方的說明列，選到哪個零件就換成它的名稱、規格與說明 */
- const strip=document.createElement('div');strip.className='pd-strip';strip.setAttribute('aria-live','polite');section.appendChild(strip);
+ const strip=document.createElement('div');strip.className='pd-strip';strip.setAttribute('aria-live','polite');strip.innerHTML='<b class="pd-strip-nm"></b><button class="parts-next" type="button"></button><span class="pd-strip-txt"><span class="pd-strip-sp"></span><span class="pd-strip-ds"></span></span>';section.appendChild(strip);
+ const stripName=strip.querySelector('.pd-strip-nm'),stripSpec=strip.querySelector('.pd-strip-sp'),stripDesc=strip.querySelector('.pd-strip-ds'),nextButton=strip.querySelector('.parts-next');
  const fill=i=>{
   const part=parts[i];
-  if(!part){strip.innerHTML='<b class="pd-strip-nm">六大零件</b><span class="pd-strip-txt"><span class="pd-strip-ds">滑到或點選零件，看規格與說明</span></span>';return;}
+  if(!part){stripName.textContent='六大零件';stripSpec.textContent='';stripDesc.textContent='滑到或點選零件，看規格與說明';return;}
   const b=part.querySelector('.dc b'),name=b?b.childNodes[0].textContent.trim():'',spec=[...part.querySelectorAll('.dc .chip')].map(c=>c.textContent.trim()).join('・'),key=[...part.classList].find(n=>details[n]);
-  strip.innerHTML=`<b class="pd-strip-nm">${name}</b><span class="pd-strip-txt"><span class="pd-strip-sp">${spec}</span><span class="pd-strip-ds">${key?details[key]:''}</span></span>`;
+  stripName.textContent=name;stripSpec.textContent=spec;stripDesc.textContent=key?details[key]:'';
  };
  fill(-1);
  /* 說明列：放在尺寸線正下方、左右輪之間置中；固定寬度 640（不超過兩輪外緣），每個零件一樣寬 */
  const alignStrip=()=>{const rear=section.querySelector('.rear-wheel:not(.pd-sk)'),front=section.querySelector('.p-wheel img:not(.pd-sk)'),wrap=section.querySelector('.pd-stage');if(!rear||!front||!wrap||!matchMedia('(min-width:901px)').matches)return;const S=section.getBoundingClientRect(),W=wrap.getBoundingClientRect(),l=rear.getBoundingClientRect().left-S.left,r=front.getBoundingClientRect().right-S.left;if(r-l<200)return;strip.style.left=(l+r)/2+'px';strip.style.width=Math.min(640,r-l)+'px';strip.style.maxWidth='';strip.style.top=(W.top-S.top+784*W.height/900)+'px';strip.style.bottom='auto';};
  alignStrip();addEventListener('resize',alignStrip);addEventListener('load',alignStrip);
- section.addEventListener('partchange',e=>{strip.classList.add('swap');clearTimeout(strip._t);strip._t=setTimeout(()=>{fill(e.detail);strip.classList.remove('swap');},140);});
+ section.addEventListener('partchange',e=>{if(matchMedia('(max-width:900px)').matches)return;strip.classList.add('swap');clearTimeout(strip._t);strip._t=setTimeout(()=>{fill(e.detail);strip.classList.remove('swap');},140);});
+ /* Mobile keeps the bicycle and card in one normal-flow screen. Tapping a
+    mounted part or the title-row arrow swaps the same description card. */
+ const mobileParts=matchMedia('(max-width:900px)');
+ let mobileIndex=0;
+ const partNames=parts.map(part=>part.querySelector('.dc b')?.childNodes[0]?.textContent.trim()||'零件');
+ const updateMobile=i=>{
+  mobileIndex=(i+parts.length)%parts.length;
+  clearTimeout(strip._t);strip.classList.remove('swap');
+  parts.forEach((part,index)=>part.classList.toggle('hov',index===mobileIndex));
+  section.classList.add('has-focus');section.classList.toggle('wheel-on',parts[mobileIndex].classList.contains('p-wheel'));
+  fill(mobileIndex);
+  const next=(mobileIndex+1)%parts.length;
+  nextButton.dataset.index=next;nextButton.setAttribute('aria-label',`切換至${partNames[next]}`);nextButton.innerHTML=`<span>${partNames[next]}</span><span class="part-arrow" aria-hidden="true">→</span>`;
+ };
+ nextButton.addEventListener('click',event=>{if(!mobileParts.matches)return;event.preventDefault();event.stopPropagation();updateMobile(Number(nextButton.dataset.index)||0);});
+ section.addEventListener('click',event=>{
+  if(!mobileParts.matches)return;
+  const next=event.target.closest('.parts-next'),part=event.target.closest('.pp10'),rear=event.target.closest('.rear-wheel');
+  if(!next&&!part&&!rear)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  if(next)updateMobile(Number(next.dataset.index)||0);
+  else if(part)updateMobile(parts.indexOf(part));
+  else updateMobile(parts.findIndex(item=>item.classList.contains('p-wheel')));
+ },true);
+ if(mobileParts.matches)updateMobile(0);
 })();
