@@ -270,7 +270,7 @@ html{scroll-padding-bottom:128px}
 </head>
 <body>
 <script src="js/cart.js?v=tap40"></script><script src="js/store-picker.js?v=map1103b"></script>
-<header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市與到店時間後，門市會在 1 個工作天內打電話跟你確認。客製車不需付訂金，到門市確認工單後再付款。"></header>
+<header class="nav site-nav" id="siteHeader" data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市後，門市會在 1 個工作天內打電話跟你確認到店時間。客製車不需付訂金，到門市確認工單後再付款。"></header>
 <script src="js/header.js?v=ink1103"></script>
 
 <main class="co">
@@ -298,6 +298,8 @@ const STEPS_ALL = {shop: ['確認商品',  '取貨門市', '聯絡與付款', '�
 const REGIONS = ['全部', '北部', '中部', '南部', '東部', '離島'];
 const SLOTS = ['11:00', '14:00', '16:30', '19:00'];
 const DEFAULT_STORE = '17544';   /* 跨越單車精品店，清單的第一間 */
+/* 客製車工廠還不能承諾交期，先藏起日期與時段，由門市來電約時間；要恢復時讓這裡回傳 true */
+const needsTime = () => !hasCustom();
 const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 /* 會員資料（示範帳號） */
 const MEMBER = {name: 'David Robinson', phone: '0912-345-678', email: 'david.robinson@example.com'};
@@ -345,7 +347,7 @@ function summary(){
     (hasCustom() ? '<div><span>客製車訂金</span><span>不需訂金</span></div>' : '') +
     (items().some(x => !x.price) ? '<div><span>價格請洽門市</span><span>' + items().filter(x => !x.price).length + ' 件，門市確認後報價</span></div>' : '') +
     '<div class="tot"><span>' + (hasCustom() ? '預估總計' : '總計') + '</span><strong>' + money(total()) + '</strong></div></div>' +
-    ((st || S.date) && S.way === 'store' ? '<div class="pick">' + (st ? '<b>' + esc(st.name) + '</b><br>' + esc(st.addr) : '') + (S.date && S.slot ? '<br>' + dLabel(S.date) + ' ' + S.slot : '') + '</div>' : '');
+    ((st || (needsTime() && S.date)) && S.way === 'store' ? '<div class="pick">' + (st ? '<b>' + esc(st.name) + '</b><br>' + esc(st.addr) : '') + (needsTime() && S.date && S.slot ? '<br>' + dLabel(S.date) + ' ' + S.slot : '') + '</div>' : '');
 }
 
 /* ---------- 各步驟 ---------- */
@@ -353,29 +355,25 @@ function paneCart(){
   if (!items().length) return '<h2>購物車是空的</h2><p class="sub">看看喜歡的車款，或從客製化開始打造一台自己的車。</p><div class="acts"><span></span><a class="btn" href="gravel.html">去逛逛車款 ' + ARROW + '</a></div>';
   const custom = hasCustom();
   return '<h2>' + (custom ? '確認客製車' : '確認' + GiantCart.groupName(items())) + '</h2><p class="sub">' + (custom ? '確認配置內容，下一步選擇客製化自行車服務門市。' : '數量與內容確認好，下一步選擇取貨方式。') + '</p><div class="items">' + itemsHtml(true) + '</div>' +
-    (hasCustom() ? '<p class="note"><b>客製車不需付訂金。</b>選好客製化自行車服務門市與到店時間後，由技師確認尺寸與零件搭配、簽訂工單，再付款。</p>' : '') +
+    (hasCustom() ? '<p class="note"><b>客製車不需付訂金。</b>選好客製化自行車服務門市後，門市會來電約到店時間，由技師確認尺寸與零件搭配、簽訂工單，再付款。</p>' : '') +
     '<div class="acts"><a class="lnk" href="javascript:history.back()">繼續逛逛</a><button class="btn" type="button" data-go="1">' + (custom ? '下一步：選擇服務門市 ' : hasBike() ? '下一步：選擇取貨門市 ' : '下一步：選擇取貨方式 ') + ARROW + '</button></div>';
 }
 function paneStore(){
   const custom = hasCustom(), onlyAcc = !hasBike();
   if (!onlyAcc) S.way = 'store';
-  if (custom) {   /* 客製車先帶入預設門市與最近可預約的時間，使用者可以再改 */
-    S.store = S.store || (STORES.find(s => s.id === DEFAULT_STORE) || STORES[0] || {}).id || null;
-    S.date = S.date || ymd(days().find(d => d.getDay() !== 1));
-    S.slot = S.slot || SLOTS[0];
-  }
+  if (custom) S.store = S.store || (STORES.find(s => s.id === DEFAULT_STORE) || STORES[0] || {}).id || null;   /* 客製車先帶入預設門市，使用者可以再改 */
   /* 只有配件時才有「宅配到府」可選；整車、客製車一律到門市，不顯示取貨方式 */
   const way = !onlyAcc ? '' : '<div class="ways"><label class="way"><input type="radio" name="way" value="store"' + (S.way === 'store' ? ' checked' : '') + '><span><b>門市取貨</b><small>到門市取貨，免運費</small></span></label>' +
     '<label class="way' + (onlyAcc ? '' : ' off') + '"><input type="radio" name="way" value="home"' + (S.way === 'home' ? ' checked' : '') + (onlyAcc ? '' : ' disabled') + '><span><b>宅配到府</b><small>' + (onlyAcc ? '只有配件時可以宅配，3–5 個工作天送達' : '整車與客製車需到門市取車') + '</small></span></label></div>';
   if (S.way === 'home') return '<h2>取貨方式</h2><p class="sub">這次只有配件，可以選擇宅配到府。</p>' + way + '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><button class="btn" type="button" data-go="2">下一步：聯絡與付款 ' + ARROW + '</button></div>';
-  const ds = days(), ready = S.store && S.date && S.slot;
+  const ds = days(), ready = S.store && (!needsTime() || (S.date && S.slot));
   return '<h2>' + (custom ? '選擇客製化自行車服務門市' : '選擇取貨門市') + '</h2>' +
     '<p class="sub">' + (custom ? '客製車要到服務門市，由技師確認尺寸與工單。以下是全台 130 間客製化自行車服務門市。' : '選一間離你近的門市，並預約到店時間。') + '</p>' + way +
     '<div class="sec" id="secStore" tabindex="-1"><h3>' + (custom ? '服務門市' : '門市') + '</h3><div id="storePick"></div></div>' +   /* 共用門市選擇器（js/store-picker.js），換步驟重畫時搬回同一個元件，地圖不用重建 */
-    '<div class="sec" id="secDate" tabindex="-1"><h3>' + (custom ? '預約量身與確認工單' : '預約到店取貨') + '<small>' + (custom ? '約 60 分鐘' : '約 20 分鐘') + '</small></h3>' +
+    (!needsTime() ? '' : '<div class="sec" id="secDate" tabindex="-1"><h3>' + (custom ? '預約量身與確認工單' : '預約到店取貨') + '<small>' + (custom ? '約 60 分鐘' : '約 20 分鐘') + '</small></h3>' +
     '<div class="dates">' + ds.map(d => { const v = ymd(d), off = d.getDay() === 1; return '<button class="date" type="button" data-date="' + v + '" aria-pressed="' + (S.date === v) + '"' + (off ? ' disabled title="週一公休"' : '') + '><small>週' + WEEK[d.getDay()] + '</small><b>' + (d.getMonth() + 1) + '/' + d.getDate() + '</b></button>'; }).join('') + '</div>' +
     '<div class="slots">' + SLOTS.map(t => '<button class="slot" type="button" data-slot="' + t + '" aria-pressed="' + (S.slot === t) + '">' + t + '</button>').join('') + '</div>' +
-    '<p class="hint">實際可預約的時段由門市確認；週一公休。</p></div>' +
+    '<p class="hint">實際可預約的時段由門市確認；週一公休。</p></div>') +
     '<div class="acts"><button class="lnk" type="button" data-go="0">上一步</button><span style="display:flex;align-items:center;gap:14px">' + (ready ? '' : '<button class="need" type="button" data-jump="' + (!S.store ? 'secStore">請選擇門市' : 'secDate">請選擇到店日期與時段') + '</button>') + '<button class="btn" type="button" data-go="2"' + (ready ? '' : ' disabled') + '>' + (custom ? '下一步：聯絡資料 ' : '下一步：聯絡與付款 ') + ARROW + '</button></span></div>';
 }
 function panePay(){
@@ -399,10 +397,10 @@ function paneDone(){
     '<ol class="track"><li class="ok">已送出<small>' + o.time + '</small></li><li class="now">' + (o.way === 'home' ? '備貨中' : '門市確認中') + '<small>' + (o.way === 'home' ? '1–2 個工作天' : '1 個工作天內來電') + '</small></li><li>' + (o.way === 'home' ? '已出貨' : '門市已確認') + '</li><li>' + (o.way === 'home' ? '送達' : (o.custom ? '到店量身' : '可到店取貨')) + '</li></ol>' +
     '<div class="info">' + (o.way === 'home' ? '<div><h4>宅配地址</h4><b>' + esc(o.addr) + '</b><br>3–5 個工作天送達</div>' :
       '<div><h4>' + (o.custom ? '客製化服務門市' : '取貨門市') + '</h4><b>' + esc(st ? st.name : '') + '</b><br>' + esc(st ? st.addr : '') + '<br>' + esc(st ? st.tel : '') + '</div>' +
-      '<div><h4>' + (o.custom ? '量身與確認工單' : '到店時間') + '</h4><b>' + dLabel(o.date) + ' ' + o.slot + '</b><br>' + (o.custom ? '約 60 分鐘，技師會確認尺寸、零件搭配並簽訂工單' : '約 20 分鐘') + '</div>') +
+      '<div><h4>' + (o.custom ? '量身與確認工單' : '到店時間') + '</h4><b>' + (o.date ? dLabel(o.date) + ' ' + o.slot : '門市來電約時間') + '</b><br>' + (o.custom ? '約 60 分鐘，技師會確認尺寸、零件搭配<span style="white-space:nowrap">並簽訂工單</span>' : '約 20 分鐘') + '</div>') +
     '<div><h4>聯絡人</h4><b>' + esc(o.name) + '</b><br>' + esc(o.phone) + '</div><div><h4>付款</h4><b>' + (o.pay === 'card' ? '信用卡線上付款' : '到門市付款') + '</b><br>總計 ' + money(o.total) + (o.custom ? '・客製車不需訂金' : '') + '</div></div>' +
     '<div class="items" style="margin-top:22px">' + o.items.map(x => '<div class="it"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><h3>' + esc(x.name) + '</h3><p class="meta">' + [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', '數量 ' + (x.qty || 1)].filter(Boolean).map(esc).join('・') + '</p></div><div class="pr">' + priceOf(x) + '</div></div>').join('') + '</div>' +
-    '<div class="acts">' + (o.way === 'home' ? '<span></span>' : '<button class="btn ghost" type="button" id="ics">加入行事曆</button>') + '<a class="btn" href="index.html">回到首頁</a></div></div>';
+    '<div class="acts">' + (o.way === 'home' || !o.date ? '<span></span>' : '<button class="btn ghost" type="button" id="ics">加入行事曆</button>') + '<a class="btn" href="index.html">回到首頁</a></div></div>';
 }
 
 let dir = 1, shownStep = -1;
@@ -435,7 +433,7 @@ function render(){
 }
 let picker = null;
 function go(n){
-  if (n === 2 && S.way === 'store' && !(S.store && S.date && S.slot)) return;
+  if (n === 2 && S.way === 'store' && !(S.store && (!needsTime() || (S.date && S.slot)))) return;
   dir = n >= S.step ? 1 : -1; S.step = n; render(); scrollTo({top: 0, behavior: 'smooth'});
 }
 function submit(){
@@ -448,7 +446,7 @@ function submit(){
   if (first) { $(first[0]).focus(); return; }
   const now = new Date(), no = 'GT' + String(now.getFullYear()).slice(2) + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0') + '-' + String(Math.floor(1000 + Math.random() * 9000));
   S.order = {no, time: (now.getMonth() + 1) + '/' + now.getDate() + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'),
-    items: items(), total: total(), way: S.way, store: S.store, date: S.date, slot: S.slot, pay: S.pay, name: S.name, phone: S.phone, email: S.email, addr: S.addr, note: S.note, custom: hasCustom()};
+    items: items(), total: total(), way: S.way, store: S.store, date: needsTime() ? S.date : null, slot: needsTime() ? S.slot : null, pay: S.pay, name: S.name, phone: S.phone, email: S.email, addr: S.addr, note: S.note, custom: hasCustom()};
   try { const all = JSON.parse(localStorage.getItem('giant-orders') || '[]'); all.unshift(S.order); localStorage.setItem('giant-orders', JSON.stringify(all.slice(0, 20))); } catch (e) {}
   GiantCart.clearSelected();   /* 只移除這次結帳的商品，另一區留在購物車 */
   go(3);
