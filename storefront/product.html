@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/advisor.css?v=mnav1104">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/advisor.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -21,13 +21,13 @@
   --ai:#1F4FE0;
   --sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
-  /* 主視覺照設計稿（1672 寬）等比縮放：1u = 設計稿 1px */
-  --u:calc(max(100vw, 1200px) / 1672);
+  /* 主視覺照設計稿（1672 寬）等比縮放：1u = 設計稿 1px。1024 以下不再縮，改用下方 RWD 區塊重排 */
+  --u:calc(max(100vw, 1024px) / 1672);
   --shell:min(1320px, calc(100vw - 96px));
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--paper);scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -483,6 +483,220 @@ body.solo-scene #accIdx{display:none}
 .stage.pg-on .gthumb.has-more::after{display:none}
 @media (prefers-reduced-motion:reduce){.pg *,.stage.pg-on *{transition:none!important}}
 
+/* ---------- RWD：斷點與規則見 docs/design.md（要退回時刪掉這一整段，加上 body 的 min-width:1200px、--u 改回 1200） ---------- */
+.nb{display:inline-block}
+.bar-price{display:none}
+/* 主視覺用 --u 等比縮放：只給下限，≥1200 的版面位置不變。全部寬度都有效 */
+.stage{height:max(100vh,calc(var(--u)*890),760px)}
+.subnav{top:max(calc(var(--u)*76),64px)}
+/* 分頁列變窄時分頁不折行：收間距與按鈕內距，車名可以折兩行 */
+.subnav-in{gap:clamp(13px,calc(5.5vw - 43px),36px)}
+.subnav .tab{flex:none;white-space:nowrap}
+.subnav .nm small{white-space:nowrap}
+.subnav-acts{flex:none}
+.subnav .btn-dark,.subnav .btn-line{padding:0 clamp(12px,calc(1.5vw - 2px),16px)}
+.info{top:max(calc(var(--u)*92),66px);width:max(calc(var(--u)*420),320px)}
+.info h1{font-size:max(34px,calc(var(--u)*44))}
+.info .price{font-size:max(17px,calc(var(--u)*20))}
+.info .vride{max-width:max(calc(var(--u)*420),320px)}
+.info .cta{flex-wrap:nowrap}
+.info .vr-copy b{font-size:max(14px,calc(var(--u)*15))}
+.info .vr-desc{font-size:max(13px,calc(var(--u)*12))}
+.info .pitch{width:calc(var(--u)*500);white-space:normal;font-size:max(14px,calc(var(--u)*15.5))}
+/* 主要按鈕膠囊形、平板以上 48px；同一列的次要按鈕跟著同高同形 */
+.btn-dark,.btn-line,.subnav .btn-dark,.subnav .btn-line{height:48px;border-radius:999px;font-size:max(14px,calc(var(--u)*15.5))}
+.btn-dark,.btn-line{flex:none;padding:0 max(18px,calc(var(--u)*24));white-space:nowrap}
+.btn-fav{flex:none}
+.btn-dark svg,.btn-line svg{width:max(16px,calc(var(--u)*18));height:max(16px,calc(var(--u)*18))}
+.btn-fav,.subnav .btn-fav{width:48px;height:48px;border-radius:50%}
+.btn-fav svg{width:max(18px,calc(var(--u)*22));height:max(18px,calc(var(--u)*22))}
+.sizes-pick b,.colors b,.acc-hd b{font-size:max(14px,calc(var(--u)*15.5))}
+.size-btns button{position:relative;min-width:max(34px,calc(var(--u)*38));height:max(26px,calc(var(--u)*30));font-size:max(13px,calc(var(--u)*13.5))}
+.size-link{position:relative;font-size:max(13px,calc(var(--u)*13))}
+.colors .sw{width:max(24px,calc(var(--u)*30));height:max(24px,calc(var(--u)*30))}
+.colors small,.acc-hd small,.acc-more,.acc-sub,.acc-row b,.acc-row .tx>span{font-size:max(13px,calc(var(--u)*13))}
+.acc{right:calc(var(--u)*41);left:auto;width:max(calc(var(--u)*388),270px)}
+.acc-more{position:relative}
+.acc-more svg{width:max(14px,calc(var(--u)*14));height:max(14px,calc(var(--u)*14))}
+.acc-row input{width:max(16px,calc(var(--u)*18));height:max(16px,calc(var(--u)*18))}
+.acc-row b{word-break:keep-all;overflow-wrap:anywhere}   /* 品名的中文詞不拆開 */
+.acc .add{height:max(40px,calc(var(--u)*44));font-size:max(14px,calc(var(--u)*15))}
+.acc .note{font-size:max(12px,calc(var(--u)*12))}
+.gthumb{width:max(40px,calc(var(--u)*52));height:max(40px,calc(var(--u)*52))}
+.gthumb.has-more::after{font-size:max(14px,calc(var(--u)*15))}
+.pg-cap b{font-size:max(17px,calc(var(--u)*20))}
+.pg-x{width:max(40px,calc(var(--u)*44));height:max(40px,calc(var(--u)*44))}
+.pg-view,.pg-top{left:max(calc(var(--u)*490),356px)}
+.pg-top{top:max(calc(var(--u)*92),68px)}
+.stage.pg-on .gal{left:max(calc(var(--u)*490),356px);width:calc(100% - max(calc(var(--u)*490),356px) - var(--u)*48)}
+.stage.pg-on .gthumb:nth-of-type(n){width:max(38px,calc(var(--u)*58));height:max(40px,calc(var(--u)*44))}
+.pg-nav span{width:max(40px,calc(var(--u)*46));height:max(40px,calc(var(--u)*46))}
+.fine,.geo-fig figcaption,.story figcaption small{font-size:13px}
+.rel-tag{font-size:12px}
+.spec-head .pdf{height:40px}
+.adv-acc-add{height:40px}
+.adv-acc-hd .acc-more,.adv-acc-list .acc-row b{font-size:13px}
+/* 視覺比 40px 小的控制項：看不見的 40px 點擊區（design.md 原則 3） */
+.crumb a{position:relative}
+.size-btns button::before,.size-link::before,.acc-more::before,.crumb a::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
+.hot::before{content:"";position:absolute;left:50%;top:50%;width:40px;height:40px;translate:-50% -50%}
+.finder input[type=range]{display:block;height:40px;margin:2px 0 -12px}   /* 看起來的位置不變，只把可點的高度補到 40 */
+.stage .tabs .tab::after{content:"";position:absolute;left:0;right:0;top:0;bottom:-12px}
+
+/* ≤1023：單欄捲動。主視覺拆開重排（順序用 order，.info 用 display:contents 讓裡面的項目直接排進 .stage）；
+   --u 固定在 1440 寬的值，元件尺寸跟桌機同一套；分頁列留在上方，購買動作固定底部 */
+@media(max-width:1023px){
+ :root{--u:.86px;--gut:calc((100vw - var(--shell)) / 2);--bar-h:73px}
+ body{padding-bottom:calc(var(--bar-h) + env(safe-area-inset-bottom))}
+ /* 主視覺 */
+ .stage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;align-content:start;height:auto;padding:76px var(--gut) 0}
+ .stage::before{display:none}
+ .info{display:contents}
+ .crumb,.info h1,.info .price,.panels,.bike,.gal,.info .vride,.info .pitch,.acc,.tabs{grid-column:1/-1}
+ .crumb{order:1}
+ .info h1{order:2;margin-top:16px;font-size:clamp(34px,9.5vw,44px);line-height:1.1}
+ .info .price{order:3;margin-top:8px;font-size:20px}
+ /* 情境照變成滿版一條，上下淡出接到底色；車疊在淡出的下半部 */
+ .panels{position:relative;order:4;height:clamp(240px,min(60vw,48vh),480px);margin:8px calc(var(--gut) * -1) 0;
+   --fade:linear-gradient(180deg,transparent 0%,#000 14%,#000 52%,rgba(0,0,0,.66) 68%,rgba(0,0,0,.24) 86%,transparent 100%)}
+ body.solo-scene .panel.p3{left:0}
+ body.solo-scene .panel.p3 .pclip{-webkit-mask-image:none;mask-image:none}
+ .bike{position:relative;left:auto;bottom:auto;order:5;justify-self:center;width:min(100%,640px);height:auto;aspect-ratio:700/410;margin-top:calc(min(100vw - var(--gut) * 2,640px) * -.36)}
+ .gal{position:relative;left:auto;bottom:auto;order:6;width:auto;margin-top:4px;gap:6px}
+ .gthumb{flex:1 1 0;width:auto;max-width:56px;height:auto;aspect-ratio:1;padding:3px;border-radius:5px}
+ .sizes-pick{order:7;margin-top:24px}
+ .colors{order:8;margin-top:24px}
+ .sizes-pick b,.colors b{font-size:14px}
+ .size-btns{margin-top:10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+ .size-btns button{min-width:0;height:44px;padding:0 4px;font-size:14px}
+ .size-link{display:inline-flex;align-items:center;min-height:40px;margin-top:4px;font-size:13px}
+ .colors .sw{width:30px;height:30px;margin:10px 0 0 4px}
+ .colors small{margin-top:10px;font-size:13px}
+ .info .cta{display:none}
+ .info .vride{order:9;width:100%;max-width:none;margin-top:24px;gap:12px;padding-right:12px;border-radius:12px}
+ .info .vr-ph{width:110px}
+ .info .vr-copy{padding:12px 0}
+ .info .vr-copy b{font-size:15px}
+ .info .vr-desc{display:block;font-size:13px}
+ .info .pitch{order:10;width:auto;margin-top:0;padding-top:24px;font-size:14px;line-height:1.75}
+ .acc{position:relative;right:auto;bottom:auto;order:11;width:auto;margin-top:24px;padding:16px;border-radius:9px}
+ .acc-hd b{font-size:15px}
+ .acc-list{gap:8px}
+ .acc-row{grid-template-columns:auto 52px minmax(0,1fr);min-height:68px;gap:12px;padding:8px 10px;border-radius:8px}
+ .acc-row input{width:20px;height:20px;border-radius:5px}
+ .acc-row .ph{width:52px;height:52px;border-radius:6px}
+ .acc .add{height:44px;border-radius:5px;font-size:14px}
+ .acc-more{min-height:40px;font-size:13px}
+ /* 分頁：一排左右滑 */
+ .tabs{position:relative;left:auto;right:auto;bottom:auto;order:12;display:flex;gap:24px;margin:32px calc(var(--gut) * -1) 0;padding:0 var(--gut);overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;border-top:1px solid var(--line)}
+ .tabs::before{display:none}
+ .tabs::-webkit-scrollbar,.subnav-in::-webkit-scrollbar{display:none}
+ .stage .tabs .tab{flex:none;min-height:48px;padding-top:0;white-space:nowrap;font-size:14px}
+ .stage .tabs .tab::after{display:none}
+ .tab::before{top:0}
+ .subnav .tab::before{top:auto;bottom:0}
+ /* 捲過主視覺後：分頁列貼在 header 下方；購買動作固定底部（不用 transform／backdrop-filter，否則 fixed 的底部列會跟著 .subnav 走） */
+ .subnav,.subnav:not(.on){top:64px;height:48px;transform:none;backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--paper);transition:none}
+ .subnav-in{width:100%;padding:0 var(--gut);gap:24px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+ .subnav .nm{display:none}
+ .subnav .tab{flex:none;height:47px;white-space:nowrap}
+ .subnav-acts,.subnav:not(.on) .subnav-acts{position:fixed;left:0;right:0;bottom:0;margin:0;display:flex;align-items:center;gap:8px;padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);visibility:visible;pointer-events:auto}
+ .bar-price{display:block;margin-right:auto;font-size:16px;font-weight:700;line-height:1.4;white-space:nowrap}
+ /* 相簿：滿版疊在所有內容上，整組可以左右滑 */
+ .pg{position:fixed;z-index:70}
+ .pg-wash{transition-duration:.25s}
+ .pg-top{left:var(--gut);right:var(--gut);top:calc(16px + env(safe-area-inset-top))}
+ .pg-view{left:0;right:0;top:108px;bottom:96px;touch-action:pan-y}
+ .pg-view.zoom{touch-action:none}
+ .pg-view .pg-nav{opacity:.8}
+ .stage.pg-on .gal{position:fixed;z-index:71;left:0;right:0;bottom:0;width:auto;margin:0;padding:12px 16px calc(16px + env(safe-area-inset-bottom));flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;background:#fff}
+ .stage.pg-on .gal::-webkit-scrollbar{display:none}
+ .stage.pg-on .gthumb:nth-of-type(n){flex:none;width:58px;max-width:none;height:44px;aspect-ratio:auto;border-radius:4px}
+ .stage.pg-on .gthumb::before{bottom:-6px}
+ body:has(.stage.pg-on){overflow:hidden}
+ /* 顧問面板蓋在內容上，內容不讓位 */
+ body.adv-open .stage{--D:calc(var(--u) * 1272)}
+ body.adv-open .bike{left:auto;width:min(100%,640px);height:auto}
+ body.adv-open .gal{left:auto;width:auto;flex-wrap:nowrap}
+ body.adv-open .acc{opacity:1;pointer-events:auto;transform:none}
+ body.adv-open .sec{width:var(--shell);margin-left:auto;margin-right:auto}
+ body.adv-open .subnav-in{width:100%;margin:0;gap:24px}
+ body.adv-open .subnav .tab{font-size:14px}
+ body.adv-open .subnav [data-act="compare"]{padding:0 max(18px,calc(var(--u)*24))}
+ body.adv-open .subnav [data-act="compare"] span{display:inline}
+ body.adv-open .foot-in{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100% - 48px);margin-left:auto;margin-right:auto}
+ /* 內容區塊 */
+ .sec{padding-top:72px;scroll-margin-top:52px}
+ .sec h2{margin-top:0}
+ .feat,.tech{grid-template-columns:minmax(0,1fr)}
+ .geo{grid-template-columns:minmax(0,1fr)}
+ .gtable-wrap{overscroll-behavior-x:contain}
+ .stories{grid-template-columns:minmax(0,1fr)}
+ /* 同車系車款：一排左右滑，頁面本身不橫捲 */
+ .rel{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:240px;gap:16px;margin-left:calc(var(--gut) * -1);margin-right:calc(var(--gut) * -1);padding:0 var(--gut);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-left:var(--gut);scrollbar-width:none}
+ .rel::-webkit-scrollbar{display:none}
+ .rel>*{scroll-snap-align:start}
+ /* 固定元素避開底部列 */
+ .toast{bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom));max-width:calc(100vw - 32px);width:max-content;text-align:center}
+ .tips-pill{left:var(--gut-fixed,16px);bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom))}
+ .tips{left:16px;bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom));width:min(460px,calc(100vw - 32px));max-height:calc(100dvh - var(--bar-h) - 88px)}
+ body .gc-bar{bottom:calc(var(--bar-h) + 12px + env(safe-area-inset-bottom));max-width:calc(100vw - 32px)}
+ body.adv-open .gc-bar{left:50%}
+ .lightbox{height:100dvh}
+}
+/* ≤767：手機專屬排列；左右留白 16px */
+@media(max-width:767px){
+ :root{--shell:calc(100vw - 32px);--bar-h:69px}
+ .stage{grid-template-columns:minmax(0,1fr);column-gap:0}
+ /* 底部列：價格＋比較、收藏＋購物車；比較收成圖示（文字留給螢幕閱讀器） */
+ .btn-dark,.btn-line,.subnav .btn-dark,.subnav .btn-line{height:auto;min-height:44px}
+ .subnav .btn-dark{padding:0 20px;letter-spacing:.02em;white-space:nowrap}
+ .subnav .btn-dark svg{display:none}
+ .subnav .btn-fav,.subnav .btn-line{flex:none;width:44px;height:44px;padding:0}
+ .subnav [data-act="compare"] span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ body.adv-open .subnav [data-act="compare"]{padding:0}
+ body.adv-open .subnav [data-act="compare"] span{display:block}
+ /* 內容區塊 */
+ .sec{padding-top:56px;scroll-margin-top:72px}
+ .sec h2{font-size:26px}
+ .sec h3{margin:32px 0 16px;font-size:18px}
+ .feat{gap:12px}
+ .feat article{padding:20px 16px}
+ .tech>div{flex-direction:column;align-items:flex-start;gap:12px;padding:16px}
+ .specs{grid-template-columns:minmax(0,1fr)}
+ .spec-g dl{grid-template-columns:104px minmax(0,1fr)}
+ .spec-g dd{overflow-wrap:anywhere}
+ .spec-head{flex-wrap:wrap;gap:12px}
+ .geo{margin-top:24px!important;gap:16px}
+ .geo-left{grid-template-rows:auto;gap:16px}
+ .geo-fig{padding:12px 12px 12px}
+ .hot{width:24px;height:24px}
+ .hot:not(.on):hover{border-color:transparent;background:none}
+ .finder{padding:20px 16px}
+ /* 幾何表：在自己的容器裡橫滑，第一欄固定 */
+ .gtable th,.gtable td{padding:11px 6px}
+ .gtable th:first-child,.gtable td:first-child{position:sticky;left:0;z-index:1;min-width:140px;max-width:140px;padding-left:10px;white-space:normal;background:#fff;box-shadow:1px 0 0 var(--line)}
+ .gtable thead th:first-child{background:#F7F9FB}
+ .gtable tbody tr.row-on td:first-child{background:#EAF0FC}
+ .stories{gap:12px;margin-top:24px}
+ .story{padding:20px 16px}
+ .story .qm{left:8px;top:40px}
+ .rel{margin-top:24px;grid-auto-columns:220px;gap:12px}
+ .foot{margin-top:56px}
+ .lightbox{padding:64px 16px 16px;gap:12px 8px}
+ .lb-close{right:16px;top:12px}
+ body .gc-bar{bottom:calc(var(--bar-h) + 60px + env(safe-area-inset-bottom))}
+}
+/* ≤370：底部列再收一點，不減功能 */
+@media(max-width:370px){
+ .subnav-acts,.subnav:not(.on) .subnav-acts{gap:6px}
+ .bar-price{font-size:15px}
+ .info .vr-ph{width:92px}
+ .subnav .btn-dark{padding:0 10px;letter-spacing:0}
+ .subnav .btn-fav,.subnav .btn-line{width:40px;height:40px;min-height:40px}
+}
+
 </style>
 </head>
 <!-- 一台車一個定位：Revolt Advanced SL 0 只用「探索未知」一個情境，照片鋪滿（solo-scene） -->
@@ -498,6 +712,7 @@ body.solo-scene #accIdx{display:none}
     <button class="tab" data-go="story">車主故事</button>
     <button class="tab" data-go="related">相關車款</button>
     <div class="subnav-acts">
+      <span class="bar-price">NT$ 308,000</span>
       <button class="btn-dark" type="button" data-act="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4h2.6l2.3 11.2a1.6 1.6 0 0 0 1.6 1.3h9.1a1.6 1.6 0 0 0 1.6-1.2L21.5 8H6"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg><span>加入購物車</span></button>
       <button class="btn-line" type="button" data-act="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>加入比較</span></button>
       <button class="btn-fav" type="button" aria-label="收藏" data-act="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button>
@@ -508,7 +723,7 @@ body.solo-scene #accIdx{display:none}
 
 <section class="stage" id="stage">
   <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="product"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
   <div class="panels rv now fade">
   <div class="panel p1" data-i="0"><div class="pclip"><div class="pimg"><img class="bg" src="img/pdp/city.webp" alt=""></div><span class="pmask"></span></div></div>
@@ -549,7 +764,7 @@ body.solo-scene #accIdx{display:none}
       <span class="vr-ph"><img src="scenario-2/img/entry.webp" alt=""></span>
       <span class="vr-copy"><b>騎一段礫石路試試？</b><span class="vr-desc">直接用這台騎五段路，<span style="white-space:nowrap">騎完告訴你它適不適合你。</span></span></span>
     </a>
-    <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，長途也能維持高速。</p>
+    <p class="pitch">GIANT 史上最輕量的頂級礫石賽車。<br>全系統整合設計，兼顧空力與操控，<span class="nb">長途也能維持高速。</span></p>
   </div>
 
   <div class="bike"><img src="img/bikes/revolt-lg.webp" alt="Revolt Advanced SL 0"></div>
@@ -596,7 +811,7 @@ body.solo-scene #accIdx{display:none}
   <div class="feat rv" style="--d:.1s">
     <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M27 5C16 5 8 12 7 24l-3 4M27 5c0 11-7 19-18 20M12 20l9-9"/></svg></span><h4>極致輕量傳動效率</h4><p>車架與前叉皆為手工打造，採用最高級別的 Advanced SL 碳纖維，整車系統總重量省下 288 公克，搭配更寬外胎，操控更加靈活。</p></article>
     <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 5L5 27M20 5l7 22M16 7v3M16 14v3M16 21v4"/></svg></span><h4>長途破風，極速馳騁</h4><p>空力管型設計專為 Gravel 賽事真實發生的 30-45 km/h 實戰時速進行全面優化，整車系統相較於前一代省了 18.99 瓦的綜合總阻力。</p></article>
-    <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 11c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 18c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 25c4 0 4-4 8-4s4 4 8 4 4-4 8-4"/></svg></span><h4>賽道專屬競技幾何</h4><p>擁有更低的 Stack、更長的 Reach、更戰鬥的座管角度，能引導騎士進入極具侵略性且符合空氣力學的低趴賽車姿態。</p></article>
+    <article><span class="fi" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 11c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 18c4 0 4-4 8-4s4 4 8 4 4-4 8-4M4 25c4 0 4-4 8-4s4 4 8 4 4-4 8-4"/></svg></span><h4>賽道專屬競技幾何</h4><p>擁有更低的 Stack、更長的 Reach、更戰鬥的座管角度，能引導騎士進入極具侵略性且符合空氣力學的<span class="nb">低趴賽車姿態。</span></p></article>
   </div>
 
   <h3>科技特色</h3>
@@ -606,7 +821,7 @@ body.solo-scene #accIdx{display:none}
 <!-- 03 幾何與尺寸 -->
 <section class="sec" id="geo">
   <h2 class="rv">車架幾何與尺寸</h2>
-  <p class="lede rv" style="--d:.08s">拉一下身高，對應的尺寸會標在右邊的幾何表上。<br>建議範圍取自官方尺寸指南，實際仍建議到門市試騎確認。</p>
+  <p class="lede rv" style="--d:.08s">拉一下身高，對應的尺寸會標在幾何表上。<br>建議範圍取自官方尺寸指南，<span class="nb">實際仍建議到門市試騎確認。</span></p>
   <div class="geo rv" style="margin-top:36px;--d:.1s">
     <div class="geo-left">
       <figure class="geo-fig">
@@ -614,7 +829,7 @@ body.solo-scene #accIdx{display:none}
           <img src="img/pdp/geo-diagram.png" alt="車架幾何標示圖">
           <button class="hot" type="button" data-letter="A" aria-label="幾何標示 A" style="left:33.3%;top:49.25%"></button><button class="hot" type="button" data-letter="B" aria-label="幾何標示 B" style="left:31.1%;top:56.16%"></button><button class="hot" type="button" data-letter="C" aria-label="幾何標示 C" style="left:39.9%;top:3.54%"></button><button class="hot" type="button" data-letter="D" aria-label="幾何標示 D" style="left:57.1%;top:26.31%"></button><button class="hot" type="button" data-letter="E" aria-label="幾何標示 E" style="left:60.4%;top:63.06%"></button><button class="hot" type="button" data-letter="F" aria-label="幾何標示 F" style="left:64.4%;top:68.66%"></button><button class="hot" type="button" data-letter="G" aria-label="幾何標示 G" style="left:67.2%;top:95.71%"></button><button class="hot" type="button" data-letter="H" aria-label="幾何標示 H" style="left:42.7%;top:75.56%"></button><button class="hot" type="button" data-letter="I" aria-label="幾何標示 I" style="left:26.0%;top:70.15%"></button><button class="hot" type="button" data-letter="J" aria-label="幾何標示 J" style="left:42.1%;top:66.04%"></button><button class="hot" type="button" data-letter="K" aria-label="幾何標示 K" style="left:54.0%;top:44.22%"></button><button class="hot" type="button" data-letter="L" aria-label="幾何標示 L" style="left:44.7%;top:8.96%"></button><button class="hot" type="button" data-letter="M" aria-label="幾何標示 M" style="left:37.5%;top:49.07%"></button><button class="hot" type="button" data-letter="N" aria-label="幾何標示 N" style="left:89.0%;top:37.5%"></button><button class="hot" type="button" data-letter="O" aria-label="幾何標示 O" style="left:91.4%;top:28.54%"></button><button class="hot" type="button" data-letter="P" aria-label="幾何標示 P" style="left:94.2%;top:65.3%"></button><button class="hot" type="button" data-letter="Q" aria-label="幾何標示 Q" style="left:14.2%;top:62.5%"></button>
         </div>
-        <figcaption>點圖上的字母或右邊表格的任一列，兩邊會同時標起來。</figcaption>
+        <figcaption>點圖上的字母或表格的任一列，<span class="nb">兩邊會同時標起來。</span></figcaption>
       </figure>
       <div class="finder">
       <h4>我適合的尺寸</h4>
@@ -680,7 +895,7 @@ body.solo-scene #accIdx{display:none}
   <div class="rel rv" id="rel" style="--d:.1s"></div>
 </section>
 
-<footer class="foot" id="siteFooter"></footer>
+<footer class="foot" id="siteFooter" data-mobile-footer></footer>
 <script src="js/footer.js?v=hdr1023b"></script>
 
 <aside class="advisor" id="advisor" role="dialog" aria-label="GIANT 選車顧問" hidden>
@@ -706,11 +921,11 @@ body.solo-scene #accIdx{display:none}
 <div class="toast" id="toast"></div>
 
 <script src="js/favorites.js?v=fav1028"></script>
-<script src="js/compare.js?v=ink1103"></script>
+<script src="js/compare.js?v=rwd1104"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd3"></script>
+<script src="js/tips.js?v=rwd1104"></script>
 <script>
 const $ = id => document.getElementById(id);
 /* ---------- 進場動態：.rv.now 載入即進場；其他捲進畫面才進場 ---------- */
@@ -859,8 +1074,8 @@ function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add(
 function layoutExplore(){
   const img = document.querySelector('.panel.p3 .bg');
   if (!img.naturalWidth) return;
-  const W = innerWidth, u = Math.max(W, 1200) / 1672;
-  const H = Math.max(innerHeight, 890 * u) - 360 * u;       /* 照片框高度（同 CSS） */
+  const W = innerWidth, u = Math.max(W, 1024) / 1672;
+  const H = Math.max(innerHeight, 890 * u, 760) - 360 * u;  /* 照片框高度（同 CSS） */
   const slant = H * .085, S = 400 * u;
   const open = document.body.classList.contains('adv-open');
   const D = open ? W - 440 - S : 1272 * u;
@@ -883,6 +1098,7 @@ addEventListener('resize', layoutExplore);
 /* ---------- header 圖示：依背後那張情境照的亮度切換黑／白 ---------- */
 function updateHeaderTone(){
   const icons = document.querySelector('.nav .icons'), r = icons.getBoundingClientRect(), cx = r.left + r.width / 2;
+  if (innerWidth <= 1023) { icons.classList.remove('on-dark'); return; }   /* 單欄版 header 下面是淺色底，不壓在照片上 */
   const panel = [...document.querySelectorAll('.panel')].find(p => { const b = p.getBoundingClientRect(); return b.left <= cx && b.right >= cx; });
   if (!panel) { icons.classList.remove('on-dark'); return; }
   const masked = !panel.classList.contains('on');
@@ -1282,7 +1498,12 @@ function bindGeoRows(){
     tr.classList.toggle('row-on', tr.dataset.letter === letterOn);
   });
 }
-document.querySelectorAll('.hot').forEach(h => h.onclick = () => markLetter(h.dataset.letter));
+document.querySelectorAll('.hot').forEach(h => h.onclick = e => {
+  /* 字母很密，40px 點擊區會互相重疊：改挑離手指最近的那一個 */
+  let t = h, best = Infinity;
+  if (e.detail) document.querySelectorAll('.hot').forEach(o => { const r = o.getBoundingClientRect(), d = Math.hypot(r.left + r.width / 2 - e.clientX, r.top + r.height / 2 - e.clientY); if (d < best) { best = d; t = o; } });
+  markLetter(t.dataset.letter);
+});
 /* 左欄的尺寸按鈕：帶到車架幾何與尺寸，並把該尺寸標在表上 */
 let sizeTouched = false;                  /* 使用者真的選過尺寸，才把 chip 標成「我的尺寸 M」 */
 function markSizeBtn(){
@@ -1299,7 +1520,7 @@ function markSizeBtn(){
 document.querySelectorAll('#sizeBtns button').forEach(b => b.onclick = () => {
   sizeTouched = true;
   sizePin = SIZES.findIndex(x => x[0] === b.dataset.size);
-  $('hRange').value = b.dataset.h; renderSize(+b.dataset.h); markSizeBtn();
+  $('hRange').value = b.dataset.h; renderSize(+b.dataset.h); markSizeBtn(); bindGeoRows();   /* 幾何表重畫了，列的點擊要重綁 */
 });
 $('sizeLink').onclick = () => $('geo').scrollIntoView({behavior:'smooth'});
 /* 進頁時把之前記住的身高套到左欄尺寸與幾何表，跟對話框的「我的尺寸」chip 三處一致 */
@@ -1382,6 +1603,7 @@ function pgFill(i, swap) {
   else { cur.src = GAL[pg.i].src; }
   $('pgCount').textContent = String(pg.i + 1).padStart(2, '0') + ' / ' + GAL.length;
   pgThumbs.forEach((t, j) => t.classList.toggle('on', j === pg.i));
+  if (pg.on && innerWidth <= 1023) { const row = $('galRow'), t = pgThumbs[pg.i]; row.scrollTo({left: t.offsetLeft - (row.clientWidth - t.offsetWidth) / 2, behavior: REDUCED ? 'auto' : 'smooth'}); }   /* 手機的縮圖列會橫滑：目前這張保持在畫面內 */
   const cap = $('pgCap'), put = () => { cap.querySelector('b').textContent = PG_CAP[pg.i][0]; cap.querySelector('span').textContent = PG_CAP[pg.i][1]; };
   if (swap && !REDUCED) { cap.classList.add('swap'); setTimeout(() => { put(); cap.classList.remove('swap'); }, 200); } else put();
 }
@@ -1431,6 +1653,15 @@ pgView.querySelector('.next').onclick = e => { e.stopPropagation(); pgFill(pg.i 
 const pgAim = e => { const r = pgView.getBoundingClientRect(), im = pgView.querySelector('img.cur'); im.style.setProperty('--ox', ((e.clientX - r.left) / r.width * 100) + '%'); im.style.setProperty('--oy', ((e.clientY - r.top) / r.height * 100) + '%'); };
 pgView.addEventListener('click', e => { if (e.target.closest('.pg-nav')) return; pgAim(e); pgView.classList.toggle('zoom'); });
 pgView.addEventListener('pointermove', e => { if (pgView.classList.contains('zoom')) pgAim(e); });
+/* 觸控：左右滑換張（放大時改成移動看細節）；滑動結束後的那一次 click 不算點擊放大 */
+let pgSwipeX = null, pgSwiped = false;
+pgView.addEventListener('touchstart', e => { pgSwipeX = e.touches[0].clientX; pgSwiped = false; }, {passive: true});
+pgView.addEventListener('touchend', e => {
+  if (pgSwipeX === null || pgView.classList.contains('zoom')) return;
+  const dx = e.changedTouches[0].clientX - pgSwipeX; pgSwipeX = null;
+  if (Math.abs(dx) > 40) { pgSwiped = true; pgFill(pg.i + (dx < 0 ? 1 : -1), true); }
+}, {passive: true});
+pgView.addEventListener('click', e => { if (pgSwiped) { pgSwiped = false; e.stopImmediatePropagation(); } }, true);
 addEventListener('keydown', e => {
   if (!pg.on) return;
   if (e.key === 'Escape') { e.stopImmediatePropagation(); closePG(); }
@@ -1460,7 +1691,14 @@ addEventListener('keydown', e => {
 const go = id => id === 'stage' ? scrollTo({top:0, behavior:'smooth'}) : $(id).scrollIntoView({behavior:'smooth'});
 document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
 const secIds = ['stage','spec','geo','sheet','story','related'];
-function markTab(id){ document.querySelectorAll('.tab[data-go]').forEach(t => t.classList.toggle('on', t.dataset.go === id)); }
+function markTab(id){
+  document.querySelectorAll('.tab[data-go]').forEach(t => {
+    const on = t.dataset.go === id, was = t.classList.contains('on');
+    t.classList.toggle('on', on);
+    /* 窄版分頁列會橫滑：目前的分頁保持在畫面內 */
+    if (on && !was && innerWidth <= 1023) { const row = t.parentElement; row.scrollTo({left: t.offsetLeft - row.offsetLeft - (row.clientWidth - t.offsetWidth) / 2, behavior: 'smooth'}); }
+  });
+}
 addEventListener('scroll', () => {
   const y = scrollY + 140;
   let curId = 'stage';

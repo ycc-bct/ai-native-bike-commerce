@@ -58,3 +58,12 @@
 @media(max-width:650px){
   .fav-panel{right:12px;left:12px;width:auto;top:72px;height:calc(100vh - 88px)}
 }
+
+/* 手機：抽屜內距 16px、關閉與移除的點擊區 40px（跟購物車抽屜一樣） */
+@media(max-width:767px){
+ .fav-hd{padding-left:16px;padding-right:16px}
+ .fav-body{padding-left:16px;padding-right:16px}
+ .fav-close{width:40px;height:40px}
+ .fav-rm{position:relative}
+ .fav-rm::before{content:"";position:absolute;inset:-5px}
+}

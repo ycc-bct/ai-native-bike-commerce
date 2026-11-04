@@ -456,7 +456,8 @@
 .parts10 .pd-rear{pointer-events:none;opacity:0}
 .parts10 .pd-sk.pd-conic{-webkit-mask-image:conic-gradient(from 0deg,#000 var(--a,0deg),transparent calc(var(--a,0deg) + .6deg));mask-image:conic-gradient(from 0deg,#000 var(--a,0deg),transparent calc(var(--a,0deg) + .6deg))}
 .parts10 .pd-sk.pd-lin{-webkit-mask-image:linear-gradient(90deg,#000 var(--p,0%),transparent calc(var(--p,0%) + 3%));mask-image:linear-gradient(90deg,#000 var(--p,0%),transparent calc(var(--p,0%) + 3%))}
-.parts10 .pd-ptip{position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#5F6670;opacity:0;pointer-events:none;z-index:40}
+/* 鉛筆進場不顯示筆尖圓點：線條自己畫出來就好 */
+.parts10 .pd-ptip,.parts10 .pd-tip{display:none!important}
 
 /* ---------- 六大零件規格：聚焦與標籤（桌機） ----------
    拿掉藍色描邊光、投影與 116% 放大；選到的零件浮起，其他只淡到約 60%；

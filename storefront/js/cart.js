@@ -149,7 +149,7 @@
     '@keyframes gcPop{from{opacity:0;transform:translateY(-8px) scale(.97)}}' +
     '.gc-pop *{box-sizing:border-box}.gc-pop button,.gc-pop a{font:inherit}' +
     '.gc-pop-hd{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}.gc-pop-hd i{width:20px;height:20px;border-radius:50%;background:#E8F5EC;color:#1E7A43;display:grid;place-items:center;font-style:normal;font-size:12px}' +
-    '.gc-pop-x{margin-left:auto;width:28px;height:28px;border:0;background:none;border-radius:50%;color:#667080;cursor:pointer;display:grid;place-items:center}.gc-pop-x:hover{background:#F1F3F5;color:#141A22}.gc-pop-x svg{width:16px;height:16px}' +
+    '.gc-pop-x{margin-left:auto;width:28px;height:28px;border:0;background:none;border-radius:50%;color:#667080;cursor:pointer;display:grid;place-items:center}.gc-pop-x{position:relative}.gc-pop-x::before{content:"";position:absolute;inset:-6px}.gc-pop-x:hover{background:#F1F3F5;color:#141A22}.gc-pop-x svg{width:16px;height:16px}' +
     '.gc-pop-it{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:center;margin:12px 0 14px}' +
     '.gc-pop-ph{width:64px;height:48px;border-radius:8px;background:#F3F5F7;display:grid;place-items:center;overflow:hidden}.gc-pop-ph img{width:90%;height:90%;object-fit:contain;mix-blend-mode:multiply}' +
     '.gc-pop-nm{font-size:14px;font-weight:700;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gc-pop-pr{margin-top:2px;font-size:14px;color:#4A5563;font-variant-numeric:tabular-nums}' +
@@ -262,7 +262,7 @@
       '<div class="gc-pop-acts"><button class="gc-pop-view" type="button">查看購物車</button><a class="gc-pop-go" href="' + ROOT + 'checkout.html">前往結帳</a></div>';
     document.body.appendChild(el); popEl = el;
     var a = cartIcon(), r = a && a.getBoundingClientRect();
-    if (r && r.width) { el.style.top = Math.round(r.bottom + 10) + 'px'; el.style.right = Math.max(16, Math.round(innerWidth - r.right - 12)) + 'px'; }
+    if (r && r.width) { el.style.top = Math.round(r.bottom + 10) + 'px'; el.style.right = (innerWidth <= 767 ? 16 : Math.max(16, Math.round(innerWidth - r.right - 12))) + 'px'; }
     else { el.style.top = '80px'; el.style.right = '16px'; }
     el.querySelector('.gc-pop-x').onclick = hidePop;
     el.querySelector('.gc-pop-view').onclick = function () { hidePop(); api.open(); };

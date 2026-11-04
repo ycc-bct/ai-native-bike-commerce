@@ -48,6 +48,7 @@
       '.gc-clear{font-size:12.5px;color:#667080;text-decoration:underline;text-underline-offset:3px;background:none;border:0;cursor:pointer}.gc-clear:hover{color:#141A22}' +
       '.gc-go{flex:none;display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:8px;background:#0E1726;color:#fff;font-size:13.5px;font-weight:700;text-decoration:none}' +
       '.gc-go:hover{background:#1c2638}' +
+      '@media (max-width:767px){.gc-bar{width:calc(100vw - 32px);max-width:calc(100vw - 32px);flex-wrap:wrap;gap:8px 12px;padding:10px 12px;white-space:normal;bottom:16px}.gc-n{flex:1 1 auto}.gc-n span{display:none}.gc-clear{min-height:40px}.gc-picks{order:5;width:100%;overflow-x:auto;scrollbar-width:none}.gc-picks button{flex:none;height:40px}}' +
       '@media (prefers-reduced-motion:reduce){.gc-bar{transition:none}}';
     document.head.appendChild(css);
     var bar = document.createElement('div');

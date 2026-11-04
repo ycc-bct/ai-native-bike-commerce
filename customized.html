@@ -954,12 +954,11 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 <script>
 // Local customizer folder and published repository root share the storefront source.
 window.customStorefrontRoot=location.pathname.includes('/customized/')?'../ai-native-bike-commerce/storefront/':'storefront/';
-document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=tag28">');document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/footer.css?v=logo100">');
+document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hf1104">');document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/footer.css?v=hf1104">');
 </script>
 <style id="responsive-layout">
 /* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
    Desktop retains its panel scroll; compact screens use the document scroll. */
-.profile-menu .profile-fav{display:none}
 @media(max-width:1023px){
  :root{--header-height:64px;--shell:calc(100% - 32px);--mobile-purchase-height:92px}
  html{height:auto;overflow:auto;scroll-padding-top:80px}
@@ -1071,7 +1070,6 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #siteFooter .foot-bar .region{padding-left:0;border-left:0}
 }
 /* <=370px: the heart lives in the member menu, so search and member stay; tighter icons keep them clear of the logo */
-@media(max-width:900px){.profile-menu .profile-fav{display:flex}}
 @media(max-width:370px){#siteHeader .icons{gap:0}}
 @media(max-width:340px){#siteHeader .logo svg{width:72px}}
 @media(min-width:768px){#configPage .sp-bg-cycle{display:none}}
@@ -1205,7 +1203,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=pill44b"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=hf1104"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');
@@ -1221,7 +1219,7 @@ member.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.prevent
 <main class="pick-page" id="seriesPage" aria-labelledby="seriesTitle" hidden></main>
 <main class="pick-page" id="levelsPage" aria-labelledby="levelsTitle" hidden></main>
 <main class="fav-page" id="favPage" aria-labelledby="favTitle" hidden><div class="fav-shell"><div class="fav-heading"><h1 id="favTitle">已儲存的客製車</h1><span id="favTotal"></span></div><div id="favBody"></div></div></main>
-<footer class="foot" id="siteFooter" hidden></footer>
+<footer class="foot" id="siteFooter" data-mobile-footer hidden></footer>
 <script>document.write('<script src="'+customStorefrontRoot+'js/footer.js?v=hdr1023b"><\/script>');</script>
 
 <dialog class="dialog share-dialog" id="shareDialog" aria-labelledby="shareTitle"><button class="icon-button share-close" data-close="shareDialog" aria-label="關閉分享">✕</button><div class="share-layout"><figure class="share-figure"><img id="shareImg" width="1200" height="900" alt="你的客製設計"></figure><div class="share-info"><p class="share-kicker">分享你的設計</p><h2 id="shareTitle"></h2><p class="share-sub" id="shareSub">2026 年式客製塗裝</p><dl class="share-summary" id="shareSummary"></dl><ul class="share-actions"><li><button type="button" class="btn" id="shareCopy"><span>複製連結</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/></svg></button></li><li><button type="button" class="btn secondary" id="shareImage"><span>下載設計卡</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4.5 19.5h15"/></svg></button></li></ul><div class="share-social" aria-label="社群分享"><button type="button" id="shareLine" aria-label="分享到 LINE" title="分享到 LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 10.5C22 5.8 17.5 2 12 2S2 5.8 2 10.5c0 4.2 3.5 7.7 8.2 8.4.4.1.5.3.4.7l-.3 2c-.1.5.2.6.6.4C16.7 18.6 22 14.7 22 10.5Z"/><text x="12" y="13" text-anchor="middle" font-size="7" font-weight="800" font-family="Arial" fill="white">LINE</text></svg></button><button type="button" id="shareInstagram" aria-label="下載設計卡以分享至 Instagram" title="下載設計卡以分享至 Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></button><button type="button" id="shareFacebook" aria-label="分享到 Facebook" title="分享到 Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 22v-9h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.5c-.4-.1-1.6-.2-3-.2-3 0-5 1.8-5 5.2V9H7v4h3v9Z"/></svg></button></div></div></div></dialog>

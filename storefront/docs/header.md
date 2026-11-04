@@ -1,6 +1,6 @@
 # 全站 Header／Footer：接到你的頁面
 
-`storefront/` 共用的 header（logo、主選單＋下拉、右側工具列：搜尋／我的最愛／購物車／會員／選車顧問）。
+`storefront/` 共用的 header（logo、主選單＋下拉、右側工具列：搜尋／購物車／會員／選車顧問；我的最愛收在會員選單）。
 程式只有兩個檔案，**不要複製到自己的資料夾**，直接引用共用檔，這樣選單文字、連結、樣式全站一起改：
 
 - `storefront/css/header.css`
@@ -66,7 +66,7 @@ window.GiantHeaderAsk = function (cat, name) {   // cat: road / mtb / gravel / e
 ## 6. 接上後的檢查
 
 1. 頁面載入沒有主控台錯誤；`typeof GiantHeader === 'object'`。
-2. 右上角愛心的數字跟其他頁一致（favorites.js 有找到 `#openFav`）。
+2. 會員選單的「我的最愛」打得開抽屜（favorites.js 有找到隱藏的 `#openFav`）。
 3. 有對話框的頁：V 按鈕能打開。
 4. 你那頁對應的第一層有底線（`data-page` 設對）。
 
@@ -82,7 +82,7 @@ window.GiantHeaderAsk = function (cat, name) {   // cat: road / mtb / gravel / e
 ```
 
 - 四欄（車款／精品配件／探索／支援）＋訂閱＋社群＋版權列，文字和連結集中在 `js/footer.js` 的 `COLS`。
-- 已做手機版的頁面在 `<footer>` 加 `data-mobile-footer`，≤ 900px 會變單欄。`body` 還鎖 `min-width:1200px` 的頁面不要加。
-- 寬度跟著你頁面 `:root` 的 `--shell`；沒有定義就用預設 `min(1368px, calc(100vw - 72px))`。
+- `<footer>` 一定要加 `data-mobile-footer`，≤ 900px 會變單欄。全站已經沒有鎖 `min-width:1200px` 的頁面，新頁面也不要鎖。
+- 每頁同寬（`min(1840px, calc(100vw - 72px))`），左右對齊 header，不跟頁面內容的 `--shell`。
 - 跟 footer 的距離由你的頁面決定（例如 `.foot{margin-top:90px}`）。
 - 對話框打開時 footer 要跟著變窄的話，沿用你頁面原本的 `body.adv-open .foot-in, body.adv-open .foot-bar{…}` 規則即可。

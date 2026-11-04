@@ -11,7 +11,7 @@ gear.push(
  {id:'lock',name:'Flex Combo+ 號碼鎖',price:550,reason:'短暫停留時的隨車鎖具。',reserve:true}
 );
 const quantities=Object.fromEntries(gear.map(g=>[g.id,1])),selected=new Set(['revolt']);let cart={},step=0,pickup='門市取貨',payment='門市付款',toastTimer;
-function save(){try{localStorage.setItem('giant-report-cart',JSON.stringify(cart));}catch{}$('cartCount').textContent=Object.values(cart).reduce((a,b)=>a+b,0);}
+function save(){try{localStorage.setItem('giant-report-cart',JSON.stringify(cart));}catch{}}
 function toast(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,2600);}
 function renderGear(){const focus=document.activeElement?.dataset.focus;
  $('equipmentGrid').innerHTML=gear.filter(g=>!g.reserve||selected.has(g.id)).map(g=>`<article class="${selected.has(g.id)?'selected':''}"><div class="image"><img src="${g.image||`img/pdp/acc-${g.id}.webp`}" alt="${g.name}"><label><input type="checkbox" data-select="${g.id}" data-focus="select-${g.id}" ${selected.has(g.id)?'checked':''}>加入清單</label></div><div class="info"><h3>${g.name}</h3><p class="reason">${g.reason}</p><div class="price-line"><strong>${money(g.price)}</strong><div class="quantity"><button type="button" data-qty="${g.id}" data-delta="-1" data-focus="minus-${g.id}" aria-label="減少${g.name}數量" ${quantities[g.id]===1?'disabled':''}>−</button><span>${quantities[g.id]}</span><button type="button" data-qty="${g.id}" data-delta="1" data-focus="plus-${g.id}" aria-label="增加${g.name}數量" ${quantities[g.id]===9?'disabled':''}>+</button></div></div></div></article>`).join('');
@@ -25,7 +25,7 @@ function addCart(open=true){selected.forEach(id=>cart[id]=quantities[id]);save()
  const ids=[...selected];ids.forEach((id,i)=>{const g=gear.find(x=>x.id===id);if(!g||!window.GiantCart)return;
   GiantCart.add(id==='revolt'?{id:'revolt-sl-0',kind:'bike',name:g.name,price:g.price,img:'img/list/revolt-sl-0.webp',qty:quantities[id],meta:{paint:'Raw Carbon / Prism Mist',note:'尺寸到門市確認'}}:{id:'acc-'+id,kind:'acc',name:g.name,price:g.price,img:g.image||`img/pdp/acc-${id}.webp`,qty:quantities[id]},{open:open&&i===ids.length-1});});}
 $('addToCart').onclick=()=>{addCart();};
-$('checkoutSelected').onclick=()=>{addCart(false);location.href='checkout.html';};$('openCart').onclick=e=>{e.preventDefault();window.GiantCart&&GiantCart.open();};$('printReport').onclick=()=>window.print();
+$('checkoutSelected').onclick=()=>{addCart(false);location.href='checkout.html';};$('printReport').onclick=()=>window.print();
 function cartRows(removable){return gear.filter(g=>cart[g.id]).map(g=>`<div class="cart-row"><img src="${g.image||`img/pdp/acc-${g.id}.webp`}" alt="${g.name}"><div><h3>${g.name}</h3><p>${money(g.price)} × ${cart[g.id]}</p>${removable?`<button class="text-button" data-remove="${g.id}">移除</button>`:''}</div><strong>${money(g.price*cart[g.id])}</strong></div>`).join('');}
 function renderCheckout(){refreshAccessorySuggestions();const count=Object.values(cart).reduce((a,b)=>a+b,0),total=gear.reduce((sum,g)=>sum+g.price*(cart[g.id]||0),0);$('orderCount').textContent=count+' 件商品';$('orderTotal').textContent=money(total);$('checkoutSteps').innerHTML=['確認清單','取貨與付款','清單備妥'].map((s,i)=>`<li class="${step===i?'current':''}" ${step===i?'aria-current="step"':''}><b>${i+1}</b>${s}</li>`).join('');$('checkoutTitle').textContent=['確認你的商品清單','選擇取貨與付款方式','下一次出發，準備好了。'][step];$('checkoutBack').hidden=step!==1;$('checkoutNext').disabled=!count;$('checkoutNext').textContent=['前往取貨與付款','確認結帳','返回騎乘報告'][step];
  $('checkoutBody').classList.toggle('is-empty',!count);
@@ -165,7 +165,7 @@ function openAdvisor(){
  advAnim=true;
  advisorGenie(a,$('advLog'),$('aiOrb'),'out',()=>{
   advAnim=false;if(!advStarted){advStarted=true;advGreet();}
-  $('advInput').focus({preventScroll:true});
+  if(!matchMedia('(max-width:767px)').matches)$('advInput').focus({preventScroll:true});
  });
 }
 function closeAdvisor(){

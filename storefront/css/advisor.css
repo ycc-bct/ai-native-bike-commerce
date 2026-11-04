@@ -171,3 +171,12 @@
 @media(max-width:767px){
  body:has(#siteHeader[data-mobile-nav]) .advisor{left:0;right:0;top:64px;width:auto;height:calc(100svh - 64px);border-radius:14px 14px 0 0;border-width:1px 0 0}
 }
+
+/* 手機：點擊區 40px（docs/design.md 原則 3）；輸入框 16px，iOS 才不會放大畫面 */
+@media(max-width:767px){
+ .adv-x,.adv-ic,.adv-send{width:40px;height:40px}
+ .adv-in input[type=text]{font-size:16px}
+ .orb-callout button{height:40px}
+ .adv-chip,.adv-quick button{position:relative}
+ .adv-chip::before,.adv-quick button::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
+}

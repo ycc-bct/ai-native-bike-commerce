@@ -58,3 +58,12 @@
 .fav-cta:hover{background:#1511ac}
 
 @media (prefers-reduced-motion:reduce){.fav-panel,.fav-scrim{transition:none}}
+
+/* 手機：抽屜內距 16px、關閉與移除的點擊區 40px（跟購物車抽屜一樣） */
+@media(max-width:767px){
+ .fav-hd{padding-left:16px;padding-right:16px}
+ .fav-body{padding-left:16px;padding-right:16px}
+ .fav-close{width:40px;height:40px}
+ .fav-rm{position:relative}
+ .fav-rm::before{content:"";position:absolute;inset:-5px}
+}

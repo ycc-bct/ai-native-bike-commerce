@@ -1,15 +1,16 @@
 /* 全站 header（首頁、產品頁共用）
-   尺寸跟著視窗寬度等比縮放（以 1672 寬的設計稿為準，最小以 1200 計）。
+   高度 64px、選單字 14px，每個寬度都一樣（docs/design.md 第 7 節）；圖示與間距跟著視窗寬度等比縮放（以 1672 寬的設計稿為準，最小以 1200 計）。
    文字／圖示顏色用 --nav-ink，各頁自己決定（深色主視覺就設成白色）。 */
-.site-nav{--hu:calc(max(100vw, 1200px) / 1672);position:absolute;z-index:30;left:0;right:0;top:0;height:calc(var(--hu) * 76);color:var(--nav-ink, #141A22)}
+.site-nav{--hu:calc(max(100vw, 1200px) / 1672);position:absolute;z-index:30;left:0;right:0;top:0;height:64px;color:var(--nav-ink, #141A22)}
 .site-nav .logo{position:absolute;left:calc(var(--hu) * 42);top:0;bottom:0;display:flex;align-items:center;color:inherit}
 .site-nav .logo svg{display:block;height:calc(var(--hu) * 20);width:auto;color:inherit}
-.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:max(12px,calc(var(--hu) * 16));line-height:1;font-weight:500}
+.site-nav .links{position:absolute;left:calc(var(--hu) * 232);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34);font-size:14px;line-height:1;font-weight:500}
 .site-nav .links a{color:inherit;text-decoration:none;opacity:.92;transition:opacity .2s}
 .site-nav .links a:hover{opacity:1}
 /* 右側順序：購物車、會員、AI 助理（固定在最右邊） */
 .site-nav .icons{position:absolute;right:calc(var(--hu) * 40);top:0;bottom:0;display:flex;align-items:center;gap:calc(var(--hu) * 34)}
 .site-nav .icons a{position:relative;display:grid;place-items:center;color:inherit}
+.site-nav .icons>button{padding:0}
 .site-nav .icons svg{display:block;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26)}
 .site-nav .orb-wrap{position:relative;display:grid;place-items:center}
 .site-nav .orb-btn{position:relative;display:grid;place-items:center;width:calc(var(--hu) * 26);height:calc(var(--hu) * 26);transition:transform .2s}
@@ -88,6 +89,9 @@ header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{colo
 #siteHeader.site-nav.scrolled{--nav-ink:#141A22;color:#141A22}
 #siteHeader.site-nav.scrolled .icons.on-dark a svg,#siteHeader.site-nav.scrolled .icons.on-dark .icon-btn svg{color:#141A22;filter:none}
 
+/* 901–1023：選單仍是桌機版，字不縮，只收間距避免撞到右側圖示 */
+@media(min-width:901px) and (max-width:1023px){.site-nav .links{left:150px;gap:16px}}
+
 /* 手機版 header（≤ 900）：只作用在開了 data-mobile-nav 的頁面。規則見 docs/design.md 第 10 節；選單本身在 js/header.js。 */
 @media(max-width:900px){
  #siteHeader[data-mobile-nav]{height:64px}
@@ -106,10 +110,9 @@ header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{colo
  #siteHeader[data-mobile-nav] .orb-callout{right:8px;width:min(300px,calc(100vw - 32px))}
  #siteHeader[data-mobile-nav] .orb-callout .tip{right:12px}
 }
+/* 購物車數字貼著圖示：點擊框 40、圖示 24，往內收 8px，跟桌機離圖示的距離一樣（右 -8、上 -6） */
+@media(max-width:900px){#siteHeader[data-mobile-nav] .gc-badge{right:0;top:2px}}
 @media(max-width:370px){#siteHeader[data-mobile-nav] .icons{gap:0}}
 @media(max-width:340px){#siteHeader[data-mobile-nav] .logo svg{width:72px}}
 
 /* Tag 按鈕：疊在圖卡上的小按鈕，規格見 docs/design.md 第 10 節。視覺高 28px，另有 40px 的隱形點擊區。 */
-.tag-btn{position:relative;display:inline-flex;align-items:center;gap:4px;width:fit-content;height:28px;padding:0 10px;border-radius:8px;background:#fff;color:#141A22;font-size:14px;font-weight:600;line-height:1;white-space:nowrap}
-.tag-btn::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
-.tag-btn svg{flex:none;width:16px;height:16px;color:inherit}

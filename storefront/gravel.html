@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/advisor.css?v=mnav1104">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/advisor.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--paper);scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -46,14 +46,14 @@ svg{display:block}
 .sec-head{display:flex;align-items:flex-end;gap:40px;margin-bottom:24px}
 .sec-head h2{font-size:30px;font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
 .sec-head .sub{margin-top:10px;font-size:15px;line-height:1.75;color:var(--ink-70)}
-.sec-head .note{margin-left:auto;max-width:300px;font-size:12.5px;line-height:1.75;color:var(--ink-50)}
+.sec-head .note{margin-left:auto;max-width:300px;font-size:13px;line-height:1.75;color:var(--ink-50)}
 .sec-head .more{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink-70);white-space:nowrap;padding-bottom:4px;transition:color .2s}
 .sec-head .more:not(:first-child):not(.note + .more){margin-left:auto}
 .sec-head .note + .more{margin-left:40px}
 .sec-head .more:hover{color:var(--ink)}
 .sec-head .more svg,.btn svg,.lnk svg,.card .go svg{width:16px;height:16px}
 .btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.04em;transition:background .2s,border-color .2s,color .2s}
-.btn.sm{height:42px;padding:0 20px;font-size:14px}
+.btn.sm{height:48px;padding:0 20px;font-size:14px}
 .btn-dark{background:var(--navy);color:#fff}
 .btn-dark:hover{background:#1C2A40}
 .btn-line{border:1px solid #B8C0CA;background:rgba(255,255,255,.6)}
@@ -68,14 +68,14 @@ svg{display:block}
 .card .ph{position:relative;aspect-ratio:1.3;border-radius:8px;overflow:hidden;background:#fff}
 .card .ph img{width:100%;height:100%;object-fit:contain;padding:6%;transition:transform .5s var(--ease)}
 .card:hover .ph img{transform:scale(1.04)}
-.card .badge{position:absolute;z-index:1;left:0;top:0;padding:3px 7px;border-radius:4px;background:var(--ai);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.card .badge{position:absolute;z-index:1;left:0;top:0;padding:3px 7px;border-radius:4px;background:var(--ai);color:#fff;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .card .badge + .badge{left:auto;margin-left:4px}
 .card .badge.best{background:var(--navy)}
 .card .badges-row{position:absolute;z-index:1;left:0;top:0;display:flex;gap:4px}
 .card .badges-row .badge{position:static}
 .card .badge.hot{background:#F26B1D}
-.card b{display:block;margin-top:10px;font-size:12.5px;font-weight:700;line-height:1.4;min-height:2.8em}
-.card span{display:block;margin-top:4px;font-size:12.5px;color:var(--ink-70)}
+.card b{display:block;margin-top:10px;font-size:13.5px;font-weight:700;line-height:1.4;min-height:2.8em}
+.card span{display:block;margin-top:4px;font-size:13.5px;color:var(--ink-70)}
 /* ---------- 頁尾 ---------- */
 
 /* ---------- 顧問對話裡的卡片（對話框本身見 css/advisor.css） ---------- */
@@ -83,7 +83,7 @@ svg{display:block}
 .types{margin:10px 0;display:grid;gap:6px}
 .type-row{padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
 .type-row b{display:block;font-size:13px;font-weight:700}
-.type-row small{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-50)}
+.type-row small{display:block;margin-top:2px;font-size:12px;color:var(--ink-50)}
 .am h4{font-size:15px;font-weight:700;margin-bottom:3px}
 .cmp{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .cmp-card{position:relative;aspect-ratio:.78;border-radius:8px;overflow:hidden;text-align:left;border:2px solid transparent;transition:border-color .25s}
@@ -92,13 +92,13 @@ svg{display:block}
 .cmp-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,16,24,.88) 0%,rgba(10,16,24,.5) 44%,rgba(10,16,24,0) 72%)}
 .cmp-card .t{position:absolute;z-index:1;left:8px;right:6px;bottom:8px;color:#fff}
 .cmp-card b{display:block;font-size:12px;font-weight:700;line-height:1.3}
-.cmp-card small{display:block;margin-top:4px;font-size:11px;line-height:1.45;opacity:.85}
+.cmp-card small{display:block;margin-top:4px;font-size:12px;line-height:1.45;opacity:.85}
 .cmp-card.pick{border-color:var(--ai)}
 .opts{margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .opt{padding:10px 10px;border-radius:10px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;gap:10px;text-align:left;transition:border-color .2s,background .2s,opacity .3s}
 .opt svg{flex:none;width:26px;height:26px;color:var(--ink)}
 .opt b{display:block;font-size:13px;font-weight:700}
-.opt small{display:block;margin-top:1px;font-size:11.5px;color:var(--ink-50)}
+.opt small{display:block;margin-top:1px;font-size:12px;color:var(--ink-50)}
 .opt:hover{border-color:var(--ink)}
 .opt.on{border-color:var(--navy);background:#EEF3FF}
 .opt:disabled{cursor:default}
@@ -106,15 +106,15 @@ svg{display:block}
 .rec{margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff}
 .rec .ph{position:relative;aspect-ratio:2.2;background:#F7F9FB}
 .rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
-.rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em}
+.rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em}
 .rec .in{padding:12px 14px 14px}
 .rec h5{font-size:15px;font-weight:700}
 .rec .pr{margin-top:2px;font-size:13.5px;color:var(--ink-70)}
 .rec ul{list-style:none;margin:8px 0 12px;display:grid;gap:5px}
-.rec li{position:relative;padding-left:14px;font-size:13px;line-height:1.55}
+.rec li{position:relative;padding-left:14px;font-size:14px;line-height:1.55}
 .rec li::before{content:"";position:absolute;left:1px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--ai)}
 .rec .acts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.rec .acts button{height:38px;border-radius:6px;font-size:13px;font-weight:700;transition:background .2s,border-color .2s}
+.rec .acts button{height:40px;border-radius:6px;font-size:13px;font-weight:700;transition:background .2s,border-color .2s}
 .rec .acts .yes{background:var(--navy);color:#fff}
 .rec .acts .yes:hover{background:#1C2A40}
 .rec .acts .no{border:1px solid #B8C0CA}
@@ -166,7 +166,7 @@ a:not([href]){cursor:default}
 .fside[hidden]{display:none}
 .fside{animation:fdrop .3s var(--ease)}
 @keyframes fdrop{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
-.fstatus{font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 0 16px;border-bottom:1px solid var(--line)}
+.fstatus{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 0 16px;border-bottom:1px solid var(--line)}
 .fgroup{border-bottom:1px solid var(--line)}
 .fg-h{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 0;font-size:13.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-align:left}
 .fg-h i{position:relative;width:14px;height:14px;flex:none}
@@ -189,11 +189,11 @@ a:not([href]){cursor:default}
 .grid .card .ph{aspect-ratio:1.4}
 .grid .card .ph img{padding:4%}
 .grid .card b{font-size:14px;min-height:0}
-.grid .card .meta{display:block;margin-top:6px;font-size:12px;color:var(--ink-50)}
+.grid .card .meta{display:block;margin-top:6px;font-size:13px;color:var(--ink-50)}
 .grid .card .price{display:block;margin-top:4px;font-size:13.5px;font-weight:600;color:var(--ink)}
 .grid .card .badges{position:absolute;z-index:1;left:0;top:0;display:flex;gap:4px;pointer-events:none}
 .grid .card .badge{position:static}
-.empty{padding:60px 0;text-align:center;color:var(--ink-50)}
+.empty{padding:60px 0;text-align:center;color:var(--ink-70)}
 /* 顧問打開時，內容往左讓位，卡片縮欄 */
 body.adv-open .sec,body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100vw - 72px - 424px);margin-left:36px}
 body.adv-open .list-hero-in{width:calc(100vw - 72px - 424px);margin-left:36px}
@@ -217,13 +217,14 @@ body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,1fr)}
 .rec-wrap[hidden]{display:none}
 .rec-wrap{margin-bottom:34px;padding-bottom:30px;border-bottom:1px solid var(--line);animation:fdrop .4s var(--ease)}
 .list-body.rec-only .rec-wrap{border-bottom:0;padding-bottom:0}
-.rec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:16px}
-.rec-head h2{font-size:22px;font-weight:800;letter-spacing:-.01em}
-.rec-head p{font-size:13px;color:var(--ink-70)}
+.rec-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;column-gap:16px;margin-bottom:24px}
+.rec-head h2{font-size:30px;font-weight:800;line-height:1.2;letter-spacing:-.01em}
+.rec-head p{grid-column:1/-1;grid-row:2;margin-top:10px;font-size:15px;line-height:1.75;color:var(--ink-70)}
+.rec-head p:empty{display:none}
 .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .rec-card{position:relative;padding:14px 14px 16px;display:flex;flex-direction:column}
 .rec-card.top{border-color:#7FA8FF;box-shadow:0 0 0 3px rgba(79,141,255,.16),0 14px 30px rgba(31,79,224,.12)}
-.rec-card .rank{align-self:flex-start;padding:4px 10px;border-radius:999px;background:#EDF0F4;color:var(--ink-70);font-size:11px;font-weight:800;letter-spacing:.06em}
+.rec-card .rank{align-self:flex-start;padding:4px 10px;border-radius:999px;background:#EDF0F4;color:var(--ink-70);font-size:12px;font-weight:800;letter-spacing:.06em}
 .rec-card .rank.on{background:var(--ai);color:#fff}
 .rec-card .ph{margin-top:6px;aspect-ratio:1.5;border-radius:8px;overflow:hidden;background:#fff}
 .rec-card .ph img{width:100%;height:100%;object-fit:contain;padding:4%;transition:transform .5s var(--ease)}
@@ -233,13 +234,13 @@ body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,1fr)}
 .rec-card .fav{margin-right:-6px}
 .rec-card .price{display:block;margin-top:3px;font-size:13.5px;font-weight:600}
 .rec-card .why{margin:12px 0 2px;padding:12px 12px;border-radius:10px;background:#EEF3FF;list-style:none;display:grid;gap:8px}
-.rec-card .why li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:var(--ink)}
+.rec-card .why li{position:relative;padding-left:16px;font-size:14px;line-height:1.55;color:var(--ink)}
 .rec-card .why li b{display:inline;margin:0;font-size:inherit;line-height:inherit;font-weight:800;color:var(--ink)}   /* 蓋掉卡片標題用的 b{display:block} */
 .rec-card .why li::before{content:"";position:absolute;left:1px;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--ai)}
 body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 /* 顧問訊息裡的差異清單 */
 .adv-diff{margin:8px 0 2px;padding-left:2px;list-style:none;display:grid;gap:6px}
-.adv-diff li{position:relative;padding-left:14px;font-size:13px;line-height:1.6}
+.adv-diff li{position:relative;padding-left:14px;font-size:14px;line-height:1.6}
 .adv-diff li::before{content:"";position:absolute;left:1px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--ai)}
 
 /* 比較模式：按「比較車款」才會在卡片上出現勾選框，並多留底部空間 */
@@ -251,12 +252,12 @@ body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 .cmp-table{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
 .ct-row{display:grid;grid-template-columns:150px repeat(var(--n),1fr);align-items:center;border-top:1px solid var(--line)}
 .ct-row:first-child{border-top:0}
-.ct-k{padding:12px 16px;font-size:12.5px;color:var(--ink-50);background:#FAFBFC;align-self:stretch;display:flex;align-items:center}
+.ct-k{padding:12px 16px;font-size:13px;color:var(--ink-50);background:#FAFBFC;align-self:stretch;display:flex;align-items:center}
 .ct-v{padding:12px 16px;font-size:13.5px}
 .ct-head .ct-v{display:flex;flex-direction:column;gap:2px;padding:16px}
 .ct-head img{width:100%;max-width:160px;aspect-ratio:1.5;object-fit:contain}
 .ct-head b{margin-top:6px;font-size:14px;font-weight:700}
-.ct-head small{font-size:12px;color:var(--ink-50)}
+.ct-head small{font-size:13px;color:var(--ink-50)}
 .ct-row.diff .ct-v{font-weight:600}
 .ct-row.diff .ct-k{color:var(--ai)}
 
@@ -267,16 +268,16 @@ body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 .cmp-toggle[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
 /* 顧問訊息裡的車主回饋 */
 .adv-voice{margin-top:8px;padding:10px 12px;border-radius:10px;background:#F5F7FA}
-.adv-voice b{display:block;font-size:12.5px;margin-bottom:4px}
-.adv-voice p{position:relative;padding-left:12px;font-size:12.5px;line-height:1.6;color:var(--ink-70)}
+.adv-voice b{display:block;font-size:13px;margin-bottom:4px}
+.adv-voice p{position:relative;padding-left:12px;font-size:14px;line-height:1.6;color:var(--ink-70)}
 .adv-voice p::before{content:"";position:absolute;left:0;top:.35em;bottom:.35em;width:2px;border-radius:2px;background:#C9D6F5}
 .adv-voice p + p{margin-top:4px}
 /* 顧問訊息裡的需求摘要 */
 .adv-need{margin:8px 0 6px;list-style:none;display:grid;gap:6px}
-.adv-need li{display:flex;gap:10px;padding:8px 10px;border-radius:8px;background:#F5F7FA;font-size:12.5px}
+.adv-need li{display:flex;gap:10px;padding:8px 10px;border-radius:8px;background:#F5F7FA;font-size:13px}
 .adv-need li span{flex:none;width:58px;color:var(--ink-50)}
 .adv-need li b{font-weight:600}
-.am small{display:block;font-size:11.5px;line-height:1.6;color:var(--ink-50)}
+.am small{display:block;font-size:13px;line-height:1.6;color:var(--ink-50)}
 /* 比較模式：卡片右上角的方框，點整張卡就勾選 */
 /* 選擇器要壓過首頁帶來的 .card span{display:block} */
 .grid .card .cmp-tick{display:none;margin:0;position:absolute;z-index:2;right:0;top:0;width:22px;height:22px;border-radius:6px;border:2px solid #B8C0CA;background:#fff;pointer-events:none;transition:background .15s,border-color .15s}
@@ -287,7 +288,7 @@ body.cmp-mode .grid .card:hover .cmp-tick{border-color:var(--ink)}
 .grid .card.picked .cmp-tick{background:var(--navy);border-color:var(--navy);box-shadow:inset 0 0 0 3px #fff}
 /* 比較表：移除與空位 */
 .ct-head .ct-v{position:relative}
-.ct-rm{margin-top:6px;align-self:flex-start;font-size:12.5px;color:var(--ink-50);text-decoration:underline;text-underline-offset:3px}
+.ct-rm{margin-top:6px;align-self:flex-start;font-size:13px;color:var(--ink-50);text-decoration:underline;text-underline-offset:3px}
 .ct-rm:hover{color:var(--ink)}
 .ct-add{width:100%;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1.5px dashed #9DB4FF;border-radius:12px;background:#F7F9FF;color:var(--ai);font-size:14px;font-weight:700;transition:background .2s,border-color .2s}
 .ct-add:hover{background:#EEF3FF;border-color:var(--ai)}
@@ -299,27 +300,133 @@ body.cmp-mode .grid .card:hover .cmp-tick{border-color:var(--ink)}
 .rec-cmp:empty{display:none}
 /* 底部比較工具列 */
 .cmp-bar[hidden]{display:none}
-.cmp-bar{position:fixed;z-index:62;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 16px;max-width:calc(100vw - 48px);white-space:nowrap;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,26,34,.2)}
-body.adv-open .cmp-bar{left:calc((100vw - 424px) / 2)}
+.cmp-bar{position:fixed;z-index:62;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 16px;width:max-content;max-width:calc(100vw - 48px);flex-wrap:wrap;white-space:nowrap;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 44px rgba(20,26,34,.2)}
+body.adv-open .cmp-bar{left:calc((100vw - 424px) / 2);max-width:calc(100vw - 424px - 48px)}
 .cmp-n{font-size:13px;font-weight:700;white-space:nowrap}
-.cmp-picks{display:flex;gap:6px}
+.cmp-picks{display:flex;flex-wrap:wrap;min-width:0;gap:6px}
 .cmp-picks:empty{display:none}
 .cmp-picks button{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;background:#F1F4F8;font-size:12px;font-weight:600;color:var(--ink-70);white-space:nowrap}
 .cmp-picks button:hover{color:var(--ink)}
 .cmp-picks svg{width:11px;height:11px}
-.cmp-clear{font-size:12.5px;color:var(--ink-50);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.cmp-clear{font-size:13px;color:var(--ink-50);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .cmp-clear:hover{color:var(--ink)}
 .cmp-bar .btn{white-space:nowrap;flex:none}
 .cmp-n{flex:none}
 /* 比較模式時 Tips 藥丸讓開，別壓到工具列左端 */
 body.cmp-mode .tips-pill{bottom:100px}
 .cmp-bar .btn:disabled{opacity:.4;cursor:default}
+
+/* ---------- RWD：斷點與規則見 docs/design.md ---------- */
+.nb{display:inline-block}
+.card .nm .nb,.grid .card .meta .nb{display:inline-block;margin-top:0;font-size:inherit;color:inherit}   /* 蓋掉 .card span{display:block} */
+.crumb{flex-wrap:wrap}
+/* 同一列車名行數不同時，規格與價格仍切齊卡片底部 */
+.grid .card{display:flex;flex-direction:column}
+.grid .card .meta{margin-top:auto;padding-top:6px}
+.grid .card .price{margin-top:4px}
+/* 推薦理由：逗號、頓號後的片語不拆開 */
+.rec-card .why .nb{display:inline-block;margin-top:0;font-size:inherit;color:inherit}
+.rec-card .why li,.rec li{text-wrap:pretty}
+.am .opt small{font-size:12px}
+.rec-card .why li b{display:inline-block}
+/* 篩選列：按鈕不被已套用的條件擠窄，條件自己換行 */
+.ftoggle,.cmp-toggle,.fbar .count{flex:none;white-space:nowrap}
+.applied{min-width:0}
+/* 觸控裝置沒有滑入：點過的卡片不留在浮起狀態，同一列才切齊 */
+@media(hover:none){.card:hover{transform:none;box-shadow:none;border-color:var(--line)}.card:hover .ph img{transform:none}}
+/* 比較表表頭：車名行數不同時，車圖仍切齊 */
+.ct-row.ct-head{align-items:start}
+/* 推薦卡的車名、價格跟清單卡同色 */
+.rec-card .nm b,.rec-card .price{color:var(--ink)}
+.crumb a,.crumb b{white-space:nowrap}
+/* 視覺小於 40px 的控制項：看不見、置中的 40px 點擊區（原則 3） */
+.crumb a,.fav,.fopt,.applied button,.cmp-back,.ct-rm,.cmp-clear,.cmp-picks button{position:relative}
+.crumb a::before,.fav::before,.fopt::before,.applied button::before,.cmp-back::before,.ct-rm::before,.cmp-clear::before,.cmp-picks button::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;transform:translateY(-50%)}
+.fav::before{left:-4px;right:-4px}
+/* 1024 以上開著顧問時內容可能只剩 528px：寬度不夠就不並排篩選欄（用內容寬度判斷，不多開視窗斷點） */
+.list-page{container-type:inline-size}
+@container (max-width:639px){
+ .list-body.open{grid-template-columns:minmax(0,1fr)}
+ body.adv-open .rec-grid{grid-template-columns:minmax(0,1fr)}
+}
+/* 頁尾跟著讓位變窄時，版權列換行，不把連結擠斷 */
+body.adv-open .foot-bar{flex-wrap:wrap}
+body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:nowrap}
+
+@media(max-width:1023px){
+ /* 主視覺：字會寬過照片暗部，遮罩拉滿全寬；z-index 讓遮罩疊在照片上 */
+ .list-hero::before{z-index:1;background:linear-gradient(90deg,rgba(10,14,20,.72) 0%,rgba(10,14,20,.55) 60%,rgba(10,14,20,.25) 100%),linear-gradient(0deg,rgba(10,14,20,.35) 0%,rgba(10,14,20,0) 40%)}
+ .list-hero .sub{line-height:1.85}
+ /* 篩選：不再並排，收合面板疊在清單上方；選項列距讓 40px 點擊區不互相重疊 */
+ .list-body,.list-body.open{grid-template-columns:minmax(0,1fr)}
+ .fside{margin-bottom:24px}
+ .fgroup .opts{gap:8px 6px}
+ .fbar .count{white-space:nowrap}
+ /* 卡片：收藏移到價格那一列，車名用滿整張卡寬 */
+ .grid .card .fav{position:absolute;right:3px;bottom:3px;margin:0}
+ .grid,.list-body.open .grid,body.adv-open .grid,body.adv-open .list-body.open .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .rec-grid,body.adv-open .rec-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ /* 捲到清單時不被固定的 header 蓋住 */
+ #grid,#recWrap,#cmpWrap{scroll-margin-top:80px}
+ /* 窄螢幕顧問面板蓋在內容上，內容不讓位 */
+ body.adv-open .sec,body.adv-open .list-hero-in{width:var(--shell);margin-left:auto;margin-right:auto}
+ body.adv-open .foot-in{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.adv-open .foot-in,body.adv-open .foot-bar{width:calc(100% - 48px);margin-left:auto;margin-right:auto}
+ /* 比較列：滿寬，已選車款換到第二行；顧問開著時靠左，開始比較不被面板蓋住 */
+ .cmp-bar{width:calc(100vw - 48px)}
+ body.adv-open .cmp-bar{left:24px;transform:none;width:calc(100vw - 448px);max-width:none}
+ .cmp-n{margin-right:auto}
+ .cmp-picks{order:4;flex:1 0 100%}
+ .cmp-picks:empty{display:none}
+ body.cmp-mode .tips-pill{bottom:152px}
+ body.cmp-mode.adv-open .tips-pill{display:none}
+ body.cmp-mode #siteFooter{padding-bottom:160px}
+}
+@media(max-width:767px){
+ :root{--shell:calc(100vw - 32px)}
+ /* 主視覺：文字佔滿寬度，遮罩改上下方向；高度跟著字長 */
+ .list-hero{height:auto;min-height:400px}
+ .list-hero::before{background:linear-gradient(0deg,rgba(10,14,20,.78) 0%,rgba(10,14,20,.56) 55%,rgba(10,14,20,.42) 100%)}
+ .list-hero-in{height:auto;min-height:inherit;padding-bottom:32px}
+ .crumb{padding-top:80px}
+ .list-hero .kicker{margin-top:40px}
+ .list-page{padding-top:16px;padding-bottom:48px}
+ /* 篩選列：兩顆按鈕＋數量一行，已套用的條件自成一行 */
+ .fbar{flex-wrap:wrap;gap:8px}
+ .ftoggle,.cmp-toggle{padding:0 14px}
+ .cmp-toggle{order:1}
+ .fbar .count{order:2}
+ .applied{order:3;flex:1 0 100%;gap:12px 6px}
+ .applied:empty{display:none}
+ .list-body{margin-top:16px}
+ .btn.sm{height:auto;min-height:44px}
+ /* 車款卡：兩欄；圖區加高、車貼底，角標不壓到車 */
+ .grid .card .ph{aspect-ratio:1.2}
+ .grid .card .ph img{object-position:50% 100%}
+ .grid,.list-body.open .grid,body.adv-open .grid,body.adv-open .list-body.open .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .rec-grid,body.adv-open .rec-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+ .rec-head h2{font-size:26px}
+ /* 比較表：項目名稱自成一列，三台車的值平均分欄，不用左右捲 */
+ .ct-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+ .ct-k{grid-column:1/-1;padding:8px 12px}
+ .ct-head .ct-k{display:none}
+ .ct-v{min-width:0;padding:10px 6px}
+ .ct-head .ct-v{padding:12px 6px}
+ /* 顧問對話裡的路況選項：兩欄放得下副標 */
+ .opt{padding:10px 8px;gap:8px}
+ /* 比較列：左右各 16px；放不下已選車款就不列（再點一次卡片即可移除），開始比較佔滿一行 */
+ .cmp-bar,body.adv-open .cmp-bar{left:16px;right:16px;bottom:16px;transform:none;width:auto;max-width:none;gap:10px 12px;padding:12px 16px;white-space:normal}
+ .cmp-n{flex:1 1 0;min-width:0}
+ .cmp-picks{display:none}
+ .cmp-bar .btn{flex:1 0 100%;justify-content:center}
+ body.cmp-mode #siteFooter{padding-bottom:128px}
+}
 </style>
 </head>
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="gravel"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
 <section class="list-hero">
   <img src="img/list/gravel-banner.webp" alt="">
@@ -327,7 +434,7 @@ body.cmp-mode .tips-pill{bottom:100px}
     <nav class="crumb" aria-label="麵包屑"><a href="index.html">首頁</a><span>/</span><b>越野 &amp; 礫石公路 跨界自行車</b></nav>
     <p class="kicker">Gravel &amp; X-Road</p>
     <h1>礫石公路自行車</h1>
-    <p class="sub">柏油之外，探索未知的路。從 GIANT 有史以來最輕量的碳纖礫石賽車，到城市街道與鄉間道路都好騎的平把全路況車款。</p>
+    <p class="sub"><span class="nb">柏油之外，探索未知的路。</span><span class="nb">從 GIANT 有史以來</span><span class="nb">最輕量的碳纖礫石賽車，</span><span class="nb">到城市街道與鄉間道路都好騎的</span><span class="nb">平把全路況車款。</span></p>
   </div>
 </section>
 
@@ -378,7 +485,7 @@ body.cmp-mode .tips-pill{bottom:100px}
         <div class="rec-cmp" id="recCmp"></div>
       </section>
       <div class="grid" id="grid"></div>
-      <p class="empty" id="empty" hidden>沒有符合條件的車款，試著放寬篩選。</p>
+      <p class="empty" id="empty" hidden><span class="nb">沒有符合條件的車款，</span><span class="nb">試著放寬篩選。</span></p>
     </div>
   </div>
 
@@ -392,7 +499,7 @@ body.cmp-mode .tips-pill{bottom:100px}
 </div>
 
 
-<footer class="foot" id="siteFooter"></footer>
+<footer class="foot" id="siteFooter" data-mobile-footer></footer>
 <script src="js/footer.js?v=hdr1023b"></script>
 
 <aside class="advisor" id="advisor" role="dialog" aria-label="GIANT 選車顧問" hidden>
@@ -416,11 +523,11 @@ body.cmp-mode .tips-pill{bottom:100px}
 </aside>
 
 <script src="js/favorites.js?v=fav1028"></script>
-<script src="js/compare.js?v=ink1103"></script>
+<script src="js/compare.js?v=rwd1104"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd3"></script>
+<script src="js/tips.js?v=rwd1104"></script>
 <script>
 const $ = id => document.getElementById(id);
 
@@ -639,7 +746,7 @@ function startChat(){
   say('嗨，我是 GIANT 的選車顧問 👋<br>' + (seen
     ? '看到你在逛 ' + CAT_LABEL[VIEWED[0]] + ' 和 ' + CAT_LABEL[VIEWED[1]] + '，眼光不錯。有什麼想問的都可以跟我說。'
     : '歡迎隨意逛逛，有什麼想問的都可以跟我說。') +
-    '<br>順帶一提，現在有 <b>滿千折百</b> 活動，2026/10/20 前消費還能參加抽籤 🎁', 700);
+    '<br>順帶一提，現在有 <b>滿千折百</b> 活動，2026/10/20 前消費<span class="nb">還能參加抽籤 🎁</span>', 700);
 }
 function askTerrain(){
   say('<h4>你平常大多騎在哪裡？</h4>知道這個就夠了，其他我來想。' +
@@ -671,7 +778,7 @@ function recommend(k, intro, extra, tag){
   const b = BY[k];
   say((intro || '') +
       '<div class="rec"><div class="ph"><span class="tag">' + (tag || '最適合你') + '</span><img src="img/bikes/' + k + '.webp" alt=""></div>' +
-      '<div class="in"><h5>' + b.n + '</h5><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+      '<div class="in"><h5>' + b.n + '</h5><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + phrases(w) + '</li>').join('') + '</ul>' +
       '<div class="acts"><button class="yes" type="button" data-act="view">看這台車款</button><button class="no" type="button" data-act="size">我適合的尺寸</button></div></div></div>' +
       chips((extra || []).concat([['again','換個條件']])),
       850, m => {
@@ -807,14 +914,16 @@ function filtered(){
   return out;
 }
 /* 只有 Revolt Advanced SL 0 有詳細頁；其他卡片保留 hover，不做連結 */
+/* 車名最後兩個字不拆開，避免「0」「1」單獨掉到下一行；連字號換成不斷行的，1-Asia 不被拆開 */
+const nameHtml = n => n.replace(/-/g, '\u2011').replace(/ (\S+ \S+)$/, ' <span class="nb">$1</span>');
 function card(b){
   const tag = b.href ? 'a' : 'div';
   const badges = (b.badges || []).map(t => '<span class="badge">' + t + '</span>').join('') + (b.yr === 2027 ? '<span class="badge best">2027</span>' : '');
   return '<' + tag + ' class="card pc" data-k="' + b.k + '" data-cat="gravel"' + (b.href ? ' href="' + b.href + '"' : '') + '>' +
     '<div class="ph"><span class="badges">' + badges + '</span><span class="cmp-tick" aria-hidden="true"></span><img src="' + b.img + '" alt="' + b.n + '" loading="lazy"></div>' +
-    '<span class="nm"><b>' + b.n + '</b>' +
+    '<span class="nm"><b>' + nameHtml(b.n) + '</b>' +
       '<button class="fav" type="button" aria-label="收藏 ' + b.n + '" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg></button></span>' +
-    '<small class="meta">' + LABEL.use[b.use] + '・' + LABEL.mat[b.mat] + '</small><span class="price">NT$ ' + fmt(b.pr) + '</span></' + tag + '>';
+    '<small class="meta"><span class="nb">' + LABEL.use[b.use] + '・</span><span class="nb">' + LABEL.mat[b.mat] + '</span></small><span class="price">NT$ ' + fmt(b.pr) + '</span></' + tag + '>';
 }
 function render(){
   const list = filtered();
@@ -1005,14 +1114,15 @@ const REASON = {
   'fr-adv-1-26':  {budget:'<b>同規格前一年式</b>，常有庫存優惠', road:'<b>舒適幾何</b>，長時間騎不易腰痠', mix:'舒適取向，<b>週末長程</b>很合適',
                    fixed:['<b>長途耐力</b>取向的坐姿', 'Shimano CUES <b>11 速</b>']},
   'revolt-pro-1': {budget:'<b>15 萬內的碳纖 Gravel</b>', road:'柏油路也順，<b>想探索時</b>隨時可以', mix:'<b>碳纖 Gravel 入門款</b>，柏油碎石都能騎',
-                   fixed:['Shimano <b>GRX</b> 礫石專用變速', '<b>寬胎</b>設定，碎石路更穩']},
+                   fixed:['Shimano <b>GRX</b> <span class="nb">礫石專用變速</span>', '<b>寬胎</b>設定，碎石路更穩']},
   'revolt-sl-1':  {budget:'<b>頂級 SL 車架</b>，比 SL 0 省 10 萬', road:'<b>空力車架</b>，柏油路一樣跑得快', mix:'<b>和 SL 0 同一支車架</b>，賽事級剛性',
                    fixed:['SRAM Force <b>無線電變</b>', 'Giant <b>CXR 0 碳輪</b>']},
-  'revolt-sl-0':  {budget:'<b>全系列頂規</b>，一次到位', road:'<b>最輕量</b>的 Gravel，柏油爬坡也輕鬆', mix:'<b>最輕量、最狂暴</b>的 Gravel 賽車',
+  'revolt-sl-0':  {budget:'<b>全系列頂規</b>，一次到位', road:'<b>最輕量</b>的 Gravel，柏油爬坡也輕鬆', mix:'<b>最輕量、最狂暴</b>的 <span class="nb">Gravel 賽車</span>',
                    fixed:['SRAM RED XPLR <b>1×13 無線電變</b>', '<b>CADEX</b> 碳纖輪組']},
   'revolt-sl-fs': {budget:'<b>車架組</b>，零件依預算慢慢升級', road:'<b>SL 級車架</b>，想怎麼配都行', mix:'<b>SL 級碳纖車架</b>打底',
                    fixed:['可<b>自行搭配</b>變速與輪組', '適合<b>已有零件</b>的車友']},
 };
+const phrases = h => h.split(/(?<=[，、])(?![^<]*<\/b>)/).map(p => '<span class="nb">' + p + '</span>').join('');
 function reasonsFor(b, key){
   const r = REASON[b.k];
   if (!r) return (NEED[key].why[b.use] || NEED[key].why.gravel);
@@ -1027,10 +1137,10 @@ function recommendOnPage(key){
     '<' + (b.href ? 'a' : 'div') + ' class="card pc rec-card' + (i ? '' : ' top') + '"' + (b.href ? ' href="' + b.href + '"' : '') + '>' +
     '<span class="rank' + (i ? '' : ' on') + '">' + RANK[i] + '</span>' +
     '<div class="ph"><img src="' + b.img + '" alt="' + b.n + '" loading="lazy"></div>' +
-    '<span class="nm"><b>' + b.n + '</b>' +
+    '<span class="nm"><b>' + nameHtml(b.n) + '</b>' +
       '<button class="fav" type="button" aria-label="收藏 ' + b.n + '" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg></button></span>' +
     '<span class="price">NT$ ' + fmt(b.pr) + '</span>' +
-    '<ul class="why">' + reasonsFor(b, key).map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+    '<ul class="why">' + reasonsFor(b, key).map(w => '<li>' + phrases(w) + '</li>').join('') + '</ul>' +
     '</' + (b.href ? 'a' : 'div') + '>').join('');
   $('recWrap').hidden = false;
   $('recCount').textContent = picks.length;
@@ -1117,7 +1227,7 @@ Tips.register('curate', () => {
   say('好，我來依你的需求推薦車款給你 👋', 500);
   say(needSummary('budget'), 900, null, true);
   recommendOnPage('budget');
-  say('清單已經整理好了，為你推薦的三台就在左邊，每張卡片都寫了挑它的理由。<br>往下滑還有這三台的比較表，價格、用途、車架材質一眼就能對照。<br>如果你平常騎的路況不同，換個條件我再整理一次：' +
+  say('清單已經整理好了，為你推薦的三台就在頁面上，每張卡片都寫了挑它的理由。<br>往下滑還有這三台的比較表，價格、用途、車架材質一眼就能對照。<br>如果你平常騎的路況不同，換個條件我再整理一次：' +
       chips([['road','大多柏油路'],['mix','柏油＋碎石']]), 900,
       m => bindChips(m, v => { say(needSummary(v), 700, null, true); recommendOnPage(v); say('好，改用「' + NEED[v].t + '」整理好了 👍', 700); }), true);
 });
@@ -1166,7 +1276,7 @@ function cmpTableHtml(list, opt){
   const cell = v => '<span class="ct-v">' + v + '</span>';
   return '<div class="cmp-table" style="--n:' + cols + '">' +
     '<div class="ct-row ct-head"><span class="ct-k">比較項目</span>' +
-      list.map(b => '<span class="ct-v"><img src="' + b.img + '" alt=""><b>' + b.n + '</b><small>' + b.yr + ' 年</small>' +
+      list.map(b => '<span class="ct-v"><img src="' + b.img + '" alt=""><b>' + nameHtml(b.n) + '</b><small>' + b.yr + ' 年</small>' +
         (ro ? '' : '<button class="ct-rm" type="button" data-k="' + b.k + '">× 移除</button>') + '</span>').join('') +
       Array.from({length: empty}, (_, i) => '<span class="ct-v"><button class="ct-add" type="button"><i>+</i>' + (i === 0 && !list.length ? '選一台' : '再加一台') + '</button></span>').join('') +
     '</div>' +
@@ -1227,6 +1337,8 @@ function setCmpMode(on){
     syncCmpBar();
     /* 直接按「比較車款」不叫出對話框；顧問已經開著才順口說明 */
     if (!$('advisor').hidden) say('比較模式打開了。在清單上點想比的車（最多三台），再按下方的「開始比較」。', 600);
+    /* 手機的顧問面板滿版，蓋住清單就選不了車：先收起來，對話保留 */
+    if (matchMedia('(max-width:767px)').matches) closeAdvisor();
     scrollToList();
   } else { clearCmp(); $('cmpBar').hidden = true; }
 }

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 :root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#667080;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.22,.61,.36,1);--shell:min(1368px,calc(100vw - 72px))}
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:#0B1018}
-body{font-family:var(--sans);color:var(--ink);background:#0B1018;-webkit-font-smoothing:antialiased;min-width:1200px;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink);background:#0B1018;-webkit-font-smoothing:antialiased;overflow:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -71,7 +71,7 @@ svg{display:block}
 .opt .th.bike img{object-fit:contain;filter:drop-shadow(0 6px 6px rgba(0,0,0,.2))}
 .opt .tx{padding:0 14px 0 16px}
 .opt .tx b{display:block;font-size:18px;font-weight:800;letter-spacing:.03em;white-space:nowrap;color:var(--navy)}
-.opt .tx small{display:block;margin-top:1px;font-size:11.5px;font-weight:600;color:var(--ink-50);letter-spacing:.08em}
+.opt .tx small{display:block;margin-top:1px;font-size:13px;font-weight:600;color:var(--ink-50);letter-spacing:.08em}
 .opt.on .tx b{color:#fff}
 .opt.on .tx small{color:rgba(255,255,255,.75)}
 .opt svg{width:22px;height:22px;flex:none;transition:transform .2s}
@@ -81,7 +81,7 @@ svg{display:block}
 .pillb:hover{background:#fff}
 .pillb:disabled{opacity:.35;cursor:default}
 .pillb img{width:40px;height:24px;object-fit:contain}
-.pillb small{font-weight:600;color:var(--ink-70)}
+.pillb small{font-size:13px;font-weight:600;color:var(--ink-70)}
 .pillb b{font-weight:800}
 .pillb.ghost{border-color:rgba(14,23,38,.35)}
 
@@ -90,33 +90,94 @@ svg{display:block}
 .swap.on{display:block}
 .swap.on + .opts{display:none}
 .swap h3{font-size:16px;font-weight:800;color:var(--navy)}
-.swap p{margin-top:2px;font-size:13px;color:var(--ink-70)}
+.swap p{margin-top:2px;font-size:14px;color:var(--ink-70)}
 .swap .row{display:flex;justify-content:center;gap:12px;margin-top:14px}
 .swap .sb{width:200px;padding:12px 10px 12px;border-radius:18px;border:1.5px solid rgba(14,23,38,.18);background:rgba(255,255,255,.85);text-align:center;transition:border-color .2s,transform .2s,box-shadow .2s}
 .swap .sb:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 10px 24px rgba(14,23,38,.14)}
 .swap .sb.now{border-color:var(--ai);background:#F3F6FF}
 .swap .sb img{height:64px;width:auto;margin:0 auto;filter:drop-shadow(0 6px 6px rgba(0,0,0,.18))}
 .swap .sb b{display:block;margin-top:8px;font-size:14px;font-weight:800}
-.swap .sb small{display:block;margin-top:2px;font-size:12px;color:var(--ink-70)}
-.swap .sb em{display:block;margin-top:6px;font-style:normal;font-size:11.5px;font-weight:700;color:var(--ai)}
+.swap .sb small{display:block;margin-top:2px;font-size:13px;color:var(--ink-70)}
+.swap .sb em{display:block;margin-top:6px;font-style:normal;font-size:13px;font-weight:700;color:var(--ai)}
 .swap .keep{margin-top:12px;font-size:13px;font-weight:700;color:var(--ink-70);text-decoration:underline;text-underline-offset:4px}
 .swap .keep:hover{color:var(--ink)}
 .tips-pill{bottom:24px}
 @media (max-height:820px){.prog{top:74px}.qcard{bottom:48px;padding:16px 22px 14px}.opt{height:58px}.opt .th{width:110px}.opt .tx b{font-size:16px}.pin i{height:44px}.pin i::after{margin-top:44px}.swap .sb img{height:62px}}
+/* ---------- RWD：斷點與規則見 docs/design.md ---------- */
+.nb{display:inline-block}
+.view{display:contents}
+.pin b,.pin small{white-space:nowrap}
+/* 視覺小於 40px 的控制項：看不見的 40px 點擊區（原則 3） */
+.pillb,.swap .keep{position:relative}
+.pillb::before,.swap .keep::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;transform:translateY(-50%)}
+@media (prefers-reduced-motion:reduce){.scene,.scene.out,.scene.ride{transform:none;transition:opacity .2s}.qcard,.opt,.opt svg,.swap .sb{transition:none}.qcard.out{transform:translateX(-50%)}.opt:hover,.swap .sb:hover{transform:none}}
+/* 平板：進度、釘點在上，問題卡接在下面照內容長高；放不下時整頁往下捲，不會互相蓋住 */
+@media(max-width:1023px){
+ body{overflow:visible}
+ .stage{height:auto;min-height:100vh;min-height:100svh}
+ .scene{object-position:var(--fx,50%) 60%}
+ .stage-in{height:auto;min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+ .view{display:block;flex:1 1 auto;min-height:300px;padding-top:84px}
+ .prog{position:relative;left:auto;top:auto;transform:none;width:min(560px,calc(100vw - 48px));margin:0 auto}
+ .qcard{position:relative;left:auto;bottom:auto;transform:none;flex:none;width:min(720px,calc(100vw - 48px));margin:0 auto 80px}
+ .qcard.out{transform:translateY(10px)}
+}
+@media (max-width:1023px) and (prefers-reduced-motion:reduce){.qcard.out{transform:none}}
+/* 手機：路景在上、問題卡是貼底的面板；路景只鋪面板上方，取景靠 --fx，面板後面是同一張的模糊圖 */
+@media(max-width:767px){
+ .scene-bg{opacity:1}
+ .scene{bottom:auto;height:calc(100% - 240px);-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 60px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 60px),transparent)}
+ .view{position:relative;min-height:168px;padding:72px 16px 0}
+ .prog{width:100%;text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 10px rgba(0,0,0,.5)}
+ /* 釘點只是標示（兩條路的名字），改貼在面板正上方、左右各一，短線指向路面 */
+ .pin{top:auto!important;bottom:16px;transform:translateX(-50%);text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 10px rgba(0,0,0,.55)}
+ #pinA{left:25.5%!important}
+ #pinB{left:74.5%!important}
+ .pin b{gap:6px;font-size:clamp(16px,4.6vw,20px)}
+ .pin b::before{width:16px;height:16px}
+ .pin small{margin-top:2px;font-size:13px}
+ .pin i{height:20px;margin-top:6px}
+ .pin i::after{margin:20px 0 0 -5px}
+ .stage-in:has(.swap.on) .pin{opacity:0;transition:none}
+ .qcard{width:100%;margin:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));border-width:1px 0 0;border-radius:28px 28px 0 0;background:linear-gradient(180deg,rgba(255,255,255,.9) 0%,rgba(255,255,255,.8) 100%)}
+ .opts{flex-direction:column;gap:8px;margin-top:12px}
+ .opt{width:100%;height:56px;padding-right:16px}
+ .opt .th{width:88px}
+ .opt .tx{flex:1 1 auto;min-width:0}
+ .opt .tx b{font-size:16px}
+ .qsub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+ .pillb{height:40px;justify-content:center}
+ /* 目前騎的：跨兩欄，車名兩行式才放得下最長的車名 */
+ #swapBtn{grid-column:1/-1;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:0 8px;align-content:center;height:52px;padding:0 16px 0 12px;text-align:left}
+ #swapBtn img{grid-row:1/3;align-self:center;width:32px;height:24px}
+ #swapBtn small{grid-area:1/2;line-height:1.3}
+ #swapBtn b{grid-area:2/2;line-height:1.3;overflow:hidden;text-overflow:ellipsis}
+ #swapBtn span{grid-area:1/3/3/4;align-self:center}
+ #swapBtn .dot{display:none}
+ /* 換車面板：放不下就在自己的列裡左右滑；打開時收起「目前騎的」（面板的「不換，繼續騎…」已經寫了），上一段、結束體驗留在畫面上 */
+ .qcard:has(.swap.on) #swapBtn{display:none}
+ .swap .row{justify-content:safe center;gap:8px;margin:12px -16px 0;padding:0 16px 2px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 16px;scrollbar-width:none}
+ .swap .row::-webkit-scrollbar{display:none}
+ .swap .sb{flex:0 0 164px;display:flex;flex-direction:column;align-items:center;scroll-snap-align:start}
+ .swap .sb img{height:52px}
+ .swap .keep{margin-top:10px}
+}
 </style>
 </head>
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="quiz" data-ai="tip" data-ai-title="我在旁邊看著你騎" data-ai-text="每一段路的選擇我都會記下來，騎完五段後幫你分析騎乘習慣，推薦最適合的車款。"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
 <section class="stage" id="stage">
   <img class="scene-bg" id="sceneBg" src="img/quiz/river-fork.webp" alt="" aria-hidden="true">
   <img class="scene" id="scene" src="img/quiz/river-fork.webp" alt="">
   <div class="stage-in">
-    <div class="prog" id="prog" aria-live="polite"></div>
-    <div class="pin" id="pinA"><b></b><small></small><i></i></div>
-    <div class="pin" id="pinB"><b></b><small></small><i></i></div>
+    <div class="view">
+      <div class="prog" id="prog" aria-live="polite"></div>
+      <div class="pin" id="pinA"><b></b><small></small><i></i></div>
+      <div class="pin" id="pinB"><b></b><small></small><i></i></div>
+    </div>
 
     <div class="qcard" id="qcard">
       <h2 id="qTitle"></h2>
@@ -134,11 +195,16 @@ svg{display:block}
 
 <script src="js/favorites.js?v=fav1028"></script>
 <script src="js/ride-data.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd3"></script>
+<script src="js/tips.js?v=rwd1104"></script>
 <script>
 const $ = id => document.getElementById(id);
 const AXES = RIDE.AXES, BIKES = RIDE.BIKES;
 const fmt = n => n.toLocaleString('en-US');
+/* 中文斷行：最後一個子句包成 .nb，放不下就整段換行（docs/design.md 第 5 節） */
+const nbTail = s => s.replace(/^(.*[，；])([^，；]+)$/, '$1<span class="nb">$2</span>');
+/* 直式螢幕看不到整張路景：每張圖取景的水平位置（%），只在 ≤1023 用到 */
+const FOCUS = {'city-bridge':50,'city-dusk':54,'city-fork':47,'city-street':42,'mtn-climb':46,'mtn-descent':48,'mtn-fork':48,'mtn-trail':50,'river-bridge':54,'river-fork':53,'river-park':46,'river-straight':53};
+const focusScene = src => { const k = src.split('/').pop().replace('.webp', ''); $('scene').style.setProperty('--fx', (FOCUS[k] ?? 50) + '%'); };
 /* 同一條路線可以換的車（跟 ride.html 的場景池一致） */
 const POOL = {
   city:     ['fast','escape','explore','advanced2','propelpro','tcr'],
@@ -229,7 +295,7 @@ function renderProg(){
 }
 function renderCur(){
   const b = BIKES[S.bike];
-  $('swapBtn').innerHTML = '<img src="' + b.img + '" alt=""><small>目前騎的</small><b>' + b.n + '</b><span>· 換一台試騎</span>';
+  $('swapBtn').innerHTML = '<img src="' + b.img + '" alt=""><small>目前騎的</small><b>' + b.n + '</b><span><i class="dot" style="font-style:normal">· </i>換一台試騎</span>';
   $('swapBtn').onclick = () => openSwap(POOL[S.scene].filter(k => k !== S.bike).slice(0, 3), null);
 }
 function optHtml(o, i){
@@ -243,7 +309,7 @@ function optHtml(o, i){
 function renderStep(){
   const st = STEPS[S.i];
   renderProg();
-  $('qTitle').textContent = st.q; $('qSub').textContent = st.sub;
+  $('qTitle').innerHTML = nbTail(st.q); $('qSub').textContent = st.sub;
   $('swap').classList.remove('on');
   $('opts').innerHTML = st.opts.map(optHtml).join('');
   $('opts').querySelectorAll('.opt').forEach(b => b.onclick = () => choose(+b.dataset.i));
@@ -255,7 +321,7 @@ function showScene(st, cb){
   const img = $('scene');
   img.classList.add('out');
   setTimeout(() => {
-    img.src = st.img; $('sceneBg').src = st.img;
+    img.src = st.img; $('sceneBg').src = st.img; focusScene(st.img);
     img.classList.toggle('fit', !!st.fit); $('stage').classList.toggle('fit', !!st.fit);
     img.classList.remove('out'); img.classList.remove('ride');
     requestAnimationFrame(() => requestAnimationFrame(() => { if (st.ride) img.classList.add('ride'); }));
@@ -281,7 +347,7 @@ function advance(){
 /* 換車面板：list 是可換的車；after 是換完（或不換）要做的事（第 4 段用），沒有就留在本段 */
 function openSwap(list, after, title, sub){
   const box = $('swap');
-  box.innerHTML = '<h3>' + (title || '換一台再上') + '</h3><p>' + (sub || '同一條路線裡挑一台，接下來的路就騎它。') + '</p><div class="row">' +
+  box.innerHTML = '<h3>' + (title || '換一台再上') + '</h3><p>' + nbTail(sub || '同一條路線裡挑一台，接下來的路就騎它。') + '</p><div class="row">' +
     list.map(k => { const b = BIKES[k]; return '<button class="sb" type="button" data-k="' + k + '"><img src="' + b.img + '" alt=""><b>' + b.n + '</b><small>' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</small><em>' + swapWhy(k) + '</em></button>'; }).join('') +
     '</div><button class="keep" type="button">不換，繼續騎 ' + BIKES[S.bike].n + '</button>';
   box.classList.add('on');
@@ -295,7 +361,7 @@ function openSwap(list, after, title, sub){
 }
 function swapWhy(k){
   const b = BIKES[k], top = b.ax.map((v, i) => [v, i]).sort((a, c) => c[0] - a[0])[0];
-  return AXES[top[1]] + ' ' + top[0] + '，' + ({ebike:'電輔上坡最省力', explore:'電輔＋直立騎姿', tcr:'輕，爬坡有效率', trance:'避震吃落差', sl0:'碎石也能全速', pro1:'寬胎更穩', talon:'越障更穩', propelpro:'平路最快', propelsl:'空力最省力', fast:'平把好操控', escape:'最輕鬆', advanced2:'什麼路都能騎'}[k] || '');
+  return AXES[top[1]] + ' ' + top[0] + '，<span class="nb">' + ({ebike:'電輔上坡最省力', explore:'電輔＋直立騎姿', tcr:'輕，爬坡有效率', trance:'避震吃落差', sl0:'碎石也能全速', pro1:'寬胎更穩', talon:'越障更穩', propelpro:'平路最快', propelsl:'空力最省力', fast:'平把好操控', escape:'最輕鬆', advanced2:'什麼路都能騎'}[k] || '') + '</span>';
 }
 /* 算分：把五段的偏好加起來，拿最後騎的那台跟全部車款比 */
 function finish(){
@@ -317,7 +383,7 @@ function finish(){
 }
 $('prev').onclick = () => { if (S.i > 0 && !S.busy) goto(S.i - 1); };
 addEventListener('keydown', e => { if (e.key === '1' || e.key === '2') choose(+e.key - 1); });
-$('scene').src = STEPS[0].img; $('sceneBg').src = STEPS[0].img;   /* 第一段的背景依場景不同 */
+$('scene').src = STEPS[0].img; $('sceneBg').src = STEPS[0].img; focusScene(STEPS[0].img);   /* 第一段的背景依場景不同 */
 renderStep();
 requestAnimationFrame(() => requestAnimationFrame(() => { if (STEPS[0].ride) $('scene').classList.add('ride'); }));
 /* Tips 示範：自動走完五段，第 4 段換成 Talon E+ */

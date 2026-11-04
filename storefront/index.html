@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/advisor.css?v=mnav1104">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/advisor.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -264,6 +264,8 @@ a:not([href]){cursor:default}
 @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}}
 
 /* ---------- RWD：斷點與規則見 docs/design.md ---------- */
+main{text-wrap:pretty}
+.card b,.scene b,.fm-copy h3,.nm-copy h3,.nc-copy h3{word-break:keep-all}
 .hero .lead .nb{display:inline-block;margin-top:0;color:inherit;font-size:inherit;letter-spacing:0}
 @media(max-width:1199px){.scene b{white-space:normal}}
 @media(max-width:1023px){
@@ -318,7 +320,7 @@ a:not([href]){cursor:default}
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="home"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
 <section class="hero">
   <img class="hero-img rv now" src="img/home-hero.webp?v=2" alt="">
@@ -336,14 +338,14 @@ a:not([href]){cursor:default}
 <a class="ride-banner rv" href="ride.html">
   <img src="img/ride/landscape.webp" alt="">
   <div class="rb-copy">
-    <h2>這段路，你想怎麼騎？</h2>
+    <h2>這段路，<span class="nb">你想怎麼騎？</span></h2>
     <p class="rb-sub">你的日常，就是最好的答案。<br>不用填表，看照片就好。<span class="nb">你選的路，會替你選出那台車。</span></p>
     <span class="btn btn-light">立即體驗<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
 </a>
 <button class="adv-card rv" id="advPromo" type="button" style="--d:.1s">
   <span class="rb-copy">
-    <h2 class="ac-h"><span class="orb-btn vbtn ac-mark"><span class="beam-glow"></span><span class="beam-ring"></span><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span>不知道從哪台開始？</h2>
+    <h2 class="ac-h"><span class="orb-btn vbtn ac-mark"><span class="beam-glow"></span><span class="beam-ring"></span><svg class="vmark" viewBox="0 0 22 28" fill="currentColor" aria-hidden="true"><path d="M7.28856 6.32744L10.7042 15.2261L10.7077 15.2227C10.7424 15.3165 10.8675 15.3443 10.9405 15.2748L18.081 8.48522C18.1922 8.38098 18.3694 8.49912 18.3138 8.64159L10.9161 27.9088C10.871 28.0304 10.6973 28.0304 10.6486 27.9088L0.0090577 0.194582C-0.0256893 0.100765 0.0438098 0 0.144576 0H21.4236C21.5244 0 21.5939 0.100765 21.5592 0.194582L19.3145 6.03903C19.2937 6.09462 19.2381 6.13285 19.179 6.13285H7.42408C7.32331 6.13285 7.25381 6.23362 7.28856 6.32744Z"/></svg></span><span>不知道<span class="nb">從哪台開始？</span></span></h2>
     <p class="rb-sub">跟 GIANT 選車顧問聊聊就好。<br>說你想騎去哪、身高多少，<span class="nb">它幫你挑車、對尺寸、比車款。</span></p>
     <span class="btn btn-dark">聊聊看<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </span>
@@ -394,11 +396,11 @@ a:not([href]){cursor:default}
   <div class="news-grid">
     <div class="news-main rv">
       <img src="img/home/news-hoyenyi.webp" alt="">
-      <div class="nm-copy"><h3>何硯宜打破武嶺最速紀錄<br>攜手捷安特通路全台同慶</h3><p>2026.09.09・以堅定的意志，騎出新的可能。</p></div>
+      <div class="nm-copy"><h3>何硯宜打破武嶺最速紀錄<br>攜手捷安特通路全台同慶</h3><p>2026.09.09・以堅定的意志，<span class="nb">騎出新的可能。</span></p></div>
     </div>
     <div class="news-card rv">
       <div class="ph"><img src="img/pdp/long.webp" alt="" style="object-position:50% 58%"><span class="date"><b>20</b><small>Sep</small></span></div>
-      <div class="nc-copy"><p class="meta"><time>2026.09.20・台中后里</time></p><h3>2026 自行車嘉年華・公路挑戰賽</h3><p class="dist">35 KM / 64 KM / 142 KM</p><p class="blurb">從后里花田綠廊出發，串聯東勢、卓蘭到中橫谷關，三種距離適合不同程度的車友。</p></div>
+      <div class="nc-copy"><p class="meta"><time>2026.09.20・台中后里</time></p><h3>2026 自行車嘉年華・公路挑戰賽</h3><p class="dist">35 KM / 64 KM / 142 KM</p><p class="blurb">從后里花田綠廊出發，串聯東勢、卓蘭到中橫谷關，三種距離適合<span class="nb">不同程度的車友。</span></p></div>
     </div>
     <div class="news-card rv">
       <div class="ph"><img src="img/home/news-testride.webp" alt=""></div>
@@ -449,7 +451,7 @@ a:not([href]){cursor:default}
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd3"></script>
+<script src="js/tips.js?v=rwd1104"></script>
 <script>
 const $ = id => document.getElementById(id);
 

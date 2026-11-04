@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=logo100"><link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -173,10 +173,10 @@ html{scroll-padding-bottom:128px}
  .co .steps{gap:12px;flex-wrap:wrap}.co .steps li{gap:12px}
  .co .step{font-size:14px}
  .co .grid{margin-top:24px;gap:24px}
- .co .form input,.co .form textarea,.co .find input,.co .sp-q input{font-size:16px}
+ .co .form input,.co .form textarea,.co .find input{font-size:16px}
  .co .btn{min-height:48px;line-height:1.5;padding:12px 20px;text-align:center}
  .co .lnk{font-size:14px;min-height:44px;display:inline-flex;align-items:center}
- .co .slot,.co .chip,.co .sp-chip{min-height:44px}
+ .co .slot,.co .chip{min-height:44px}
  .co .acts{flex-wrap:wrap;gap:16px}
  .co .acts>span{min-width:0;flex-wrap:wrap}
  .co .pane:has(input:not([type=radio],[type=checkbox]):focus,textarea:focus)>.acts{position:static}
@@ -213,15 +213,6 @@ html{scroll-padding-bottom:128px}
  .co .form label{font-size:14px}.co .form input{min-width:0;width:100%;height:48px;scroll-margin-top:80px}.co .form textarea{min-width:0;width:100%;scroll-margin-top:80px}
  .co .sec h3 small{display:block;margin:4px 0 0}
  .co .sec>.sp{min-width:0;gap:16px}
- .co .sp-list{padding:16px 12px 8px}
- .co .sp-tools{flex-wrap:wrap}
- .co .sp-q{flex-basis:100%;padding:0 12px}
- .co .sp-near{min-height:44px}
- .co .sp-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px 12px;margin:0 -8px;padding:12px 8px}
- .co .sp-end{grid-column:2;text-align:left}
- .co .sp-end a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
- .co .sp-txt span{white-space:normal;font-size:13px;line-height:1.6}
- .co .sp-picked{overflow-wrap:anywhere;font-size:14px;line-height:1.75}
  .co .dates{max-width:100%;overscroll-behavior-x:contain}
  .co .slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .co .slot{padding:0 12px}
@@ -255,9 +246,9 @@ html{scroll-padding-bottom:128px}
 </style>
 </head>
 <body>
-<script src="js/cart.js?v=pill44b"></script><script src="js/store-picker.js?v=row1104"></script>
+<script src="js/cart.js?v=rwd1104"></script><script src="js/store-picker.js?v=rwd1104"></script>
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市後，門市會在 1 個工作天內打電話跟你確認到店時間。客製車不需付訂金，到門市確認工單後再付款。"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
 <main class="co">
   <a class="co-back" href="javascript:history.back()" id="coBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>繼續逛逛</a>
@@ -338,7 +329,7 @@ function summary(){
 
 /* ---------- 各步驟 ---------- */
 function paneCart(){
-  if (!items().length) return '<h2>購物車是空的</h2><p class="sub">看看喜歡的車款，或從客製化開始打造一台自己的車。</p><div class="acts"><span></span><a class="btn" href="gravel.html">去逛逛車款 ' + ARROW + '</a></div>';
+  if (!items().length) return '<h2>購物車是空的</h2><p class="sub">看看喜歡的車款，或從客製化開始<span style="display:inline-block">打造一台自己的車。</span></p><div class="acts"><span></span><a class="btn" href="gravel.html">去逛逛車款 ' + ARROW + '</a></div>';
   const custom = hasCustom();
   return '<h2>' + (custom ? '確認客製車' : '確認' + GiantCart.groupName(items())) + '</h2><p class="sub">' + (custom ? '確認配置內容，下一步選擇客製化自行車服務門市。' : '數量與內容確認好，下一步選擇取貨方式。') + '</p><div class="items">' + itemsHtml(true) + '</div>' +
     (hasCustom() ? '<p class="note"><b>客製車不需付訂金。</b>選好客製化自行車服務門市後，門市會來電約到店時間，由技師確認尺寸與零件搭配、簽訂工單，再付款。</p>' : '') +

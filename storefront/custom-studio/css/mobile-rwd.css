@@ -98,7 +98,7 @@
 
   /* -- Final CTA: the dark card fills the screen. */
   #cta{padding-left:0!important;padding-right:0!important;padding-bottom:0!important;background:#05070b}
-  #cta .cta{box-sizing:border-box;height:100%;min-height:0!important;border-radius:0;padding:24px 20px 28px!important}
+  #cta .cta{box-sizing:border-box;height:100%;min-height:0!important;border-radius:0;padding:24px 16px 28px!important}
   #cta .cta-stats{margin-top:22px}
 
   /* Footer: keep the subscribe field inside the viewport. */
@@ -373,4 +373,26 @@
     source photo has extra dark space on the left, so a proportional right
     inset is more stable than the previous fixed negative offset. */
  #cta .cta::before{background-position:62% 8px!important;background-size:auto 44%!important}
+}
+
+/* 901–1199 還不是手機版：塗裝區左右留白跟其他區塊一樣 36px，手機才是 16px */
+@media(min-width:901px) and (max-width:1199px){
+ #templates.tpl9.arc-showroom .sh9,#templates.tpl9 .paint-craft{margin-inline:36px}
+}
+
+/* 服務門市區：外層寬度已留好 16px，不要再加內距，否則左右變 32px，跟其他區塊對不齊 */
+@media(max-width:900px){
+ #stores{padding-left:0!important;padding-right:0!important}
+ #stores .slist li{text-wrap:pretty}
+ /* 跟 CTA 之間留 56px（同首頁手機版區塊間距）；用外距，不壓縮門市清單的高度 */
+ #stores{padding-bottom:0!important;margin-bottom:56px}
+ /* CTA 上緣：底色統一，照片頂端淡入，看不出照片的邊 */
+ #cta{background:#060709}
+ #cta .cta::after{background:linear-gradient(180deg,#060709 18px,rgba(6,7,9,0) 96px),linear-gradient(0deg,rgba(4,6,10,.94) 0%,rgba(4,6,10,.8) 35%,rgba(4,6,10,.08) 65%,rgba(4,6,10,0) 100%)}
+}
+
+/* 手機：色票放進弧線內，排在 PROPEL／DEFY 下方、TCR／TRINITY 之間，CTA 跟著上移。
+   弧線高度 = min(660px,94vw) × .24 + 48px；色票頂距弧線頂 77px，窄螢幕兩側比較擠就放低一點（320 寬 109px）。 */
+@media(max-width:767px){
+ #templates.tpl9.arc-showroom .tray9{position:relative;z-index:2;margin-top:calc(max(77px,255px - 45.7vw) - min(660px,94vw) * .24 - 48px)}
 }

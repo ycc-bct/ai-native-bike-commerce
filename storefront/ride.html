@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/header.css?v=tag28"><link rel="stylesheet" href="css/favorites.css?v=ink1103">
-<link rel="stylesheet" href="css/tips.css?v=ink1103">
+<link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 :root{--paper:#F3F5F7;--ink:#141A22;--ink-70:#4A5563;--ink-50:#667080;--line:#DCE1E7;--navy:#0E1726;--ai:#1F4FE0;--sans:"Inter","Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--ease:cubic-bezier(.16,1,.3,1);--shell:min(1840px,calc(100vw - 72px))}
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--paper)}
-body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;min-width:1200px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -91,20 +91,68 @@ svg{display:block}
 .radar{width:100%;overflow:visible;display:block}
 .radar .g{fill:none;stroke:#C5D0E4;stroke-width:1}
 .radar .f{fill:rgba(31,79,224,.16);stroke:var(--ai);stroke-width:2.5;stroke-linejoin:round}
-.radar text{font-size:12.5px;fill:var(--ink);font-weight:600}
+.radar text{font-size:var(--rfs,12.5px);fill:var(--ink);font-weight:600}
 .pf .txs{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
 .pf h4{margin:0 0 4px;font-size:14px;font-weight:800}
-.pf p{margin:0;font-size:13px;line-height:1.7;color:var(--ink)}
+.pf p{margin:0;font-size:14px;line-height:1.7;color:var(--ink);text-wrap:pretty}
 .pf p + p{margin-top:4px}
 #goRide{flex:none}
-@media (max-width:1400px){.pf{grid-template-columns:196px 180px minmax(0,1fr);gap:20px}.pf .txs{gap:20px}.pf .hd b{font-size:21px}}
-@media (max-height:820px){.pf{grid-template-columns:180px 168px minmax(0,1fr);gap:16px}.pf .txs{gap:16px}.pf .hd b{font-size:20px}.pf p{font-size:12.5px;line-height:1.6}}
+@media (max-width:1400px){.pf{grid-template-columns:clamp(150px,15.4vw,196px) clamp(140px,14.1vw,180px) minmax(0,1fr);gap:20px}.pf .txs{gap:20px}.pf .hd b{font-size:21px}}
+@media (max-height:820px){.pf{grid-template-columns:clamp(150px,14.1vw,180px) clamp(140px,13.2vw,168px) minmax(0,1fr);gap:16px}.pf .txs{gap:16px}.pf .hd b{font-size:20px}.pf p{line-height:1.6}}
+/* ---------- RWD：斷點與規則見 docs/design.md ---------- */
+.nb{display:inline-block}
+/* 視覺小於 40px 的控制項：看不見的 40px 點擊區（原則 3） */
+.rb-shuffle,.pf .fav{position:relative}
+.rb-shuffle::before,.pf .fav::before{content:"";position:absolute;left:50%;top:50%;width:100%;min-width:40px;height:40px;transform:translate(-50%,-50%)}
+@media (prefers-reduced-motion:reduce){.lb,.lb .ph,.pf,.rb-shuffle svg{transition:none}.lb:hover{transform:none}.rb-shuffle:hover svg{transform:none}}
+/* 平板：舞台改成兩列（風景＋車／分析），都照內容長高；圖片用格線區域當定位範圍 */
+@media(max-width:1023px){
+ .stage{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:auto;min-height:100vh;min-height:100svh}
+ .stage > img{grid-area:1/1/2/2;height:100%}
+ .stage-in{grid-area:1/1/2/2;height:auto;display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding-top:88px}
+ .ask{position:static;max-width:none}
+ .lineup{position:relative;bottom:auto}
+ .ride-bar{position:relative;grid-area:2/1/3/2;height:auto}
+ .ride-bar .ride-shell{height:auto;flex-wrap:wrap;gap:12px;padding:20px 0}
+ .pf{flex:1 1 100%;grid-template-columns:168px 200px minmax(0,1fr);gap:24px}
+ .pf .txs{grid-template-columns:minmax(0,1fr);gap:12px}
+ #goRide{margin-left:auto}
+}
+/* 手機：標題與情境在上、車在地磚上左右滑，分析往下捲，「開始體驗」固定在底部 */
+@media(max-width:767px){
+ :root{--shell:calc(100vw - 32px)}
+ .stage{--phh:clamp(150px,22svh,190px)}
+ .stage > img{object-position:38% 78%}
+ .stage-in{min-height:calc(100vh - 140px);min-height:calc(100svh - 140px);gap:16px;padding-top:80px}
+ .stage h1{font-size:clamp(28px,8vw,32px);line-height:1.2}
+ .ask-row{display:flex;margin-top:12px}
+ .chips,.lineup{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 16px;scrollbar-width:none}
+ .chips::-webkit-scrollbar,.lineup::-webkit-scrollbar{display:none}
+ .chips{position:relative;flex-wrap:nowrap;margin:0 -16px;padding:0 16px}
+ .chip{flex:none;scroll-snap-align:start}
+ .ask-sub{gap:12px;margin-top:10px}
+ .rb-hint{min-width:0}
+ .rb-shuffle{flex:none}
+ /* 手機取景天空佔比高，白字加一層貼字的陰影才讀得到 */
+ .rb-hint,.rb-shuffle{text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 10px rgba(0,0,0,.5)}
+ .lineup{display:flex;gap:8px;margin:0 -16px;padding:12px 16px 0}
+ .lb{flex:0 0 min(70vw,280px);scroll-snap-align:start}
+ .lb .meta{min-height:0}
+ .ride-bar{z-index:auto}
+ .ride-bar .ride-shell{padding:20px 0 calc(88px + env(safe-area-inset-bottom))}
+ .pf{grid-template-columns:minmax(0,1fr);gap:16px}
+ .radar{width:min(280px,100%);margin:0 auto}
+ /* 底部固定列：主要動作滿版，在 header 抽屜（z 30）之下 */
+ body::after{content:"";position:fixed;z-index:19;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
+ .btn{height:44px}
+ #goRide{position:fixed;z-index:20;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom));margin:0;justify-content:center}
+}
 </style>
 </head>
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="ride" data-ai="tip" data-ai-title="我是 GIANT 選車顧問" data-ai-text="選一段你想騎的路，五段騎完後，我會分析你的騎乘習慣，推薦最適合的車款。"></header>
-<script src="js/header.js?v=pill44b"></script>
+<script src="js/header.js?v=hf1104"></script>
 
 
 <section class="stage" id="stage">
@@ -121,7 +169,7 @@ svg{display:block}
           <button class="chip" type="button" data-scene="any">還沒決定</button>
         </div>
         <div class="ask-sub">
-          <p class="rb-hint" id="hint">照你想騎的路，幫你換幾台看看。</p>
+          <p class="rb-hint" id="hint">照你想騎的路，<span class="nb">幫你換幾台看看。</span></p>
           <button class="rb-shuffle" id="shuffle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>換幾台看看</button>
         </div>
       </div>
@@ -139,11 +187,20 @@ svg{display:block}
 
 <script src="js/favorites.js?v=fav1028"></script>
 <script src="js/ride-data.js?v=hdr1023"></script>
-<script src="js/tips.js?v=bd3"></script>
+<script src="js/tips.js?v=rwd1104"></script>
 <script>
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
 const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* 中文斷行：最後一個子句包成 .nb，放不下就整段換行（docs/design.md 第 5 節） */
+const nbTail = s => s.replace(/^(.*[，；])([^，；]+)$/, '$1<span class="nb">$2</span>');
+/* 窄螢幕上左右滑的列：選中的項目要在看得到的範圍內（桌機放得下，不會動） */
+function keepInView(box, el){
+  if (!el || box.scrollWidth <= box.clientWidth) return;
+  const r = el.getBoundingClientRect(), b = box.getBoundingClientRect();
+  if (r.left >= b.left && r.right <= b.right) return;
+  box.scrollTo({left: box.scrollLeft + r.left - b.left - 16, behavior: S.ready && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto'});
+}
 
 /* ---------- 車款：五軸為示意分數（爬坡／舒適／操控／效率／多用途），gid 是 scenario-2 認得的 id ---------- */
 const AXES = RIDE.AXES, BIKES = RIDE.BIKES;
@@ -184,7 +241,9 @@ function render(){
     selectBike(el.dataset.k, true);
   }));
   $('goRide').href = rideHref(S.sel);
-  $('hint').textContent = S.scene === 'any' ? '還沒想好也沒關係，先挑一台看看五軸分析。' : '照你想騎的路，幫你換幾台看看。';
+  $('hint').innerHTML = nbTail(S.scene === 'any' ? '還沒想好也沒關係，先挑一台看看五軸分析。' : '照你想騎的路，幫你換幾台看看。');
+  keepInView($('chips'), $('chips').querySelector('.chip.on'));
+  keepInView($('lineup'), $('lineup').querySelector('.lb.on'));
 }
 function rideHref(k){ return 'quiz.html?bike=' + k + '&scene=' + S.scene; }
 function setScene(s){ if (!SCENES[s]) return; S.scene = s; S.off = 0; S.sel = null; render(); showPerf(S.sel); }
@@ -221,11 +280,18 @@ function showPerf(k){
     '</div></div>' +
     radar(b.ax) +
     '<div class="txs"><div class="tx"><h4>選車分析</h4>' +
-    '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</p>' +
-    '<p>' + b.n + ' 以' + AXES[t1[1]] + '（' + t1[0] + '）和' + AXES[t2[1]] + '（' + t2[0] + '）最突出，' + AXES[t1[1]] + (b.ax[t1[1]] === groupMax ? '是這 ' + n + ' 台裡最高。' : '在這 ' + n + ' 台裡排第 ' + rank + '。') + '</p></div>' +
-    '<div class="tx"><h4>適用地形</h4><p>' + b.t + '</p></div></div>';
+    '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，<span class="nb">平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</span></p>' +
+    '<p>' + b.n + ' 以' + AXES[t1[1]] + '（' + t1[0] + '）<span class="nb">和' + AXES[t2[1]] + '（' + t2[0] + '）最突出，</span><span class="nb">' + AXES[t1[1]] + (b.ax[t1[1]] === groupMax ? '是這 ' + n + ' 台裡最高。' : '在這 ' + n + ' 台裡排第 ' + rank + '。') + '</span></p></div>' +
+    '<div class="tx"><h4>適用地形</h4><p>' + nbTail(b.t) + '</p></div></div>';
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+  fitRadar();
 }
+/* 五軸圖的字畫在 viewBox 裡，會跟著圖縮放；換算成畫面上固定 12px（中文下限） */
+function fitRadar(){
+  const r = document.querySelector('.radar'), w = r && r.getBoundingClientRect().width;
+  if (w) r.style.setProperty('--rfs', (12 * 280 / w).toFixed(2) + 'px');
+}
+addEventListener('resize', fitRadar);
 
 /* ---------- 進頁：帶 ?bike= 直接選那台 ---------- */
 (function init(){
@@ -234,6 +300,7 @@ function showPerf(k){
   if (key) { S.scene = Object.keys(SCENES).find(x => SCENES[x].pool.includes(key)) || 'any'; S.off = 0; S.sel = key; }
   render();
   showPerf(S.sel);
+  S.ready = true;
 })();
 /* Tips 示範：山路 → 點 Talon E+ */
 Tips.register('ride', () => { setScene('mountain'); setTimeout(() => selectBike('ebike', true), 350); });
