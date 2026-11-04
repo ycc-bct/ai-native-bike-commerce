@@ -41,3 +41,19 @@
  .foot .foot-in{width:calc(100% - 32px);grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px;padding:32px 0}
  .foot .foot-bar{width:calc(100% - 32px)}
 }
+
+/* 手機版 footer（≤ 900）：單欄、每個連結一列。只作用在已做手機版的頁面（footer 加 data-mobile-footer）。規則見 docs/design.md 第 10 節。 */
+@media(max-width:900px){
+ #siteFooter[data-mobile-footer] .foot-in{width:calc(100% - 32px);grid-template-columns:minmax(0,1fr);gap:28px;padding:36px 0}
+ #siteFooter[data-mobile-footer] .foot-col b,#siteFooter[data-mobile-footer] .foot-sub b{font-size:16px;margin-bottom:8px}
+ #siteFooter[data-mobile-footer] .foot-col a{display:flex;align-items:center;min-height:40px;margin-top:0;font-size:14px}
+ #siteFooter[data-mobile-footer] .sub-form{height:48px}
+ #siteFooter[data-mobile-footer] .sub-form button{width:48px;flex-shrink:0}
+ #siteFooter[data-mobile-footer] .foot-brand svg{width:100px;height:auto}
+ #siteFooter[data-mobile-footer] .social a{position:relative}
+ #siteFooter[data-mobile-footer] .social a::after{content:'';position:absolute;inset:-5px}
+ #siteFooter[data-mobile-footer] .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
+ #siteFooter[data-mobile-footer] .foot-bar .legal{margin-left:0;display:flex;flex-direction:column;gap:0;width:100%}
+ #siteFooter[data-mobile-footer] .legal a{display:flex;align-items:center;min-height:40px;font-size:14px}
+ #siteFooter[data-mobile-footer] .foot-bar .region{padding-left:0;border-left:0}
+}

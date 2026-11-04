@@ -190,7 +190,7 @@
 /* Narrow-screen header: logo and 40px icon targets; the menu itself comes from storefront/js/header.js (data-mobile-nav). */
 @media(max-width:900px){
  #siteHeader .logo{left:56px!important}
- #siteHeader .logo svg{width:80px!important;height:auto!important}
+ #siteHeader .logo svg{width:100px!important;height:auto!important}
  #siteHeader .links{display:none!important}
  #siteHeader .icons{right:8px!important;gap:4px!important}
  #siteHeader .icons>button,#siteHeader .icons>a,#siteHeader .orb-wrap,#siteHeader #aiOrb{width:40px!important;height:40px!important;min-width:40px;box-sizing:border-box}
@@ -207,7 +207,8 @@
 #parts .pp10.hov>img:not(.pd-sk),#parts.wheel-on .rear-wheel:not(.pd-sk){transform:none!important}
 
 /* <=370px: the heart lives in the member menu, so search and member stay; tighter icons keep them clear of the logo */
-@media(max-width:370px){#siteHeader .icons{gap:0!important}#siteHeader .logo svg,#siteFooter .foot-brand svg{width:72px!important}}
+@media(max-width:370px){#siteHeader .icons{gap:0!important}}
+@media(max-width:340px){#siteHeader .logo svg{width:72px!important}}
 
 /* Mobile footer: one category and one link per row. */
 @media(max-width:900px){
@@ -217,7 +218,7 @@
   #siteFooter .sub-form{height:48px}
   #siteFooter .sub-form button{width:48px;flex-shrink:0}
   /* footer wordmark the same size as the header's */
-  #siteFooter .foot-brand svg{width:80px!important;height:auto!important}
+  #siteFooter .foot-brand svg{width:100px!important;height:auto!important}
   #siteFooter .social a{position:relative}
   #siteFooter .social a::after{content:'';position:absolute;inset:-5px}
   #siteFooter .foot-bar{width:calc(100% - 32px);flex-direction:column;align-items:flex-start;gap:12px;line-height:1.6}
@@ -337,13 +338,9 @@
  #stores .slist .q{flex-basis:42px!important}
 }
 
-/* v15 — free scrolling, direct part selection, tabbed mobile menu and compact footer. */
+/* v15 — free scrolling, direct part selection, tabbed mobile menu. */
 .parts-next{display:none}
-.foot-group>summary{list-style:none}
-.foot-group>summary::-webkit-details-marker{display:none}
 @media(min-width:901px){
- .foot-group>summary{display:block;font-size:13.5px;font-weight:700;margin-bottom:12px;pointer-events:none}
- .foot-group.foot-sub>summary{font-size:13.5px}
  /* Keep every desktop mega-menu on the same frame; dense categories scroll
     inside the panel instead of changing the header's overall height. */
  #siteHeader .dd{height:320px}
@@ -376,28 +373,4 @@
     source photo has extra dark space on the left, so a proportional right
     inset is more stable than the previous fixed negative offset. */
  #cta .cta::before{background-position:62% 8px!important;background-size:auto 44%!important}
-
- /* Footer categories are native accordions; legal links share one quiet row. */
- #siteFooter .foot-in{gap:0;padding:30px 0}
- #siteFooter .foot-brand{margin-bottom:18px}
- #siteFooter .foot-group{border-top:1px solid #dce1e7}
- #siteFooter .foot-group>summary{position:relative;display:flex;align-items:center;min-height:52px;padding-right:32px;font-size:16px;font-weight:700;cursor:pointer}
- #siteFooter .foot-group>summary::after{content:'+';position:absolute;right:4px;top:50%;translate:0 -50%;font-size:22px;font-weight:400;transition:rotate .25s ease}
- #siteFooter .foot-group[open]>summary::after{rotate:45deg}
- #siteFooter .foot-group-body{padding:0 0 16px;animation:foot-group-in .28s cubic-bezier(.16,1,.3,1)}
- #siteFooter .foot-col a{padding:0 4px}
- #siteFooter .foot-sub .sub-form{max-width:none}
- #siteFooter .foot-sub .social{flex-direction:row}
- #siteFooter .foot-sub .social a{justify-content:center;width:44px;height:44px;border:1px solid #dce1e7;border-radius:50%;font-size:0}
- #siteFooter .foot-sub .social a::after{display:none}
- #siteFooter .foot-bar{gap:10px;padding:18px 0 24px;font-size:11px!important}
- #siteFooter .foot-bar .legal{display:flex;flex-direction:row;flex-wrap:nowrap;gap:14px;width:100%;overflow-x:auto;scrollbar-width:none}
- #siteFooter .foot-bar .legal::-webkit-scrollbar{display:none}
- #siteFooter .legal a{display:inline;min-height:0;font-size:11px;white-space:nowrap}
- #siteFooter .foot-bar .region{font-size:11px}
-}
-@keyframes foot-group-in{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
-@media(prefers-reduced-motion:reduce){
- #siteFooter .foot-group-body{animation:none}
- #siteFooter .foot-group>summary::after{transition:none}
 }

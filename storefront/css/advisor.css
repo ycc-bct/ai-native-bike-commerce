@@ -166,3 +166,8 @@
 .adv-acc-add{margin-top:10px;width:100%;height:38px;border-radius:6px;border:1px solid #B8C0CA;background:#fff;font-size:13.5px;font-weight:700;transition:border-color .2s}
 .adv-acc-add:hover{border-color:var(--ink)}
 .adv-acc-add.done{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* 手機上顧問面板滿版貼在 header 下方（只作用在開了 data-mobile-nav 的頁面） */
+@media(max-width:767px){
+ body:has(#siteHeader[data-mobile-nav]) .advisor{left:0;right:0;top:64px;width:auto;height:calc(100svh - 64px);border-radius:14px 14px 0 0;border-width:1px 0 0}
+}
