@@ -299,12 +299,26 @@ main{text-wrap:pretty}
  .ride-banner,.adv-card{height:320px}
  .rb-copy{padding:16px}
  .adv-card .ac-h{flex-direction:column;gap:8px}
- /* 情境帶：保留斜切，改成左右滑 */
- .scenes{--sh:300px;--w:260px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none}
- .scenes::-webkit-scrollbar{display:none}
- .scene{scroll-snap-align:start}
- .scene:first-child .txt{left:16px}
- .scene b{font-size:16px}
+ /* 情境帶：五條上下堆疊的長方形橫條，一個畫面看得到全部車種 */
+ .scenes{--bh:124px;height:auto;width:100vw;margin-left:calc(50% - 50vw);overflow:visible}
+ .scene{position:relative;left:auto;top:auto;width:100%;height:var(--bh)}
+ .scene+.scene{margin-top:1px}
+ .scene .pclip,.scene:first-child .pclip,.scene:last-child .pclip{clip-path:none}
+ .scene .seam{display:none}
+ .scene .pclip::after{background:linear-gradient(90deg,rgba(10,16,24,.72) 0%,rgba(10,16,24,.38) 45%,rgba(10,16,24,0) 78%)}
+ .scene .txt,.scene:first-child .txt{left:16px;right:auto;top:50%;bottom:auto;translate:0 -50%}
+ .scene b{font-size:18px}
+ .scene em{margin-top:6px;font-size:14px;line-height:1.5}
+ .scene em br{display:none}          /* 說明合成一行，橫條高度不用變 */
+ /* 五張照片的主角對齊：以頭部為基準，都放在橫條右側同一點（距左 74%、距上 22%），放大到差不多的大小（頭到腰）。
+    數字是各照片頭部在原圖的位置（hx, hy）、原圖長寬比（a）與放大倍數（k）。登山那張騎士在原圖裡很小，放太大會糊，所以只放到 2.2 倍 */
+ .scene{container-type:inline-size}
+ .scene img,.scene:hover img,.scene img.zoom,.scene:hover img.zoom{inset:auto;left:calc(74cqw - var(--hx) * var(--k) * 100cqw);top:calc(var(--bh) * .22 - var(--hy) * var(--k) * 100cqw / var(--a));width:calc(var(--k) * 100cqw);height:auto;max-width:none;object-fit:fill;object-position:0 0!important;transform:none}
+ .scene:nth-child(1){--hx:.66;--hy:.31;--a:1.5;--k:1.38}
+ .scene:nth-child(2){--hx:.70;--hy:.50;--a:1.25;--k:2.2}
+ .scene:nth-child(3){--hx:.52;--hy:.31;--a:1.25;--k:1.44}
+ .scene:nth-child(4){--hx:.66;--hy:.19;--a:1.5;--k:1.16}
+ .scene:nth-child(5){--hx:.465;--hy:.475;--a:1.5;--k:2.05}
  .feat-main{aspect-ratio:4/3}
  .fm-copy{padding:20px;max-width:none}
  .fm-copy h3{font-size:24px}
