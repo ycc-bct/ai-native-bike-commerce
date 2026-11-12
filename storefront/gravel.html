@@ -259,7 +259,6 @@ body.adv-open .rec-grid{grid-template-columns:repeat(3,1fr)}
 .ct-head b{margin-top:6px;font-size:14px;font-weight:700}
 .ct-head small{font-size:13px;color:var(--ink-50)}
 .ct-row.diff .ct-v{font-weight:600}
-.ct-row.diff .ct-k{color:var(--ai)}
 
 /* 篩選列上的「比較車款」開關（body.cmp-mode 是模式本身，按鈕另取名避免撞到） */
 .cmp-toggle{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border-radius:999px;border:1px solid #B8C0CA;background:#fff;font-size:13.5px;font-weight:700;transition:border-color .2s,background .2s,color .2s}
@@ -407,8 +406,11 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
  .ct-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
  .ct-k{grid-column:1/-1;padding:8px 12px}
  .ct-head .ct-k{display:none}
- .ct-v{min-width:0;padding:10px 6px}
- .ct-head .ct-v{padding:12px 6px}
+ /* 數值跟項目名稱同樣左內距 12px，第一欄才會和上面的名稱對齊 */
+ .ct-v{min-width:0;padding:10px 12px}
+ .ct-head .ct-v{padding:12px}
+ /* 三欄的唯讀推薦表比較窄：左邊一樣 12px 對齊名稱，右邊縮小，價格才不會擠成兩行 */
+ .cmp-table[style*="--n:3"] .ct-v{padding-right:4px}
  /* 顧問對話裡的路況選項：兩欄放得下副標 */
  .opt{padding:10px 8px;gap:8px}
  /* 比較列：左右各 16px；放不下已選車款就不列（再點一次卡片即可移除），開始比較佔滿一行 */
