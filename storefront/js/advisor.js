@@ -2,6 +2,17 @@
    a：對話框元素；log：訊息捲動區；target：縮進去的那顆 orb；dir：'in' 縮小／'out' 打開 */
 function advisorGenie(a, log, target, dir, done){
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
+  /* 手機、平板、觸控裝置：只讓面板本身淡入淡出加小位移，不做精靈收合。
+     精靈效果要把整個面板（含對話紀錄、圖片）複製 48 份全尺寸圖層，手機上面板是滿版的，
+     iOS Safari 會因記憶體不足把頁面關掉，出現「此網頁重複發生問題」。 */
+  if (matchMedia('(max-width:1023px), (pointer: coarse)').matches || !a.animate) {
+    if (!a.animate) { done(); return; }
+    var kf = [{opacity: 0, transform: 'translateY(24px)'}, {opacity: 1, transform: 'none'}];
+    var an = a.animate(dir === 'in' ? kf.slice().reverse() : kf, {duration: dir === 'in' ? 200 : 320, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'both'});
+    var fin = false, end = function () { if (fin) return; fin = true; an.cancel(); done(); };
+    an.onfinish = end; an.oncancel = end;
+    return;
+  }
   const pr = a.getBoundingClientRect(), tr = target.getBoundingClientRect();
   const N = 48, W = pr.width, H = pr.height, sh = H / N, pcx = pr.left + W / 2;
   const tx = tr.left + tr.width / 2, ty = tr.bottom < 0 ? -20 : tr.top + tr.height / 2, tw = Math.max(18, tr.width * .8);

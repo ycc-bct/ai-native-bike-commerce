@@ -43,7 +43,7 @@
     '.pick-page,.fav-page{transition:padding .45s cubic-bezier(.16,1,.3,1)}';
   document.head.appendChild(css);
   if (typeof window.advisorGenie !== 'function') {
-    var s = document.createElement('script'); s.src = ROOT + 'js/advisor.js?v=hdr1023'; document.head.appendChild(s);
+    var s = document.createElement('script'); s.src = ROOT + 'js/advisor.js?v=lite1112'; document.head.appendChild(s);
   }
 
   /* ---------- 對話框 ---------- */
