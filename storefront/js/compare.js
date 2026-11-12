@@ -4,7 +4,9 @@
    改變時在 document 發出 'compare:change'（detail 是目前的清單）。
    GiantCompare.bar()：在頁面底部放比較列（詳細頁用；商品清單頁有自己的比較列，只同步清單）。 */
 (function () {
-  var KEY = 'giant-compare', MAX = 3;
+  var KEY = 'giant-compare';
+  /* 手機最多比較兩台，平板以上三台 */
+  function max() { return matchMedia('(max-width:767px)').matches ? 2 : 3; }
   var script = document.currentScript || document.querySelector('script[src*="compare.js"]');
   var ROOT = script ? script.src.replace(/js\/compare\.js.*$/, '') : '';
   function read() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
@@ -12,20 +14,20 @@
   function write(l) { try { localStorage.setItem(KEY, JSON.stringify(l)); } catch (e) {} emit(l); }
 
   var api = {
-    max: MAX,
+    get max() { return max(); },
     list: read,
     has: function (k) { return read().some(function (x) { return x.k === k; }); },
     add: function (item) {
       var l = read();
       if (l.some(function (x) { return x.k === item.k; })) return true;
-      if (l.length >= MAX) return false;
+      if (l.length >= max()) return false;
       l.push(item); write(l); return true;
     },
     remove: function (k) { write(read().filter(function (x) { return x.k !== k; })); },
     clear: function () { write([]); },
     setList: function (l) {
-      if (JSON.stringify(l.slice(0, MAX)) === JSON.stringify(read())) return;
-      write(l.slice(0, MAX));
+      if (JSON.stringify(l.slice(0, max())) === JSON.stringify(read())) return;
+      write(l.slice(0, max()));
     },
     toggle: function (item) { if (api.has(item.k)) { api.remove(item.k); return false; } return api.add(item); }
   };
@@ -59,8 +61,8 @@
       var l = read();
       bar.classList.toggle('off', !l.length);
       if (!l.length) return;
-      var hint = l.length < 2 ? '・再選一台' : l.length < MAX ? '・還可以再加一台' : '・已達上限';
-      bar.innerHTML = '<span class="gc-n">比較 ' + l.length + '/' + MAX + '<span>' + hint + '</span></span>' +
+      var hint = l.length < 2 ? '・再選一台' : l.length < max() ? '・還可以再加一台' : '・已達上限';
+      bar.innerHTML = '<span class="gc-n">比較 ' + l.length + '/' + max() + '<span>' + hint + '</span></span>' +
         '<div class="gc-picks">' + l.map(function (b) { return '<button type="button" data-k="' + b.k + '" aria-label="從比較移除 ' + b.n + '">' + (b.img ? '<img src="' + ROOT + b.img + '" alt="">' : '') + b.n + X + '</button>'; }).join('') + '</div>' +
         '<button class="gc-clear" type="button">清除</button>' +
         '<a class="gc-go" href="' + ROOT + 'gravel.html?cmp=1">' + (l.length < 2 ? '選其他車款比較' : '開始比較') + '</a>';

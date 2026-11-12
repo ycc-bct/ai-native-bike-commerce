@@ -956,7 +956,7 @@ body:has(#seriesPage:not([hidden]),#levelsPage:not([hidden])) #siteHeader{backgr
 <script>
 // Local customizer folder and published repository root share the storefront source.
 window.customStorefrontRoot=location.pathname.includes('/customized/')?'../ai-native-bike-commerce/storefront/':'storefront/';
-document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hf1104">');document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/footer.css?v=hf1104">');
+document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.css?v=hd1112b">');document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/footer.css?v=hf1104">');
 </script>
 <style id="responsive-layout">
 /* Responsive layout — GIANT 客製車設計系統 (2026-10-30).
@@ -1200,6 +1200,9 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
  #configPage .gs-brands button,#configPage .pager-link{min-height:40px}
  #configPage .size-range{height:40px;margin:0}
 }
+
+/* H1 統一規則（docs/design.md 第 4 節，客製車主標）：每個寬度都是 24px */
+body .pick-head h1,body .fav-heading h1,body #configPage .intro h1{font-size:24px}
 </style>
 </head>
 <body>
@@ -1208,7 +1211,7 @@ document.write('<link rel="stylesheet" href="'+customStorefrontRoot+'css/header.
 <script>
 if(location.protocol==='file:')document.write('<script src="assets/propel/local-images.js"><\/script>');
 </script>
-<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=hf1104"><\/script>');</script>
+<script>document.write('<script src="'+customStorefrontRoot+'js/header.js?v=hd1112b"><\/script>');</script>
 <script>
 // Connect this page's existing account, saved designs and inactive cart to shared markup.
 (()=>{const h=document.getElementById('siteHeader'),cart=h.querySelector('[aria-label="購物車"]'),member=h.querySelector('[aria-label="會員"]');

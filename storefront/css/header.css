@@ -73,7 +73,7 @@
 .site-nav .dd-ask .vv{width:28px;height:28px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#1F4FE0;box-shadow:0 2px 8px rgba(31,79,224,.22)}
 .site-nav .dd-ask .vv svg{width:11px;height:14px;fill:currentColor}
 .site-nav .dd-gear .dd-in{gap:64px}
-.site-nav .dd-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;font-weight:700;color:#667080}
+.site-nav .dd-col .dd-h{margin:0 0 8px;font-size:12px;letter-spacing:.14em;font-weight:700;color:#667080}
 /* 下拉打開時：主動跳出的顧問氣泡先讓開；深色主視覺頁（產品頁）的白色圖示要變回深色 */
 .site-nav.open .orb-callout{visibility:hidden}
 header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{color:#141A22;filter:none}
@@ -116,3 +116,6 @@ header.site-nav.open .icons a svg,header.site-nav.open .icons .icon-btn svg{colo
 @media(max-width:340px){#siteHeader[data-mobile-nav] .logo svg{width:72px}}
 
 /* Tag 按鈕：疊在圖卡上的小按鈕，規格見 docs/design.md 第 10 節。視覺高 28px，另有 40px 的隱形點擊區。 */
+
+/* 選單裡的分類名是文字標籤，不是標題（docs/design.md 第 4 節） */
+.dd-h,.gn-h{display:block;margin:0;font-weight:700}

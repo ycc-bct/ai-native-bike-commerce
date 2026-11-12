@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
-<link rel="stylesheet" href="css/advisor.css?v=rwd1112">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hd1112b"><link rel="stylesheet" href="css/favorites.css?v=hd1112b">
+<link rel="stylesheet" href="css/advisor.css?v=hd1112">
 <link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -218,7 +218,7 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .type-row{padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
 .type-row b{display:block;font-size:13px;font-weight:700}
 .type-row small{display:block;margin-top:2px;font-size:12px;color:var(--ink-50)}
-.am h4{font-size:15px;font-weight:700;margin-bottom:3px}
+.am .am-h{font-size:15px;font-weight:700;margin-bottom:3px}
 .cmp{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .cmp-card{position:relative;aspect-ratio:.78;border-radius:8px;overflow:hidden;text-align:left;border:2px solid transparent;transition:border-color .25s}
 .cmp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
@@ -242,7 +242,7 @@ body.adv-open .foot-in{grid-template-columns:1fr 1fr 1fr}
 .rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
 .rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em}
 .rec .in{padding:12px 14px 14px}
-.rec h5{font-size:15px;font-weight:700}
+.rec .rec-n{font-size:15px;font-weight:700}
 .rec .pr{margin-top:2px;font-size:13.5px;color:var(--ink-70)}
 .rec ul{list-style:none;margin:8px 0 12px;display:grid;gap:5px}
 .rec li{position:relative;padding-left:14px;font-size:13px;line-height:1.55}
@@ -316,16 +316,17 @@ main{text-wrap:pretty}
  .mtb-copy{justify-content:flex-end;padding-bottom:32px}
 }
 </style>
+<link rel="stylesheet" href="css/type.css?v=hd1112b">
 </head>
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="home"></header>
-<script src="js/header.js?v=hf1104"></script>
+<script src="js/header.js?v=hd1112b"></script>
 
 <section class="hero">
   <img class="hero-img rv now" src="img/home-hero.webp?v=2" alt="">
   <div class="hero-copy">
-    <h1 class="rv now">More<br>Than a Bike.</h1>
+    <h1 class="t-display rv now">More<br>Than a Bike.</h1>
     <div class="lead-row rv now" style="--d:.18s">
       <p class="lead">從城市到山林，從日常到挑戰。<br>自行車不只帶你前進，<span class="nb">更帶你看見更大的世界。</span></p>
     </div>
@@ -447,7 +448,7 @@ main{text-wrap:pretty}
   </form>
 </aside>
 
-<script src="js/favorites.js?v=fav1028"></script>
+<script src="js/favorites.js?v=hd1112"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
@@ -674,7 +675,7 @@ function startChat(){
     '<br>順帶一提，現在有 <b>滿千折百</b> 活動，2026/10/20 前消費還能參加抽籤 🎁', 700);
 }
 function askTerrain(){
-  say('<h4>你平常大多騎在哪裡？</h4>知道這個就夠了，其他我來想。' +
+  say('<p class="am-h">你平常大多騎在哪裡？</p>知道這個就夠了，其他我來想。' +
       '<div class="opts">' + OPTS.map(([v, t, s]) => '<button class="opt" type="button" data-v="' + v + '">' + ICON[v] + '<span><b>' + t + '</b><small>' + s + '</small></span></button>').join('') + '</div>',
       650, m => m.querySelectorAll('.opt').forEach(o => o.onclick = () => {
         lockOpen(); o.classList.add('on');
@@ -703,7 +704,7 @@ function recommend(k, intro, extra, tag){
   const b = BY[k];
   say((intro || '') +
       '<div class="rec"><div class="ph"><span class="tag">' + (tag || '最適合你') + '</span><img src="img/bikes/' + k + '.webp" alt=""></div>' +
-      '<div class="in"><h5>' + b.n + '</h5><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + w + '</li>').join('') + '</ul>' +
+      '<div class="in"><p class="rec-n">' + b.n + '</p><p class="pr">NT$ ' + fmt(b.pr) + '</p><ul>' + WHY[k].map(w => '<li>' + w + '</li>').join('') + '</ul>' +
       '<div class="acts"><button class="yes" type="button" data-act="view">看這台車款</button><button class="no" type="button" data-act="size">我適合的尺寸</button></div></div></div>' +
       chips((extra || []).concat([['again','換個條件']])),
       850, m => {

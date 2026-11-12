@@ -80,7 +80,7 @@
     panel.setAttribute('role', 'dialog'); panel.tabIndex = -1;
     panel.setAttribute('aria-label', '我的最愛');
     panel.innerHTML =
-      '<header class="fav-hd"><h2>我的最愛</h2>' +
+      '<header class="fav-hd"><p class="fav-t">我的最愛</p>' +
       '<button type="button" class="fav-close" aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>' +
       '<div class="fav-body"></div>';
     panel.querySelector('.fav-close').addEventListener('click', () => setOpen(false));

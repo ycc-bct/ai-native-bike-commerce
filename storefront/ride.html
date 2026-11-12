@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/header.css?v=hd1112b"><link rel="stylesheet" href="css/favorites.css?v=hd1112b">
 <link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +93,7 @@ svg{display:block}
 .radar .f{fill:rgba(31,79,224,.16);stroke:var(--ai);stroke-width:2.5;stroke-linejoin:round}
 .radar text{font-size:var(--rfs,12.5px);fill:var(--ink);font-weight:600}
 .pf .txs{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.pf h4{margin:0 0 4px;font-size:14px;font-weight:800}
+.pf .pf-h{margin:0 0 4px;font-size:14px;font-weight:800}
 .pf p{margin:0;font-size:14px;line-height:1.7;color:var(--ink);text-wrap:pretty}
 .pf p + p{margin-top:4px}
 #goRide{flex:none}
@@ -147,12 +147,14 @@ svg{display:block}
  .btn{height:44px}
  #goRide{position:fixed;z-index:20;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom));margin:0;justify-content:center}
 }
+
 </style>
+<link rel="stylesheet" href="css/type.css?v=hd1112b">
 </head>
 <body>
 
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="ride" data-ai="tip" data-ai-title="我是 GIANT 選車顧問" data-ai-text="選一段你想騎的路，五段騎完後，我會分析你的騎乘習慣，推薦最適合的車款。"></header>
-<script src="js/header.js?v=hf1104"></script>
+<script src="js/header.js?v=hd1112b"></script>
 
 
 <section class="stage" id="stage">
@@ -185,7 +187,7 @@ svg{display:block}
 </section>
 
 
-<script src="js/favorites.js?v=fav1028"></script>
+<script src="js/favorites.js?v=hd1112"></script>
 <script src="js/ride-data.js?v=hdr1023"></script>
 <script src="js/tips.js?v=rwd1104"></script>
 <script>
@@ -279,10 +281,10 @@ function showPerf(k){
     favBtn(fid) +
     '</div></div>' +
     radar(b.ax) +
-    '<div class="txs"><div class="tx"><h4>選車分析</h4>' +
+    '<div class="txs"><div class="tx"><span class="pf-h">選車分析</span>' +
     '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，<span class="nb">平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</span></p>' +
     '<p>' + b.n + ' 以' + AXES[t1[1]] + '（' + t1[0] + '）<span class="nb">和' + AXES[t2[1]] + '（' + t2[0] + '）最突出，</span><span class="nb">' + AXES[t1[1]] + (b.ax[t1[1]] === groupMax ? '是這 ' + n + ' 台裡最高。' : '在這 ' + n + ' 台裡排第 ' + rank + '。') + '</span></p></div>' +
-    '<div class="tx"><h4>適用地形</h4><p>' + nbTail(b.t) + '</p></div></div>';
+    '<div class="tx"><span class="pf-h">適用地形</span><p>' + nbTail(b.t) + '</p></div></div>';
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
   fitRadar();
 }
