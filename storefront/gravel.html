@@ -415,6 +415,8 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
  .opt{padding:10px 8px;gap:8px}
  /* 比較列：左右各 16px；放不下已選車款就不列（再點一次卡片即可移除），開始比較佔滿一行 */
  .cmp-bar,body.adv-open .cmp-bar{left:16px;right:16px;bottom:16px;transform:none;width:auto;max-width:none;gap:10px 12px;padding:12px 16px;white-space:normal}
+ /* 陰影只貼著 panel（最多外擴 12px），不碰到畫面底部：iOS Safari 會拿頁面最底下的顏色去染網址列，大陰影會變成一條灰色分界線 */
+ .cmp-bar{box-shadow:0 0 12px rgba(20,26,34,.12),0 1px 3px rgba(20,26,34,.08)}
  .cmp-n{flex:1 1 0;min-width:0}
  .cmp-picks{display:none}
  .cmp-bar .btn{flex:1 0 100%;justify-content:center}
@@ -529,7 +531,7 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
 </aside>
 
 <script src="js/favorites.js?v=hd1112"></script>
-<script src="js/compare.js?v=cmp2"></script>
+<script src="js/compare.js?v=sh1112"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
