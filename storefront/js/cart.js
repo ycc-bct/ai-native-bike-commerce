@@ -111,7 +111,7 @@
     '.gc-drawer:focus{outline:none}.gc-drawer.on{transform:none}.gc-drawer[hidden],.gc-scrim[hidden]{display:none}' +
     '.gc-drawer *{box-sizing:border-box}.gc-drawer button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}' +
     '.gc-drawer :focus-visible{outline:3px solid #64748b;outline-offset:3px}' +
-    '.gc-hd{display:flex;align-items:center;gap:12px;padding:24px var(--gc-pad) 20px;border-bottom:1px solid #DCE1E7}.gc-hd h2{margin:0;font-size:24px;font-weight:700;line-height:1.3}.gc-hd span{font-size:12px;color:#4A5563;font-variant-numeric:tabular-nums}' +
+    '.gc-hd{display:flex;align-items:center;gap:12px;padding:24px var(--gc-pad) 20px;border-bottom:1px solid #DCE1E7}.gc-t{display:block;margin:0;font-weight:700}.gc-hd .gc-t{margin:0;font-size:24px;font-weight:700;line-height:1.3}.gc-hd span{font-size:12px;color:#4A5563;font-variant-numeric:tabular-nums}' +
     '.gc-x{margin-left:auto;margin-right:-10px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#4A5563}.gc-x:hover{background:#F1F3F5}.gc-x svg{width:20px;height:20px}' +
     '.gc-body{flex:1;overflow-y:auto;padding:8px var(--gc-pad) 24px}' +
     '.gc-sec{display:flex;align-items:center;gap:12px;padding:20px 0 4px;cursor:pointer}.gc-sec+.gc-item{border-top:0}' +
@@ -159,14 +159,14 @@
     '.gc-badge.bump{animation:gcBump .5s cubic-bezier(.16,1,.3,1)}@keyframes gcBump{30%{transform:scale(1.35)}}' +
     '@media (prefers-reduced-motion:reduce){.gc-pop,.gc-badge.bump{animation:none}}' +
     '.gc-badge{position:absolute;right:-8px;top:-6px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#1F4FE0;color:#fff;font:700 12px/18px "Inter",sans-serif;text-align:center}' +
-    '@media (max-width:767px){.gc-drawer{--gc-pad:16px}.gc-hd{padding:12px var(--gc-pad) 12px}.gc-hd h2,.gc-sum strong{font-size:16px;font-weight:700;line-height:1.4}.gc-go{min-height:44px}.gc-drawer .gc-link{min-height:40px}.gc-qty{height:42px}.gc-qty button{width:40px;height:40px}.gc-top{grid-template-columns:minmax(0,1fr)}.gc-top .gc-price{grid-column:1;grid-row:auto;margin-top:4px;text-align:left}}' +
+    '@media (max-width:767px){.gc-drawer{--gc-pad:16px}.gc-hd{padding:12px var(--gc-pad) 12px}.gc-hd .gc-t,.gc-sum strong{font-size:16px;font-weight:700;line-height:1.4}.gc-go{min-height:44px}.gc-drawer .gc-link{min-height:40px}.gc-qty{height:42px}.gc-qty button{width:40px;height:40px}.gc-top{grid-template-columns:minmax(0,1fr)}.gc-top .gc-price{grid-column:1;grid-row:auto;margin-top:4px;text-align:left}}' +
     '@media (prefers-reduced-motion:reduce){.gc-drawer,.gc-scrim{transition:none}.gc-item.new{animation:none}}';
   document.head.appendChild(css);
 
   var X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var scrim = document.createElement('div'); scrim.className = 'gc-scrim'; scrim.hidden = true;
   var dr = document.createElement('aside'); dr.className = 'gc-drawer'; dr.hidden = true; dr.setAttribute('role', 'dialog'); dr.tabIndex = -1; dr.setAttribute('aria-label', '購物車');
-  dr.innerHTML = '<div class="gc-hd"><h2>購物車</h2><span id="gcN"></span><button class="gc-x" type="button" aria-label="關閉購物車">' + X + '</button></div><div class="gc-body" id="gcBody"></div><div class="gc-ft" id="gcFt"></div>';
+  dr.innerHTML = '<div class="gc-hd"><p class="gc-t">購物車</p><span id="gcN"></span><button class="gc-x" type="button" aria-label="關閉購物車">' + X + '</button></div><div class="gc-body" id="gcBody"></div><div class="gc-ft" id="gcFt"></div>';
   function mount() { if (!scrim.isConnected) { document.body.appendChild(scrim); document.body.appendChild(dr); } }
 
   var fresh = null;

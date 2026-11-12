@@ -112,7 +112,7 @@
 .type-row{padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:#fff}
 .type-row b{display:block;font-size:13px;font-weight:700}
 .type-row small{display:block;margin-top:2px;font-size:11.5px;color:var(--ink-50)}
-.am h4{font-size:15px;font-weight:700;margin-bottom:3px}
+.am .am-h{font-size:15px;font-weight:700;margin-bottom:3px}
 .cmp{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .cmp-card{position:relative;aspect-ratio:.78;border-radius:8px;overflow:hidden;text-align:left;border:2px solid transparent;transition:border-color .25s}
 .cmp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
@@ -136,7 +136,7 @@
 .rec .ph img{position:absolute;left:14%;top:8%;width:72%;height:84%;object-fit:contain}
 .rec .tag{position:absolute;left:10px;top:10px;padding:3px 8px;border-radius:5px;background:var(--ai);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.04em}
 .rec .in{padding:12px 14px 14px}
-.rec h5{font-size:15px;font-weight:700}
+.rec .rec-n{font-size:15px;font-weight:700}
 .rec .pr{margin-top:2px;font-size:13.5px;color:var(--ink-70)}
 .rec ul{list-style:none;margin:8px 0 12px;display:grid;gap:5px}
 .rec li{position:relative;padding-left:14px;font-size:13px;line-height:1.55}

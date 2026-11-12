@@ -26,7 +26,7 @@
 
 .fav-hd{flex:none;display:flex;align-items:center;justify-content:space-between;
   padding:22px 24px 18px;border-bottom:1px solid #DCE1E7}
-.fav-hd h2{margin:0;font-size:20px;font-weight:800;color:#141A22}
+.fav-hd .fav-t{margin:0;font-size:20px;font-weight:800;color:#141A22}
 .fav-close{border:0;background:none;padding:0;width:36px;height:36px;border-radius:50%;
   display:grid;place-items:center;color:#4A5563;cursor:pointer}
 .fav-close svg{width:20px;height:20px}
@@ -67,3 +67,4 @@
  .fav-rm{position:relative}
  .fav-rm::before{content:"";position:absolute;inset:-5px}
 }
+.fav-t{display:block;margin:0;font-weight:700}

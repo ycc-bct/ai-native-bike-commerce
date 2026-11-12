@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
-<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
+<link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hd1112b"><link rel="stylesheet" href="css/favorites.css?v=hd1112b">
 <link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +46,7 @@ a{color:inherit}
 .it:first-child{border-top:0}
 .ph{width:120px;height:86px;border-radius:10px;background:var(--paper);display:grid;place-items:center;overflow:hidden}
 .ph img{width:92%;height:92%;object-fit:contain;mix-blend-mode:multiply}
-.it h3{font-size:15px;font-weight:700;line-height:1.4}
+.it .it-n{font-size:15px;font-weight:700;line-height:1.4}
 .it .meta{margin-top:3px;font-size:13px;color:var(--ink-70);line-height:1.6}
 .tag{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:999px;background:#EEF3FF;color:var(--ai);font-size:12px;font-weight:700}
 .it .ctl{display:flex;align-items:center;gap:12px;margin-top:10px}
@@ -120,7 +120,7 @@ html{scroll-padding-bottom:128px}
 .need{font-size:13px;color:var(--ink-70);text-decoration:underline;text-underline-offset:3px}.need:hover{color:var(--ink)}
 /* 摘要 */
 .sum{position:sticky;top:calc(max(100vw, 1200px) / 1672 * 76 + 20px)}
-.sum h2{font-size:17px}
+.sum h3{font-size:17px}
 .sum ul{list-style:none;margin-top:14px;display:grid;gap:12px}
 .sum li{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center}
 .sum .ph{width:56px;height:42px;border-radius:8px}
@@ -149,7 +149,7 @@ html{scroll-padding-bottom:128px}
 @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(31,79,224,.08)}}
 .info{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
 .info div{padding:16px;border-radius:12px;background:var(--paper);font-size:14px;line-height:1.7;color:var(--ink-70)}
-.info h4{font-size:13px;font-weight:700;color:var(--ink-50);letter-spacing:.04em;margin-bottom:4px}
+.info .info-h{font-size:13px;font-weight:700;color:var(--ink-50);letter-spacing:.04em;margin-bottom:4px}
 .info b{color:var(--ink);font-size:15px}
 .toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,12px);padding:12px 22px;border-radius:8px;background:var(--ink);color:#fff;font-size:14px;opacity:0;transition:opacity .2s,transform .2s;z-index:80;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -205,7 +205,7 @@ html{scroll-padding-bottom:128px}
  .co .it{grid-template-columns:minmax(0,1fr);gap:12px;align-items:start;padding:20px 0}
  .co .it>.ph{width:100%;height:auto;aspect-ratio:3/2;max-height:200px}
  .co .it>.ph img{max-height:184px}
- .co .it h3{font-size:16px}.co .it .meta{font-size:14px;line-height:1.75}
+ .co .it .it-n{font-size:16px}.co .it .meta{font-size:14px;line-height:1.75}
  .co .it .pr{grid-column:1;font-size:18px}
  .co .it .ctl{gap:24px;flex-wrap:wrap}
  .co .qty{height:44px}.co .qty button{width:44px;height:42px}
@@ -227,7 +227,7 @@ html{scroll-padding-bottom:128px}
  .co .pane>.acts>.lnk{align-self:center}
  .co .pane>.acts .need{flex:0 0 100%;order:-1;min-height:44px;margin-top:-8px;text-align:left}
  .co .pane>.acts .btn{flex:1;width:auto}
- .co .sum h2{font-size:20px}.co .sum li{grid-template-columns:56px minmax(0,1fr);gap:8px 12px}
+ .co .sum h3{font-size:20px}.co .sum li{grid-template-columns:56px minmax(0,1fr);gap:8px 12px}
  .co .sum li>span{grid-column:2;white-space:normal}
  .co .sum li b{font-size:14px}.co .sum li small{font-size:13px}
  .co .rows{font-size:14px}.co .rows .tot strong{font-size:24px}
@@ -243,12 +243,14 @@ html{scroll-padding-bottom:128px}
  .co .steps .step.cur{font-size:13px;gap:6px}
  .co .pane>.acts{column-gap:12px}.co .pane>.acts .btn{padding-inline:12px;gap:6px}
 }
+
 </style>
+<link rel="stylesheet" href="css/type.css?v=hd1112b">
 </head>
 <body>
-<script src="js/cart.js?v=rwd1104"></script><script src="js/store-picker.js?v=rwd1104"></script>
+<script src="js/cart.js?v=hd1112b"></script><script src="js/store-picker.js?v=rwd1104"></script>
 <header class="nav site-nav" id="siteHeader" data-mobile-nav data-page="checkout" data-ai="tip" data-ai-title="結帳有問題嗎？" data-ai-text="選好門市後，門市會在 1 個工作天內打電話跟你確認到店時間。客製車不需付訂金，到門市確認工單後再付款。"></header>
-<script src="js/header.js?v=hf1104"></script>
+<script src="js/header.js?v=hd1112b"></script>
 
 <main class="co">
   <a class="co-back" href="javascript:history.back()" id="coBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>繼續逛逛</a>
@@ -262,7 +264,7 @@ html{scroll-padding-bottom:128px}
 
 <footer class="foot" id="siteFooter" data-mobile-footer></footer>
 <script src="js/footer.js?v=hdr1023b"></script>
-<script src="js/favorites.js?v=fav1028"></script>
+<script src="js/favorites.js?v=hd1112"></script>
 <script>
 /* ---------- 結帳流程：資料都在這頁，送出後存一筆訂單在 localStorage（giant-orders）並清空購物車 ---------- */
 const $ = id => document.getElementById(id);
@@ -309,7 +311,7 @@ function stepsHtml(){
 function itemsHtml(editable){
   return items().map(x => {
     const q = x.qty || 1, meta = [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', x.meta && x.meta.note].filter(Boolean).map(esc).join('・');
-    return '<div class="it" data-id="' + esc(x.id) + '"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><h3>' + esc(x.name) + '</h3>' +
+    return '<div class="it" data-id="' + esc(x.id) + '"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><p class="it-n">' + esc(x.name) + '</p>' +
       (meta ? '<p class="meta">' + meta + '</p>' : '') + (editable ? '<div class="ctl">' + (x.kind === 'custom' ? '' : '<span class="qty"><button type="button" data-q="-1" aria-label="減少"' + (q <= 1 ? ' disabled' : '') + '>−</button><b>' + q + '</b><button type="button" data-q="1" aria-label="增加">+</button></span>') +
         (x.edit ? '<a class="lnk" href="' + esc(GiantCart.url(x.edit)) + '">回到編輯</a>' : '') + '<button class="lnk" type="button" data-rm>移除</button></div>' : x.kind === 'custom' ? '' : '<p class="meta">數量 ' + q + '</p>') +
       '</div><div class="pr">' + priceOf(x) + '</div></div>';
@@ -319,7 +321,7 @@ function summary(){
   if (S.step === 3) { $('sum').innerHTML = ''; $('sum').hidden = true; return; }
   $('sum').hidden = false;
   const st = S.store && storeById(S.store);
-  $('sum').innerHTML = '<h2>訂單摘要</h2><ul>' + items().map(x => '<li><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><b>' + esc(x.name) + '</b><small>' + (x.kind === 'custom' ? esc(x.meta && x.meta.paint || '客製車') : '數量 ' + (x.qty || 1)) + (x.meta && x.meta.size ? '・尺寸 ' + esc(x.meta.size) : '') + '</small></div><span>' + priceOf(x) + '</span></li>').join('') + '</ul>' +
+  $('sum').innerHTML = '<h3>訂單摘要</h3><ul>' + items().map(x => '<li><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><b>' + esc(x.name) + '</b><small>' + (x.kind === 'custom' ? esc(x.meta && x.meta.paint || '客製車') : '數量 ' + (x.qty || 1)) + (x.meta && x.meta.size ? '・尺寸 ' + esc(x.meta.size) : '') + '</small></div><span>' + priceOf(x) + '</span></li>').join('') + '</ul>' +
     '<div class="rows"><div><span>' + (hasCustom() ? '預估金額' : '商品小計') + '</span><span>' + money(total()) + '</span></div>' + (hasCustom() ? '' : '<div><span>' + (S.way === 'home' ? '宅配運費' : '門市取貨') + '</span><span>免運</span></div>') +
     (hasCustom() ? '<div><span>客製車訂金</span><span>不需訂金</span></div>' : '') +
     (items().some(x => !x.price) ? '<div><span>價格請洽門市</span><span>' + items().filter(x => !x.price).length + ' 件，門市確認後報價</span></div>' : '') +
@@ -372,11 +374,11 @@ function paneDone(){
   const o = S.order, st = o.store && storeById(o.store);
   return '<div class="done"><div class="mark">' + CHECK + '</div><h2>' + (S.viewing ? (o.custom ? '預約詳情' : '訂單詳情') : (o.custom ? '預約已送出' : '訂單已送出')) + '</h2><p class="ono">' + (o.custom ? '預約編號' : '訂單編號') + ' <b>' + o.no + '</b>' + (S.viewing ? '，' + esc(o.time) + ' 送出。' : '，確認信已寄到 ' + esc(o.email) + '。') + '</p>' +
     '<ol class="track"><li class="ok">已送出<small>' + o.time + '</small></li><li class="now">' + (o.way === 'home' ? '備貨中' : '門市確認中') + '<small>' + (o.way === 'home' ? '1–2 個工作天' : '1 個工作天內來電') + '</small></li><li>' + (o.way === 'home' ? '已出貨' : '門市已確認') + '</li><li>' + (o.way === 'home' ? '送達' : (o.custom ? '到店量身' : '可到店取貨')) + '</li></ol>' +
-    '<div class="info">' + (o.way === 'home' ? '<div><h4>宅配地址</h4><b>' + esc(o.addr) + '</b><br>3–5 個工作天送達</div>' :
-      '<div><h4>' + (o.custom ? '客製化服務門市' : '取貨門市') + '</h4><b>' + esc(st ? st.name : '') + '</b><br>' + esc(st ? st.addr : '') + '<br>' + esc(st ? st.tel : '') + '</div>' +
-      '<div><h4>' + (o.custom ? '量身與確認工單' : '到店時間') + '</h4><b>' + (o.date ? dLabel(o.date) + ' ' + o.slot : '門市來電約時間') + '</b><br>' + (o.custom ? '約 60 分鐘，技師會確認尺寸、零件搭配<span style="white-space:nowrap">並簽訂工單</span>' : '約 20 分鐘') + '</div>') +
-    '<div><h4>聯絡人</h4><b>' + esc(o.name) + '</b><br>' + esc(o.phone) + '</div><div><h4>付款</h4><b>' + (o.pay === 'card' ? '信用卡線上付款' : '到門市付款') + '</b><br>總計 ' + money(o.total) + (o.custom ? '・客製車不需訂金' : '') + '</div></div>' +
-    '<div class="items" style="margin-top:22px">' + o.items.map(x => '<div class="it"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><h3>' + esc(x.name) + '</h3><p class="meta">' + [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', '數量 ' + (x.qty || 1)].filter(Boolean).map(esc).join('・') + '</p></div><div class="pr">' + priceOf(x) + '</div></div>').join('') + '</div>' +
+    '<div class="info">' + (o.way === 'home' ? '<div><p class="info-h">宅配地址</p><b>' + esc(o.addr) + '</b><br>3–5 個工作天送達</div>' :
+      '<div><p class="info-h">' + (o.custom ? '客製化服務門市' : '取貨門市') + '</p><b>' + esc(st ? st.name : '') + '</b><br>' + esc(st ? st.addr : '') + '<br>' + esc(st ? st.tel : '') + '</div>' +
+      '<div><p class="info-h">' + (o.custom ? '量身與確認工單' : '到店時間') + '</p><b>' + (o.date ? dLabel(o.date) + ' ' + o.slot : '門市來電約時間') + '</b><br>' + (o.custom ? '約 60 分鐘，技師會確認尺寸、零件搭配<span style="white-space:nowrap">並簽訂工單</span>' : '約 20 分鐘') + '</div>') +
+    '<div><p class="info-h">聯絡人</p><b>' + esc(o.name) + '</b><br>' + esc(o.phone) + '</div><div><p class="info-h">付款</p><b>' + (o.pay === 'card' ? '信用卡線上付款' : '到門市付款') + '</b><br>總計 ' + money(o.total) + (o.custom ? '・客製車不需訂金' : '') + '</div></div>' +
+    '<div class="items" style="margin-top:22px">' + o.items.map(x => '<div class="it"><div class="ph">' + (x.img ? '<img src="' + esc(GiantCart.url(x.img)) + '" alt="">' : '') + '</div><div><p class="it-n">' + esc(x.name) + '</p><p class="meta">' + [x.meta && x.meta.paint, x.meta && x.meta.size ? '尺寸 ' + x.meta.size : '', '數量 ' + (x.qty || 1)].filter(Boolean).map(esc).join('・') + '</p></div><div class="pr">' + priceOf(x) + '</div></div>').join('') + '</div>' +
     '<div class="acts">' + (o.way === 'home' || !o.date ? '<span></span>' : '<button class="btn ghost" type="button" id="ics">加入行事曆</button>') + '<a class="btn" href="index.html">回到首頁</a></div></div>';
 }
 

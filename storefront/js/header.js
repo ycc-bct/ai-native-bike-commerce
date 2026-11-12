@@ -58,7 +58,7 @@
   }
   function gearPanel() {
     return '<div class="dd dd-gear" data-dd="gear" hidden><div class="dd-in">' +
-      GEAR.map(function (g) { return '<div class="dd-col"><h4>' + esc(g.t) + '</h4><ul class="dd-list one">' + g.sub.map(link).join('') + '</ul></div>'; }).join('') +
+      GEAR.map(function (g) { return '<div class="dd-col"><p class="dd-h">' + esc(g.t) + '</p><ul class="dd-list one">' + g.sub.map(link).join('') + '</ul></div>'; }).join('') +
       '</div></div>';
   }
 
@@ -146,7 +146,7 @@
         '.gn-sub{padding:0 0 8px}' +
         '.gn-sub a{display:flex;align-items:center;min-height:48px;padding:0 16px;font-size:16px;font-weight:600;line-height:1.4;color:#141A22;text-decoration:none}' +
         '.gn-sub a.gn-all{gap:6px;font-size:14px;color:#1F4FE0}.gn-all svg{flex:none;width:16px;height:16px}' +
-        '.gn-group{padding:16px 0 0}.gn-group h3{margin:0;padding:0 16px 4px;font-size:14px;font-weight:400;line-height:1.5;color:#4A5563}' +   /* 精品配件：灰色小標＋同字級的項目 */
+        '.gn-group{padding:16px 0 0}.gn-group .gn-h{margin:0;padding:0 16px 4px;font-size:14px;font-weight:400;line-height:1.5;color:#4A5563}' +   /* 精品配件：灰色小標＋同字級的項目 */
         '.gn-row:focus-visible,.gn-sub a:focus-visible,.gn-kv:focus-visible,#siteHeader .gn-toggle:focus-visible{outline:3px solid #64748b;outline-offset:-3px}' +
       '}' +
       'html.gn-lock,html.gn-lock body{overflow:hidden}' +
@@ -179,7 +179,7 @@
       }).join('') +
       '<div class="gn-page" data-p="gear" aria-label="精品配件">' +
         '<button type="button" class="gn-row gn-back" data-go="main">精品配件' + LEFT + '</button>' +
-        GEAR.map(function (g) { return '<div class="gn-group gn-sub"><h3>' + esc(g.t) + '</h3>' + g.sub.map(sub).join('') + '</div>'; }).join('') +
+        GEAR.map(function (g) { return '<div class="gn-group gn-sub"><p class="gn-h">' + esc(g.t) + '</p>' + g.sub.map(sub).join('') + '</div>'; }).join('') +
       '</div>';
     host.prepend(btn); host.append(panel);
     var mq = matchMedia('(max-width:900px)');
@@ -249,7 +249,7 @@
   addEventListener('scroll', navTone, {passive: true}); navTone();
   /* 全站購物車（右側抽屜＋右上角件數），每一頁都載入 */
   if (!document.querySelector('script[src*="js/cart.js"]')) {
-    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=rwd1104'; document.head.appendChild(cs);
+    var cs = document.createElement('script'); cs.src = ROOT + 'js/cart.js?v=hd1112b'; document.head.appendChild(cs);
   }
   /* 會員選單：點右上角 D 打開（客製編輯頁有自己的會員選單，會把這顆換成 #openMember，這裡就不處理）。只放點了有作用的項目 */
   (function () {
