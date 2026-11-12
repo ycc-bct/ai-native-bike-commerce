@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GIANT · More Than a Bike</title>
 <link rel="stylesheet" href="css/footer.css?v=hf1104"><link rel="stylesheet" href="css/header.css?v=hf1104"><link rel="stylesheet" href="css/favorites.css?v=rwd1104">
-<link rel="stylesheet" href="css/advisor.css?v=rwd1104">
+<link rel="stylesheet" href="css/advisor.css?v=rwd1112">
 <link rel="stylesheet" href="css/tips.css?v=notip1104">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -421,6 +421,8 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
  .cmp-bar .btn{flex:1 0 100%;justify-content:center}
  body.cmp-mode #siteFooter{padding-bottom:128px}
 }
+/* 手機上顧問面板滿版，比較列先收起來，不蓋住對話框的輸入框（docs/design.md 共用元件） */
+@media(max-width:767px){body.adv-open .cmp-bar{display:none!important}}
 </style>
 </head>
 <body>
@@ -434,7 +436,7 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
     <nav class="crumb" aria-label="麵包屑"><a href="index.html">首頁</a><span>/</span><b>越野 &amp; 礫石公路 跨界自行車</b></nav>
     <p class="kicker">Gravel &amp; X-Road</p>
     <h1>礫石公路自行車</h1>
-    <p class="sub"><span class="nb">柏油之外，探索未知的路。</span><span class="nb">從 GIANT 有史以來</span><span class="nb">最輕量的碳纖礫石賽車，</span><span class="nb">到城市街道與鄉間道路都好騎的</span><span class="nb">平把全路況車款。</span></p>
+    <p class="sub"><span class="nb">柏油之外，探索未知的路。</span><span class="nb">從 GIANT 有史以來最輕量的碳纖礫石賽車，</span><span class="nb">到城市街道與鄉間道路都好騎的</span><span class="nb">平把全路況車款。</span></p>
   </div>
 </section>
 
@@ -523,7 +525,7 @@ body.adv-open .foot-bar .legal a,body.adv-open .foot-bar .region{white-space:now
 </aside>
 
 <script src="js/favorites.js?v=fav1028"></script>
-<script src="js/compare.js?v=rwd1104"></script>
+<script src="js/compare.js?v=rwd1112"></script>
 <script src="js/thinking-orbs-engine.js?v=hdr1023"></script>
 <script src="js/orb.js?v=hdr1023"></script>
 <script src="js/advisor.js?v=hdr1023"></script>
@@ -955,6 +957,7 @@ function togglePanel(open){
   $('ftoggle').setAttribute('aria-expanded', open);
 }
 $('ftoggle').onclick = () => togglePanel($('fpanel').hidden);
+addEventListener('keydown', e => { if (e.key === 'Escape' && !$('fpanel').hidden) { togglePanel(false); $('ftoggle').focus(); } });
 $('fapply').onclick = () => { togglePanel(false); $('grid').scrollIntoView({behavior:'smooth', block:'start'}); };
 $('fpanel').querySelectorAll('.fg-h').forEach(h => h.onclick = () => {
   const open = h.getAttribute('aria-expanded') !== 'true';
