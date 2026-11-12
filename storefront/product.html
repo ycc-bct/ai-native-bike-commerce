@@ -631,6 +631,9 @@ body.solo-scene #accIdx{display:none}
  .sec h2{margin-top:0}
  .feat,.tech{grid-template-columns:minmax(0,1fr)}
  .geo{grid-template-columns:minmax(0,1fr)}
+ /* 單欄時順序：幾何圖 → 幾何表 → 我適合的尺寸（幾何圖接在表格正上方，點圖上的字母，標起來的列就在下面） */
+ .geo-left{display:contents}
+ .geo-fig{order:1}.gtable-wrap{order:2}.finder{order:3}
  .gtable-wrap{overscroll-behavior-x:contain}
  .stories{grid-template-columns:minmax(0,1fr)}
  /* 同車系車款：一排左右滑，頁面本身不橫捲 */
