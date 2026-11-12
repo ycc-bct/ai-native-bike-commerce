@@ -67,7 +67,7 @@
 .adv-mini span{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-70)}
 .adv-in{flex:none;display:flex;align-items:center;gap:2px;margin:10px 12px 12px;padding:5px 5px 5px 14px;border:1px solid #C5CCD5;border-radius:999px;background:#fff;transition:border-color .2s}
 .adv-in:focus-within{border-color:var(--ink)}
-.adv-in input[type=text]{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink);padding:0 4px}
+.adv-in input[type=text]{flex:1;align-self:stretch;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink);padding:0 4px}
 .adv-in input::placeholder{color:#667080}
 .adv-ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--ink-70);transition:background .2s,color .2s}
 .adv-ic:hover{background:#EEF1F4;color:var(--ink)}
@@ -172,8 +172,8 @@
  body:has(#siteHeader[data-mobile-nav]) .advisor{left:0;right:0;top:64px;width:auto;height:calc(100svh - 64px);border-radius:14px 14px 0 0;border-width:1px 0 0}
 }
 
-/* 手機：點擊區 40px（docs/design.md 原則 3）；輸入框 16px，iOS 才不會放大畫面 */
-@media(max-width:767px){
+/* 手機與平板：點擊區 40px（docs/design.md 原則 3）；輸入框 16px，iOS／iPadOS 才不會放大畫面 */
+@media(max-width:1023px){
  .adv-x,.adv-ic,.adv-send{width:40px;height:40px}
  .adv-in input[type=text]{font-size:16px}
  .orb-callout button{height:40px}
