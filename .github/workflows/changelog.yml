@@ -1,0 +1,49 @@
+# 每次有人推到 main（合併 PR 或直接 push），自動把這次的提交記進
+# storefront/docs/CHANGELOG.md。規則寫在 .github/scripts/changelog.py。
+name: Changelog
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: changelog
+  cancel-in-progress: false
+
+jobs:
+  record:
+    # 機器人自己的提交不再觸發，避免無限循環
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Write entries
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.event.after }}
+          REPO: ${{ github.repository }}
+        run: python3 .github/scripts/changelog.py
+
+      - name: Commit
+        run: |
+          if git diff --quiet -- storefront/docs/CHANGELOG.md; then
+            echo "沒有新紀錄"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add storefront/docs/CHANGELOG.md
+          git commit -m "Changelog: record ${AFTER:0:7} [skip ci]"
+          for i in 1 2 3; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase origin main
+          done
+          exit 1
+        env:
+          AFTER: ${{ github.event.after }}
