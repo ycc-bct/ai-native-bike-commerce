@@ -12,8 +12,8 @@
 
 ## 2026-11-16
 
-- 【文件】規範拆成兩份：`customized.md`（客製車編輯頁，給廠商開發）與 `design.md`（其餘頁面與全站共用）；新增這份 `CHANGELOG.md`。
-- 【文件】設定頁標題列高度改記為 `--cfg-title: 48px`；補上「升級合計」手機 14px、768px 以上 16px。
+- [#26](https://github.com/ycc-bct/ai-native-bike-commerce/pull/26)【文件】規範拆成兩份：`customized.md`（客製車編輯頁，給廠商開發）與 `design.md`（其餘頁面與全站共用）；新增這份 `CHANGELOG.md`。
+- [#26](https://github.com/ycc-bct/ai-native-bike-commerce/pull/26)【文件】設定頁標題列高度改記為 `--cfg-title: 48px`；補上「升級合計」手機 14px、768px 以上 16px。
 
 ## 2026-11-12
 
