@@ -73,10 +73,12 @@ def main():
             files = changed([parents[0], sha])
             if only_changelog(files):
                 continue
-            titles = [t for t in git("log", "--no-merges", "--reverse", "--format=%s",
-                                     f"{parents[0]}..{parents[1]}").splitlines()
-                      if not t.startswith("Changelog:")]
-            body = "；".join(titles) or subject
+            titles = [l.split("\t", 1)[1] for l in git(
+                "log", "--no-merges", "--reverse", "--format=%an\t%s",
+                f"{parents[0]}..{parents[1]}").splitlines()
+                if not l.startswith("github-actions[bot]\t")]
+            pr_title = (git("show", "-s", "--format=%b", sha).splitlines() or [""])[0]
+            body = "；".join(titles) or pr_title or subject
             lines.append(f"- [#{n}](https://github.com/{REPO}/pull/{n}){scope(files)}{body}")
         else:
             short = sha[:7]
