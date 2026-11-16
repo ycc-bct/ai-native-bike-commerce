@@ -249,6 +249,9 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
  .sec-head h2{font-size:26px}
  .book{gap:16px}
  .card{--card-x:16px;padding:24px 16px}
+ /* 選了門市才出現選時間；桌機兩欄同時在 */
+ #bookWhen{display:none}
+ .book.has-store #bookWhen{display:block}
  .card h3 small{display:block;margin:4px 0 0}
  /* 時段三顆平均分欄寬 */
  .slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -256,7 +259,10 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
  .inputs{grid-template-columns:minmax(0,1fr)}
  .inputs input{height:48px}
  #storePick .sp{grid-template-columns:minmax(0,1fr)}
- .gear{grid-template-columns:minmax(0,1fr);gap:12px}
+ /* 推薦配件：往右滑的一排，第一張對齊頁面 16px */
+ .gear{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding-inline:16px;scrollbar-width:none;margin-inline:-16px;padding:4px 16px 8px}
+ .gear::-webkit-scrollbar{display:none}
+ .g{flex:0 0 min(78vw,280px);scroll-snap-align:start}
  .g{padding:16px}
  .g .tag{left:26px;top:26px}
  .cartbar{flex-direction:column;align-items:stretch;gap:12px;padding:16px}
@@ -306,7 +312,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
         <h3>選門市</h3>
         <div id="storePick"></div>
       </div>
-      <div class="card">
+      <div class="card" id="bookWhen">
         <h3>選時間<small id="bookBike"></small></h3>
         <div class="field"><label>日期</label><div class="dates" id="dates"></div></div>
         <div class="field"><label>時段</label><div class="slots" id="slots"></div></div>
@@ -440,8 +446,13 @@ const WD = ['日','一','二','三','四','五','六'];
 function dates(){ const out = []; for (let i = 1; i <= 7; i++) { const d = new Date(); d.setDate(d.getDate() + i); out.push({t: (d.getMonth() + 1) + '/' + d.getDate(), w: '週' + WD[d.getDay()], wk: d.getDay() === 0 || d.getDay() === 6}); } return out; }
 const DATES = dates(), SLOTS = ['10:00','13:30','16:00'];
 (function sizeDefault(){ let h = 0; try { h = +localStorage.getItem(ADV_H_KEY) || 0; } catch (e) {} const s = h ? advSizeFor(ADV_SIZES, h) : null; B.size = s ? s[0] : 'M'; B.sizeFrom = s ? '依你記住的身高 ' + h + ' cm' : ''; })();
+function syncBookTime(){
+  const book = document.querySelector('.book');
+  if (book) book.classList.toggle('has-store', !!B.store);
+}
 function renderBook(){
-  if (!storePicker && window.GiantStorePicker) storePicker = GiantStorePicker.mount($('storePick'), {mode: 'select', layout: 'stack', selected: B.store, tags: STORE_TAGS, onSelect: st => { B.store = st.id; }});
+  if (!storePicker && window.GiantStorePicker) storePicker = GiantStorePicker.mount($('storePick'), {mode: 'select', layout: 'stack', selected: B.store, tags: STORE_TAGS, onSelect: st => { B.store = st && st.id; syncBookTime(); }});
+  syncBookTime();
   $('bookBike').textContent = rec.n;
   $('dates').innerHTML = DATES.map((d, i) => '<button class="pill' + (i === B.date ? ' on' : '') + (d.wk && i === DATES.findIndex(x => x.wk) ? ' sug' : '')   /* 不用 rec：advisor.css 的 .rec 是聊天卡片，會帶 margin */ + '" type="button" data-i="' + i + '">' + d.t + '<small>' + d.w + '</small>' + (d.wk && i === DATES.findIndex(x => x.wk) ? '<i class="tg">建議</i>' : '') + '</button>').join('');
   $('dates').querySelectorAll('.pill').forEach(b => b.onclick = () => { B.date = +b.dataset.i; renderBook(); });

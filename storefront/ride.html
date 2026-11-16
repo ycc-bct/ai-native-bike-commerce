@@ -123,6 +123,8 @@ svg{display:block}
  :root{--shell:calc(100vw - 32px)}
  .stage{--phh:clamp(150px,22svh,190px)}
  .stage > img{object-position:38% 78%}
+ /* 手機取景切到較深的藍天，深色標題不好讀。淺藍色只罩在標題那一段，下面的白字仍留在原來的天空上 */
+ .stage::before{background:linear-gradient(180deg,rgba(214,232,246,.96) 0,rgba(206,226,242,.88) 128px,rgba(186,214,232,.28) 176px,rgba(243,245,247,0) 220px)}
  .stage-in{min-height:calc(100vh - 140px);min-height:calc(100svh - 140px);gap:16px;padding-top:80px}
  .stage h1{font-size:clamp(28px,8vw,32px);line-height:1.2}
  .ask-row{display:flex;margin-top:12px}
@@ -135,13 +137,19 @@ svg{display:block}
  .rb-shuffle{flex:none}
  /* 手機取景天空佔比高，白字加一層貼字的陰影才讀得到 */
  .rb-hint,.rb-shuffle{text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 10px rgba(0,0,0,.5)}
- .lineup{display:flex;gap:8px;margin:0 -16px;padding:12px 16px 0}
- .lb{flex:0 0 min(70vw,280px);scroll-snap-align:start}
+ .lineup{display:flex;gap:4px;margin:0 -16px;padding:8px 16px 16px}
+ .lb{flex:0 0 min(64vw,250px);scroll-snap-align:start}
+ .lb .pic{margin-inline:-18px}
  .lb .meta{min-height:0}
  .ride-bar{z-index:auto}
  .ride-bar .ride-shell{padding:20px 0 calc(88px + env(safe-area-inset-bottom))}
  .pf{grid-template-columns:minmax(0,1fr);gap:16px}
  .radar{width:min(280px,100%);margin:0 auto}
+ /* 內文照 design.md：15px、行高 1.75、#4A5563；小標到說明 10px */
+ .pf .pf-h{margin-bottom:10px}
+ .pf p{font-size:15px;line-height:1.75;color:#4A5563}
+ /* 適用地形：pretty 會把放得下的句子也拆開，這裡關掉，只在真的放不下時於標點換行 */
+ .pf p.terrain{text-wrap:wrap}
  /* 底部固定列：主要動作滿版，在 header 抽屜（z 30）之下 */
  body::after{content:"";position:fixed;z-index:19;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
  .btn{height:44px}
@@ -284,7 +292,7 @@ function showPerf(k){
     '<div class="txs"><div class="tx"><span class="pf-h">選車分析</span>' +
     '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，<span class="nb">平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</span></p>' +
     '<p>' + b.n + ' 以' + AXES[t1[1]] + '（' + t1[0] + '）<span class="nb">和' + AXES[t2[1]] + '（' + t2[0] + '）最突出，</span><span class="nb">' + AXES[t1[1]] + (b.ax[t1[1]] === groupMax ? '是這 ' + n + ' 台裡最高。' : '在這 ' + n + ' 台裡排第 ' + rank + '。') + '</span></p></div>' +
-    '<div class="tx"><span class="pf-h">適用地形</span><p>' + nbTail(b.t) + '</p></div></div>';
+    '<div class="tx"><span class="pf-h">適用地形</span><p class="terrain">' + nbTail(b.t) + '</p></div></div>';
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
   fitRadar();
 }
