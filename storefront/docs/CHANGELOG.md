@@ -14,7 +14,7 @@
 
 ## 2026-11-16
 
-- [#29](https://github.com/ycc-bct/ai-native-bike-commerce/pull/29)【全站】Ride flow on phones: lighter sky, tighter bikes, report follows the store
+- [#29](https://github.com/ycc-bct/ai-native-bike-commerce/pull/29)【選車、騎乘中、騎乘報告】手機版：選車標題那段天空改淺、車距收近，選車分析與適用地形改成 15px；目前騎的和車名同一行，換車改成圖示，電輔選項高度跟其他選項一樣；選了門市（含進頁就已選好）才出現選時間，配件改成橫向滑動。桌機不變。
 - [#28](https://github.com/ycc-bct/ai-native-bike-commerce/pull/28)【文件】Changelog: use commit or PR titles for merged PRs
 - [#27](https://github.com/ycc-bct/ai-native-bike-commerce/pull/27)【文件】CHANGELOG 改為自動記錄：任何人推到 `main` 都會由 GitHub Actions 加進這份紀錄。
 - [#26](https://github.com/ycc-bct/ai-native-bike-commerce/pull/26)【文件】規範拆成兩份：`customized.md`（客製車編輯頁，給廠商開發）與 `design.md`（其餘頁面與全站共用）；新增這份 `CHANGELOG.md`。
