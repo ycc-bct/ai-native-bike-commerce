@@ -14,7 +14,7 @@
 
 ## 2026-11-19
 
-- [#33](https://github.com/ycc-bct/ai-native-bike-commerce/pull/33)【全站】Ride report on phones: give the accessory tag even padding
+- [#33](https://github.com/ycc-bct/ai-native-bike-commerce/pull/33)【騎乘報告】手機版：配件卡「先備這件」上方間距改成跟左邊一樣，都是 16px。桌機不變。
 - [#31](https://github.com/ycc-bct/ai-native-bike-commerce/pull/31)【選車、騎乘中、騎乘報告】手機版：「換幾台看看」的圖示補上跟文字一樣的陰影；換車改成重新整理圖示、圖示沒有外框，黑框留在整顆按鈕；選了門市就捲到選時間，配件標籤上移不再擋住商品照片。桌機不變。
 
 ## 2026-11-16
