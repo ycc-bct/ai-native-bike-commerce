@@ -149,13 +149,13 @@ svg{display:block}
  .opt .tx b{font-size:16px}
  .qsub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
  .pillb{height:40px;justify-content:center}
- /* 目前騎的和車名同一行；換車是圖示，整列都能點 */
- #swapBtn{grid-column:1/-1;display:grid;grid-template-columns:32px minmax(0,1fr) 40px;gap:0 8px;align-items:center;height:52px;padding:0 10px 0 12px;text-align:left;border-color:transparent}
+ /* 目前騎的和車名同一行；換車是重新整理圖示、沒有自己的框，黑框留在整顆按鈕 */
+ #swapBtn{grid-column:1/-1;display:grid;grid-template-columns:32px minmax(0,1fr) 40px;gap:0 8px;align-items:center;height:52px;padding:0 6px 0 12px;text-align:left}
  #swapBtn img{grid-row:1;align-self:center;width:32px;height:24px}
  #swapBtn .cur{display:flex;align-items:baseline;gap:6px;min-width:0;grid-column:2;grid-row:1}
  #swapBtn .cur small,#swapBtn .cur b{line-height:1.3;white-space:nowrap}
  #swapBtn .cur b{overflow:hidden;text-overflow:ellipsis}
- #swapBtn .chg{display:grid;place-items:center;width:40px;height:40px;border-radius:999px;border:1.5px solid var(--navy);background:rgba(255,255,255,.9)}
+ #swapBtn .chg{display:grid;place-items:center;width:40px;height:40px;border:0;background:none}
  #swapBtn .chg svg{width:18px;height:18px}
  #swapBtn .chg-label{display:none}
  /* 換車面板：放不下就在自己的列裡左右滑；打開時收起「目前騎的」（面板的「不換，繼續騎…」已經寫了），上一段、結束體驗留在畫面上 */
@@ -301,7 +301,7 @@ function renderProg(){
 }
 function renderCur(){
   const b = BIKES[S.bike];
-  $('swapBtn').innerHTML = '<img src="' + b.img + '" alt=""><span class="cur"><small>目前騎的</small><b>' + b.n + '</b></span><span class="chg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3M18 4l3 3-3 3M17 17H6l3 3M6 20l-3-3 3-3"/></svg></span><span class="chg-label"><i class="dot" style="font-style:normal">· </i>換一台試騎</span>';
+  $('swapBtn').innerHTML = '<img src="' + b.img + '" alt=""><span class="cur"><small>目前騎的</small><b>' + b.n + '</b></span><span class="chg" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></span><span class="chg-label"><i class="dot" style="font-style:normal">· </i>換一台試騎</span>';
   $('swapBtn').setAttribute('aria-label', '目前騎的 ' + b.n + '，換一台試騎');
   $('swapBtn').onclick = () => openSwap(POOL[S.scene].filter(k => k !== S.bike).slice(0, 3), null);
 }
