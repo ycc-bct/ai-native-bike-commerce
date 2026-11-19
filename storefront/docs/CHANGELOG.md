@@ -12,6 +12,10 @@
 
 ---
 
+## 2026-11-19
+
+- [#31](https://github.com/ycc-bct/ai-native-bike-commerce/pull/31)【全站】Ride flow on phones: shadow the shuffle icon, simplify swap, jump to time
+
 ## 2026-11-16
 
 - [#29](https://github.com/ycc-bct/ai-native-bike-commerce/pull/29)【選車、騎乘中、騎乘報告】手機版：選車標題那段天空改淺、車距收近，選車分析與適用地形改成 15px；目前騎的和車名同一行，換車改成圖示，電輔選項高度跟其他選項一樣；選了門市（含進頁就已選好）才出現選時間，配件改成橫向滑動。桌機不變。
