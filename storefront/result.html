@@ -250,7 +250,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
  .book{gap:16px}
  .card{--card-x:16px;padding:24px 16px}
  /* 選了門市才出現選時間；桌機兩欄同時在 */
- #bookWhen{display:none}
+ #bookWhen{display:none;scroll-margin-top:80px}
  .book.has-store #bookWhen{display:block}
  .card h3 small{display:block;margin:4px 0 0}
  /* 時段三顆平均分欄寬 */
@@ -264,7 +264,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
  .gear::-webkit-scrollbar{display:none}
  .g{flex:0 0 min(78vw,280px);scroll-snap-align:start}
  .g{padding:16px}
- .g .tag{left:26px;top:26px}
+ .g .tag{left:16px;top:4px}
  .cartbar{flex-direction:column;align-items:stretch;gap:12px;padding:16px}
  .cartbar span{display:block;margin:4px 0 0}
  .cartbar span:empty{display:none}
@@ -451,7 +451,7 @@ function syncBookTime(){
   if (book) book.classList.toggle('has-store', !!B.store);
 }
 function renderBook(){
-  if (!storePicker && window.GiantStorePicker) storePicker = GiantStorePicker.mount($('storePick'), {mode: 'select', layout: 'stack', selected: B.store, tags: STORE_TAGS, onSelect: st => { B.store = st && st.id; syncBookTime(); }});
+  if (!storePicker && window.GiantStorePicker) storePicker = GiantStorePicker.mount($('storePick'), {mode: 'select', layout: 'stack', selected: B.store, tags: STORE_TAGS, onSelect: st => { B.store = st && st.id; syncBookTime(); if (B.store && isPhone()) { const when = $('bookWhen'); if (when) when.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}); } }});
   syncBookTime();
   $('bookBike').textContent = rec.n;
   $('dates').innerHTML = DATES.map((d, i) => '<button class="pill' + (i === B.date ? ' on' : '') + (d.wk && i === DATES.findIndex(x => x.wk) ? ' sug' : '')   /* 不用 rec：advisor.css 的 .rec 是聊天卡片，會帶 margin */ + '" type="button" data-i="' + i + '">' + d.t + '<small>' + d.w + '</small>' + (d.wk && i === DATES.findIndex(x => x.wk) ? '<i class="tg">建議</i>' : '') + '</button>').join('');

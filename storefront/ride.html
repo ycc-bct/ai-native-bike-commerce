@@ -135,8 +135,9 @@ svg{display:block}
  .ask-sub{gap:12px;margin-top:10px}
  .rb-hint{min-width:0}
  .rb-shuffle{flex:none}
- /* 手機取景天空佔比高，白字加一層貼字的陰影才讀得到 */
+ /* 手機取景天空佔比高，白字加一層貼字的陰影才讀得到；圖示吃不到 text-shadow，用同一組投影 */
  .rb-hint,.rb-shuffle{text-shadow:0 1px 3px rgba(0,0,0,.6),0 1px 10px rgba(0,0,0,.5)}
+ .rb-shuffle svg{filter:drop-shadow(0 1px 3px rgba(0,0,0,.6)) drop-shadow(0 1px 10px rgba(0,0,0,.5))}
  .lineup{display:flex;gap:4px;margin:0 -16px;padding:8px 16px 16px}
  .lb{flex:0 0 min(64vw,250px);scroll-snap-align:start}
  .lb .pic{margin-inline:-18px}
