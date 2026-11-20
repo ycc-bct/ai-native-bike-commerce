@@ -100,10 +100,9 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
 .shot .glow{position:absolute;left:50%;top:50%;width:520px;height:320px;transform:translate(-50%,-52%);border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 70%);z-index:0}
 .shot .pic{z-index:1}
 .cap-acts{position:relative;z-index:1;display:flex;justify-content:center;align-items:center;gap:10px;margin-top:14px}
-.cap-acts .fav{width:48px;height:48px;border-radius:999px;border:1.5px solid #B8C0CA;background:#fff;display:grid;place-items:center;color:var(--ink-70);cursor:pointer;transition:border-color .2s,transform .15s}
-.cap-acts .fav:hover{border-color:var(--ink);transform:scale(1.06)}
-.cap-acts .fav svg{width:19px;height:19px}
-.cap-acts .fav.on{color:#E2465B;border-color:#F3C9CF}
+.cap-acts .fav{width:48px;height:48px;border-radius:50%;border:1px solid #B8C0CA;background:#fff;display:grid;place-items:center;color:var(--ink-70);flex:none;cursor:pointer}
+.cap-acts .fav svg{width:22px;height:22px}
+.cap-acts .fav.on{color:#E0344B;border-color:#E0344B}
 .cap-acts .fav.on svg{fill:currentColor}
 .cap-acts .btn.on{background:#1DB56A}
 .rode[hidden]{display:none}
@@ -232,6 +231,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
  .btn{height:auto;min-height:44px;padding-block:8px}
  .btn.sm{height:auto}
  .cap-acts .fav{width:44px;height:44px}
+ .cap-acts .fav svg{width:20px;height:20px}
  .verdict{padding:88px 0 40px}
  .shot .glow{width:100%}
  /* 主要動作上下排、滿寬 */
@@ -301,7 +301,7 @@ body.member .site-nav .icons a[aria-label="會員"]::after{content:"";position:a
       <span class="glow"></span>
       <span class="pic" id="recPic"><img id="recImg" src="" alt=""><i class="sh"></i><i class="sk"></i><i class="sh"></i><i class="sk"></i></span>
       <div class="cap" id="recCap"></div>
-      <div class="cap-acts"><button class="fav" id="heroFav" type="button" aria-label="加入我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg></button><button class="btn btn-dark sm" id="heroCart" type="button">加入購物車</button></div>
+      <div class="cap-acts"><button class="fav" id="heroFav" type="button" aria-label="加入我的最愛"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg></button><button class="btn btn-dark sm" id="heroCart" type="button">加入購物車</button></div>
     </div>
   </div>
 </section>

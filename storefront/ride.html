@@ -82,11 +82,14 @@ svg{display:block}
 .pf.on{opacity:1;transform:none}
 .pf .hd small{display:block;font-size:11.5px;letter-spacing:.16em;color:var(--ink-50)}
 .pf .hd b{display:block;margin-top:4px;font-size:24px;font-weight:800;line-height:1.2}
+.pf .hd .ttl{display:flex;align-items:center;gap:12px;width:100%;margin-top:4px}
+.pf .hd .ttl .fav{margin-left:auto}
+.pf .hd .ttl b{margin-top:0;min-width:0}
 .pf .hd .nm{display:flex;align-items:center;gap:12px;margin-top:6px}
 .pf .hd .pr{font-size:14px;font-weight:700;color:var(--ink-70)}
-.pf .fav{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--ink-70);flex:none;cursor:pointer}
-.pf .fav svg{width:17px;height:17px}
-.pf .fav.on{color:#E2465B;border-color:#F3C9CF}
+.pf .fav{width:48px;height:48px;border-radius:50%;border:1px solid #B8C0CA;background:#fff;display:grid;place-items:center;color:var(--ink-70);flex:none;cursor:pointer}
+.pf .fav svg{width:22px;height:22px}
+.pf .fav.on{color:#E0344B;border-color:#E0344B}
 .pf .fav.on svg{fill:currentColor}
 .radar{width:100%;overflow:visible;display:block}
 .radar .g{fill:none;stroke:#C5D0E4;stroke-width:1}
@@ -145,6 +148,8 @@ svg{display:block}
  .ride-bar{z-index:auto}
  .ride-bar .ride-shell{padding:20px 0 calc(88px + env(safe-area-inset-bottom))}
  .pf{grid-template-columns:minmax(0,1fr);gap:16px}
+ .pf .fav{width:44px;height:44px}
+ .pf .fav svg{width:20px;height:20px}
  .radar{width:min(280px,100%);margin:0 auto}
  /* 內文照 design.md：15px、行高 1.75、#4A5563；小標到說明 10px */
  .pf .pf-h{margin-bottom:10px}
@@ -226,7 +231,7 @@ const CHIP_LABEL = {city:'城市日常', river:'長距離挑戰', mountain:'探�
 const S = {scene:'river', off:0, sel:null};
 
 /* 我的最愛：每台車名旁一顆愛心，跟底部橫條的愛心、全站清單同步（gid 沒有的車用這頁的 key 當 id） */
-const HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.2A4 4 0 0 1 12 8a4 4 0 0 1 7 2.8C19 15.6 12 20 12 20z"/></svg>';
+const HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 20.3S3.5 15.1 3.5 9.1A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.5c0 6-8.5 11.2-8.5 11.2z"/></svg>';
 const favHas = id => !!(window.GiantFav && GiantFav.has(id));
 function favBtn(id){ return '<button class="fav' + (favHas(id) ? ' on' : '') + '" type="button" data-fav="' + id + '" aria-label="加入我的最愛">' + HEART + '</button>'; }
 function syncHearts(){ document.querySelectorAll('.fav[data-fav]').forEach(f => f.classList.toggle('on', favHas(f.dataset.fav))); }
@@ -286,9 +291,7 @@ function showPerf(k){
   const sceneName = S.scene === 'any' ? '還沒決定' : CHIP_LABEL[S.scene];
   const fid = b.gid || k;
   const el = $('perfPanel');
-  el.innerHTML = '<div class="hd"><small>PERFORMANCE</small><b>' + b.n + '</b><div class="nm"><span class="pr">' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</span>' +
-    favBtn(fid) +
-    '</div></div>' +
+  el.innerHTML = '<div class="hd"><small>PERFORMANCE</small><div class="ttl"><b>' + b.n + '</b>' + favBtn(fid) + '</div><div class="nm"><span class="pr">' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</span></div></div>' +
     radar(b.ax) +
     '<div class="txs"><div class="tx"><span class="pf-h">選車分析</span>' +
     '<p>' + (S.scene === 'any' ? '畫面上這 ' : '「' + sceneName + '」這 ') + n + ' 台裡，<span class="nb">平均最強的是' + AXES[bestAxis] + '（' + avg[bestAxis] + '）。</span></p>' +
