@@ -14,6 +14,7 @@
 
 ## 2026-11-20
 
+- [#37](https://github.com/ycc-bct/ai-native-bike-commerce/pull/37)【全站】選車、騎乘報告：愛心統一成商品頁圓形，選車愛心跟車名同一排靠右
 - [#36](https://github.com/ycc-bct/ai-native-bike-commerce/pull/36)【全站】手機版：主要按鈕改 44，選項膠囊和列表篩選列對齊，看車架幾何與尺寸維持字重 400
 - [#35](https://github.com/ycc-bct/ai-native-bike-commerce/pull/35)【全站】【文件】手機版：選車、騎乘中、騎乘報告的按鈕、文字連結和字級對齊，門市搜尋收成兩列，規則寫進 design.md
 
