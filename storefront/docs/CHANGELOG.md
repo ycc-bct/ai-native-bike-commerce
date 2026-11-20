@@ -12,6 +12,10 @@
 
 ---
 
+## 2026-11-20
+
+- [#35](https://github.com/ycc-bct/ai-native-bike-commerce/pull/35)【全站】【文件】手機版：選車、騎乘中、騎乘報告的按鈕、文字連結和字級對齊，門市搜尋收成兩列，規則寫進 design.md
+
 ## 2026-11-19
 
 - [#33](https://github.com/ycc-bct/ai-native-bike-commerce/pull/33)【騎乘報告】手機版：配件卡「先備這件」上方間距改成跟左邊一樣，都是 16px。桌機不變。
