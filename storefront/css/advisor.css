@@ -167,9 +167,11 @@
 .adv-acc-add:hover{border-color:var(--ink)}
 .adv-acc-add.done{background:var(--navy);border-color:var(--navy);color:#fff}
 
-/* 手機上顧問面板滿版貼在 header 下方（只作用在開了 data-mobile-nav 的頁面） */
+/* 手機上顧問是整頁對話框，連 header 一起蓋住；關掉用面板右上的關閉鈕 */
 @media(max-width:767px){
- body:has(#siteHeader[data-mobile-nav]) .advisor{left:0;right:0;top:64px;width:auto;height:calc(100svh - 64px);border-radius:14px 14px 0 0;border-width:1px 0 0}
+ body:has(#siteHeader[data-mobile-nav]) .advisor{inset:0;width:auto;height:auto;border-radius:0;border:0;z-index:80}
+ body:has(#siteHeader[data-mobile-nav]) .adv-hd{padding-top:max(14px,env(safe-area-inset-top))}
+ body:has(#siteHeader[data-mobile-nav]) .adv-in{margin-bottom:calc(12px + env(safe-area-inset-bottom))}
 }
 
 /* 手機與平板：點擊區 40px（docs/design.md 原則 3）；輸入框 16px，iOS／iPadOS 才不會放大畫面 */
@@ -179,4 +181,11 @@
  .orb-callout button{height:40px}
  .adv-chip,.adv-quick button{position:relative}
  .adv-chip::before,.adv-quick button::before{content:"";position:absolute;left:0;right:0;top:50%;height:40px;translate:0 -50%}
+}
+/* 手機：面板裡的按鈕跟全站一樣 44px。字重維持各按鈕原本的值 */
+@media(max-width:767px){
+ .advisor .adv-x,.advisor .adv-ic,.advisor .adv-send{width:44px;height:44px}
+ .advisor .adv-chip,.advisor .adv-quick button{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;height:auto;padding:0 14px;font-size:14px}
+ .advisor .rec .acts button,.advisor .adv-acc-add{height:44px}
+ .advisor .adv-acc-add{font-size:14px}
 }
