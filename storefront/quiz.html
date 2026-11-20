@@ -38,7 +38,7 @@ svg{display:block}
 
 /* 進度條 */
 .prog{position:absolute;left:50%;top:84px;transform:translateX(-50%);width:560px;text-align:center;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
-.prog small{display:block;font-size:12.5px;letter-spacing:.14em;font-weight:700;opacity:.9}
+.prog small{display:block;font-size:13px;letter-spacing:.14em;font-weight:700;opacity:.9}
 .prog .bars{display:flex;gap:6px;margin-top:8px}
 .prog .bars i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.35);overflow:hidden;position:relative}
 .prog .bars i::after{content:"";position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
@@ -148,7 +148,7 @@ svg{display:block}
  .opt .tx{flex:1 1 auto;min-width:0}
  .opt .tx b{font-size:16px}
  .qsub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
- .pillb{height:40px;justify-content:center}
+ .pillb{height:44px;font-size:14px;justify-content:center}
  /* 目前騎的和車名同一行；換車是重新整理圖示、沒有自己的框，黑框留在整顆按鈕 */
  #swapBtn{grid-column:1/-1;display:grid;grid-template-columns:32px minmax(0,1fr) 40px;gap:0 8px;align-items:center;height:52px;padding:0 6px 0 12px;text-align:left}
  #swapBtn img{grid-row:1;align-self:center;width:32px;height:24px}
@@ -164,7 +164,8 @@ svg{display:block}
  .swap .row::-webkit-scrollbar{display:none}
  .swap .sb{flex:0 0 164px;display:flex;flex-direction:column;align-items:center;scroll-snap-align:start}
  .swap .sb img{height:52px}
- .swap .keep{margin-top:10px}
+ .swap .sb b .ln2{display:block}
+ .swap .keep{margin:20px 0;font-size:14px}
 }
 </style>
 <link rel="stylesheet" href="css/type.css?v=hd1112b">
@@ -355,7 +356,7 @@ function advance(){
 function openSwap(list, after, title, sub){
   const box = $('swap');
   box.innerHTML = '<h3>' + (title || '換一台再上') + '</h3><p>' + nbTail(sub || '同一條路線裡挑一台，接下來的路就騎它。') + '</p><div class="row">' +
-    list.map(k => { const b = BIKES[k]; return '<button class="sb" type="button" data-k="' + k + '"><img src="' + b.img + '" alt=""><b>' + b.n + '</b><small>' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</small><em>' + swapWhy(k) + '</em></button>'; }).join('') +
+    list.map(k => { const b = BIKES[k]; return '<button class="sb" type="button" data-k="' + k + '"><img src="' + b.img + '" alt=""><b>' + bikeName(b.n) + '</b><small>' + (b.pr ? 'NT$ ' + fmt(b.pr) : '價格請洽門市') + '</small><em>' + swapWhy(k) + '</em></button>'; }).join('') +
     '</div><button class="keep" type="button">不換，繼續騎 ' + BIKES[S.bike].n + '</button>';
   box.classList.add('on');
   box.querySelectorAll('.sb').forEach(b => b.onclick = () => {
@@ -366,9 +367,14 @@ function openSwap(list, after, title, sub){
   });
   box.querySelector('.keep').onclick = () => { box.classList.remove('on'); if (after) setTimeout(after, 200); };
 }
+function bikeName(n){
+  const w = n.trim().split(/\s+/);
+  if (w.length < 3) return n;
+  return '<span class="ln1">' + w[0] + '</span> <span class="ln2">' + w.slice(1).join(' ') + '</span>';
+}
 function swapWhy(k){
   const b = BIKES[k], top = b.ax.map((v, i) => [v, i]).sort((a, c) => c[0] - a[0])[0];
-  return AXES[top[1]] + ' ' + top[0] + '，<span class="nb">' + ({ebike:'電輔上坡最省力', explore:'電輔＋直立騎姿', tcr:'輕，爬坡有效率', trance:'避震吃落差', sl0:'碎石也能全速', pro1:'寬胎更穩', talon:'越障更穩', propelpro:'平路最快', propelsl:'空力最省力', fast:'平把好操控', escape:'最輕鬆', advanced2:'什麼路都能騎'}[k] || '') + '</span>';
+  return AXES[top[1]] + ' ' + top[0] + '，<span class="nb">' + ({ebike:'電輔上坡最省力', explore:'電輔＋直立騎姿', tcr:'車身輕', trance:'避震吃落差', sl0:'碎石也能全速', pro1:'寬胎更穩', talon:'越障更穩', propelpro:'平路最快', propelsl:'空力最省力', fast:'平把好操控', escape:'最輕鬆', advanced2:'什麼路都能騎'}[k] || '') + '</span>';
 }
 /* 算分：把五段的偏好加起來，拿最後騎的那台跟全部車款比 */
 function finish(){
