@@ -14,6 +14,7 @@
 
 ## 2026-11-20
 
+- [#40](https://github.com/ycc-bct/ai-native-bike-commerce/pull/40)【全站】手機版：選車顧問改成整頁對話框，蓋住 header，面板按鈕改 44
 - [#39](https://github.com/ycc-bct/ai-native-bike-commerce/pull/39)【全站】騎乘報告：拿掉配件區「配件名稱與價格以門市為準」這行，桌面與手機都拿掉
 - [#37](https://github.com/ycc-bct/ai-native-bike-commerce/pull/37)【選車、騎乘報告】選車分析的愛心改成商品頁的圓形，跟車名同一排、靠最右、垂直置中，價格留在下一行；桌面 48px、手機 44px，收藏後填紅。騎乘報告的愛心改成同一顆圓形，仍在「加入購物車」左邊。
 - [#36](https://github.com/ycc-bct/ai-native-bike-commerce/pull/36)【首頁、列表頁、商品頁、選車、騎乘報告、文件】手機版：主要按鈕高度 44px，字重維持 700。列表「篩選與排序」「比較車款」字級 14、字重 700，手機高度 44、桌面高度仍是 42。選項膠囊（情境、地區、日期、尺寸）手機 44px、14px、字重 700。商品頁「看車架幾何與尺寸」手機 14px、字重維持 400，跟上方尺寸膠囊拉開。字重不隨寬度改，寫進 design.md。
