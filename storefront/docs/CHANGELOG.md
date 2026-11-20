@@ -14,6 +14,7 @@
 
 ## 2026-11-20
 
+- [#36](https://github.com/ycc-bct/ai-native-bike-commerce/pull/36)【全站】手機版：主要按鈕改 44，選項膠囊和列表篩選列對齊，看車架幾何與尺寸維持字重 400
 - [#35](https://github.com/ycc-bct/ai-native-bike-commerce/pull/35)【全站】【文件】手機版：選車、騎乘中、騎乘報告的按鈕、文字連結和字級對齊，門市搜尋收成兩列，規則寫進 design.md
 
 ## 2026-11-19
