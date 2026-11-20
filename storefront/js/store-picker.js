@@ -46,14 +46,14 @@
     '.sp-mk{position:relative;width:20px;height:20px}.sp-mk i{position:absolute;inset:0;border-radius:50%;background:var(--sp-ai);border:3px solid #fff;box-shadow:0 2px 8px rgba(31,79,224,.35)}',
     '.sp-mk::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--sp-ai);opacity:0;animation:sp-pulse 1.8s ease-out .6s infinite}',
     '.sp-mk-tag{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);padding:7px 12px 8px;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(20,26,34,.06),0 8px 22px rgba(20,26,34,.12);white-space:nowrap;pointer-events:none;opacity:0;animation:sp-tag .3s ease .6s forwards}',
-    '.sp-mk-tag b{display:block;font-size:13.5px;font-weight:700}.sp-mk-tag span{display:block;margin-top:2px;font-size:12px;color:var(--sp-ink50)}',
+    '.sp-mk-tag b{display:block;font-size:14px;font-weight:700}.sp-mk-tag span{display:block;margin-top:2px;font-size:12px;color:var(--sp-ink50)}',
     '.sp-me{width:16px;height:16px;border-radius:50%;background:#14B8A6;border:3px solid #fff;box-shadow:0 0 0 6px rgba(20,184,166,.18)}',
     '@keyframes sp-pulse{0%{opacity:.35;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}@keyframes sp-tag{from{opacity:0;transform:translate(-50%,4px)}to{opacity:1;transform:translateX(-50%)}}',
     '.sp-list{display:flex;flex-direction:column;min-height:0;padding:18px 18px 6px;border:1px solid var(--sp-line);border-radius:16px;background:#fff}',
     '.sp-tools{display:flex;gap:8px;flex:none}',
     '.sp-q{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:44px;padding:0 16px;border:1px solid #C9D0D8;border-radius:999px;font-size:14.5px;font-weight:600}.sp-q:focus-within{border-color:var(--sp-ink)}',
     '.sp-q svg{flex:none;width:17px;height:17px;color:var(--sp-ink70)}.sp-q input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;color:var(--sp-ink)}.sp-q input::placeholder{color:#667080;font-weight:500}',
-    '.sp-near{flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border:1px solid #C9D0D8;border-radius:999px;background:#fff;font-size:13.5px;font-weight:700;white-space:nowrap}.sp-near svg{width:16px;height:16px}.sp-near:hover{border-color:var(--sp-ink)}',
+    '.sp-near{flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border:1px solid #C9D0D8;border-radius:999px;background:#fff;font-size:14px;font-weight:700;white-space:nowrap}.sp-near svg{width:16px;height:16px}.sp-near:hover{border-color:var(--sp-ink)}',
     '.sp-near.on{background:#E6F6F4;border-color:#14B8A6;color:#0F766E}.sp-near[aria-busy=true]{opacity:.6;cursor:wait}',
     '.sp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;flex:none}',
     '.sp-chip{height:34px;padding:0 13px;border:1px solid var(--sp-line);border-radius:999px;background:#fff;font-size:13px;font-weight:600;color:var(--sp-ink70);font-variant-numeric:tabular-nums;transition:background .2s,color .2s,border-color .2s}',
@@ -74,12 +74,12 @@
     '.sp-end{flex:none;text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}.sp-end small{display:block;margin-top:3px;font-size:12px;font-weight:600;color:#0F766E}',
     '.sp-end a{color:var(--sp-ink);text-decoration:none}.sp-end a:hover{text-decoration:underline}',
     '.sp-empty{display:block!important;padding:28px 0!important;text-align:center;color:var(--sp-ink50);font-size:14px;border-top:0!important;cursor:default!important}',
-    '.sp-picked{grid-column:1/-1;margin:0;padding:12px 16px;border-radius:12px;background:#F3F5F7;font-size:13.5px;line-height:1.6;color:var(--sp-ink70)}.sp-picked b{color:var(--sp-ink)}.sp-picked:empty{display:none}',
+    '.sp-picked{grid-column:1/-1;margin:0;padding:12px 16px;border-radius:12px;background:#F3F5F7;font-size:14px;line-height:1.6;color:var(--sp-ink70)}.sp-picked b{color:var(--sp-ink)}.sp-picked:empty{display:none}',
     '.sp-msg{flex:none;margin:8px 0 0;font-size:12.5px;color:#B23932}.sp-msg:empty{display:none}',
     '@media(max-width:760px){.sp-side,.sp-side.sp-nomap{grid-template-columns:1fr;height:auto}.sp-side .sp-map{height:240px}.sp-side .sp-list ul{max-height:320px}}',
     /* sp-rwd：手機規則，結帳與結果頁共用 */
     '@media(max-width:1023px){.sp-q input{font-size:16px}.sp-chip{min-height:44px}.sp-zoom button{width:40px;height:40px}}',
-    '@media(max-width:767px){.sp-list{padding:16px 12px 8px}.sp-tools{flex-wrap:wrap}.sp-q{flex-basis:100%;padding:0 12px}.sp-near{min-height:44px}.sp-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px 12px;margin:0 -8px;padding:12px 8px}.sp-end{grid-column:2;text-align:left}.sp-end a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}.sp-txt span{white-space:normal;line-height:1.6}.sp-picked{overflow-wrap:anywhere;font-size:14px;line-height:1.75}}',
+    '@media(max-width:767px){.sp-list{padding:16px 12px 8px}.sp-tools{flex-wrap:nowrap;align-items:center}.sp-q{flex:1 1 auto;min-width:0;padding:0 14px}.sp-near{width:44px;height:44px;min-height:0;padding:0;justify-content:center;gap:0;font-size:0;border-radius:999px}.sp-near svg{width:18px;height:18px}.sp-chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;margin:12px -12px 0;padding:0 12px 4px;scrollbar-width:none}.sp-chips::-webkit-scrollbar{display:none}.sp-chip{flex:none;height:44px;min-height:44px;font-size:14px;scroll-snap-align:start}.sp-list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px 12px;margin:0 -8px;padding:12px 8px}.sp-end{grid-column:2;text-align:left}.sp-end a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}.sp-txt span{white-space:normal;line-height:1.6}.sp-picked{overflow-wrap:anywhere;font-size:14px;line-height:1.75}}',
     '@media(prefers-reduced-motion:reduce){.sp-mk::before{animation:none}.sp-mk-tag{animation:none;opacity:1}}'
   ].join('');
   document.head.appendChild(css);
@@ -134,7 +134,7 @@
     el.className = 'sp sp-' + (layout === 'auto' ? 'side' : layout) + (mode === 'browse' ? ' sp-browse' : '');
     el.innerHTML = '<div class="sp-map"><div class="sp-wait">地圖載入中…</div><div class="sp-zoom"><button type="button" data-z="1" aria-label="放大地圖">' + ICON.plus + '</button><button type="button" data-z="-1" aria-label="縮小地圖">' + ICON.minus + '</button></div></div>' +
       '<div class="sp-list"><div class="sp-tools"><label class="sp-q">' + ICON.search + '<input type="search" placeholder="搜尋門市、縣市或地址" aria-label="搜尋門市" autocomplete="off"></label>' +
-      '<button type="button" class="sp-near" aria-pressed="false">' + ICON.near + '離我最近</button></div>' +
+      '<button type="button" class="sp-near" aria-pressed="false" aria-label="離我最近">' + ICON.near + '離我最近</button></div>' +
       '<p class="sp-msg" role="status"></p><div class="sp-chips" role="group" aria-label="地區"></div><p class="sp-cnt"></p><ul role="listbox" aria-label="門市"></ul></div>' +
       (mode === 'select' ? '<p class="sp-picked" aria-live="polite"></p>' : '');
     host.appendChild(el);

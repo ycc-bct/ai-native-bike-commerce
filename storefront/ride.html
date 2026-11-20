@@ -60,7 +60,7 @@ svg{display:block}
 .lb.on b{color:var(--ai)}
 .lb .meta{min-height:72px;display:flex;flex-direction:column;align-items:center}
 .lb b{margin-top:12px;font-size:14.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-shadow:0 1px 10px rgba(255,255,255,.9)}
-.lb .pr{margin-top:4px;font-size:13.5px;font-weight:700;color:var(--ink);text-shadow:0 1px 8px rgba(255,255,255,.9)}
+.lb .pr{margin-top:4px;font-size:14px;font-weight:700;color:var(--ink);text-shadow:0 1px 8px rgba(255,255,255,.9)}
 .lb .go svg{width:14px;height:14px}
 /* 選中車上方的建議泡泡 */
 /* ---------- 下方選路列 ---------- */
@@ -70,7 +70,7 @@ svg{display:block}
 .chip{height:46px;padding:0 22px;border-radius:999px;border:1.5px solid var(--navy);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:15px;font-weight:700;color:var(--navy);transition:background .2s,color .2s,transform .2s}
 .chip:hover{background:#fff}
 .chip.on{background:var(--navy);color:#fff}
-.rb-hint{display:block;font-size:13.5px;font-weight:600;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.rb-hint{display:block;font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.5)}
 .rb-shuffle{display:inline-flex;align-items:center;gap:6px;padding:0;background:none;font-size:14px;font-weight:700;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.5);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;white-space:nowrap;transition:opacity .2s}
 .rb-shuffle:hover{opacity:.8}
 .rb-shuffle svg{width:15px;height:15px;transition:transform .5s var(--ease)}
@@ -131,8 +131,8 @@ svg{display:block}
  .chips,.lineup{overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 16px;scrollbar-width:none}
  .chips::-webkit-scrollbar,.lineup::-webkit-scrollbar{display:none}
  .chips{position:relative;flex-wrap:nowrap;margin:0 -16px;padding:0 16px}
- .chip{flex:none;scroll-snap-align:start}
- .ask-sub{gap:12px;margin-top:10px}
+ .chip{flex:none;height:44px;scroll-snap-align:start}
+ .ask-sub{gap:12px;margin-top:20px}
  .rb-hint{min-width:0}
  .rb-shuffle{flex:none}
  /* 手機取景天空佔比高，白字加一層貼字的陰影才讀得到；圖示吃不到 text-shadow，用同一組投影 */
